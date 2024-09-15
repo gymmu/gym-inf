@@ -1,6 +1,7 @@
 import { Routes, Route, Link, Outlet, useLocation } from "react-router-dom"
 import { useEffect, useRef, useLayoutEffect } from "react"
 import ICode from "./components/ICode"
+import {ReactSVG} from "react-svg"
 
 import ChapterPres from "./sites/md/00-pres.mdx"
 import ChapterInstallation from "./sites/md/01-installation.mdx"
@@ -146,6 +147,10 @@ function Wrapper({ children }) {
   return <>{children}</>
 }
 
+function Icon({url}) {
+    return (<ReactSVG src={url} />)
+}
+
 function Layout() {
   const dialogRef = useRef(null)
   useEffect(() => {
@@ -159,11 +164,11 @@ function Layout() {
   return (
     <>
       <header>
+        <span className="icon">
+            <Icon url="/icons/hamburger.svg" />
+        </span>
         <h1>
           <Link to="/">Gym Informatik</Link>
-          <span className="back">
-            <Link to="/">Home</Link>
-          </span>
         </h1>
       </header>
       <main>
