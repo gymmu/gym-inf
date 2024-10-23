@@ -1,7 +1,7 @@
 import { Routes, Route, Link, Outlet, useLocation } from "react-router-dom"
 import { useEffect, useRef, useLayoutEffect } from "react"
 import ICode from "./components/ICode"
-import {ReactSVG} from "react-svg"
+import { ReactSVG } from "react-svg"
 
 import ChapterPres from "./sites/md/00-pres.mdx"
 import ChapterInstallation from "./sites/md/01-installation.mdx"
@@ -27,6 +27,8 @@ import ChapterCSSImgNextToText from "./sites/md/03-7-css-img-next-to-text.mdx"
 import ChapterJavascriptIntroduction from "./sites/md/05-0-javascript.mdx"
 import ChapterJavascriptChangePage from "./sites/md/05-1-javascript-change-page.mdx"
 import ChapterJavascriptTextToNumbers from "./sites/md/05-2-javascript-text-to-numbers.mdx"
+import ChapterJavascriptVariables from "./sites/md/06-0-javascript-variables.mdx"
+import ChapterJavascriptBlocks from "./sites/md/06-0-javascript-blocks.mdx"
 import ChapterJavascriptIf from "./sites/md/06-0-javascript-if.mdx"
 import ChapterJavascriptFor from "./sites/md/06-1-javascript-for.mdx"
 import ChapterJavascriptReturn from "./sites/md/06-2-javascript-return.mdx"
@@ -96,6 +98,14 @@ export default function App() {
               path="javascript-text-to-numbers"
               element={<ChapterJavascriptTextToNumbers />}
             />
+            <Route
+              path="javascript-variables"
+              element={<ChapterJavascriptVariables />}
+            />
+            <Route
+              path="javascript-blocks"
+              element={<ChapterJavascriptBlocks />}
+            />
             <Route path="javascript-if" element={<ChapterJavascriptIf />} />
             <Route path="javascript-for" element={<ChapterJavascriptFor />} />
             <Route
@@ -147,8 +157,8 @@ function Wrapper({ children }) {
   return <>{children}</>
 }
 
-function Icon({url}) {
-    return (<ReactSVG src={url} />)
+function Icon({ url }) {
+  return <ReactSVG src={url} />
 }
 
 function Layout() {
@@ -165,7 +175,7 @@ function Layout() {
     <>
       <header>
         <span className="icon">
-            <Icon url="/icons/hamburger.svg" />
+          <Icon url="/icons/hamburger.svg" />
         </span>
         <h1>
           <Link to="/">Gym Informatik</Link>
@@ -314,6 +324,12 @@ function ChapterIndex() {
         <li>
           Javascript: Logik
           <ol>
+            <li>
+              <Link to="javascript-variables">Variablen</Link>
+            </li>
+            <li>
+              <Link to="javascript-blocks">Code-Blöcke / Scoping</Link>
+            </li>
             <li>
               <Link to="javascript-if">
                 Bedingungen (<pre>if</pre>)
