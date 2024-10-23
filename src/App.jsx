@@ -49,7 +49,7 @@ export default function App() {
       <Wrapper>
         <Routes>
           {/* TODO: Change the layout to no longer use the nesting of the root
-           * This schould be easily possible, since we can place the <Routes> component
+           * This should be easily possible, since we can place the <Routes> component
            * anywhere we want, so we could keep the layout and the navbar static in our
            * UI, and just change the rendered component.
            */}
