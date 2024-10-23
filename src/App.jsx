@@ -28,6 +28,7 @@ import ChapterJavascriptIntroduction from "./sites/md/05-0-javascript.mdx"
 import ChapterJavascriptChangePage from "./sites/md/05-1-javascript-change-page.mdx"
 import ChapterJavascriptTextToNumbers from "./sites/md/05-2-javascript-text-to-numbers.mdx"
 import ChapterJavascriptVariables from "./sites/md/06-0-javascript-variables.mdx"
+import ChapterJavascriptDeclarative from "./sites/md/06-0-javascript-declarative.mdx"
 import ChapterJavascriptBlocks from "./sites/md/06-0-javascript-blocks.mdx"
 import ChapterJavascriptIf from "./sites/md/06-0-javascript-if.mdx"
 import ChapterJavascriptFor from "./sites/md/06-1-javascript-for.mdx"
@@ -105,6 +106,10 @@ export default function App() {
             <Route
               path="javascript-blocks"
               element={<ChapterJavascriptBlocks />}
+            />
+            <Route
+              path="javascript-declarative"
+              element={<ChapterJavascriptDeclarative />}
             />
             <Route path="javascript-if" element={<ChapterJavascriptIf />} />
             <Route path="javascript-for" element={<ChapterJavascriptFor />} />
@@ -329,6 +334,11 @@ function ChapterIndex() {
             </li>
             <li>
               <Link to="javascript-blocks">Code-Blöcke / Scoping</Link>
+            </li>
+            <li>
+              <Link to="javascript-declarative">
+                Deklarativer Code und praktische Funktionen
+              </Link>
             </li>
             <li>
               <Link to="javascript-if">
