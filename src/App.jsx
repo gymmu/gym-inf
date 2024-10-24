@@ -1,159 +1,222 @@
-import { Routes, Route, Link, Outlet, useLocation } from "react-router-dom"
-import { useEffect, useRef, useLayoutEffect } from "react"
+import {
+  Link,
+  Outlet,
+  useLocation,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom"
+import {
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  lazy,
+  Suspense,
+  useState,
+} from "react"
 import ICode from "./components/ICode"
 import { ReactSVG } from "react-svg"
 
-import ChapterPres from "./sites/md/00-pres.mdx"
-import ChapterInstallation from "./sites/md/01-installation.mdx"
-import ChapterHTML from "./sites/md/02-0-html.mdx"
-import ChapterHTMLElements from "./sites/md/02-1-html-elements.mdx"
-import ChapterHTMLAttributes from "./sites/md/02-2-html-attributes.mdx"
-import ChapterSVG from "./sites/md/01-0-svg.mdx"
-import ChapterSVGElements from "./sites/md/01-1-svg-elements.mdx"
-import ChapterSVGClipping from "./sites/md/01-2-svg-clipping.mdx"
-import ChapterSVGAnimation from "./sites/md/01-3-svg-animation.mdx"
-import ChapterCSS from "./sites/md/03-0-css.mdx"
-import ChapterCSSSelectors from "./sites/md/03-1-css-selectors.mdx"
-import ChapterCSSBoxModel from "./sites/md/03-2-css-box-model.mdx"
-import ChapterCSSAnimations from "./sites/md/03-3-css-animationen.mdx"
-import ChapterGit from "./sites/md/04-0-git.mdx"
-import ChapterGitBranches from "./sites/md/04-1-git-branches.mdx"
-import ChapterGitMerges from "./sites/md/04-2-git-merges.mdx"
-import ChapterGitMergeConflicts from "./sites/md/04-3-git-merge-conflicts.mdx"
-import ChapterCSSCenterImage from "./sites/md/03-4-css-img.mdx"
-import ChapterCSSLayout from "./sites/md/03-5-css-layout.mdx"
-import ChapterCSSImgBackground from "./sites/md/03-6-css-img-background.mdx"
-import ChapterCSSImgNextToText from "./sites/md/03-7-css-img-next-to-text.mdx"
-import ChapterJavascriptIntroduction from "./sites/md/05-0-javascript.mdx"
-import ChapterJavascriptChangePage from "./sites/md/05-1-javascript-change-page.mdx"
-import ChapterJavascriptTextToNumbers from "./sites/md/05-2-javascript-text-to-numbers.mdx"
-import ChapterJavascriptVariables from "./sites/md/06-0-javascript-variables.mdx"
-import ChapterJavascriptDeclarative from "./sites/md/06-0-javascript-declarative.mdx"
-import ChapterJavascriptBlocks from "./sites/md/06-0-javascript-blocks.mdx"
-import ChapterJavascriptIf from "./sites/md/06-0-javascript-if.mdx"
-import ChapterJavascriptFor from "./sites/md/06-1-javascript-for.mdx"
-import ChapterJavascriptReturn from "./sites/md/06-2-javascript-return.mdx"
-import ChapterJavascriptLists from "./sites/md/06-3-javascript-lists.mdx"
-import ChapterJavascriptASCII from "./sites/md/06-4-javascript-ascii.mdx"
-import ChapterJavascriptSwitches from "./sites/md/06-5-javascript-switches.mdx"
-import ChapterAIIntro from "./sites/md/07-0-ai-intro.mdx"
-import ChapterAIPong from "./sites/md/07-1-ai-pong.mdx"
-import ChapterJavascriptObjects from "./sites/md/08-0-javascript-objects.mdx"
-import ChapterJavascriptObjectsAsData from "./sites/md/08-1-javascript-objects-as-data.mdx"
-import ChapterJavascriptBinary from "./sites/md/08-2-javascript-binary-data.mdx"
-import ChapterJavascriptHexadecimal from "./sites/md/08-3-javascript-hex-data.mdx"
-
-export default function App() {
+function SuspenseWrapper({ path }) {
+  const LazyComponent = lazy(() => import(path))
   return (
-    <>
-      <Wrapper>
-        <Routes>
-          {/* TODO: Change the layout to no longer use the nesting of the root
-           * This schould be easily possible, since we can place the <Routes> component
-           * anywhere we want, so we could keep the layout and the navbar static in our
-           * UI, and just change the rendered component.
-           */}
-          <Route path="/" element={<Layout />}>
-            <Route index element={<ChapterIndex />} />
-            <Route path="pres" element={<ChapterPres />} />
-            <Route path="install" element={<ChapterInstallation />} />
-            <Route path="html" element={<ChapterHTML />} />
-            <Route path="html-elements" element={<ChapterHTMLElements />} />
-            <Route path="html-attributes" element={<ChapterHTMLAttributes />} />
-
-            <Route path="svg" element={<ChapterSVG />} />
-            <Route path="svg-elements" element={<ChapterSVGElements />} />
-            <Route path="svg-clipping" element={<ChapterSVGClipping />} />
-            <Route path="svg-animation" element={<ChapterSVGAnimation />} />
-
-            <Route path="css" element={<ChapterCSS />} />
-            <Route path="css-selectors" element={<ChapterCSSSelectors />} />
-            <Route path="css-box-model" element={<ChapterCSSBoxModel />} />
-            <Route path="css-animations" element={<ChapterCSSAnimations />} />
-            <Route path="git" element={<ChapterGit />} />
-            <Route path="git-branches" element={<ChapterGitBranches />} />
-            <Route path="git-merges" element={<ChapterGitMerges />} />
-            <Route
-              path="git-merge-conflicts"
-              element={<ChapterGitMergeConflicts />}
-            />
-            <Route path="tipp-images" element={<ChapterCSSCenterImage />} />
-            <Route path="tipp-flexbox" element={<ChapterCSSLayout />} />
-            <Route
-              path="img-background"
-              element={<ChapterCSSImgBackground />}
-            />
-            <Route
-              path="img-next-to-text"
-              element={<ChapterCSSImgNextToText />}
-            />
-            <Route
-              path="javascript"
-              element={<ChapterJavascriptIntroduction />}
-            />
-            <Route
-              path="javascript-change-page"
-              element={<ChapterJavascriptChangePage />}
-            />
-            <Route
-              path="javascript-text-to-numbers"
-              element={<ChapterJavascriptTextToNumbers />}
-            />
-            <Route
-              path="javascript-variables"
-              element={<ChapterJavascriptVariables />}
-            />
-            <Route
-              path="javascript-blocks"
-              element={<ChapterJavascriptBlocks />}
-            />
-            <Route
-              path="javascript-declarative"
-              element={<ChapterJavascriptDeclarative />}
-            />
-            <Route path="javascript-if" element={<ChapterJavascriptIf />} />
-            <Route path="javascript-for" element={<ChapterJavascriptFor />} />
-            <Route
-              path="javascript-return"
-              element={<ChapterJavascriptReturn />}
-            />
-            <Route
-              path="javascript-lists"
-              element={<ChapterJavascriptLists />}
-            />
-            <Route
-              path="javascript-ascii"
-              element={<ChapterJavascriptASCII />}
-            />
-            <Route
-              path="javascript-switches"
-              element={<ChapterJavascriptSwitches />}
-            />
-            <Route path="ai-intro" element={<ChapterAIIntro />} />
-            <Route path="ai-pong" element={<ChapterAIPong />} />
-            <Route
-              path="javascript-objects"
-              element={<ChapterJavascriptObjects />}
-            />
-            <Route
-              path="javascript-objects-as-data"
-              element={<ChapterJavascriptObjectsAsData />}
-            />
-            <Route
-              path="javascript-binary-data"
-              element={<ChapterJavascriptBinary />}
-            />
-            <Route
-              path="javascript-hex-data"
-              element={<ChapterJavascriptHexadecimal />}
-            />
-          </Route>
-        </Routes>
-      </Wrapper>
-    </>
+    <Suspense fallback={<div>Loading...</div>}>
+      <LazyComponent />
+    </Suspense>
   )
 }
 
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        { path: "/", element: <SuspenseWrapper path="./sites/md/index.mdx" /> },
+        {
+          path: "install",
+          element: <SuspenseWrapper path="./sites/md/installation.mdx" />,
+        },
+        {
+          path: "html",
+          element: <SuspenseWrapper path="./sites/md/html.mdx" />,
+        },
+        {
+          path: "html-elements",
+          element: <SuspenseWrapper path="./sites/md/html-elements.mdx" />,
+        },
+        {
+          path: "html-attributes",
+          element: <SuspenseWrapper path="./sites/md/html-attributes.mdx" />,
+        },
+        {
+          path: "svg",
+          element: <SuspenseWrapper path="./sites/md/svg.mdx" />,
+        },
+        {
+          path: "svg-elements",
+          element: <SuspenseWrapper path="./sites/md/svg-elements.mdx" />,
+        },
+        {
+          path: "svg-clipping",
+          element: <SuspenseWrapper path="./sites/md/svg-clipping.mdx" />,
+        },
+        {
+          path: "svg-animation",
+          element: <SuspenseWrapper path="./sites/md/svg-animation.mdx" />,
+        },
+        {
+          path: "css",
+          element: <SuspenseWrapper path="./sites/md/css.mdx" />,
+        },
+        {
+          path: "css-selectors",
+          element: <SuspenseWrapper path="./sites/md/css-selectors.mdx" />,
+        },
+        {
+          path: "css-box-model",
+          element: <SuspenseWrapper path="./sites/md/css-box-model.mdx" />,
+        },
+        {
+          path: "css-animations",
+          element: <SuspenseWrapper path="./sites/md/css-animationen.mdx" />,
+        },
+        {
+          path: "tipp-images",
+          element: <SuspenseWrapper path="./sites/md/css-img.mdx" />,
+        },
+        {
+          path: "tipp-flexbox",
+          element: <SuspenseWrapper path="./sites/md/css-layout.mdx" />,
+        },
+        {
+          path: "img-background",
+          element: <SuspenseWrapper path="./sites/md/css-img-background.mdx" />,
+        },
+        {
+          path: "img-next-to-text",
+          element: (
+            <SuspenseWrapper path="./sites/md/css-img-next-to-text.mdx" />
+          ),
+        },
+        {
+          path: "git",
+          element: <SuspenseWrapper path="./sites/md/git.mdx" />,
+        },
+        {
+          path: "git-branches",
+          element: <SuspenseWrapper path="./sites/md/git-branches.mdx" />,
+        },
+        {
+          path: "git-merges",
+          element: <SuspenseWrapper path="./sites/md/git-merges.mdx" />,
+        },
+        {
+          path: "git-merge-conflicts",
+          element: (
+            <SuspenseWrapper path="./sites/md/git-merge-conflicts.mdx" />
+          ),
+        },
+        {
+          path: "javascript",
+          element: <SuspenseWrapper path="./sites/md/javascript.mdx" />,
+        },
+        {
+          path: "javascript-change-page",
+          element: (
+            <SuspenseWrapper path="./sites/md/javascript-change-page.mdx" />
+          ),
+        },
+        {
+          path: "javascript-blocks",
+          element: <SuspenseWrapper path="./sites/md/javascript-blocks.mdx" />,
+        },
+        {
+          path: "javascript-declarative",
+          element: (
+            <SuspenseWrapper path="./sites/md/javascript-declarative.mdx" />
+          ),
+        },
+        {
+          path: "javascript-if",
+          element: <SuspenseWrapper path="./sites/md/javascript-if.mdx" />,
+        },
+        {
+          path: "javascript-for",
+          element: <SuspenseWrapper path="./sites/md/javascript-for.mdx" />,
+        },
+        {
+          path: "javascript-return",
+          element: <SuspenseWrapper path="./sites/md/javascript-return.mdx" />,
+        },
+        {
+          path: "javascript-lists",
+          element: <SuspenseWrapper path="./sites/md/javascript-lists.mdx" />,
+        },
+        {
+          path: "javascript-ascii",
+          element: <SuspenseWrapper path="./sites/md/javascript-ascii.mdx" />,
+        },
+        {
+          path: "javascript-switches",
+          element: (
+            <SuspenseWrapper path="./sites/md/javascript-switches.mdx" />
+          ),
+        },
+        {
+          path: "javascript-text-to-numbers",
+          element: (
+            <SuspenseWrapper path="./sites/md/javascript-text-to-numbers.mdx" />
+          ),
+        },
+        {
+          path: "javascript-variables",
+          element: (
+            <SuspenseWrapper path="./sites/md/javascript-variables.mdx" />
+          ),
+        },
+        {
+          path: "ai-intro",
+          element: <SuspenseWrapper path="./sites/md/ai-intro.mdx" />,
+        },
+        {
+          path: "ai-pong",
+          element: <SuspenseWrapper path="./sites/md/ai-pong.mdx" />,
+        },
+        {
+          path: "javascript-objects",
+          element: <SuspenseWrapper path="./sites/md/javascript-objects.mdx" />,
+        },
+        {
+          path: "javascript-objects-as-data",
+          element: (
+            <SuspenseWrapper path="./sites/md/javascript-objects-as-data.mdx" />
+          ),
+        },
+        {
+          path: "javascript-binary-data",
+          element: (
+            <SuspenseWrapper path="./sites/md/javascript-binary-data.mdx" />
+          ),
+        },
+        {
+          path: "javascript-hex-data",
+          element: (
+            <SuspenseWrapper path="./sites/md/javascript-hex-data.mdx" />
+          ),
+        },
+      ],
+    },
+  ],
+  {
+    basename: "/gym-inf",
+  },
+)
+
+export default function App() {
+  return <RouterProvider router={router} />
+}
+
+// TODO: Use this again
 function Wrapper({ children }) {
   const location = useLocation()
   useLayoutEffect(() => {
@@ -168,6 +231,7 @@ function Icon({ url }) {
 
 function Layout() {
   const dialogRef = useRef(null)
+  const [navVisible, setNavVisible] = useState(false)
   useEffect(() => {
     window.addEventListener("keydown", (ev) => {
       if (ev.shiftKey && ev.key === " ") {
@@ -176,29 +240,43 @@ function Layout() {
       }
     })
   }, [])
+
+  const toggleSide = () => {
+    console.log("Toggle show")
+    setNavVisible((old) => !old)
+  }
   return (
     <>
-      <header>
+      <header onClick={toggleSide}>
         <span className="icon">
           <Icon url="/icons/hamburger.svg" />
         </span>
-        <h1>
-          <Link to="/">Gym Informatik</Link>
-        </h1>
+        <h1>Gym Informatik</h1>
       </header>
+      <aside className={navVisible ? "show" : ""}>
+        <ChapterIndex />
+      </aside>
       <main>
         <Outlet />
-        <dialog
-          style={{
-            padding: "4rem 2rem",
-            fontSize: "2.5rem",
-            fontWeight: "bold",
-            fontFamily: "monospace",
-          }}
-          ref={dialogRef}>{`${window.location}`}</dialog>
       </main>
+      <dialog
+        style={{
+          padding: "4rem 2rem",
+          fontSize: "2.5rem",
+          fontWeight: "bold",
+          fontFamily: "monospace",
+        }}
+        ref={dialogRef}>{`${window.location}`}</dialog>
       <footer>Informatik Gymnasium Muttenz</footer>
     </>
+  )
+}
+
+function NavLink({ to, children }) {
+  return (
+    <li>
+      <Link to={to}>{children}</Link>
+    </li>
   )
 }
 
@@ -215,185 +293,109 @@ function ChapterIndex() {
         <li>
           Einführung
           <ol>
-            <li>
-              <Link to="install">Installation</Link>
-            </li>
+            <NavLink to="install">Installation</NavLink>
           </ol>
         </li>
         <li>
           HTML
           <ol>
-            <li>
-              <Link to="html">Webseiten</Link>
-            </li>
-            <li>
-              <Link to="html-elements">Webseiten strukturieren</Link>
-            </li>
-            <li>
-              <Link to="html-attributes">HTML Attribute</Link>
-            </li>
+            <NavLink to="html">Webseiten</NavLink>
+            <NavLink to="html-elements">Webseiten strukturieren</NavLink>
+            <NavLink to="html-attributes">HTML Attribute</NavLink>
           </ol>
         </li>
         <li>
           SVG
           <ol>
-            <li>
-              <Link to="svg">Vektorgrafiken mit SVG</Link>
-            </li>
-            <li>
-              <Link to="svg-elements">Weitere SVG-Elemente</Link>
-            </li>
-            <li>
-              <Link to="svg-clipping">Elemente verbergen</Link>
-            </li>
-            <li>
-              <Link to="svg-animation">Elemente animieren</Link>
-            </li>
+            <NavLink to="svg">Vektorgrafiken mit SVG</NavLink>
+            <NavLink to="svg-elements">Weitere SVG-Elemente</NavLink>
+            <NavLink to="svg-clipping">Elemente verbergen</NavLink>
+            <NavLink to="svg-animation">Elemente animieren</NavLink>
           </ol>
         </li>
         <li>
           CSS
           <ol>
-            <li>
-              <Link to="css">Elemente gestalten</Link>
-            </li>
-            <li>
-              <Link to="css-selectors">CSS Selektoren</Link>
-            </li>
-            <li>
-              <Link to="css-box-model">CSS Box Modell</Link>
-            </li>
-            <li>
-              <Link to="css-animations">CSS Animationen</Link>
-            </li>
+            <NavLink to="css">Elemente gestalten</NavLink>
+            <NavLink to="css-selectors">CSS Selektoren</NavLink>
+            <NavLink to="css-box-model">CSS Box Modell</NavLink>
+            <NavLink to="css-animations">CSS Animationen</NavLink>
           </ol>
         </li>
         <li>
           Git
           <ol>
-            <li>
-              <Link to="git">Versionskontrolle</Link>
-            </li>
-            <li>
-              <Link to="git-branches">
-                Versionszweige (<ICode>branch</ICode>es)
-              </Link>
-            </li>
-            <li>
-              <Link to="git-merges">
-                Versionen zusammenführen (<ICode>merge</ICode>)
-              </Link>
-            </li>
-            <li>
-              <Link to="git-merge-conflicts">
-                <ICode>merge</ICode>-Konflikte
-              </Link>
-            </li>
+            <NavLink to="git">Versionskontrolle</NavLink>
+            <NavLink to="git-branches">
+              Versionszweige (<ICode>branch</ICode>es)
+            </NavLink>
+            <NavLink to="git-merges">
+              Versionen zusammenführen (<ICode>merge</ICode>)
+            </NavLink>
+            <NavLink to="git-merge-conflicts">
+              <ICode>merge</ICode>-Konflikte
+            </NavLink>
           </ol>
         </li>
         <li>
           Tipps und Tricks für HTML und CSS
           <ol>
-            <li>
-              <Link to="tipp-images">Bilder zentrieren</Link>
-            </li>
-            <li>
-              <Link to="tipp-flexbox">Layouts</Link>
-            </li>
-            <li>
-              <Link to="img-background">Bild als Hintergrund</Link>
-            </li>
-            <li>
-              <Link to="img-next-to-text">Bild neben Text</Link>
-            </li>
+            <NavLink to="tipp-images">Bilder zentrieren</NavLink>
+            <NavLink to="tipp-flexbox">Layouts</NavLink>
+            <NavLink to="img-background">Bild als Hintergrund</NavLink>
+            <NavLink to="img-next-to-text">Bild neben Text</NavLink>
           </ol>
         </li>
         <li>
           Javascript
           <ol>
-            <li>
-              <Link to="javascript">Einführung in Javascript</Link>
-            </li>
-            <li>
-              <Link to="javascript-change-page">
-                Seiteninhalte mit Javascript anpassen
-              </Link>
-            </li>
-            <li>
-              <Link to="javascript-text-to-numbers">
-                Datentypen in Javascript
-              </Link>
-            </li>
+            <NavLink to="javascript">Einführung in Javascript</NavLink>
+            <NavLink to="javascript-change-page">
+              Seiteninhalte mit Javascript anpassen
+            </NavLink>
+            <NavLink to="javascript-text-to-numbers">
+              Datentypen in Javascript
+            </NavLink>
           </ol>
         </li>
         <li>
           Javascript: Logik
           <ol>
-            <li>
-              <Link to="javascript-variables">Variablen</Link>
-            </li>
-            <li>
-              <Link to="javascript-blocks">Code-Blöcke / Scoping</Link>
-            </li>
-            <li>
-              <Link to="javascript-declarative">
-                Deklarativer Code und praktische Funktionen
-              </Link>
-            </li>
-            <li>
-              <Link to="javascript-if">
-                Bedingungen (<pre>if</pre>)
-              </Link>
-            </li>
-            <li>
-              <Link to="javascript-for">
-                Javascript Schleifen (<pre>for</pre>)
-              </Link>
-            </li>
-            <li>
-              <Link to="javascript-return">
-                Rückgabewerte in Javascript (<pre>return</pre>)
-              </Link>
-            </li>
-            <li>
-              <Link to="javascript-lists">Listen in Javascript</Link>
-            </li>
-            <li>
-              <Link to="javascript-ascii">ASCII-Codes in Javascript</Link>
-            </li>
-            <li>
-              <Link to="javascript-switches">Schalter in Javascript</Link>
-            </li>
+            <NavLink to="javascript-variables">Variablen</NavLink>
+            <NavLink to="javascript-blocks">Code-Blöcke / Scoping</NavLink>
+            <NavLink to="javascript-declarative">
+              Deklarativer Code und praktische Funktionen
+            </NavLink>
+            <NavLink to="javascript-if">
+              Bedingungen (<pre>if</pre>)
+            </NavLink>
+            <NavLink to="javascript-for">
+              Javascript Schleifen (<pre>for</pre>)
+            </NavLink>
+            <NavLink to="javascript-return">
+              Rückgabewerte in Javascript (<pre>return</pre>)
+            </NavLink>
+            <NavLink to="javascript-lists">Listen in Javascript</NavLink>
+            <NavLink to="javascript-ascii">ASCII-Codes in Javascript</NavLink>
+            <NavLink to="javascript-switches">Schalter in Javascript</NavLink>
           </ol>
         </li>
         <li>
           Künstliche Intelligenz
           <ol>
-            <li>
-              <Link to="ai-intro">Arbeiten mit küstlicher Intelligenz</Link>
-            </li>
-            <li>
-              <Link to="ai-pong">Pong mit küstlicher Intelligenz</Link>
-            </li>
+            <NavLink to="ai-intro">Arbeiten mit küstlicher Intelligenz</NavLink>
+            <NavLink to="ai-pong">Pong mit küstlicher Intelligenz</NavLink>
           </ol>
         </li>
         <li>
           Javascript: Datenstrukturen
           <ol>
-            <li>
-              <Link to="javascript-objects">Objekte</Link>
-            </li>
-            <li>
-              <Link to="javascript-objects-as-data">
-                Objekte as Datenquelle
-              </Link>
-            </li>
-            <li>
-              <Link to="javascript-binary-data">Binärsystem</Link>
-            </li>
-            <li>
-              <Link to="javascript-hex-data">Hexadezimalsystem</Link>
-            </li>
+            <NavLink to="javascript-objects">Objekte</NavLink>
+            <NavLink to="javascript-objects-as-data">
+              Objekte as Datenquelle
+            </NavLink>
+            <NavLink to="javascript-binary-data">Binärsystem</NavLink>
+            <NavLink to="javascript-hex-data">Hexadezimalsystem</NavLink>
           </ol>
         </li>
       </ol>
