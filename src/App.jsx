@@ -1,5 +1,11 @@
-import { Routes, Route, Link, Outlet, useLocation } from "react-router-dom"
-import { useEffect, useRef, useLayoutEffect } from "react"
+import {
+  Link,
+  Outlet,
+  useLocation,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom"
+import { useEffect, useRef, useLayoutEffect, lazy } from "react"
 import ICode from "./components/ICode"
 import { ReactSVG } from "react-svg"
 
@@ -43,16 +49,52 @@ import ChapterJavascriptObjectsAsData from "./sites/md/08-1-javascript-objects-a
 import ChapterJavascriptBinary from "./sites/md/08-2-javascript-binary-data.mdx"
 import ChapterJavascriptHexadecimal from "./sites/md/08-3-javascript-hex-data.mdx"
 
+/** Lazily loading an mdx Component and render it to an react component.
+ *
+ * We have to use this, since an mdx component does not really return a comonent
+ * part, but we need to have the component part in order to render it with the router.
+ */
+function mdxLoader(path) {
+  const Comp = lazy(() => import(path))
+  return { Component: Comp }
+}
+
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "install",
+          element: <ChapterInstallation />,
+        },
+        {
+          path: "html",
+          async lazy() {
+            return mdxLoader("./sites/md/02-0-html.mdx")
+          },
+        },
+      ],
+    },
+  ],
+  {
+    basename: "/gym-inf",
+  },
+)
+
 export default function App() {
   return (
     <>
+      <RouterProvider router={router} />
+      {/*
       <Wrapper>
-        <Routes>
+      <Routes>
           {/* TODO: Change the layout to no longer use the nesting of the root
            * This should be easily possible, since we can place the <Routes> component
            * anywhere we want, so we could keep the layout and the navbar static in our
            * UI, and just change the rendered component.
-           */}
+           }
           <Route path="/" element={<Layout />}>
             <Route index element={<ChapterIndex />} />
             <Route path="pres" element={<ChapterPres />} />
@@ -150,6 +192,7 @@ export default function App() {
           </Route>
         </Routes>
       </Wrapper>
+        */}
     </>
   )
 }
@@ -187,16 +230,19 @@ function Layout() {
         </h1>
       </header>
       <main>
+        <aside>
+          <ChapterIndex />
+        </aside>
         <Outlet />
-        <dialog
-          style={{
-            padding: "4rem 2rem",
-            fontSize: "2.5rem",
-            fontWeight: "bold",
-            fontFamily: "monospace",
-          }}
-          ref={dialogRef}>{`${window.location}`}</dialog>
       </main>
+      <dialog
+        style={{
+          padding: "4rem 2rem",
+          fontSize: "2.5rem",
+          fontWeight: "bold",
+          fontFamily: "monospace",
+        }}
+        ref={dialogRef}>{`${window.location}`}</dialog>
       <footer>Informatik Gymnasium Muttenz</footer>
     </>
   )
