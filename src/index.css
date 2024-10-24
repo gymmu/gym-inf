@@ -5,6 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
+  fg-color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
   font-synthesis: none;
@@ -49,13 +50,11 @@ footer {
 #root main > p,
 #root main > section {
   margin: 0 auto;
-  width: min(80%, 920px);
 }
 
 #root main > h2,
 #root main > h3 {
   margin: 20px auto;
-  width: min(80%, 920px);
 }
 
 h1 a {
@@ -99,7 +98,7 @@ ol.nav * {
 }
 
 ol.nav {
-  width: clamp(460px, 70%, 720px);
+  width: 100%;
   margin: 10px auto;
   list-style: none;
 }
@@ -129,7 +128,7 @@ ol.nav {
 }
 
 .hint {
-  width: clamp(460px, 60%, 720px);
+  width: 90%;
   margin: 0.5rem auto;
   font-size: 0.9rem;
   font-family: monospace;
@@ -151,5 +150,15 @@ ol.nav {
 
 main {
   display: grid;
-  grid-template-columns: 400px auto;
+  grid-template-columns: 320px 1fr;
+}
+
+.outlet {
+  width: 100%;
+}
+
+aside {
+  border-right: 1px solid rgba(255, 255, 255, 0.87);
+  height: calc(100vh - var(--header-height));
+  overflow-y: scroll;
 }
