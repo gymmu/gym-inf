@@ -5,7 +5,14 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom"
-import { useEffect, useRef, useLayoutEffect, lazy, Suspense } from "react"
+import {
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  lazy,
+  Suspense,
+  useState,
+} from "react"
 import ICode from "./components/ICode"
 import { ReactSVG } from "react-svg"
 
@@ -24,6 +31,7 @@ const router = createBrowserRouter(
       path: "/",
       element: <Layout />,
       children: [
+        { path: "/", element: <SuspenseWrapper path="./sites/md/index.mdx" /> },
         {
           path: "install",
           element: <SuspenseWrapper path="./sites/md/installation.mdx" />,
@@ -223,6 +231,7 @@ function Icon({ url }) {
 
 function Layout() {
   const dialogRef = useRef(null)
+  const [navVisible, setNavVisible] = useState(false)
   useEffect(() => {
     window.addEventListener("keydown", (ev) => {
       if (ev.shiftKey && ev.key === " ") {
@@ -231,20 +240,23 @@ function Layout() {
       }
     })
   }, [])
+
+  const toggleSide = () => {
+    console.log("Toggle show")
+    setNavVisible((old) => !old)
+  }
   return (
     <>
-      <header>
+      <header onClick={toggleSide}>
         <span className="icon">
           <Icon url="/icons/hamburger.svg" />
         </span>
-        <h1>
-          <Link to="/">Gym Informatik</Link>
-        </h1>
+        <h1>Gym Informatik</h1>
       </header>
+      <aside className={navVisible ? "show" : ""}>
+        <ChapterIndex />
+      </aside>
       <main>
-        <aside>
-          <ChapterIndex />
-        </aside>
         <Outlet />
       </main>
       <dialog
