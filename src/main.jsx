@@ -4,8 +4,4 @@ import { BrowserRouter } from "react-router-dom"
 import App from "./App.jsx"
 import "./index.css"
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter basename="/gym-inf/">
-    <App />
-  </BrowserRouter>,
-)
+ReactDOM.createRoot(document.getElementById("root")).render(<App />)
