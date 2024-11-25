@@ -15,9 +15,12 @@ import {
 } from "react"
 import ICode from "./components/ICode"
 import { ReactSVG } from "react-svg"
+import { compile } from "@mdx-js/mdx"
 
 function SuspenseWrapper({ path }) {
-  const LazyComponent = lazy(() => import(path))
+  const file = path.split("/").slice(-1)[0]
+  const filename = file.split(".")[0]
+  const LazyComponent = lazy(() => import(`./sites/md/${filename}.mdx`))
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <LazyComponent />
@@ -249,7 +252,7 @@ function Layout() {
     <>
       <header onClick={toggleSide}>
         <span className="icon">
-          <Icon url="/icons/hamburger.svg" />
+          <Icon url="./icons/hamburger.svg" />
         </span>
         <h1>Gym Informatik</h1>
       </header>
@@ -283,7 +286,7 @@ function NavLink({ to, children }) {
 function ChapterIndex() {
   return (
     <>
-      <div class="hint">
+      <div className="hint">
         ACHTUNG: Diese Webseite ist unter aktiver Entwicklung. Informationen
         können von einem Tag auf den nächsten ändern. Wenn Sie eine Information
         von der Webseite brauchen, dann machen Sie ein Screenshot davon, und

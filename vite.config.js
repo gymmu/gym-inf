@@ -15,7 +15,11 @@ export default defineConfig({
           src: normalizePath(
             path.resolve(__dirname, "src/sites/md") + "/*.mdx",
           ),
-          dest: "./assets",
+          dest: "./assets/sites/md/",
+        },
+        {
+          src: normalizePath(path.resolve(__dirname, "public/icons") + "/*svg"),
+          dest: "./assets/icons/",
         },
       ],
     }),
