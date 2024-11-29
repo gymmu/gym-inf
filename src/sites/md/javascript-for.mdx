@@ -1,9 +1,11 @@
 import Example from "../../components/Example.jsx"
 import Chapter from "../../components/Chapter.jsx"
 
+import LoopSimulator from "../../components/LoopSimulator.jsx"
+
 <Chapter>
      
-## Schleifen in Javascript (<pre>for</pre>)
+## Schleifen in Javascript (`for`)
 
 Eine Aufgabe, die beim Programmieren immer wieder auftritt, ist das Iterieren
 über Listen, also das Durchgehen aller Elemente einer Liste. Häufig möchten wir
@@ -44,5 +46,23 @@ Teile des Codes machen, und bauen Sie sich mit der Zeit ein detailliertes
 Verständnis für jede Zeile in diesem Code-Stück auf.
 
 </Example>
+
+<section>
+
+## Visualisierung vom Schema: Neue Liste erstellen
+
+Wir können denn Code aus dem Beispiel von oben auch visualisieren. Bei dem
+Schema gehen Sie immer genau gleich vor. Sie erstellen eine neue leere Liste,
+und schreiben die alte ein Zeichen nach dem anderen ab. So können Sie für jedes
+Zeichen prüfen ob Sie dieses behalten möchten, oder mit einem anderen Zeichen
+ersetzen.
+
+Die Visualisierung hier, macht genau das Beispiel von oben, wo alle kleinen
+`a`'s mir grossen `A`'s ersetzt werden. Wenn Sie eine andere Eingabe untersuchen
+möchten, dann können Sie das einfach ändern.
+
+<LoopSimulator />
+
+</section>
 
 </Chapter>
