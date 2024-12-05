@@ -207,6 +207,10 @@ const router = createBrowserRouter(
             <SuspenseWrapper path="./sites/md/javascript-hex-data.mdx" />
           ),
         },
+        {
+          path: "network",
+          element: <SuspenseWrapper path="./sites/md/network.mdx" />,
+        },
       ],
     },
   ],
@@ -399,6 +403,12 @@ function ChapterIndex() {
             </NavLink>
             <NavLink to="javascript-binary-data">Binärsystem</NavLink>
             <NavLink to="javascript-hex-data">Hexadezimalsystem</NavLink>
+          </ol>
+        </li>
+        <li>
+          Netzwerke
+          <ol>
+            <NavLink to="network">Netzwerke</NavLink>
           </ol>
         </li>
       </ol>
