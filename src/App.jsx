@@ -1,21 +1,20 @@
 import {
   Link,
   Outlet,
-  useLocation,
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom"
 import {
   useEffect,
   useRef,
-  useLayoutEffect,
   lazy,
   Suspense,
   useState,
+  useContext,
+  createContext,
 } from "react"
 import ICode from "./components/ICode"
 import { ReactSVG } from "react-svg"
-import { compile } from "@mdx-js/mdx"
 
 function SuspenseWrapper({ path }) {
   const file = path.split("/").slice(-1)[0]
@@ -211,6 +210,10 @@ const router = createBrowserRouter(
           path: "network",
           element: <SuspenseWrapper path="./sites/md/network.mdx" />,
         },
+        {
+          path: "game",
+          element: <SuspenseWrapper path="./sites/md/game.mdx" />,
+        },
       ],
     },
   ],
@@ -219,17 +222,19 @@ const router = createBrowserRouter(
   },
 )
 
-export default function App() {
-  return <RouterProvider router={router} />
+const NavContext = createContext({})
+function NavProvider({ children }) {
+  const [visible, setVisible] = useState(false)
+
+  return (
+    <NavContext.Provider value={{ visible, setVisible }}>
+      {children}
+    </NavContext.Provider>
+  )
 }
 
-// TODO: Use this again
-function Wrapper({ children }) {
-  const location = useLocation()
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0)
-  }, [location.pathname])
-  return <>{children}</>
+export default function App() {
+  return <RouterProvider router={router} />
 }
 
 function Icon({ url }) {
@@ -238,34 +243,16 @@ function Icon({ url }) {
 
 function Layout() {
   const dialogRef = useRef(null)
-  const [navVisible, setNavVisible] = useState(false)
-  useEffect(() => {
-    window.addEventListener("keydown", (ev) => {
-      if (ev.shiftKey && ev.key === " ") {
-        dialogRef.current.textContent = window.location
-        dialogRef.current.showModal()
-      }
-    })
-  }, [])
 
-  const toggleSide = () => {
-    console.log("Toggle show")
-    setNavVisible((old) => !old)
-  }
   return (
     <>
-      <header onClick={toggleSide}>
-        <span className="icon">
-          <Icon url="./icons/hamburger.svg" />
-        </span>
-        <h1>Gym Informatik</h1>
-      </header>
-      <aside className={navVisible ? "show" : ""}>
-        <ChapterIndex />
-      </aside>
-      <main>
-        <Outlet />
-      </main>
+      <NavProvider>
+        <Header />
+        <Navbar />
+        <main>
+          <Outlet />
+        </main>
+      </NavProvider>
       <dialog
         style={{
           padding: "4rem 2rem",
@@ -279,10 +266,40 @@ function Layout() {
   )
 }
 
+function Header() {
+  const { setVisible } = useContext(NavContext)
+  const toggleSide = () => {
+    setVisible((toggle) => !toggle)
+  }
+  return (
+    <header onClick={toggleSide}>
+      <span className="icon">
+        <Icon url="./icons/hamburger.svg" />
+      </span>
+      <h1>Gym Informatik</h1>
+    </header>
+  )
+}
+
+function Navbar() {
+  const { visible } = useContext(NavContext)
+  return (
+    <aside className={visible ? "show" : ""}>
+      <ChapterIndex />
+    </aside>
+  )
+}
+
 function NavLink({ to, children }) {
+  const { setVisible } = useContext(NavContext)
+  const hide = () => {
+    setVisible(false)
+  }
   return (
     <li>
-      <Link to={to}>{children}</Link>
+      <Link onClick={hide} to={to}>
+        {children}
+      </Link>
     </li>
   )
 }
@@ -406,9 +423,9 @@ function ChapterIndex() {
           </ol>
         </li>
         <li>
-          Netzwerke
+          Computerspiele
           <ol>
-            <NavLink to="network">Netzwerke</NavLink>
+            <NavLink to="game">Eigenes Computerspiel</NavLink>
           </ol>
         </li>
       </ol>
