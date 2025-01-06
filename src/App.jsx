@@ -214,6 +214,12 @@ const router = createBrowserRouter(
           path: "game",
           element: <SuspenseWrapper path="./sites/md/game.mdx" />,
         },
+        {
+          path: "game-animations",
+          element: (
+            <SuspenseWrapper path="./sites/md/game-player-and-animations.mdx" />
+          ),
+        },
       ],
     },
   ],
@@ -426,6 +432,7 @@ function ChapterIndex() {
           Computerspiele
           <ol>
             <NavLink to="game">Eigenes Computerspiel</NavLink>
+            <NavLink to="game-animations">Spieler und Animationen</NavLink>
           </ol>
         </li>
       </ol>
