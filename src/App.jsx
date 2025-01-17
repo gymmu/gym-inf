@@ -185,26 +185,26 @@ const router = createBrowserRouter(
           element: <SuspenseWrapper path="./sites/md/ai-pong.mdx" />,
         },
         {
-          path: "javascript-objects",
-          element: <SuspenseWrapper path="./sites/md/javascript-objects.mdx" />,
+          path: "data",
+          element: <SuspenseWrapper path="./sites/md/data.mdx" />,
         },
         {
-          path: "javascript-objects-as-data",
+          path: "data-objects",
+          element: <SuspenseWrapper path="./sites/md/data-objects.mdx" />,
+        },
+        {
+          path: "data-objects-as-data",
           element: (
-            <SuspenseWrapper path="./sites/md/javascript-objects-as-data.mdx" />
+            <SuspenseWrapper path="./sites/md/data-objects-as-data.mdx" />
           ),
         },
         {
-          path: "javascript-binary-data",
-          element: (
-            <SuspenseWrapper path="./sites/md/javascript-binary-data.mdx" />
-          ),
+          path: "data-binary",
+          element: <SuspenseWrapper path="./sites/md/data-binary.mdx" />,
         },
         {
-          path: "javascript-hex-data",
-          element: (
-            <SuspenseWrapper path="./sites/md/javascript-hex-data.mdx" />
-          ),
+          path: "data-hex",
+          element: <SuspenseWrapper path="./sites/md/data-hex.mdx" />,
         },
         {
           path: "network",
@@ -422,14 +422,13 @@ function ChapterIndex() {
           </ol>
         </li>
         <li>
-          Javascript: Datenstrukturen
+          Daten und Objekte
           <ol>
-            <NavLink to="javascript-objects">Objekte</NavLink>
-            <NavLink to="javascript-objects-as-data">
-              Objekte as Datenquelle
-            </NavLink>
-            <NavLink to="javascript-binary-data">Binärsystem</NavLink>
-            <NavLink to="javascript-hex-data">Hexadezimalsystem</NavLink>
+            <NavLink to="data">Daten</NavLink>
+            <NavLink to="data-objects">Objekte</NavLink>
+            <NavLink to="data-objects-as-data">Objekte as Datenquelle</NavLink>
+            <NavLink to="data-binary">Binärsystem</NavLink>
+            <NavLink to="data-hex">Hexadezimalsystem</NavLink>
           </ol>
         </li>
         <li>
