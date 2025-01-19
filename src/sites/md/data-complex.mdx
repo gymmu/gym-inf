@@ -1,0 +1,116 @@
+import Chapter from "../../components/Chapter"
+import Example from "../../components/Example"
+import VSpace from "../../components/VSpace"
+
+<Chapter>
+
+## Komplexe Daten
+
+Im vorherigen Kapitel haben wir gesehen wie man Daten als Objekte beschreibt. Da
+haben wir gesagt dass die einfachste Form von interessanten Daten, ein Objekt
+ist. Bis jetzt haben wir uns aber nur sehr einfache Objekte angeschaut. In dem
+Kapitel schauen wir uns komplexere Objekte an.
+
+<Example title="Beispiel: Objekte verschachteln" classes="example">
+
+Hier haben wir ein ganz einfaches Objekt, das eine Person und deren Wohnandresse
+hat.
+
+```javascript
+{
+  "vorname": "Peter",
+  "nachname": "Muster",
+  "strasse": "Mustergasse",
+  "strassenNr": 7,
+  "plz": 4132,
+  "stadt": "Muttenz"
+}
+```
+
+Jetzt schauen wir uns das gleiche Objekt ein klein wenig anders an.
+
+```javascript
+{
+  "vorname": "Peter",
+  "nachname": "Muster",
+  "adresse": {
+    "strasse": "Mustergasse",
+    "strassenNr": 7,
+    "plz": 4132,
+    "stadt": "Muttenz"
+  }
+}
+```
+
+Was fällt Ihnen dabei auf?
+
+</Example>
+
+### Verschachtelung zur besseren Übersicht
+
+Wir können ganz einfach Objekte in Objekten erstellen. So können wir unsere
+Objekte verschachteln, was es uns ermöglicht ein Objekt besser zu gruppieren.
+Das kann uns beim modellieren helfen, und aber auch bei der Lesbarkeit der
+Daten. Im Beispiel oben, können wir sehr einfach ablesen, dass jetzt eine
+Adresse kommt. Wenn uns diese nicht interessiert, können wir die auch einfach
+überlesen.
+
+<Example title="Aufagbe: Wann ist Verschachtelung gut?" classes="exercise">
+
+Finden Sie ein Beispiel wo sich die Verschachtelung der Daten lohnt. Schreiben
+Sie das Beispiel auf. Finden Sie ein zweites Beispiel wo sich die
+Verschachtelung nicht lohnt, schreiben Sie auch dieses auf, und die Gründe
+weshalb es sicht nicht lohnt.
+
+Es gibt hier keine festen Regeln wann man Verschchtelung verwendet und wann
+nicht. Es kommt immer auf den Fall an. Wichtig ist jedoch dass Sie sich mal
+Gedanken darüber machen.
+
+</Example>
+
+### Listen
+
+Eine weitere komplexe Form von Daten, sind Listen. Wenn wir mehrere Objekte von
+der gleichen Art haben, dann lohnt es sich meistens eine Liste zu machen.
+
+<Example title="Beispiel: Haustiere" classes="example">
+
+Eine Person kann oftmals mehrere oder auch garkein Haustier haben. Hier ist es
+also praktisch, wenn wir eine Liste erstellen können.
+
+```javascript
+{
+  "vorname": "Peter",
+  "nachname": "Muster",
+  "haustiere": ["Carlo", "Memphis", "Spot", "Daisy"]
+}
+```
+
+In dem Beispiel hier fehlen die Informationen zu den Haustieren. Diese können
+Sie aber ganz einfach hinzufügen, denn Sie können in einer Liste auch Objekte
+haben. Mit Informationen könnte das Beispiel dann so aussehen.
+
+```javascript
+{
+  "vorname": "Peter",
+  "nachname": "Muster",
+  "haustiere": [
+    {
+      "name": "Carlo",
+      "tierart": "Hamster"
+    }, {
+      "name": "Memphis",
+      "tierart": "Hund"
+    }, {
+      "name": "Stip",
+      "tierart": "Hund"
+    }, {
+      "name": "Daisy",
+      "tierart": "Katze"
+    }]
+}
+```
+
+</Example>
+
+</Chapter>
