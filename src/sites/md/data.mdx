@@ -39,7 +39,7 @@ Informationen aus der realen Welt. Wir können also Daten (oder besser gesagt
 Techniken aus der Datenrepresentation) für das Modellieren der realen Welt
 verwenden.
 
-<Example title="Modellieren mit Daten">
+<Example title="Modellieren mit Daten" classes="example">
 
 Objekte aus der realen Welt haben alle unterschiedliche Eigenschaften. Wenn wir
 ähnliche Objekte zusammen nehmen, können wir daraus eine Klasse machen, wo alle
@@ -92,7 +92,7 @@ Es macht zum Beispiel keinen Sinn das Alter von einer Person zu speichern, wenn
 Sie auch das Geburtsdatum haben. Denn das Alter ändert sich ständig, aber das
 Geburtsdatum bleibt immer gleich.
 
-<Example title="Aufgabe: Redundanz in den Daten reduzieren">
+<Example title="Aufgabe: Redundanz in den Daten reduzieren" classes="exercise">
 
 In dieser Aufgabe wird eine Person modelliert. Die hat hier sehr viele
 Eigenschaften. Diskutieren Sie welche Eigenschaften redundant sind, und wieso.
@@ -182,7 +182,7 @@ das Alter zu wissen, aber die eigentliche Information steckt im Gebursdatum.
 Wenn wir das Alter mit in die Daten nehmen, sind wir redundant. Das ist bei der
 Präsentation von Daten aber oft erwünscht.
 
-<Example title="Beispiel: Einkaufsartikel mit Aktionen">
+<Example title="Beispiel: Einkaufsartikel mit Aktionen" classes="example">
 
 Wenn Sie einen Artikel einkaufen möchten, auf dem gerade eine Aktion ist, dann
 möchten Sie als Kunde möglichst viel Informationen sehen. Viele davon sind aber
@@ -221,7 +221,7 @@ neuen Informationen angereichert. Diese Fälle müssen wir unterscheiden können
 denn diese Daten von dem Beispiel, möchten wir nicht speichern, dann können wir
 die Daten auch mit Redundanz anreichern.
 
-<Example title="Aufgabe: Wieso ist Redundanz schlecht?">
+<Example title="Aufgabe: Wieso ist Redundanz schlecht?" classes="exercise">
 
 Finden Sie einige Gründe wieso Redundanz schlecht ist. Gibt es auch Situationen
 wo Redundanz gut ist, ausser beim anreichern von Informationen?
@@ -229,5 +229,11 @@ wo Redundanz gut ist, ausser beim anreichern von Informationen?
 </Example>
 
 ### Single Point of Failure
+
+Redundanz in den Daten kann aber auch vor Datenverlust schützen. Zum Beispiel
+können Daten bei der Speicherung zerstörrt werden, oder bei der Übertragung über
+das Netzwerk. Wenn wir dort Redundanz in den Daten haben, dann können wir uns
+vor Verlust in den Daten schützen. Die erfordert jedoch Zusatzaufwand, denn wir
+müssen immer auf die Integrität der Daten testen.
 
 </Chapter>
