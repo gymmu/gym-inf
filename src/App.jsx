@@ -197,6 +197,10 @@ const router = createBrowserRouter(
           element: <SuspenseWrapper path="./sites/md/data-complex.mdx" />,
         },
         {
+          path: "data-classes",
+          element: <SuspenseWrapper path="./sites/md/data-classes.mdx" />,
+        },
+        {
           path: "data-objects-as-data",
           element: (
             <SuspenseWrapper path="./sites/md/data-objects-as-data.mdx" />
@@ -431,6 +435,7 @@ function ChapterIndex() {
             <NavLink to="data">Daten</NavLink>
             <NavLink to="data-objects">Objekte</NavLink>
             <NavLink to="data-complex">Komplexe Daten</NavLink>
+            <NavLink to="data-classes">Klassen</NavLink>
             <NavLink to="data-objects-as-data">Objekte as Datenquelle</NavLink>
             <NavLink to="data-binary">Binärsystem</NavLink>
             <NavLink to="data-hex">Hexadezimalsystem</NavLink>

@@ -1,0 +1,50 @@
+import Chapter from "../../components/Chapter"
+import Example from "../../components/Example"
+import VSpace from "../../components/VSpace"
+
+<Chapter>
+
+## Klassen
+
+Wir haben Klassen im letzten Kapitel bereits kurz angesprochen. Klassen sind
+Baupläne für Objekte. Sie geben uns die Struktur von einem Objekt an. Am besten
+betrachten wir uns gleich ein Beispiel.
+
+<Example title="Beispiel: Person" classes="example">
+
+In der Personen-Klasse können wir alle Eigenschaften angeben, die eine Person
+haben soll.
+
+```javascript
+class Person {
+  vorname
+  zweitname
+  nachname
+  geburtsdatum
+}
+```
+
+Wenn wir nun neue _Instanzen_ von der Klasse erzeugen, sind alle diese
+Eigenschaften bereits vorhanden. Eine _Instanz_ davon, also ein Objekt, kann
+dann so aussehen.
+
+```javascript
+{
+  "vorname": "Peter",
+  "zweitname": "",
+  "nachname": "Muster",
+  "geburtsdatum": "01.01.2001"
+}
+```
+
+Sie sehen also dass alle Eigenschaften vorkommen. Die Eigenschaften die das
+Objekt nicht hat, sind dann einfach leer. Damit haben alle Objekte von der
+Klasse die gleichen Eigenschaften, was beim Programmieren sehr wichtig ist. In
+einem Computerspiel möchten Sie zum Beispiel von einem Spielobjekt die
+Lebenspunkte wissen. Dafür muss jedes Spielobjekt Lebenspunkte haben, ansonsten
+haben Sie gleich einen Fehler. Den Fall das die Lebenspunkte _leer_ sind, ist
+viel einfacher zu behandeln.
+
+</Example>
+
+</Chapter>
