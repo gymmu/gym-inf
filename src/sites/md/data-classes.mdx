@@ -47,4 +47,45 @@ viel einfacher zu behandeln.
 
 </Example>
 
+### Wozu brauchen wir Klassen?
+
+Klassen braucht es eben um die Struktur von Daten zu erklären. Damit können wir
+vorab definieren wie die Daten aussehen, und dann die Objekte erstellen lassen.
+Dem sagt man **instanziieren** von einer Klasse. Obder eine **Instanz** von
+einer Klasse erstellen. Diese Instanz ist dann unser Objekt.
+
+Aber wenn wir noch gar keine konkreten Daten haben, und erst einmal nur unser
+Schema erstellen, dann machen wir das über Klassen. Damit können wir es uns
+sparen solch kreativen Namen wie `"Peter Muster"` zu erstellen, und uns nur auf
+das Schema der Daten zu konzentrieren. Das ist eine Technik die beim modellieren
+sehr hilfreich ist, denn der Fokus liegt nur auf dem Schema.
+
+<Example title="Aufgabe: Eigenes Schema erstellen" classes="exercise">
+
+Erstellen Sie ein Schema für ein bis zwei Tiere. Welche Eigenschaften haben
+diese Tiere gemeinsam? Welche Eigenschaften teilen die Tiere nicht?
+
+Wie Sie alle Eigenschaften teilen, dann suchen Sie ein weiteres Tier, dass eine
+Eigenschaft hat, die es nicht mit den anderen teilt.
+
+</Example>
+
+### Vererbung
+
+Im Beispiel oben haben Sie gesehen dass gewisse Eigenschaften für einige Klassen
+gemeinsam sind. Das sind die Eigenschaften die meistens die Klasse sogar
+ausmachen. Wenn wir solche Eigenschaften haben, dann können wir eine weitere
+Klasse bilden, von der die anderen Klassen **erben** können. Das heisst es
+werden alle Eigenschaften übernommen.
+
+<Example title="Beispiel: Haustiere mit Vererbung" classes="example">
+
+```javascript
+class Haustier {
+  name
+}
+```
+
+</Example>
+
 </Chapter>
