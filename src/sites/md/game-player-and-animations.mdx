@@ -208,7 +208,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if (left.isDown) {
       // Links wirde gedrückt, wir setzen die Geschwindigkeit des Spielers, dann
       // kümmert sich die Physik-Engine von Phaser um die Verschiebung und Kollisionen.
-      body.setVelocityX(-this.speed)
+      this.body.setVelocityX(-this.speed)
 
       // Wenn der Spieler ruhig war, dann lasse die Animation "player_left" starten
       if (isIdle) this.anims.play("player_left", true)
