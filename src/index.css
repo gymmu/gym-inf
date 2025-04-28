@@ -199,6 +199,46 @@ section ol {
   }
 }
 
+.pw-table {
+  width: 100%;
+  border: 2px solid #d3d3d3; /* Hellgrauer Rand */
+  border-collapse: collapse; /* Keine Ränder zwischen den Zellen */
+}
+
+.pw-table th,
+.pw-table td {
+  padding: 0.25rem;
+  text-align: center; /* Zentrierte Zahlen */
+}
+
+.pw-table tr:nth-child(even) {
+  background-color: #2a2a2a; /* Leicht helleres Grau für jede zweite Zeile */
+}
+
+.rainbow-table {
+  width: 100%;
+  border: 2px solid #d3d3d3; /* Hellgrauer Rand */
+  border-radius: 0.5rem; /* Abgerundete Ecken */
+  border-collapse: collapse; /* Keine Ränder zwischen den Zellen */
+}
+
+.rainbow-table th {
+  text-align: center; /* Zentrierter Text */
+  font-weight: bold; /* Fettgedruckter Text */
+  padding: 0.5rem; /* Mehr Padding */
+  background-color: rgb(61, 61, 61); /* Heller Hintergrund */
+}
+
+.rainbow-table td {
+  padding: 0.5rem; /* Mehr Padding */
+  font-family: monospace; /* Monospace Schriftart für Hashes */
+}
+
+.rainbow-table tr:nth-child(2n-1) {
+  background-color: #1e1e1e; /* Leicht dunklerer Hintergrund für jede zweite Zeile */
+}
+
+
 @media (max-width: 840px) {
   #root {
     grid-template-columns: 1fr;
