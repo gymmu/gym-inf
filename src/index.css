@@ -171,6 +171,34 @@ main {
   overflow-x: hidden;
 }
 
+section ol {
+  margin-left: 0px; /* Fügt einen linken Rand hinzu */
+  list-style-type: none; /* Entfernt die Standardnummerierung */
+  counter-reset: list-counter; /* Initialisiert den Zähler */
+
+  & > li {
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  & > li::before {
+    content: counter(list-counter);
+    counter-increment: list-counter;
+    position: absolute;
+    left: -1.5rem;
+    top: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    border-radius: 50%;
+    background-color: #242424;
+    color: white;
+    text-align: center;
+    font-weight: bold; /* Fettgedruckte Nummerierung */
+    border: 2px solid white;
+  }
+}
+
 @media (max-width: 840px) {
   #root {
     grid-template-columns: 1fr;
