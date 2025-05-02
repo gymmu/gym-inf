@@ -1,0 +1,1 @@
+import{j as i}from"./index-DiKZnCYU.js";function h({children:s,title:e="Beispiel",classes:r=""}){return i.jsxs("div",{className:`highlight ${r}`,children:[i.jsx("h3",{children:`${e}`}),s]})}export{h as E};
