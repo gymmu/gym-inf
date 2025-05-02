@@ -4,7 +4,8 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ['main']
+    branches: 
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,33 +22,78 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
+    name: Build vite
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo and submodules
-        uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v4
         with:
           submodules: recursive
-      - name: Set up Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'npm'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+
       - name: Install dependencies
-        run: npm install
-      - name: Build
+        uses: bahmutov/npm-install@v1
+
+      - name: Build Project
         run: npm run build
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
         with:
-          # Upload dist repository
-          path: './docs'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+          name: production-files
+          path: ./docs
+
+
+
+  # Single deploy job since we're just deploying
+  deploy:
+    # environment:
+    #   name: github-pages
+    #   url: ${{ steps.deployment.outputs.page_url }}
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/head/main'
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: production-files
+          path: ./docs
+
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+
+
+      # These are the old steps, don't really work anymore...
+      # - name: Checkout repo and submodules
+      #   uses: actions/checkout@v3
+      #   with:
+      #     submodules: recursive
+      # - name: Set up Node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 18
+      #     cache: 'npm'
+      # - name: Install dependencies
+      #   run: npm install
+      # - name: Build
+      #   run: npm run build
+      # - name: Setup Pages
+      #   uses: actions/configure-pages@v3
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     # Upload dist repository
+      #     path: './docs'
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v2
