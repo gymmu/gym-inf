@@ -21,6 +21,10 @@ export default defineConfig({
           src: normalizePath(path.resolve(__dirname, "public/icons") + "/*svg"),
           dest: "./assets/icons/",
         },
+        {
+          src: normalizePath(path.resolve(__dirname, "public/audio") + "/*mp3"),
+          dest: "./assets/audio/",
+        },
       ],
     }),
   ],
