@@ -236,6 +236,10 @@ const router = createBrowserRouter(
           path: "security-passwords",
           element: <SuspenseWrapper path="./sites/md/security-passwords.mdx" />,
         },
+        {
+          path: "network-intro",
+          element: <SuspenseWrapper path="./sites/md/network-intro.mdx" />,
+        },
       ],
     },
   ],
@@ -457,6 +461,12 @@ function ChapterIndex() {
           Sicherheit
           <ol>
             <NavLink to="security-passwords">Passwörter und Sicherheit</NavLink>
+          </ol>
+        </li>
+        <li>
+          Netzwerke
+          <ol>
+            <NavLink to="network-intro">Computernetzwerke</NavLink>
           </ol>
         </li>
       </ol>
