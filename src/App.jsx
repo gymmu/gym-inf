@@ -310,7 +310,7 @@ function Header() {
 function Navbar() {
   const { visible } = useContext(NavContext)
   return (
-    <aside className={visible ? "show" : ""}>
+    <aside className={visible ? "show sidenav" : "sidenav"}>
       <ChapterIndex />
     </aside>
   )
