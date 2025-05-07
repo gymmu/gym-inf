@@ -9,7 +9,6 @@ import Presentation, {
   Basement,
   Fragment,
 } from "../../components/Reveal"
-import NetworkDiagram from "../../components/NetworkDiagram"
 
 <Chapter>
 
@@ -124,48 +123,80 @@ auszutauschen. Das einfachste Beispiel ist der Besuch einer Webseite. Damit das
 funktionieren kann, müssen Sie von Ihrem Gerät eine Anfrage an ein anderen Gerät
 schicken, und sagen welche Webseite sie angezeigt haben möchten. Dieses
 Kommunikationsmodell bezeichnet man als ein
-[**Server-Client**-Modell](#server-client).
 
-import ServerClientDiagram from "../../components/ServerClientDiagram"
+<a href="#server-client">
+  <strong>Server-Client</strong>-Modell
+</a>
+.
 
 <Example id="server-client" title="Server-Client Modell">
+  Beim <strong>Server-Client</strong>-Modell sind immer 2 Parteien involviert. Der <strong>Client</strong>
+  ist die Anwendung, die eine Anfrage stellt. Der <strong>Server</strong> ist die Anwendung,
+  die die Antwort zur Verfügung stellt. Das kann auf dem gleichen Gerät passieren,
+  oder wie meistens über das Internet. Damit diese Anwendungen miteinander
+  kommunizieren können, braucht es ein Protokoll. Beim Abrufen von Webseiten wird
+  dabei <strong>HTTP</strong> verwendet. Dabei steht <strong>HTTP</strong> für <strong>Hypertext Transfer
+  Protocol</strong>. Wenn die Verbindung verschlüsselt sein soll, dann ist es <strong>HTTPS</strong>.
 
-Beim **Server-Client**-Modell sind immer 2 Parteien involviert. Der **Client**
-ist die Anwendung, die eine Anfrage stellt. Der **Server** ist die Anwendung,
-die die Antwort zur Verfügung stellt. Das kann auf dem gleichen Gerät passieren,
-oder wie meistens über das Internet. Damit diese Anwendungen miteinander
-kommunizieren können, braucht es ein Protokoll. Beim Abrufen von Webseiten wird
-dabei **HTTP** verwendet. Dabei steht **HTTP** für **Hypertext Transfer
-Protocol**. Wenn die Verbindung verschlüsselt sein soll, dann ist es **HTTPS**.
-
-<ServerClientDiagram />
+<div style={{ display: "flex", justifyContent: "center", margin: "2rem 0" }}>
+  <img
+    src="./svg/server-client-diagram.svg"
+    alt="Server Client Model Diagram"
+    width="100%"
+  />
+</div>
 
 </Example>
+
+<section>
 
 <h3 id="url">Webadressen</h3>
 
 Um auf eine Webseite zugreifen zu können, brauchen wir einen Link bzw. eine
-Webadresse. Der korrekte Begriff dafür ist **URL** (Uniform Resource Locator).
-Eine **URL** ist nach dem folgenden Schema aufgebaut:
+Webadresse. Der korrekte Begriff dafür ist <strong>URL</strong> (Uniform
+Resource Locator). Eine <strong>URL</strong> ist nach dem folgenden Schema
+aufgebaut:
 
 <URLComponent url="https://www.gym-muttenz.ch/index.php" />
 
-- **Protokoll (Protocol):** Gibt an, wie der Computer mit der Webseite
-  kommuniziert (z.B. http, https).
-- **Benutzername (Username):** Optionaler Name zur Anmeldung auf der Webseite.
-- **Passwort (Password):** Optionales Passwort zur Anmeldung.
-- **Host (Host):** Die Adresse der Webseite (z.B. www.beispiel.de).
-- **Pfad (Pathname):** Zeigt die genaue Seite oder Datei auf der Webseite an
-  (z.B. /startseite).
-- **Suchparameter (Search):** Zusätzliche Informationen, die an die Webseite
-  übergeben werden (z.B. ?suche=blumen).
-- **Anker (Hash):** Verweist auf eine bestimmte Stelle auf der Webseite (z.B.
-  #kontakt).
+<ul>
+  <li>
+    <strong>Protokoll (Protocol):</strong> Gibt an, wie der Computer mit der
+    Webseite kommuniziert (z.B. http, https).
+  </li>
+  <li>
+    <strong>Benutzername (Username):</strong> Optionaler Name zur Anmeldung auf
+    der Webseite.
+  </li>
+  <li>
+    <strong>Passwort (Password):</strong> Optionales Passwort zur Anmeldung.
+  </li>
+  <li>
+    <strong>Host (Host):</strong> Die Adresse der Webseite (z.B.
+    www.beispiel.de).
+  </li>
+  <li>
+    <strong>Pfad (Pathname):</strong> Zeigt die genaue Seite oder Datei auf der
+    Webseite an (z.B. /startseite).
+  </li>
+  <li>
+    <strong>Suchparameter (Search):</strong> Zusätzliche Informationen, die an
+    die Webseite übergeben werden (z.B. ?suche=blumen).
+  </li>
+  <li>
+    <strong>Anker (Hash):</strong> Verweist auf eine bestimmte Stelle auf der
+    Webseite (z.B. #kontakt).
+  </li>
+</ul>
 
 Wenn Sie bei Google etwas suchen möchten, dann können Sie das direkt in der
-**URL** angeben. Es ist nicht immer `q=` aber das können Sie schnell
-herausfinden wenn Sie eine Suche mit der jeweiligen Suchmaschine machen.
+
+<strong>URL</strong> angeben. Es ist nicht immer <code>q=</code> aber das können
+Sie schnell herausfinden wenn Sie eine Suche mit der jeweiligen Suchmaschine
+machen.
 
 <URLComponent url="https://www.google.com/search?q=netzwerke" />
+
+</section>
 
 </Chapter>
