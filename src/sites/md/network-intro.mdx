@@ -301,4 +301,53 @@ schützen, ist es wichtig das nur Verbindungen über **HTTPS** verwendet werden.
 
 </Example>
 
+<h2 id="vpn">Anonym im Internet (VPN)</h2>
+
+Sie haben sicher schon davon gehört das Sie mit einem **VPN** anonym und sicher
+im Internet surfen können. Sie können auch ganz eifach den Standort wechseln
+wenn Sie ein **VPN** verwenden. Schauen wir uns doch zusammen an, was es damit
+auf sich hat.
+
+Zuerst müssen Sie verstehen wie man einem Gerät im Internet einen geografischen
+Standort zuweisen kann. Das ist ganz einfach, Ihr **ISP** hat das in einer
+Datenbank registriert. Wie genau die Adresse tatsächlich ist, hängt vom **ISP**
+ab. Das kann Ihre exakte Adresse sein, oder einfach nur der Ort in dem Sie
+registriert sind. Das reicht aber schon aus, um gewisse Inhalte für Sie zu
+blockieren. Das passiert ganz oft bei _Netflix_ oder ähnlichen anbietern, wenn
+es wegen der Lizenz nicht möglich ist einen Inhalt in anderen Ländern zu
+publizieren. Um das zu umgehen, verwenden viele ein **VPN**. Aber was passier
+bei einem **VPN** denn genau.
+
+Ein **VPN** ist ein Programm das bei Ihnen auf dem Computer läuft. Bevor irgend
+ein Datenpacket verschickt wird, wird das Packet verschlüsselt, dann wird das
+verschlüsselte Packet an den **VPN**-Anbieter geschickt. Dort wird es entpackt
+und dann erneut an das eigentliche Ziel verschickt. Sie sieht es für den
+Empfänger so aus, als ob die Daten vom **VPN**-Server direkt kommen, und nicht
+von Ihnen. Auf dem Rückweg werden die Daten dann wieder zum **VPN** geschickt,
+wieder verschlüsselt, und zurück an Sie geschickt.
+
+Wenn jemand (Ihr **ISP** zum Beispiel) diese Verbindung nun abhört, sieht man
+nur dass Sie mit dem **VPN** kommunizieren. Ihr **ISP** kann Sie also nicht mehr
+ausspionieren. Früher (heute noch immer) wird diese Technik gerne verwendet um
+sich in Firmennetze zu verbinden. Daher der Name **virtual private network**.
+
+Ob Sie nun mit einem **VPN** tatsächlich anonym im Internet unterwegs sind,
+können Sie sich sehr einfach ausdenken. Ihr **ISP** und alle anderen die
+mithören würden, können Ihre Verbindungen nicht mehr lesen, oder das Ziel davon
+sehen. Wenn es vom **VPN** weitergeht, kann das Ziel nicht sehen wer der
+Absender war (ausser natürlich Sie sind mit einem Account eingeloggt). Es wirkt
+also als seien Sie tatsächlich anonym, ausser natürlich für den
+**VPN**-Anbieter. Da müssen Sie sich dann fragen wie sehr Sie dem Vertrauen
+möchten. denn nimmt man das mit der _No Log Policy_ wörtlich, merken Sie ganz
+schnell das es technisch garnicht möglich ist. Bis eine Antwort zurück zum
+Absender geschickt wurde, muss ein **VPN** speichern woher die Anfrage gekommen
+ist, und wo sie hingeht, sonst kann die Antwort nicht zugestellt werden. Danach
+kann man aber alles löschen. Ob das tatsächlich gemacht wird, ist aber fraglich.
+Denn Ihr **ISP** behält all Ihre Verbindungsdaten über mehrere Jahre. Technisch
+ist es also sicher möglich solche grossen Datenmengen zu speichern.
+
+Man kann also sagen dass Sie ein wenig anonymer im Internet unterwegs sind, wenn
+Sie ein **VPN** verwenden. Die Problematik wer all Ihre Verbindungsdaten hat,
+verschiebt sich dann einfach vom **ISP** zum **VPN**.
+
 </Chapter>
