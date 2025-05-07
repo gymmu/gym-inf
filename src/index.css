@@ -17,6 +17,17 @@
   --footer-height: 60px;
 }
 
+/* Add scroll-margin-top to headings to offset fixed header */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+[id] {
+  scroll-margin-top: var(--header-height);
+}
+
 pre {
   overflow-x: scroll;
   max-width: 100%;
@@ -154,7 +165,7 @@ ol.nav {
   stroke: white;
 }
 
-aside {
+aside.sidenav {
   grid-area: navbar;
   border-right: 1px solid rgba(255, 255, 255, 0.87);
   height: calc(100vh - var(--header-height));
@@ -238,19 +249,18 @@ section ol {
   background-color: #1e1e1e; /* Leicht dunklerer Hintergrund für jede zweite Zeile */
 }
 
-
 @media (max-width: 840px) {
   #root {
     grid-template-columns: 1fr;
   }
-  aside {
+  aside.sidenav {
     position: fixed;
     z-index: 10;
     background-color: #242424;
     width: 320px;
     display: none;
   }
-  .show {
+  aside.sidenav.show {
     display: block;
   }
 }
