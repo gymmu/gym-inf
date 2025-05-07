@@ -350,4 +350,63 @@ Man kann also sagen dass Sie ein wenig anonymer im Internet unterwegs sind, wenn
 Sie ein **VPN** verwenden. Die Problematik wer all Ihre Verbindungsdaten hat,
 verschiebt sich dann einfach vom **ISP** zum **VPN**.
 
+<Example id="nat" title="NAT (Network Address Translation)">
+
+Es git ein sehr grosses Problem mit den **IP-Adressen**. Es hat nicht genügend
+Adressen für alle Geräte, deshalb hat man sich einen Tick mit **NAT** einfallen
+lassen.
+
+In einem lokalen Netzwerk haben viele Geräte private IP-Adressen, die nur
+innerhalb dieses Netzwerks gültig sind. Damit diese Geräte trotzdem mit dem
+Internet kommunizieren können, wird **NAT** verwendet.
+
+**NAT** steht für _Network Address Translation_. Es ist eine Technik, bei der
+ein Router die privaten IP-Adressen der Geräte im lokalen Netzwerk in eine
+öffentliche IP-Adresse übersetzt, die im Internet verwendet wird.
+
+Wenn ein Gerät im lokalen Netzwerk eine Anfrage ins Internet schickt, ersetzt
+der Router die private IP-Adresse durch seine eigene öffentliche IP-Adresse. Die
+Antwort vom Internet wird dann vom Router wieder an das richtige Gerät im
+lokalen Netzwerk weitergeleitet.
+
+Dadurch können viele Geräte in einem lokalen Netzwerk dieselbe öffentliche
+IP-Adresse teilen, was die Anzahl der benötigten öffentlichen IP-Adressen
+reduziert.
+
+Ein weiterer Vorteil von **NAT** ist, dass es eine Art Schutz bietet, da Geräte
+im lokalen Netzwerk von aussen nicht direkt erreichbar sind.
+
+<div style={{ display: "flex", justifyContent: "center", margin: "2rem 0" }}>
+  <img src="./svg/nat-diagram.svg" alt="NAT Diagramm" width="100%" />
+</div>
+
+</Example>
+
+<section>
+
+<h2 id="firewalls">Firewalls</h2>
+
+Firewalls sind Sicherheitsmechanismen, die den Datenverkehr zwischen
+verschiedenen Netzwerken kontrollieren. Sie entscheiden, welche Verbindungen
+erlaubt sind und welche blockiert werden.
+
+Eine Firewall kann entweder als Software auf einem Gerät oder als eigenständiges
+Gerät im Netzwerk eingesetzt werden.
+
+Firewalls schützen Netzwerke vor unerwünschtem Zugriff von aussen und helfen
+dabei, schädliche Datenpakete zu erkennen und zu blockieren.
+
+Sie sind ein wichtiger Bestandteil der Netzwerksicherheit und tragen dazu bei,
+dass nur vertrauenswürdige Verbindungen zugelassen werden.
+
+Wenn Sie einen Server bei sich zu Hause laufen lassen möchten, damit andere auf
+Ihren Server zugreifen können, müssen Sie die nötigen Ports in der Firewall
+freischalten. Das machen Sie auf dem **Modem** und der Vorgang nennt sich dort
+oftmals _Port-Forwarding_. Sie sagen dem Gerät also dass Verbindungen auf einem
+bestimmten Port, zum Beispiel 5173 an eine lokale **IP-Adresse** geschickt
+werden soll. So verwenden Sie dann **NAT** um Ihren Server für das ganze
+Internet bereitzustellen.
+
+</section>
+
 </Chapter>
