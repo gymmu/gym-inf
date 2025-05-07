@@ -1,0 +1,1 @@
+import{j as i}from"./index-cIQnBFSb.js";function l({children:s,title:e="Beispiel",classes:r="",id:t=""}){return i.jsxs("div",{className:`highlight ${r}`,children:[i.jsx("h3",{id:t,children:`${e}`}),s]})}export{l as E};
