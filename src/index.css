@@ -17,6 +17,17 @@
   --footer-height: 60px;
 }
 
+/* Add scroll-margin-top to headings to offset fixed header */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+[id] {
+  scroll-margin-top: var(--header-height);
+}
+
 pre {
   overflow-x: scroll;
   max-width: 100%;
