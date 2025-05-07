@@ -14,18 +14,6 @@ import Presentation, {
 
 <h2 id="networks">Netzwerke</h2>
 
-<div style={{ display: "flex", justifyContent: "center", margin: "2rem 0" }}>
-  <img
-    src="./svg/server-client-diagram.svg"
-    alt="Server Client Model Diagram"
-    width="100%"
-  />
-</div>
-
-<div style={{ display: "flex", justifyContent: "center", margin: "2rem 0" }}>
-  <img src="./svg/network-diagram.svg" alt="Network Diagram" width="100%" />
-</div>
-
 <Presentation>
       <Slide>
         <h2 id="networks">Netzwerke</h2>
@@ -140,7 +128,16 @@ Kommunikationsmodell bezeichnet man als ein
   oder wie meistens über das Internet. Damit diese Anwendungen miteinander
   kommunizieren können, braucht es ein Protokoll. Beim Abrufen von Webseiten wird
   dabei <strong>HTTP</strong> verwendet. Dabei steht <strong>HTTP</strong> für <strong>Hypertext Transfer
-  Protocol</strong>. Wenn die Verbindung verschlüsselt sein soll, dann ist es <strong>HTTPS</strong>.
+  Protocol</strong>. Wenn die Verbindung verschlüsselt sein soll, dann ist es
+  <strong>HTTPS</strong>.
+
+<div style={{ display: "flex", justifyContent: "center", margin: "2rem 0" }}>
+  <img
+    src="./svg/server-client-diagram.svg"
+    alt="Server Client Model Diagram"
+    width="100%"
+  />
+</div>
 
 </Example>
 
@@ -193,6 +190,115 @@ machen.
 
 <URLComponent url="https://www.google.com/search?q=netzwerke" />
 
+Der **Anker** oder oftmals auch als **Hash** bezeichnet, gibt uns eine
+praktische Möglichkeit um zu einem Element mit der ID des Ankers zu springen.
+Manchmal wird es auch anders verwendet, aber die meisten Browser und Webseiten
+verwenden es so, dass man direkt zum Element mit der **Anker-ID** gescrollt
+wird.
+
+<URLComponent url="https://gymmu.github.io/gym-inf/network-intro#url" />
+
+Wie könnten auch direkt den Benutzername und das Posswort in der **URL**
+mitschicken. Das sollte jedoch niemals gemacht werden, denn die **URL** könnte
+so in den Logeinträgen auf dem Webserver gespeichert werden, oder in der
+Browserhistory. Beides ist nicht verschlüsselt!!! In einem lokalen Netzwerk,
+kann so etwas aber praktisch sein.
+
+<URLComponent url="http://username:password@localhost:631/index.html" />
+
+Mit dieser **URL** kann man sich beim _Linux_-Systemen beim lokalen
+Druckerservice anmelden. Da die Verbindung dann nur zum eigenen Computer ist,
+braucht es keine Verschlüsselung, und das Passwort kann auch übermittelt werden.
+Danach sollte aber die Browserhistory gelöscht werden.
+
+Man kann natürlich alles miteinander kombinieren, und über die **URL** bereits
+sehr viele Daten an den Webserver schicken. Aber wie genau finden die Daten denn
+zum Webserver?
+
 </section>
+
+<Example id="internet" title="Internet">
+
+Das Internet besteht aus ganz vielen verschiedenen Teilen. Wir schauen uns eine
+vereinfachte Darstellung davon an und versuchen die wichtigsten Teile zu
+verstehen.
+
+<div style={{ display: "flex", justifyContent: "center", margin: "2rem 0" }}>
+  <img src="./svg/network-diagram.svg" alt="Network Diagram" width="100%" />
+</div>
+
+#### Webserver
+
+Das sind Computer die irgendwo am Netzwerk angehängt sind, und über eine
+öffentliche **IP-Adresse** verfügen. Ein Webserver nimmt Anfragen von einem
+Client entgegen, und schickt meistens eine Webseite, oder einfach nur Daten
+zurück.
+
+#### DNS-Server
+
+Das sind einige wenige spezielle Server die auf der ganzen Welt verteilt sind.
+Ein DNS-Server speichert welche **IP-Adresse** zu welchem **Domain-Name** passt.
+Wenn man also die **IP-Adresse** von `github.com` nicht auswendig weiss, kann
+man das beim **DNS-Server** anfragen. Das passiert automatisch, und wird dann
+auf allen Zwischengeräten gespeichert, so dass nicht jedes mal eine Anfrage an
+den **DNS-Server** gemacht werden muss.
+
+**DNS** steht übrigens für Domain-Name-System.
+
+#### Router
+
+Die **Router** sind das Herzstück vom Internet. Damit Daten durch das Internet
+geschickt werden können, müssen mehrere **Router** miteinander verbunden sein.
+Ein Router merkt sich dann immer mit welchen Geräten er verbunden ist. Wenn nun
+einen Anfrage kommt, kann der Router diese gezielt an den nächsten Router
+weiterleiten, oder wenn es eine ganz neue Verbindung ist, kann er einfach an
+alle weiterleiten die er kennt.
+
+#### IP-Adresse
+
+Alle Geräte die im Internet sind, haben eine **IP-Adresse**. Die Geräte
+untereinander sprechen sich über die **IP-Adresse** an, nicht über den
+**Domain-Name**, so wie wir das machen würden.
+
+Eine **IPv4-Adresse** besteht aus vier Zahlen, die durch Punkte getrennt sind.
+Jede Zahl kann einen Wert von 0 bis 255 haben. Eine IPv4-Adresse besteht aus 4
+Bytes (32 Bit). Beispiele für IPv4-Adressen sind:
+
+- **Localhost:** 127.0.0.1 (wird verwendet, um auf den eigenen Computer zu
+  verweisen)
+- **Lokales Netzwerk:** 192.168.1.1 (häufig verwendete Adresse für Router in
+  privaten Netzwerken)
+- **DNS-Server:** 8.8.8.8 (ein öffentlicher DNS-Server von Google)
+
+#### Modem / ISP
+
+Ein **IPS** ist Ihr Internet-Service-Provider, also die Firma die Ihnen den
+Anschluss and Internet anbietet. Bei den meisten wird das _Swisscom_, _Sunrise_
+oder _Cablecom_ sein. Diese Firma stellt Ihnen ein **Modem** zur Verfügung,
+welches über das Internet erreichbar ist (es hat eine öffentliche IP-Adresse).
+Das **Modem** funktioniert dann wie ein **Router**. Es kennt alle Geräte im
+lokalen Netzwerk, und kann Daten zu diesen schicken. Wenn Daten nach draussen
+sollen, dann schickt es diese einfach zum nächsten **Router**. Der ist dann
+meistens beim **ISP** selbst, und von dort werden die Daten dann weiter
+geleitet.
+
+Das heisst also, Ihr **ISP** weiss immer ganz genau welche Webseiten Sie
+besuchen. Mit einem **VPN** kann man sich davor schützen, die Daten liegen dann
+aber beim **VPN**.
+
+#### Client
+
+Das sind die Endgeräte, wie Laptops und Smartphones die an einem lokalen Netz
+angehängt sind. Wenn wir zwischen 2 Geräten kommunizieren möchten, dann geht das
+immer über ein weiteres Gerät (z.B. das **Modem**). Es ist schon auch möglich
+eine wirklich direkte Verbindung aufzubauen, aber das ist oftmals zu mühsam. Nun
+sollte auch klar sein, dass alle Verbindungen und Daten im Internet abgehört
+werden können. Denn alle Geräte sind miteinander verbunden. Wenn man es schaft
+sich bei einer Verbindung dazwischen zu schalten, dann kann man den ganzen
+Verkehr auf dieser Verbindung abhören und auswerten. In diesem Fall spricht man
+von einer **man-in-the-middle**-Attacke. Um sich davon zumindest teilweise zu
+schützen, ist es wichtig das nur Verbindungen über **HTTPS** verwendet werden.
+
+</Example>
 
 </Chapter>
