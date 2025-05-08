@@ -1,6 +1,0 @@
-[submodule "src/sites/old-gym-inf"]
-	path = src/sites/old-gym-inf
-	url = https://github.com/cedricgeissmann/gym-inf
-[submodule "src/components"]
-	path = src/components
-	url = https://github.com/gymmu/components
