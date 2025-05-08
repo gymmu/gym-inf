@@ -1,0 +1,192 @@
+* {
+  box-sizing: border-box;
+}
+
+pre {
+  display: inline;
+}
+
+pre:has(code) {
+  display: block;
+}
+
+.highlight {
+  border-left: 10px solid forestgreen;
+  padding-left: 20px;
+  padding-right: 15px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: rgb(61, 61, 61);
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.example {
+  border-left-color: aquamarine;
+}
+
+.danger {
+  border-left-color: firebrick;
+}
+
+.exercise {
+  border-left-color: orange;
+}
+
+.outlet > * {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+@media only screen and (min-width: 1200px) {
+  .outlet > * {
+    padding-left: calc(50vw - 600px);
+    padding-right: calc(50vw - 600px);
+  }
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.tabs > li {
+  list-style-type: none;
+}
+
+.tabs > li > button {
+  width: 100%;
+  text-align: center;
+  background-color: inherit;
+  border: 5px solid var(--background-color);
+  padding: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.active {
+  border-bottom: 5px solid white !important;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.fiddleContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.fiddleContainer .output {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fiddleContainer .renderOutput {
+  height: 100%;
+  background-color: whitesmoke;
+  color: black;
+  max-width: 300px;
+}
+
+.fiddleContainer .renderOutput.wide {
+  max-width: 100%;
+}
+
+.fiddleContainer .renderOutput * {
+  padding: 0;
+  margin: 0;
+}
+
+/* Class for small margins */
+.sm {
+  margin: 0.25rem 0;
+}
+
+/* Diesen Hack brauchen wir, damit der Monaco-Editor in RevealJS richtig
+angezeigt wird. */
+.monaco-editor {
+  height: 300px !important;
+}
+
+/* Dieser Hack verschiebt den Monaco-Editor an die richtige Stelle in RevealJS
+und ermöglicht das Bearbeiten während der Präsentation. */
+.fiddleContainer section {
+  top: 0 !important;
+  pointer-events: auto !important;
+}
+
+.for-letter {
+  padding: 0.5rem;
+  border: 1px solid white;
+  min-width: 2em;
+  min-height: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.for-letter.active-letter {
+  color: red;
+  border-color: red;
+}
+
+.letter-wrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: left;
+}
+
+.letter-with-index-wrapper > span:nth-child(2) {
+  font-size: 0.7rem;
+}
+
+.letter-with-index-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.letter-simulator-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+}
+
+.letter-control-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem;
+}
+
+.letter-control-panel > button {
+  min-height: 3rem;
+  min-width: 100px;
+}
+
+.letter-input-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  padding-bottom: 1rem;
+  align-items: center;
+}
+
+.letter-input-wrapper > input {
+  min-height: 2rem;
+  font-size: 1.5rem;
+}
