@@ -135,6 +135,20 @@ ol.nav a {
   padding: 5px 0;
 }
 
+ol.nav > li {
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--color-gray);
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  padding-left: 20px;
+  color: var(--color-yellow);
+}
+
+ol.nav > li > a {
+  color: var(--color-yellow);
+}
+
 ol.nav li:hover > a {
   text-decoration: underline;
 }
@@ -142,9 +156,10 @@ ol.nav li:hover > a {
 ol.nav > li {
   font-weight: bold;
   font-size: 1.2rem;
-  border-bottom: 0.5px solid var(--color-gray);
-  margin-bottom: 15px;
-  padding-bottom: 15px;
+  border-bottom: 1px solid var(--color-gray);
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  padding-left: 20px;
 }
 
 ol.nav * {
@@ -154,7 +169,8 @@ ol.nav * {
 
 ol.nav {
   width: 100%;
-  margin: 10px auto;
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
