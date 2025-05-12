@@ -237,6 +237,12 @@ const router = createBrowserRouter(
           element: <SuspenseWrapper path="./sites/md/security-passwords.mdx" />,
         },
         {
+          path: "security-encryption",
+          element: (
+            <SuspenseWrapper path="./sites/md/security-encryption.mdx" />
+          ),
+        },
+        {
           path: "network-intro",
           element: <SuspenseWrapper path="./sites/md/network-intro.mdx" />,
         },
@@ -461,6 +467,9 @@ function ChapterIndex() {
           Sicherheit
           <ol>
             <NavLink to="security-passwords">Passwörter und Sicherheit</NavLink>
+            <NavLink to="security-encryption">
+              Verschiedene Verschlüsselungsverfahren
+            </NavLink>
           </ol>
         </li>
         <li>
