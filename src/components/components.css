@@ -11,26 +11,26 @@ pre:has(code) {
 }
 
 .highlight {
-  border-left: 10px solid forestgreen;
+  border-left: 10px solid var(--color-forestgreen);
   padding-left: 20px;
   padding-right: 15px;
   margin-top: 50px;
   margin-bottom: 50px;
-  background-color: rgb(61, 61, 61);
+  background-color: var(--color-rgb-61-61-61);
   padding-top: 30px;
   padding-bottom: 50px;
 }
 
 .example {
-  border-left-color: aquamarine;
+  border-left-color: var(--color-aquamarine);
 }
 
 .danger {
-  border-left-color: firebrick;
+  border-left-color: var(--color-firebrick);
 }
 
 .exercise {
-  border-left-color: orange;
+  border-left-color: var(--color-orange);
 }
 
 .outlet > * {
@@ -125,7 +125,7 @@ und ermöglicht das Bearbeiten während der Präsentation. */
 
 .for-letter {
   padding: 0.5rem;
-  border: 1px solid white;
+  border: 1px solid var(--color-white);
   min-width: 2em;
   min-height: 3em;
   display: flex;
@@ -134,8 +134,8 @@ und ermöglicht das Bearbeiten während der Präsentation. */
 }
 
 .for-letter.active-letter {
-  color: red;
-  border-color: red;
+  color: var(--color-red);
+  border-color: var(--color-red);
 }
 
 .letter-wrapper {
