@@ -1,0 +1,1 @@
+import{j as o}from"./index-CTvo37NJ.js";function s({src:e}){return o.jsx("div",{children:o.jsxs("audio",{controls:!0,children:[o.jsx("source",{src:e,type:"audio/mpeg"}),"Your browser does not support the audio element."]})})}export{s as A};
