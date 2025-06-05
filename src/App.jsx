@@ -5,10 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom"
 import {
-  useEffect,
   useRef,
-  lazy,
-  Suspense,
   useState,
   useContext,
   createContext,
@@ -17,7 +14,7 @@ import ICode from "./components/ICode"
 import { ReactSVG } from "react-svg"
 
 // Import routes from external file
-import { routeRegistry, registerRoute } from './routes';
+import { routeRegistry } from './routes';
 
 // Create the router using the registry
 // Fügen Sie die Routen hier ein
@@ -53,6 +50,7 @@ function Icon({ url }) {
   return <ReactSVG src={url} />
 }
 
+// Layout component can be extracted
 function Layout() {
   const dialogRef = useRef(null)
 
@@ -78,6 +76,7 @@ function Layout() {
   )
 }
 
+// Header component can be extracted
 function Header() {
   const { setVisible } = useContext(NavContext)
   const toggleSide = () => {
@@ -93,6 +92,7 @@ function Header() {
   )
 }
 
+// Navbar component can be extracted
 function Navbar() {
   const { visible } = useContext(NavContext)
   return (
@@ -102,6 +102,7 @@ function Navbar() {
   )
 }
 
+// NavLink component can be extracted
 function NavLink({ to, children }) {
   const { setVisible } = useContext(NavContext)
   const hide = () => {
@@ -116,6 +117,7 @@ function NavLink({ to, children }) {
   )
 }
 
+// ChapterIndex component can be extracted
 function ChapterIndex() {
   return (
     <>
