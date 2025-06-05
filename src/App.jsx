@@ -11,23 +11,23 @@ import Header from "./components/Header";
 // Import routes from external file
 import { routeRegistry } from './routes';
 
-// Create the router using the registry
-// Fügen Sie die Routen hier ein
-const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <Layout />,  
-      children: routeRegistry,
-    },
-  ],
-  {
-    basename: "/gym-inf",
-  },
-);
 
 export default function App() {
-  return <RouterProvider router={router} />
+    // Create the router using the registry
+    // Fügen Sie die Routen hier ein
+    const router = createBrowserRouter(
+        [
+            {
+                path: "/",
+                element: <Layout />,  
+                children: routeRegistry,
+            },
+        ],
+        {
+            basename: "/gym-inf",
+        },
+    );
+    return <RouterProvider router={router} />
 }
 
 // Layout component can be extracted
