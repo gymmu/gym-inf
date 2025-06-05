@@ -28,6 +28,8 @@ export default function App() {
             ...routeRegistry, // Create a new array to ensure fresh reference
             {
               path: "*", // Catch-all route for invalid paths
+              // TODO: Beim Reload oder externen aufruf, muss die richtige seite
+              // geladen werden. Im Moment wird die Startseite geladen
               element: <Navigate to="/" replace />,
             },
           ],
