@@ -20,7 +20,7 @@ function ChapterIndex() {
         <li>
           HTML
           <ol>
-            <NavLink to="html">Webseiten</NavLink>
+            <NavLink to="html" site="../sites/md/html.mdx">Webseiten</NavLink>
             <NavLink to="html-elements">Webseiten strukturieren</NavLink>
             <NavLink to="html-attributes">HTML Attribute</NavLink>
           </ol>
