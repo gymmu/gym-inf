@@ -1,5 +1,4 @@
 import {
-  Link,
   Outlet,
   createBrowserRouter,
   RouterProvider,
@@ -7,7 +6,7 @@ import {
 import { useRef, useContext } from "react"
 import { NavContext, NavProvider } from "./context/NavContext"
 import ICode from "./components/ICode"
-import { ReactSVG } from "react-svg"
+import Header from "./components/Header";
 
 // Import routes from external file
 import { routeRegistry } from './routes';
@@ -29,10 +28,6 @@ const router = createBrowserRouter(
 
 export default function App() {
   return <RouterProvider router={router} />
-}
-
-function Icon({ url }) {
-  return <ReactSVG src={url} />
 }
 
 // Layout component can be extracted
@@ -61,21 +56,6 @@ function Layout() {
   )
 }
 
-// Header component can be extracted
-function Header() {
-  const { setVisible } = useContext(NavContext)
-  const toggleSide = () => {
-    setVisible((toggle) => !toggle)
-  }
-  return (
-    <header onClick={toggleSide}>
-      <span className="icon">
-        <Icon url="./icons/hamburger.svg" />
-      </span>
-      <h1>Gym Informatik</h1>
-    </header>
-  )
-}
 
 // Navbar component can be extracted
 function Navbar() {
@@ -87,20 +67,9 @@ function Navbar() {
   )
 }
 
+import NavLink from "./components/NavLink";
+
 // NavLink component can be extracted
-function NavLink({ to, children }) {
-  const { setVisible } = useContext(NavContext)
-  const hide = () => {
-    setVisible(false)
-  }
-  return (
-    <li>
-      <Link onClick={hide} to={to}>
-        {children}
-      </Link>
-    </li>
-  )
-}
 
 // ChapterIndex component can be extracted
 function ChapterIndex() {
