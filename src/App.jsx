@@ -4,12 +4,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom"
-import {
-  useRef,
-  useState,
-  useContext,
-  createContext,
-} from "react"
+import { useRef, useContext } from "react"
+import { NavContext, NavProvider } from "./context/NavContext"
 import ICode from "./components/ICode"
 import { ReactSVG } from "react-svg"
 
@@ -30,17 +26,6 @@ const router = createBrowserRouter(
     basename: "/gym-inf",
   },
 );
-
-const NavContext = createContext({})
-function NavProvider({ children }) {
-  const [visible, setVisible] = useState(false)
-
-  return (
-    <NavContext.Provider value={{ visible, setVisible }}>
-      {children}
-    </NavContext.Provider>
-  )
-}
 
 export default function App() {
   return <RouterProvider router={router} />
