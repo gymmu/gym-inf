@@ -43,14 +43,6 @@ function Layout() {
           <Outlet />
         </main>
       </NavProvider>
-      <dialog
-        style={{
-          padding: "4rem 2rem",
-          fontSize: "2.5rem",
-          fontWeight: "bold",
-          fontFamily: "monospace",
-        }}
-        ref={dialogRef}>{`${window.location}`}</dialog>
       <footer>Informatik Gymnasium Muttenz</footer>
     </>
   )
