@@ -18,6 +18,12 @@ export default defineConfig({
           dest: "./assets/sites/md/",
         },
         {
+          src: normalizePath(
+            path.resolve(__dirname, "src/sites/md/fms") + "/*.mdx",
+          ),
+          dest: "./assets/sites/md/",
+        },
+        {
           src: normalizePath(path.resolve(__dirname, "public/icons") + "/*svg"),
           dest: "./assets/icons/",
         },

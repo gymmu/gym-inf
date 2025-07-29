@@ -9,6 +9,6 @@ function registerRoute(path, element) {
 }
 
 // Register routes
-registerRoute("/", <SuspenseWrapper path="./sites/md/index.mdx" />)
+registerRoute("/", <SuspenseWrapper filename="./sites/md/index.mdx" />)
 
 export { routeRegistry, registerRoute }
