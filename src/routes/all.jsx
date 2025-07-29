@@ -69,6 +69,7 @@ registerRoute("security-encryption", <SuspenseWrapper filename="./sites/md/secur
 registerRoute("network-intro", <SuspenseWrapper filename="./sites/md/network-intro.mdx" />);
 
 registerRoute("fms-theorie", <SuspenseWrapper filename="./sites/md/fms.mdx" fms={true} />);
+registerRoute("fms/ikt", <SuspenseWrapper filename="./sites/md/fms/ikt.mdx" fms={true} />);
 
 // Export the route registry
 export default routeRegistry;

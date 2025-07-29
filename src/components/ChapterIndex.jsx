@@ -25,7 +25,13 @@ function FmsIndex() {
         <>
             <h2>FMS</h2>
         <ol className="nav">
-
+            <li>IKT
+                <ol>
+                    <NavLink to="fms/ikt" site="../site/md/fms/ikt.mdx">
+                        Einführung
+                    </NavLink>
+                </ol>
+            </li>
         </ol>
         </>
     )
