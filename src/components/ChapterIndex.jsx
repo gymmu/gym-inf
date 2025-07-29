@@ -15,7 +15,27 @@ function ChapterIndex() {
         von der Webseite brauchen, dann machen Sie ein Screenshot davon, und
         speichern diesen für sich ab.
       </div>
-      { !fms ? <ol className="nav">
+      { !fms ? <GymIndex />  : <FmsIndex />}
+    </>
+  )
+}
+
+function FmsIndex() {
+    return (
+        <>
+            <h2>FMS</h2>
+        <ol className="nav">
+
+        </ol>
+        </>
+    )
+}
+
+function GymIndex() {
+    return (
+        <>
+        <h2>Gym</h2>
+<ol className="nav">
         <li>
           Einführung
           <ol>
@@ -258,11 +278,9 @@ function ChapterIndex() {
             </NavLink>
           </ol>
         </li>
-      </ol> : <ol>
-        FMS
-    </ol>}
-    </>
-  )
+      </ol>
+      </>
+    )
 }
 
 export default ChapterIndex

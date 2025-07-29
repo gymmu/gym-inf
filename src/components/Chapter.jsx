@@ -7,9 +7,7 @@ export default function Chapter({ children, hash, setFmsNav = false }) {
     const {setFms} = useContext(NavContext)
   useEffect(() => {
 
-    if (setFmsNav) {
-            setFms(true)
-        }
+    setFms(setFmsNav)
 
     Prism.highlightAll()
   }, [])
