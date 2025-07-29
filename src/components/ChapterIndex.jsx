@@ -1,7 +1,12 @@
 import NavLink from "./NavLink"
 import ICode from "./ICode"
+import { useContext } from "react"
+import { NavContext } from "../context/NavContext"
 
 function ChapterIndex() {
+
+  const {fms} = useContext(NavContext)
+
   return (
     <>
       <div className="hint">
@@ -10,7 +15,7 @@ function ChapterIndex() {
         von der Webseite brauchen, dann machen Sie ein Screenshot davon, und
         speichern diesen für sich ab.
       </div>
-      <ol className="nav">
+      { !fms ? <ol className="nav">
         <li>
           Einführung
           <ol>
@@ -253,7 +258,9 @@ function ChapterIndex() {
             </NavLink>
           </ol>
         </li>
-      </ol>
+      </ol> : <ol>
+        FMS
+    </ol>}
     </>
   )
 }
