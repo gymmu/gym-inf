@@ -5,7 +5,14 @@ import { NavContext } from "../context/NavContext"
 
 function ChapterIndex() {
 
-  const {fms} = useContext(NavContext)
+  const {fms, setFms} = useContext(NavContext)
+
+  const activateGym = () => {
+        setFms(false)
+    }
+  const activateFMS = () => {
+        setFms(true)
+    }
 
   return (
     <>
@@ -15,6 +22,15 @@ function ChapterIndex() {
         von der Webseite brauchen, dann machen Sie ein Screenshot davon, und
         speichern diesen für sich ab.
       </div>
+        <div style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-evenly"
+            }}>
+            <h2 style={{cursor: "pointer"}} className={!fms ? "active-school" : "" } onClick={activateGym}>Gym</h2>
+            <h2 style={{cursor: "pointer"}} className={fms ? "active-school" : "" } onClick={activateFMS} >FMS</h2>
+        </div>
       { !fms ? <GymIndex />  : <FmsIndex />}
     </>
   )
@@ -23,7 +39,6 @@ function ChapterIndex() {
 function FmsIndex() {
     return (
         <>
-            <h2>FMS</h2>
         <ol className="nav">
             <li>IKT
                 <ol>
@@ -40,7 +55,6 @@ function FmsIndex() {
 function GymIndex() {
     return (
         <>
-        <h2>Gym</h2>
 <ol className="nav">
         <li>
           Einführung

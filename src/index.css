@@ -321,6 +321,7 @@ section ol {
 @media (max-width: 840px) {
   #root {
     grid-template-columns: 1fr;
+    grid-template-areas: "header" "main" "footer";
   }
   aside.sidenav {
     position: fixed;
@@ -332,4 +333,8 @@ section ol {
   aside.sidenav.show {
     display: block;
   }
+}
+
+.active-school {
+    text-decoration: underline;
 }
