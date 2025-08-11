@@ -1,8 +1,15 @@
-import SuspenseWrapper from "../components/SuspenseWrapper";
+import { createBrowserRouter, Link } from "react-router-dom"
+
+import Layout from "@components/Layout"
+
+// Importiere Unterseiten fürs Gym
 import Index from "@pages/index.mdx"
 import Installation from "@pages/installation.mdx"
 
+// Importiere Unterseiten für die FMS
 import FMSIndex from "@pages/fms/index.mdx"
+import FMSIkt from "@pages/fms/ikt.mdx"
+
 // Route registry to store all routes
 const routeRegistry = [];
 
@@ -73,8 +80,40 @@ registerRoute("install", <Installation />);
 // registerRoute("network-intro", <SuspenseWrapper filepath="network-intro.mdx" />);
 
 registerRoute("fms-theorie", <FMSIndex />);
+registerRoute("fms/ikt", <FMSIkt />);
 // registerRoute("fms/ikt", <SuspenseWrapper filepath="fms/ikt.mdx" fms={true} />);
 
-// Export the route registry
-export default routeRegistry;
+
+export const createRouter = () => {
+    return createBrowserRouter(
+        [
+            {
+                path: "/",
+                element: <Layout />,
+                children: [
+                    {path: "/", element: <Index />},
+                    {path: "/install", element: <Installation />},
+                    
+                    // FMS Routes
+                    {path: "fms-theorie", element: <FMSIndex /> },
+                    {path: "fms/ikt", element: <FMSIkt /> },
+
+                    // Was passiert wenn die Route falsch ist.
+                    {
+                        path: "*", // Catch-all route for invalid paths
+                        // TODO: Beim Reload oder externen aufruf, muss die richtige seite
+                        // geladen werden. Im Moment wird die Startseite geladen
+                        // element: <Navigate to="/" replace />,
+                        element: <div>
+                            Leider wurde hier keine Webseite gefunden, gehe zurück zum <Link to="/">Start</Link>
+                        </div>
+                    },
+                ],
+            },
+        ],
+        {
+            basename: "/gym-inf/",
+        },
+    )
+}
 

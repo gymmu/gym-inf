@@ -48,6 +48,8 @@ export default defineConfig({
     alias: {
             '@': generateAlias('src'),
             '@pages': generateAlias('src/sites/md'),
+            '@components': generateAlias('src/components'),
+            '@context': generateAlias('src/context'),
             '@icons': generateAlias('public/icons')
         },
     extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".mdx"]

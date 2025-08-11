@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import {registerRoute} from "./../routes.jsx"
 import SuspenseWrapper from "./SuspenseWrapper"
 
-function NavLink({ to, site, children }) {
+function NavLink({ to, elem, children }) {
   const { setVisible } = useContext(NavContext);
   useEffect(() => {
-    registerRoute(to, <SuspenseWrapper path={site} />);
+    registerRoute(to, elem);
     }, [])
   const hide = () => {
     setVisible(false);

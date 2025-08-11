@@ -3,6 +3,8 @@ import ICode from "./ICode"
 import { useContext } from "react"
 import { NavContext } from "../context/NavContext"
 
+import FMSIkt from "@pages/fms/ikt.mdx"
+
 function ChapterIndex() {
 
   const {fms, setFms} = useContext(NavContext)
@@ -42,7 +44,7 @@ function FmsIndex() {
         <ol className="nav">
             <li>IKT
                 <ol>
-                    <NavLink to="fms/ikt" site="../site/md/fms/ikt.mdx">
+                    <NavLink to="fms/ikt">
                         Einführung
                     </NavLink>
                 </ol>
