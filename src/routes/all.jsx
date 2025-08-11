@@ -10,27 +10,10 @@ import Installation from "@pages/installation.mdx"
 import FMSIndex from "@pages/fms/index.mdx"
 import FMSIkt from "@pages/fms/ikt.mdx"
 
-// Route registry to store all routes
-const routeRegistry = [];
-
-/* Füge eine Seite zur Route-Registry hinzu.
- *
- * Die Route-Registry ist eine Liste von Unterwebseiten, die hier verfügbar
- * sind. Somit gibt es einen zentralen Ort an dem man alle Routes angeben muss.
- * Die Unterseiten müssen aber noch nicht zuvor geladen werden, diese werden
- * erst später per lazy-loading hinzugefügt. Eine Route braucht einen Pfad auf
- * dem sie hört, und eine Unterseite die dann geladen werden soll.
- *
- * @param path Der Pfad auf den die Route hört.
- * @param filepath Der Name der Datei die lazy-loaded wird.
- */
-export function registerRoute(path, element) {
-  routeRegistry.push({ path, element });
-}
 
 // Register routes
-registerRoute("/", <Index />);
-registerRoute("install", <Installation />);
+// registerRoute("/", <Index />);
+// registerRoute("install", <Installation />);
 // registerRoute("html", <SuspenseWrapper filepath="html.mdx" />);
 // registerRoute("html-elements", <SuspenseWrapper filepath="html-elements.mdx" />);
 // registerRoute("html-attributes", <SuspenseWrapper filepath="html-attributes.mdx" />);
@@ -79,8 +62,8 @@ registerRoute("install", <Installation />);
 // registerRoute("security-encryption", <SuspenseWrapper filepath="security-encryption.mdx" />);
 // registerRoute("network-intro", <SuspenseWrapper filepath="network-intro.mdx" />);
 
-registerRoute("fms-theorie", <FMSIndex />);
-registerRoute("fms/ikt", <FMSIkt />);
+// registerRoute("fms-theorie", <FMSIndex />);
+// registerRoute("fms/ikt", <FMSIkt />);
 // registerRoute("fms/ikt", <SuspenseWrapper filepath="fms/ikt.mdx" fms={true} />);
 
 
@@ -105,7 +88,7 @@ export const createRouter = () => {
                         // geladen werden. Im Moment wird die Startseite geladen
                         // element: <Navigate to="/" replace />,
                         element: <div>
-                            Leider wurde hier keine Webseite gefunden, gehe zurück zum <Link to="/">Start</Link>
+                            Leider wurde hier keine Webseite gefunden. Gehe zurück zum <Link to="/">Start</Link>
                         </div>
                     },
                 ],
