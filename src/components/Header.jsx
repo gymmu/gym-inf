@@ -12,7 +12,7 @@ function Header() {
   return (
     <header>
       <span className="icon" onClick={toggleSide}>
-        <img src="/icons/hamburger.svg" />
+        <ReactSVG src="@icons/hamburger.svg" />
       </span>
       <h1><Link to="/">Informatik Skript</Link></h1>
     </header>

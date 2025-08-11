@@ -1,4 +1,5 @@
-import SuspenseWrapper from "./components/SuspenseWrapper"
+// import SuspenseWrapper from "./components/SuspenseWrapper"
+// import Index from "@pages/index.mdx"
 
 // Route registry to store all routes
 const routeRegistry = []
@@ -9,6 +10,6 @@ function registerRoute(path, element) {
 }
 
 // Register routes
-registerRoute("/", <SuspenseWrapper filename="./sites/md/index.mdx" />)
+registerRoute("/", <div>Just stupid shit.... </div>)
 
 export { routeRegistry, registerRoute }
