@@ -1,5 +1,4 @@
 import NavLink from "./NavLink"
-import ICode from "./ICode"
 import { useContext } from "react"
 import { NavContext } from "../context/NavContext"
 
@@ -35,15 +34,28 @@ function FmsIndex() {
     <>
       <div>
         <h2>1. Klasse</h2>
-      <ol className="nav">
-        <li>Obsidian
-          <ol>
-            <NavLink to="obsidian">
-              Einführung
+        <ol className="nav">
+          <li>Obsidian
+            <ol>
+              <NavLink to="obsidian">
+                Einführung
+              </NavLink>
+            <NavLink to="obsidian-md">
+              Markdown in Obsidian
             </NavLink>
-          </ol>
-        </li>
-      </ol>
+            </ol>
+          </li>
+        </ol>
+        <h2>2. Klasse</h2>
+        <ol className="nav">
+          <li>Tabellenkalkulation
+            <ol>
+              <NavLink to="fms/excel">
+                Einstieg in Excel
+              </NavLink>
+            </ol>
+          </li>
+        </ol>
       </div>
     </>
   )

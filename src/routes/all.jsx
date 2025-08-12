@@ -9,6 +9,7 @@ import Index from "@pages/index.mdx"
 import FMSIndex from "@pages/fms/index.mdx"
 import Obsidian from "@pages/obsidian.mdx"
 import ObsidianMarkdown from "@pages/obsidian-md.mdx"
+import Excel from "@pages/fms/excel.mdx"
 
 
 // Register routes
@@ -80,6 +81,7 @@ export const createRouter = () => {
                     
                     // FMS Routes
                     {path: "fms-theorie", element: <FMSIndex /> },
+                    {path: "fms/excel", element: <Excel /> },
 
                     // Was passiert wenn die Route falsch ist.
                     {
