@@ -4,11 +4,11 @@ import Layout from "@components/Layout"
 
 // Importiere Unterseiten fürs Gym
 import Index from "@pages/index.mdx"
-import Installation from "@pages/installation.mdx"
 
 // Importiere Unterseiten für die FMS
 import FMSIndex from "@pages/fms/index.mdx"
-import FMSIkt from "@pages/fms/ikt.mdx"
+import Obsidian from "@pages/obsidian.mdx"
+import ObsidianMarkdown from "@pages/obsidian-md.mdx"
 
 
 // Register routes
@@ -75,11 +75,11 @@ export const createRouter = () => {
                 element: <Layout />,
                 children: [
                     {path: "/", element: <Index />},
-                    {path: "/install", element: <Installation />},
+                    {path: "obsidian", element: <Obsidian />},
+                    {path: "obsidian-md", element: <ObsidianMarkdown />},
                     
                     // FMS Routes
                     {path: "fms-theorie", element: <FMSIndex /> },
-                    {path: "fms/ikt", element: <FMSIkt /> },
 
                     // Was passiert wenn die Route falsch ist.
                     {
