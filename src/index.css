@@ -247,6 +247,12 @@ main {
   overflow-x: hidden;
 }
 
+main > p,
+main > h2, 
+main > h3 {
+  padding: 0 2rem;
+}
+
 section ol {
   margin-left: 0px; /* Fügt einen linken Rand hinzu */
   list-style-type: none; /* Entfernt die Standardnummerierung */
