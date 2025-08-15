@@ -1,1 +1,112 @@
+import Example from "@components/Example"
+
 ## Notwendige Programme Installieren
+
+Um mit dem Computer vernünftig arbeiten zu können, brauchen wir einige
+Programme, die Sie zuerst installieren müssen. Sie finden hier eine Liste mit
+allen Programmen die Sie verwenden werden. Weiter unten finden Sie eine kurze
+Beschreibung zu alle den Programmen.
+
+- [VSCode](https://code.visualstudio.com/download)
+- [Git](https://git-scm.com/downloads)
+- [NodeJS](https://nodejs.org/en/download) (Hier müssen Sie das Binary
+herunterladen, das finden Sie unterhalb von dem Skript).
+- [Docker-Desktop](https://www.docker.com/products/docker-desktop/) (Das wird
+nicht unbedingt benötigt, kann vieles aber einfacher machen, dafür auch
+langsamer).
+
+Bei `NodeJS` und `Docker-Desktop` können Sie eigentlich auswählen, welches Sie
+installieren möchten. Denn durch `Docker-Desktop` kann man `NodeJS` automatisch
+laufen lassen, allerdings ist das ein wenig langsamer. Am besten versuchen Sie
+beides zu installieren, dann sind Sie flexibel.
+
+## Github-Account
+
+Sie werden alle Materialien über Github-Classrooms erhalten und abgeben,
+deshalb ist es wichtig das Sie auch einen Github-Account haben. Erstellen Sie
+diesen [hier](https://github.com/signup).
+
+Verwenden Sie für diesen Account am besten Ihre Schulemail. Den Benutzernamen
+können Sie wählen wie Sie möchten. Sie können Ihre e-Nummer dafür verwenden,
+oder auch etwas das für Sie einfacher zum merken ist.
+
+## Erklärung zu den Programmen
+
+Hier finden Sie eine kurze Erklärung was die einzelnen Programme machen.
+
+### VSCode
+
+Das ist Ihr Editor. In der Informatik ist der Editor und vor allem Ihr Umgang
+damit das wichtigste überhaupt. Mit dem Editor bearbeiten Sie Text und Code, er
+ist also Ihr Werkzeug um Ihre Ideen direkt umzusetzen und anzupassen. In all
+den Informatiklektionen die Sie haben, sollten Sie immer auf einen guten Umgang
+mit dem Editor achten. Dazu kommt dann aber noch mehr in den einzelnen
+Lektionen.
+
+### Git
+
+`Git` ist ein Werkzeug zur Versionierung von Software oder Projekten im
+allgemeinen. `Git` ist nicht das gleiche wie `Github`. `Github` ist ein
+Onlinedienst von Microsoft, der es ermöglicht `Git`-Projekte einfach
+miteinander zu tauschen.
+
+Versionierung klingt für Sie wahrscheinlich noch sehr unnötig und kompliziert,
+es ist aber sehr praktisch, und wenn Sie sich ein klein wenig damit
+auseinandersetzen, auch sehr einfach. `Git` macht Ihnen keine automatische
+Versionierung wie Sie das vielleicht schon von `Word` oder `OneNote` kennen,
+sondern Sie müssen explizit sagen, wann es eine neue Version ist. Damit liegt
+die Kontrolle über die Versionierung bei Ihnen, und Sie können einfach zu
+funktionierenden Versionen zurück springen, wenn Sie was gemacht haben, das
+nicht funktioniert. Aber auch zu dem Werkzeug kommt später noch mehr.
+
+### NodeJS
+
+`NodeJS` oder kurz auch einfach nur `node`, ist ein Programm das es Ihnen
+ermöglicht, `Javascript`-Code auf dem eigene Computer auszuführen. Wir brauchen
+das Programm also, damit wir unsere eigenen Programme schreiben und ausführen
+können. `Node` kann Ihnen ausserdem noch weitere `Javascript`-Programme
+installieren, die Ihr eigenes Programm unterstützen und erweitern, so müssen
+wir nicht alles komplett neu programmieren. Auch zu diesem Programm kommt
+später noch mehr.
+
+### Docker-Desktop
+
+`Docker` ist ein Programm, das Ihnen einen Container auf dem Computer ausführen
+kann. Ein Container ist ein eigenes Modul, welches unabhängig vom Rest Ihres
+Betriebssystems arbeiten kann. Mit so einem Container können wir also das
+benötigte `NodeJS` ausführen. Container sind sehr praktisch weil wir dann alle
+das genau gleiche Setup verwenden können. Wir haben also alle die gleiche
+Version von `Node` und lassen es auf dem gleichen Betriebssystem laufen. So
+können Unterschiede und Komplikationen die auf Mac, Windows oder Linux
+auftreten minimiert werden.
+
+Wenn Sie `Node` zum laufen bekommen, dann brauchen Sie `Docker` nicht
+unbedingt, aber wie schon erwähnt, macht es Dinge einfacher, weil dann alle das
+gleiche Setup haben. Allerdings lauft alles ein wenig langsamer, was Sie dann
+auch merken werden.
+
+<Example title="Installation testen">
+
+Wenn Sie alles installiert haben, dann möchten Sie die Installation sicherlich
+auch testen. Dafür können Sie VSCode öffnen und ein neues Repository von Github
+klonen, und eine erste eigene Version erstellen. Dafür drücken Sie die folgende
+Tastenkombination: `Shift + Ctrl + P` und suchen nach dem Befehl: `Git: Clone`.
+Drücken Sie auf `Enter` um den Befehl auszuführen und fügen Sie die folgende
+`URL` ein:
+
+```text
+https://github.com/gymmu/00-demo.git
+```
+
+Bestätigen Sie das wieder mit `Enter` und legen Sie das neue Repository auf
+Ihrem `Desktop` ab.
+
+Wenn das Repository erfolgreich geklont werden konnte, und Sie haben alles
+richtig installiert, dann können Sie mit folgendem Befehl das ganze zum laufen
+    bringen:
+
+    ```bash
+    npm run dev
+    ```
+
+</Example>
