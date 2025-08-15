@@ -64,19 +64,35 @@ function FmsIndex() {
 function GymIndex() {
   return (
     <>
-      <ol className="nav">
-        <li>
-          Obsidian
-          <ol>
-            <NavLink to="obsidian">
-              Obsidian
-            </NavLink>
-            <NavLink to="obsidian-md">
-              Markdown in Obsidian
-            </NavLink>
-          </ol>
-        </li>
-      </ol>
+      <div>
+
+        <h2>Theorie</h2>
+        <ol className="nav">
+          <li>
+            Obsidian
+            <ol>
+              <NavLink to="obsidian">
+                Obsidian
+              </NavLink>
+              <NavLink to="obsidian-md">
+                Markdown in Obsidian
+              </NavLink>
+            </ol>
+          </li>
+        </ol>
+
+        <h2>Praktikum</h2>
+        <ol className="nav">
+          <li>
+            <ol>
+              <NavLink to="praktikum/install">
+                Installation
+              </NavLink>
+            </ol>
+          </li>
+        </ol>
+
+      </div>
     </>
   )
 }
