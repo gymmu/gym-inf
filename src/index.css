@@ -33,6 +33,23 @@
   --footer-height: 60px;
 }
 
+::-webkit-scrollbar {
+  width: clamp(5px, 0.5em, 10px);
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-grey);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-yellow);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 /* Add scroll-margin-top to headings to offset fixed header */
 h1,
 h2,
@@ -44,9 +61,12 @@ h6,
   scroll-margin-top: var(--header-height);
 }
 
-pre {
-  overflow-x: scroll;
-  max-width: 100%;
+pre:has(code) {
+  overflow-x: auto;
+  width: clamp(360px, 80%, 840px);
+  margin-inline: auto;
+  padding: 1.75em;
+  background-color: var(--color-bg);
 }
 
 * {

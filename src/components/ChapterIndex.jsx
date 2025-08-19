@@ -45,6 +45,13 @@ function FmsIndex() {
             </NavLink>
             </ol>
           </li>
+          <li>Computerhardware
+            <ol>
+              <NavLink to="fms/hardware">
+                Hardware
+              </NavLink>
+            </ol>
+          </li>
         </ol>
         <h2>2. Klasse</h2>
         <ol className="nav">
