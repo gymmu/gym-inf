@@ -1,0 +1,164 @@
+import Example from "@components/Example.jsx"
+import SmallASCII from "@components/SmallASCII.jsx"
+
+## Computer Hardware
+
+Ein Computer besteht aus vielen einzelnen Komponenten. Einige wenige davon
+können Sie sehen, wie zum Beispiel den Bildschirm oder die Tastatur. Dies sind
+aber eigentlich keine Komponenten von einem Computer, sondern periphere Geräte
+die den Umgang mit dem Computer einfacher machen. Der eigentliche **Computer**
+ist die Recheneinheit die im Zentrum des Computers steht, daher auch der Name
+Computer. Dieser kommt vom Wort `compute` was so viel bedeutet wie `berechnen`.
+In der deutschen Sprache verwendet man manchmal auch das Wort `Rechner` wenn
+man über den **Computer** spricht. Es ist ganz wichtig das wir dies immer im
+Hinterkopf behalten, der **Computer** ist nur eine sehr fortgeschrittene
+Rechenmaschine in seinem Kern. Für diese Funktionalität braucht ein
+**Computer** die folgenden Komponenten:
+
+- **CPU**: Zentrale Recheneinheit
+- **RAM**: Arbeitsspeicher
+- **Festplatte**: Langzeitspeicher
+
+Diese Komponenten werden wir uns zusammen anschauen und verstehen wofür diese
+gebraucht werden. Aber zuerst müssen wir verstehen was denn ein **Computer**
+eigentlich genau *berechnet*.
+
+### Bits und Bytes
+
+Da der **Computer** ein elektronisches Gerät ist, kann er auch nur auf
+elektronischen Komponenten arbeiten. Die einzige mögliche Speichereinheit die
+wir haben, ist ein `Bit`. Ein `Bit` kann entweder geladen oder nicht geladen
+sein. So wie bei einer Lampe, diese kann entweder eingeschaltet oder
+ausgeschaltet sein. Eine Dimmfunktion gibt es nicht, da die Speicherzelle sonst
+nicht zuverlässig ausgelesen werden kann. Ein `Bit` kann also die folgenden
+beiden Werte annehmen `0` oder `1`. Ein Computer arbeitet also immer auf diesen
+`Bits`. Er kann ein `Bit` auslesen oder setzen.
+
+Mit nur einem `Bit` können wir nur sehr wenig Informationen speichern,
+eigentlich nur die Zahlen `0` und `1`, oder wenn wir diese als Wahrheitswerte
+interpretieren möchten, können wir die Informationen `true` und `false`
+speichern. Mit nur einem `Bit` kommen wir also nicht sehr weit. Damit wir mit
+mehr Informationen arbeiten können, nehmen wir einfach mehrere `Bits` zusammen.
+Man hat beschlossen dass es am besten ist gleich 8 `Bits` zusammen zu nehmen,
+das gibt uns dann 1 `Byte`. Im Speicher würde ein `Byte` dann so aussehen:
+
+```text
+1001 0011
+```
+
+Mit diesem `Byte` können wir bereits $2^8$ Informationen darstellen, also $256$
+unterschiedliche Dinge. Damit können wir schon mal alle Ziffern und das ganze
+Alphabet mit noch Sonderzeichen abdecken. Dafür müssen wir das aber definieren.
+Also immer wenn wir das folgende `Byte` haben, möchten wir dies als `a`
+interpretieren, so wie in dieser Tabelle:
+
+<SmallASCII />
+
+Der **Computer** rechnet also immer mit `Bits` und damit wir mehr Informationen
+verwenden können, müssen wir mehrere `Bits` zu einem `Byte` zusammenschliessen
+und dieses `Byte` müssen wir dann interpretieren, so wie es in der Tabelle
+gemacht wird.
+
+<Example title="Hardware Komponenten">
+
+    Wir haben uns weiter oben 3 Hardware Komponenten angeschaut. Was genau
+    haben diese jetzt aber mit dem Computer zu tun? Und wieso müssen wir zuerst
+    diese `Bits` und `Bytes` verstehen?
+    
+    Zum Glück müssen Sie das alles nicht im Detail verstehen, wir können uns
+    hier also einfach anschauen was die einzelnen Dinge machen. Starten wir mit
+    dem schwierigsten. Was genau macht die **CPU**?
+
+    Eine **CPU** ist die logische Recheneinheit des Computers. Die **CPU**
+    liest ein kleines Stück des Speichers ein, und formt diesen dann um. Das
+    passiert alles über logische Schaltkreise in der **CPU**. Möchten wir dem
+    Computer zum Beispiel sagen das wir ein grosses `A` in ein kleines `a`
+    umwandeln möchten, dann liest der Computer den Speicher an der Stelle aus
+    wo das `A` stand, und schreibt neu das entsprechende `Byte` für `a`.
+
+    ```
+    0110 0001  -->  0100 0001
+    ```
+
+    Die **CPU** liest also immer einige `Bytes` gleichzeitig ein, und schreibt
+    dann neue `Bytes`. Wie die **CPU** aber zu dem Resultat kommt, schauen wir
+    uns nicht genauer an, das würde zu viel Zeit brauchen und ist nicht
+    unbedingt hilfreich.
+
+</Example>
+
+## Alles in `0` und `1`
+
+Um die Funktionsweise eines **Computers** zu verstehen, und zu verstehen was
+überhaupt möglich ist, müssen Sie sich immer ganz klar machen, die Grundlage
+für alles was auf dem **Computer** passiert, sind die `0` und die `1`, mehr
+gibt es da nicht. Wenn wir also Daten auf dem **Computer** speichern, dann ist
+dies einfach eine Abfolge von `Bits`. Schauen wir uns ein Bild auf dem
+Bildschirm an, dann ist dieses Bild im Speicher einfach eine Reihe von `Bits`.
+Wo dieses Bild beginnt und wo es aufhört im Speicher ist ebenfalls in `Bits` im
+Speicher abgelegt.
+
+Wenn wir auf dem **Computer** eine Taste drücken, dann wird ein Signal aus
+mehreren `Bits` (genau ein `Byte`) an die **CPU** geschickt, das führt dann
+dazu dass genau dieses `Byte` im Speicherblock hinzugefügt wird, und so
+entsteht ein Text auf dem **Computer**.
+
+Die Anzeige die Sie auf dem Bildschirm sehen, ist einfach ein Teil des
+Speichers, der genau sagt welches Pixel welche Farbe haben soll. Ändert sich
+nun die Farbe von so einem Pixel, dann ist es weil die **CPU** die `Bits` im
+Speicherbereich für den Bildschirm geändert hat.
+
+Wenn Sie Daten über das Netzwerk schicken, machen Sie das auch in `Bits`. Das
+übertragen von Daten ist im Prinzip recht einfach. Sie legen fest wie viele
+Signale in der Sekunde übertragen werden können. Wenn Sie nun einen `1`
+schicken möchten, machen Sie den Strom so lange an wie Sie `1`-en schicken, und
+lassen den Strom ab, wenn Sie `0`-en schicken. Nehmen Sie an Sie können 1
+Signal in der Sekunde schicken. Möchten Sie nun eine `a` verschicken, dann
+machen Sie folgendes:
+
+- 1s kein Strom
+- 2s Strom
+- 4s kein Strom
+- 1s Strom
+
+Wenn Sie das auf der anderen Seite auslesen, und pro Sekunde ein `Bit`
+auslesen, erhalten Sie das folgende `Byte` am Ende: `0110 0001`.
+
+<Example title="Stromausfall">
+
+    Was passiert wenn der Strom ausfällt? Dazu müssen wir **RAM**-Speicher und
+    **Festplatten**-Speicher unterscheiden. Beides sind Speichermedien um eine
+    Reihe von `Bytes` zu speichern. Das eine ist sehr schnell **RAM** das
+    andere sehr langsam **Festplatte**. Damit der **Computer** effizient
+    arbeiten kann, arbeitet dieser also immer mit **RAM**, daher auch der Name
+    **Arbeitsspeicher**.
+
+    **RAM** besteht aus ganz vielen kleinen Kondesatoren, diese können geladen
+    oder nicht geladen sein, also jeweils ein `Bit`. Damit diese aber geladen
+    sind, braucht es Strom, sonst geht die Ladung ganz schnell weg. Somit
+    braucht es also eine andere Lösung für den permanenten Speicher. Also eine
+    **Festplatte**.
+
+    Auf einer **Festplatte** werden die Daten magnetisch in die einzelnen
+    Zellen geschrieben. So braucht es keinen Strom um die Daten zu erhalten.
+    Das ganze ist aber sehr viel langsamer und eignet sich somit nicht für
+    direkte Berechnungen.
+
+</Example>
+
+## Vom Speicher zur CPU
+
+Damit wir überhaupt etwas arbeiten können auf dem **Computer** müssen die Daten
+immer zuerst von der **Festplatte** gelesen werden. Von der **Festplatte**
+werden die Daten ins **RAM** geladen, darauf kann dann die **CPU** ihre
+logischen Operationen durchführen.
+
+Damit ein **Computer** aber auch wirklich das macht was er soll, und auch nicht
+immer das gleiche, braucht es neben den *Daten* auch noch *Instruktionen*. Das
+sind die Maschinenbefehle, die der **CPU** sagen, wie die *Daten* verarbeitet
+werden. Aus unserer Sicht müssen wir das nicht weiter Unterscheiden, denn auch
+diese *Instruktionen* sind einfach nur als `Bits` im Speicher abgelegt.
+
+
+
+
