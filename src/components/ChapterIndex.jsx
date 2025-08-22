@@ -45,11 +45,13 @@ function FmsIndex() {
             </NavLink>
             </ol>
           </li>
-          <li>Computerhardware
+          <li>Einführung
             <ol>
               <NavLink to="fms/hardware">
-                Hardware
+                Computer Hardware
               </NavLink>
+              <NavLink to="fms/binary">Binärsystem</NavLink>
+              <NavLink to="fms/Hex">Hexadezimalsystem</NavLink>
             </ol>
           </li>
         </ol>

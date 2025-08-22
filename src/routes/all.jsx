@@ -13,6 +13,8 @@ import FMSIndex from "@pages/fms/index.mdx"
 import Obsidian from "@pages/obsidian.mdx"
 import ObsidianMarkdown from "@pages/obsidian-md.mdx"
 import Hardware from "@pages/fms/hardware.mdx"
+import Binary from "@pages/fms/binary.mdx"
+import Hex from "@pages/fms/hex.mdx"
 
 // FMS Praktikum
 import Excel from "@pages/fms/excel.mdx"
@@ -94,6 +96,8 @@ export const createRouter = () => {
                     // FMS Routes 1. Klasse
                     {path: "fms-theorie", element: <FMSIndex /> },
                     {path: "fms/hardware", element: <Hardware /> },
+                    {path: "fms/binary", element: <Binary /> },
+                    {path: "fms/hex", element: <Hex /> },
 
                     // FMS Routes 2. Klasse
                     {path: "fms/excel", element: <Excel /> },
