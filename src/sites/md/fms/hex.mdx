@@ -1,1 +1,72 @@
+import {Math, DMath} from "@components/Katex.jsx"
+import Example from "@components/Example.jsx"
+
 ## Hexadezimalsystem
+
+Neben dem Dezimal- und dem Binärzahlensystem, gibt es noch weitere
+Zahlensysteme, wie zum Beispiel das Hexadezimalsystem. Das Hexadezimalsystem
+ist in der Informatik sehr praktisch, da man ein `Byte` immer mit genau 2
+Stellen darstellen kann. Man braucht also deutlich weniger Platz wie beim
+Binärsystem und das ganze wird viel einfacher zu lesen. Sie denken nun
+wahrscheinlich; wieso denn nicht direkt das Dezimalsystem, das wäre ja am
+einfachsten zum lesen. Das mag so sein, aber das Dezimalsystem geht mit einem
+`Byte` nicht gut auf. Denn ein `Byte` kann die Zahlen <Math>0</Math> bis
+<Math>255</Math> darstellen. Das bedeutet wir brauchen 3 Stellen für das
+Dezimalsystem, und können gut <Math>{String.raw`\frac{3}{4}`}</Math> der Werte
+nicht verwenden. Weitere Gründe sind das umrechnen in das Binärsystem, das über
+das Hexadezimalsystem einfacher ist. Aber was genau ist jetzt das
+Hexadezimalsystem?
+
+<Example title="16er-System">
+
+    Das Hexadezimalsystem ist das Zahlensystem mit der Basis 16, was von `hexa
+    := 6` und `dezimal := 10`, kommt. Ansonsten funktioniert es genau gleich
+    wie die anderen Zahlensysteme, wir können also den Wert von einer
+    Hexadezimalzahl ganz einfach im Dezimalsystem berechnen.
+
+    <DMath>{String.raw`
+        92_{\mathrm{Hex}} = 9 \cdot 16^1 + 2 \cdot 16^0 = 146
+    `}</DMath>
+
+
+    Die Zahl ist ja bereits sehr gross mit einer <Math>9</Math> an der ersten
+    Stelle, aber noch weit weg von der <Math>255</Math>. Wie können wir denn
+    noch grössere Zahlen machen?
+
+</Example>
+
+### Ziffern erweitern
+
+Im Binärsystem hatten wir nur die <Math>0</Math> und <Math>1</Math> als Ziffern
+gebraucht. Im Dezimalsystem brauchen wir alle Ziffern die wir kennen. Nun
+brauchen wir aber 16 Ziffern, da wir sonst nicht alle Werte darstellen können.
+Deshalb müssen wir die Ziffern einfach erweitern. Das machen wir indem wir das
+Alphabet zur Hilfe nehmen. Unsere Ziffern gehen also von <Math>0</Math> bis
+<Math>{String.raw`\mathrm{F}`}</Math>, und haben die folgenden Werte:
+
+ - <Math>{String.raw`0 \rightarrow 0`}</Math>
+ - <Math>{String.raw`1 \rightarrow 1`}</Math>
+ - <Math>{String.raw`2 \rightarrow 2`}</Math>
+ - <Math>{String.raw`3 \rightarrow 3`}</Math>
+ - <Math>{String.raw`4 \rightarrow 4`}</Math>
+ - <Math>{String.raw`5 \rightarrow 5`}</Math>
+ - <Math>{String.raw`6 \rightarrow 6`}</Math>
+ - <Math>{String.raw`7 \rightarrow 7`}</Math>
+ - <Math>{String.raw`8 \rightarrow 8`}</Math>
+ - <Math>{String.raw`9 \rightarrow 9`}</Math>
+ - <Math>{String.raw`\mathrm{A} \rightarrow 10`}</Math>
+ - <Math>{String.raw`\mathrm{B} \rightarrow 11`}</Math>
+ - <Math>{String.raw`\mathrm{C} \rightarrow 12`}</Math>
+ - <Math>{String.raw`\mathrm{D} \rightarrow 13`}</Math>
+ - <Math>{String.raw`\mathrm{E} \rightarrow 14`}</Math>
+ - <Math>{String.raw`\mathrm{F} \rightarrow 15`}</Math>
+
+Nun können wir also den grössten Wert einer 2-stelligen Hexzahl berechnen:
+
+<DMath>{String.raw`
+    \mathrm{FF}_\mathrm{Hex} = 15 \cdot 16^1 + 15 \cdot 16^0 = 240 + 15 = 255 
+`}</DMath>
+
+<Example title="Aufgabe: Werte im Dezimalsystem berechnen">
+
+</Example>
