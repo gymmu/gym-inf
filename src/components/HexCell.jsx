@@ -3,12 +3,12 @@ import MonacoEditor from "react-monaco-editor"
 import { hexy } from "hexy"
 
 export default function HexCell() {
-    const [hex, setHex] = useState("abcdef")
+    const [hex, setHex] = useState("Hello World!")
     const [format, setFormat] = useState({
-        width: 2,
+        width: 4,
         numbering: "none",
         format: "twos",
-        radix: 2
+        radix: 16
     }
 
     )

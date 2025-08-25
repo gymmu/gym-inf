@@ -1,5 +1,6 @@
 import {Math, DMath} from "@components/Katex.jsx"
 import Example from "@components/Example.jsx"
+import HexCell from "@components/HexCell"
 
 ## Hexadezimalsystem
 
@@ -67,6 +68,88 @@ Nun können wir also den grössten Wert einer 2-stelligen Hexzahl berechnen:
     \mathrm{FF}_\mathrm{Hex} = 15 \cdot 16^1 + 15 \cdot 16^0 = 240 + 15 = 255 
 `}</DMath>
 
+Das ist unglaublich praktisch für uns, denn so können wir ein `Byte` mit immer
+genau 2 Stellen einer Hexzahl angeben. Das ist einer der Gründe weshalb das
+Hexadezimalsystem in der Informatik gern verwendet wurde und immer noch wird.
+
 <Example title="Aufgabe: Werte im Dezimalsystem berechnen">
 
+    Berechnen Sie die folgenden Werte im Dezimalsystem:
+
+    - <Math>{String.raw`62_\mathrm{Hex}`}</Math>
+    - <Math>{String.raw`\mathrm{F0}_\mathrm{Hex}`}</Math>
+    - <Math>{String.raw`\mathrm{0F}_\mathrm{Hex}`}</Math>
+    - <Math>{String.raw`\mathrm{AB}_\mathrm{Hex}`}</Math>
+
 </Example>
+
+### Von Dezimal zu Hex
+
+Auch beim Hexadezimalsystem kann es vorkommen das wir eine Zahl vom
+Dezimalsystem ins Hexadezimalsystem bringen müssen. Auch das geht recht
+einfach, wir dividieren die Hexzahl durch 16 und der Rest ergibt die nächste
+Stelle. Wenn das Resultat grösser als 16 ist, dann wiederholen wir den Vorgang
+bis es nicht mehr möglich ist. Oder anders formuliert, wir schauen welche
+Stellen aktiv sind. Wir möchten dafür die Zahl
+<Math>{String.raw`6754_\mathrm{Dec}`}</Math> in eine Hexzahl umwandeln. Wir
+dividieren also immer durch 16 und schauen uns den Rest an.
+
+<DMath>{String.raw`
+    \begin{align*}
+    6754 : 16 = 422.125 &\Rightarrow \text{0er-Stelle} \Rightarrow 0.125 \cdot 16 = 2 \\
+    422 : 16 = 26.375 &\Rightarrow \text{1er-Stelle} \Rightarrow 0.375 \cdot 16 = 6 \\
+    26 : 16 = 1.625 &\Rightarrow \text{2er-Stelle} \Rightarrow 0.625 \cdot 16 = 10 \\
+    1 : 16 = 0.0625 &\Rightarrow \text{3er-Stelle} \Rightarrow 0.0625 \cdot 16 = 1 \\
+    \end{align*}
+`}</DMath>
+
+Dann können wir die Zahl einfach an den Stellen ablesen. Wir müssen nur noch
+die Ziffern ersetzen, falls eine Stelle einen Wert von 10 oder mehr hat. Hier
+ergibt sich also die Zahl
+<Math>{String.raw`\mathrm{1A62}_\mathrm{Hex}`}</Math>. Somit können wir also in
+beide Richtungen umrechnen.
+
+<Example title="Aufgabe: Umrechnen ins Hexadezimalsystem">
+
+    Bestimmen Sie die Werte der folgenden Zahlen im Hexadezimalsystem:
+
+    - <Math>{String.raw`\mathrm{16}_\mathrm{Dec}`}</Math>
+    - <Math>{String.raw`\mathrm{162}_\mathrm{Dec}`}</Math>
+    - <Math>{String.raw`\mathrm{240}_\mathrm{Dec}`}</Math>
+    - <Math>{String.raw`\mathrm{255}_\mathrm{Dec}`}</Math>
+
+</Example>
+
+### Warum das Hexadezimalsystem?
+
+Auf modernen Computern wird das Hexadezimalsystem nicht mehr explizit
+verwendet, denn es ist für uns unintuitiv und mühsam zum rechnen. Auf modernen
+Computern gibt es so viele Schichten, die alles für Sie abstrahieren, das Sie
+fast gar nicht in Berührung mit den `Bits` und `Bytes` kommen. Bei der
+Entstehung der Computer, war das noch ganz anders. In den Anfangszeiten wurde
+noch direkt mit `Bytes` gearbeitet. Da ein `Byte` aber 8 Stellen hat, und nur
+aus `0` und `1` besteht, passieren da recht schnell Fehler. Deshalb ist das
+Hexadezimalsystem besser, denn man kann die Zahlen kompakter darstellen (nur 2
+Stellen) und es wird auch übersichtlicher und einfacher zu merken.
+
+Heute finden Sie noch sehr oft Überreste vom Hexadezimalsystem im Umgang mit
+dem Computer. Eine ganz normale Textdatei auf dem Computer ist immer nur im
+ASCII-Code gespeichert, diese Datei lässt sich dann `Byte` für `Byte` im
+Hexadezimalcode lesen und mit Hilfe der ASCII-Tabelle direkt übersetzen. Das
+folgende Beispiel zeigt wie so eine Datei aussehen könnte. Auf der rechten
+Seite haben Sie den Inhalt der Datei, so wie wir als Menschen das ganze gerne
+lesen würden, und auf der rechten Seite, finden Sie die Datei im
+Hexadezimalformat.
+
+<HexCell />
+
+### Farben und Hexadezimalsystem
+
+Das Hexadezimalsystem ist auch bei den Farben sehr verbreitet, oder war es
+früher einmal. Wenn Sie auf dem Computer eine Farbe darstellen möchten, also
+auf dem Bildschirm, dann können Sie jede beliebige Farbe erzeugen, indem Sie
+das Licht von 3 Grundfarben mischen, und zwar von `rot`, `grün` und `blau`. Die
+Intensität der einzelnen Farben, können Sie jeweils von 0 bis 255 abstufen. So
+brauchen Sie genau 1 `Byte` für jeden Farbkanal, also 3 `Bytes` pro Pixel. Die
+Farben werden dann immer so angegeben: `#FF0037`. Das wäre eine Farbe mit sehr
+viel `rot`, kein `grün` und ein klein wenig `blau`.
