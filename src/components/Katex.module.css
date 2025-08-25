@@ -1,0 +1,11 @@
+.inline {
+  /* Nothing to do yet. */
+}
+
+.display {
+  text-align: center;
+}
+
+.wrapper {
+  container-type: inline-size;
+}

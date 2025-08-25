@@ -1,4 +1,6 @@
 import {Math, DMath} from "@components/Katex.jsx"
+import Example from "@components/Example.jsx"
+import Tooltip from "@components/Tooltip.jsx"
 
 ## Binärsystem
 
@@ -71,4 +73,41 @@ schreiben wir dafür auch `0b10`, wenn es einfacher ist. Das zweite ist auch die
 Schreibweise die in der Informatik verbreitet ist, das erste wird mehr in der
 Mathematik verwendet.
 
-Aber was hat diese Zahl nun für einen Wert?
+Aber was hat diese Zahl nun für einen Wert? Das können wir mit der Regel von
+oben ganze einfach ausrechnen:
+
+<DMath>
+    {String.raw`1 \cdot 2^1 + 0 \cdot 2^0 = 2_\mathrm{Dec}`}
+</DMath>
+
+Genau das Schema können Sie bei allen Binärzahlen anwenden, dann erhalten Sie
+immer der Wert im Dezimalsystem.
+
+<Example title="Aufgabe: Von Binär zu Dezimal">
+
+    Bestimmen Sie den Dezimalwert der folgenden Binärzahlen.
+
+    - <Tooltip tip="4">`0b0100`</Tooltip>
+    - <Tooltip tip="10">`0b1010`</Tooltip>
+    - <Tooltip tip="1">`0b0001`</Tooltip>
+    - <Tooltip tip="15">`0b1111`</Tooltip>
+
+    Bestimmen Sie auch den Wert von diesen grösseren Binärzahlen
+
+    - <Tooltip tip="75">`0b1000 1011`</Tooltip>
+    - <Tooltip tip="24">`0b0001 1000`</Tooltip>
+    - <Tooltip tip="255">`0b1111 1111`</Tooltip>
+    - <Tooltip tip="240">`0b1111 0000`</Tooltip>
+
+    Die grösste Zahl mit 8 Stellen ist also die Zahl `0b1111 1111`, mit dem
+    Wert 255. Das ist genau ein `Byte` wo alle `Bits` auf `1` gesetzt wurden.
+    Daraus können Sie ablesen das Sie mit einem `Byte` genau 256 Informationen
+    darstellen können, also die Zahlen von 0 bis 255.
+
+</Example>
+
+## Von der Dezimalzahl zur Binärzahl
+
+Dieser Weg wird deutlich weniger oft gebraucht, dennoch schauen wir es kurz an.
+Wenn Sie eine Dezimalzahl in eine Binärzahl umwandeln möchten, können Sie mit
+einem ganz einfachen Algorithmus vorgehen

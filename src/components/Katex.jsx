@@ -1,6 +1,7 @@
 import katex from "katex"
 import { useEffect, useRef } from "react"
 import "katex/dist/katex.css"
+import styles from "./Katex.module.css"
 
 export function Math({ children }) {
   const katexElement = useRef(null)
@@ -10,7 +11,7 @@ export function Math({ children }) {
       throwOnError: false,
     })
   }, [katexElement])
-  return <span ref={katexElement}>{children}</span>
+  return <span className={styles.inline} ref={katexElement}>{children}</span>
 }
 
 export function DMath({ children }) {
@@ -22,5 +23,9 @@ export function DMath({ children }) {
       throwOnError: false,
     })
   }, [katexElement])
-  return <div ref={katexElement} style={{textAlign: "center"}}>{children}</div>
+  return (
+    <div className={styles.wrapper}>
+     <div ref={katexElement} className={styles.display}>{children}</div>
+    </div>
+  )
 }
