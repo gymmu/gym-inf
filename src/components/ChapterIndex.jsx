@@ -62,6 +62,9 @@ function FmsIndex() {
               <NavLink to="fms/excel">
                 Einstieg in Excel
               </NavLink>
+              <NavLink to="fms/excel-spielplan">
+                Zusammenarbeit in Excel
+              </NavLink>
             </ol>
           </li>
         </ol>

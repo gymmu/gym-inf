@@ -1,0 +1,69 @@
+import Video from "@components/Video"
+import Example from "@components/Example"
+import Img from "@components/Img"
+
+import ExcelImg from "@img/excel-spielplan.png"
+
+## Zusammenarbeiten in Excel
+
+Wie im letzten Kapitel bereits angekündigt, kann Excel für alle möglichen Tasks
+verwendet werden. Oftmals auch für Dinge, für die es ursprünglich nicht gemacht
+wurde. Dank der Entwicklung von **Google Spreadsheets**, was nur im Browser und
+über die **Google Drive** verfügbar ist, hat auch Excel nachziehen müssen, und
+eine Vollversion des Programms im Browser zur Verfügung zu stellen. Damit sind
+die Tage in denen man Excel-Sheets per Email verschickt hat, und niemand mehr
+weiss welches die aktuelle Version ist, endlich vorbei. Zusätzlich können die
+Sheets sogar gleichzeitig bearbeitet werden, und ermöglichen ganz neue Tasks,
+die ursprünglich nicht vorgesehen waren. Wenn sich jeder an einfache Regeln
+hält, dann können wir zum Beispiel einen Doodle ganz leicht über Excel
+koordinieren, wir müssen nur jedem Bearbeiter einen Link schicken, der das
+Sheet enthält. So können auch Personen die nicht in der gleichen Organisation
+sind, oder keinen **Google Account** haben, auf das Sheet zugreifen und
+Änderungen einfügen. Wir müssen nicht mehr eine eigene Applikation dafür
+erstellen.
+
+<Example title="Beispiel: Spielplansitzung">
+
+    Im regionalen Volleyball war es seit Jahren so, dass man sich für die
+    Spielplansitzung vor Ort trifft, und dann in 30 Minuten alle Spiele der
+    Saison abmacht. Das hat oft dazu geführt das es überschneidungen gab, oder
+    es unnötig kompliziert wurde. Oftmals gab es sogar richtig schlechte
+    Spielpläne, je nach dem welche Teams die Spiele zuerst abgemacht haben. Mit
+    Covid brauchte es eine neue Lösung für das Problem, denn eine Sitzung mit
+    allen Teamverantwortlichen in einer Aula war nicht mehr möglich. Das
+    gleiche Format einfach nur digital mit Zoom und Breakout-Rooms zu machen,
+    erschien auch nicht sehr attraktiv, da die gleichen Probleme wie oben
+    bereits erwähnt, erhalten bleiben. Auf so kurze Zeit eine Applikation zu
+    entwerfen war auch nicht möglich, daher wurde das ganze mit geteilten
+    **Excel Sheets** gelöst. Wie das ganze aussehen könnte, sehen Sie in dem
+    folgenden Bild.
+
+    <Img src={ExcelImg} imgStyle={{width: '80%'}} />
+
+    Im Video weiter unten, können Sie die wichtigsten Teile von dieser Tabelle
+    Schritt-für-Schritt mitarbeiten.
+
+</Example>
+
+## Videoanleitung
+
+Hier finden Sie den Link zum Onedrive-Ordner der Schule, damit können Sie alles
+direkt im Browser mit dem Video mitarbeiten:
+[https://sblch-my.sharepoint.com/my](https://sblch-my.sharepoint.com/my)
+
+<Video url="HuOC_rlxte4" />
+
+<Example title="Aufgabe: Sheet verbessern">
+
+    Finden Sie Möglichkeiten das Sheet weiter zu verbessern. Fügen Sie die
+    Teamnummer in die Tabelle mit ein. Zeigen Sie Überschneidungen an, wenn am
+    gleichen Tag ein Spiel abgemacht wird. Markieren Sie eine Zelle in
+    hellgrau, wenn das Auswärtsteam an dem Datum bereits ein Spiel abgemacht
+    hat. Markieren Sie alle Zellen mit dunkelgrau, wenn das Auswärtsteam am
+    gleichen Tag ein Heimspiel anbieten würde.
+
+    Sie können auch eigene Verbesserungen einbringen. Versuchen Sie dabei mit
+    zusätzlichen Tabellen und den Befehlen `XVERGLEICH(...)`, `INDEX(...)`,
+    `FILTER(...)` und `SVERWEIS(...)` zu arbeiten.
+
+</Example>

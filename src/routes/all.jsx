@@ -19,6 +19,7 @@ import Hex from "@pages/fms/hex.mdx"
 
 // FMS Praktikum
 import Excel from "@pages/fms/excel.mdx"
+import ExcelSpielplan from "@pages/fms/excel-spielplan.mdx"
 
 
 // Register routes
@@ -103,6 +104,7 @@ export const createRouter = () => {
 
                     // FMS Routes 2. Klasse
                     {path: "fms/excel", element: <Excel /> },
+                    {path: "fms/excel-spielplan", element: <ExcelSpielplan /> },
 
                     // Was passiert wenn die Route falsch ist.
                     {
