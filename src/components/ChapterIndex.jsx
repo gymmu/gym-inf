@@ -88,6 +88,16 @@ function GymIndex() {
               </NavLink>
             </ol>
           </li>
+          <li>Einführung
+            <ol>
+              <NavLink to="fms/hardware">
+                Computer Hardware
+              </NavLink>
+              <NavLink to="fms/binary">Binärsystem</NavLink>
+              <NavLink to="fms/Hex">Hexadezimalsystem</NavLink>
+              <NavLink to="colors">Farben</NavLink>
+            </ol>
+          </li>
         </ol>
 
         <h2>Praktikum</h2>

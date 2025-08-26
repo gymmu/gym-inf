@@ -1,0 +1,8 @@
+:root {
+    --bg-color: #ff55ff;
+}
+
+.container {
+    background-color: var(--bg-color);
+
+}
