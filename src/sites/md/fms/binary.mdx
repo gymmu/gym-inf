@@ -110,4 +110,27 @@ immer der Wert im Dezimalsystem.
 
 Dieser Weg wird deutlich weniger oft gebraucht, dennoch schauen wir es kurz an.
 Wenn Sie eine Dezimalzahl in eine Binärzahl umwandeln möchten, können Sie mit
-einem ganz einfachen Algorithmus vorgehen
+einem ganz einfachen Algorithmus vorgehen. Dabei schreiben wir die Binärzahl
+von hinten nach vorne.
+
+Nehmen wir als Beispiel die Zahl <Math>{String.raw`43_\mathrm{Dec}`}</Math>.
+Nun dividieren wir diese Zahl durch 2, und wir notieren den Rest. Wenn es einen
+Rest gibt, dann schreiben wir eine <Math>1</Math>. Wenn es keinen Rest gibt,
+dann schreiben wir an der Stelle eine <Math>0</Math>. Dann rechnen wir mit dem
+Ergebnis weiter, lassen den Rest aber weg. Das machen wir bis wir bei
+<Math>0</Math> angekommen sind.
+
+
+<DMath>{String.raw`
+    \begin{align*}
+    43 : 2 = 21.5 &\Rightarrow \text{0er-Stelle} \Rightarrow 0.5 \cdot 2 = 1 \\
+    21 : 2 = 10.5 &\Rightarrow \text{1er-Stelle} \Rightarrow 0.5 \cdot 2 = 1 \\
+    10 : 2 = 5 &\Rightarrow \text{2er-Stelle} \Rightarrow 0.0 \cdot 2 = 0 \\
+    5 : 2 = 2.5 &\Rightarrow \text{3er-Stelle} \Rightarrow 0.5 \cdot 2 = 1 \\
+    2 : 2 = 1 &\Rightarrow \text{4er-Stelle} \Rightarrow 0.0 \cdot 2 = 0 \\
+    1 : 2 = 0.5 &\Rightarrow \text{5er-Stelle} \Rightarrow 0.5 \cdot 2 = 1
+    \end{align*}
+`}</DMath>
+
+Wir erhalten damit also die folgende Binärzahl:
+<Math>{String.raw`101011_\mathrm{Bin}`}</Math>.
