@@ -1,0 +1,136 @@
+import {Math, DMath} from "@components/Katex.jsx"
+import Example from "@components/Example.jsx"
+import Tooltip from "@components/Tooltip.jsx"
+
+## Binärsystem
+
+Das Binärsystem ist eines von vielen Zahlensystem. Es ist besonders in der
+Informatik sehr verbreitet, da die Grundeinheit des Computers das `Bit` ist,
+und somit nur 2 Werte annehmen kann. Für uns scheint das Binärsystem auf den
+ersten Blick sehr unintuitiv und kompliziert, da wir uns das Dezimalsystem
+gewohnt sind. Die Beherrschung des Binärsystems ist vor allem auch wichtig, um
+den folgenden Witz zu verstehen.
+
+```text
+Es gitb nur 10 Arten von Menschen, diejenigen die das Binärsystem verstehen und
+die anderen.
+```
+
+## Dezimalsystem
+
+Bevor wir uns das Binärsystem aber genauer anschauen, versuchen wir zu
+verstehen, wie Zahlensysteme generell funktionieren. Dafür schauen wir und das
+Dezimalsystem genauer an, da Sie dieses schon kennen.
+
+Die Zahl <Math>273</Math> im Dezimalsystem, hat einen klaren Wert für Sie,
+genau wie die Zahl <Math>721.</Math> Für Sie ist auch absolut klar dass
+<Math>273 < 721</Math> ist. Dazu müssen Sie nicht mal die ganze Zahl anschauen,
+es reicht völlig wenn Sie auf die hunderter Stelle schauen. Aber was genau ist
+denn die hunderter Stelle?
+
+Um den Wert einer mehrstelligen Zahl zu erhalten, wenden wir eigentlich immer
+einen Trick an. Im Dezimalsystem haben wir diese Stellen sogar benannt. Der
+Trick sieht dann wie folgt aus:
+
+<DMath>
+    {String.raw`273 = 2 \cdot 100 + 7 \cdot 10 + 3 \cdot 1`}
+</DMath>
+
+So können wir den Wert der Zahl ganz einfach berechnen. Da es aber aufwendig
+ist, die Zahl immer so aufzuschreiben, schreibt man die Zahl in der Kurzform,
+so wie sie auf der linken Seite steht, also <Math>273</Math>. Wir können die
+Regel mit der Summe die wir oben verwendet haben, aber noch allgemeiner
+schreiben. Wenn wir das machen, dann sollten wir danach jedes beliebige
+Zahlensystem verstehen, oder zumindest den Wert der Zahl im Dezimalsystem
+berechnen können. Die Regel sieht wie folgt aus:
+
+<DMath>
+    {String.raw`273 = 2 \cdot 10^2 + 7 \cdot 10^1 + 3 \cdot 10^0`}
+</DMath>
+
+Beginnen wir bei <Math>0</Math> zu zählen, so wie es in der Informatik üblich
+ist, dann können wir den Wert einer Stelle immer mit
+<Math>{String.raw`\mathrm{Basis}^\mathrm{Stelle}`}</Math> darstellen. So kommen
+wir auf den Wert der Stelle, also <Math>10^0</Math> für die Einerstelle,
+<Math>10^1</Math> für die Zehnerstelle, <Math>10^2</Math> für die
+Hunderterstelle und so weiter.
+
+Der Wert an der jeweiligen Stelle, wird dann mit der Ziffer angegeben. Also die
+Zahl <Math>273</Math> hat an der Hunderterstelle den folgenden Wert:
+
+<DMath>
+    {String.raw`2 \cdot 10^2`}
+</DMath>
+
+Die gleichen Regeln lassen sich nun auf alle anderen Zahlensysteme anwenden.
+
+## Ziffern im Binärsystem
+
+Das Binärsystem hat nur 2 Ziffern, die <Math>0</Math> und die <Math>1</Math>.
+Sie können also Zahlen nur mit diesen beiden Ziffern schreiben, wie zum
+Beispiel die Zahl <Math>{String.raw`10_{\mathrm{Bin}}`}</Math>. Oftmals
+schreiben wir dafür auch `0b10`, wenn es einfacher ist. Das zweite ist auch die
+Schreibweise die in der Informatik verbreitet ist, das erste wird mehr in der
+Mathematik verwendet.
+
+Aber was hat diese Zahl nun für einen Wert? Das können wir mit der Regel von
+oben ganze einfach ausrechnen:
+
+<DMath>
+    {String.raw`1 \cdot 2^1 + 0 \cdot 2^0 = 2_\mathrm{Dec}`}
+</DMath>
+
+Genau das Schema können Sie bei allen Binärzahlen anwenden, dann erhalten Sie
+immer der Wert im Dezimalsystem.
+
+<Example title="Aufgabe: Von Binär zu Dezimal">
+
+    Bestimmen Sie den Dezimalwert der folgenden Binärzahlen.
+
+    - <Tooltip tip="4">`0b0100`</Tooltip>
+    - <Tooltip tip="10">`0b1010`</Tooltip>
+    - <Tooltip tip="1">`0b0001`</Tooltip>
+    - <Tooltip tip="15">`0b1111`</Tooltip>
+
+    Bestimmen Sie auch den Wert von diesen grösseren Binärzahlen
+
+    - <Tooltip tip="75">`0b1000 1011`</Tooltip>
+    - <Tooltip tip="24">`0b0001 1000`</Tooltip>
+    - <Tooltip tip="255">`0b1111 1111`</Tooltip>
+    - <Tooltip tip="240">`0b1111 0000`</Tooltip>
+
+    Die grösste Zahl mit 8 Stellen ist also die Zahl `0b1111 1111`, mit dem
+    Wert 255. Das ist genau ein `Byte` wo alle `Bits` auf `1` gesetzt wurden.
+    Daraus können Sie ablesen das Sie mit einem `Byte` genau 256 Informationen
+    darstellen können, also die Zahlen von 0 bis 255.
+
+</Example>
+
+## Von der Dezimalzahl zur Binärzahl
+
+Dieser Weg wird deutlich weniger oft gebraucht, dennoch schauen wir es kurz an.
+Wenn Sie eine Dezimalzahl in eine Binärzahl umwandeln möchten, können Sie mit
+einem ganz einfachen Algorithmus vorgehen. Dabei schreiben wir die Binärzahl
+von hinten nach vorne.
+
+Nehmen wir als Beispiel die Zahl <Math>{String.raw`43_\mathrm{Dec}`}</Math>.
+Nun dividieren wir diese Zahl durch 2, und wir notieren den Rest. Wenn es einen
+Rest gibt, dann schreiben wir eine <Math>1</Math>. Wenn es keinen Rest gibt,
+dann schreiben wir an der Stelle eine <Math>0</Math>. Dann rechnen wir mit dem
+Ergebnis weiter, lassen den Rest aber weg. Das machen wir bis wir bei
+<Math>0</Math> angekommen sind.
+
+
+<DMath>{String.raw`
+    \begin{align*}
+    43 : 2 = 21.5 &\Rightarrow \text{0er-Stelle} \Rightarrow 0.5 \cdot 2 = 1 \\
+    21 : 2 = 10.5 &\Rightarrow \text{1er-Stelle} \Rightarrow 0.5 \cdot 2 = 1 \\
+    10 : 2 = 5 &\Rightarrow \text{2er-Stelle} \Rightarrow 0.0 \cdot 2 = 0 \\
+    5 : 2 = 2.5 &\Rightarrow \text{3er-Stelle} \Rightarrow 0.5 \cdot 2 = 1 \\
+    2 : 2 = 1 &\Rightarrow \text{4er-Stelle} \Rightarrow 0.0 \cdot 2 = 0 \\
+    1 : 2 = 0.5 &\Rightarrow \text{5er-Stelle} \Rightarrow 0.5 \cdot 2 = 1
+    \end{align*}
+`}</DMath>
+
+Wir erhalten damit also die folgende Binärzahl:
+<Math>{String.raw`101011_\mathrm{Bin}`}</Math>.
