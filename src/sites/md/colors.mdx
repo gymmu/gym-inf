@@ -1,5 +1,66 @@
 import RGB from "@components/RGB.jsx"
+import Color from "@components/Color.jsx"
+import Example from "@components/Example.jsx"
 
 ## Farben
 
+Da ein Computer nur mit `Bits` arbeiten kann, müssen wir dem Computer
+beibringen wie er `Bits` zusammen gruppieren kann, damit wir diese Daten weiter
+interpretieren können. Wir haben bereits gesehen das wir mit dem `Byte 0110
+0001` den Buchstaben `a` abbilden können. Wir können also mit `Bytes` bereits
+Text abbilden. Nun möchten wir aber noch Bilder beschreiben können. Dafür
+müssen wir die `Bits` so gruppieren, das wir die Farben von einzelnen Pixeln
+beschreiben können. Das kommt daher, das Computerdisplays pro Pixel 3 LEDs
+haben, die jeweils `rot`, `grün` und `blau` sind. Wenn Sie das Licht von diesen
+LEDs mischen, dann können Sie jede beliebige Farbe darstellen. Sie müssen nur
+sagen wie stark jedes LED leuchten soll. Aus dieser Idee ergibt sich das
+`RBG`-Farbschema.
+
+Wir müssen nun also die Intensitäten von `rot`, `grün` und `blau` jeweils in
+`Bits` angeben. Damit mir möglichst feine Abstufungen haben, hat man sich für
+256 Werte pro Farbe entschieden. Wir können ein Pixel also mit genau 3 `Bytes`
+beschreiben. Wenn wir also nur Rot möchten, dann können wir das mit den
+folgenden 3 `Bytes` beschreiben.
+
+```text
+1111 1111 0000 0000 0000 0000
+```
+
+Das ist aber unglaublich aufwendig und Fehler können schnell passieren, wenn
+man mal in einer Stelle verrutscht. Deshalb nehmen wir das Hexadezimalsystem
+zur Hilfe und können die gleiche Farbe dann einfach so schreiben: `FF 00 00`.
+Dieses Format ist so verbreitet, das man dafür eine eigene Schreibweise
+eingeführt hat: `#FF0000`.
+
+Hier finden Sie eine Anwendung die Ihnen die Farbe direkt darstellen kann.
+
 <RGB />
+
+<Example title="Farben mischen">
+
+    Sie kennen bereits das mischen von Wasserfarben. Diese Art von Farben
+    mischen, nennt man Farbsubtraktion, da die unterschiedlichen Farbpigmente
+    das Licht absorbieren. Also jede weitere Farbe absorbiert mehr Licht.
+
+    Die Mischung von Farben die wir auf dem Bildschirm haben, funktioniert ganz
+    anders. Da kommt immer mehr Licht dazu, deshalb sagt man zu dieser Art
+    Farbaddition. Mit Farbaddition kommen Sie auf ganz andere Farben wie mit
+    der Farbsubtraktion. Zum Beispiel erreichen Sie weiss, indem Sie alle
+    Farben voll aktivieren, also mit `#FFFFFF`. Und schwarz erhalten Sie wenn
+    Sie alle Farben komplett deaktivieren, also `#000000`.
+
+    Finden Sie heraus was die folgenden `Bytes` für eine Farbe ergeben.
+    Versuchen Sie zuerst zu raten, geben Sie es dann in den Farbrechner oben
+    ein.
+
+    - `#FF00FF`
+    - `#00FFFF`
+    - `#A33ECE`
+    - `#626262`
+
+    Versuchen Sie die Hexwerte für die folgenden Farben zu finden:
+
+    - <Color hex="#FFFF00" />
+
+
+</Example>
