@@ -33,15 +33,15 @@ export default function RGB() {
                 #
             </div>
             <div className={styles.inputgroup}>
-                <label className={styles.red} for="red">Rot</label>
+                <label className={styles.red} htmlFor="red">Rot</label>
                 <input className={styles.colorinput} id="red" maxLength="2" type="text" name="red" value={red} onChange={updateRed} />
             </div>
             <div className={styles.inputgroup}>
-                <label className={styles.green} for="green">Grün</label>
+                <label className={styles.green} htmlFor="green">Grün</label>
                 <input className={styles.colorinput} id="green" maxLength="2" type="text" name="green" value={green} onChange={updateGreen} />
             </div>
             <div className={styles.inputgroup}>
-                <label className={styles.blue} for="blue">Blau</label>
+                <label className={styles.blue} htmlFor="blue">Blau</label>
                 <input className={styles.colorinput} id="blue" maxLength="2" type="text" name="blue" value={blue} onChange={updateBlue} />
             </div>
 
