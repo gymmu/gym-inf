@@ -5,6 +5,7 @@ import Layout from "@components/Layout"
 // Importiere Unterseiten fürs Gym
 import Index from "@pages/index.mdx"
 import Colors from "@pages/colors.mdx"
+import Information from "@pages/information.mdx"
 
 // Importiere Unterseiten fürs Gym Praktikum
 import PInstall from "@pages/praktikum/installation.mdx"
@@ -92,6 +93,7 @@ export const createRouter = () => {
                     {path: "obsidian", element: <Obsidian />},
                     {path: "obsidian-md", element: <ObsidianMarkdown />},
                     {path: "colors", element: <Colors />},
+                    {path: "information", element: <Information />},
 
                     // Gym Praktikum
                     {path: "praktikum/install", element: <PInstall />},
