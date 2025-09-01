@@ -4,11 +4,6 @@ import Example from "@components/Example.jsx"
 
 import PPM from "@components/Bitmap.jsx"
 
-<PPM ppmS={String.raw`P3
-2
-2
-FF
-0 FF 0 FF 0 0 FF 0 0 FF 0 FF`}/>
 
 ## Farben
 
@@ -31,7 +26,7 @@ beschreiben. Wenn wir also nur Rot möchten, dann können wir das mit den
 folgenden 3 `Bytes` beschreiben.
 
 ```text
-1111 1111 0000 0000 0000 0000
+11111111 00000000 00000000
 ```
 
 Das ist aber unglaublich aufwendig und Fehler können schnell passieren, wenn
@@ -69,6 +64,62 @@ Hier finden Sie eine Anwendung die Ihnen die Farbe direkt darstellen kann.
     Versuchen Sie die Hexwerte für die folgenden Farben zu finden:
 
     - <Color hex="#FFFF00" />
+    - <Color hex="#FF00FF" />
+    - <Color hex="#00FFFF" />
+    - <Color hex="#000000" />
+    - <Color hex="#FFFFFF" />
 
+
+</Example>
+
+### Bilder
+
+Wir wissen nun wie man Farben beschreiben kann, jetzt möchten wir aber Bilder
+beschreiben. Wir schauen uns dafür ein Bildformat an, das so eigentlich nicht
+mehr verwendet wird, das aber praktisch zum lernen ist. Das Format heisst `PPM`
+und steht für `Portable Pixmap Format`. Im Gegensatz zu den häufig verwendeten
+Formaten wir `JPG` oder `PNG`, ist `PPM` nicht komprimiert. Das bedeutet das
+jedes einzelne Pixel mit all seinen Farbwerten beschrieben wird. Das Format
+selber ist sehr einfach aufgebaut, hier finden Sie ein Beispiel dazu:
+
+```text
+P3
+2
+2
+FF
+00 FF 00 FF 00 00
+A2 B5 18 3F 3F 3F
+```
+
+Die erste Zeile beschreibt welche Version von dem Format verwendet werden soll.
+`P1` und `P2` wären Binär oder nur Graustufen. Daher arbeiten wir nur mit dem
+`P3` Format. In unserer Anwendung sind die anderen Formate gar nicht definiert.
+Die nächsten beiden Zeilen geben die `Breite` und die `Höhe` des Bildes in
+Pixeln an. Die Zeile 4 gibt den maximalen Wert an. Der ist bei uns immer `FF`,
+angeben müssen wir ihn dennoch. Alles was danach kommt, sind die einzelnen
+Pixel. Hier spielt es keine Rolle ob Sie diese auf einer Zeile oder auf
+mehreren verteilt schreiben. Hier wird einfach ein `Byte` nach dem anderen
+gelesen und als Farbkanal für den entsprechenden Pixel interpretiert. Das
+Format das hier gewählt wurde, soll das ganze ein wenig übersichtlicher machen.
+So entspricht das Format genau der Anordnung der Pixel im Bild selber.
+
+<PPM ppmS={String.raw`P3
+2
+2
+FF
+00 FF 00 FF 00 00
+A2 B5 18 3F 3F 3F`}/>
+
+<Example title="Aufgaben: Bilder erstellen">
+
+    Erstellen Sie eigene Bilder mit diesem Format.
+
+    - Erstellen Sie ein `2x2` Bild, das alle Grundfarben und weiss enhält.
+    - Erstellen Sie ein `2x2` Bild, das 4 unterschiedliche Grüntöne enthält.
+    - Erstellen Sie ein `3x3` Bild, mit 9 unterschiedlichen Farben.
+    - Erstellen Sie ein `4x4` Bild, mit einem Farbverlauf. Starten Sie oben
+    links mit Ihrer Lieblingsfarbe und unten rechts mit einer weiteren Farbe.
+    Der Farbverlauf soll diagnal sein, von Ihrer Lieblingsfarbe zur zweiten
+    Farbe.
 
 </Example>
