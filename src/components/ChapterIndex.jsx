@@ -52,6 +52,8 @@ function FmsIndex() {
               </NavLink>
               <NavLink to="fms/binary">Binärsystem</NavLink>
               <NavLink to="fms/Hex">Hexadezimalsystem</NavLink>
+              <NavLink to="information">Daten und Informationen</NavLink>
+              <NavLink to="colors">Farben</NavLink>
             </ol>
           </li>
         </ol>
