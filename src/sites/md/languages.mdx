@@ -1,0 +1,18 @@
+import Example from "@components/Example.jsx"
+import HexImgCell from "@components/HexImgCell.jsx"
+
+## Sprachen
+
+In den vorherigen Kapiteln, haben wir gelernt dass der Computer alle Daten in `Bits` abspeichert. Sobald wir diese `Bits` zusammen gruppieren und zu einem `Byte` fassen, können wir bereits sehr viele Informationen damit repräsentieren. Das haben wir beim `ASCII`-Code gesehen, aber auch bei den Bildern, bei denen wir jeweils ein Pixel mit 3 Farbkanälen dargestellt haben. Wir haben also die Daten die im Computer gespeichert sind, auf eine ganz bestimmte Art und Weise **interpretiert**. Diese **Interpretation** können wir auf dem Computer als **Sprache** bezeichnen.
+
+Diese **Sprachen** können unterschiedlich kompliziert oder auch sehr einfach sein. Wichtig dabei ist, dass diese **Sprachen** immer irgendwo festgelegt sind. Der Computer verwendet diese **Sprachen** dann um einen Speicherblock zu **interpretieren** und damit etwas vernünftiges anzufangen. Ganz wichtig dabei ist, der Computer kann nicht wissen was wir meinen, und unpräzise Aussagen von uns korrigieren. Der Computer kann nur ganz genau einer **Sprache** folgen, wie zum Beispiel dem `ASCII`-Code.
+
+<Example title="ASCII vs Bild">
+
+    Der Computer kann jeden Speicherblock mit jeder beliebigen Sprache interpretieren. Manchmal geht es sogar auf, das der gleiche Speicherblock mit verschiedenen Sprachen Sinn ergibt. Meist ist dies aber nicht der Fall. Wir schauen und als Beispiel einen Speicherblock im `ASCII`-Code an. Dann interpretieren wir den gleichen Speicherblock als Bild.
+
+    <HexImgCell />
+
+    An dem Beispiel können Sie ganz gut erkennen, das der Computer einfach nur versucht einen Speicherblock mit der angegebenen Sprache zu **interpretieren**. Manchmal geht das recht gut auf, aber schon in dem Beispiel hier, funktioniert es oftmals nicht, da wir nicht immer genügend Zeichen haben, um alle Pixel zu füllen.
+
+</Example>
