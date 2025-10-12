@@ -107,6 +107,7 @@ function GymIndex() {
             Sprachen
             <ol>
               <NavLink to="sprachen">Sprachen</NavLink>
+              <NavLink to="grammar">Grammatik</NavLink>
             </ol>
           </li>
         </ol>

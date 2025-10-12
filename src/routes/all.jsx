@@ -7,6 +7,7 @@ import Index from "@pages/index.mdx"
 import Colors from "@pages/colors.mdx"
 import Information from "@pages/information.mdx"
 import Languages from "@pages/languages.mdx"
+import Grammar from "@pages/grammar.mdx"
 
 // Importiere Unterseiten fürs Gym Praktikum
 import PInstall from "@pages/praktikum/installation.mdx"
@@ -39,6 +40,7 @@ export const createRouter = () => {
           { path: "colors", element: <Colors /> },
           { path: "information", element: <Information /> },
           { path: "sprachen", element: <Languages /> },
+          { path: "grammar", element: <Grammar /> },
 
           // Gym Praktikum
           { path: "praktikum/install", element: <PInstall /> },
