@@ -1,5 +1,6 @@
 import Example from "@components/Example.jsx"
 import HexImgCell from "@components/HexImgCell.jsx"
+import {Math, DMath} from "@components/Katex.jsx"
 
 ## Sprachen
 
@@ -14,5 +15,36 @@ Diese **Sprachen** können unterschiedlich kompliziert oder auch sehr einfach se
     <HexImgCell />
 
     An dem Beispiel können Sie ganz gut erkennen, das der Computer einfach nur versucht einen Speicherblock mit der angegebenen Sprache zu **interpretieren**. Manchmal geht das recht gut auf, aber schon in dem Beispiel hier, funktioniert es oftmals nicht, da wir nicht immer genügend Zeichen haben, um alle Pixel zu füllen.
+
+</Example>
+
+## Verschiedene Sprachen
+
+Es gibt unzählige **Sprachen** die wir auf dem Computer verwenden können. Wir können auch unsere ganz eigene Sprache erfinden, wenn wir das möchten. Eine eigene Sprache macht allerdings nicht so viel Sinn, denn andere Personen oder Programme werden diese nicht verstehen, ausser diese Sprache wird in das neue Programm implementiert. Das wäre aber ein sehr grosser Aufwand, deshalb hat man sich auf einige Standarts geeinigt, die dann als Sprachen überall verwendet werden. Ein besserer Begriff für **Sprachen** wäre in unserem Fall: **Dateiformat**. Es wirkt ein wenig merkwürdig wenn wir bei Bildern von **Sprache** reden, das ganze soll aber zeigen wie wichtig die **Sprachen** in der Informatik überhaupt sind. Hier finden Sie eine kurze Liste von **Sprachen** von denen wir uns einige anschauen werden.
+
+- `ASCII` (Text)
+- `PPM` (Portable Pixmap Format)
+- `Markdown` (wird in Obsidian verwendet)
+- `XML` (`HTML` und `SVG`)
+- `CSS` (wird verwendet um `HTML` zu gestalten)
+- `Javascript` (Programmiersprache für das Web)
+- `Latex` (Beschreibungssprache für PDF-Dokumente)
+- `JSON` (Objektbeschreibungssprache)
+
+## Syntax
+
+Für den Computer ist es enorm wichtig dass wir eine korrekte **Syntax** einhalten. Ohne eine **Syntax** kann der Computer die **Sprache** nicht lesen, denn wie wir weiter oben bereits beschrieben haben, kann der Computer nicht für uns mitdenken. Jede **Sprache** hat eine **Syntax** und diese muss exakt eingehalten werden, ansonsten ist der aktuelle Speicherblock, nicht von der gegebenen **Sprache**.
+
+Die **Syntax** beschreibt die Form der **Sprache** sowie die Regeln die darauf angewendet werden. Sie kennen **Syntax** bereits aus anderen Bereichen, zum Beispiel in den natürlichen Sprachen, verwenden wir einen `.` um einen Satz zu beenden. In der Mathematik finden Sie sehr viel **Syntax**, da jedes Zeichen in der Mathematik eine spezielle Bedeutung hat. Zum Beispiel bei Funktionen wird häufig die folgende Syntax verwendet: <Math>{String.raw`f(x)=x + 2`}</Math>. Dieser Ausdruck hat sehr viel Bedeutung in sich, zum Beispiel wird hier der Name der Funktion festgelegt - das was vor den Klammern steht. Weiterhin sagen wir, was das Argument ist - was in den Klammern steht. Auf der rechten Seite sagen wir welche Regel angewendet wird, um den Wert der Funktion für ein bestimmtes <Math>{String.raw`x`}</Math> zu bestimmen. Für Sie wirkt diese Syntax wahrscheinlich sehr mühsam und unnötig, wir müssen uns aber exakt an diese Syntax halten, damit wir auch genau das richtige meinen. Bei natürlicher Sprache und aber auch in der Mathematik, wird der Text immer von einem Menschen gelesen und interpretiert. Ein Mensch kann herausfinden wenn ein Fehler passiert ist, und diesen dann korrigieren. Das braucht aber immer zusätzlichen Aufwand, und gerade in der Mathematik, kann es später auch dazu führen, dass etwas anders interpretiert wird, wie Sie es gemeint haben. Deshalb ist es ganz wichtig, sich so genau wie möglich an die Syntax zu halten.
+
+Beim Computer ist es aber noch wichtiger. Denn der Computer kann ihre Fehler nicht interpretieren und korrigieren. Nehmen wir dafür wieder ein einfaches Beispiel aus der Mathematik. Hier ist es üblich dass Sie vergessen die Klammern richtig zu schliessen. Schauen Sie sich mal das folgende Beispiel an:
+
+<DMath>{String.raw`(15 - 4 \cdot 3 = 33`}</DMath>
+
+Hier ist es aus mindestens 2 Grunden leicht ersichtlich, dass Sie die Klammer nach der 4 schliessen sollten. Zumindest ist es für uns einfach ersichtlich. Für den Computer ist dies aber nicht so klar. Der Computer weiss dank der **Syntax** nur, dass es vor dem `=`-Zeichen, noch sicher eine schliessende Klammer braucht. Aber von der **Syntax** her, wären diese beiden Möglichkeiten korrekt: <Math>{String.raw`(15 - 4 \cdot 3)`}</Math> und <Math>{String.raw`(15 - 4) \cdot 3`}</Math>. Aber nur das zweite ist korrekt. Für uns als Menschen, macht es Sinn die Klammer dort zu schliessen, denn sonst hätten wir die Klammer gar nicht schreiben müssen. Der Computer kann aber nicht so denken. Wir könnten nun dem Computer so eine Korrekturregel beibringen, dann ist die Sprache aber nicht mehr komplett eindeutig, das möchte man vermeiden, denn so treten Fehler auf, die man nie wieder findet. Der Computer soll sich immer genau so verhalten, wie das ursprünglich vorgesehen ist. Bei modernen Sprachen, gibt der Computer aber einen Hinweis auf diesen Fehler, damit man diesen schnell korrigieren kann. Dafür muss man allerdings die Sprache und die Fehlermeldungen verstehen.
+
+<Example title="Syntax und Grammatik">
+
+Bei **Computersprachen** beschreibt die Grammatik wie die Syntax für eine **Sprache** funktioniert. Bei den natürlichen Sprachen beschreibt die Grammatik wie eine Sprache aufgebaut ist und berücksichtigt die Entwicklung der Sprache, es ist keine Vorschrift wie die Sprache genau verwendet wird. Daher gibt es auch so viele Ausnahmen. Bei **Computersprachen** ist dies ganz anders. Da kommt die Grammatik zuerst und diese muss exakt eingehalten werden, damit die Syntax der Sprache korrekt ist. In den weiteren Kapiteln, schauen wir uns einige Sprachen und deren Grammatik genauer an.
 
 </Example>
