@@ -65,3 +65,76 @@ Wir können nun beliebig viele von diesen **Terminalsymbolen** aneinander hänge
     Von einer Grammatik muss so lange eine Regel angewendet werden, bis nur noch **Terminalsymbole** im Wort vorkommen. Wenn wir also mit der Regel `Hexzahl` starten, dann bauen wir uns zum Beispiel das Wort `0{Ziffer}`. Dann müssen wir noch dir Regel für `Ziffer` anwenden, und landen dann zum Beispiel bei `0D`. Das ist eine gültige 2-stellige Hexadezimalzahl. Wir können jeweils die Grammatik dafür verwenden, um herauszufinden, ob ein Wort gültig ist.
 
 </Section>
+
+## Einfache Rechnungen
+
+Wir können auch eine Grammatik für einfache Rechnungen definieren. Dafür müssen wir nur Zahlen erstellen können, diese mit verschiedenen Zeichen kombinieren und schön können wir einfache Addition und Subtraktion machen. Schauen wir uns dafür die folgende Grammatik an, mit dem erweiterten Alphabet.
+
+<DMath>{String.raw`\Sigma_{\mathrm{Calc}} = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, +, -, =\}`}</DMath>
+
+Dazu können wir die folgenden **Syntaxdiagramme** aufzeichnen.
+
+**Rechnung**:
+<Mermaid>
+{String.raw`
+graph LR
+  A[Start] --> Z[Zahl] --> O[Operation] --> Z2[Zahl] --> G(=) --> Z3[Zahl] --> E[End]
+  Z2 --> O
+`}
+</Mermaid>
+
+**Zahl**:
+<Mermaid>
+{String.raw`
+---
+config:
+  theme: 'dark'
+---
+graph LR
+  A[Start] --> Z[Ziffer] -->Z
+  Z --> E[End]
+`}
+</Mermaid>
+
+**Operation**:
+<Mermaid>
+{String.raw`
+graph LR
+  A[Start] --> P[+] -->E[End]
+  A --> M[-] --> E
+`}
+</Mermaid>
+
+**Ziffer:**
+<Mermaid>
+{String.raw`
+---
+config:
+  theme: 'dark'
+---
+graph LR
+  A[Start] --> 0(0) --> C[End]
+  A --> 1(1) --> C
+  A --> 2(2) --> C
+  A --> 3(3) --> C
+  A --> 4(4) --> C
+  A --> 5(5) --> C
+  A --> 6(6) --> C
+  A --> 7(7) --> C
+  A --> 8(8) --> C
+  A --> 9(9) --> C
+`}
+</Mermaid>
+
+Mit dieser Grammatik können wir alle Additionen und Subtraktionen darstellen. Ob diese dann richtig gerechnet werden, kann die Grammatik nicht entscheiden. Aber dank der Grammatik können wir eine Rechnung in der Form <Math>{String.raw`12 + 4 - 10 = 6`}</Math> auslesen, und zwar so das wir die einzelnen Teile erhalten. Wir können aus der Rechnung also einen **Syntaxbaum** erstellen. Diesen können wir dann berechnen und prüfen ob die Rechnung korrekt ist. Dafür brauchen wir dann aber ein weiteres Programm, das rechnen kann.
+
+<Section classes="exercise">
+
+## Aufgaben
+
+1. Prüfen Sie ob die obere Grammatik auch mit folgender Rechnung funktioniert: <Math>2 - 4 = -2</Math>. Falls nicht, passen Sie die Syntaxdiagramme so an, dass es funktioniert.
+2. Erweitern Sie das obere Beispiel, dass auch `*` und `/` unterstützt wird.
+3. Schauen Sie sich nochmals die Sprache `Markdown` an. Verwenden Sie dazu den folgenden <a href="/gym-inf/obsidian-intro.md" target="_blank">Link</a>. Geben Sie eine Grammatik für eine minimale Version von `Markdown` an. Die Grammatik soll folgende Dinge erkennen können: Abschnitte, Title, Listen, Links.
+4. Entwickeln Sie eine eigene Grammatik um die Struktur von Textdokumenten zu beschreiben. Tauschen Sie Ihre Grammatik mit jemandem aus, und geben Sie ein Feedback dazu.
+
+</Section>
