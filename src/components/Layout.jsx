@@ -12,7 +12,7 @@ export default function Layout() {
       <NavProvider>
         <Header />
         <Navbar />
-        <main>
+        <main className="content-grid">
           <Outlet />
         </main>
       </NavProvider>

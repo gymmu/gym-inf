@@ -7,7 +7,7 @@ export default function Example({
   id = "",
 }) {
   return (
-    <div className={`highlight ${classes}`}>
+    <div className={`full-width content-grid highlight ${classes}`}>
       <h3 id={id}>{`${title}`}</h3>
       {children}
     </div>

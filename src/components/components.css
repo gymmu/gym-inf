@@ -12,13 +12,7 @@ pre:has(code) {
 
 .highlight {
   border-left: 10px solid var(--color-green);
-  padding-left: 20px;
-  padding-right: 15px;
-  margin-top: 50px;
-  margin-bottom: 50px;
   background-color: var(--color-rgb-61-61-61);
-  padding-top: 30px;
-  padding-bottom: 50px;
 }
 
 .example {
@@ -31,18 +25,6 @@ pre:has(code) {
 
 .exercise {
   border-left-color: var(--color-orange);
-}
-
-.outlet > * {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
-@media only screen and (min-width: 1200px) {
-  .outlet > * {
-    padding-left: calc(50vw - 600px);
-    padding-right: calc(50vw - 600px);
-  }
 }
 
 .tabs {

@@ -46,7 +46,9 @@
   background: var(--color-yellow);
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -134,6 +136,7 @@ footer {
 #root {
   min-height: 100vh;
   display: grid;
+  position: relative;
   grid-template-columns: 320px 1fr;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
@@ -264,14 +267,6 @@ aside.sidenav {
 
 main {
   grid-area: main;
-  width: 100%;
-  overflow-x: hidden;
-}
-
-main > p,
-main > h2, 
-main > h3 {
-  padding: 0 2rem;
 }
 
 section ol {
@@ -345,7 +340,28 @@ section ol {
   ); /* Leicht dunklerer Hintergrund für jede zweite Zeile */
 }
 
-@media (max-width: 840px) {
+.active-school {
+  text-decoration: underline;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: [full-width-start] 50px [breakout-start] 50px [content-start] 1fr [content-end] 50px [breakout-end] 50px [full-width-end];
+}
+
+.content-grid > * {
+  grid-column: content;
+}
+
+.breakout {
+  grid-column: breakout;
+}
+
+.full-width {
+  grid-column: full-width;
+}
+
+@media (max-width: 819px) {
   #root {
     grid-template-columns: 1fr;
     grid-template-areas: "header" "main" "footer";
@@ -360,8 +376,8 @@ section ol {
   aside.sidenav.show {
     display: block;
   }
-}
 
-.active-school {
-    text-decoration: underline;
+  .content-grid {
+    grid-template-columns: [full-width-start] 20px [breakout-start] 1px [content-start] 1fr [content-end] 1px [breakout-end] 20px [full-width-end];
+  }
 }
