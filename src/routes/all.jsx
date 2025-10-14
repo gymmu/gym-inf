@@ -25,6 +25,7 @@ import FmsSVG from "@pages/fms/svg.mdx"
 // FMS Praktikum
 import Excel from "@pages/fms/excel.mdx"
 import ExcelSpielplan from "@pages/fms/excel-spielplan.mdx"
+import FmsHTML from "@pages/fms/html.mdx"
 
 export const createRouter = () => {
   return createBrowserRouter(
@@ -59,6 +60,7 @@ export const createRouter = () => {
           // FMS Routes 2. Klasse
           { path: "fms/excel", element: <Excel /> },
           { path: "fms/excel-spielplan", element: <ExcelSpielplan /> },
+          { path: "fms/html", element: <FmsHTML /> },
 
           // Was passiert wenn die Route falsch ist.
           {
