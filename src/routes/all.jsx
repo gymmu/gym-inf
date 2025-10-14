@@ -19,6 +19,8 @@ import ObsidianMarkdown from "@pages/obsidian-md.mdx"
 import Hardware from "@pages/fms/hardware.mdx"
 import Binary from "@pages/fms/binary.mdx"
 import Hex from "@pages/fms/hex.mdx"
+import Pictures from "@pages/fms/pictures.mdx"
+import FmsSVG from "@pages/fms/svg.mdx"
 
 // FMS Praktikum
 import Excel from "@pages/fms/excel.mdx"
@@ -50,6 +52,9 @@ export const createRouter = () => {
           { path: "fms/hardware", element: <Hardware /> },
           { path: "fms/binary", element: <Binary /> },
           { path: "fms/hex", element: <Hex /> },
+          // FMS: Bilder und SVG
+          { path: "pictures", element: <Pictures /> },
+          { path: "/fms/svg", element: <FmsSVG /> },
 
           // FMS Routes 2. Klasse
           { path: "fms/excel", element: <Excel /> },

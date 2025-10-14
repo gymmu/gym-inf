@@ -1,0 +1,87 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Section from "@components/Section.jsx"
+import {Math} from "@components/Katex.jsx"
+import FiddleSVG from "@components/FiddleSVG"
+
+## Bilder
+
+Bilder können auf dem Computer generell in 2 unterschiedlichen Arten abgespeichert werden. Zum einen gibt es **Rastergrafiken**, diese sind Pixel basiert, und jedes Pixel hat einen eigenen Farbwert. Auf der anderen Seite gibt es **Vektorgrafiken**, diese beschreiben den Inhalt von einem Bild mit mathematischen Formen. Jedes dieser beiden Formate, hat Vor- und Nachteile.
+
+<LearningGoals>
+
+    - Sie kennen den Unterschied zwischen **Raster-** und **Vektorgrafiken**.
+    - Sie können entschieden wann es sinnvoll ist, welche Art der Grafik einzusetzen.
+    - Sie kennen einige Dateiformate, und können diese zum jeweiligen Grafiktyp zuordnen.
+
+</LearningGoals>
+
+## Rastergrafiken
+
+Bei Rastergrafiken handelt es sich um Bilder, die am besten in Pixeln beschrieben werden können. Diese braucht für gewöhnlich sehr viel Speicherplatz, denn pro Pixel werden 3-4 `Bytes` gebraucht. Diese Bilder haben oft eine Auflösung von `1920x1200` Pixel. Sie brauchen somit also pro Bild <Math>{String.raw`1920 \cdot 1200 \cdot 3 = 6912000`}</Math> `Bytes`. Bei den meisten Bildformaten wird jedoch eine schlaue Art der Komprimierung verwendet, damit nicht ganz so viel Speicher gebraucht wird.
+
+### Komprimierung
+
+Wir schauen uns die genauen Algorithmen für die Komprimierung nicht an, dafür haben wir nicht genügend Zeit. Die Idee hinter der Komprimierung, können wir aber im Kopf durchgehen. Stellen Sie sich ein Bild von einem Wald vor, oder eines Auf dem viel blauer Himmel zu sehen ist. Dann sollte Ihnen recht schnell klar werden, das wir nicht jedes Pixel mit seinem genauen Farbwert abspeichern müssen, sondern wir können uns ein paar Farben aus dem Bild aussuchen, und dann eine Liste von Pixeln unter dieser Farbe speichern. Das geht jedoch nur, wenn die Pixel aneinander liegen. Muss man jedes Pixel einzeln in der Liste aufzählen, braucht man dennoch 3 `Bytes` pro Pixel.
+
+<Section classes="exercise">
+
+Überlegen Sie sich, weshalb das so ist?
+
+**Tipp:** Rechnen Sie die Anzahl an Pixeln in einem `1920x1200` grossen Bild aus und überlegen Sie wie viele `Bits` sie brauchen um Zahlen von dieser Grösse darzustellen.
+
+</Section>
+
+Eine andere Art der Komprimierung wäre es, die benötigten Farben in einer Liste zu speichern. Wenn ein Bild nicht mehr wie 256 verschiedene Farben hat, dann können wir pro Pixel mit genau einem `Byte` auskommen, statt mit 3. Hier können aber Informationen verloren gehen. Meistens ist es so das die Farben ganz leicht unterschiedlich sind, aber für das menschliche Auge fast nicht erkennbar. Der Komprimierungsalgorithmus, packt diese Farben dann zusammen, damit die Liste an verschiedenen Farben kleiner bleibt. Das bedeutet aber, dass Informationen vorloren gehen.
+
+Diese Arten der Komprimierung, treten bei den Bildformaten `.jpg` und `.png` auf. Keine Komprimierung findet beim `.ppm` statt, da wird jeder Pixel mit seinen 3 `Bytes` in den Speicher geschrieben.
+
+### Anwendungsbereich
+
+Rastergrafiken eignen sich besonders für Fotos oder von Hand gezeichnete Bilder. Auch handschriftliche Dokumente auf dem Computer, lassen sich besser mit Rastergrafiken abbilden, da diese meistens keinen mathematischen Formen folgen. Generell ist alles was fotografiert oder eingescannt wird, besser als Rastergrafik. Auch Bilder mit sehr wenig Farbinformationen, können gut als Rastergrafiken abgespeichert werden.
+
+Icons sind oftmals sehr kleine Bilder mit sehr wenig Farbinformationen. Diese bieten sich aber überhaupt nicht als Rastergrafiken an. Denn das grosse Problem bei Rastergrafiken, ist das vergrössern, oder auch verkleinern. Bei einem Bild mit sehr hoher Auflösung, kann man gut hineinzoomen, bis man die Verpixelung sehen kann. Bei Icons ist dies aber nicht der Fall, da diese meist nur `16x16` oder `32x32` Pixel gross sind. Sollte so ein Icon grösser angezeigt werden, wäre es völlig verpixelt. Da kommen **Vektorgrafiken** zur Hilfe.
+
+<Section classes="exercise">
+
+- Was sind die Nachteile von Rastergrafiken?
+- Wie funktioniert Komprimierung bei einem Bild mit sehr viel Nachthimmel?
+- Warum eignen sich Rastergrafiken **nicht** für Icons?
+
+</Section>
+
+## Vektorgrafiken
+
+Bei Vektorgrafiken wird der Bildinhalt immer mit mathematischen Formen beschrieben. Das bedeutet das wir ein Programm benötigen, das diese Beschreibungen lesen kann und das gewünschte Bild dann darstellen kann. Wir beschrieben also nicht speziell welcher Pixel in welcher Farbe angemalt werden soll, sondern wir beschrieben die Formen die gezeichnet werden, mit Text. Für einfache Bilder braucht das also nur sehr wenig Speicher, denn Text können wir mit `1 Byte` pro Zeichen darstellen. Wir brauchen also deutlich weniger Speicherplatz, wenn wir ein sehr grosses Bild mit einfachen Formen beschreiben möchten. Die Limitationen sind offensichtlich, wir können nicht so etwas komplexes wie ein Foto mit einfachen Formen beschreiben.
+
+<Section classes="example">
+
+    ## Beispiel: SVG
+
+    Am besten schauen wir uns ein Beispiel von einem solchen Bild an, und wie es beschrieben wird. Wir verwenden dafür das `.svg`-Format, dieses hat sich im Internet durchgesetzt und bietet sehr viele spannende Möglichkeiten, bis sogar Animationen.
+
+    Das folgende Bild beschreibt einen schwarzen Kreis im Mittelpunkt des Bildes, mit dem Radius `50`.
+
+    <FiddleSVG
+      classes="full-width"
+      svg={`<svg height="200" width="200">
+      <circle cx="100" cy="100" r="50" fill="#000000" />
+</svg>`}
+    />
+
+    Ändern Sie die Farbe, den Radius und die Position des Kreises. Halten Sie fest was passiert.
+</Section>
+
+## Anwendungsbereiche
+
+Vektorgrafiken werden immer dann verwendet, wenn der Bildinhalt mit mathematischen Formen beschrieben werden kann, und wenn das Bild in unterschiedlicher Grösse dargestellt werden soll, ohne dass das Bild verpixelt erschient. Oftmals werden solche Grafiken in Webseiten eingebaut, und dann kann die Farbe der Grafik im nachhinein noch von der Webseite angepasst werden.
+
+Ein weiterer Anwendungsbereich ist im Lernen. Man kann sehr leicht lernen wie man Inhalte mit Sprache beschreiben kann, so dass der Computer diese dann darstellen kann. Das ist sehr nahe beim Programmieren, ist aber nicht so komplex mit der Logik, daher ermöglicht es Ihnen einen einfacheren Einstieg. Auch werden die LLMs immer wie besser, das bedeutet Sie können sich auch Grafiken von einer KI generieren lassen, und müssen dann nur noch kleine Anpassungen vornehmen.
+
+<Section classes="exercise">
+
+### Aufgaben
+
+- Schreiben Sie Vor- und Nachteile von jeder Art der Grafik heraus?
+- Wann macht es Sinn eine Vektorgrafik zu verwenden?
+
+</Section>

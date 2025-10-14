@@ -1,0 +1,90 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Section from "@components/Section.jsx"
+import {Math} from "@components/Katex.jsx"
+import FiddleSVG from "@components/FiddleSVG"
+
+## SVG
+
+Wir haben das `.svg`-Format bereits im letzten Kapitel kurz angeschaut. In diesem Kapitel möchten wir herausfinden wie genau **SVG** funktioniert, und was wir alles damit machen können.
+
+<LearningGoals>
+
+- Sie wissen was **SVG** bedeutet.
+- Sie kennen den grundlegenden Aufbau von einer `.svg`-Datei.
+- Sie kennen das Koordinatensystem, das in **SVG** verwendet wird.
+- Sie wissen was Attribute sind.
+- Sie können Kreise und Rechtecke von unterschiedlicher Grösse und Farbe im **SVG** platzieren.
+
+</LearningGoals>
+
+Die Abkürzung **SVG** steht für **s**calable **v**ector **g**raphics. Somit ist **SVG** vom Typ der Vektorgrafiken, und beliebig zoombar. Das mach es sehr praktisch für Icons die oftmals auf Webseiten verwendet werden.
+
+<Section>
+
+## Genereller Aufbau
+
+Eine `.svg`-Datei ist immer gleich aufgebaut. Es gibt ein einziges Wurzelelement, das alle anderen Elemente enthält. Im Wurzelelement geben wir die Grösse für das verwendete Koordinatensystem an.
+
+```svg
+<svg width="200" height="200">
+
+</svg>
+```
+
+Dieses Wurzelelement beschreibt uns die Leinwand die wir verwenden können, um weitere Element darauf zu malen. Dabei beginnt das Koordinatensystem oben links. Ein Element in **SVG** wird immer in dieser Form geschrieben `<element>...</element>`. Hat ein Element keinen Inhalt, dann schreibt man es in der Regel in der Kurzform `<element />`.
+
+Die Eigenschaften von einem Element, werden über die Attribute angegeben. Die Attribute werden innerhalb der `<>` angegeben, direkt nach dem Typ des Elements. Also wie oben im Beispiel `<svg width="200" height="200">`. Hier sind `width` und `height` die Attribute, und legen die Eigenschaften des `svg`-Elements fest.
+
+</Section>
+
+## Einfache Elemente (Kreis)
+
+Eines der einfachsten Elemente haben wir bereits gesehen, das ist der Kreis. Wir können einen Kreis ganz einfach zeichnen lassen, indem wir die Eigenschaften des Kreises mit den Attributen beschreiben. Also ein Kreis mit dem Mittelpunkt an der Koordinate `100, 100` und dem Radius `50` können wir ganz einfach so beschreiben: `<circle cx="100" cy="100" r="50" />`. Da nichts in den Kreis hinein kommt, können wir hier die Kurzform verwenden.
+
+<FiddleSVG
+  classes="full-width"
+  svg={`<svg height="200" width="200">
+    <circle cx="100" cy="100" r="50" fill="#000000" />
+</svg>`}
+/>
+
+<Section classes="exercise">
+
+## Aufgaben
+
+- Ändern Sie die Farbe und Position des Kreises.
+- Fügen Sie einen zweiten Kreis mit anderen Eigenschaften hinzu.
+
+</Section>
+
+## Weitere Elemente (Rechteck)
+
+Sie können nicht nur Kreise zeichnen, sondern auch Rechtecke. Diese haben jedoch leicht andere Eigenschaften. Zum Beispiel können Sie einen Kreis sehr gut über den Mittelpunkt beschreiben. Bei einem Rechteck geht dies weniger gut. Da bietet sich aber die obere linke Ecke an. Also können Sie ein Rechteck wie folgt angeben.
+
+<FiddleSVG
+  classes="full-width"
+  svg={`<svg height="200" width="200">
+    <rect x="50" y="50" height="100" width="100" fill="#000000" />
+</svg>`}
+/>
+
+<Section classes="exercise">
+
+## Aufgaben
+
+- Ändern Sie die Farbe und Position des Rechtecks.
+- Fügen Sie ein zweites Rechteck mit anderen Eigenschaften hinzu.
+
+</Section>
+
+## Besserer Editor
+
+Die Grafiken die Sie hier erstellen können, sind nur zum üben uns ausprobieren gedacht. Für komplexere Grafiken, können Sie den folgenden Online-Editor verwenden: <a href="https://editsvgcode.com/" target="_blank">EditSVGCode</a>
+
+<Section classes="exercise">
+
+## Aufgabe
+
+- Erstellen Sie eine Grafik mit mehreren Kreisen und Rechtecken.
+
+</Section>
