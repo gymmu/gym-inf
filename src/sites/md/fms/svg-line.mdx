@@ -1,0 +1,54 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Section from "@components/Section.jsx"
+import {Math} from "@components/Katex.jsx"
+import FiddleSVG from "@components/FiddleSVG"
+
+## Linie
+
+**SVG** hat auch ganz einfache Formen, wie zum Beispiel die Linie. Diese schauen wir uns in diesem Kapitel an.
+
+<LearningGoals>
+
+- Sie wissen wie man in **SVG** eine Linie zeichnet.
+- Sie können Start- und Endpunkt der Linie verändern.
+- Sie können die Farbe der Linie anpassen.
+- Sie können die Breite der Linie anpassen.
+- Sie können die Zeichenart der Linie verändern.
+
+</LearningGoals>
+
+Linien sind sehr einfache Objekte. Sie haben einen Start- und einen Endpunkt. Diese werden bei den Attributen angegeben, dann wird eine ganz normale schwarze Linie von einem Punkt zum anderen gezeichnet. So wie in dem folgenden Beispiel.
+
+<FiddleSVG
+  classes="full-width"
+  svg={`<svg height="200" width="200">
+    <line x1="50" y1="50" x2="150" y2="150" stroke="black" />
+</svg>`}
+/>
+
+<Section>
+
+## Eigenschaften der Linie verändern
+
+Die einfachsten Eigenschaften einer Linie die wir verändern können, sind der Start- und der Endpunkt. Das kennen wir bereits vom Kreis und vom Rechteck. Diese hatten aber noch die Eigenschaft `fill`, was bei einer Linie aber keinen Sinn mehr ergibt. Neu ist die Eigenschaft `stroke`, damit geben wir an, in welcher Farbe die Linie gezeichnet werden soll.
+
+Neben `stroke` gibt es noch weitere Eigenschaften die bestimmen wie die Linie gezeichnet wird. Da gibt es noch `stroke-width`, damit können wir die Breite der Linie bestimmen.
+
+Möchten Sie eine Linie gestrichelt zeichnen, können Sie dafür das Attribut `stroke-dasharray` verwenden. Hier geben Sie eine Liste an, in der Sie bestimmen wie lange gezeichnet wird, und wie viel nicht gezeichnet wird. So wie in dem Beispiel hier.
+
+
+<FiddleSVG
+  classes="full-width"
+  svg={`<svg height="200" width="200">
+    <line x1="50" y1="50" x2="150" y2="150"
+      stroke="black"
+      stroke-dasharray="5,2"
+      />
+</svg>`}
+/>
+
+### Aufgabe
+
+Passen Sie die Werte in `stroke-dasharray` an. Es können auch mehr wie 2 Werte verwendet werden.
+
+</Section>

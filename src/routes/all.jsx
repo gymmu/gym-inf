@@ -21,6 +21,7 @@ import Binary from "@pages/fms/binary.mdx"
 import Hex from "@pages/fms/hex.mdx"
 import Pictures from "@pages/fms/pictures.mdx"
 import FmsSVG from "@pages/fms/svg.mdx"
+import FmsSVGLine from "@pages/fms/svg-line.mdx"
 
 // FMS Praktikum
 import Excel from "@pages/fms/excel.mdx"
@@ -56,6 +57,7 @@ export const createRouter = () => {
           // FMS: Bilder und SVG
           { path: "pictures", element: <Pictures /> },
           { path: "/fms/svg", element: <FmsSVG /> },
+          { path: "/fms/svg-line", element: <FmsSVGLine /> },
 
           // FMS Routes 2. Klasse
           { path: "fms/excel", element: <Excel /> },
