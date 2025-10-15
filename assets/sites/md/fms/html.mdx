@@ -1,0 +1,74 @@
+import Video from "@components/Video.jsx"
+
+## Webdesign mit HTML uns CSS
+
+Das moderne Web hat sehr viel zu bieten. Die Grundlage dafür sind Webseiten. Jede Person kann eine eigene Webseite erstellen und diese auch für andere zugänglich machen. Solange es nur um Informationen geht, die auf einer Webseite dargestellt werden, ist das sehr einfach.
+
+Wir werden uns in dem Kapitel damit beschäftigen eine eigene Webseite zu erstellen, und diese dann auch einfach zu gestalten. Dafür müssen wir die Grundkonzepte von `HTML` und `CSS` lernen.
+
+## HTML
+
+`HTML` ist die Sprache in der die Struktur von einer Webseite beschrieben wird. Das hat noch nichts mit der Gestaltung zu tun, wir beschrieben nur die Struktur, also ob ein Element ein Titel ist, oder ob es ein Bild sein soll, oder ein Link. Dafür wird eine Sprache verwendet, die sich aus `XML` entwickelt hat. Die Sprache ist sehr einfach und alles darin ist in Blöcken aufgebaut. Zum Beispiel sieht ein Titel in `HTML` so aus: `<h1>Das ist ein Titel</h1>`. Elemente können aber auch Attribute haben, das sind Eigenschaften die nicht angezeigt werden, so kann man bei einem Link zum Beispiel sagen, auf welche Webseite man gelenkt werden soll, dass geht mit dem folgenden Element: `<a href="https://www.gym-muttenz.ch">Gym Muttenz</a>`. Hier ist `href` das Attribut, und der Wert darin, ist die Webseite zu der wir geleitet werden. Das was zwischen den `>...<` steht, ist immer das was auf der Webseite angezeigt wird.
+
+Eine einfache `HTML`-Datei, kann also so aussehen:
+
+```html
+<header>
+    <h1>Titel</h1>
+</header>
+<main>
+    <section>
+        <h2>Abschnitt 1</h2>
+        <p>Das hier ist ein Paragraph.</p>
+        <p>hier ist noch ein weiterer Paragraph.</p>
+    </section>
+    <section>
+        <h2>Abschnitte mit einem Link</h2>
+        <p>
+            Hier ist ein Paragraph mit einem Link zum <a href="https://www.gym-muttenz.ch">Gym Muttenz</a>
+        </p>
+    </section>
+</main>
+<footer>Das ist die Fusszeile</footer>
+```
+
+Das gibt uns die ganze Struktur der Webseite an. Es wird aber noch nichts besonders dargestellt. Dafür brauchen wir eine weitere Sprache, und zwar `CSS`.
+
+## CSS
+
+Mit der `CSS`-Sprache, können wir das aussehen von einer Webseite anpassen. Hier sind praktische keine Grenzen gesetzt, man kann der Kreativität vollen lauf lassen, wenn man verstanden hat, wie `CSS` funktioniert.
+
+Ganz Grundlegend gibt es in `CSS` Regeln, die beschreiben wie ein Element dargestellt wird. So kann man zum Beispiel eine Regel erstellen, die besagt das alle Title eine grüne Schriftfarbe haben sollen. Diese Regeln gehen aber noch sehr viel weiter, man kann beinahe alles auf einer Webseite mit `CSS` verändern.
+
+Hier finden Sie eine einfache Regel:
+
+```css
+h1 {
+    color: green;
+    background-color: #efefef;
+    text-align: center;
+    padding-block: 1em;
+}
+```
+
+Das was vor der Klammer steht, also hier `h1`, sagt worauf die Regel angewendet wird. Innerhalb des Blocks, stehen einfach die Eigenschaften die angepasst werden können.
+
+## Nachschlagen
+
+Es gibt unzählige `HTML`-Elemente und `CSS`-Eigenschaften. Viele davon kann man einfach mit einer Internetsuche herausfinden, oder man kann sich gezielt durch diese beiden Webseiten arbeiten:
+
+- <a href="https://www.w3schools.com/html/" target="_blank">HTML</a>
+- <a href="https://www.w3schools.com/css/" target="_blank">CSS</a>
+
+## Testen im Editor
+
+Wir werden alles in CodePen testen, am besten machen Sie sich dort einen gratis Account. Bedenken Sie das all ihr Code dort öffentlich ist, also schreiben Sie keine persönlichen Dinge rein, oder Dinge die nicht in den öffentlichen Raum gehören.
+
+
+- <a href="https://codepen.io/" target="_blank">CodePen</a>
+
+## Video
+
+Für einen einfachen Start, können Sie dem folgenden Video folgen. Sie müssen nicht alles genau so machen wie im Video, sondern können immer Ihre eigenen Stiele und den eigenen Inhalt anwenden.
+
+<Video url="I_jdQC7w7_I" />
