@@ -27,6 +27,7 @@ import FmsSVGLine from "@pages/fms/svg-line.mdx"
 import Excel from "@pages/fms/excel.mdx"
 import ExcelSpielplan from "@pages/fms/excel-spielplan.mdx"
 import FmsHTML from "@pages/fms/html.mdx"
+import CodePen from "../components/CodePen"
 
 export const createRouter = () => {
   return createBrowserRouter(
@@ -63,6 +64,8 @@ export const createRouter = () => {
           { path: "fms/excel", element: <Excel /> },
           { path: "fms/excel-spielplan", element: <ExcelSpielplan /> },
           { path: "fms/html", element: <FmsHTML /> },
+
+          { path: "codepen", element: <CodePen /> },
 
           // Was passiert wenn die Route falsch ist.
           {

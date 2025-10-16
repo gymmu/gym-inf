@@ -1,0 +1,20 @@
+.codePenWrapper {
+  border: 1px solid white;
+  display: flex;
+}
+
+.pane {
+  flex-grow: 1;
+}
+
+.paneLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Use an editor wrapper for this one. */
+.paneLeft > * {
+  flex-grow: 1;
+  border: 1px solid white;
+  margin: 0;
+}
