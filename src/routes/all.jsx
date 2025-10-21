@@ -8,6 +8,7 @@ import Colors from "@pages/colors.mdx"
 import Information from "@pages/information.mdx"
 import Languages from "@pages/languages.mdx"
 import Grammar from "@pages/grammar.mdx"
+import Regex from "@pages/regex.mdx"
 
 // Importiere Unterseiten fürs Gym Praktikum
 import PInstall from "@pages/praktikum/installation.mdx"
@@ -22,12 +23,15 @@ import Hex from "@pages/fms/hex.mdx"
 import Pictures from "@pages/fms/pictures.mdx"
 import FmsSVG from "@pages/fms/svg.mdx"
 import FmsSVGLine from "@pages/fms/svg-line.mdx"
+import FmsSVGPath from "@pages/fms/svg-path.mdx"
 
 // FMS Praktikum
 import Excel from "@pages/fms/excel.mdx"
 import ExcelSpielplan from "@pages/fms/excel-spielplan.mdx"
 import FmsHTML from "@pages/fms/html.mdx"
 import CodePen from "../components/CodePen"
+import CodePenSVG from "../components/CodePenSVG"
+import RegexEditor from "../components/RegexEditor"
 
 export const createRouter = () => {
   return createBrowserRouter(
@@ -46,6 +50,7 @@ export const createRouter = () => {
           { path: "information", element: <Information /> },
           { path: "sprachen", element: <Languages /> },
           { path: "grammar", element: <Grammar /> },
+          { path: "regex", element: <Regex /> },
 
           // Gym Praktikum
           { path: "praktikum/install", element: <PInstall /> },
@@ -59,13 +64,17 @@ export const createRouter = () => {
           { path: "pictures", element: <Pictures /> },
           { path: "/fms/svg", element: <FmsSVG /> },
           { path: "/fms/svg-line", element: <FmsSVGLine /> },
+          { path: "/fms/svg-path", element: <FmsSVGPath /> },
 
           // FMS Routes 2. Klasse
           { path: "fms/excel", element: <Excel /> },
           { path: "fms/excel-spielplan", element: <ExcelSpielplan /> },
           { path: "fms/html", element: <FmsHTML /> },
 
+          // TODO: Comment these out if no longer tested
           { path: "codepen", element: <CodePen /> },
+          { path: "codepensvg", element: <CodePenSVG /> },
+          { path: "regexeditor", element: <RegexEditor /> },
 
           // Was passiert wenn die Route falsch ist.
           {

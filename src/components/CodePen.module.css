@@ -1,5 +1,4 @@
 .codePenWrapper {
-  border: 1px solid white;
   display: flex;
 }
 
@@ -10,11 +9,23 @@
 .paneLeft {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 /* Use an editor wrapper for this one. */
 .paneLeft > * {
-  flex-grow: 1;
-  border: 1px solid white;
   margin: 0;
+}
+
+.outputPane {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mark {
+  background-color: yellow;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: bold;
 }

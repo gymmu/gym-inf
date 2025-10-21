@@ -2,6 +2,7 @@ import LearningGoals from "@components/LearningGoals.jsx"
 import Section from "@components/Section.jsx"
 import {Math} from "@components/Katex.jsx"
 import FiddleSVG from "@components/FiddleSVG"
+import CodePenSVG from "@components/CodePenSVG.jsx"
 
 ## Linie
 
@@ -19,10 +20,16 @@ import FiddleSVG from "@components/FiddleSVG"
 
 Linien sind sehr einfache Objekte. Sie haben einen Start- und einen Endpunkt. Diese werden bei den Attributen angegeben, dann wird eine ganz normale schwarze Linie von einem Punkt zum anderen gezeichnet. So wie in dem folgenden Beispiel.
 
-<FiddleSVG
+<CodePenSVG
   classes="full-width"
-  svg={`<svg height="200" width="200">
-    <line x1="50" y1="50" x2="150" y2="150" stroke="black" />
+  initialCode={`<svg viewBox="0 0 300 300" width="300">
+    <line
+      x1="50"
+      y1="50"
+      x2="150"
+      y2="150"
+      stroke="black"
+    />
 </svg>`}
 />
 
@@ -37,18 +44,52 @@ Neben `stroke` gibt es noch weitere Eigenschaften die bestimmen wie die Linie ge
 Möchten Sie eine Linie gestrichelt zeichnen, können Sie dafür das Attribut `stroke-dasharray` verwenden. Hier geben Sie eine Liste an, in der Sie bestimmen wie lange gezeichnet wird, und wie viel nicht gezeichnet wird. So wie in dem Beispiel hier.
 
 
-<FiddleSVG
+<CodePenSVG
   classes="full-width"
-  svg={`<svg height="200" width="200">
+  initialCode={`<svg viewBox="0 0 300 300" width="300">
     <line x1="50" y1="50" x2="150" y2="150"
       stroke="black"
       stroke-dasharray="5,2"
-      />
+    />
 </svg>`}
 />
 
 ### Aufgabe
 
-Passen Sie die Werte in `stroke-dasharray` an. Es können auch mehr wie 2 Werte verwendet werden.
+- Passen Sie die Werte in `stroke-dasharray` an. Es können auch mehr wie 2 Werte verwendet werden.
+- Finden Sie heraus, was das Attribut `stroke-dashoffset` bewirkt.
+
+</Section>
+
+## Mehrere Linien
+
+Sie können natürlich auch mehrere Linien Zeichnen und zum Beispiel ein Dreieck erstellen. Dazu brauchen Sie einfach mehrere Linien.
+
+<CodePenSVG
+  classes="full-width"
+  initialCode={`<svg viewBox="0 0 300 300" width="300">
+    <line x1="150" y1="50" x2="50" y2="250"
+      stroke="black"
+      stroke-width="5"
+    />
+    <line x1="50" y1="250" x2="250" y2="250"
+      stroke="green"
+      stroke-width="5"
+    />
+    <line x1="150" y1="50" x2="250" y2="250"
+      stroke="pink"
+      stroke-width="5"
+    />
+</svg>`}
+/>
+
+Wie Sie sehen können, sind die Ecken nicht schön abgerundet. Das macht natürlich sinn, denn wir zeichnen nicht eine einzige Figur, sondern 3 Linien die wir übereinander legen. Im nächsten  Kapitel schauen wir Pfade an, da sehen Sie wie man ein Dreieck als eine einzige Figur zeichnen kann.
+
+<Section className="exercise">
+
+## Aufgaben
+
+- Erstellen Sie eine Grafik mit 2 parallelen Linien. Die Linien sollen möglichst viele unterschiedliche Eigenschaften haben.
+- Verwenden Sie das `line`-Element, um 3 Rechtecke in unterschiedlichen Farben zu erzeugen.
 
 </Section>

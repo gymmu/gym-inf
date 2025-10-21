@@ -1,7 +1,7 @@
 import LearningGoals from "@components/LearningGoals.jsx"
 import Section from "@components/Section.jsx"
 import {Math} from "@components/Katex.jsx"
-import FiddleSVG from "@components/FiddleSVG"
+import CodePenSVG from "@components/CodePenSVG"
 
 ## Pfade
 
@@ -9,4 +9,86 @@ Das wohl mächtigste Element in **SVG** ist der Pfad. Mit einem Pfad können Sie
 
 <LearningGoals>
 
+- Sie können einfache Formen mit Pfaden erstellen.
+- Sie können einen Stern zeichnen.
+- Sie können die verschiedenen Attribute von einem Pfad verändern.
+- Sie wissen was das `d`-Attribut von einem Pfad ist, und können es entsprechend abändern.
+- Sie verstehen die Syntax die im `d`-Attribut eines Pfades verwendet wird.
+
 </LearningGoals>
+
+## Der einfachste Path
+
+Die einfachste Form die wir mit einem Pfad zeichnen können, ist eine Linie. Wie man das macht, sehen Sie in dem folgenden Block.
+
+<CodePenSVG
+  classes="full-width"
+  initialCode={`<svg viewBox="0 0 300 300" width="300">
+    <path  stroke="black" stroke-width="5"
+      d="M 100, 100 L 200, 200"
+    />
+</svg>`}
+/>
+
+Das bringt uns leider nicht so viel, denn Linien können wir bereits zeichnen. Aber an diesem sehr einfachen Beispiel, können Sie gleich sehen wie ein `path`-Element eigentlich funktioniert. Wir haben die ganz normalen Attribute, die wir auch auf anderen Elementen setzen. Damit überhaupt etwas gezeichnet wird, müssen wir `stroke` angeben, und `stroke-width` damit wir das Resultate besser sehen können. Dann kommt aber noch ein neues Attribut dazu, das `d`-Attribut. Dieses enthält die Daten für den Pfad, also die Instruktionen, wie dieser gezeichnet werden soll. Auf den ersten Blick sieht der Inhalt davon recht kompliziert aus, aber das können wir ganz schnell vereinfachen, denn es sind nur einfache Zeichenbefehle.
+
+<Section classes="important">
+
+## Zeichenbefehle für Pfade
+
+Die Zeichenbefehle funktionieren alle auf die gleiche Art. Die Art ist auch sehr einfach, Sie müssen aber jeweils wissen, wie viele Parameter ein Befehl braucht. Ganz generell funktionieren diese Befehle immer so: Ein Buchstabe gibt die Art des Befehls an, dann werden so viele Zahlen gelesen wie der Befehl braucht, dann kann ein weiterer Buchstabe kommen um einen neuen Befehl zu starten. Es ist sehr **wichtig** dass Sie zwischen Gross- und Kleinschreibung unterscheiden, wieso wird aber erst später erklärt. Für den Moment schreiben wir alles mit Grossbuchstaben. Damit diese Zeichenbefehle einfacher zu verstehen sind, stellen Sie sich einfach vor, dass Sie mit diesen Befehlen die Spitzen von einem Stift befehligen.
+
+- Bewegen (**M** `x, y`): Dieser Befehl verschiebt die Spitze des Stiftes zu der gegeben Koordinate.
+- Linie (**L** `x, y`): Dieser Befehl zeichnet eine Linie vom aktuellen Punkt, bis zur angegebenen Koordinate.
+- Pfad schliessen (**Z**): Dieser Befehl zeichnet vom aktuellen Punkt zurück zum Startpunkt.
+
+Es gibt noch mehr Befehle, diese schauen wir aber erst später an.
+
+</Section>
+
+## Ein Dreieck zeichnen
+
+Im letzten Kapitel haben wir bereits ein Dreieck gezeichnet. Wobei dies kein richtiges Dreieck war, sondern nur 3 Linien. Es gab keine Möglichkeit diese Form auszufüllen. Mit Pfaden können wir das aber ganz einfach machen.
+
+<CodePenSVG
+  classes="full-width"
+  initialCode={`<svg viewBox="0 0 300 300" width="300">
+    <path  stroke="black"
+      stroke-width="5"
+      fill="#E68B2E"
+      d="M 150, 50 L 50, 250 L 250, 250 Z"
+    />
+</svg>`}
+/>
+
+Im Code hier, können Sie sehen das wir nur zwei neue Zeichenbefehle hinzugenommen haben. Wir mussten nur eine horizontale Linie zeichnen, und den Pfad selber schliessen lassen. Das macht es sehr einfach solche Formen zu zeichnen.
+
+<Section>
+
+## Absolute und relative Zeichenbefehle
+
+Wir haben es weiter oben bereits angesprochen, es macht bei Pfaden einen Unterschied, ob Sie die Zeichenbefehle gross oder klein schreiben. Der Unterschied liegt darin wie die Koordinaten danach gelesen werden. Wenn wir die Grossbuchstaben verwenden, dann werden die Koordinaten **absolut** gelesen, wenn wir die Kleinbuchstaben verwenden, dann werden die Koordinaten **relativ** gelesen. Das kann es manchmal deutlich einfacher machen eine Form zu zeichnen. Bei relativen Koordinaten, können wir immer so überlegen, wie weit muss ich meinen Stift von der aktuellen Position in `x`- und `y`-Richtung bewegen.
+
+Wir möchten nun ein rechtwinkliges Dreieck zeichnen. Der rechte Winkel ist unten links und die Katheten haben die Längen 140 und 210.
+
+<CodePenSVG
+  classes="full-width"
+  initialCode={`<svg viewBox="0 0 300 300" width="300">
+    <path  stroke="black"
+      stroke-width="5"
+      fill="#4693CF"
+      d="m 50, 50 l 0, 140 l 210, 0 Z"
+    />
+</svg>`}
+/>
+
+Diese Befehle gehen aber noch einfacher. Wenn wir Linien nur horizontal oder vertikal zeichnen, dann können wir dafür eine Kurzform verwenden.
+
+- Horizontale Linie (**h** `x`): Dieser Befehl zeichnet eine horizontale Linie vom aktuellen Punkt um `x` Einheiten in `x`-Richtung.
+- Vertikale Linie (**v** `y`): Dieser Befehl zeichnet eine vertikale Linie vom aktuellen Punkt um `y` Einheiten in `y`-Richtung.
+
+### Aufgabe
+
+Versuchen Sie die Zeichenbefehle oben mit den horizontalen und vertikalen Linien zu ersetzen.
+
+</Section>

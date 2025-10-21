@@ -31,6 +31,10 @@ pre:has(code) {
   border-left-color: var(--color-orange);
 }
 
+.important {
+  border-left-color: var(--color-purple);
+}
+
 .tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;

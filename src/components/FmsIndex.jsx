@@ -28,6 +28,7 @@ export default function FmsIndex() {
             <NavLink to="pictures">Bilder</NavLink>
             <NavLink to="fms/svg">SVG</NavLink>
             <NavLink to="fms/svg-line">Linien</NavLink>
+            <NavLink to="fms/svg-path">Pfade</NavLink>
           </ol>
         </li>
       </ol>
