@@ -92,3 +92,105 @@ Diese Befehle gehen aber noch einfacher. Wenn wir Linien nur horizontal oder ver
 Versuchen Sie die Zeichenbefehle oben mit den horizontalen und vertikalen Linien zu ersetzen.
 
 </Section>
+
+## Kompliziertere Zeichenbefehle
+
+Mit Pfaden haben wir die Möglichkeit komplexere Formen zu zeichnen, als nur gerade Linien. Diese werden aber schnell sehr kompliziert und sind nicht direkt für Code geeignet. Meistens möchte man dafür ein Zeichenwerkzeug haben. Wir schauen uns aber die einfachste Form von einer sogenannten Bézier-Kurve an.
+
+Bei Bézier-Kurven, geht es immer darum, dass Sie sogenannte Kontrollpunkte einführen. Der Pfad wird dann zu diesem Kontrollpunkt hin gezogen und es entsteht eine leichte Krümmung in der Kurve. Wir schauen und dazu ein Beispiel an, und zeichnen sämtliche Punkte die bei der Kurve verwendet werden ein. Die grünen Punkte sind Start- und Endpunkt, der rote ist der Kontrollpunkt.
+
+<CodePenSVG
+  classes="full-width"
+  initialCode={`<svg viewBox="0 0 300 300" width="300">
+    <path  stroke="black"
+      stroke-width="2"
+      fill="none"
+      d="M 50, 150 Q 150, 50, 250, 150"
+    />
+    <circle cx="50" cy="150" r="5" fill="forestgreen" />
+    <circle cx="150" cy="50" r="5" fill="firebrick" />
+    <circle cx="250" cy="150" r="5" fill="forestgreen" />
+</svg>`}
+/>
+
+Wir sehen das die Kurve durch den Start- und Endpunkt geht. Während die Kurve aber gezeichnet wird, wird der Stift immer hin zum Kontrollpunkt gezogen. So bekommen wir eine angenehme Krümmung in die Kurve. Verantwortlich dafür ist der Zeichenbefehl `Q`.
+
+- Quadratische Bézier-Kurve (**Q** `x1, y1, x, y`): Mit diesem Zeichenbefehl können Sie eine quadratische Bézier-Kurve zeichnen lassen. Dabei sind `x1` und `y1` die Koordinaten des Kontrollpunkts und `x` und `y` die Koordinaten des Endpunkts.
+- Quadratische Bézier-Kurve weiterzeichnen (**T** `x, y`): Dieser Zeichenbefehl kann nur direkt nach einem `Q` verwendet werden. Hier wird der Kontrollpunkt der vorherigen Kurve am Startpunkt gespiegelt und weiter verwendet, dann müssen Sie nur noch den Endpunkt mit `x` und `y` angeben.
+
+<Section classes="exercise">
+
+## Aufgabe
+
+Versuchen Sie eine Art Sinuskurve zu erzeugen, verwenden Sie dafür die Zeichenbefehle `Q` und `T`.
+
+</Section>
+
+## Turtle Graphics mit Pfaden
+
+Ein beliebtes Einstiegsthema ins Computerprogrammieren, sind die sogenannten **Turtle Graphics**. Da steuern Sie eine Schildkröte, die einen Stift bei sich trägt. Sie können der Schildkröte verschiedene Anweisungen geben, wie zum Beispiel 100 Einheiten nach vorne laufen, um 45° nach links drehen, dann 50 Einheiten zurück laufen, den Stift anheben und nochmals 50 Einheiten zurück laufen, usw. Alle diese Grafiken die man mit Turtles erstellen kann, können wir auch mit Pfaden erstellen. Besonders einfach geht das, wenn Sie die **relativen** Koordinaten verwenden. Damit wir alles schön übersichtlich haben, versuchen wir jeden neuen Befehl in einem Pfad, auf eine neue Zeile zu bringen, so wie wir das in dem unteren Beispiel gemacht haben. Sie können hier alles vor Zeile 15 ignorieren, das zeichnet uns nur ein Gitter, mit dem wir uns besser orientieren können.
+
+<CodePenSVG
+  classes="full-width"
+  initialCode={`<svg viewBox="0 0 300 300" width="300">
+  <!-- Gibt uns ein Gitter, an dem wir uns orientieren können. -->
+  <defs>
+    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="gray" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="url(#smallGrid)"/>
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="gray" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#grid)" />
+  <!-- Gitter fertig. -->
+
+  <path stroke="black"
+    stroke-width="2"
+    fill="gray"
+    fill-rule="evenodd"
+    opacity="0.5"
+    d="M 50, 150
+      l 100, -100
+      l 100, 100
+      h -25
+      v 100
+      h -150
+      v -100
+      z
+
+      M 100, 250
+      v -50
+      h 30
+      v 50
+      z
+
+      M 160, 120
+      h 40
+      v 30
+      h -40
+      z
+
+      M 100, 120
+      h 40
+      v 30
+      h -40
+      z
+      "
+  />
+  </svg>`}
+/>
+
+<Section classes="exercise">
+
+## Aufgaben
+
+- Nutzen Sie das `path`-Element um das Haus von Nikolaus zu zeichnen.
+- Zeichnen Sie einen Stern mit 6 Zacken.
+- Zeichnen Sie einen Quader in einer 3D Perspektive.
+- Zeichnen Sie einen Tannenbaum.
+- Zeichnen Sie ein Haus in einer Hügellandschaft. Es soll eine gebogene Strasse haben, die direkt zur Haustüre führt.
+- Zeichnen Sie unterschiedliche Logos.
+
+</Section>
