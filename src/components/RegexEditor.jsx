@@ -5,18 +5,27 @@ import "crypto"
 
 import styles from "@components/CodePen.module.css"
 
-export default function RegexEditor() {
-  const [regex, setRegex] = useState(`[0-9A-F][0-9A-F]`)
-  const [output, setOutput] = useState("#00FF00")
+export default function RegexEditor({
+  defaultInput = "#00FF00",
+  defaultRegex = "[0-9A-F][0-9A-F]",
+}) {
+  const [regex, setRegex] = useState(defaultRegex)
+  const [output, setOutput] = useState(defaultInput)
   const [matches, setMatches] = useState([])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const matches = [...output.matchAll(regex)]
-      setMatches([...matches])
-      matches.forEach((elem) => {
-        console.log(elem)
-      })
+      try {
+        const matches = [...output.matchAll(regex)]
+        setMatches([...matches])
+        matches.forEach((elem) => {
+          console.log(elem)
+        })
+      } catch (e) {
+        console.error(
+          "There is an error in the regular expression that is parsed. This is expected behavior, so do not panic!!!",
+        )
+      }
     }, 1000)
     return () => {
       clearTimeout(timeout)
@@ -26,6 +35,12 @@ export default function RegexEditor() {
   return (
     <div className={`${styles.codePenWrapper} full-width`}>
       <div className={`${styles.pane} ${styles.paneLeft}`}>
+        <h3>Eingabe Text</h3>
+        <input
+          type="text"
+          value={output}
+          onChange={(e) => setOutput(e.target.value)}
+        />
         <Editor
           title="Regex"
           language="text"
@@ -34,11 +49,6 @@ export default function RegexEditor() {
         />
       </div>
       <div className={styles.pane}>
-        <input
-          type="text"
-          value={output}
-          onChange={(e) => setOutput(e.target.value)}
-        />
         <div>
           <h3>Erkannte Teile</h3>
           <Highlight matches={matches} output={output} />
@@ -82,14 +92,47 @@ function Editor(props) {
 }
 
 function Highlight({ matches, output }) {
+  const [res, setResult] = useState([])
   // Gehe durch den Output und markiere alle Teile die matches getroffen werden. Der Rest wird ohne Highlights eingefügt.
+  useEffect(() => {
+    let currentIndex = 0
+    const result = []
+    for (let i = 0; i < matches.length; i++) {
+      const match = matches[i]
+      if (currentIndex < match.index) {
+        result.push({
+          hl: false,
+          content: output.substring(currentIndex, match.index),
+        })
+        currentIndex = match.index
+        i--
+      } else {
+        result.push({
+          hl: true,
+          content: output.substring(match.index, match.index + match[0].length),
+        })
+        currentIndex += match[0].length
+      }
+    }
+    setResult(result)
+  }, [matches, output])
+
   return (
     <div>
-      {matches?.map((match) => (
-        <span key={crypto.randomUUID()} className={styles.mark}>
-          {match}
-        </span>
-      ))}
+      {res &&
+        res.map((elem) => {
+          return <Mark key={crypto.randomUUID()} elem={elem} />
+        })}
     </div>
+  )
+}
+
+function Mark({ elem }) {
+  const { hl = true, content } = elem
+  return (
+    <span
+      className={hl ? `${styles.markgroup} ${styles.mark}` : styles.markgroup}>
+      {content}
+    </span>
   )
 }

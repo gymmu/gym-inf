@@ -1,5 +1,8 @@
 .codePenWrapper {
   display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .pane {
@@ -23,9 +26,12 @@
   justify-content: center;
 }
 
+.markgroup {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 .mark {
   background-color: yellow;
   color: black;
-  font-size: 1.5rem;
-  font-weight: bold;
 }
