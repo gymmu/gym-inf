@@ -24,6 +24,7 @@ import Pictures from "@pages/fms/pictures.mdx"
 import FmsSVG from "@pages/fms/svg.mdx"
 import FmsSVGLine from "@pages/fms/svg-line.mdx"
 import FmsSVGPath from "@pages/fms/svg-path.mdx"
+import FmsSVGUse from "@pages/fms/svg-use.mdx"
 
 // FMS Praktikum
 import Excel from "@pages/fms/excel.mdx"
@@ -65,6 +66,7 @@ export const createRouter = () => {
           { path: "/fms/svg", element: <FmsSVG /> },
           { path: "/fms/svg-line", element: <FmsSVGLine /> },
           { path: "/fms/svg-path", element: <FmsSVGPath /> },
+          { path: "/fms/svg-use", element: <FmsSVGUse /> },
 
           // FMS Routes 2. Klasse
           { path: "fms/excel", element: <Excel /> },
