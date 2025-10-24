@@ -21,7 +21,7 @@ export default function RegexEditor({
         matches.forEach((elem) => {
           console.log(elem)
         })
-      } catch (e) {
+      } catch {
         console.error(
           "There is an error in the regular expression that is parsed. This is expected behavior, so do not panic!!!",
         )
@@ -119,10 +119,9 @@ function Highlight({ matches, output }) {
 
   return (
     <div>
-      {res &&
-        res.map((elem) => {
-          return <Mark key={crypto.randomUUID()} elem={elem} />
-        })}
+      {res?.map((elem) => {
+        return <Mark key={crypto.randomUUID()} elem={elem} />
+      })}
     </div>
   )
 }

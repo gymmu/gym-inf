@@ -134,11 +134,24 @@ footer {
 }
 
 #root {
+  width: 100%;
   min-height: 100vh;
   display: grid;
   position: relative;
-  grid-template-columns: 320px 1fr;
   grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+}
+
+.sidenav:not(.show) {
+  display: none;
+}
+
+#root:has(.show) {
+  grid-template-columns: 320px 1fr;
   grid-template-areas:
     "header header"
     "navbar main"
