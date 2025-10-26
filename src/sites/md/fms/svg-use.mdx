@@ -75,3 +75,42 @@ Weiter oben haben Sie gesehen das Transformationen recht kompliziert aussehen. D
 - Sie wissen das bei einer Transformation ein neues Koordinatensystem für das aktuelle Element erstellt wird.
 
 </LearningGoals>
+
+<CodePenSVG classes="full-width"
+  initialCode={`<svg viewBox="0 0 300 300" width="100%">
+  <!-- Gibt uns ein Gitter, an dem wir uns orientieren können. -->
+  <defs>
+    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="gray" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="url(#smallGrid)"/>
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="gray" stroke-width="1"/>
+    </pattern>
+
+    <pattern id="smallGridBlue" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="blue" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="gridBlue" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="url(#smallGridBlue)"/>
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="blue" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <g>
+  <rect width="100%" height="100%" fill="url(#grid)" />
+  </g>
+  <g>
+  <rect width="100%" height="100%" fill="url(#gridBlue)" />
+  <circle r="5" fill="blue"/>
+  <circle cx="150" cy="150" r="5" fill="blue"/>
+  <animateTransform attributeName="transform"
+        attributeType="XML"
+        type="translate"
+        values="0 0;150 0;150 150; 150 150"
+        dur="3s"
+        repeatCount="indefinite" />
+  </g>
+
+  <!-- Gitter fertig. -->
+  </svg>`}
+/>
