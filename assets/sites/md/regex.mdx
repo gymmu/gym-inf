@@ -1,5 +1,6 @@
 import LearningGoals from "@components/LearningGoals.jsx"
 import RegexEditor from "@components/RegexEditor.jsx"
+import Section from "@components/Section.jsx"
 
 ## Reguläre Ausdrücke (Regex)
 
@@ -16,6 +17,279 @@ Reguläre Ausdrücke sind ein wichtiger Teil von Grammatiken und Sprachen. Man k
 
 ## Hexadezimalzahlen erkennen
 
-Im vorherigen Kapitel, haben wir Syntaxdiagramme erstellt, mit deren Hilfe wir Hexadezimalzahlen erkennen konnten. Nun packen wir das ganze in eine einfache Regex.
+Im vorherigen Kapitel, haben wir Syntaxdiagramme erstellt, mit deren Hilfe wir Hexadezimalzahlen erkennen konnten. Nun packen wir das ganze in eine einfache Regex `[0-9A-F][0-9A-F]`.
 
-<RegexEditor />
+<RegexEditor defaultInput="A3 B3 777 90G d0D" defaultRegex="[0-9A-F][0-9A-F]" />
+
+Sie können hier sehen dass diese Regex genau eine 2-stellige Hexadezimalzahl matched, aber nur wenn die Buchstaben grossgeschrieben sind. Anstatt ein kompliziertes Syntaxdiagramm aufzustellen, können wir diesen relativ kurzen Ausdruck angeben, der uns dann exakt einen Teil des Textes matched.
+
+<Section>
+
+## Reguläre Ausdrücke lesen können
+
+Wie oben bereits erwähnt, sind Reguläre Ausdrücke wie eine eigene Sprache. Da gibt es einige Regeln die man beachten muss. Diese Regeln werden im folgenden erklärt. Ganz generell gilt die Regel, wenn ein Buchstabe einfach so da steht, dann wird genau dieser Buchstabe gematched, genau wie bei einer normalen Textsuche. Am besten ist es sowieso als Textsuche über diese Regulären Ausdrücke nachzudenken. Möchten Sie zum Beispiel das Wort `cat` in einem Text suchen, dann machen Sie das mit der Regex `cat`. Möchten Sie nun aber auch diejenigen finden, die grossgeschrieben sind, dann machen Sie das mit `[C|c]at`. Hier sind `at` ganz normale Buchstaben die im Wort vorkommen müssen, und `[C|c]` ist eine Regel die sagt: entweder ein grosses oder ein kleines `c`.
+
+### Regeln
+
+- `[abc]` genau ein Buchstabe aus `a`,  `b` oder `c`.
+- `[^abc]` genau ein Buchstabe, aber **nicht** `a`, `b` oder `c`.
+- `[a-z]` genau ein Buchstabe von `a` bis `z`.
+- `[^a-z]` genau ein Buchstabe, aber **nicht** `a` bis `z`.
+- `[a-zA-Z]` genau ein Buchstabe von `a` bis `z`, oder `A` bis `Z`.
+- `.` irgend ein einzelnes Zeichen.
+- `a|b` entweder `a` oder `b`.
+- `\s` irgend eine Art von Leerzeichen (Leerschlag oder Tab).
+- `\S` alles ausser ein Leerzeichen.
+- `\d` eine Ziffer. Kann man auch als `[0-9]` angeben.
+- `\D` alles ausser eine Ziffer. Kann man auch als `[^0-9]` angeben.
+- `\w` irgend ein Zeichen das in einem Wort vorkommen kann. Das sind Buchstaben und `-` und weitere Spezialzeichen.
+- `\W` alles ausser einem Wortzeichen. Also Leerzeichen, Punkt, Komma, etc.
+- `\b` alle Zeichen die ein Wort begrenzen.
+- `\B` alle Zeichen die ein Wort **nicht** begrenzen.
+- `\n` Zeilenumbruch.
+- `\t` Tabulatorzeichen.
+- `a?` 0 oder 1 `a`.
+- `a*` 0 oder mehrere `a`.
+- `a+` 1 oder mehrere `a`.
+- `a{3}` genau 3 `a`.
+- `a{3,}` 3 oder mehr `a`
+- `a{3,6}` zwischen 3 und 6 `a`.
+- `^a` es muss ein `a` ganz am Anfang haben.
+- `a$` es muss ein `a` ganz am Ende haben.
+- `(...)` erfasst den Inhalt in einer Gruppe. Gruppen werden einfach durchnummeriert, startet mit 1.
+- `(?:...)` Gruppe die nicht erfasst wird.
+- `(?<name>...)` benannte Gruppe, kann später mit `<name>` abgerufen werden.
+- `$1` Inhalt der Gruppe 1. Wird oftmals auch als `\1` geschrieben.
+- `$$` das Zeichen `$`.
+- `` $` `` Inhalt vor einem Match.
+- `$'` Inhalt nach einem Match.
+- `$&` alles was gematched wurde.
+- `$<name>` Inhalt der benannten Gruppe `<name>`. Diese Form wird nicht überall unterstützt, wir verwenden Sie nur in der Theorie.
+
+### Zeichen escapen
+
+Dafür gibt es leider keine gute deutsche Übersetzung. Ein Zeichen **escapen** bedeutet es von seiner eigentlichen Funktion zu sperren. Wenn wir also einen Punkt (`.`) matchen möchten, dann müssen wir das so schreiben: `\.`. Damit wird die eigentliche Funktion des Zeichens `.` in einem regulären Ausdruck unterdrückt, und wir können es als das Zeichen selbst nehmen. Das müssen wir mit allen Zeichen machen, die eine spezielle Bedeutung in regulären Ausdrücken haben.
+
+</Section>
+
+## Einfache Beispiele
+
+Schauen wir uns ein paar einfache Beispiele an. Wenn wir einen regulären Ausdruck angeben möchten, dann möchten wir das immer für eine ganze Reihe von ausdrücken machen, und alle sollen gematched werden. Daher geben wir immer ein paar Einträge an, für diese erstellen wir dann eine Regex, die alle matchen kann.
+
+Sie können alle diese Ausdrücke auf <a href="https://regex101.com/" target="_blank">Regex101</a> testen.
+
+- **Uhrzeit**: Wir nehmen das 24-Stunden-Format, ohne Sekunden.
+
+```text
+1:23
+12:45
+9:01
+06:25
+23:59
+```
+
+Diese können wir alle mit dem folgenden Ausdruck matchen: `^[0-2]?[0-9]:[0-5][0-9]$`.
+
+- **Telefonnummer**: Wir gehen Hier von schweizer Handy-Nummern aus, die können in unterschiedlichen Formaten angegeben werden, wir möchten alle treffen.
+
+```text
++41 78 665 23 45
+076 334 21 89
++4179 663 1234
+072 5554433
+0791112233
+```
+
+Diese können wir alle mit dem folgenden Ausdruck matchen: `^(\+41 ?|0)7\d ?\d{3} ?\d{2} ?\d{2}$`
+
+<Section classes="exercise">
+
+## Aufgaben
+
+Öffnen Sie die Webseite <a href="https://regex101.com/" target="_blank">Regex101</a>. Und erstellen Sie reguläre Ausdrücke für die folgenden Listen von Ausdrücken. Versuchen Sie möglichst alle Ausdrücke zu treffen.
+
+1. Datum
+
+```
+31.12.2023
+01.01.2024
+15.08.2023
+28.02.2022
+07.07.2021
+22.11.2020
+30.06.2025
+17.03.2023
+05.05.2024
+12.12.2022
+```
+
+2. Uhrzeit
+
+```
+18:30:45
+07:15:22
+12:00:00
+23:59:59
+00:01:01
+15:45:30
+09:30:15
+22:10:05
+16:25:40
+03:05:33
+```
+
+3. Vollnamen
+
+```
+Max Mustermann
+Anna Müller
+Peter Schneider
+Sofia Weber
+Thomas Schmid
+Laura Fischer
+Felix Meier
+Clara Zimmermann
+Daniela Roth
+Michael Steiner
+```
+
+4. Email-Adressen
+
+```
+hier.sind@beispiel.ch
+kontakt@firma.ch
+info@service.ch
+support@unternehmen.ch
+team@projekt.ch
+mail@anbieter.ch
+service@webseite.ch
+verwaltung@organisation.ch
+anfragen@firma.ch
+newsletter@portal.ch
+```
+
+5. Adressen
+
+```
+Musterstraße 1, 8000 Zürich
+Bahnhofplatz 5, 6003 Luzern
+Hauptstraße 10, 2000 Neuenburg
+Zürcherstrasse 15, 8134 Adliswil
+Lindenweg 2, 4051 Basel
+Kirchweg 21, 3000 Bern
+Schulstrasse 7, 9010 St. Gallen
+Industriestrasse 9, 8400 Winterthur
+Römerstrasse 4, 1201 Genf
+Dorfplatz 3, 4125 Riehen
+```
+
+6. Webadressen
+
+```
+https://www.beispiel.ch
+http://www.example.ch
+https://www.testseite.ch
+http://beispiel.ch
+https://test.example.ch
+http://www.meine-seite.ch
+https://www.domain.ch/news
+https://shop.beispiel.ch
+http://testseiten.ch
+https://www.anderedomain.ch/produkte
+```
+
+7. IBAN-Nummern
+
+```
+CH12 3456 7890 1234 5678 9
+CH98 7654 3210 9876 5432 1
+CH76 1234 5678 9123 4567 8
+CH45 6789 0123 4567 8901 2
+CH22 1111 2222 3333 4444 5
+CH33 5555 6666 7777 8888 0
+CH99 0000 1111 2222 3333 3
+CH87 4444 5555 6666 7777 6
+CH11 9999 8888 7777 6666 4
+CH66 2222 3333 4444 5555 7
+```
+
+8. RGB-Farbwerte
+
+```
+#FF5733
+#33FF57
+#3357FF
+#F1C40F
+#E74C3C
+#8E44AD
+#3498DB
+#2ECC71
+#E67E22
+#C0392B
+```
+
+9. Einfache Gleichungen
+
+```
+x + 5 = 10
+3y - 7 = 11
+z / 2 = 4
+8 = a + 2
+b - 3 = 6
+2c + 9 = 15
+d / 4 + 1 = 3
+e - 5 = 2e
+7 = f / 3 + 1
+g + 8 = 12
+```
+
+10. Komplexere Gleichungen
+
+```
+x + 5 = 10
+3y - 7 = 2y + 5
+2(x - 3) = 8
+5a + 2 = 3a + 10
+4(x + 2) = 3(x - 1) + 4
+7 - 2b = 3(b + 1)
+6(x + 3) - 5 = 2x + 15
+8 = 4y - 12 + 2y
+x/2 + 4 = 6
+9 - 3z = 2(z + 6)
+```
+
+11. RGB Farbwerte, aber jeder Farbkanal ist eine Schnappszahl
+
+```
+#FF00CC
+#00FF88
+#CC0099
+#6600FF
+#FF3300
+#00CC55
+#9900FF
+#FF6666
+#00CC99
+#FFCC00
+```
+
+12. Doppelte Wörter
+
+```
+Ich liebe die Berge und Berge sind schön.
+Der Hund bellt, denn der Hund ist freundlich.
+Käse schmeckt gut, denn guter Käse ist lecker.
+Die Blume blüht und blüht den ganzen Tag.
+Wir gehen essen, denn essen macht Spass.
+Das Wasser ist klar, weil klares Wasser wichtig ist.
+Freunde sind wichtig, denn wichtige Freunde sind rar.
+Der Zug fährt schnell, denn schnelle Züge sind top.
+Das Wetter ist schön, denn schönes Wetter ist selten.
+Ein Buch ist spannend, denn spannende Bücher bringen Freude.
+```
+
+</Section>
+
+## Suche und ersetzen
+
+Reguläre Ausdrücke werden nicht nur im Programmieren eingesetzt, sie können auch bei einfachen Anwendungen wie Google Docs, Google Sheets und auch VSCode zum suchen und ersetzen verwendet werden.

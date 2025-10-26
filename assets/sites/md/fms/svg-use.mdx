@@ -1,0 +1,116 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Section from "@components/Section.jsx"
+import CodePenSVG from "@components/CodePenSVG"
+
+## Eigene SVG Elemente definieren und wiederverwenden
+
+Im letzten Kapitel haben Sie den Pfad kennengelernt. Mit diesem können Sie alle möglichen Formen erstellen. Oftmals brauchen Sie eine Form mehrfach, aber an anderen Orten in dem Bild. Das können wir mit den beiden Elementen `defs` und `use` erreichen.
+
+<LearningGoals>
+
+- Sie können Elemente definieren, die aber nicht gezeichnet werden.
+- Sie können die gleiche Form an verschiedenen Stellen im Bild verwenden.
+- Sie können Attribute aus den definierten Formen überschreiben.
+- Sie wissen wie das `id`-Attribut funktioniert.
+- Sie wissen wie das `href`-Attribut funktioniert.
+- Sie wissen das man ein `#` braucht, um eine ID anzusprechen.
+
+</LearningGoals>
+
+## Dreiecke
+
+Im letzten Kapitel haben wir schon gesehen das man mit Pfaden ganz einfach Dreiecke angeben kann. Das gleichseitige Dreieck ist eine Form die man immer wieder verwenden kann, Sie können diese auch rotieren und skalieren, dann haben Sie alle möglichen Formen von gleichseitigen Dreiecken.
+
+<CodePenSVG classes="full-width"
+  initialCode={`<svg viewBox="0 0 300 300" width="300">
+    <defs>
+      <path id="triangle"
+        d="M 30 0 l -30 51.962 h 60 z"
+      />
+    </defs>
+
+    <!-- Einfache Beispiele -->
+    <use href="#triangle" x="20" y="70" fill="blue" />
+    <use href="#triangle" x="90" y="40" fill="green" />
+
+    <!-- kompliziertere Beispiele -->
+    <use href="#triangle" x="0" y="0" fill="pink"
+      transform="translate(50, 150) scale(2)" />
+    <use href="#triangle" x="0" y="0" fill="magenta"
+      transform="translate(180, 150) scale(0.5) rotate(-45)" />
+  </svg>`}
+/>
+
+Wir verwenden ein `defs` Element, um die Elemente zu definieren, aber nicht zu zeichnen. Nichts was in einem `defs` ist, wird gezeichnet. Damit die Elemente aber gezeichnet werden, müssen wir `use` verwenden. Die ersten beiden Beispiele sind sehr einfach. Wir setzen einfach `x`, `y` und `fill` schon wird ein neues Dreieck an der gewünschten Stelle mit der gewünschten Farbe gezeichnet.
+
+Wollen wir die Dreiecke aber noch verschieben, dann wird das ganze ein wenig komplizierter. Aber auch das ist nicht so schwer, wenn Sie mal verstanden haben, wie das ganze geht. Das schauen wir aber weiter unten an.
+
+<Section>
+
+## Die Attribute `id` und `href`
+
+Diese beiden Attribute haben keinen wirklich sichtbaren Effekt auf das Bild, sind aber super wichtig für die ganze Funktionalität und generell für das Verständnis von SVG und später auch Webseiten.
+
+Mit dem `id`-Attribut, setzen Sie den Namen für das Element. Dieser Name muss eindeutig sein, darf also kein zweites mal im gleichen Dokument vorkommen.
+
+Mit dem `href`-Attribut können Sie ein anderes Element *referenzieren*. Das können Sie sich recht leicht merken, denn `href` steht für `hyper-reference`, also eine Verlinkung von Elementen. Damit Sie direkt die ID von einem Objekt ansprechen können, müssen Sie ein `#` vor den ID-Namen setzen. Oben im Beispiel haben wir die ID `triangle` verwendet, und wenn wir das Element in `href` ansprechen möchten, dann müssen Sie das mit `#triangle` machen.
+
+## Aufgabe
+
+Erstellen Sie ein zusätzliches Element `square` und zeichnen Sie 2 verschiedene Versionen davon.
+
+</Section>
+
+## Transformationen
+
+Weiter oben haben Sie gesehen das Transformationen recht kompliziert aussehen. Das möchten wir hier aber vereinfachen. Das geht aber nur, wenn Sie versuchen zu verstehen wie Transformationen in SVG generell funktionieren.
+
+<LearningGoals>
+
+- Sie kennen verschiedene Arten von Transformationen (verschieben, rotieren, skalieren).
+- Sie können Transformationen in der korrekten Reihenfolge anwenden.
+- Sie verstehen den Zusammenhang zwischen den Attributen `x, y` und der Verschiebung.
+- Sie wissen wo der Ursprung einer Transformation ist.
+- Sie verstehen dass bei einer Transformation das Basiskoordinatensystem transformiert wird.
+- Sie wissen das bei einer Transformation ein neues Koordinatensystem für das aktuelle Element erstellt wird.
+
+</LearningGoals>
+
+<CodePenSVG classes="full-width"
+  initialCode={`<svg viewBox="0 0 300 300" width="100%">
+  <!-- Gibt uns ein Gitter, an dem wir uns orientieren können. -->
+  <defs>
+    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="gray" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="url(#smallGrid)"/>
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="gray" stroke-width="1"/>
+    </pattern>
+
+    <pattern id="smallGridBlue" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="blue" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="gridBlue" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="url(#smallGridBlue)"/>
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="blue" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <g>
+  <rect width="100%" height="100%" fill="url(#grid)" />
+  </g>
+  <g>
+  <rect width="100%" height="100%" fill="url(#gridBlue)" />
+  <circle r="5" fill="blue"/>
+  <circle cx="150" cy="150" r="5" fill="blue"/>
+  <animateTransform attributeName="transform"
+        attributeType="XML"
+        type="translate"
+        values="0 0;150 0;150 150; 150 150"
+        dur="3s"
+        repeatCount="indefinite" />
+  </g>
+
+  <!-- Gitter fertig. -->
+  </svg>`}
+/>
