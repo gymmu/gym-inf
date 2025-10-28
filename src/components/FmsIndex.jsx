@@ -47,6 +47,7 @@ export default function FmsIndex() {
           Webdesign
           <ol>
             <NavLink to="fms/html">Einstieg in HTML</NavLink>
+            <NavLink to="fms/webdesign">Webdesign mit HTML</NavLink>
           </ol>
         </li>
       </ol>

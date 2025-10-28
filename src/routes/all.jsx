@@ -31,6 +31,7 @@ import FmsSVGUse from "@pages/fms/svg-use.mdx"
 import Excel from "@pages/fms/excel.mdx"
 import ExcelSpielplan from "@pages/fms/excel-spielplan.mdx"
 import FmsHTML from "@pages/fms/html.mdx"
+import FmsWebdesign from "@pages/fms/webdesign.mdx"
 import CodePen from "../components/CodePen"
 import CodePenSVG from "../components/CodePenSVG"
 import RegexEditor from "../components/RegexEditor"
@@ -74,6 +75,7 @@ export const createRouter = () => {
           { path: "fms/excel", element: <Excel /> },
           { path: "fms/excel-spielplan", element: <ExcelSpielplan /> },
           { path: "fms/html", element: <FmsHTML /> },
+          { path: "fms/webdesign", element: <FmsWebdesign /> },
 
           // TODO: Comment these out if no longer tested
           { path: "codepen", element: <CodePen /> },
