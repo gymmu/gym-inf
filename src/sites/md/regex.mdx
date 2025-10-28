@@ -292,4 +292,166 @@ Ein Buch ist spannend, denn spannende Bücher bringen Freude.
 
 ## Suche und ersetzen
 
-Reguläre Ausdrücke werden nicht nur im Programmieren eingesetzt, sie können auch bei einfachen Anwendungen wie Google Docs, Google Sheets und auch VSCode zum suchen und ersetzen verwendet werden.
+Reguläre Ausdrücke werden nicht nur im Programmieren eingesetzt, sie können auch bei einfachen Anwendungen wie Google Docs, Google Sheets und auch VSCode zum suchen und ersetzen verwendet werden. Testen können Sie das aber auch auf der Webseite <a href="https://regex101.com/" target="_blank">Regex101</a>.
+
+Mit normalem suchen und ersetzen, sind Sie sehr eingeschränkt. Mit regulären Ausdrücken, sind Sie aber sehr flexibler. Sie können sogar das gesuchte in ein anderes Format bringen.
+
+<Section classes="exercise">
+
+## Aufgaben
+
+1. Finden Sie alle vorkommen von `cat` oder `Cat` und ersetzen Sie diese mit Katze.
+
+```
+Katzen sind faszinierende Tiere, die in vielen Haushalten als geliebte Begleiter leben. Eine Cat ist bekannt für ihre Unabhängigkeit und ihren spielerischen Charakter. Oft sieht man eine cat, die neugierig durch die Wohnung schleicht oder sich in der Sonne räkelt. Ihre Geschmeidigkeit und Eleganz machen sie zu einem beliebten Motiv in der Kunst und Fotografie. Ausserdem haben Katzen die Fähigkeit, die Stimmung ihrer Besitzer zu spüren, was sie zu wunderbaren Begleitern in stressigen Zeiten macht. Egal ob es eine große oder kleine Cat ist, ihre Präsenz bereichert das Leben vieler Menschen.
+```
+
+2. Bringen Sie das Datum in das Format `YYYY-MM-DD`.
+
+```
+31.12.2023
+01.01.2024
+15.02.2024
+28.02.2024
+05.03.2024
+10.04.2024
+20.07.2024
+09.11.2024
+24.12.2024
+01.05.2025
+```
+
+3. Bringen Sie die Telefonnummern in das Format `+41 7x xxx xx xx`.
+
+```
++41 78 123 45 67
++41 791234567
++41 78-123-45-67
++41 781234567
++41 78 123 4567
+078 123 45 67
++41 (0)78 123 45 67
+0781234567
++41 78/123 45 67
++41 78.123.45.67
+```
+
+4. Bringen Sie die Preisliste in das Format `CHF \d+.\d{2}`. Sie müssen den Wechselkurs nicht beachten, es geht nur um das Format.
+
+```
+10.50€
+19.00€
+25.75€
+50.00€
+100,99€
+200,05€
+350.80€
+500,20€
+999.99€
+1'500.00€
+```
+
+5. Bringen Sie die folgenden Emailadressen in das Format: `Vorname: ..., Nachname: ..., Provider: ..., Top-Level-Domain: ...`
+
+```
+max.mueller@webmail.ch
+anna.meier@gmx.ch
+peter.meier@example.com
+laura.wagner@live.ch
+oliver.krause@mail.ch
+maria.fischer@posteo.ch
+jan.schneider@t-online.ch
+sophie.zimmermann@example.ch
+michael.schmid@example.ch
+```
+
+6. Entfernen Sie die Nummerierung aus der Liste.
+
+```
+1. Äpfel
+2. Taschenbuch
+3. Wanderung
+4. Spaghetti Bolognese
+5. Konzertkarten
+6. Kaffeetasse
+7. Fahrrad
+8. Bluetooth-Kopfhörer
+9. Puzzle
+10. Eintrittskarte fürs Kino
+```
+
+7. Bringen Sie diese Aufzählung in eine Listenform mit dem Format: `- Eintrag 1\n - Eintrag 2\n`
+
+```Fussball, Tennis, Basketball, Volleyball, Badminton, Hockey, Golf, Tischtennis, Squash, Rugby```
+
+8. Setzen Sie alle Einträge dieser TODO-Liste zurück, ausser es hat ein `[x]`.
+
+```
+[ ] Einkaufen gehen
+[o] Projektbericht fertigstellen
+[.] E-Mails beantworten
+[ ] Arzttermin vereinbaren
+[! ] Website aktualisieren
+[o] Meeting mit dem Team leiten
+[ ] Präsentation vorbereiten
+[.] Buch lesen
+[!] Wohnung putzen
+[ ] Neues Rezept ausprobieren
+```
+
+</Section>
+
+## Syntax prüfen
+
+Wenn Sie Computer Code schreiben, dann muss dieser einer bestimmten Syntax folgen, dam der Computer den Code überhaupt lesen kann. Da können sehr oft bereits Fehler passieren, und der Computer kann mit dem Code gar nichts anfangen. Damit dies nicht passiert, gibt es Hilfsprogramme wie `Linter` die den Code anschauen und eine Fehlermeldung zurückgeben, wenn etwas mit der Syntax nicht stimmt. Wir möchten nun auch ganz einfache `Linter` erstellen, die für uns einige Objekte in **SVG** erkennen können.
+
+<Section classes="exercise">
+
+## Aufgabe
+
+1. Erkennen Sie alle gültigen `circle`-Elemente.
+
+```xml
+<circle cx="10" cy="10" fill="red" r="5" />
+<circle cx="20" cy="20" fill="blue" r="10" stroke="black" stroke-width="2" />
+<circle cx="30" cy="30" r="15" />
+<circle cx="40" cy="40" fill="green" r="20" stroke="yellow" />
+<circle cx="50" cy="50" radius="25" />
+<circle cx="60" cy="60" fill="purple" r="30" stroke="white" stroke-width="1" />
+<circle cx="70" cy="70" fill="orange" />
+<circle cx="80" cy="80" fill="pink" r="8" opacity="0.5" />
+<circle cx="90" cy="90" rx="10" ry="5" />
+<circle cx="100" cy="100" r="12" stroke="gray" stroke-width="3" />
+```
+
+2. Erkennen Sie alle gültigen `rect`-Elemente.
+
+```xml
+<rect fill="red" height="100" width="200" x="10" y="10"/>
+<rect height="100" width="200" x="10" y="10" z="5"/>
+<rect fill="blue" height="50" width="150" rx="10" y="20"/>
+<rect fill="green" height="100" width="200" x="10"/>
+<rect fill="yellow" x="50" y="50"/>
+<rect height="100" width="200" x="10" y="10" stroke="black" stroke-width="2"/>
+<rect alpha="0.5" fill="orange" height="100" width="200" x="10" y="10"/>
+<rect height="150" width="300" x="20" y="20" viewBox="0 0 100 100"/>
+<rect fill="purple" height="80" width="180" z="10" x="15" y="15"/>
+<rect fill="cyan" height="100" width="200" x="-10" y="-10" opacity="0.75"/>
+```
+
+3. Erkenne ob dies ein gültiges `d`-Attribut für ein `path`-Element ist.
+
+```
+M10 10 H 90 V 90 H 10 Z
+M20,20 C40,10 60,10 80,20 S100,30 120,20
+M30 30 L 60 30 L 60 60 L 30 60 Z
+M40 40 Q 50 10 60 40 T 80 80
+M50 50 A 40 40 0 0 1 90 50
+M70 70 M 80 80 L 90 90
+M0 0 L 100 100
+M10 10 H 90 Z
+M20,20 C40,10 G60,10 80,20 S100,30 120,20
+M30 30 L 60 Z 60 60 L 30 60
+```
+
+</Section>
