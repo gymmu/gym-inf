@@ -2,6 +2,7 @@ import LearningGoals from "@components/LearningGoals.jsx"
 import Section from "@components/Section.jsx"
 import {Math} from "@components/Katex.jsx"
 import FiddleSVG from "@components/FiddleSVG"
+import PrismBlock from "@components/PrismBlock.jsx"
 
 ## SVG
 
@@ -25,11 +26,13 @@ Die Abkürzung **SVG** steht für **s**calable **v**ector **g**raphics. Somit is
 
 Eine `.svg`-Datei ist immer gleich aufgebaut. Es gibt ein einziges Wurzelelement, das alle anderen Elemente enthält. Im Wurzelelement geben wir die Grösse für das verwendete Koordinatensystem an.
 
+<PrismBlock>
 ```svg
 <svg width="200" height="200">
 
 </svg>
 ```
+</PrismBlock>
 
 Dieses Wurzelelement beschreibt uns die Leinwand die wir verwenden können, um weitere Element darauf zu malen. Dabei beginnt das Koordinatensystem oben links. Ein Element in **SVG** wird immer in dieser Form geschrieben `<element>...</element>`. Hat ein Element keinen Inhalt, dann schreibt man es in der Regel in der Kurzform `<element />`.
 
