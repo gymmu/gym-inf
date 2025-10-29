@@ -1,0 +1,30 @@
+.container {
+    container-type: inline-size;
+
+    @container (width > 600px) {
+        .gridContainer {
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        .optionsContainer {
+            flex-direction: column;
+            justify-content: center;
+        }
+    } 
+}
+
+.gridContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.optionsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}

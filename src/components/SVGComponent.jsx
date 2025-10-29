@@ -1,16 +1,13 @@
 import { useState } from "react"
+import styles from "@components/SVGComponent.module.css"
 
 export default function SVGComponent({ width = "100%", children }) {
   const [showPattern, setShowPattern] = useState(false)
   const [backgroundWhite, setBackgroundWhite] = useState(false)
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}>
+    <div className={styles.container}>
+      <div className={styles.gridContainer} >
+        <div className={styles.optionsContainer}>
         <label htmlFor="showPattern">
           <input
             id="showPattern"
@@ -72,6 +69,7 @@ export default function SVGComponent({ width = "100%", children }) {
           {showPattern && <rect width="100%" height="100%" fill="url(#grid)" />}
           {children}
         </svg>
+      </div>
       </div>
     </div>
   )
