@@ -1,29 +1,20 @@
 import { useState } from "react"
+import Checkbox from "@components/Checkbox.jsx"
 import styles from "@components/SVGComponent.module.css"
 
 export default function SVGComponent({ width = "100%", children }) {
   const [showPattern, setShowPattern] = useState(false)
   const [backgroundWhite, setBackgroundWhite] = useState(false)
+  const [maxwidth, setMaxwidth] = useState(false)
+  const [showBorder, setShowBorder] = useState(false)
   return (
     <div className={styles.container}>
       <div className={styles.gridContainer} >
         <div className={styles.optionsContainer}>
-        <label htmlFor="showPattern">
-          <input
-            id="showPattern"
-            type="checkbox"
-            onChange={() => setShowPattern(!showPattern)}
-          />
-          Gitter anzeigen
-        </label>
-        <label htmlFor="backgroundWhite">
-          <input
-            id="backgroundWhite"
-            type="checkbox"
-            onChange={() => setBackgroundWhite(!backgroundWhite)}
-          />
-          Hintergrund weiss
-        </label>
+        <Checkbox labelText="Gitter anzeigen" toggle={showPattern} setToggle={setShowPattern}/>
+        <Checkbox labelText="Hintergrund weiss" toggle={backgroundWhite} setToggle={setBackgroundWhite} />
+        <Checkbox labelText="Rand anzeigen" toggle={showBorder} setToggle={setShowBorder} />
+        <Checkbox labelText="Maximale Breite" toggle={maxwidth} setToggle={setMaxwidth} />
       </div>
       <div
         style={{
@@ -31,12 +22,15 @@ export default function SVGComponent({ width = "100%", children }) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          width: "100%",
+          flexGrow: 1
         }}>
         <svg
+          className={showBorder ? styles.border : ""}
           role="img"
           viewBox="0 0 300.5 300.5"
           xmlns="http://www.w3.org/2000/svg"
-          width={width}>
+          width={maxwidth ? "100%" : width}>
           <title>SVG Image</title>
           <defs>
             <pattern
