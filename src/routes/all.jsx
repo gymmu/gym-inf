@@ -9,6 +9,7 @@ import Information from "@pages/information.mdx"
 import Languages from "@pages/languages.mdx"
 import Grammar from "@pages/grammar.mdx"
 import Regex from "@pages/regex.mdx"
+import GymHTML from "@pages/html.mdx"
 
 // Importiere Unterseiten fürs Gym Praktikum
 import PInstall from "@pages/praktikum/installation.mdx"
@@ -56,6 +57,7 @@ export const createRouter = () => {
           { path: "sprachen", element: <Languages /> },
           { path: "grammar", element: <Grammar /> },
           { path: "regex", element: <Regex /> },
+          { path: "html", element: <GymHTML /> },
 
           // Gym Praktikum
           { path: "praktikum/install", element: <PInstall /> },
@@ -84,7 +86,7 @@ export const createRouter = () => {
           { path: "codepensvg", element: <CodePenSVG /> },
           { path: "regexeditor", element: <RegexEditor /> },
 
-          { path: "path-editor", element: <Path />},
+          { path: "path-editor", element: <Path /> },
 
           // Was passiert wenn die Route falsch ist.
           {

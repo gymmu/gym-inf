@@ -40,6 +40,14 @@ function getPathPoints(pathElement) {
             }
             prevCoords = [prevCoords[0] + coords[0], prevCoords[1] + coords[1]]
         }
+        if (type === "v") {
+            points.push({x: prevCoords[0], y: prevCoords[1] + coords[0]})
+            prevCoords = [prevCoords[0], prevCoords[1] + coords[0]]
+        }
+        if (type === "h") {
+            points.push({x: prevCoords[0] + coords[0], y: prevCoords[1]})
+            prevCoords = [prevCoords[0] + coords[0], prevCoords[1]]
+        }
         // Hier müsste man C, Q, S, T, A, H, V Befehle ebenfalls behandeln,
         // was sehr komplex ist.
     });
@@ -61,7 +69,7 @@ vertices.forEach((vertex, index) => {
     circle.setAttribute("fill", "red");
 
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.textContent = index;
+    text.textContent = index + 1;
     text.setAttribute('font-size', '20')
     text.setAttribute('font-weight', 'bold')
     text.setAttribute("x", vertex.x - 4)

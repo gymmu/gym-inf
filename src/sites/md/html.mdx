@@ -1,7 +1,45 @@
-import Chapter from "../../components/Chapter"
-import Code from "../../components/Code"
+import {Presentation, Slide, Narrow, SlideContent} from "@components/Presentation.jsx"
+import PrismBlock from "@components/PrismBlock.jsx"
 
-<Chapter>
+## HTML
+
+`HTML` ist eine Beschreibungssprache. Sie basiert auf `XML` und ist darum sehr ähnlich wie `SVG`. Die Sprache selber ist super einfach, alles ist in sogenannte Tags aufgeteilt. Ein Tag hat immer die folgende Syntax: `<tag-name>...</tag-name>`
+
+<Presentation>
+<Slide>
+## Titel
+
+<SlideContent>
+In `HTML` gibt es unterschiedlich grosse Titel. Insgesamt sind es 6 Grössen. Alle haben eine ähnliche Syntax.
+
+<Narrow>
+<PrismBlock>
+    ```html
+    <h1>Seitentitel</h1>
+    ```
+</PrismBlock>
+</Narrow>
+
+ oder
+
+<Narrow>
+<PrismBlock>
+    ```html
+    <h2>Untertitel</h2>
+    ```
+</PrismBlock>
+</Narrow>
+
+usw.
+</SlideContent>
+</Slide>
+<Slide>
+## Slide 2
+</Slide>
+<Slide>
+## Slide 3
+</Slide>
+</Presentation>
 
 ## Webseiten
 
@@ -18,9 +56,11 @@ Möchten wir einen Text als **Titel** festlegen, machen wir das in
 
 **HTML** mit der folgenden Syntax:
 
+<PrismBlock>
 ```html
 <h1>Titel</h1>
 ```
+</PrismBlock>
 
 Mit `<h1>` sagen Sie dem Computer dass nun ein Titel folgt. Dann wird all der
 Text bis `</h1>` als Titel interpretiert.
@@ -68,12 +108,7 @@ geordnete Liste.
 
 Bilder können sie mit dem `<img>`-Tag einfügen. Dazu ein einfaches Beispiel.
 
-```html
-<img
-  src="https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80"
-  width="500px" />
-```
+<PrismBlock>
+</PrismBlock>
 
 </section>
-
-</Chapter>
