@@ -150,6 +150,18 @@ footer {
     "navbar footer";
 }
 
+#root.full-screen {
+  grid-template-columns: 1fr;
+  grid-template-areas: "main";
+}
+
+#root.full-screen > header,
+#root.full-screen > footer,
+#root.full-screen > aside,
+#root.full-screen > main > *:not(.full-screen) {
+  display: none;
+}
+
 h1 a {
   text-decoration: none;
   color: inherit;

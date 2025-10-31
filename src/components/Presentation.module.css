@@ -7,6 +7,10 @@
   scroll-snap-type: y mandatory;
 }
 
+.presentation.fullScreen {
+  min-height: 100vh;
+}
+
 .slide {
   scroll-snap-align: start;
   min-height: 100%;

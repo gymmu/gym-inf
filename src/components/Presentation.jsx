@@ -1,7 +1,11 @@
 import style from "@components/Presentation.module.css"
 
 export function Presentation({ children }) {
-  return <div className={style.presentation}>{children}</div>
+  return (
+    <div className={`${style.presentation} ${style.fullScreen} full-screen`}>
+      {children}
+    </div>
+  )
 }
 
 export function Slide({ children }) {
