@@ -36,6 +36,8 @@ import CodePen from "../components/CodePen"
 import CodePenSVG from "../components/CodePenSVG"
 import RegexEditor from "../components/RegexEditor"
 
+import Path from "@components/Path.jsx"
+
 export const createRouter = () => {
   return createBrowserRouter(
     [
@@ -81,6 +83,8 @@ export const createRouter = () => {
           { path: "codepen", element: <CodePen /> },
           { path: "codepensvg", element: <CodePenSVG /> },
           { path: "regexeditor", element: <RegexEditor /> },
+
+          { path: "path-editor", element: <Path />},
 
           // Was passiert wenn die Route falsch ist.
           {
