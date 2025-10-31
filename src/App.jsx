@@ -1,7 +1,9 @@
 import { RouterProvider } from "react-router-dom"
 
 // Import routes from external file
-import {createRouter} from "./routes/all.jsx"
+import { createRouter } from "./routes/all.jsx"
+import { AppProvider } from "./context/AppContext.jsx"
+import { NavProvider } from "./context/NavContext.jsx"
 
 export default function App() {
   const router = createRouter()
@@ -11,5 +13,11 @@ export default function App() {
     return <div>Loading...</div>
   }
 
-  return <RouterProvider router={router} />
+  return (
+    <AppProvider>
+      <NavProvider>
+        <RouterProvider router={router} />
+      </NavProvider>
+    </AppProvider>
+  )
 }

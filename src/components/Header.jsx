@@ -1,13 +1,12 @@
-import { useContext } from "react"
-import { NavContext } from "../context/NavContext"
 import { ReactSVG } from "react-svg"
 import { Link } from "react-router-dom"
 import HamburgerUrl from "@icons/hamburger.svg?url"
+import { useAppContext } from "@context/AppContext"
 
 function Header() {
-  const { setVisible } = useContext(NavContext)
+  const { menuVisible, setMenuVisible } = useAppContext()
   const toggleSide = () => {
-    setVisible((toggle) => !toggle)
+    setMenuVisible(!menuVisible)
   }
 
   return (

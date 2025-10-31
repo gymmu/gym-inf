@@ -1,0 +1,43 @@
+#app {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  position: relative;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+}
+
+#app.show {
+  grid-template-columns: 320px 1fr;
+  grid-template-areas:
+    "header header"
+    "navbar main"
+    "navbar footer";
+}
+
+#app.show aside {
+  display: block;
+}
+
+#app.fullScreen {
+  grid-template-columns: 1fr;
+  grid-template-areas: "main";
+}
+
+#app.fullScreen > header,
+#app.fullScreen > footer,
+#app.fullScreen > aside,
+#app.fullScreen > main > * {
+  display: none;
+}
+
+@media (width < 820px) {
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "main" "footer";
+  }
+}

@@ -1,13 +1,16 @@
-import { useContext } from "react";
-import { NavContext } from "../context/NavContext";
-import ChapterIndex from "./ChapterIndex";
+import { useAppContext } from "../context/AppContext"
+import ChapterIndex from "./ChapterIndex"
+
+import style from "@components/Navbar.module.css"
 
 export default function Navbar() {
-  const { visible } = useContext(NavContext);
+  const { menuVisible } = useAppContext()
   return (
-    <aside className={visible ? "show sidenav" : "sidenav"}>
+    <aside
+      className={
+        menuVisible ? `${style.show} ${style.sidenav}` : style.sidenav
+      }>
       <ChapterIndex />
     </aside>
-  );
+  )
 }
-

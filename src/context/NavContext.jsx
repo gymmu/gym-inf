@@ -2,6 +2,10 @@ import { useState, createContext } from "react"
 
 const NavContext = createContext({})
 
+function useNavContext() {
+  return createContext(NavContext)
+}
+
 function NavProvider({ children }) {
   const [visible, setVisible] = useState(false)
   const [fms, setFms] = useState(false)
@@ -13,4 +17,4 @@ function NavProvider({ children }) {
   )
 }
 
-export { NavContext, NavProvider }
+export { NavContext, NavProvider, useNavContext }
