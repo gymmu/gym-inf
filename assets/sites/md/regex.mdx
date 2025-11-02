@@ -1,6 +1,7 @@
 import LearningGoals from "@components/LearningGoals.jsx"
 import RegexEditor from "@components/RegexEditor.jsx"
 import Section from "@components/Section.jsx"
+import PrismBlock from "@components/PrismBlock.jsx"
 
 ## Reguläre Ausdrücke (Regex)
 
@@ -80,6 +81,7 @@ Sie können alle diese Ausdrücke auf <a href="https://regex101.com/" target="_b
 
 - **Uhrzeit**: Wir nehmen das 24-Stunden-Format, ohne Sekunden.
 
+<PrismBlock>
 ```text
 1:23
 12:45
@@ -87,11 +89,13 @@ Sie können alle diese Ausdrücke auf <a href="https://regex101.com/" target="_b
 06:25
 23:59
 ```
+</PrismBlock>
 
 Diese können wir alle mit dem folgenden Ausdruck matchen: `^[0-2]?[0-9]:[0-5][0-9]$`.
 
 - **Telefonnummer**: Wir gehen Hier von schweizer Handy-Nummern aus, die können in unterschiedlichen Formaten angegeben werden, wir möchten alle treffen.
 
+<PrismBlock>
 ```text
 +41 78 665 23 45
 076 334 21 89
@@ -99,6 +103,7 @@ Diese können wir alle mit dem folgenden Ausdruck matchen: `^[0-2]?[0-9]:[0-5][0
 072 5554433
 0791112233
 ```
+</PrismBlock>
 
 Diese können wir alle mit dem folgenden Ausdruck matchen: `^(\+41 ?|0)7\d ?\d{3} ?\d{2} ?\d{2}$`
 
@@ -110,7 +115,8 @@ Diese können wir alle mit dem folgenden Ausdruck matchen: `^(\+41 ?|0)7\d ?\d{3
 
 1. Datum
 
-```
+<PrismBlock>
+```text
 31.12.2023
 01.01.2024
 15.08.2023
@@ -122,10 +128,12 @@ Diese können wir alle mit dem folgenden Ausdruck matchen: `^(\+41 ?|0)7\d ?\d{3
 05.05.2024
 12.12.2022
 ```
+</PrismBlock>
 
 2. Uhrzeit
 
-```
+<PrismBlock>
+```text
 18:30:45
 07:15:22
 12:00:00
@@ -137,10 +145,12 @@ Diese können wir alle mit dem folgenden Ausdruck matchen: `^(\+41 ?|0)7\d ?\d{3
 16:25:40
 03:05:33
 ```
+</PrismBlock>
 
 3. Vollnamen
 
-```
+<PrismBlock>
+```text
 Max Mustermann
 Anna Müller
 Peter Schneider
@@ -152,10 +162,12 @@ Clara Zimmermann
 Daniela Roth
 Michael Steiner
 ```
+</PrismBlock>
 
 4. Email-Adressen
 
-```
+<PrismBlock>
+```text
 hier.sind@beispiel.ch
 kontakt@firma.ch
 info@service.ch
@@ -167,10 +179,12 @@ verwaltung@organisation.ch
 anfragen@firma.ch
 newsletter@portal.ch
 ```
+</PrismBlock>
 
 5. Adressen
 
-```
+<PrismBlock>
+```text
 Musterstraße 1, 8000 Zürich
 Bahnhofplatz 5, 6003 Luzern
 Hauptstraße 10, 2000 Neuenburg
@@ -182,10 +196,12 @@ Industriestrasse 9, 8400 Winterthur
 Römerstrasse 4, 1201 Genf
 Dorfplatz 3, 4125 Riehen
 ```
+</PrismBlock>
 
 6. Webadressen
 
-```
+<PrismBlock>
+```text
 https://www.beispiel.ch
 http://www.example.ch
 https://www.testseite.ch
@@ -197,10 +213,12 @@ https://shop.beispiel.ch
 http://testseiten.ch
 https://www.anderedomain.ch/produkte
 ```
+</PrismBlock>
 
 7. IBAN-Nummern
 
-```
+<PrismBlock>
+```text
 CH12 3456 7890 1234 5678 9
 CH98 7654 3210 9876 5432 1
 CH76 1234 5678 9123 4567 8
@@ -212,10 +230,12 @@ CH87 4444 5555 6666 7777 6
 CH11 9999 8888 7777 6666 4
 CH66 2222 3333 4444 5555 7
 ```
+</PrismBlock>
 
 8. RGB-Farbwerte
 
-```
+<PrismBlock>
+```text
 #FF5733
 #33FF57
 #3357FF
@@ -227,10 +247,12 @@ CH66 2222 3333 4444 5555 7
 #E67E22
 #C0392B
 ```
+</PrismBlock>
 
 9. Einfache Gleichungen
 
-```
+<PrismBlock>
+```text
 x + 5 = 10
 3y - 7 = 11
 z / 2 = 4
@@ -242,10 +264,12 @@ e - 5 = 2e
 7 = f / 3 + 1
 g + 8 = 12
 ```
+</PrismBlock>
 
 10. Komplexere Gleichungen
 
-```
+<PrismBlock>
+```text
 x + 5 = 10
 3y - 7 = 2y + 5
 2(x - 3) = 8
@@ -257,10 +281,12 @@ x + 5 = 10
 x/2 + 4 = 6
 9 - 3z = 2(z + 6)
 ```
+</PrismBlock>
 
 11. RGB Farbwerte, aber jeder Farbkanal ist eine Schnappszahl
 
-```
+<PrismBlock>
+```text
 #FF00CC
 #00FF88
 #CC0099
@@ -272,10 +298,12 @@ x/2 + 4 = 6
 #00CC99
 #FFCC00
 ```
+</PrismBlock>
 
 12. Doppelte Wörter
 
-```
+<PrismBlock>
+```text
 Ich liebe die Berge und Berge sind schön.
 Der Hund bellt, denn der Hund ist freundlich.
 Käse schmeckt gut, denn guter Käse ist lecker.
@@ -287,6 +315,7 @@ Der Zug fährt schnell, denn schnelle Züge sind top.
 Das Wetter ist schön, denn schönes Wetter ist selten.
 Ein Buch ist spannend, denn spannende Bücher bringen Freude.
 ```
+</PrismBlock>
 
 </Section>
 
@@ -302,13 +331,16 @@ Mit normalem suchen und ersetzen, sind Sie sehr eingeschränkt. Mit regulären A
 
 1. Finden Sie alle vorkommen von `cat` oder `Cat` und ersetzen Sie diese mit Katze.
 
-```
+<PrismBlock>
+```text
 Katzen sind faszinierende Tiere, die in vielen Haushalten als geliebte Begleiter leben. Eine Cat ist bekannt für ihre Unabhängigkeit und ihren spielerischen Charakter. Oft sieht man eine cat, die neugierig durch die Wohnung schleicht oder sich in der Sonne räkelt. Ihre Geschmeidigkeit und Eleganz machen sie zu einem beliebten Motiv in der Kunst und Fotografie. Ausserdem haben Katzen die Fähigkeit, die Stimmung ihrer Besitzer zu spüren, was sie zu wunderbaren Begleitern in stressigen Zeiten macht. Egal ob es eine große oder kleine Cat ist, ihre Präsenz bereichert das Leben vieler Menschen.
 ```
+</PrismBlock>
 
 2. Bringen Sie das Datum in das Format `YYYY-MM-DD`.
 
-```
+<PrismBlock>
+```text
 31.12.2023
 01.01.2024
 15.02.2024
@@ -320,10 +352,12 @@ Katzen sind faszinierende Tiere, die in vielen Haushalten als geliebte Begleiter
 24.12.2024
 01.05.2025
 ```
+</PrismBlock>
 
 3. Bringen Sie die Telefonnummern in das Format `+41 7x xxx xx xx`.
 
-```
+<PrismBlock>
+```text
 +41 78 123 45 67
 +41 791234567
 +41 78-123-45-67
@@ -335,10 +369,12 @@ Katzen sind faszinierende Tiere, die in vielen Haushalten als geliebte Begleiter
 +41 78/123 45 67
 +41 78.123.45.67
 ```
+</PrismBlock>
 
 4. Bringen Sie die Preisliste in das Format `CHF \d+.\d{2}`. Sie müssen den Wechselkurs nicht beachten, es geht nur um das Format.
 
-```
+<PrismBlock>
+```text
 10.50€
 19.00€
 25.75€
@@ -350,10 +386,12 @@ Katzen sind faszinierende Tiere, die in vielen Haushalten als geliebte Begleiter
 999.99€
 1'500.00€
 ```
+</PrismBlock>
 
 5. Bringen Sie die folgenden Emailadressen in das Format: `Vorname: ..., Nachname: ..., Provider: ..., Top-Level-Domain: ...`
 
-```
+<PrismBlock>
+```text
 max.mueller@webmail.ch
 anna.meier@gmx.ch
 peter.meier@example.com
@@ -364,10 +402,12 @@ jan.schneider@t-online.ch
 sophie.zimmermann@example.ch
 michael.schmid@example.ch
 ```
+</PrismBlock>
 
 6. Entfernen Sie die Nummerierung aus der Liste.
 
-```
+<PrismBlock>
+```text
 1. Äpfel
 2. Taschenbuch
 3. Wanderung
@@ -379,14 +419,20 @@ michael.schmid@example.ch
 9. Puzzle
 10. Eintrittskarte fürs Kino
 ```
+</PrismBlock>
 
 7. Bringen Sie diese Aufzählung in eine Listenform mit dem Format: `- Eintrag 1\n - Eintrag 2\n`
 
-```Fussball, Tennis, Basketball, Volleyball, Badminton, Hockey, Golf, Tischtennis, Squash, Rugby```
+<PrismBlock>
+```text
+Fussball, Tennis, Basketball, Volleyball, Badminton, Hockey, Golf, Tischtennis, Squash, Rugby
+```
+</PrismBlock>
 
 8. Setzen Sie alle Einträge dieser TODO-Liste zurück, ausser es hat ein `[x]`.
 
-```
+<PrismBlock>
+```text
 [ ] Einkaufen gehen
 [o] Projektbericht fertigstellen
 [.] E-Mails beantworten
@@ -398,6 +444,7 @@ michael.schmid@example.ch
 [!] Wohnung putzen
 [ ] Neues Rezept ausprobieren
 ```
+</PrismBlock>
 
 </Section>
 
@@ -411,6 +458,7 @@ Wenn Sie Computer Code schreiben, dann muss dieser einer bestimmten Syntax folge
 
 1. Erkennen Sie alle gültigen `circle`-Elemente.
 
+<PrismBlock>
 ```xml
 <circle cx="10" cy="10" fill="red" r="5" />
 <circle cx="20" cy="20" fill="blue" r="10" stroke="black" stroke-width="2" />
@@ -423,9 +471,11 @@ Wenn Sie Computer Code schreiben, dann muss dieser einer bestimmten Syntax folge
 <circle cx="90" cy="90" rx="10" ry="5" />
 <circle cx="100" cy="100" r="12" stroke="gray" stroke-width="3" />
 ```
+</PrismBlock>
 
 2. Erkennen Sie alle gültigen `rect`-Elemente.
 
+<PrismBlock>
 ```xml
 <rect fill="red" height="100" width="200" x="10" y="10"/>
 <rect height="100" width="200" x="10" y="10" z="5"/>
@@ -438,10 +488,12 @@ Wenn Sie Computer Code schreiben, dann muss dieser einer bestimmten Syntax folge
 <rect fill="purple" height="80" width="180" z="10" x="15" y="15"/>
 <rect fill="cyan" height="100" width="200" x="-10" y="-10" opacity="0.75"/>
 ```
+</PrismBlock>
 
 3. Erkenne ob dies ein gültiges `d`-Attribut für ein `path`-Element ist.
 
-```
+<PrismBlock>
+```text
 M10 10 H 90 V 90 H 10 Z
 M20,20 C40,10 60,10 80,20 S100,30 120,20
 M30 30 L 60 30 L 60 60 L 30 60 Z
@@ -453,5 +505,6 @@ M10 10 H 90 Z
 M20,20 C40,10 G60,10 80,20 S100,30 120,20
 M30 30 L 60 Z 60 60 L 30 60
 ```
+</PrismBlock>
 
 </Section>
