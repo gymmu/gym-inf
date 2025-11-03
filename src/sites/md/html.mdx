@@ -242,9 +242,57 @@ Das moderne Web (HTML5 seit ca. 2010) hat verschiedene Elemente, die das logisch
         </span>
       ```
     </PrismBlock>
+Weiter unten finden Sie noch mehr Inline- und Block-Elemente.
 </Slide>
 
-Weiter unten finden Sie noch mehr Inline- und Block-Elemente.
+<Slide>
+    ## Formulare
+
+    Auf Webseiten müssen Sie oftmals Daten eingeben, das macht man mit dem `<form>`-Element.
+
+    <PrismBlock>
+    ```html
+    <form action="javascript:void(0);">
+      <div class="form-group">
+        <label for="name">
+          Name:
+        </label>
+        <input id="name" type="text" name="name">
+      </div>
+      <div class="form-group">
+        <label for="email">
+          Email:
+        </label>
+        <input id="email" type="email" name="email">
+      </div>
+      <button type="submit">Abschicken</button>
+    </form>
+    ```
+    </PrismBlock>
+
+    Eine Liste von Elementen die man in Formularen verwendet, finden Sie weiter unten.
+
+  </Slide>
+
+<Slide>
+
+## Dropdown Menu
+
+Auch Auswahllisten sind einfach möglich.
+
+<PrismBlock>
+    ```html
+    <select>
+        <option>Auswahl 1</option>
+        <option>Auswahl 2</option>
+        <option>Auswahl 3</option>
+        <option>Auswahl 4</option>
+        <option>Auswahl 5</option>
+    </select>
+    ```
+</PrismBlock>
+
+</Slide>
 
 </Presentation>
 
@@ -298,3 +346,27 @@ Hier ist eine Liste mit Block-Elementen:
 - `<header>`
 - `<footer>`
 - `<main>`
+
+## Elemente für Formulare
+
+- `<input type="Typen">` mit verschiedenen Typen:
+    - `text` - Einzeiliges Texteingabefeld
+    - `password` - Eingabefeld für Passwörter
+    - `email` - Eingabefeld für E-Mail-Adressen
+    - `number` - Eingabefeld für Zahlen
+    - `date` - Eingabefeld für Datumsangaben
+    - `checkbox` - Kontrollkästchen
+    - `radio` - Optionsfeld
+    - `file` - Datei-Upload
+    - `submit` - Senden-Button
+    - `reset` - Zurücksetzen-Button
+    - `range` - Slider in einem Bereich
+- `<textarea>` - Mehrzeiliges Texteingabefeld
+- `<select>` - Dropdown-Liste
+  - `<option>` - Optionen innerhalb der Dropdown-Liste
+- `<button>` - Allgemeiner Button
+- `<label>` - Beschriftung für Formularelemente
+- `<fieldset>` - Gruppiert verwandte Elemente
+- `<legend>` - Beschriftung für ein `fieldset`
+- `<datalist>` - Vorgaben für `<input>`-Felder
+- `<output>` - Ausgabe von Berechnungen oder Ergebnissen
