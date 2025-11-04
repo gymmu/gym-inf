@@ -36,6 +36,7 @@ import FmsWebdesign from "@pages/fms/webdesign.mdx"
 import CodePen from "../components/CodePen"
 import CodePenSVG from "../components/CodePenSVG"
 import RegexEditor from "../components/RegexEditor"
+import BoxModel from "../components/BoxModel"
 
 import Path from "@components/Path.jsx"
 
@@ -85,6 +86,7 @@ export const createRouter = () => {
           { path: "codepen", element: <CodePen /> },
           { path: "codepensvg", element: <CodePenSVG /> },
           { path: "regexeditor", element: <RegexEditor /> },
+          { path: "boxmodel", element: <BoxModel /> },
 
           { path: "path-editor", element: <Path /> },
 
