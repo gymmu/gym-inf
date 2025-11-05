@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { dark } from "react-syntax-highlighter/dist/esm/styles/prism"
+
 import Editor from "@components/Editor.jsx"
 
 export default function Path({defaultPath = "M 100 100\nL 200 200"}) {
     const [path, setPath] = useState(defaultPath)
+    const [strokeColor, setStrokeColor] = useState("black")
+    const [strokeWidth, setStrokeWidth] = useState(3)
+    const [fill, setFill] = useState("none")
   const [srcDoc, setSrcDoc] = useState("")
+    const [codeString, setCodeString] = useState("hello World")
     const script = `
 function getPathPoints(pathElement) {
     const pathData = pathElement.getAttribute('d');
@@ -107,6 +114,23 @@ vertices.forEach((vertex, index) => {
           <script>${script}</script>
         </html>
       `)
+    const formatPath = path.split("\n").map((line, index) => {
+        if (index === 0) {
+            return line
+        } else {
+            return `\t\t   ${line}`
+                }
+            }).join("\n")
+
+    setCodeString(`<svg viewBox="0 0 300 300" width="300">
+    <path stroke="${strokeColor}"
+        stroke-width="${strokeWidth}" 
+        fill="${fill}"
+        d="
+           ${formatPath}
+          "
+    />
+</svg>`)
     }, 1000)
     return () => {
       clearTimeout(timeout)
@@ -115,9 +139,14 @@ vertices.forEach((vertex, index) => {
 
     return (
         <div style={{
-            display: "flex",
+            display: "grid",
+            gridTemplateColumns: "1fr 300px",
+            gap: "1rem"
         }}>
             <div style={{flexGrow: 1}}>
+          <SyntaxHighlighter language="css" style={dark}>
+            {codeString}
+          </SyntaxHighlighter>
             <Editor title="Pfad" language="text" value={path} handleChange={setPath} />
             </div>
             <div>
