@@ -4,61 +4,44 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
 import Slider from "./Slider"
+import style from "@components/BoxModel.module.css"
 
 export default function BoxModel({ children }) {
-  const [bgColor, setBgColor] = useState("blue")
+  const [bgColor, setBgColor] = useState("red")
   const [codeString, setCodeString] = useState("")
   const [margin, setMargin] = useState(10)
   const [border, setBorder] = useState(2)
   const [padding, setPadding] = useState(10)
   const [width, setWidth] = useState(200)
   const [height, setHeight] = useState(100)
-  const [prevMargin, setPrevMargin] = useState(margin)
-  const [prevBorder, setPrevBorder] = useState(border)
-  const [prevPadding, setPrevPadding] = useState(padding)
-  const [prevWidth, setPrevWidth] = useState(width)
-  const [prevHeight, setPrevHeight] = useState(height)
-  const [blinkingValues, setBlinkingValues] = useState({})
 
   useEffect(() => {
-    const newCodeString = `.box {\n        margin: ${margin}px;\n        border: ${border}px solid black;\n        padding: ${padding}px;\n        width: ${width}px;\n        height: ${height}px;\n        background-color: ${bgColor};`
+    const newCodeString = `.box {
+    margin: ${margin}px;
+    border: ${border}px solid black;
+    padding: ${padding}px;
+    width: ${width}px;
+    height: ${height}px;
+    background-color: ${bgColor};
+}`
 
     setCodeString(newCodeString)
-
-    // Check for changes and set blinking values
-    const newBlinkingValues = {}
-    if (margin !== prevMargin) newBlinkingValues.margin = true
-    if (border !== prevBorder) newBlinkingValues.border = true
-    if (padding !== prevPadding) newBlinkingValues.padding = true
-    if (width !== prevWidth) newBlinkingValues.width = true
-    if (height !== prevHeight) newBlinkingValues.height = true
-
-    setBlinkingValues(newBlinkingValues)
-
-    // Reset blinking state after 200ms
-    const timer = setTimeout(() => {
-      setBlinkingValues({})
-    }, 200)
-
     // Update previous values
-    setPrevMargin(margin)
-    setPrevBorder(border)
-    setPrevPadding(padding)
-    setPrevWidth(width)
-    setPrevHeight(height)
-
-    return () => clearTimeout(timer)
   }, [bgColor, margin, border, padding, width, height])
 
   return (
     <>
-      <div style={{ display: "flex" }}>
-        <div style={{ marginRight: "20px" }}>
-          <input
-            type="text"
+      <div className={style.gridContainer}>
+                <div className={style.leftContainer}>
+        <div className={style.controlls}>
+          <select
             value={bgColor}
             onChange={(e) => setBgColor(e.target.value)}
-          />
+          >
+            <option>red</option>
+            <option>green</option>
+            <option>blue</option>
+          </select>
           <Slider
             sliderText="Margin"
             value={margin}
@@ -98,8 +81,10 @@ export default function BoxModel({ children }) {
             {codeString}
           </SyntaxHighlighter>
         </div>
+        </div>
+        <div className={style.boxContainer}>
         <div
-          className="box"
+          className={style.box}
           style={{
             backgroundColor: bgColor,
             margin: `${margin}px`,
@@ -109,6 +94,7 @@ export default function BoxModel({ children }) {
             height: `${height}px`,
           }}
         />
+        </div>
       </div>
     </>
   )

@@ -1,0 +1,22 @@
+.gridContainer {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 1em;
+    overflow: hidden;
+}
+
+.controlls {
+    display: flex;
+    flex-direction: column;
+}
+
+.boxContainer {
+    width: 100%;
+    background-color: rgb(200, 200, 200, 0.7);
+}
+
+.box {
+    background-clip: content-box;
+    background-color: yellow;
+}
+
