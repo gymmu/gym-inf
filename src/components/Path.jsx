@@ -96,7 +96,7 @@ vertices.forEach((vertex, index) => {
       setSrcDoc(`
         <html>
           <body>
-            <svg viewBox="0 0 300 300" width="300">
+            <svg viewBox="-25 -25 350 350" width="300">
               <defs>
                   <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
                     <path d="M 10 0 L 0 0 0 10" fill="none" stroke="gray" stroke-width="0.5"/>
@@ -106,7 +106,25 @@ vertices.forEach((vertex, index) => {
                     <path d="M 50 0 L 0 0 0 50" fill="none" stroke="gray" stroke-width="1"/>
                   </pattern>
                 </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
+                <rect width="301" height="301" fill="url(#grid)" />
+                <g id="xAxisLabels">
+                    <text x="-5" y="-5">0</text>
+                    <text x="40" y="-5">50</text>
+                    <text x="85" y="-5">100</text>
+                    <text x="135" y="-5">150</text>
+                    <text x="185" y="-5">200</text>
+                    <text x="235" y="-5">250</text>
+                    <text x="285" y="-5">300</text>
+                </g>
+                <g id="yAxisLabels">
+                    <text x="-15" y="5">0</text>
+                    <text x="-20" y="55">50</text>
+                    <text x="-25" y="105">100</text>
+                    <text x="-25" y="155">150</text>
+                    <text x="-25" y="205">200</text>
+                    <text x="-25" y="255">250</text>
+                    <text x="-25" y="305">300</text>
+                </g>
                 <path id="myPath" stroke="${strokeColor}" stroke-width="${strokeWidth}" fill="${fill}" d="${path}" />
                 <g id="circleGroup"></g>
             </svg>
@@ -138,6 +156,50 @@ vertices.forEach((vertex, index) => {
       clearTimeout(timeout)
     }
   }, [path, fill, strokeColor, strokeWidth])
+
+    function appendToPath(str) {
+        setPath((oldPath) => {
+            if (oldPath.match(/[zZ]$/)) {
+                // Append before Z
+                const pathWithoutClosing = oldPath.split(/\n[zZ]/)[0]
+                return `${pathWithoutClosing}\n${str}\nZ`
+            } else {
+                return `${oldPath}\n${str}`
+            }
+        })
+    }
+
+    function addLineAbsolute() {
+        appendToPath("L 0 0")
+    }
+
+    function addMoveAbsolute() {
+        appendToPath("M 0 0")
+    }
+
+    function addVerticalAbsolute() {
+        appendToPath("V 0")
+    }
+
+    function addHorizontalAbsolute() {
+        appendToPath("H 0")
+    }
+
+    function addLineRelative() {
+        appendToPath("l 0 0")
+    }
+
+    function addMoveRelative() {
+        appendToPath("m 0 0")
+    }
+
+    function addVerticalRelative() {
+        appendToPath("v 0")
+    }
+
+    function addHorizontalRelative() {
+        appendToPath("h 0")
+    }
 
     return (
         <div className={style.gridContainer} >
@@ -178,16 +240,21 @@ vertices.forEach((vertex, index) => {
                     maxVal={10}
                 />
                 </div>
+                <div className={style.formGroup}>
+                    <label>Absolute Koordinaten:</label>
+                    <button onClick={addLineAbsolute}>Linie (absolut) hinzufügen</button>
+                    <button onClick={addMoveAbsolute}>Bewegen (absolut) hinzufügen</button>
+                    <button onClick={addHorizontalAbsolute}>Horizontale Linie (absolut) hinzufügen</button>
+                    <button onClick={addVerticalAbsolute}>Vertikale Linie (absolut) hinzufügen</button>
                 </div>
-            </div>
-            <div className={style.gridBox}>
-                <h2>SVG Code</h2>
-                <SyntaxHighlighter language="css" style={dark}>
-                    {codeString}
-                </SyntaxHighlighter>
-            </div>
-            <div className={style.gridBox}>
-                <Editor title="Pfad" language="text" value={path} handleChange={setPath} />
+                <div className={style.formGroup}>
+                    <label>Relative Koordinaten:</label>
+                        <button onClick={addLineRelative}>Linie (relativ) hinzufügen</button>
+                        <button onClick={addMoveRelative}>Bewegen (relativ) hinzufügen</button>
+                        <button onClick={addHorizontalRelative}>Horizontale Linie (relativ) hinzufügen</button>
+                        <button onClick={addVerticalRelative}>Vertikale Linie (relativ) hinzufügen</button>
+                </div>
+                </div>
             </div>
             <div className={style.gridBox}>
                 <h2>Resultat</h2>
@@ -199,6 +266,15 @@ vertices.forEach((vertex, index) => {
                     height="300px"
                     width="300px"
                 />
+            </div>
+            <div className={style.gridBox}>
+                <Editor title="Pfad" language="text" value={path} handleChange={setPath} />
+            </div>
+            <div className={style.gridBox}>
+                <h2>SVG Code</h2>
+                <SyntaxHighlighter language="css" style={dark}>
+                    {codeString}
+                </SyntaxHighlighter>
             </div>
         </div>
     )
