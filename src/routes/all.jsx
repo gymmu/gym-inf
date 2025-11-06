@@ -26,6 +26,7 @@ import FmsSVG from "@pages/fms/svg.mdx"
 import FmsSVGLine from "@pages/fms/svg-line.mdx"
 import FmsSVGPath from "@pages/fms/svg-path.mdx"
 import FmsSVGAufgaben from "@pages/fms/svg-aufgaben.mdx"
+import FmsSVGPath02 from "@pages/fms/svg-path-2.mdx"
 import FmsSVGUse from "@pages/fms/svg-use.mdx"
 
 // FMS Praktikum
@@ -74,6 +75,7 @@ export const createRouter = () => {
           { path: "/fms/svg-line", element: <FmsSVGLine /> },
           { path: "/fms/svg-path", element: <FmsSVGPath /> },
           { path: "/fms/svg-aufgaben", element: <FmsSVGAufgaben /> },
+          { path: "/fms/svg-path-2", element: <FmsSVGPath02 /> },
           { path: "/fms/svg-use", element: <FmsSVGUse /> },
 
           // FMS Routes 2. Klasse
