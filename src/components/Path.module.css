@@ -1,0 +1,25 @@
+.gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 1rem;
+}
+
+.gridBox > iframe {
+    margin-inline: 75px;
+}
+
+.controlls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formGroup {
+    display: flex;
+    gap: 1rem;
+    padding-inline: 1rem;
+}
+
+.formGroup > * {
+    flex: 0 1 100%;
+}

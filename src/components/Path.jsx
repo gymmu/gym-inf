@@ -3,14 +3,16 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
 import Editor from "@components/Editor.jsx"
+import Slider from "./Slider"
+import style from "@components/Path.module.css"
 
-export default function Path({defaultPath = "M 100 100\nL 200 200"}) {
+export default function Path({defaultPath = "M 100 100\nL 200 200\nL 200 100\nZ"}) {
     const [path, setPath] = useState(defaultPath)
     const [strokeColor, setStrokeColor] = useState("black")
     const [strokeWidth, setStrokeWidth] = useState(3)
     const [fill, setFill] = useState("none")
   const [srcDoc, setSrcDoc] = useState("")
-    const [codeString, setCodeString] = useState("hello World")
+    const [codeString, setCodeString] = useState("")
     const script = `
 function getPathPoints(pathElement) {
     const pathData = pathElement.getAttribute('d');
@@ -105,7 +107,7 @@ vertices.forEach((vertex, index) => {
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#grid)" />
-                <path id="myPath" stroke="black" stroke-width="3" fill="none" d="${path}" />
+                <path id="myPath" stroke="${strokeColor}" stroke-width="${strokeWidth}" fill="${fill}" d="${path}" />
                 <g id="circleGroup"></g>
             </svg>
           </body>
@@ -131,34 +133,72 @@ vertices.forEach((vertex, index) => {
           "
     />
 </svg>`)
-    }, 1000)
+    }, 500)
     return () => {
       clearTimeout(timeout)
     }
-  }, [path])
+  }, [path, fill, strokeColor, strokeWidth])
 
     return (
-        <div style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 300px",
-            gap: "1rem"
-        }}>
-            <div style={{flexGrow: 1}}>
-          <SyntaxHighlighter language="css" style={dark}>
-            {codeString}
-          </SyntaxHighlighter>
-            <Editor title="Pfad" language="text" value={path} handleChange={setPath} />
+        <div className={style.gridContainer} >
+            <div className={style.gridBox}>
+                <h2>Kontrollelemente</h2>
+                <div className={style.controlls}>
+                    <div className={style.formGroup}>
+                <label htmlFor="fillField">Füllfarbe</label>
+                <select
+                    id="fillField"
+                    value={fill}
+                    onChange={(e) => setFill(e.target.value)}
+                >
+                    <option>none</option>
+                    <option>red</option>
+                    <option>green</option>
+                    <option>blue</option>
+                </select>
+                </div>
+                    <div className={style.formGroup}>
+                <label htmlFor="strokeColorField">Strichfarbe</label>
+                <select
+                    id="strokeColorField"
+                    value={strokeColor}
+                    onChange={(e) => setStrokeColor(e.target.value)}
+                >
+                    <option>red</option>
+                    <option>green</option>
+                    <option>blue</option>
+                </select>
+                </div>
+                    <div className={style.formGroup}>
+                <Slider
+                    sliderText="Stroke width: "
+                    value={strokeWidth}
+                    setValue={setStrokeWidth}
+                    minVal={0}
+                    maxVal={10}
+                />
+                </div>
+                </div>
             </div>
-            <div>
+            <div className={style.gridBox}>
+                <h2>SVG Code</h2>
+                <SyntaxHighlighter language="css" style={dark}>
+                    {codeString}
+                </SyntaxHighlighter>
+            </div>
+            <div className={style.gridBox}>
+                <Editor title="Pfad" language="text" value={path} handleChange={setPath} />
+            </div>
+            <div className={style.gridBox}>
                 <h2>Resultat</h2>
-        <iframe
-          srcDoc={srcDoc}
-          title="output"
-          sandbox="allow-scripts"
-          frameBorder="0"
-          height="300px"
-          width="300px"
-        />
+                <iframe
+                    srcDoc={srcDoc}
+                    title="output"
+                    sandbox="allow-scripts"
+                    frameBorder="0"
+                    height="300px"
+                    width="300px"
+                />
             </div>
         </div>
     )
