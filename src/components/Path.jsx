@@ -20,6 +20,7 @@ function getPathPoints(pathElement) {
     const points = [];
 
     let prevCoords = [0, 0];
+    let prevControllCoords = [0, 0];
     commands.forEach(command => {
         const type = command.charAt(0);
         // Koordinaten extrahieren und in Zahlen umwandeln
@@ -41,6 +42,17 @@ function getPathPoints(pathElement) {
             points.push({x: coords[0], y: prevCoords[1]})
             prevCoords = [coords[0], prevCoords[1]]
         }
+        if (type === "Q") {
+            points.push({x: coords[0], y: coords[1]})
+            points.push({x: coords[2], y: coords[3]})
+            prevControllCoords = [coords[0], coords[1]]
+            prevCoords = [coords[2], coords[3]]
+        }
+
+        if (type === "T") {
+            points.push({x: prevCoords[0] + (prevCoords[0] - prevControllCoords[0]), y: prevCoords[1] + (prevCoords[1] - prevControllCoords[1])})
+            points.push({x: coords[0], y: coords[1]})
+        }
 
         // Hier kommen die relativen Befehle
         if (type === 'l' || type === 'm') {
@@ -57,7 +69,17 @@ function getPathPoints(pathElement) {
             points.push({x: prevCoords[0] + coords[0], y: prevCoords[1]})
             prevCoords = [prevCoords[0] + coords[0], prevCoords[1]]
         }
-        // Hier müsste man C, Q, S, T, A, H, V Befehle ebenfalls behandeln,
+        if (type === "q") {
+            points.push({x: coords[0] + prevCoords[0], y: coords[1] + prevCoords[1]})
+            points.push({x: coords[2] + prevCoords[0], y: coords[3] + prevCoords[1]})
+            prevControllCoords = [coords[0] + prevCoords[0], coords[1] + prevCoords[1]]
+            prevCoords = [coords[2] + prevCoords[0], coords[3] + prevCoords[1]]
+        }
+        if (type === "t") {
+            points.push({x: prevCoords[0] + (prevCoords[0] - prevControllCoords[0]), y: prevCoords[1] + (prevCoords[1] - prevControllCoords[1])})
+            points.push({x: prevCoords[0] + coords[0], y: prevCoords[1] + coords[1]})
+        }
+        // Hier müsste man C, Q, S, T, A Befehle ebenfalls behandeln,
         // was sehr komplex ist.
     });
 
@@ -169,36 +191,60 @@ vertices.forEach((vertex, index) => {
         })
     }
 
+    function rand() {
+        return Math.floor(Math.random() * 300)
+    }
+
     function addLineAbsolute() {
-        appendToPath("L 0 0")
+        appendToPath(`L ${rand()} ${rand()}`)
     }
 
     function addMoveAbsolute() {
-        appendToPath("M 0 0")
+        appendToPath(`M ${rand()} ${rand()}`)
     }
 
     function addVerticalAbsolute() {
-        appendToPath("V 0")
+        appendToPath(`V ${rand()}`)
     }
 
     function addHorizontalAbsolute() {
-        appendToPath("H 0")
+        appendToPath(`H ${rand()}`)
+    }
+
+    function addQuadraticAbsolute() {
+        appendToPath(`Q ${rand()} ${rand()} ${rand()} ${rand()}`)
+    }
+
+    function addQuadraticContinuationAbsolute() {
+        appendToPath(`T ${rand()} ${rand()}`)
     }
 
     function addLineRelative() {
-        appendToPath("l 0 0")
+        appendToPath(`l ${rand()} ${rand()}`)
     }
 
     function addMoveRelative() {
-        appendToPath("m 0 0")
+        appendToPath(`m ${rand()} ${rand()}`)
     }
 
     function addVerticalRelative() {
-        appendToPath("v 0")
+        appendToPath(`v ${rand()}`)
     }
 
     function addHorizontalRelative() {
-        appendToPath("h 0")
+        appendToPath(`h ${rand()}`)
+    }
+
+    function addQuadraticRelative() {
+        appendToPath(`q ${rand()} ${rand()} ${rand()} ${rand()}`)
+    }
+
+    function addQuadraticContinuationRelative() {
+        appendToPath(`t ${rand()} ${rand()}`)
+    }
+
+    function resetPath() {
+        setPath("")
     }
 
     return (
@@ -246,6 +292,8 @@ vertices.forEach((vertex, index) => {
                     <button onClick={addMoveAbsolute}>Bewegen (absolut) hinzufügen</button>
                     <button onClick={addHorizontalAbsolute}>Horizontale Linie (absolut) hinzufügen</button>
                     <button onClick={addVerticalAbsolute}>Vertikale Linie (absolut) hinzufügen</button>
+                    <button onClick={addQuadraticAbsolute}>Quadratische Kurve (absolut) hinzufügen</button>
+                    <button onClick={addQuadraticContinuationAbsolute}>Fortsetzung quadratische Kurve (absolut) hinzufügen</button>
                 </div>
                 <div className={style.formGroup}>
                     <label>Relative Koordinaten:</label>
@@ -253,6 +301,11 @@ vertices.forEach((vertex, index) => {
                         <button onClick={addMoveRelative}>Bewegen (relativ) hinzufügen</button>
                         <button onClick={addHorizontalRelative}>Horizontale Linie (relativ) hinzufügen</button>
                         <button onClick={addVerticalRelative}>Vertikale Linie (relativ) hinzufügen</button>
+                    <button onClick={addQuadraticRelative}>Quadratische Kurve (relativ) hinzufügen</button>
+                    <button onClick={addQuadraticContinuationRelative}>Fortsetzung quadratische Kurve (relativ) hinzufügen</button>
+                </div>
+                <div className={style.formGroup}>
+                    <button onClick={resetPath}>Pfad löschen</button>
                 </div>
                 </div>
             </div>
