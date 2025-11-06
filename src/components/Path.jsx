@@ -244,7 +244,7 @@ vertices.forEach((vertex, index) => {
     }
 
     function resetPath() {
-        setPath("")
+        setPath("M 100 100\nL 200 200\nL 200 100\nZ")
     }
 
     return (
@@ -305,7 +305,8 @@ vertices.forEach((vertex, index) => {
                     <button onClick={addQuadraticContinuationRelative}>Fortsetzung quadratische Kurve (relativ) hinzufügen</button>
                 </div>
                 <div className={style.formGroup}>
-                    <button onClick={resetPath}>Pfad löschen</button>
+                    <button onClick={resetPath}>Pfad zurücksetzen</button>
+                    <button onClick={() => setPath("")}>Pfad löschen</button>
                 </div>
                 </div>
             </div>
