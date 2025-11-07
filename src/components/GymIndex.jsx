@@ -29,6 +29,7 @@ export default function GymIndex() {
             <NavLink to="grammar">Grammatik</NavLink>
             <NavLink to="regex">Regex</NavLink>
             <NavLink to="html">HTML</NavLink>
+            <NavLink to="css">CSS</NavLink>
           </ol>
         </li>
       </ol>

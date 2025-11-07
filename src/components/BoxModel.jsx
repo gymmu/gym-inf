@@ -104,7 +104,3 @@ export default function BoxModel({ children }) {
     </div>
   )
 }
-
-function Updater({ children }) {
-  return <span>{children}</span>
-}
