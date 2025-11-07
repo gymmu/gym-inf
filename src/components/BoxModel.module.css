@@ -1,13 +1,22 @@
+.wrapper {
+    container-type: inline-size;
+}
+
+
 .gridContainer {
     display: grid;
     grid-template-columns: 350px 1fr;
     gap: 1em;
     overflow: hidden;
+    grid-template-areas:
+        "controlls html"
+        "css iframe";
 }
 
 .controlls {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 }
 
 div:has( > .boxContainer) {
@@ -24,3 +33,18 @@ div:has( > .boxContainer) {
     background-clip: content-box;
 }
 
+.formControll {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+}
+
+@container (width < 600px) {
+    .gridContainer {
+        grid-template-areas: 
+            "controlls"
+            "css"
+            "html"
+            "iframe";
+        grid-template-columns: 1fr;
+    }
+}

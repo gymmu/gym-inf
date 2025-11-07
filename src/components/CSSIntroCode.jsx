@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism"
 import Editor from "@components/Editor.jsx"
+import Select from "@components/Select.jsx"
 
 import Slider from "./Slider"
 import style from "@components/BoxModel.module.css"
@@ -56,62 +57,54 @@ export default function CSSIntroCode({htmlCode, cssCode}) {
     }
 
     return (
-        <>
-            <div className={style.gridContainer}>
-                <div className={style.leftContainer}>
-                    <div className={style.controlls}>
+        <div className={style.wrapper}>
+        <div className={style.gridContainer}>
 
-                        <div className={style.formControll}>
-                            <label>Hintergrundfarbe: </label>
-                            <select
-                                value={bgColor}
-                                onChange={(e) => setBgColor(e.target.value)}
-                            >
-                                <option>white</option>
-                                <option>red</option>
-                                <option>green</option>
-                                <option>blue</option>
-                                <option>black</option>
-                            </select>
-                        </div>
-                        <div className={style.formControll}>
-                            <label>Schriftfarbe: </label>
-                            <select
-                                value={fgColor}
-                                onChange={(e) => setFgColor(e.target.value)}
-                            >
-                                <option>white</option>
-                                <option>red</option>
-                                <option>green</option>
-                                <option>blue</option>
-                                <option>black</option>
-                            </select>
-                        </div>
-                        <div className={style.formControll}>
-                            <Slider
-                                sliderText="Schriftgrösse"
-                                value={fontSize}
-                                setValue={setFontSize}
-                                minVal={4}
-                                maxVal={56}
-                            />
-                        </div>
-                        <SyntaxHighlighter language="html" style={dark}>
-                            {html}
-                        </SyntaxHighlighter>
-                        <Editor title="CSS" language="css" value={css} handleChange={handleCodeUpdate} />
-                    </div>
+            <div className={style.controlls} style={{gridArea: "controlls"}}>
+                <h3>Kontrollelemente</h3>
+                <div className={style.formControll}>
+                    <label>Hintergrundfarbe: </label>
+                    <Select value={bgColor} onChange={(e) => setBgColor(e.target.value)} 
+                        options={["white", "red", "green", "blue", "black"]} />
                 </div>
-                <div>
-                    <iframe 
-                        srcDoc={srcDoc}
-                        title="output"
-                        frameBorder="0"
-                        height="300px"
-                        width="300px"
+                <div className={style.formControll}>
+                    <label>Schriftfarbe: </label>
+                    <Select
+                        value={fgColor}
+                        onChange={(e) => setFgColor(e.target.value)}
+                        options={["white", "red", "green", "blue", "black"]}
+                    />
+                </div>
+                <div className={style.formControll}>
+                    <Slider
+                        sliderText="Schriftgrösse"
+                        value={fontSize}
+                        setValue={setFontSize}
+                        minVal={4}
+                        maxVal={56}
                     />
                 </div>
             </div>
-        </>
+            <div style={{gridArea: "html"}}>
+                <h3>HTML</h3>
+                <SyntaxHighlighter language="html" style={dark}>
+                    {html}
+                </SyntaxHighlighter>
+            </div>
+            <div style={{gridArea: "css"}}>
+                <Editor title="CSS" language="css" value={css} handleChange={handleCodeUpdate} />
+            </div>
+            <div style={{gridArea: "iframe"}}>
+                <h3>Resultat</h3>
+                <iframe 
+                    srcDoc={srcDoc}
+                    title="output"
+                    frameBorder="0"
+                    height="100%"
+                    width="100%"
+                />
+            </div>
+        </div>
+        </div>
     )
 }
