@@ -1,0 +1,118 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Section from "@components/Section.jsx"
+import {Math} from "@components/Katex.jsx"
+import Path from "@components/Path.jsx"
+import ImgGrid, {SvgWithGrid} from "@components/ImgGrid.jsx"
+
+## Mehr zu Pfaden
+
+Pfade sind das wichtigste und aber auch komplizierteste Element in `SVG`,
+deshalb schauen wir uns die Pfade in diesem Kapitel nochmals genauer an.
+
+<LearningGoals>
+
+- Sie können die generelle Syntax von einem Pfad lesen.
+- Sie wissen wie man einen Pfad automatisch schliesst.
+- Sie können die Strichfarbe von einem Pfad anpassen.
+- Sie können die Strichbreite von einem Pfad anpassen.
+- Sie können erkennen aus welchen Teilen ein Pfad zusammengesetzt ist.
+- Sie können selber weitere Teile an einen Pfad anhängen.
+- Sie kennen die verschiedenen Zeichenbefehle für einen Pfad.
+- Sie kennen den unterschied zwischen gross und klein geschriebenen
+  Zeichenbefehlen.
+
+</LearningGoals>
+
+## Dreiecke mit einem Pfad
+
+Wir können beliebige Dreiecke beschrieben, wenn wir jeweils die Eckpunkte
+angeben. Genau das machen wir mit dem folgenden Code. Hier können Sie die
+Grafik die erstellt wird über die Buttons anpassen, und aber auch den Pfad
+direkt verändern, um das gewünschte Resultat zu erreichen.
+
+<Path />
+
+<Section classes="execrise">
+
+## Aufgaben
+
+Versuchen Sie die folgenden Grafiken mit dem Tool oben so gut es geht
+nachzubauen.
+
+<ImgGrid>
+
+<SvgWithGrid>
+<path id="myPath" stroke="black" strokeWidth="3" fill="none" d="M 100 100
+L 200 200
+L 200 100
+Z"></path>
+<g id="circleGroup"><circle cx="100" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="96" y="106">1</text><circle cx="200" cy="200" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="196" y="206">2</text><circle cx="200" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="196" y="106">3</text></g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+<path id="myPath" stroke="black" strokeWidth="3" fill="none" d="M 100 100
+v 100
+h 100
+v -100
+Z"></path>
+<g id="circleGroup"><circle cx="100" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="96" y="106">1</text><circle cx="100" cy="200" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="96" y="206">2</text><circle cx="200" cy="200" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="196" y="206">3</text><circle cx="200" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="196" y="106">4</text></g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+<path id="myPath" stroke="black" strokeWidth="3" fill="none" d="M 100 100
+v 150
+h 100
+v -150
+h 50
+l -100 -75
+l -100 75
+Z"></path>
+<g id="circleGroup"><circle cx="100" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="96" y="106">1</text><circle cx="100" cy="250" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="96" y="256">2</text><circle cx="200" cy="250" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="196" y="256">3</text><circle cx="200" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="196" y="106">4</text><circle cx="250" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="246" y="106">5</text><circle cx="150" cy="25" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="146" y="31">6</text><circle cx="50" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="46" y="106">7</text></g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+<path id="myPath" stroke="black" strokeWidth="3" fill="none" d="M 50 150
+Q 150 50 250 150"></path>
+<g id="circleGroup"><circle cx="50" cy="150" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="46" y="156">1</text><circle cx="150" cy="50" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="146" y="56">2</text><circle cx="250" cy="150" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="246" y="156">3</text></g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+<path id="myPath" stroke="black" strokeWidth="3" fill="none" d="M 50 150
+Q 100 50 150 150
+T 250 150"></path>
+<g id="circleGroup"><circle cx="50" cy="150" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="46" y="156">1</text><circle cx="100" cy="50" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="96" y="56">2</text><circle cx="150" cy="150" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="146" y="156">3</text><circle cx="200" cy="250" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="196" y="256">4</text><circle cx="250" cy="150" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="246" y="156">5</text></g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+<path id="myPath" stroke="red" strokeWidth="3" fill="red" d="M 50 100
+q 25 -100 100 0
+q 75 -100 100 0
+q -10 100 -100 150
+q -90 -50 -100 -150
+Z"></path>
+<g id="circleGroup"><circle cx="50" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="46" y="106">1</text><circle cx="75" cy="0" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="71" y="6">2</text><circle cx="150" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="146" y="106">3</text><circle cx="225" cy="0" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="221" y="6">4</text><circle cx="250" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="246" y="106">5</text><circle cx="240" cy="200" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="236" y="206">6</text><circle cx="150" cy="250" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="146" y="256">7</text><circle cx="60" cy="200" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="56" y="206">8</text><circle cx="50" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="46" y="106">9</text></g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+<path id="myPath" stroke="blue" strokeWidth="3" fill="green" d="M 0 300
+v -200
+Q 150 0 200 50
+q 50 50 100 0
+v 250
+Z"></path>
+<g id="circleGroup"><circle cx="0" cy="300" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="-4" y="306">1</text><circle cx="0" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="-4" y="106">2</text><circle cx="150" cy="0" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="146" y="6">3</text><circle cx="200" cy="50" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="196" y="56">4</text><circle cx="250" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="246" y="106">5</text><circle cx="300" cy="50" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="296" y="56">6</text><circle cx="300" cy="300" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="296" y="306">7</text></g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+<path id="myPath" stroke="blue" strokeWidth="3" fill="blue" d="M 150 50
+l -75 200
+L 250 100
+h -200
+L 225 250
+Z"></path>
+<g id="circleGroup"><circle cx="150" cy="50" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="146" y="56">1</text><circle cx="75" cy="250" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="71" y="256">2</text><circle cx="250" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="246" y="106">3</text><circle cx="50" cy="100" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="46" y="106">4</text><circle cx="225" cy="250" r="16" fill="red"></circle><text fontSize="20" fontWeight="bold" x="221" y="256">5</text></g>
+</SvgWithGrid>
+
+</ImgGrid>
+
+</Section>
