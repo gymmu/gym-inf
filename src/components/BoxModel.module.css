@@ -10,13 +10,17 @@
     flex-direction: column;
 }
 
+div:has( > .boxContainer) {
+    width: fit-content;
+}
+
 .boxContainer {
     width: 100%;
     background-color: rgb(200, 200, 200, 0.7);
+    flex-grow: 0;
 }
 
 .box {
     background-clip: content-box;
-    background-color: yellow;
 }
 

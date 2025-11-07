@@ -30,7 +30,7 @@ export default function BoxModel({ children }) {
   }, [bgColor, margin, border, padding, width, height])
 
   return (
-    <>
+    <div>
       <div className={style.gridContainer}>
                 <div className={style.leftContainer}>
         <div className={style.controlls}>
@@ -82,7 +82,11 @@ export default function BoxModel({ children }) {
           </SyntaxHighlighter>
         </div>
         </div>
-        <div className={style.boxContainer}>
+        <div>
+        <div className={style.boxContainer}
+             style={{
+                            padding: `${margin}px`
+                        }}>
         <div
           className={style.box}
           style={{
@@ -95,8 +99,9 @@ export default function BoxModel({ children }) {
           }}
         />
         </div>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
