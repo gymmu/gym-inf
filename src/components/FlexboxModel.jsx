@@ -93,24 +93,13 @@ export default function BoxModel({ children }) {
           </SyntaxHighlighter>
         </div>
         </div>
-        <div style={{width: "fit-content"}}>
-        <div className={style.boxContainer}
-             style={{
-                boxSizing: "content-box",
-                padding: `${0.1}px`,
-            }}>
-        <div
-          className={style.box}
-          style={{
-            backgroundColor: bgColor,
-            margin: `${margin}px`,
-            border: `${border}px solid black`,
-            padding: `${padding}px`,
-            width: `${width}px`,
-            height: `${height}px`,
-          }}
-        />
-        </div>
+        <div className={style.flexWrapper}>
+        <div className={style.flexBox}>box 1</div>
+        <div className={style.flexBox}>box 2</div>
+        <div className={style.flexBox}>box 3</div>
+        <div className={style.flexBox}>box 4</div>
+        <div className={style.flexBox}>box 5</div>
+        <div className={style.flexBox}>box 6</div>
         </div>
       </div>
     </div>

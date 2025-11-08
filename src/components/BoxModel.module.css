@@ -19,10 +19,6 @@
     gap: 1rem;
 }
 
-div:has( > .boxContainer) {
-    width: fit-content;
-}
-
 .boxContainer {
     width: 100%;
     background-color: rgb(200, 200, 200, 0.7);
@@ -36,6 +32,22 @@ div:has( > .boxContainer) {
 .formControll {
     display: grid;
     grid-template-columns: 200px 1fr;
+}
+
+.flexWrapper {
+    display: flex;
+    background-color: white;
+    width: 100%;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.flexBox {
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
 }
 
 @container (width < 600px) {

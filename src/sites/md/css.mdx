@@ -1,5 +1,7 @@
 import CSSIntroCode from "@components/CSSIntroCode.jsx"
 import BoxModel from "@components/BoxModel.jsx"
+import FlexboxModel from "@components/FlexboxModel.jsx"
+import Section from "@components/Section.jsx"
 
 ## Webseiten gestalten
 
@@ -30,3 +32,29 @@ wie sich die Box verändert.
 
 <BoxModel />
 
+<Section>
+
+## Layout Optionen
+
+Im letzten Kapitel haben wir bereits gesprochen dass wir 2 Arten von Elementen
+unterscheiden; `inline` und `block`. Für modernes Webdesign reicht dies aber
+nicht, hier brauchen wir mehr Möglichkeiten. Da kommen `flexbox` und `grid` ins
+Spiel. Beide kümmern sich darum wie die Elemente in deren Container
+ausgerichtet werden. Diese Elemente verhalten sich dann nicht mehr wie `inline`
+oder `block` Elemente, wir können die viel besser beschreiben.
+
+</Section>
+
+## Flexbox
+
+Mit Flexbox können wir die Kinder von einem Element in ein flexibles
+dynamisches Layout bringen. Flexbox eignet sich sehr gut um horizontale und
+vertikale Listen anzuzeigen, ist also sehr gut geeignet für Navigationslisten.
+Flexbox wird aber auch ganz generell gerne verwendet um Elemente zu zentrieren,
+da es eine einfache Ausrichtung erlaubt.
+
+<FlexboxModel />
+
+{/* TODO: Die wichtigen komponenten von flexbox durchgehen, also alle
+ausrichtungen und noch ein paar eigenschaften der Kinder, wie zum, beispiel,
+flex-grow. */}
