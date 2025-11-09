@@ -1,197 +1,90 @@
-import Chapter from "../../components/Chapter"
-import Example from "../../components/Example"
-import Fiddle from "../../components/Fiddle"
-import Presentation, {
-  Slide,
-  Fragment,
-  Basement,
-} from "../../components/Reveal"
-
-<Chapter>
+import CSSIntroCode from "@components/CSSIntroCode.jsx"
+import BoxModel from "@components/BoxModel.jsx"
+import FlexboxModel from "@components/FlexboxModel.jsx"
+import GridModel from "@components/GridModel.jsx"
+import GridTemplateModel from "@components/GridTemplateModel.jsx"
+import Section from "@components/Section.jsx"
 
 ## Webseiten gestalten
 
-<section>
+Das standart Layout das für Webseiten verwendet wird, ist oftmals nicht
+angemessen und nicht schön. Zum Glück kann man die Darstellung mit `CSS` super
+einfach anpassen. Wie man das macht, schauen wir uns in diesem Kapitel an.
 
-<Presentation>
-  <Slide>
-    <Basement>
-    ## `Klassen` in CSS
-      <ul>
-        <li class="fragment">
-          Eine `Klasse` in CSS ist ein Attribut, das wir einem `HTML`-Element
-          geben können.
-        </li>
-        <li class="fragment">
-          Bsp.: `<h1 class="important">Wichtiger Titel</h1>`
-        </li>
-        <li class="fragment">
-          Diese `Klasse` können wir in CSS auswählen, und die Gestaltung für das
-          Element anpassen.
-        </li>
-        <li class="fragment">
-          Bsp.: `h1 {
-            background-color: green;
-          }`
-        </li>
-      </ul>
-    </Basement>
-    <Basement>
-      <Fiddle
-        html={`<h1 class="my-title">Titel</h1>`}
-        css={`
-          .my-title {
-            background-color: green;
-          }
-        `}
-      />
-    </Basement>
-  </Slide>
-  <Slide>
-    <Basement>
-      ## Eigenschaften anpassen durch CSS
-      <ul>
-        <li class="fragment">Mit CSS setzen wir die Eigenschaften von einem
-        Element</li>
-        <li class="fragment">Der **Selektor** beschreibt welche Element gewählt
-        werden</li>
-        <li class="fragment">Die **Regeln** beschreiben wie der Browser das
-        Element zeichnet</li>
-        <li class="fragment">ACHTUNG! Ein Element kann auch von mehreren
-        Selektoren getroffen werden</li>
-        <li class="fragment">Wichtige Eigenschaften sind: `width, height,
-        background-color, margin, padding, border`</li>
-      </ul>
-    </Basement>
-    <Basement>
-    <Fiddle
-        html={`<div class="my-box">box</div>`}
-        css={`
-          .my-box {
-            background-color: green;
-            width: 100px;
-            height: 100px;
-            margin: 0px;
-            padding: 20px;
-            border: 2px dotted red;
-          }
-        `}
-      />
-    </Basement>
-  </Slide>
-   <Slide>
-    <Basement>
-      ## `Inline` vs `Block` vs `Flex`
-      <ul>
-        <li class="fragment">CSS unterschiedet verschiedene Arten von Display</li>
-        <li class="fragment">`Inline` werden Elemente aneinander gehängt</li>
-        <li class="fragment">`Block` ein Element braucht die volle Breite</li>
-        <li class="fragment">`Flex` Elemente darin können entlang einer Achse
-        ausgerichtet werden</li>
-        <li class="fragment">`<div>`-Elemente sollten immer als Container
-        verwendet werden</li>
-      </ul>
-    </Basement>
-    <Basement>
-    <Fiddle
-        html={`<div class="my-container">
-  <div class="my-box">box</div>
-</div>`}
-        css={`
-          .my-box {
-            background-color: green;
-            width: 100px;
-            height: 100px;
-            margin: 0px;
-            padding: 20px;
-            border: 2px dotted red;
-          }
-        `}
-      />
-    </Basement>
-  </Slide>
-</Presentation>
+<div className="full-height">
+## CSS Grundelemente
 
-Bisher haben wir uns mit der Struktur von Webseiten beschäftigt. Nun möchten wir
-diese Strukturen auch verwenden um die Webseiten zu gestalten. Dies wird mit
+Die Grundelemente in `CSS` sind Hintergrundfarbe, Schriftfarbe und
+Schriftgrösse von einem Element. Diese werden hier alle in der Klasse `title`
+neu gesetzt.
 
-<b>CSS</b> (Cascading Style Sheets) gemacht.
+<CSSIntroCode htmlCode='<h1 class="title">Hello World!</h1>' css={`.title {
+    background-color: white;
+    color: black;
+    font-size: 32pt;
+}`} />
+</div>
 
-</section>
+<div className="full-height">
+## Box-Modell
 
-### Stylesheet einbinden
+In `CSS` werden alle Dimensionen von einem Element mit dem Box-Modell
+beschrieben. Das Box-Modell ist in 4 Teile unterteilt. Die ersten drei sind
+verschiedene Arten von Rändern, der vierte Teil ist der Inhalt des Elementes
+selbst. Wir unterscheide von aussen nach innen: `margin, border, padding,
+content`. In der folgenden Simulation können Sie diese alle anpassen, und sehen
+wie sich die Box verändert.
 
-Um eine saubere Trennung von Struktur und Gestaltung zu erreichen, können
-Stylesheets in Webseiten eingebunden werden. Damit können Styles auch auf
-mehreren Webseiten verwendet werden, und müssen nicht immer wiederholt werden.
+<BoxModel />
+</div>
 
-<Example title="Aufgabe: Stylesheet verlinken">
-  Fügen Sie den folgenden Code im `<head>` von Ihrem HTML Dokument
-  ein.
+<Section>
 
-```html
-<link rel="stylesheet" href="style.css" />
-```
+## Layout Optionen
 
-Erstellen Sie dann eine neue Datei mit dem Namen `style.css`
+Im letzten Kapitel haben wir bereits gesprochen dass wir 2 Arten von Elementen
+unterscheiden; `inline` und `block`. Für modernes Webdesign reicht dies aber
+nicht, hier brauchen wir mehr Möglichkeiten. Da kommen `flexbox` und `grid` ins
+Spiel. Beide kümmern sich darum wie die Elemente in deren Container
+ausgerichtet werden. Diese Elemente verhalten sich dann nicht mehr wie `inline`
+oder `block` Elemente, wir können die viel besser beschreiben.
 
-</Example>
+</Section>
 
-### Stylesheet verwenden
+<div className="full-height">
+## Flexbox
 
-Haben Sie das Stylesheet eingebunden, möchten wir als erstes ausprobieren ob es
-funktioniert hat. Am einfachsten geht das wenn Sie eine direkt sichtbare
-Änderung machen. Zum Beispiel können Sie die Hintergrundfarbe der Webseite
-ändern.
+Mit Flexbox können wir die Kinder von einem Element in ein flexibles
+dynamisches Layout bringen. Flexbox eignet sich sehr gut um horizontale und
+vertikale Listen anzuzeigen, ist also sehr gut geeignet für Navigationslisten.
+Flexbox wird aber auch ganz generell gerne verwendet um Elemente zu zentrieren,
+da es eine einfache Ausrichtung erlaubt.
 
-<Example title="Aufgabe: Neue Hintergrundfarbe">
-  Öffnen Sie `style.css` und geben Sie den folgenden Code
-  ein:
+<FlexboxModel />
+</div>
 
-```css
-body {
-  background-color: red;
-}
-```
+<div className="full-height">
+## Grid
 
-Der Hintergrund Ihrer ganzen Seite, sollte nun rot sein.
+Mit einem Grid-Layout können wir sehr flexible Gitter machen, und diese sogar
+in nicht regelmässige Gitter unterteilen. Zuerst schauen wir uns aber die Basis
+für Grid-Layouts an.
 
-</Example>
+<GridModel />
+</div>
 
-### Weitere Elemente
+<div className="full-height">
 
-Sie können in CSS einzelne Elemente unterschiedlich gestalten, dafür brauchen
-Sie einfach weitere Regeln. Diese werden in der gleichen Datei eingefügt.
+## Grid Templates
 
-<Example title="Aufgabe: Schriftfarbe des Titels ändern">
+Regelmässige Gitter können praktisch sein um etwas anzuzeigen, aber viel besser
+sind eigentlich Gitter Vorlagen, da können wir das ganze Layout so auslegen wie
+wir das gerne hätten, wir können das also ganz einfach beschreiben.
 
-Um den Titel besser hervorzuheben, möchten wir gerne die Farbe des Titels
-ändern, aber den Rest der Seite so lassen. Verwenden Sie dafür diese neue Regel.
+<GridTemplateModel />
 
-```css
-h1 {
-  color: whitesmoke;
-  text-decoration: underline;
-  text-align: center;
-}
-```
+Dieser Layout-Trick wird oft angewendet um das Gesamtlayout der Webseite zu
+erstellen. Man kann es aber auch für Dashbord-Elemente verwenden, und
+sogenannte Bento-Grids erstellen.
 
-Sie sollten nun einen zentrierten Titel haben der unterstrichen ist.
-
-</Example>
-
-### Mit CSS Regeln experimentieren
-
-Wie Sie gesehen haben, kann man verschiedene Regeln auf unterschiedliche
-Elemente anwenden. Versuchen Sie mithilfe des Editors eine weitere Regel für ein
-
-`<p>`-Tag zu erstellen, und diese anders zu gestalten.
-
-<Example title="Aufgabe: Webseite gestalten">
-
-Testen Sie verschiedene Stile für Ihre Webseite aus. Erstellen Sie jeweils einen
-neuen Commit, wenn Sie mit einem Stil zufrieden sind. Verändern Sie Ihren Stil
-mindestens 3 mal, um die History von Ihrem Projekt zu vergrössern.
-
-</Example>
-</Chapter>
+</div>
