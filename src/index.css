@@ -328,6 +328,10 @@ section ol {
   grid-column: full-width;
 }
 
+.full-height {
+  min-height: calc(100vh - var(--body-height));
+}
+
 @media (max-width: 819px) {
   .content-grid {
     grid-template-columns: [full-width-start] 20px [breakout-start] 1px [content-start] 1fr [content-end] 1px [breakout-end] 20px [full-width-end];

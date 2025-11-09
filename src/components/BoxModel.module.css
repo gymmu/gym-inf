@@ -5,7 +5,7 @@
 
 .gridContainer {
     display: grid;
-    grid-template-columns: 350px 1fr;
+    grid-template-columns: 500px 1fr;
     gap: 1em;
     overflow: hidden;
     grid-template-areas:
