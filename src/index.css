@@ -329,7 +329,7 @@ section ol {
 }
 
 .full-height {
-  min-height: calc(100vh - var(--body-height));
+  min-height: calc(100vh - 80px);
 }
 
 @media (max-width: 819px) {
