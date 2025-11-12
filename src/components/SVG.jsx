@@ -82,6 +82,22 @@ export function Circle({
   )
 }
 
+export function Rectangle({
+  x = 0,
+  y = 0,
+  width = 10,
+  height = 10,
+  fill = "black",
+  stroke = "none",
+  children,
+}) {
+  return (
+    <rect x={x} y={y} width={width} height={height} fill={fill} stroke={stroke}>
+      {children}
+    </rect>
+  )
+}
+
 export function Animation({
   animateRef,
   attributeName,
