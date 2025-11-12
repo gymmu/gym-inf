@@ -11,6 +11,7 @@ export default function SVGAnimation() {
   const [fill, setFill] = useState("none")
   const [attribute, setAttribute] = useState("cx")
   const [values, setValues] = useState("0;300;0")
+  const [begin, setBegin] = useState(2)
   const [dur, setDur] = useState(2)
   const [repeatCount, setRepeatCount] = useState("indefinite")
   const [svgDisplayCode, setSvgDisplayCode] = useState("")
@@ -25,7 +26,8 @@ export default function SVGAnimation() {
     setSvgDisplayCode(`<svg viewBox="0 0 300 300" width="300">
   <circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}">
     <animate attributeName="${attribute}"
-              values="${values}"
+              from="${values}"
+              begin="${begin}s"
               dur="${dur}s"
               repeatCount="${repeatCount}"
     />
@@ -89,6 +91,7 @@ export default function SVGAnimation() {
             <Animation
               animateRef={animateRef}
               attributeName={attribute}
+              begin={`${begin}s`}
               values={values}
               dur={`${dur}s`}
               repeat={repeatCount}
@@ -217,6 +220,7 @@ function Animation({
   animateRef,
   attributeName,
   values,
+  begin,
   dur = "1s",
   repeat = "indefinite",
 }) {
@@ -225,6 +229,7 @@ function Animation({
       ref={animateRef}
       attributeName={attributeName}
       values={values}
+      begin={begin}
       dur={dur}
       repeatCount={repeat}
       restart="always"
