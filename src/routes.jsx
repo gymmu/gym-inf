@@ -1,6 +1,3 @@
-// import SuspenseWrapper from "./components/SuspenseWrapper"
-// import Index from "@pages/index.mdx"
-
 // Route registry to store all routes
 const routeRegistry = []
 

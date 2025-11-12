@@ -32,7 +32,7 @@ export default function FmsIndex() {
             <NavLink to="fms/svg-aufgaben">Aufgaben</NavLink>
             <NavLink to="fms/svg-path-2">Pfade 2.0</NavLink>
             <NavLink to="fms/svg-animation">Animationen</NavLink>
-            {/* <NavLink to="fms/svg-use">Elemente wiederverwenden</NavLink> */}
+            <NavLink to="fms/svg-use">Elemente wiederverwenden</NavLink>
           </ol>
         </li>
       </ol>

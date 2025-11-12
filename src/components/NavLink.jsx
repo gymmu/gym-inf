@@ -1,17 +1,16 @@
-import { useContext, useEffect } from 'react';
-import { NavContext } from '../context/NavContext';
-import { Link } from 'react-router-dom';
-import {registerRoute} from "./../routes.jsx"
-import SuspenseWrapper from "./SuspenseWrapper"
+import { useContext, useEffect } from "react"
+import { NavContext } from "../context/NavContext"
+import { Link } from "react-router-dom"
+import { registerRoute } from "./../routes.jsx"
 
 function NavLink({ to, elem, children }) {
-  const { setVisible } = useContext(NavContext);
+  const { setVisible } = useContext(NavContext)
   useEffect(() => {
-    registerRoute(to, elem);
-    }, [])
+    registerRoute(to, elem)
+  }, [])
   const hide = () => {
-    setVisible(false);
-  };
+    setVisible(false)
+  }
 
   return (
     <li>
@@ -19,8 +18,7 @@ function NavLink({ to, elem, children }) {
         {children}
       </Link>
     </li>
-  );
+  )
 }
 
-export default NavLink;
-
+export default NavLink
