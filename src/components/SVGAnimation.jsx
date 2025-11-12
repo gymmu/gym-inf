@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
+import { renderToString } from "react-dom/server"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
@@ -6,119 +7,34 @@ import Editor from "@components/Editor.jsx"
 import Slider from "./Slider"
 import style from "@components/Path.module.css"
 
-export default function SVGAnimation({
-  defaultPath = "M 100 100\nL 200 200\nL 200 100\nZ",
-}) {
-  const [path, setPath] = useState(defaultPath)
-  const [strokeColor, setStrokeColor] = useState("black")
-  const [strokeWidth, setStrokeWidth] = useState(3)
+export default function SVGAnimation() {
   const [fill, setFill] = useState("none")
   const [attribute, setAttribute] = useState("cx")
-  const [values, setValues] = useState("0")
-  const [srcDoc, setSrcDoc] = useState("")
-  const [codeString, setCodeString] = useState("")
+  const [values, setValues] = useState("0;300;0")
+  const [dur, setDur] = useState(2)
+  const [repeatCount, setRepeatCount] = useState("indefinite")
+  const [svgDisplayCode, setSvgDisplayCode] = useState("")
+
+  const animateRef = useRef(null)
+
+  const cx = 150
+  const cy = 150
+  const r = 20
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setSrcDoc(`
-        <html>
-          <body>
-          </body>
-          <style>svg { background-color: white}</style>
-          <style>body { margin: 0; padding: 0; overflow: hidden;}</style>
-        </html>
-      `)
-      const formatPath = path
-        .split("\n")
-        .map((line, index) => {
-          if (index === 0) {
-            return line
-          } else {
-            return `\t\t   ${line}`
-          }
-        })
-        .join("\n")
-
-      setCodeString(`<path stroke="${strokeColor}"
-        stroke-width="${strokeWidth}"
-        fill="${fill}"
-        d="
-           ${formatPath}
-          "
-    />`)
-    }, 500)
-    return () => {
-      clearTimeout(timeout)
+    setSvgDisplayCode(`<svg viewBox="0 0 300 300" width="300">
+  <circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}">
+    <animate attributeName="${attribute}"
+              values="${values}"
+              dur="${dur}s"
+              repeatCount="${repeatCount}"
+    />
+  </circle>
+</svg>`)
+    if (animateRef) {
+      animateRef.current.beginElement()
     }
-  }, [path, fill, strokeColor, strokeWidth])
-
-  function appendToPath(str) {
-    setPath((oldPath) => {
-      if (oldPath.match(/[zZ]$/)) {
-        // Append before Z
-        const pathWithoutClosing = oldPath.split(/\n[zZ]/)[0]
-        return `${pathWithoutClosing}\n${str}\nZ`
-      } else {
-        return `${oldPath}\n${str}`
-      }
-    })
-  }
-
-  function rand() {
-    return Math.floor(Math.random() * 300)
-  }
-
-  function addLineAbsolute() {
-    appendToPath(`L ${rand()} ${rand()}`)
-  }
-
-  function addMoveAbsolute() {
-    appendToPath(`M ${rand()} ${rand()}`)
-  }
-
-  function addVerticalAbsolute() {
-    appendToPath(`V ${rand()}`)
-  }
-
-  function addHorizontalAbsolute() {
-    appendToPath(`H ${rand()}`)
-  }
-
-  function addQuadraticAbsolute() {
-    appendToPath(`Q ${rand()} ${rand()} ${rand()} ${rand()}`)
-  }
-
-  function addQuadraticContinuationAbsolute() {
-    appendToPath(`T ${rand()} ${rand()}`)
-  }
-
-  function addLineRelative() {
-    appendToPath(`l ${rand()} ${rand()}`)
-  }
-
-  function addMoveRelative() {
-    appendToPath(`m ${rand()} ${rand()}`)
-  }
-
-  function addVerticalRelative() {
-    appendToPath(`v ${rand()}`)
-  }
-
-  function addHorizontalRelative() {
-    appendToPath(`h ${rand()}`)
-  }
-
-  function addQuadraticRelative() {
-    appendToPath(`q ${rand()} ${rand()} ${rand()} ${rand()}`)
-  }
-
-  function addQuadraticContinuationRelative() {
-    appendToPath(`t ${rand()} ${rand()}`)
-  }
-
-  function resetPath() {
-    setPath("M 100 100\nL 200 200\nL 200 100\nZ")
-  }
+  }, [attribute, values, dur, repeatCount, animateRef])
 
   return (
     <div className={style.gridContainer}>
@@ -145,39 +61,45 @@ export default function SVGAnimation({
               onChange={(e) => setValues(e.target.value)}
             />
           </div>
+          <div className={style.formGroup}>
+            <Slider
+              sliderText="Dauer"
+              value={dur}
+              setValue={setDur}
+              minVal={0.1}
+              maxVal={10}
+              step={0.1}
+            />
+          </div>
+          <div className={style.formGroup}>
+            <Slider
+              sliderText="Wiederholungen"
+              value={repeatCount}
+              setValue={setRepeatCount}
+              minVal={1}
+              maxVal={10}
+            />
+          </div>
         </div>
       </div>
       <div className={style.gridBox}>
         <h2>Resultat</h2>
         <SVGComponent>
-          <Path
-            strokeWidth={strokeWidth}
-            strokeColor={strokeColor}
-            fill={fill}
-            d={path}
-          />
-          <Circle>
+          <Circle cx={cx} cy={cy} r={r}>
             <Animation
+              animateRef={animateRef}
               attributeName={attribute}
               values={values}
-              dur="2s"
-              repeat="indefinite"
+              dur={`${dur}s`}
+              repeat={repeatCount}
             />
           </Circle>
         </SVGComponent>
       </div>
       <div className={style.gridBox}>
-        <Editor
-          title="Pfad"
-          language="text"
-          value={path}
-          handleChange={setPath}
-        />
-      </div>
-      <div className={style.gridBox}>
         <h2>SVG Code</h2>
-        <SyntaxHighlighter language="css" style={dark}>
-          {codeString}
+        <SyntaxHighlighter language="svg" style={dark}>
+          {svgDisplayCode}
         </SyntaxHighlighter>
       </div>
     </div>
@@ -292,6 +214,7 @@ function Circle({
 }
 
 function Animation({
+  animateRef,
   attributeName,
   values,
   dur = "1s",
@@ -299,10 +222,12 @@ function Animation({
 }) {
   return (
     <animate
+      ref={animateRef}
       attributeName={attributeName}
       values={values}
       dur={dur}
       repeatCount={repeat}
+      restart="always"
     />
   )
 }
