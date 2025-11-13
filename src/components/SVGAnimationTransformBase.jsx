@@ -9,7 +9,7 @@ import style from "@components/Path.module.css"
 
 export default function SVGAnimationTransformBase({
   id = "placeholder",
-  attributes = [],
+  attributes = ["none", "rotate", "scale", "skewX", "skewY", "translate"],
   elementControlls,
   element,
   outputString = "<circle>",

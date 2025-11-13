@@ -20,7 +20,6 @@ export default function SVGAnimationTransformCircle() {
   return (
     <SVGAnimationTransformBase
       id="circle-animation"
-      attributes={["none", "rotate", "scale", "skewX", "skewY"]}
       element={<Circle cx={cx} cy={cy} r={r} fill={fill} />}
       elementControlls={
         <>
