@@ -137,6 +137,30 @@ export function Animation({
   )
 }
 
+export function AnimationTransform({
+  target = "",
+  animateRef,
+  attributeType,
+  values,
+  begin,
+  dur = "1s",
+  repeat = "indefinite",
+}) {
+  return (
+    <animateTransform
+      xlinkHref={`#${target}`}
+      ref={animateRef}
+      attributeName="transform"
+      type={attributeType}
+      values={values}
+      begin={begin}
+      dur={dur}
+      repeatCount={repeat}
+      restart="always"
+    />
+  )
+}
+
 export function Grid() {
   return (
     <>
