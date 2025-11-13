@@ -138,7 +138,6 @@ export function Animation({
 }
 
 export function AnimationTransform({
-  target = "",
   animateRef,
   attributeType,
   values,
@@ -148,7 +147,6 @@ export function AnimationTransform({
 }) {
   return (
     <animateTransform
-      xlinkHref={`#${target}`}
       ref={animateRef}
       attributeName="transform"
       type={attributeType}

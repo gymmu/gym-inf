@@ -86,15 +86,17 @@ export default function SVGAnimationBase({
       <div className={style.gridBox}>
         <h3>Resultat</h3>
         <SVGComponent>
-          <Animation
-            target={`${id}`}
-            animateRef={animateRef}
-            attributeName={attribute}
-            values={values}
-            dur={`${dur}s`}
-            repeat={repeatCount}
-          />
-          {element}
+          <g>
+            <Animation
+              target={`${id}`}
+              animateRef={animateRef}
+              attributeName={attribute}
+              values={values}
+              dur={`${dur}s`}
+              repeat={repeatCount}
+            />
+            {element}
+          </g>
         </SVGComponent>
       </div>
       <div className={style.gridBox} style={{ gridColumn: "1 / span 2" }}>

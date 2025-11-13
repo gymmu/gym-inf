@@ -107,15 +107,15 @@ export default function SVGAnimationTransformBase({
       <div className={style.gridBox}>
         <h3>Resultat</h3>
         <SVGComponent>
-          <AnimationTransform
-            target={`${id}`}
-            animateRef={animateRef}
-            attributeType={attribute}
-            values={values}
-            dur={`${dur}s`}
-            repeat={repeatCount}
-          />
-          <g id={id} transform-origin={`${originX} ${originY}`}>
+          <g transform-origin={`${originX} ${originY}`}>
+            <AnimationTransform
+              target={`${id}`}
+              animateRef={animateRef}
+              attributeType={attribute}
+              values={values}
+              dur={`${dur}s`}
+              repeat={repeatCount}
+            />
             {element}
           </g>
           <Origin x={originX} y={originY} />

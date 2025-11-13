@@ -11,16 +11,21 @@ export default function SVGAnimationTransformCircle() {
   const [cy, setCy] = useState(150)
   const [r, setR] = useState(20)
 
-  const fill = "hotpink"
+  const fill = "black"
 
   useEffect(() => {
-    setOutputString(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}">`)
+    setOutputString(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" />`)
   }, [cx, cy, r])
 
   return (
     <SVGAnimationTransformBase
       id="circle-animation"
-      element={<Circle cx={cx} cy={cy} r={r} fill={fill} />}
+      element={
+        <>
+          <Circle cx={cx} cy={cy} r={r} fill={fill} />
+          <Circle cx={cx} cy={cy + 100} r={r} fill={fill} />
+        </>
+      }
       elementControlls={
         <>
           <h3>Kontrollelemente Kreis</h3>
