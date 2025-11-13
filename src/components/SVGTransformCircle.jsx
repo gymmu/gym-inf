@@ -7,8 +7,8 @@ import style from "@components/Path.module.css"
 
 export default function SVGTransform() {
   const [outputString, setOutputString] = useState("")
-  const [cx, setCx] = useState(0)
-  const [cy, setCy] = useState(0)
+  const [cx, setCx] = useState(150)
+  const [cy, setCy] = useState(150)
 
   const r = 40
   const fill = "forestgreen"

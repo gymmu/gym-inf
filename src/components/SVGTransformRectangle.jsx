@@ -7,10 +7,10 @@ import style from "@components/Path.module.css"
 
 export default function SVGTransformRectangle() {
   const [outputString, setOutputString] = useState("")
-  const [x, setX] = useState(0)
-  const [y, setY] = useState(0)
-  const [width, setWidth] = useState(50)
-  const [height, setHeight] = useState(50)
+  const [x, setX] = useState(100)
+  const [y, setY] = useState(100)
+  const [width, setWidth] = useState(100)
+  const [height, setHeight] = useState(100)
 
   const fill = "pink"
 

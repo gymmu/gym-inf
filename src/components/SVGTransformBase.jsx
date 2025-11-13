@@ -25,8 +25,8 @@ export default function SVGTransformBase({
 
   useEffect(() => {
     setSvgDisplayCode(`<svg viewBox="0 0 300 300" width="300">
-      <g transform-origin="${originX} ${originY}"
-         translate="transform(${dx}, ${dy}) rotate(${rotation}) scale=(${scale}) skewX=(${skewX}) skewY(${skewY})">
+  <g transform-origin="${originX} ${originY}"
+     transform="translate(${dx}, ${dy}) rotate(${rotation}) scale(${scale}) skewX(${skewX}) skewY(${skewY})">
       ${outputString}
   </g>
 </svg>`)
@@ -60,7 +60,7 @@ export default function SVGTransformBase({
               sliderText={`Verschiebung x = ${dx}`}
               value={dx}
               setValue={setDx}
-              minVal={0}
+              minVal={-300}
               maxVal={300}
             />
           </div>
@@ -69,7 +69,7 @@ export default function SVGTransformBase({
               sliderText={`Verschiebung y = ${dy}`}
               value={dy}
               setValue={setDy}
-              minVal={0}
+              minVal={-300}
               maxVal={300}
             />
           </div>
