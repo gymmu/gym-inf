@@ -150,10 +150,32 @@ export function Grid() {
   )
 }
 
-export function Transform({ children, tx = 50, ty = 0, rot = 0, scale = 1 }) {
+export function Transform({
+  children,
+  originX = 0,
+  originY = 0,
+  tx = 50,
+  ty = 0,
+  rot = 0,
+  scale = 1,
+  skewX = 0,
+  skewY = 0,
+}) {
   return (
-    <g transform={`translate(${tx}, ${ty}) rotate(${rot}) scale(${scale})`}>
+    <g
+      transform-origin={`${originX} ${originY}`}
+      transform={`translate(${tx}, ${ty}) rotate(${rot}) scale(${scale}) skewX(${skewX}) skewY(${skewY})`}>
       {children}
+    </g>
+  )
+}
+
+export function Origin({ x, y }) {
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <circle r="5" fill="red" />
+      <path stroke="red" d="M -20 0 L 20 0 M 0 -20 L 0 20" />
+      <circle r="15" stroke="red" fill="none" />
     </g>
   )
 }

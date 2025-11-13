@@ -23,20 +23,18 @@ export default function SVGTransformPath() {
   const fill = "pink"
 
   useEffect(() => {
-    setSvgDisplayCode(`<svg viewBox="0 0 300 300" width="300">
-  <g translate="transform(${dx}, ${dy}) rotate(${rotation}) scale=(${scale})">
-      <rect x="${x}" y="${y}" width="${width}" height="${height}" fill="${fill}" />
-  </g>
-</svg>`)
-  }, [dx, dy, rotation, scale, x, y, width, height])
+    setOutputString(`<path fill="${fill}" d="${path}" />`)
+  }, [path])
 
   return (
     <SVGTransformBase
       elementControlls={
         <>
           <h3>Kontrollelemente Pfad</h3>
-          <div className={style.formControll}>
+          <div className={style.formGroup}>
+            <label htmlFor="pathField">Pfad: </label>
             <input
+              id="pathField"
               type="text"
               value={path}
               onChange={(e) => setPath(e.target.value)}
