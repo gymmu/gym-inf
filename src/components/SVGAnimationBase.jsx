@@ -1,40 +1,33 @@
 import { useEffect, useState, useRef } from "react"
-import { renderToString } from "react-dom/server"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
-import { SVGComponent, Circle, Animation } from "./SVG"
-import Editor from "@components/Editor.jsx"
-import Slider from "./Slider"
+import { SVGComponent, Animation } from "./SVG"
+import Slider from "@components/Slider"
+import Select from "@components/Select.jsx"
 import style from "@components/Path.module.css"
 
 export default function SVGAnimationBase({
   id = "placeholder",
+  attributes = [],
   elementControlls,
   element,
   outputString = "<circle>",
 }) {
-  const [fill, setFill] = useState("none")
-  const [attribute, setAttribute] = useState("cx")
+  const [attribute, setAttribute] = useState(attributes[0] || "none")
   const [values, setValues] = useState("0;300;0")
-  const [begin, setBegin] = useState(2)
   const [dur, setDur] = useState(2)
   const [repeatCount, setRepeatCount] = useState("indefinite")
   const [svgDisplayCode, setSvgDisplayCode] = useState("")
 
   const animateRef = useRef(null)
 
-  const cx = 150
-  const cy = 150
-  const r = 20
-
   useEffect(() => {
     const closing = outputString.match(/^<[a-z]+/)[0].substring(1)
     setSvgDisplayCode(`<svg viewBox="0 0 300 300" width="300">
   ${outputString}
     <animate attributeName="${attribute}"
-              from="${values}"
-              begin="${begin}s"
+              values="${values}"
               dur="${dur}s"
               repeatCount="${repeatCount}"
     />
@@ -43,7 +36,7 @@ export default function SVGAnimationBase({
     if (animateRef) {
       animateRef.current.beginElement()
     }
-  }, [attribute, values, dur, repeatCount, begin, outputString])
+  }, [attribute, values, dur, repeatCount, outputString])
 
   return (
     <div className={style.gridContainer}>
@@ -52,14 +45,12 @@ export default function SVGAnimationBase({
         <div className={style.controlls}>
           <div className={style.formGroup}>
             <label htmlFor="attribteField">Animations Attribut</label>
-            <select
+            <Select
               id="attributeField"
               value={attribute}
-              onChange={(e) => setAttribute(e.target.value)}>
-              <option>cx</option>
-              <option>cy</option>
-              <option>r</option>
-            </select>
+              onChange={(e) => setAttribute(e.target.value)}
+              options={[...attributes]}
+            />
           </div>
           <div className={style.formGroup}>
             <label htmlFor="valuesField">Animations-Werte</label>
@@ -72,7 +63,7 @@ export default function SVGAnimationBase({
           </div>
           <div className={style.formGroup}>
             <Slider
-              sliderText="Dauer"
+              sliderText={`Dauer ${dur}s`}
               value={dur}
               setValue={setDur}
               minVal={0.1}
@@ -82,7 +73,7 @@ export default function SVGAnimationBase({
           </div>
           <div className={style.formGroup}>
             <Slider
-              sliderText="Wiederholungen"
+              sliderText={`Wiederholungen ${repeatCount}-mal`}
               value={repeatCount}
               setValue={setRepeatCount}
               minVal={1}
@@ -90,6 +81,7 @@ export default function SVGAnimationBase({
             />
           </div>
         </div>
+        {elementControlls}
       </div>
       <div className={style.gridBox}>
         <h3>Resultat</h3>
@@ -98,12 +90,11 @@ export default function SVGAnimationBase({
             target={`${id}`}
             animateRef={animateRef}
             attributeName={attribute}
-            begin={`${begin}s`}
             values={values}
             dur={`${dur}s`}
             repeat={repeatCount}
           />
-          <Circle id={id} cx={cx} cy={cy} r={r}></Circle>
+          {element}
         </SVGComponent>
       </div>
       <div className={style.gridBox} style={{ gridColumn: "1 / span 2" }}>
