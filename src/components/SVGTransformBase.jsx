@@ -117,7 +117,6 @@ export default function SVGTransformBase({
       <div className={style.gridBox}>
         <h3>Resultat</h3>
         <SVGComponent>
-          <Origin x={originX} y={originY} />
           <Transform
             originX={originX}
             originY={originY}
@@ -129,6 +128,7 @@ export default function SVGTransformBase({
             skewY={skewY}>
             {element}
           </Transform>
+          <Origin x={originX} y={originY} />
         </SVGComponent>
       </div>
       <div className={style.gridBox} style={{ gridColumn: "1 / span 2" }}>
