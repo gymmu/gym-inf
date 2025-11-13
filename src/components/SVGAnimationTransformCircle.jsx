@@ -14,7 +14,8 @@ export default function SVGAnimationTransformCircle() {
   const fill = "black"
 
   useEffect(() => {
-    setOutputString(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" />`)
+    setOutputString(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" />
+    <circle cx="${cx}" cy="${cy + 100}" r="${r}" fill="${fill}" />`)
   }, [cx, cy, r])
 
   return (
