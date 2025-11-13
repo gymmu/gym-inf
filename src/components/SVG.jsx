@@ -57,17 +57,25 @@ export function SVGComponent({ children }) {
 }
 
 export function Path({
+  id = "",
   strokeWidth = 2,
   strokeColor = "black",
   fill = "none",
   d = "",
 }) {
   return (
-    <path strokeWidth={strokeWidth} stroke={strokeColor} fill={fill} d={d} />
+    <path
+      id={id}
+      strokeWidth={strokeWidth}
+      stroke={strokeColor}
+      fill={fill}
+      d={d}
+    />
   )
 }
 
 export function Circle({
+  id = "",
   cx = 0,
   cy = 0,
   r = 10,
@@ -76,13 +84,14 @@ export function Circle({
   children,
 }) {
   return (
-    <circle cx={cx} cy={cy} r={r} fill={fill} stroke={stroke}>
+    <circle id={id} cx={cx} cy={cy} r={r} fill={fill} stroke={stroke}>
       {children}
     </circle>
   )
 }
 
 export function Rectangle({
+  id = "",
   x = 0,
   y = 0,
   width = 10,
@@ -92,13 +101,21 @@ export function Rectangle({
   children,
 }) {
   return (
-    <rect x={x} y={y} width={width} height={height} fill={fill} stroke={stroke}>
+    <rect
+      id={id}
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      fill={fill}
+      stroke={stroke}>
       {children}
     </rect>
   )
 }
 
 export function Animation({
+  target = "",
   animateRef,
   attributeName,
   values,
@@ -108,6 +125,7 @@ export function Animation({
 }) {
   return (
     <animate
+      xlinkHref={`#${target}`}
       ref={animateRef}
       attributeName={attributeName}
       values={values}
