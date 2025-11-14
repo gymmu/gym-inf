@@ -14,7 +14,7 @@ export default function SVGAnimationCircle() {
   const fill = "hotpink"
 
   useEffect(() => {
-    setOutputString(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" />`)
+    setOutputString(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}">`)
   }, [cx, cy, r])
 
   return (

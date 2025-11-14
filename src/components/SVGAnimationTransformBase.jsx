@@ -17,7 +17,7 @@ export default function SVGAnimationTransformBase({
   const [attribute, setAttribute] = useState(attributes[0] || "none")
   const [originX, setOriginX] = useState(0)
   const [originY, setOriginY] = useState(0)
-  const [values, setValues] = useState("0;300;0")
+  const [values, setValues] = useState("0;30;0")
   const [dur, setDur] = useState(2)
   const [repeatCount, setRepeatCount] = useState("indefinite")
   const [svgDisplayCode, setSvgDisplayCode] = useState("")
