@@ -1,0 +1,165 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Section from "@components/Section.jsx"
+import SVGAnimationCircle from "@components/SVGAnimationCircle.jsx"
+import SVGAnimationTransformCircle from "@components/SVGAnimationTransformCircle.jsx"
+import ImgGrid, {SvgWithGrid} from "@components/ImgGrid.jsx"
+
+import AnimateHamburger from "@components/AnimateHamburger.jsx"
+
+## Animationen in SVG
+
+Animationen werden im Web recht häufig verwendet, damit es für Besucher einfacher ist zu erkennen, wo gerade etwas auf der Webseite passiert. Gute Animationen sind oftmals sehr komplex, aber bereits einfache Animationen können schon sehr viel ausmachen. Zum Beispiel ein Hamburger-Menu, das anzeigt ob die Seitenleiste geöffnet oder geschlossen ist. Wie man eine solche Animation machen könnte, schauen wir uns hier an.
+
+<AnimateHamburger />
+
+<LearningGoals>
+
+- Sie wissen wie man eine einfache Animation in SVG erstellt.
+- Sie wissen welche Attribute man animieren kann.
+- Sie kennen 2 Arten der Animation (Attribute und Transformationen).
+- Sie wissen wie das `values`-Attribut bei Animationen funktioniert.
+
+</LearningGoals>
+
+<div className="full-height">
+
+## Attribute animieren
+
+Animationen müssen nicht schwierig sein. Man kann bereits viele Effekte erreichen, wenn schon nur ein einziges Attribut animiert wird. Man kann zum Beispiel sagen, das sich ein Kreis hin und her bewegen soll.
+
+<Section classes="exercise">
+    Wählen Sie ein Attribut aus der Liste aus. Ändern Sie die Animationswerte, so das die Animation sinn ergibt, und fügen Sie neue Werte hinzu. Schauen Sie sich genau an wie der SVG-Code aufgebaut ist.
+</Section>
+
+<SVGAnimationCircle />
+
+</div>
+
+## Weitere Objekte animieren
+
+Wir können natürlich auch andere Objekte animieren, nicht nur Kreise. Mit dem `animate`-Element, sagen Sie welches Attribut von dem direkten Elternelement animiert werden soll. Das geht für alle möglichen Elemente. Sie können sogar das `d`-Attribut vpn Pfaden animieren. Diese Aufgabe lassen wir aber für die Übungen. Nun möchten wir uns zuerst mit der Animation von Transformationen beschäftigen, denn hier können wir auch einfach ganze Gruppen animieren.
+
+<div className="full-height">
+
+## Transformationen animieren
+
+Wenn wir Transformationen animieren, dann können wir alle Elemente in eine Gruppe (ein `g`-Element packen). Dann gilt die Animation für die ganze Gruppe. Ein Animations-Element verändert immer das direkte Elternelement. Da Transformationen auf alle Elemente angewendet werden können, ist es sehr einfach ganze Gruppen zu animieren.
+
+<Section classes="exercise">
+    Wählen Sie ein Animationsattribut aus. Überlegen Sie sich immer zuerst wie die Animation aussehen könnte. Ändern Sie dann die Animationswerte so, dass die Animation sinn ergibt. Verschieben Sie auch den Animationsursprung.
+</Section>
+
+<SVGAnimationTransformCircle />
+
+</div>
+
+<Section classes="exercise">
+
+Erstellen Sie die folgenden Animationen. Der Transformationsursprung ist absichtlich nicht eingezeichnet. Sie können die Grafiken mit den Applets oben erstellen, oder direkt zur Seite <a href="https://editsvgcode.com/" target="_blank">SVGEditor</a> gehen.
+
+Es werden hier auch neue Elemente wie zum Beispiel die Ellipse verwendet. Erstellen Sie die Basis der Animation im Applet, und finalisieren Sie diese dann im Editor.
+
+<ImgGrid>
+
+<SvgWithGrid>
+    <ellipse cx="150" cy="150" rx="100" ry="20" fill="hotpink">
+      <animate attributeName="ry"
+                values="20;100;20"
+                dur="2s"
+                repeatCount="indefinite"
+      />
+    </ellipse>
+</SvgWithGrid>
+
+<SvgWithGrid>
+    <rect x="50" y="50" height="200" width="20" fill="skyblue">
+      <animate attributeName="width"
+                values="20;200;20"
+                dur="2s"
+                repeatCount="indefinite"
+      />
+    </rect>
+</SvgWithGrid>
+
+<SvgWithGrid>
+    <path fill="hotpink" d="M 100 100 L 200 200 v -100 z">
+        <animate attributeName="d"
+                  values="M 100 100 L 200 200 v -100 z;M 10 100 L 200 200 v -150 z"
+                  dur="2s"
+                  repeatCount="indefinite"
+        />
+      </path>
+</SvgWithGrid>
+
+<SvgWithGrid>
+    <g transform-origin="150 130">
+      <circle cx="150" cy="100" r="20" fill="black" />
+      <circle cx="150" cy="200" r="20" fill="black" />
+      <animateTransform attributeName="transform"
+                type="rotate"
+                values="0;360"
+                dur="4s"
+                repeatCount="indefinite"
+      />
+    </g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+    <g transform-origin="250 130">
+        <circle cx="150" cy="100" r="20" fill="black" />
+        <circle cx="150" cy="200" r="20" fill="black" />
+        <animateTransform attributeName="transform"
+                  type="scale"
+                  values="0;1.5;0.1"
+                  dur="3s"
+                  repeatCount="indefinite"
+        />
+      </g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+    <g transform-origin="139 47">
+      <circle cx="150" cy="100" r="20" fill="magenta" />
+      <rect x="150" y="200" height="40" width="40" fill="cyan" />
+      <animateTransform attributeName="transform"
+                type="skewX"
+                values="0;30;-30;0"
+                dur="3s"
+                repeatCount="indefinite"
+      />
+    </g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+    <g transform-origin="150 100">
+      <path fill="forestgreen" d="M 50 100 l 100 100 v -100 Z" />
+      <animateTransform attributeName="transform"
+                type="rotate"
+                values="0;360;270;360;0"
+                dur="5s"
+                repeatCount="indefinite"
+      />
+    </g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+<path id="myPath" stroke="red" strokeWidth="3" fill="red" d="M 50 100
+q 25 -100 100 0
+q 75 -100 100 0
+q -10 100 -100 150
+q -90 -50 -100 -150
+Z">
+
+<animate attributeName="d"
+          values="M 50 100 q 0 0 100 0 q 0 0 100 0 q 0 0 -100 150 q 0 0 -100 -150 Z;
+                  M 50 100 q 25 -100 100 0 q 75 -100 100 0 q -10 100 -100 150 q -90 -50 -100 -150 Z;
+                  M 50 100 q 25 -100 100 0 q 75 -100 100 0 q -10 100 -100 150 q -90 -50 -100 -150 Z"
+          dur="3s"
+          repeatCount="indefinite"
+/>
+</path>
+</SvgWithGrid>
+
+</ImgGrid>
+
+</Section>

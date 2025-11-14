@@ -1,0 +1,140 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Section from "@components/Section.jsx"
+import CodePenSVG from "@components/CodePenSVG"
+
+import GridTransformation from "@components/GridTransformation.jsx"
+import SVGTransformCircle from "@components/SVGTransformCircle.jsx"
+import SVGTransformRectangle from "@components/SVGTransformRectangle.jsx"
+import SVGTransformPath from "@components/SVGTransformPath.jsx"
+
+import ImgGrid, {SvgWithGrid} from "@components/ImgGrid.jsx"
+
+## SVG Elemente Transformieren
+
+In den bisherigen Kapiteln haben Sie gelernt wie man Basis-Elemente in SVG zeichnet. Oftmals reichen diese Basis-Elemente aber nicht aus um alle gewünschten Formen zeichnen zu können. Oftmals reicht aber eine einfache Drehung, Skalierung oder Verzerrung. Das alles können wir ganz einfach mit einer Transformation machen.
+
+<LearningGoals>
+
+- Sie können Elemente verschieben.
+- Sie können Elemente drehen.
+- Sie können Elemente skalieren.
+- Sie können Elemente verzerren.
+- Sie wissen welche Arten von Transformationen möglich sind.
+- Sie wissen was der Transformations-Ursprung ist, und wie dieser die Transformation beeinflusst.
+
+</LearningGoals>
+
+## Transformations-Ursprung
+
+Transformationen sind im Prinzip ganz einfach. Das Problem bei SVG-Transformationen, ist aber der Ursprung. Dieser liegt nicht in der Mitte der Figur, sondern im Ursprung des Koordinatensystems. Einfache Transformationen wie **Verschiebungen** sind davon nicht beeinflusst, aber alle anderen Transformationen **Rotieren**, **Skalieren** und **Verzerren**, brauchen aber einen Fixpunkt, und dieser liegt Standartmässig im Ursprung. Wir können diesen aber verschieben.
+
+<div className="full-height">
+
+Schauen wir uns zuerst mal die folgende Grafik an. Wir sehen einen Kreis im Mittelpunk der Grafik. Nun möchten wir diesen verschieben. Das machen wir mit einer Transformation.
+
+<Section classes="exercise">
+    Verschieben Sie den Kreis in x- und y-Richtung. Schauen Sie sich an, wie sich der SVG-Code ändert.
+</Section>
+
+<SVGTransformCircle />
+
+<Section classes="important">
+    Die Transformation verhält sich genau so wie wir es erwarten, denn eine Verschiebung braucht keinen Fixpunkt.
+</Section>
+</div>
+
+<div className="full-height">
+
+### Transformationen mit einem Fixpunkt
+
+Nun schauen wir uns weitere Transformationen an. Diese haben alle einen Fixpunkt, den wir aber kontrollieren können.
+
+Wir haben wieder die gleiche Grafik wie oben, nun möchten wir aber das ganze rotieren.
+
+<Section classes="exercise">
+    Rotieren Sie die Grafik um 45°. Bevor Sie das aber machen, was denken Sie wie die Grafik nachher aussehen wird?
+</Section>
+
+<SVGTransformCircle />
+
+<Section classes="important">
+    Die Grafik wurde um Ihren Ursprung gedreht, und solange wir diesen nicht angeben, ist es der Ursprung des Koordinatensystems. Wir können diesen aber ganz einfach verschieben.
+</Section>
+
+Wir wählen nun einen neuen Fixpunkt für die Transformation.
+
+<Section classes="exercise">
+    Verschieben Sie den Ursprung auf die Koordinate `(150, 0)` und drehen Sie das ganze nochmals um 45°. Was ist nun passiert?
+</Section>
+
+</div>
+
+<div className="full-height">
+
+## Rechtecke Transformieren
+
+Wir können auch ganz andere Elemente transformieren. Möchten wir zum Beispiel eine Raute erzeugen, dann können wir ein Quadrat zeichnen, und dieses einfach drehen. Genau das machen wir jetzt.
+
+<Section classes="exercise">
+    Drehen Sie das Rechteck so, dass in der Mitte des Bildes eine Raute entsteht.
+
+    **Hinweis:** Es gibt mehrere Möglichkeiten wie Sie zum Ziel kommen können.
+</Section>
+
+<SVGTransformRectangle />
+
+</div>
+
+<div className="full-height">
+
+## Pfade Transformieren
+
+Gerade bei Pfaden kann es oftmals einfacher sein in einer Grundform zu denken, und diese dann zu verschieben oder drehen, je nach Anwendung natürlich auch Skalieren oder sogar verzerren. Genau das schauen wir uns nun mit Dreiecken an.
+
+<Section classes="exercise">
+    Verzerren Sie das Dreieck so, dass es gleichseitig aussieht.
+</Section>
+
+<SVGTransformPath />
+
+</div>
+
+<Section classes="full-height exercise">
+
+## Aufgaben
+
+Erstellen Sie die folgenden Grafiken. Der Transformationsursprung ist absichtlich nicht eingezeichnet. Sie können die Grafiken mit den Applets oben erstellen, oder direkt zur Seite <a href="https://editsvgcode.com/" target="_blank">SVGEditor</a> gehen.
+
+<ImgGrid>
+
+<SvgWithGrid>
+<g transform-origin="200 100"
+    transform="translate(0, 0) rotate(45) scale(1.4) skewX(45) skewY(0)">
+    <path fill="pink" d="M 100 100 L 200 200 v -100 Z" />
+</g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+    <g transform-origin="200 100"
+         transform="translate(0, 0) rotate(90) scale(1) skewX(0) skewY(45)">
+          <rect x="100" y="100" width="100" height="100" fill="pink" />
+      </g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+<g transform-origin="150 150"
+    transform="translate(0, 0) rotate(0) scale(1.9) skewX(45) skewY(0)">
+    <circle cx="150" cy="150" r="40" fill="forestgreen" />
+</g>
+</SvgWithGrid>
+
+<SvgWithGrid>
+    <g transform-origin="100 100"
+       transform="translate(-100, 0) rotate(0) scale(1.5) skewX(45) skewY(-33)">
+        <path fill="firebrick" d="M 100 100 L 200 200 v -100 Z" />
+    </g>
+</SvgWithGrid>
+
+</ImgGrid>
+
+</Section>
