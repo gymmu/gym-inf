@@ -11,6 +11,7 @@ import Grammar from "@pages/grammar.mdx"
 import Regex from "@pages/regex.mdx"
 import GymHTML from "@pages/html.mdx"
 import GymCSS from "@pages/css.mdx"
+import GymJS from "@pages/javascript.mdx"
 
 // Importiere Unterseiten fürs Gym Praktikum
 import PInstall from "@pages/praktikum/installation.mdx"
@@ -64,6 +65,7 @@ export const createRouter = () => {
           { path: "regex", element: <Regex /> },
           { path: "html", element: <GymHTML /> },
           { path: "css", element: <GymCSS /> },
+          { path: "javascript", element: <GymJS /> },
 
           // Gym Praktikum
           { path: "praktikum/install", element: <PInstall /> },

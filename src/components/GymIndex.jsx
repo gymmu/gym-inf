@@ -30,6 +30,7 @@ export default function GymIndex() {
             <NavLink to="regex">Regex</NavLink>
             <NavLink to="html">HTML</NavLink>
             <NavLink to="css">CSS</NavLink>
+            <NavLink to="javascript">Javascript</NavLink>
           </ol>
         </li>
       </ol>
