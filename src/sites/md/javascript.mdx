@@ -1,5 +1,6 @@
 import Section from "@components/Section.jsx"
 import PrismBlock from "@components/PrismBlock.jsx"
+import LearningGoals from "@components/LearningGoals.jsx"
 
 ## Einführung in Javascript
 
@@ -12,6 +13,21 @@ Javascript wird verwendet um Webseiten interaktiv zu machen. Man kann es aber
 auch verwenden um die Logik auf einer Webseite zu steuern, man kann Daten von
 einer externen Quelle laden und analysieren, oder sogar ganze Spiele als
 Webseite entwickeln.
+
+<LearningGoals>
+
+- Sie wissen was Javascript ist.
+- Sie können Javascript-Code erkennen und abändern.
+- Sie wissen was die Entwickler-Konsole im Browser ist, und wie man diese öffnet.
+- Sie wissen welche Operationen man in Javascript machen kann.
+- Sie wissen was eine Variable ist.
+- Sie wissen was eine Funktion ist.
+- Sie wissen wie man eine Funktion aufruft.
+- Sie können eigene Funktionen schreiben und aufrufen.
+- Sie kennen einige einfache Ereignisse in Javascript.
+- Sie wissen wie man Code in einem Skript speichert, und dieses in einer Webseite einbindet.
+
+</LearningGoals>
 
 ## Entwickler-Konsole
 
@@ -165,6 +181,38 @@ Natürlich ist es unpraktisch wenn Sie den Code immer wieder in der Konsole eing
 
 ```html
 <script src="./main.js" defer></script>
+```
+
+</PrismBlock>
+
+Nun da wir ein Skript haben, in dem wir unsere Funktionen speichern können, können wir auch grössere und kompliziertere Codes machen. Wir möchten nun Elemente dynamisch erstellen und zum Dokument hinzufügen. Wir schreiben also eine Funktion, die ein neues Element erzeugt, und dieses im `body`-Element anhängt.
+
+<PrismBlock>
+
+```javascript
+let counter = 0
+
+function createNewElement(){
+  let newElement = document.createElement("div")
+  counter = counter + 1
+  newElement.textContent = "Element " + counter
+
+  let body = document.querySelector("body")
+  body.appendChild(newElement)
+}
+```
+
+</PrismBlock>
+
+Jetzt wo wir diese Funktion haben, können wir die Entwickler-Konsole öffnen, und die Funktion aufrufen. Wir möchten diese Funktion dann noch an ein Ereignis binden. Wir können Funktionen ganz einfach an Elemente anknüpfen, dafür müssen wir nur ein Element haben, dann geht das wie oben.
+
+Dafür erstellen wir in `HTML` einen Button, und dem `onclick`-Attribut von diesem Button, fügen wir nun die neue Funktion hinzu.
+
+
+<PrismBlock>
+
+```html
+<button onclick="createNewElement()">Neues Element erstellen</button>
 ```
 
 </PrismBlock>
