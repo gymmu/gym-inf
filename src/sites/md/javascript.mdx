@@ -61,3 +61,110 @@ let titleElement = document.querySelector("h1")
 title.textContent = "Neuer Titel"
 ```
 </PrismBlock>
+
+Dieses Beispiel ist dennoch unpraktisch, da beim besuchen einer Webseite, niemand die Konsole öffnen würde, um den Inhalt darauf anzupassen. Wir können dieses Code aber in einer **Funktion** speichern, und ihn auf Befehl ausführen. Meistens bindet man diese Funktion dann an einen Button, oder etwas ähnliches. Wir bleiben vorerst dabei, und machen alles von Hand in der Konsole.
+
+<Section>
+
+## Eigene Funktionen schreiben
+
+Wir können ganz einfach neue eigene Funktionen definieren. Das ist sehr praktisch für uns, denn so können wir Code in Blöcken speichern, und diesen dann immer wieder und wieder ausführen. Wir möchten nun eine Funktion erstellen, die eine Variable immer ums eins erhöht, und diesen Wert dann in den `h1`-Titel schreibt. Die Kommentare brauchen Sie nicht abzuschreiben, die sind nur für Ihr Verständnis.
+
+<PrismBlock>
+
+```javascript
+// Erstellt eine Variable mit Namen count und dem Wert 0
+let count = 0
+
+// Erstellt eine Funktion mit dem Namen increaseCount
+function increaseCount() {
+
+  // Erstellt eine neue Variable mit Namen titleElement und speichert das h1-Element darin
+  let titleElement = document.querySelector("h1")
+
+  // Erhöht die Variable count um 1
+  count = count + 1
+
+  // setzt den Textinhalt von titleElement auf den Wert von count.
+  titleElement.textContent = count
+}
+```
+
+</PrismBlock>
+
+Wenn wir nur diesen Code eingeben, passiert noch nichts. Wir haben erst die Funktion und die Variable erstellt. Nun können wir diese Funktion aber noch aufrufen, dann wird sie auch ausgeführt. Also einfach in der Konsole den Befehl `increaseCount()` laufen lassen.
+
+</Section>
+
+## Funktionen automatisch ausführen lassen
+
+Es gibt verschiedene Möglichkeiten wie wir Funktionen automatisch laufen lassen können. Zum Beispiel können wir auf das anklicken von einem Element reagieren, oder auf das drücken einer Taste, oder auch nur alle 2 Sekunden. Wie man so etwas macht, schauen wir uns hier gerade an. Wir starten mit dem drücken der `Leertaste`.
+
+Das drücken einer Taste ist ein **Ereignis** in Javascript. Wir können dem Browser sagen, er soll auf ein bestimmtes Ereignis warten, und dann Code ausführen.
+
+<PrismBlock>
+
+```javascript
+document.addEventListener("keydown", increaseCount)
+```
+
+</PrismBlock>
+
+Wenn wir nun die Webseite anwählen, und irgend eine Taste drücken, dann wird direkt diese Funktion ausgeführt. Das können wir natürlich auch machen, wenn eine Element angeklickt wird. Zum Beispiel das `h1`-Titel-Element.
+
+<PrismBlock>
+
+```javascript
+document.querySelector("h1").addEventListener("click", increaseCount)
+```
+
+</PrismBlock>
+
+Jetzt wir immer wenn wir das Element anklicken, der Zähler um eins erhöht.
+
+Nun wollen wir das ganze noch an einen Timer hängen. Das ist ebenfalls sehr einfach. Wir funktioniert mit dem folgenden Code.
+
+
+<PrismBlock>
+
+```javascript
+setInterval(increaseCount, 2000)
+```
+
+</PrismBlock>
+
+Damit wird die Funktion alle 2 Sekunden aufgerufen, und der Zähler automatisch erhöht.
+
+## Anonyme Funktionen
+
+Für diese Beispiele hier war es praktisch eine Funktion mit einem Namen zu haben. Oftmals möchten wir aber nicht die gleiche Funktion ausführen, sondern einfach ein Stück Code, das wir direkt bei der Erstellung des **Ereignis** angeben können. Dafür gibt es anonyme Funktionen. Diese testen wir jetzt gleich. Wir möchten einfach die Hintergrundfarbe von einem Element anpassen, wenn es angeklickt wird. Nehmen wir dafür das `body`-Element.
+
+<PrismBlock>
+
+```javascript
+document.querySelector("body").addEventListener("click", () => {
+  let body = document.querySelector("body")
+  let bgColor = body.style.backgroundColor
+  body.style.backgroundColor = "red"
+
+  setTimeout(() => {
+    body.style.backgroundColor = bgColor
+  }, 1000)
+})
+```
+
+</PrismBlock>
+
+In diesem Code haben wir gleich 2 anonyme Funktionen. Eine anonyme Funktion erkennen Sie immer an dem folgenden Muster `() => {...}`. Diese anonymen Funktionen sind extrem wichtig in Javascript, und werden überall die ganze Zeit verwendet. Sie sollten diese Funktionen also unbedingt erkennen können. Verstehen und anwenden werden wir später noch dazu kommen. Dank diesen anonymen Funktionen, kann Javascript Code so modular geschrieben werden. Denn oftmals ist es so das sie einfach auf ein **Ereignis** warten, und wenn das **Ereignis** passiert ist, dann soll eine Funktion ausgeführt werden. Da diese Funktion immer anders sein kann, bekommen wir dadurch die Modularität von Javascript.
+
+## Code speichern
+
+Natürlich ist es unpraktisch wenn Sie den Code immer wieder in der Konsole eingeben müssen, viel praktischer ist es, wenn Sie den Code in einer Datei speichern können. Das geht ganz einfach. Sie müssen dafür nur die Datei, die den Code enthält, in Ihrem `HTML`-Dokument verknüpfen. Dafür fügen Sie im `HTML`-Dokument im `head` die folgende Zeile ein:
+
+<PrismBlock>
+
+```html
+<script src="./main.js" defer></script>
+```
+
+</PrismBlock>
