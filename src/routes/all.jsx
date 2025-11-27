@@ -38,6 +38,10 @@ import Excel from "@pages/fms/excel.mdx"
 import ExcelSpielplan from "@pages/fms/excel-spielplan.mdx"
 import FmsHTML from "@pages/fms/html.mdx"
 import FmsWebdesign from "@pages/fms/webdesign.mdx"
+import FmsJavascript from "@pages/fms/javascript.mdx"
+
+
+// Weitere eigenständige imports. Diese sind nicht verlinkt.
 import CodePen from "../components/CodePen"
 import CodePenSVG from "../components/CodePenSVG"
 import RegexEditor from "../components/RegexEditor"
@@ -94,6 +98,7 @@ export const createRouter = () => {
           { path: "fms/excel-spielplan", element: <ExcelSpielplan /> },
           { path: "fms/html", element: <FmsHTML /> },
           { path: "fms/webdesign", element: <FmsWebdesign /> },
+          { path: "fms/javascript", element: <FmsJavascript /> },
 
           // TODO: Comment these out if no longer tested
           { path: "codepen", element: <CodePen /> },
