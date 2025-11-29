@@ -1,53 +1,48 @@
-import { createBrowserRouter, Link } from "react-router-dom"
-
-import Layout from "@components/Layout"
-
-// Importiere Unterseiten fürs Gym
-import Index from "@pages/index.mdx"
-import Colors from "@pages/colors.mdx"
-import Information from "@pages/information.mdx"
-import Languages from "@pages/languages.mdx"
-import Grammar from "@pages/grammar.mdx"
-import Regex from "@pages/regex.mdx"
-import GymHTML from "@pages/html.mdx"
-import GymCSS from "@pages/css.mdx"
-import GymJS from "@pages/javascript.mdx"
-
-// Importiere Unterseiten fürs Gym Praktikum
-import PInstall from "@pages/praktikum/installation.mdx"
-
+import Layout from "@components/Layout";
+import Colors from "@pages/colors.mdx";
+import GymCSS from "@pages/css.mdx";
+import Binary from "@pages/fms/binary.mdx";
+import Hardware from "@pages/fms/hardware.mdx";
+import Hex from "@pages/fms/hex.mdx";
 // Importiere Unterseiten für die FMS
-import FMSIndex from "@pages/fms/index.mdx"
-import Obsidian from "@pages/obsidian.mdx"
-import ObsidianMarkdown from "@pages/obsidian-md.mdx"
-import Hardware from "@pages/fms/hardware.mdx"
-import Binary from "@pages/fms/binary.mdx"
-import Hex from "@pages/fms/hex.mdx"
-import Pictures from "@pages/fms/pictures.mdx"
-import FmsSVG from "@pages/fms/svg.mdx"
-import FmsSVGLine from "@pages/fms/svg-line.mdx"
-import FmsSVGPath from "@pages/fms/svg-path.mdx"
-import FmsSVGAufgaben from "@pages/fms/svg-aufgaben.mdx"
-import FmsSVGPath02 from "@pages/fms/svg-path-2.mdx"
-import FmsSVGTransformation from "@pages/fms/svg-transform.mdx"
-import FmsSVGAnimation from "@pages/fms/svg-animation.mdx"
+import FMSIndex from "@pages/fms/index.mdx";
+import Pictures from "@pages/fms/pictures.mdx";
+import FmsSVG from "@pages/fms/svg.mdx";
+import FmsSVGAnimation from "@pages/fms/svg-animation.mdx";
+import FmsSVGAufgaben from "@pages/fms/svg-aufgaben.mdx";
+import FmsSVGLine from "@pages/fms/svg-line.mdx";
+import FmsSVGPath from "@pages/fms/svg-path.mdx";
+import FmsSVGPath02 from "@pages/fms/svg-path-2.mdx";
+import FmsSVGTransformation from "@pages/fms/svg-transform.mdx";
+import Grammar from "@pages/grammar.mdx";
+import GymHTML from "@pages/html.mdx";
+// Importiere Unterseiten fürs Gym
+import Index from "@pages/index.mdx";
+import Information from "@pages/information.mdx";
+import GymJS from "@pages/javascript.mdx";
+import Languages from "@pages/languages.mdx";
+import Obsidian from "@pages/obsidian.mdx";
+import ObsidianMarkdown from "@pages/obsidian-md.mdx";
+// Importiere Unterseiten fürs Gym Praktikum
+import PInstall from "@pages/praktikum/installation.mdx";
+import Regex from "@pages/regex.mdx";
+import { createBrowserRouter, Link } from "react-router-dom";
+
 // import FmsSVGUse from "@pages/fms/svg-use.mdx"
 
+import Path from "@components/Path.jsx";
 // FMS Praktikum
-import Excel from "@pages/fms/excel.mdx"
-import ExcelSpielplan from "@pages/fms/excel-spielplan.mdx"
-import FmsHTML from "@pages/fms/html.mdx"
-import FmsWebdesign from "@pages/fms/webdesign.mdx"
-import FmsJavascript from "@pages/fms/javascript.mdx"
-
-
+import Excel from "@pages/fms/excel.mdx";
+import ExcelSpielplan from "@pages/fms/excel-spielplan.mdx";
+import FmsHTML from "@pages/fms/html.mdx";
+import FmsInternet from "@pages/fms/internet.mdx";
+import FmsJavascript from "@pages/fms/javascript.mdx";
+import FmsWebdesign from "@pages/fms/webdesign.mdx";
+import BoxModel from "../components/BoxModel";
 // Weitere eigenständige imports. Diese sind nicht verlinkt.
-import CodePen from "../components/CodePen"
-import CodePenSVG from "../components/CodePenSVG"
-import RegexEditor from "../components/RegexEditor"
-import BoxModel from "../components/BoxModel"
-
-import Path from "@components/Path.jsx"
+import CodePen from "../components/CodePen";
+import CodePenSVG from "../components/CodePenSVG";
+import RegexEditor from "../components/RegexEditor";
 
 export const createRouter = () => {
   return createBrowserRouter(
@@ -90,12 +85,20 @@ export const createRouter = () => {
             path: "/fms/svg-transformation",
             element: <FmsSVGTransformation />,
           },
-          { path: "/fms/svg-animation", element: <FmsSVGAnimation /> },
-          // { path: "/fms/svg-use", element: <FmsSVGUse /> },
+          {
+            path: "/fms/svg-animation",
+            element: <FmsSVGAnimation />,
+          },
+          // Internet und Sicherheit
+          { path: "/fms/internet", element: <FmsInternet /> },
 
           // FMS Routes 2. Klasse
           { path: "fms/excel", element: <Excel /> },
-          { path: "fms/excel-spielplan", element: <ExcelSpielplan /> },
+          {
+            path: "fms/excel-spielplan",
+            element: <ExcelSpielplan />,
+          },
+
           { path: "fms/html", element: <FmsHTML /> },
           { path: "fms/webdesign", element: <FmsWebdesign /> },
           { path: "fms/javascript", element: <FmsJavascript /> },
@@ -127,5 +130,5 @@ export const createRouter = () => {
     {
       basename: "/gym-inf/",
     },
-  )
-}
+  );
+};

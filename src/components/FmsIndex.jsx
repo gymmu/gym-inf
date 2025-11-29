@@ -1,4 +1,4 @@
-import NavLink from "./NavLink"
+import NavLink from "./NavLink";
 
 export default function FmsIndex() {
   return (
@@ -35,6 +35,12 @@ export default function FmsIndex() {
             <NavLink to="fms/svg-animation">Animationen</NavLink>
           </ol>
         </li>
+        <li>
+          Internet
+          <ol>
+            <NavLink to="fms/internet">Internet</NavLink>
+          </ol>
+        </li>
       </ol>
       <h2>2. Klasse</h2>
       <ol className="nav">
@@ -55,5 +61,5 @@ export default function FmsIndex() {
         </li>
       </ol>
     </div>
-  )
+  );
 }
