@@ -2,15 +2,16 @@
     display: grid;
     grid-template-areas: "stack";
     align-items: end;
-    overflow: hidden;
     max-width: 540px;
     margin-inline: auto;
+    height: max-content;
 }
 
 
 .figureContainer > img {
     width: 100%;
     grid-area: stack;
+    height: auto;
 }
 
 .figureContainer > figcaption {
@@ -22,14 +23,18 @@
 }
 
 .figureContainer > div {
+    opacity: 0;
     grid-area: stack;
     margin-bottom: auto;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 0.5rem;
     transform: translateY(-100%);
-    transition: transform 0.4s ease;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    z-index: -10;
 }
 
 .figureContainer:hover > div {
+    opacity: 1;
     transform: translateY(0);
+    z-index: 2;
 }
