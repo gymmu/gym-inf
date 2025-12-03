@@ -1,0 +1,242 @@
+{
+  "title": "VPN Quiz",
+  "description": "Quiz zu Virtual Private Networks - Funktionsweise, Anwendung und Sicherheit",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "question": "Wofür steht die Abkürzung VPN?",
+      "answers": [
+        {
+          "text": "Very Private Network",
+          "correct": false
+        },
+        {
+          "text": "Virtual Private Network",
+          "correct": true
+        },
+        {
+          "text": "Verified Protection Network",
+          "correct": false
+        },
+        {
+          "text": "Virtual Public Network",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "true-false",
+      "question": "Ein VPN verschlüsselt alle Daten zwischen Ihrem Gerät und dem VPN-Server.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": true
+        },
+        {
+          "text": "Falsch",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "question": "Was sieht Ihr ISP, wenn Sie ein VPN verwenden?",
+      "answers": [
+        {
+          "text": "Alle Webseiten, die Sie besuchen",
+          "correct": false
+        },
+        {
+          "text": "Nur dass Sie mit einem VPN-Server verbunden sind",
+          "correct": true
+        },
+        {
+          "text": "Gar nichts",
+          "correct": false
+        },
+        {
+          "text": "Nur verschlüsselte Daten, die er entschlüsseln kann",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "true-false",
+      "question": "Mit einem VPN bin ich zu 100% anonym im Internet.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": false
+        },
+        {
+          "text": "Falsch",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "question": "Wann ist der Einsatz eines VPN besonders sinnvoll?",
+      "answers": [
+        {
+          "text": "Beim Surfen zu Hause im eigenen WLAN",
+          "correct": false
+        },
+        {
+          "text": "In öffentlichen WLANs",
+          "correct": true
+        },
+        {
+          "text": "Beim Spielen von Online-Games",
+          "correct": false
+        },
+        {
+          "text": "Beim lokalen Datenaustausch im Heimnetzwerk",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "true-false",
+      "question": "Kostenlose VPNs sind genauso sicher wie bezahlte VPN-Dienste.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": false
+        },
+        {
+          "text": "Falsch",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "question": "Was ist der Hauptunterschied zwischen HTTPS und VPN?",
+      "answers": [
+        {
+          "text": "HTTPS verschlüsselt nur zwischen Browser und Webseite, VPN verschlüsselt den gesamten Traffic zum VPN-Server",
+          "correct": true
+        },
+        {
+          "text": "HTTPS ist sicherer als VPN",
+          "correct": false
+        },
+        {
+          "text": "VPN funktioniert nur mit HTTPS",
+          "correct": false
+        },
+        {
+          "text": "Es gibt keinen Unterschied",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "true-false",
+      "question": "Ein VPN schützt vor Viren und Malware.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": false
+        },
+        {
+          "text": "Falsch",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "question": "Welche IP-Adresse sieht eine Webseite, wenn Sie mit VPN verbunden sind?",
+      "answers": [
+        {
+          "text": "Ihre echte IP-Adresse",
+          "correct": false
+        },
+        {
+          "text": "Die IP-Adresse des VPN-Servers",
+          "correct": true
+        },
+        {
+          "text": "Die IP-Adresse Ihres ISP",
+          "correct": false
+        },
+        {
+          "text": "Gar keine IP-Adresse",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "question": "Worauf sollten Sie bei der Auswahl eines VPN-Anbieters achten?",
+      "answers": [
+        {
+          "text": "Dass er möglichst kostenlos ist",
+          "correct": false
+        },
+        {
+          "text": "Dass er eine No-Logs-Policy hat und starke Verschlüsselung verwendet",
+          "correct": true
+        },
+        {
+          "text": "Dass er in einem Land mit schwachen Datenschutzgesetzen sitzt",
+          "correct": false
+        },
+        {
+          "text": "Dass er viele Werbeanzeigen schaltet",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "true-false",
+      "question": "Der VPN-Anbieter kann alle Ihre Internetaktivitäten sehen.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": true
+        },
+        {
+          "text": "Falsch",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "question": "Was ist ein Nachteil von VPN?",
+      "answers": [
+        {
+          "text": "Es verschlüsselt die Daten",
+          "correct": false
+        },
+        {
+          "text": "Es kann die Internetgeschwindigkeit verlangsamen",
+          "correct": true
+        },
+        {
+          "text": "Es schützt vor dem ISP",
+          "correct": false
+        },
+        {
+          "text": "Es ermöglicht Zugriff auf geografisch gesperrte Inhalte",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

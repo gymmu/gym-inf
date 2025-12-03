@@ -36,6 +36,9 @@ import Excel from "@pages/fms/excel.mdx";
 import ExcelSpielplan from "@pages/fms/excel-spielplan.mdx";
 import FmsHTML from "@pages/fms/html.mdx";
 import FmsInternet from "@pages/fms/internet.mdx";
+import FmsInternetQuiz from "@pages/fms/internet-quiz.mdx";
+import FmsVPN from "@pages/fms/vpn.mdx";
+import FmsVPNQuiz from "@pages/fms/vpn-quiz.mdx";
 import FmsJavascript from "@pages/fms/javascript.mdx";
 import FmsWebdesign from "@pages/fms/webdesign.mdx";
 import BoxModel from "../components/BoxModel";
@@ -91,6 +94,9 @@ export const createRouter = () => {
           },
           // Internet und Sicherheit
           { path: "/fms/internet", element: <FmsInternet /> },
+          { path: "/fms/internet-quiz", element: <FmsInternetQuiz /> },
+          { path: "/fms/vpn", element: <FmsVPN /> },
+          { path: "/fms/vpn-quiz", element: <FmsVPNQuiz /> },
 
           // FMS Routes 2. Klasse
           { path: "fms/excel", element: <Excel /> },
