@@ -3,11 +3,13 @@
     grid-template-areas: "stack";
     align-items: end;
     overflow: hidden;
+    max-width: 540px;
+    margin-inline: auto;
 }
 
 
 .figureContainer > img {
-    max-width: 100%;
+    width: 100%;
     grid-area: stack;
 }
 

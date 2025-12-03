@@ -39,6 +39,8 @@ import FmsInternet from "@pages/fms/internet.mdx";
 import FmsInternetQuiz from "@pages/fms/internet-quiz.mdx";
 import FmsVPN from "@pages/fms/vpn.mdx";
 import FmsVPNQuiz from "@pages/fms/vpn-quiz.mdx";
+import FmsVerschluesselung from "@pages/fms/verschluesselung.mdx";
+import FmsVerschluesselungQuiz from "@pages/fms/verschluesselung-quiz.mdx";
 import FmsJavascript from "@pages/fms/javascript.mdx";
 import FmsWebdesign from "@pages/fms/webdesign.mdx";
 import BoxModel from "../components/BoxModel";
@@ -97,6 +99,11 @@ export const createRouter = () => {
           { path: "/fms/internet-quiz", element: <FmsInternetQuiz /> },
           { path: "/fms/vpn", element: <FmsVPN /> },
           { path: "/fms/vpn-quiz", element: <FmsVPNQuiz /> },
+          { path: "/fms/verschluesselung", element: <FmsVerschluesselung /> },
+          {
+            path: "/fms/verschluesselung-quiz",
+            element: <FmsVerschluesselungQuiz />,
+          },
 
           // FMS Routes 2. Klasse
           { path: "fms/excel", element: <Excel /> },

@@ -1,0 +1,311 @@
+{
+  "title": "Verschlüsselung und Schlüsselaustausch Quiz",
+  "description": "Quiz zu symmetrischer und asymmetrischer Verschlüsselung, HTTPS und dem Schlüsselaustausch-Problem",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "question": "Was ist das Hauptproblem beim Schlüsselaustausch?",
+      "answers": [
+        {
+          "text": "Schlüssel sind zu lang",
+          "correct": false
+        },
+        {
+          "text": "Wie tauscht man einen geheimen Schlüssel sicher über eine unsichere Verbindung aus?",
+          "correct": true
+        },
+        {
+          "text": "Verschlüsselung ist zu langsam",
+          "correct": false
+        },
+        {
+          "text": "Es gibt zu viele verschiedene Verschlüsselungsverfahren",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "true-false",
+      "question": "Bei der symmetrischen Verschlüsselung wird der gleiche Schlüssel zum Ver- und Entschlüsseln verwendet.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": true
+        },
+        {
+          "text": "Falsch",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "question": "Was ist der Hauptvorteil der asymmetrischen Verschlüsselung?",
+      "answers": [
+        {
+          "text": "Sie ist schneller als symmetrische Verschlüsselung",
+          "correct": false
+        },
+        {
+          "text": "Sie löst das Schlüsselaustausch-Problem",
+          "correct": true
+        },
+        {
+          "text": "Sie braucht keine Schlüssel",
+          "correct": false
+        },
+        {
+          "text": "Sie ist einfacher zu implementieren",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "question": "Im Vorhängeschloss-Prinzip entspricht der öffentliche Schlüssel...",
+      "answers": [
+        {
+          "text": "dem Schlüssel zum Öffnen des Schlosses",
+          "correct": false
+        },
+        {
+          "text": "dem offenen Vorhängeschloss",
+          "correct": true
+        },
+        {
+          "text": "der verschlossenen Kiste",
+          "correct": false
+        },
+        {
+          "text": "der geheimen Nachricht",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "true-false",
+      "question": "Der private Schlüssel wird beim Verbindungsaufbau über das Internet geschickt.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": false
+        },
+        {
+          "text": "Falsch",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "question": "Welche Verschlüsselungsart verwendet HTTPS für den eigentlichen Datenaustausch?",
+      "answers": [
+        {
+          "text": "Nur asymmetrische Verschlüsselung",
+          "correct": false
+        },
+        {
+          "text": "Nur symmetrische Verschlüsselung",
+          "correct": true
+        },
+        {
+          "text": "Keine Verschlüsselung",
+          "correct": false
+        },
+        {
+          "text": "Abwechselnd beide",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "question": "Warum kombiniert HTTPS asymmetrische und symmetrische Verschlüsselung?",
+      "answers": [
+        {
+          "text": "Weil es gesetzlich vorgeschrieben ist",
+          "correct": false
+        },
+        {
+          "text": "Asymmetrisch für sicheren Schlüsselaustausch, symmetrisch für schnelle Datenübertragung",
+          "correct": true
+        },
+        {
+          "text": "Um mehr Sicherheit durch Redundanz zu haben",
+          "correct": false
+        },
+        {
+          "text": "Weil Browser nur diese Kombination unterstützen",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "true-false",
+      "question": "Symmetrische Verschlüsselung ist schneller als asymmetrische Verschlüsselung.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": true
+        },
+        {
+          "text": "Falsch",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "question": "Was garantiert ein digitales Zertifikat?",
+      "answers": [
+        {
+          "text": "Dass die Webseite keine Viren hat",
+          "correct": false
+        },
+        {
+          "text": "Dass der öffentliche Schlüssel wirklich zur Webseite gehört",
+          "correct": true
+        },
+        {
+          "text": "Dass die Webseite kostenlos ist",
+          "correct": false
+        },
+        {
+          "text": "Dass die Verschlüsselung besonders stark ist",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "true-false",
+      "question": "Certificate Authorities (CAs) stellen digitale Zertifikate aus.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": true
+        },
+        {
+          "text": "Falsch",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "question": "Was passiert in Phase 1 des HTTPS-Handshakes?",
+      "answers": [
+        {
+          "text": "Die eigentlichen Daten werden übertragen",
+          "correct": false
+        },
+        {
+          "text": "Ein symmetrischer Schlüssel wird sicher ausgetauscht",
+          "correct": true
+        },
+        {
+          "text": "Das Zertifikat wird erstellt",
+          "correct": false
+        },
+        {
+          "text": "Die Webseite wird geladen",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "question": "Was ist das Man-in-the-Middle Problem?",
+      "answers": [
+        {
+          "text": "Der Server ist zu langsam",
+          "correct": false
+        },
+        {
+          "text": "Ein Hacker stellt sich zwischen Client und Server und fängt Daten ab",
+          "correct": true
+        },
+        {
+          "text": "Die Verschlüsselung funktioniert nicht richtig",
+          "correct": false
+        },
+        {
+          "text": "Das Zertifikat ist abgelaufen",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "true-false",
+      "question": "Bei asymmetrischer Verschlüsselung kann jeder, der den öffentlichen Schlüssel hat, damit verschlüsselte Nachrichten entschlüsseln.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": false
+        },
+        {
+          "text": "Falsch",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "question": "Wofür wird der öffentliche Schlüssel verwendet?",
+      "answers": [
+        {
+          "text": "Zum Entschlüsseln von Nachrichten",
+          "correct": false
+        },
+        {
+          "text": "Zum Verschlüsseln von Nachrichten",
+          "correct": true
+        },
+        {
+          "text": "Zum Signieren von Zertifikaten",
+          "correct": false
+        },
+        {
+          "text": "Zum Löschen von Nachrichten",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "question": "Was prüft Ihr Browser, wenn er ein Zertifikat erhält?",
+      "answers": [
+        {
+          "text": "Nur ob das Zertifikat existiert",
+          "correct": false
+        },
+        {
+          "text": "Ob es von einer vertrauenswürdigen CA ausgestellt wurde, noch gültig ist und zum Domainnamen passt",
+          "correct": true
+        },
+        {
+          "text": "Nur die Gültigkeitsdauer",
+          "correct": false
+        },
+        {
+          "text": "Ob die Webseite schön aussieht",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

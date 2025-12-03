@@ -31,6 +31,7 @@
 
   --header-height: 80px;
   --footer-height: 60px;
+  --body-height: calc(100dvh - var(--header-height) - var(--footer-height));
 }
 
 ::-webkit-scrollbar {
@@ -79,14 +80,13 @@ header {
   inset: 0;
   background-color: var(--color-bg);
   padding: 1rem 2rem;
-  font-size: 1.5rem;
   font-weight: 700;
   font-family: "Georgia", serif;
-  letter-spacing: 0.1em;
   text-transform: uppercase;
   border-bottom: 2px solid var(--color-fg);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   z-index: 10;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
 }
 
 .icon {
@@ -95,13 +95,16 @@ header {
 }
 
 h1 {
-  margin: 0 20px;
-  font-size: 2.5rem;
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  /* font-size: 2.5rem; */
   font-weight: 900;
   font-family: "Georgia", serif;
   letter-spacing: 0.15em;
   color: var(--color-yellow);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
 h2,
@@ -234,6 +237,9 @@ ol.nav {
 
 main {
   grid-area: main;
+    overflow:scroll;
+    height: var(--body-height);
+    margin: 0;
 }
 
 section ol {
@@ -332,8 +338,14 @@ section ol {
   min-height: calc(100vh - 80px);
 }
 
-@media (max-width: 819px) {
+@media (width < 820px) {
   .content-grid {
     grid-template-columns: [full-width-start] 20px [breakout-start] 1px [content-start] 1fr [content-end] 1px [breakout-end] 20px [full-width-end];
+  }
+}
+
+@media (width > 920px) {
+  .content-grid {
+    grid-template-columns: [full-width-start] 10% [breakout-start] 10% [content-start] 1fr [content-end] 10% [breakout-end] 10% [full-width-end];
   }
 }
