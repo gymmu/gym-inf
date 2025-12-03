@@ -1,0 +1,204 @@
+{
+  "title": "Internet Quiz",
+  "description": "Quiz zu den Grundlagen des Internets, Datenübertragung und Sicherheit",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "question": "Was ist die Hauptaufgabe eines Routers?",
+      "answers": [
+        {
+          "text": "Daten verschlüsseln",
+          "correct": false
+        },
+        {
+          "text": "Verschiedene Netzwerke miteinander verbinden",
+          "correct": true
+        },
+        {
+          "text": "Webseiten speichern",
+          "correct": false
+        },
+        {
+          "text": "Viren scannen",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "true-false",
+      "question": "Alle Daten im Internet werden standardmässig verschlüsselt übertragen.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": false
+        },
+        {
+          "text": "Falsch",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "question": "Was bedeutet das 'S' in HTTPS?",
+      "answers": [
+        {
+          "text": "Server",
+          "correct": false
+        },
+        {
+          "text": "Secure",
+          "correct": true
+        },
+        {
+          "text": "Speed",
+          "correct": false
+        },
+        {
+          "text": "System",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "question": "In welche Teile werden Daten bei der Übertragung im Internet aufgeteilt?",
+      "answers": [
+        {
+          "text": "Bytes",
+          "correct": false
+        },
+        {
+          "text": "Pakete",
+          "correct": true
+        },
+        {
+          "text": "Chunks",
+          "correct": false
+        },
+        {
+          "text": "Frames",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "true-false",
+      "question": "Ihr ISP (Internet Service Provider) kann sehen, welche Webseiten Sie besuchen.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": true
+        },
+        {
+          "text": "Falsch",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "question": "Wann sollten Sie besonders auf HTTPS achten?",
+      "answers": [
+        {
+          "text": "Nur beim Online-Banking",
+          "correct": false
+        },
+        {
+          "text": "Beim Einloggen und bei sensiblen Daten",
+          "correct": true
+        },
+        {
+          "text": "Nur auf unsicheren Webseiten",
+          "correct": false
+        },
+        {
+          "text": "Nie, HTTP ist auch sicher",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "true-false",
+      "question": "In öffentlichen WLANs können andere Personen Ihren Datenverkehr abfangen.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": true
+        },
+        {
+          "text": "Falsch",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "question": "Was ist NAT (Network Address Translation)?",
+      "answers": [
+        {
+          "text": "Ein Verschlüsselungsprotokoll",
+          "correct": false
+        },
+        {
+          "text": "Eine Methode um private IP-Adressen in öffentliche zu übersetzen",
+          "correct": true
+        },
+        {
+          "text": "Ein Browser-Plugin",
+          "correct": false
+        },
+        {
+          "text": "Ein Virenscanner",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "true-false",
+      "question": "Mit HTTPS kann der ISP sehen, was Sie auf einer Webseite genau tun.",
+      "answers": [
+        {
+          "text": "Wahr",
+          "correct": false
+        },
+        {
+          "text": "Falsch",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "question": "Wie erkennen Sie eine sichere HTTPS-Verbindung im Browser?",
+      "answers": [
+        {
+          "text": "An der grünen Adressleiste",
+          "correct": false
+        },
+        {
+          "text": "Am Vorhängeschloss-Symbol in der Adresszeile",
+          "correct": true
+        },
+        {
+          "text": "An der Geschwindigkeit der Webseite",
+          "correct": false
+        },
+        {
+          "text": "Am Logo der Webseite",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

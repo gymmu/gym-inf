@@ -1,0 +1,355 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Figure from "@components/Figure.jsx"
+
+## Verschlüsselung und das Schlüsselaustausch-Problem
+
+Wir wissen bereits, dass HTTPS unsere Daten verschlüsselt. Aber haben Sie sich
+schon einmal gefragt: Wie können zwei Computer, die sich noch nie getroffen
+haben, verschlüsselt kommunizieren? Das ist das **Schlüsselaustausch-Problem** -
+und die Lösung ist genial!
+
+<LearningGoals>
+
+    - Sie verstehen das grundlegende Problem beim Schlüsselaustausch.
+    - Sie kennen den Unterschied zwischen symmetrischer und asymmetrischer Verschlüsselung.
+    - Sie wissen wie öffentliche und private Schlüssel funktionieren.
+    - Sie verstehen das Konzept hinter HTTPS und SSL/TLS.
+
+</LearningGoals>
+
+## Das Problem: Wie tauscht man Schlüssel sicher aus?
+
+Stellen Sie sich vor, Sie möchten einen verschlossenen Brief an jemanden
+schicken. Der Brief ist in einer Kiste mit Vorhängeschloss. Das Problem: Wie
+bekommt die andere Person den Schlüssel, ohne dass jemand auf dem Weg den
+Schlüssel abfangen kann?
+
+### Ein Beispiel aus dem Alltag
+
+**Alice** möchte **Bob** eine geheime Nachricht schicken:
+
+1. Alice schreibt die Nachricht und legt sie in eine Kiste
+2. Alice schliesst die Kiste mit einem Vorhängeschloss ab
+3. Alice schickt die Kiste zu Bob
+
+**Das Problem:** Bob kann die Kiste nicht öffnen, weil er keinen Schlüssel hat!
+
+**Naive Lösung:** Alice schickt den Schlüssel in einem zweiten Brief nach.
+**Aber:** Jeder auf dem Weg kann den Brief öffnen und den Schlüssel kopieren!
+
+{/* TODO: BILD EINFÜGEN - Illustration des Problems */}
+{/* Zeigt Alice mit verschlossener Kiste und Bob ohne Schlüssel, mit einem Hacker dazwischen */}
+{/* <Figure src="URL_HIER" alt="Das Schlüsselaustausch-Problem" caption="Wie kann Bob die Kiste öffnen, ohne dass der Schlüssel abgefangen wird?" origin="URL_ORIGIN" /> */}
+
+Das ist **genau das Problem** im Internet: Wenn Sie sich das erste Mal mit einer
+Webseite verbinden, wie können Sie einen geheimen Schlüssel austauschen, ohne
+dass jemand auf dem Weg den Schlüssel mitliest?
+
+## Die geniale Lösung: Das Vorhängeschloss-Prinzip
+
+Es gibt eine clevere Lösung für dieses Problem! Schauen wir uns das
+Vorhängeschloss-Prinzip an:
+
+### Schritt 1: Bob schickt sein offenes Vorhängeschloss
+
+1. **Bob** hat ein Vorhängeschloss mit einem Schlüssel
+2. **Bob** öffnet das Schloss und schickt es (geöffnet!) zu Alice
+3. **Wichtig:** Bob behält den Schlüssel bei sich!
+
+### Schritt 2: Alice verwendet Bobs Vorhängeschloss
+
+4. Alice erhält das offene Vorhängeschloss
+5. Alice legt ihre geheime Nachricht in eine Kiste
+6. Alice schliesst die Kiste mit **Bobs Vorhängeschloss** ab
+7. Alice schickt die verschlossene Kiste zurück zu Bob
+
+### Schritt 3: Bob öffnet die Kiste
+
+8. Bob erhält die verschlossene Kiste
+9. Bob verwendet seinen Schlüssel (den er nie aus der Hand gegeben hat!) um die
+   Kiste zu öffnen
+10. Bob kann die geheime Nachricht lesen
+
+**Das Geniale:** Der Schlüssel musste nie über das Internet geschickt werden!
+Nur das offene Schloss wurde verschickt, und das ist nicht gefährlich.
+
+{/* TODO: BILD EINFÜGEN - Das Vorhängeschloss-Prinzip Schritt für Schritt */}
+{/* Zeigt die drei Schritte: 1) Bob schickt offenes Schloss, 2) Alice schliesst Kiste damit, 3) Bob öffnet mit seinem Schlüssel */}
+{/* <Figure src="URL_HIER" alt="Das Vorhängeschloss-Prinzip" caption="Die geniale Lösung: Nur das offene Schloss wird verschickt, nie der Schlüssel" origin="URL_ORIGIN" /> */}
+
+## Symmetrische vs. Asymmetrische Verschlüsselung
+
+In der Computerwelt gibt es zwei Arten von Verschlüsselung:
+
+### Symmetrische Verschlüsselung - Ein Schlüssel für alles
+
+Bei der **symmetrischen Verschlüsselung** gibt es nur einen Schlüssel. Dieser
+Schlüssel wird sowohl zum Verschlüsseln als auch zum Entschlüsseln verwendet.
+
+**Beispiel:** Eine Kiste mit einem normalen Schloss
+
+- **Verschlüsseln:** Kiste mit Schlüssel abschliessen
+- **Entschlüsseln:** Kiste mit dem gleichen Schlüssel öffnen
+
+**Vorteil:** Sehr schnell!  
+**Nachteil:** Beide Parteien brauchen den gleichen Schlüssel - wie tauscht man
+den sicher aus?
+
+**Beispiele:** AES, DES, 3DES
+
+### Asymmetrische Verschlüsselung - Zwei Schlüssel (öffentlich und privat)
+
+Bei der **asymmetrischen Verschlüsselung** gibt es zwei verschiedene Schlüssel:
+
+- **Öffentlicher Schlüssel** (Public Key): Kann jeder haben, wird zum
+  Verschlüsseln verwendet
+- **Privater Schlüssel** (Private Key): Nur Sie haben ihn, wird zum
+  Entschlüsseln verwendet
+
+**Das Vorhängeschloss-Prinzip:**
+
+- **Öffentlicher Schlüssel** = Das offene Vorhängeschloss (kann jeder haben und
+  verwenden)
+- **Privater Schlüssel** = Der Schlüssel zum Öffnen (nur Bob hat ihn)
+
+**Vorteil:** Kein Schlüsselaustausch-Problem!  
+**Nachteil:** Langsamer als symmetrische Verschlüsselung
+
+**Beispiele:** RSA, ECC (Elliptic Curve Cryptography)
+
+{/* TODO: BILD EINFÜGEN - Vergleich symmetrisch vs. asymmetrisch */}
+{/* Zwei Diagramme: Links ein Schlüssel für beide Richtungen, rechts zwei verschiedene Schlüssel */}
+{/* <Figure src="URL_HIER" alt="Symmetrische vs. Asymmetrische Verschlüsselung" caption="Links: Ein Schlüssel für alles. Rechts: Öffentlicher und privater Schlüssel" origin="URL_ORIGIN" /> */}
+
+## Wie funktioniert HTTPS? Die beste Kombination!
+
+HTTPS verwendet **beide** Verschlüsselungsarten clever kombiniert:
+
+### Phase 1: Handshake - Asymmetrische Verschlüsselung
+
+Beim ersten Verbindungsaufbau (SSL/TLS Handshake):
+
+1. **Sie:** "Hallo Website, ich möchte eine sichere Verbindung!"
+2. **Website:** "Hier ist mein öffentlicher Schlüssel" (das offene
+   Vorhängeschloss)
+3. **Sie:** Generieren einen zufälligen symmetrischen Schlüssel
+4. **Sie:** Verschlüsseln den symmetrischen Schlüssel mit dem öffentlichen
+   Schlüssel der Website
+5. **Sie:** Schicken den verschlüsselten symmetrischen Schlüssel zur Website
+6. **Website:** Entschlüsselt mit ihrem privaten Schlüssel und erhält den
+   symmetrischen Schlüssel
+
+**Ergebnis:** Beide haben jetzt den gleichen symmetrischen Schlüssel, ohne dass
+jemand ihn abfangen konnte!
+
+### Phase 2: Datenaustausch - Symmetrische Verschlüsselung
+
+Für alle weiteren Daten:
+
+7. Alle Daten werden mit dem symmetrischen Schlüssel verschlüsselt und
+   entschlüsselt
+8. Das ist viel schneller als asymmetrische Verschlüsselung!
+
+**Das Beste aus beiden Welten:**
+
+- **Asymmetrisch** für den sicheren Schlüsselaustausch (langsam, aber sicher)
+- **Symmetrisch** für die eigentlichen Daten (schnell!)
+
+{/* TODO: BILD EINFÜGEN - HTTPS Handshake Prozess */}
+{/* Zeigt den Ablauf: 1) Öffentlicher Schlüssel-Austausch, 2) Symmetrischer Schlüssel verschlüsselt gesendet, 3) Normale Kommunikation */}
+{/* <Figure src="URL_HIER" alt="HTTPS Handshake" caption="Phase 1: Schlüsselaustausch mit asymmetrischer Verschlüsselung. Phase 2: Daten mit symmetrischer Verschlüsselung" origin="URL_ORIGIN" /> */}
+
+## Zertifikate: Woher weiss ich, dass der öffentliche Schlüssel echt ist?
+
+Es gibt noch ein Problem: Woher weiss ich, dass der öffentliche Schlüssel
+wirklich von der Webseite kommt, die ich besuchen möchte?
+
+### Das Man-in-the-Middle Problem
+
+Ein Hacker könnte sich in die Mitte stellen:
+
+1. **Sie:** "Hallo bank.ch, ich möchte deinen öffentlichen Schlüssel"
+2. **Hacker:** Fängt die Anfrage ab und antwortet: "Hier ist MEIN öffentlicher
+   Schlüssel" (gibt sich als Bank aus)
+3. **Sie:** Verschlüsseln Ihre Daten mit dem Schlüssel des Hackers!
+4. **Hacker:** Kann alles lesen!
+
+### Die Lösung: Digitale Zertifikate
+
+**Zertifikate** sind wie ein Personalausweis für Webseiten. Sie werden von
+vertrauenswürdigen Organisationen (Certificate Authorities, CA) ausgestellt.
+
+**Ein Zertifikat enthält:**
+
+- Den öffentlichen Schlüssel der Webseite
+- Den Namen der Webseite (z.B. www.bank.ch)
+- Wer das Zertifikat ausgestellt hat (z.B. Let's Encrypt, DigiCert)
+- Gültigkeitsdauer
+- Eine digitale Signatur der CA
+
+**Ihr Browser:**
+
+1. Erhält das Zertifikat von der Webseite
+2. Prüft, ob das Zertifikat von einer vertrauenswürdigen CA ausgestellt wurde
+3. Prüft, ob das Zertifikat noch gültig ist
+4. Prüft, ob das Zertifikat zum Domainnamen passt
+
+**Wenn alles stimmt:** Grünes Vorhängeschloss im Browser!  
+**Wenn etwas nicht stimmt:** Warnung: "Diese Verbindung ist nicht sicher"
+
+{/* TODO: BILD EINFÜGEN - Zertifikat-Kette */}
+{/* Zeigt Browser → Webseite-Zertifikat → CA-Zertifikat → Root-CA */}
+{/* <Figure src="URL_HIER" alt="Zertifikat-Kette" caption="Ihr Browser vertraut der Root-CA, die wiederum das Webseiten-Zertifikat signiert hat" origin="URL_ORIGIN" /> */}
+
+## Schritt für Schritt: Was passiert bei HTTPS?
+
+Lassen Sie uns alles zusammenfassen. Wenn Sie `https://www.beispiel.ch`
+besuchen:
+
+### 1. Verbindungsaufbau (Client Hello)
+
+- Ihr Browser: "Hallo, ich möchte eine sichere Verbindung. Ich unterstütze diese
+  Verschlüsselungsverfahren..."
+
+### 2. Server antwortet (Server Hello)
+
+- Server: "OK, wir verwenden dieses Verschlüsselungsverfahren. Hier ist mein
+  Zertifikat mit dem öffentlichen Schlüssel"
+
+### 3. Zertifikat prüfen
+
+- Ihr Browser prüft: Ist das Zertifikat gültig? Von einer vertrauenswürdigen CA?
+  Passt zum Domainnamen?
+
+### 4. Symmetrischen Schlüssel austauschen
+
+- Ihr Browser generiert einen zufälligen symmetrischen Schlüssel
+- Browser verschlüsselt diesen mit dem öffentlichen Schlüssel des Servers
+- Browser schickt den verschlüsselten Schlüssel zum Server
+- Server entschlüsselt mit seinem privaten Schlüssel
+
+### 5. Sichere Verbindung steht
+
+- Ab jetzt wird alles mit dem symmetrischen Schlüssel verschlüsselt
+- Vorhängeschloss erscheint im Browser!
+
+### 6. Datenaustausch
+
+- Alle Daten werden verschlüsselt gesendet und empfangen
+- Niemand auf dem Weg kann die Daten lesen
+
+## Wichtige Konzepte zusammengefasst
+
+### Das Schlüsselaustausch-Problem
+
+Wie tauscht man einen geheimen Schlüssel über eine unsichere Verbindung aus?
+
+### Die Lösung: Asymmetrische Verschlüsselung
+
+- **Öffentlicher Schlüssel:** Kann jeder haben, zum Verschlüsseln
+- **Privater Schlüssel:** Nur der Empfänger hat ihn, zum Entschlüsseln
+
+### Die Praxis: Kombination beider Verfahren
+
+- **Asymmetrisch:** Für den Schlüsselaustausch (sicher, aber langsam)
+- **Symmetrisch:** Für die Daten (schnell!)
+
+### Vertrauen: Digitale Zertifikate
+
+- Garantieren, dass der öffentliche Schlüssel wirklich zur Webseite gehört
+- Werden von vertrauenswürdigen CAs ausgestellt
+- Browser prüfen automatisch die Gültigkeit
+
+## Warum ist das wichtig?
+
+Ohne diese clevere Lösung wäre sicheres Online-Banking, Online-Shopping oder
+private Kommunikation im Internet nicht möglich! Das Schlüsselaustausch-Problem
+und seine Lösung sind die Grundlage für fast alle Sicherheit im Internet.
+
+**Denken Sie daran:**
+
+- Das **Vorhängeschloss-Prinzip** (asymmetrische Verschlüsselung) löst das
+  Schlüsselaustausch-Problem
+- HTTPS kombiniert **asymmetrische** (für Schlüsselaustausch) und
+  **symmetrische** (für Daten) Verschlüsselung
+- **Zertifikate** garantieren, dass Sie wirklich mit der richtigen Webseite
+  kommunizieren
+
+---
+
+## Technische Details (für Interessierte)
+
+### Verwendete Algorithmen
+
+**Asymmetrische Verschlüsselung:**
+
+- **RSA (Rivest-Shamir-Adleman):** Klassiker, basiert auf der Schwierigkeit,
+  grosse Zahlen zu faktorisieren
+- **ECC (Elliptic Curve Cryptography):** Moderner, kleinere Schlüssel bei
+  gleicher Sicherheit
+- **Schlüssellängen:** RSA 2048-4096 Bit, ECC 256-384 Bit
+
+**Symmetrische Verschlüsselung:**
+
+- **AES (Advanced Encryption Standard):** Standard, sehr schnell
+- **ChaCha20:** Alternative, gut für mobile Geräte
+- **Schlüssellängen:** 128, 192 oder 256 Bit
+
+**Hash-Funktionen (für Signaturen):**
+
+- **SHA-256, SHA-384, SHA-512:** Sichere Hash-Funktionen
+- **MD5, SHA-1:** Veraltet, nicht mehr sicher!
+
+### SSL/TLS Versionen
+
+- **SSL 2.0, 3.0:** Veraltet, unsicher, nicht mehr verwenden!
+- **TLS 1.0, 1.1:** Veraltet, sollte nicht mehr verwendet werden
+- **TLS 1.2:** Weit verbreitet, sicher
+- **TLS 1.3:** Neueste Version, schneller und sicherer
+
+### Der TLS Handshake im Detail
+
+1. **Client Hello:** Client schickt unterstützte Cipher Suites, TLS-Version,
+   Zufallszahl
+2. **Server Hello:** Server wählt Cipher Suite, schickt Zertifikat und
+   Zufallszahl
+3. **Zertifikatsprüfung:** Client validiert Zertifikatskette
+4. **Key Exchange:** Austausch des Pre-Master-Secret (verschlüsselt mit Public
+   Key)
+5. **Finished:** Beide berechnen den Master-Secret und Session-Keys
+6. **Verschlüsselte Kommunikation:** Ab jetzt symmetrische Verschlüsselung
+
+### Diffie-Hellman Key Exchange
+
+Eine alternative Methode zum Schlüsselaustausch:
+
+- Beide Parteien einigen sich auf öffentliche Parameter
+- Beide generieren private Zufallszahlen
+- Durch mathematische Operationen entsteht ein gemeinsamer geheimer Schlüssel
+- **Perfect Forward Secrecy:** Auch wenn der private Schlüssel später
+  kompromittiert wird, sind alte Verbindungen sicher
+
+### Certificate Authorities (CAs)
+
+Bekannte CAs:
+
+- **Let's Encrypt:** Kostenlos, automatisiert
+- **DigiCert, GlobalSign, Sectigo:** Kommerzielle Anbieter
+- **Root CAs:** Im Browser bereits vorinstalliert und vertrauenswürdig
+
+### OCSP und CRL
+
+Methoden zur Prüfung, ob ein Zertifikat widerrufen wurde:
+
+- **CRL (Certificate Revocation List):** Liste widerrufener Zertifikate
+- **OCSP (Online Certificate Status Protocol):** Echtzeit-Prüfung
+- **OCSP Stapling:** Server liefert OCSP-Antwort mit, effizienter
+
+## Zusammenfassung
+
+Das **Schlüsselaustausch-Problem** ist ein fundamentales Problem der
+Kryptographie. Die Lösung durch **asymmetrische Verschlüsselung** (öffentlicher
+und privater Schlüssel) ermöglicht es, sicher über unsichere Kanäle zu
+kommunizieren. HTTPS kombiniert diese clevere Methode mit der Effizienz
+symmetrischer Verschlüsselung und nutzt Zertifikate für Vertrauen. So wird
+sichere Kommunikation im Internet erst möglich!

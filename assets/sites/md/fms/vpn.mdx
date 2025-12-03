@@ -1,0 +1,261 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Figure from "@components/Figure.jsx"
+
+## VPN - Virtual Private Network
+
+Haben Sie sich schon einmal gefragt, wie Sie im Internet wirklich anonym sein
+können? Oder wie Sie sicher im öffentlichen WLAN surfen können? Die Antwort auf
+beide Fragen lautet: **VPN**. In diesem Kapitel schauen wir uns an, was ein VPN
+ist, wie es funktioniert und wann Sie es verwenden sollten.
+
+<LearningGoals>
+
+    - Sie wissen was ein VPN ist und wie es funktioniert.
+    - Sie verstehen den Unterschied zwischen verschlüsselten Daten und anonymen Daten.
+    - Sie wissen wann der Einsatz eines VPN sinnvoll ist.
+    - Sie kennen die Vor- und Nachteile von VPN-Verbindungen.
+
+</LearningGoals>
+
+## Was ist ein VPN?
+
+**VPN** steht für **Virtual Private Network** - zu Deutsch: virtuelles privates
+Netzwerk. Ein VPN erstellt einen verschlüsselten "Tunnel" zwischen Ihrem Gerät
+und einem VPN-Server. Alle Daten, die Sie senden oder empfangen, laufen durch
+diesen Tunnel und sind somit vor fremden Blicken geschützt.
+
+Stellen Sie sich vor, Sie schicken einen Brief durch eine undurchsichtige Röhre
+direkt zu Ihrem Empfänger, statt ihn offen auf der Strasse zu transportieren.
+Niemand auf dem Weg kann sehen, was in dem Brief steht oder wohin er genau geht.
+
+<Figure src="https://www.auvik.com/wp-content/uploads/2021/01/pasted-image-1.png" alt="VPN Tunnel Visualisierung" caption="Ein VPN erstellt einen verschlüsselten Tunnel für Ihre Daten" origin="https://www.auvik.com/franklyit/blog/vpn-split-tunneling/" />
+
+## Wie funktioniert ein VPN?
+
+Die Funktionsweise eines VPN ist relativ einfach:
+
+1. **Sie verbinden sich mit einem VPN-Server**: Statt direkt eine Webseite
+   aufzurufen, verbinden Sie sich zuerst mit einem VPN-Server.
+
+2. **Ihre Daten werden verschlüsselt**: Alle Daten, die Sie senden, werden
+   verschlüsselt, bevor sie Ihren Computer verlassen.
+
+3. **Der VPN-Server leitet Ihre Anfrage weiter**: Der VPN-Server entschlüsselt
+   Ihre Anfrage und sendet sie an die gewünschte Webseite weiter.
+
+4. **Die Antwort kommt zurück**: Die Webseite schickt die Antwort an den
+   VPN-Server, der sie verschlüsselt und an Sie zurückschickt.
+
+5. **Sie entschlüsseln die Daten**: Ihr Computer entschlüsselt die Daten und
+   zeigt Ihnen die Webseite an.
+
+### Was sieht wer?
+
+Das Wichtige bei einem VPN ist zu verstehen, wer was sehen kann:
+
+**Ohne VPN:**
+
+- Ihr **ISP** sieht: Welche Webseiten Sie besuchen (auch bei HTTPS)
+- **Router** auf dem Weg sehen: Wohin Ihre Anfragen gehen
+- Die **Webseite** sieht: Ihre echte IP-Adresse und Ihren Standort
+
+**Mit VPN:**
+
+- Ihr **ISP** sieht: Nur dass Sie mit einem VPN-Server verbunden sind (nicht
+  welche Webseiten Sie besuchen)
+- **Router** auf dem Weg sehen: Nur verschlüsselte Daten zum VPN-Server
+- Die **Webseite** sieht: Die IP-Adresse des VPN-Servers (nicht Ihre echte IP)
+- Der **VPN-Anbieter** sieht: Alle Ihre Aktivitäten (Vertrauen ist wichtig!)
+
+<Figure src="https://blog.resch.cloud/wp-content/uploads/2023/08/Mit-VPN-vs.-ohne-VPN-1.jpg.pagespeed.ce.I7v6UEc1u6.jpg" alt="Datenfluss mit und ohne VPN" caption="Vergleich: Was kann der ISP sehen mit und ohne VPN?" origin="https://blog.resch.cloud/2023/08/30/warum-vpn-meist-nutzlos-sind-und-wie-man-einen-eigenen-vpn-server-aufsetzt/" />
+
+## Wofür brauche ich ein VPN?
+
+Es gibt verschiedene Situationen, in denen ein VPN sinnvoll ist:
+
+### 1. Öffentliche WLANs
+
+In öffentlichen WLANs (Café, Flughafen, Hotel) können andere Personen im
+gleichen Netzwerk Ihren Datenverkehr abfangen. Mit einem VPN sind Ihre Daten
+verschlüsselt und somit geschützt.
+
+**Beispiel:** Sie sitzen im Café und möchten Ihre E-Mails abrufen. Ohne VPN
+könnte jemand im gleichen WLAN Ihre Passwörter stehlen. Mit VPN sind alle Daten
+verschlüsselt.
+
+### 2. Schutz vor dem ISP
+
+Ihr Internet-Anbieter kann sehen, welche Webseiten Sie besuchen. In manchen
+Ländern werden diese Daten gespeichert oder an Regierungen weitergegeben. Mit
+einem VPN sieht der ISP nur, dass Sie mit einem VPN-Server verbunden sind.
+
+### 3. Umgehung von geografischen Sperren
+
+Manche Webseiten oder Streaming-Dienste sind nur in bestimmten Ländern
+verfügbar. Mit einem VPN können Sie einen Server in einem anderen Land wählen
+und so auf diese Inhalte zugreifen.
+
+**Beispiel:** Eine Serie ist nur in den USA verfügbar. Mit einem VPN-Server in
+den USA können Sie die Serie trotzdem schauen.
+
+### 4. Anonymität im Internet
+
+Webseiten sehen nicht Ihre echte IP-Adresse, sondern die des VPN-Servers. So
+können Sie anonymer im Internet surfen.
+
+## VPN vs. HTTPS - Was ist der Unterschied?
+
+Viele verwechseln VPN und HTTPS. Beide verschlüsseln Daten, aber sie schützen
+vor unterschiedlichen Dingen:
+
+### HTTPS
+
+- **Verschlüsselt:** Den Inhalt Ihrer Kommunikation mit einer Webseite
+- **Schützt vor:** Mitlesern auf dem Weg (z.B. in öffentlichen WLANs)
+- **Ihr ISP sieht:** Welche Webseite Sie besuchen (aber nicht was Sie dort tun)
+- **Die Webseite sieht:** Ihre echte IP-Adresse
+
+### VPN
+
+- **Verschlüsselt:** Alle Daten zwischen Ihnen und dem VPN-Server
+- **Schützt vor:** ISP, Router auf dem Weg, lokales Netzwerk
+- **Ihr ISP sieht:** Nur dass Sie mit einem VPN-Server verbunden sind
+- **Die Webseite sieht:** Die IP-Adresse des VPN-Servers
+
+### Kombination: HTTPS + VPN
+
+Am sichersten sind Sie mit beiden zusammen:
+
+- **VPN** schützt vor Ihrem ISP und lokalen Netzwerken
+- **HTTPS** schützt vor dem VPN-Anbieter (der kann den Inhalt nicht lesen)
+
+**Wichtig:** Verwenden Sie immer noch HTTPS, auch mit VPN! So sind Ihre Daten
+selbst vor dem VPN-Anbieter geschützt.
+
+## Vor- und Nachteile von VPN
+
+### Vorteile
+
+1. **Verschlüsselung:** Alle Daten sind verschlüsselt und vor Mitlesern
+   geschützt
+2. **Privatsphäre:** Ihr ISP kann nicht sehen, welche Webseiten Sie besuchen
+3. **Anonymität:** Webseiten sehen nicht Ihre echte IP-Adresse
+4. **Schutz in öffentlichen WLANs:** Auch in unsicheren Netzwerken sind Sie
+   geschützt
+5. **Umgehung von Sperren:** Zugriff auf geografisch gesperrte Inhalte
+
+### Nachteile
+
+1. **Geschwindigkeit:** VPN kann die Internetgeschwindigkeit verlangsamen
+   (zusätzliche Verschlüsselung und längerer Weg)
+2. **Kosten:** Gute VPN-Dienste kosten Geld (kostenlose VPNs sind oft unsicher)
+3. **Vertrauen:** Sie müssen dem VPN-Anbieter vertrauen (er sieht alle Ihre
+   Aktivitäten)
+4. **Komplexität:** Muss eingerichtet und aktiviert werden
+5. **Keine 100% Anonymität:** Der VPN-Anbieter kennt Ihre echte IP-Adresse
+
+## Worauf sollte ich bei einem VPN-Anbieter achten?
+
+Nicht alle VPN-Dienste sind gleich gut. Achten Sie auf folgende Punkte:
+
+### 1. No-Logs-Policy
+
+Der VPN-Anbieter sollte keine Logs (Aufzeichnungen) Ihrer Aktivitäten speichern.
+Prüfen Sie die Datenschutzrichtlinien!
+
+**Gut:** "Wir speichern keine Logs Ihrer Internetaktivitäten"  
+**Schlecht:** "Wir speichern temporäre Logs für 30 Tage"
+
+### 2. Verschlüsselung
+
+Moderne VPNs sollten starke Verschlüsselung verwenden (z.B. AES-256, OpenVPN,
+WireGuard).
+
+### 3. Standort des Unternehmens
+
+VPN-Anbieter unterliegen den Gesetzen des Landes, in dem sie registriert sind.
+Länder mit strengen Datenschutzgesetzen sind besser (z.B. Schweiz, Island).
+
+### 4. Geschwindigkeit
+
+Ein guter VPN-Dienst sollte Ihre Internetgeschwindigkeit nicht zu stark
+beeinträchtigen.
+
+### 5. Kosten
+
+**Kostenlose VPNs sind oft gefährlich!** Sie verdienen Geld durch:
+
+- Verkauf Ihrer Daten
+- Einblendung von Werbung
+- Begrenzte Geschwindigkeit und Datenvolumen
+
+## VPN einrichten
+
+Die meisten VPN-Anbieter haben einfache Apps für alle Geräte:
+
+1. **VPN-Anbieter wählen** und Abo abschliessen
+2. **App herunterladen** für Ihr Gerät (Windows, Mac, iOS, Android)
+3. **Anmelden** mit Ihren Zugangsdaten
+4. **Server wählen** (meistens automatisch der schnellste)
+5. **Verbinden** - fertig!
+
+Viele Anbieter bieten auch Browser-Erweiterungen an, die nur den Browser-Traffic
+über VPN leiten.
+
+## Wann sollte ich KEIN VPN verwenden?
+
+Es gibt auch Situationen, in denen ein VPN nicht nötig oder sogar hinderlich
+ist:
+
+1. **Online-Banking in vertrauenswürdigen Netzwerken:** Manche Banken blockieren
+   VPN-Verbindungen aus Sicherheitsgründen
+2. **Lokale Dienste:** Manche Webseiten funktionieren nur mit lokaler IP-Adresse
+3. **Gaming:** VPN kann die Latenz (Ping) erhöhen
+4. **Streaming mit lokalem Content:** Manche Streaming-Dienste blockieren
+   VPN-Verbindungen
+
+## Mythen über VPN
+
+### Mythos 1: "Mit VPN bin ich 100% anonym"
+
+**Falsch!** Der VPN-Anbieter kennt Ihre echte IP-Adresse. Ausserdem können Sie
+über Browser-Fingerprinting, Cookies und Login-Daten trotzdem identifiziert
+werden.
+
+### Mythos 2: "VPN schützt vor Viren"
+
+**Falsch!** VPN verschlüsselt nur die Datenübertragung. Gegen Viren und Malware
+hilft nur ein Antivirusprogramm.
+
+### Mythos 3: "VPN ist illegal"
+
+**Falsch!** In den meisten Ländern ist VPN völlig legal. Nur in manchen
+autoritären Staaten ist VPN verboten oder eingeschränkt.
+
+### Mythos 4: "Kostenlose VPNs sind genauso gut"
+
+**Falsch!** Kostenlose VPNs verdienen oft Geld durch den Verkauf Ihrer Daten -
+genau das Gegenteil von dem, was ein VPN erreichen soll!
+
+## Zusammenfassung
+
+Ein **VPN** erstellt einen verschlüsselten Tunnel zwischen Ihrem Gerät und einem
+VPN-Server. Dadurch sind Ihre Daten vor Ihrem ISP, Ihrem lokalen Netzwerk und
+anderen Mitlesern geschützt. Die Webseite sieht nicht Ihre echte IP-Adresse,
+sondern die des VPN-Servers.
+
+**Wann VPN verwenden:**
+
+- In öffentlichen WLANs
+- Wenn Sie nicht möchten, dass Ihr ISP Ihre Aktivitäten sieht
+- Für mehr Anonymität im Internet
+- Zum Umgehen geografischer Sperren
+
+**Wichtig:**
+
+- Vertrauen Sie nur seriösen VPN-Anbietern
+- Vermeiden Sie kostenlose VPNs
+- Verwenden Sie immer noch HTTPS, auch mit VPN
+- VPN garantiert keine 100% Anonymität
+
+**Die beste Kombination:** HTTPS + VPN + gesunder Menschenverstand beim Surfen!

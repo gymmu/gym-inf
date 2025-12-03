@@ -1,0 +1,214 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Figure from "@components/Figure.jsx"
+
+## Das Internet
+
+Das Internet ist ein gefährlicher Ort, Sie können sich einen Virus holen, Ihre
+persönlichen Daten können gestohlen werden und an jeder Ecke wird versucht Ihr
+Passwort zu knacken. Wieso genau das Internet so gefährlich ist, und wie wir uns
+davor schützen können, schauen wir in den folgenden Kapiteln an. Denn das
+Internet ist nicht nur gefährlich, sondern auch ein sehr toller Ort, wo wir
+allerlei Informationen austauschen können.
+
+<LearningGoals>
+
+    - Sie Wissen wie Daten prinzipiell übertragen werden.
+    - Sie wissen dass alle Übertragungen öffentlich einsehbar sind.
+    - Sie wissen dass was das HTTP und HTTPS Protokoll sind.
+    - Sie wissen wann Daten verschlüsselt / sicher versendet werden.
+
+</LearningGoals>
+
+## Was ist das Internet?
+
+Das Internet ist das Netzwerk das alle Geräte miteinander verknüpft. Das
+Grundprinzip ist ganz einfach, ein Computer sendet ein elektrisches Signal über
+Kabel- oder Kabelloseverbindungen, und alle Geräte die am gleichen Kabel hängen,
+können das Signal mithören. Aber nicht alle Geräte sind direkt miteinander
+verbunden, sonst wäre das Datenchaos ja viel zu gross, sondern im Internet gibt
+es Verteilerknoten - diese nennt man Router - die verschiedene Netzwerke
+miteinander verbinden.
+
+<Figure
+  src="https://media.geeksforgeeks.org/wp-content/uploads/20230420093202/Internet-image-(2).webp"
+  alt="Darstellung des Internets"
+  caption="Darstellung des Internets"
+  origin="https://www.geeksforgeeks.org/computer-science-fundamentals/what-is-internet-definition-uses-working-advantages-and-disadvantages/"
+/>
+
+## Router
+
+Router verbinden unterschiedliche Teile des Internets miteinander. Sie sind
+essentiell für die Funktionsweise des modernen Internets, denn dank den Routern,
+können Sie jeden anderen Computer im Internet erreichen.
+
+Theoretisch ist wirklich jeder andere Computer im Internet erreichbar, aber
+natürlich möchten Sie das nicht. Sie möchten zum Beispiel nicht das alle Ihre
+Computer von aussen erreichbar sind, so funktionieren viele von diesen Routern
+aus als Gateway zum Internet, und unterbinden den direkten Kontakt von aussen.
+Genau das ist zum Beispiel die Rolle von einem **Modem**, welches Sie von Ihrem
+ISP zu Hause haben.
+
+## Internet Service Provider (ISP)
+
+Ein Internet Service Provider, ist wie der Name bereits sagt, der Dienstanbieter
+für das Internet. Jeder Haushalt der an das Internet angeschlossen ist, hat zu
+Hause ein Gerät - das **Modem** - welches Ihr zu Hause mit dem Internet
+verbindet. Diese **Modems** sind gleichzeitig auch immer **Router**, sie
+verbinden unterschiedliche Teile das Internets miteinander.
+
+<Figure
+  src="https://kinsta.com/wp-content/uploads/2022/02/ISP-Work-768x256.png"
+  alt="Visualisierung einer Internet Service Providers"
+  caption="Visualisierung einer Internet Service Providers"
+  origin="https://kinsta.com/blog/what-is-isp/"
+/>
+
+Das Modem zu Hause funktioniert als Gateway - eine Art Torwächter zwischen Ihrem
+privaten Netzwerk zu Hause und dem grossen Internet. Alle Geräte in Ihrem
+Haushalt (Computer, Smartphone, Tablet) haben private IP-Adressen, die nur
+innerhalb Ihres Netzwerks funktionieren. Das Modem übersetzt diese privaten
+Adressen in eine öffentliche IP-Adresse - dieser Prozess heisst **NAT** (Network
+Address Translation). So können viele Geräte mit nur einer öffentlichen
+IP-Adresse ins Internet.
+
+Der ISP sieht alle Daten, die über sein Netzwerk laufen. Das ist wichtig zu
+verstehen, denn es bedeutet: Ihr Internet-Anbieter kann theoretisch sehen,
+welche Webseiten Sie besuchen und welche Daten Sie versenden - ausser die Daten
+sind verschlüsselt. Dazu kommen wir später.
+
+## Wie werden Daten übertragen?
+
+Wenn Sie eine Webseite aufrufen oder eine Nachricht versenden, werden Ihre Daten
+nicht als ganzes Stück verschickt, sondern in viele kleine **Pakete**
+aufgeteilt. Stellen Sie sich vor, Sie möchten ein Buch per Post versenden, aber
+Sie dürfen nur einzelne Seiten verschicken. Jede Seite bekommt eine Nummer, die
+Adresse des Empfängers und Ihre eigene Adresse als Absender.
+
+Genau so funktioniert das Internet:
+
+1. **Daten werden in Pakete aufgeteilt**: Ein Bild, eine E-Mail oder eine
+   Webseite wird in viele kleine Pakete zerlegt (meist 1-1.5 KB gross).
+
+2. **Jedes Paket bekommt Adressen**: Auf jedem Paket steht die **IP-Adresse**
+   des Absenders und des Empfängers. Eine IP-Adresse ist wie eine Postadresse
+   für Computer, zum Beispiel `192.168.1.1` oder `172.217.168.46`.
+
+3. **Router leiten die Pakete weiter**: Jeder Router auf dem Weg schaut sich die
+   Zieladresse an und entscheidet, wohin das Paket als nächstes geschickt werden
+   soll. Die Pakete nehmen nicht unbedingt alle den gleichen Weg!
+
+4. **Pakete werden wieder zusammengesetzt**: Am Ziel angekommen werden alle
+   Pakete wieder in der richtigen Reihenfolge zusammengesetzt.
+
+<Figure src="https://cdn.kastatic.org/ka-perseus-images/337190cba133e19ee9d8b5878453f915971a59cd.svg" 
+    alt="Visualisierung von IP-Paketen"
+    caption="Daten werden in Pakete aufgeteilt und über verschiedene Wege zum Ziel geschickt" origin="https://www.khanacademy.org/computing/computers-and-internet/xcae6f4a7ff015e7d:the-internet/xcae6f4a7ff015e7d:routing-with-redundancy/a/ip-packets" />
+
+## Das Problem: Alles ist öffentlich
+
+Hier kommt das grosse Sicherheitsproblem: Standardmässig sind alle diese Pakete
+**unverschlüsselt**. Das ist, als würden Sie Ihre Nachrichten auf Postkarten
+schreiben statt in einem verschlossenen Brief. Jeder Router, jeder ISP, jeder
+Knotenpunkt auf dem Weg kann die Daten lesen.
+
+Das bedeutet konkret:
+
+- Ihr **ISP** kann sehen, welche Webseiten Sie besuchen
+- Jeder **Router** auf dem Weg kann die Daten lesen
+- In einem **öffentlichen WLAN** kann jeder im gleichen Netzwerk Ihre Daten
+  abfangen
+- **Passwörter**, **Kreditkartennummern** und **private Nachrichten** können
+  gestohlen werden
+
+Das klingt beängstigend - und das ist es auch! Aber zum Glück gibt es eine
+Lösung: **Verschlüsselung**.
+
+## HTTP vs. HTTPS - Der entscheidende Unterschied
+
+Sie haben sicher schon das kleine **Vorhängeschloss** in der Adresszeile Ihres
+Browsers gesehen. Dieses Symbol zeigt an, ob eine Verbindung sicher ist oder
+nicht.
+
+### HTTP - Unverschlüsselt und unsicher
+
+**HTTP** steht für "HyperText Transfer Protocol" und ist das grundlegende
+Protokoll für die Übertragung von Webseiten. Das Problem: HTTP ist
+**unverschlüsselt**. Alles, was Sie eingeben oder empfangen, kann von jedem
+gelesen werden, der Zugriff auf die Datenübertragung hat.
+
+```
+http://www.beispiel-shop.com/login
+```
+
+Wenn Sie auf einer Webseite mit HTTP Ihr Passwort eingeben, ist das so, als
+würden Sie Ihr Passwort laut in einem vollen Raum rufen. Verwenden Sie **nie**
+HTTP für sensible Daten!
+
+### HTTPS - Verschlüsselt und sicher
+
+**HTTPS** ist die sichere Version von HTTP. Das "S" steht für "Secure" und
+bedeutet, dass alle Daten **verschlüsselt** werden, bevor sie versendet werden.
+Die Verschlüsselung basiert auf **SSL/TLS** - Sie müssen nicht verstehen wie das
+technisch funktioniert, aber wichtig ist: Nur der Sender und der Empfänger
+können die Daten lesen.
+
+```
+https://www.beispiel-shop.com/login
+```
+
+Mit HTTPS:
+
+- Kann Ihr **ISP** nur sehen, dass Sie `beispiel-shop.com` besuchen, aber nicht
+  was Sie dort tun
+- Können **Router** auf dem Weg die Daten nicht mitlesen
+- Sind Ihre **Passwörter** und **Kreditkartendaten** geschützt
+- Können Sie sicher sein, dass Sie wirklich mit der echten Webseite verbunden
+  sind (keine Fälschung)
+
+<Figure src="https://www.cloudflare.com/img/learning/security/glossary/what-is-ssl/http-vs-https.svg"
+    alt="HTTP vs HTTPS" caption="Vergleich zwischen unverschlüsselter (HTTP) und verschlüsselter (HTTPS) Verbindung"
+    origin="https://www.cloudflare.com/de-de/learning/ssl/why-is-http-not-secure/" />
+
+## Wann bin ich sicher?
+
+Die Faustregel ist ganz einfach:
+
+- **HTTPS mit Vorhängeschloss** = Sicher  
+- **HTTP ohne Vorhängeschloss** = Unsicher
+
+Achten Sie besonders auf HTTPS:
+
+- Beim **Online-Banking**
+- Beim **Online-Shopping** (Kreditkartendaten!)
+- Beim **Einloggen** auf Webseiten
+- Bei **E-Mail** und **sozialen Netzwerken**
+
+Die meisten modernen Browser warnen Sie mittlerweile, wenn Sie eine unsichere
+Webseite besuchen. Nehmen Sie diese Warnungen ernst!
+
+<Figure src="https://www.ra-plutte.de/wp-content/uploads/2017/01/https_plutte_schwenke_titelbild_schloss-800x426.png.webp"
+    alt="Browser Vorhängeschloss" caption="Das Vorhängeschloss zeigt eine sichere HTTPS-Verbindung an" origin="https://www.ra-plutte.de/gastbeitrag-warum-sie-ihre-website-auf-https-umstellen-sollten/" />
+
+### Öffentliche WLANs - Besondere Vorsicht
+
+In öffentlichen WLANs (Café, Flughafen, Hotel) ist die Gefahr besonders gross.
+Hier können andere Personen im gleichen Netzwerk Ihren Datenverkehr abfangen.
+Selbst mit HTTPS sollten Sie in öffentlichen WLANs vorsichtig sein und niemals
+auf HTTP-Seiten surfen.
+
+Noch sicherer sind Sie mit einem **VPN** (Virtual Private Network). Ein VPN
+verschlüsselt Ihren gesamten Datenverkehr zusätzlich und schützt Sie auch vor
+neugierigen Blicken Ihres ISPs.
+
+<Figure src="https://www.bsi.bund.de/SharedDocs/Bilder/DE/Video/BSI/VerbraucherInnen/Sicher_im_Internet/WLAN.jpg?__blob=normal&v=1" alt="Gefahren in öffentlichen WLANs" caption="In öffentlichen WLANs können andere Nutzer Ihren Datenverkehr mitlesen" origin="https://www.bsi.bund.de/DE/Themen/Verbraucherinnen-und-Verbraucher/Informationen-und-Empfehlungen/Cyber-Sicherheitsempfehlungen/Router-WLAN-VPN/Sicherheitstipps-fuer-privates-und-oeffentliches-WLAN/sicherheitstipps-fuer-privates-und-oeffentliches-wlan_node.html" />
+
+## Zusammenfassung
+
+Das Internet ist ein offenes Netzwerk, in dem Daten in kleinen Paketen von
+Router zu Router weitergeleitet werden. Standardmässig sind diese Daten für
+jeden lesbar, der Zugriff auf die Übertragung hat. Mit **HTTPS** werden die
+Daten verschlüsselt und sind somit sicher vor fremden Blicken.
+
+**Wichtigste Regel**: Achten Sie immer auf das Vorhängeschloss und HTTPS,
+besonders bei sensiblen Daten!
