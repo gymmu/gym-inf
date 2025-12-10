@@ -79,6 +79,7 @@ header {
   background-color: var(--color-bg);
   font-weight: 700;
     padding-block: 1rem;
+    padding-inline: 2rem;
   text-transform: uppercase;
   border-bottom: 2px solid var(--color-fg);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -213,8 +214,7 @@ ol.nav {
 
 main {
   grid-area: main;
-    overflow:scroll;
-    height: var(--body-height);
+    overflow-y:scroll;
     margin: 0;
 }
 
@@ -313,7 +313,7 @@ section ol {
 .full-height {
     margin: 0;
     padding: 0;
-  min-height: calc(100vh - 80px);
+  min-height: var(--body-height);
 }
 
 @media (width < 820px) {
