@@ -1,0 +1,555 @@
+import Section from "@components/Section.jsx"
+import Figure from "@components/Figure.jsx"
+
+## Die geheime Reise eines Pakets
+
+Eine Internet-Geschichte zum Erzählen (ca. 30 Minuten)
+
+<Section className="full-height">
+
+### Einleitung
+
+**Die Geschichte beginnt...**
+
+_"Heute erzähle ich euch die Geschichte von Emma. Emma ist 16 Jahre alt und
+macht etwas, das ihr alle jeden Tag macht: Sie öffnet ihr Smartphone und tippt
+in den Browser: 'instagram.com'. Aber was Emma nicht sieht – und was die meisten
+Menschen nie sehen – ist die unglaubliche Reise, die in diesem Moment beginnt.
+Eine Reise durch ein riesiges, weltweites Netzwerk, durch Kabel unter dem Meer,
+durch Rechenzentren und Router, und dabei lauern überall Gefahren._
+
+_Dies ist die Geschichte vom kleinen Datenpaket P-47 und seiner gefährlichen
+Mission durch das Internet."_
+
+</Section>
+
+<Section className="full-height">
+
+### Kapitel 1: Die Geburt eines Pakets
+
+_"In Emmas Smartphone, genauer gesagt im Arbeitsspeicher, entsteht gerade etwas
+Neues. Der Browser hat Emmas Anfrage 'instagram.com' erhalten und muss jetzt
+eine Nachricht verschicken. Aber das Internet ist wie ein riesiges Postsystem –
+man kann nicht einfach einen riesigen Brief verschicken. Nein, die Nachricht
+wird zerlegt. In tausende winzige Päckchen._
+
+_Unser Held heißt **Paket P-47**. P-47 ist gerade mal 1.500 Bytes groß – das ist
+weniger als ein einziger Satz in einem Word-Dokument. Aber P-47 ist wichtig! Er
+trägt einen Teil von Emmas Anfrage._
+
+**Die Anatomie eines Pakets**
+
+_Schauen wir uns P-47 mal genauer an. Jedes Paket im Internet ist wie ein Brief
+mit mehreren Umschlägen:_
+
+#### 1. Der Header (Briefumschlag):
+
+- **Absender-Adresse**: `192.168.1.47` (Emmas Handy im privaten WLAN)
+- **Empfänger-Adresse**: `157.240.241.35` (Instagram Server)
+- **Port-Nummer**: Wie eine Wohnungsnummer – Port 443 bedeutet "HTTPS"
+- **Sequenznummer**: P-47 ist das 47. Paket von insgesamt 200
+- **Prüfsumme**: Ein mathematischer Code, um zu erkennen, ob das Paket
+  beschädigt wurde
+
+#### 2. Der Payload (Inhalt):
+
+- Die eigentlichen Daten – in unserem Fall verschlüsselter Code
+
+_P-47 ist bereit. Die Reise beginnt!"_
+
+<Figure
+  src="https://cdn.kastatic.org/ka-perseus-images/337190cba133e19ee9d8b5878453f915971a59cd.svg"
+  alt="Visualisierung von IP-Paketen"
+  caption="Daten werden in Pakete aufgeteilt"
+  origin="https://www.khanacademy.org/computing/computers-and-internet/xcae6f4a7ff015e7d:the-internet/xcae6f4a7ff015e7d:routing-with-redundancy/a/ip-packets"
+/>
+
+</Section>
+
+<Section className="full-height">
+
+### Kapitel 2: Das erste Hindernis – Der WLAN-Router
+
+_"P-47 wird als elektrisches Signal durch die Luft geschossen. Emmas Handy
+sendet Radiowellen mit 2.4 GHz aus – das sind 2,4 Milliarden Schwingungen pro
+Sekunde! Diese Wellen rasen durch ihr Zimmer und werden vom WLAN-Router
+empfangen._
+
+_Aber hier lauert die erste Gefahr! In einem WLAN können **ALLE Geräte** im
+gleichen Netzwerk mithören. Stellt euch vor, ihr seid in einem Raum und ruft
+etwas laut. Jeder im Raum hört es. Genau so funktioniert WLAN._
+
+_Emmas kleiner Bruder Max ist auch im WLAN. Max hat gerade ein YouTube-Tutorial
+geschaut: 'Wie werde ich Hacker?' Er hat ein Programm heruntergeladen –
+**Wireshark** – das kann alle Datenpakete im WLAN abfangen._
+
+**Man-in-the-Middle Angriff**
+
+_Max startet das Programm und plötzlich sieht er **ALLES**:_
+
+- Papas E-Mails
+- Mamas Online-Shopping
+- Emmas Instagram-Anfrage
+
+_ABER – und jetzt kommt das Rettende – Max sieht nur wirres Zeug:_
+
+```
+d7 3a 9f 2e b4 c8 1f 5d 9a 2c e7 4b...
+```
+
+_'Was ist das?', denkt Max. 'Nur komische Zahlen und Buchstaben!' Wieso? Weil
+Emma eine **HTTPS**-Verbindung nutzt. Das Paket P-47 ist **verschlüsselt**!_
+
+_Emmas Daten sind in einem digitalen Safe versteckt. Max kann den Safe sehen, er
+kann ihn anfassen, aber er kommt nicht rein. Der Schlüssel existiert nur bei
+Emmas Handy und bei Instagram."_
+
+</Section>
+
+<Section className="full-height">
+
+### Kapitel 3: Das Gateway zur großen weiten Welt
+
+_"P-47 erreicht das Modem – das Gateway zur Außenwelt. Das Modem ist wie ein
+Torwächter zwischen Emmas kleinem Heim-Netzwerk und dem riesigen Internet._
+
+**NAT - Network Address Translation**
+
+_Jetzt passiert etwas Magisches: **NAT – Network Address Translation**. Emmas
+Handy hat die private Adresse `192.168.1.47`. Aber diese Adresse gilt nur in
+ihrem Haus. Das ist wie eine Zimmernummer in einem Hotel. 'Zimmer 47' gibt es in
+jedem Hotel der Welt! Das funktioniert nicht als weltweite Adresse._
+
+_Das Modem macht folgendes:_
+
+1. Es merkt sich: 'Paket P-47 kommt von Emmas Handy (192.168.1.47, Port 54321)'
+2. Es ersetzt die Absenderadresse durch die öffentliche IP: `84.56.123.89:8447`
+3. Es schickt das Paket ins Internet
+4. Wenn eine Antwort kommt an `84.56.123.89:8447`, weiß das Modem: 'Ah, das ist
+   für Emmas Handy!'
+
+_So können hunderte Geräte bei Emma zu Hause mit nur EINER öffentlichen
+IP-Adresse ins Internet. Clever, oder?_
+
+_Das Modem öffnet das große Tor. P-47 verlässt das sichere Heim und betritt das
+echte Internet. Die gefährliche Reise beginnt!"_
+
+<Figure
+  src="https://kinsta.com/wp-content/uploads/2022/02/ISP-Work-768x256.png"
+  alt="Visualisierung eines Internet Service Providers"
+  caption="Der Weg vom Heimnetzwerk ins Internet"
+  origin="https://kinsta.com/blog/what-is-isp/"
+/>
+
+</Section>
+
+<Section className="full-height">
+
+### Kapitel 4: Durch das Netz des ISP
+
+_"P-47 rast nun durch ein Glasfaserkabel. Mit Lichtgeschwindigkeit! Wirklich:
+200.000 Kilometer pro Sekunde. In einer Sekunde könnte P-47 fünfmal um die Erde
+rasen – wenn die Kabel so verlegt wären._
+
+_Das Kabel führt zum **Internet Service Provider** – dem ISP. In der Schweiz ist
+das vielleicht Swisscom, in Deutschland die Telekom. Der ISP ist DER große
+Beobachter._
+
+**Was sieht der ISP?**
+
+_Beim ISP steht ein riesiger Router. Der Router hat eine Liste – eine
+Routing-Tabelle – mit Milliarden Einträgen. Für jede IP-Adresse im Internet weiß
+er: 'Da lang!'_
+
+_Aber der ISP macht noch mehr. Er **protokolliert** alles. Stellt euch ein
+riesiges Logbuch vor:_
+
+```
+10:47:23 - 84.56.123.89 → 157.240.241.35 (Instagram)
+10:47:24 - 84.56.123.89 → 172.217.168.46 (Google)
+10:47:25 - 84.56.123.89 → 151.101.1.140 (Reddit)
+```
+
+_Der ISP sieht:_
+
+- ✅ **Welche Webseiten** Emma besucht (die Ziel-IP-Adresse)
+- ✅ **Wann** sie diese besucht
+- ✅ **Wie viele Daten** übertragen werden
+- ❌ **NICHT was** Emma auf Instagram macht (wegen HTTPS!)
+
+_Der ISP ist wie jemand, der eure Briefumschläge liest – er sieht Absender und
+Empfänger, aber nicht den Inhalt. Dank HTTPS!_
+
+_In vielen Ländern muss der ISP diese Daten speichern. In der Schweiz gibt es
+die **Vorratsdatenspeicherung** – ISPs müssen 6 Monate lang speichern, wer wann
+mit wem kommuniziert hat. Die Polizei kann das anfragen, wenn es einen Verdacht
+gibt._
+
+**Deep Packet Inspection**
+
+_Manche ISPs gehen noch weiter: **Deep Packet Inspection (DPI)**. Das ist wie
+Röntgengeräte am Flughafen. Der ISP versucht, in die Pakete reinzuschauen:_
+
+- Benutzt du BitTorrent? → Verbindung verlangsamen
+- Streamst du 4K-Videos? → Datenrate begrenzen
+- Gehst du auf verbotene Seiten? → Blockieren
+
+_Aber auch hier: HTTPS schützt! Der ISP sieht nur verschlüsselten Datensalat. Er
+kann vermuten, was ihr tut (durch die Datenmenge), aber nicht genau wissen._
+
+_P-47 verlässt nun den ISP. Nächster Stop: Das Backbone des Internets!"_
+
+</Section>
+
+<Section className="full-height">
+
+### Kapitel 5: Durch das Backbone – Die Autobahn des Internets
+
+_"Jetzt wird es richtig schnell. P-47 gelangt in das **Internet-Backbone** – das
+sind die riesigen Hochgeschwindigkeits-Datenautobahnen, die Kontinente
+verbinden._
+
+**Unterwasserkabel und Routing**
+
+_Instagrams Server stehen in Kalifornien, USA. Emma ist in der Schweiz. Das
+bedeutet: P-47 muss den Atlantik überqueren! Und das macht er durch
+**Unterwasserkabel**._
+
+_Auf dem Meeresboden liegen tausende Kilometer Glasfaserkabel. Sie sind so dick
+wie ein Gartenschlauch und können 400 Terabit pro Sekunde übertragen – das sind
+50 Millionen HD-Filme! Gleichzeitig!_
+
+_P-47 rast durch so ein Kabel, zusammen mit Millionen anderen Paketen. Hier
+draußen auf See gibt es keine Kontrolle mehr. Das ist die Wildnis des
+Internets._
+
+_Unterwegs passiert P-47 mehrere **Tier-1-Router**. Das sind die mächtigsten
+Router der Welt, betrieben von Firmen wie Level3, Cogent oder AT&T. Diese Router
+entscheiden in Mikrosekunden:_
+
+1. Ziel-IP analysieren: `157.240.241.35`
+2. Routing-Tabelle checken: 'Kalifornien, USA'
+3. Besten Weg wählen: 'Über New York'
+4. Weiterleiten!
+
+**BGP - Border Gateway Protocol**
+
+_Die Router kommunizieren ständig miteinander über ein Protokoll namens **BGP**
+(Border Gateway Protocol). Sie tauschen Informationen aus:_
+
+- 'Hey, ich kenne den Weg zu 157.240.0.0/16!'
+- 'Achtung, Kabel nach London ist überlastet!'
+- 'Alternativer Weg über Paris verfügbar!'
+
+_Manchmal passieren Fehler. 2008 hat Pakistan versucht, YouTube zu blockieren,
+hat aber ausversehen dem **ganzen Internet** gesagt: 'YouTube ist bei uns!'
+Plötzlich wollten alle Pakete nach Pakistan – YouTube war weltweit down für 2
+Stunden._
+
+_P-47 hat Glück. Alles läuft glatt. Nach 50 Millisekunden – das ist ein
+Wimpernschlag – erreicht P-47 die USA."_
+
+<Figure
+  src="https://media.geeksforgeeks.org/wp-content/uploads/20230420093202/Internet-image-(2).webp"
+  alt="Darstellung des Internets"
+  caption="Das globale Netzwerk des Internets"
+  origin="https://www.geeksforgeeks.org/computer-science-fundamentals/what-is-internet-definition-uses-working-advantages-and-disadvantages/"
+/>
+
+</Section>
+
+<Section className="full-height">
+
+### Kapitel 6: Das große Rechenzentrum
+
+_"P-47 kommt an! Er erreicht Facebooks Rechenzentrum in Kalifornien. Das ist
+eine riesige Halle, so groß wie mehrere Fußballfelder, vollgestopft mit Servern.
+Es ist laut (die Ventilatoren!) und kalt (wegen der Kühlung)._
+
+_Der Instagram-Server empfängt P-47 und alle seine 199 Geschwister-Pakete. Sie
+kommen nicht alle gleichzeitig an! Manche haben schnellere Wege genommen, manche
+langsamere. Manche sind sogar verloren gegangen – dann müssen sie neu
+angefordert werden._
+
+_Der Server sortiert alle Pakete nach ihrer Sequenznummer:_
+
+```
+P-1, P-2, P-3, ..., P-47, ..., P-200
+```
+
+_Dann entschlüsselt er sie mit dem geheimen Schlüssel und liest Emmas Anfrage:
+'Zeig mir meinen Instagram-Feed!'_
+
+_Der Server arbeitet jetzt:_
+
+1. Emma authentifizieren (ist sie eingeloggt?)
+2. Feed zusammenstellen (Posts von Freunden)
+3. Bilder laden
+4. Werbung auswählen (ja, auch das!)
+5. Alles in Pakete packen – diesmal 5.000 Pakete!
+6. Zurückschicken an Emma
+
+_Die Reise geht rückwärts!"_
+
+</Section>
+
+<Section className="full-height">
+
+### Kapitel 7: Die Rückreise – und neue Gefahren
+
+_"Die 5.000 Antwort-Pakete machen sich auf den Rückweg. Aber diesmal lauern
+andere Gefahren._
+
+**Angriffe auf Daten**
+
+_Auf dem Rückweg gibt es böse Akteure:_
+
+#### 1. Der neugierige ISP:
+
+_Ein ISP in den USA scannt alle Pakete. Er verkauft Daten an Werbefirmen: 'Diese
+IP besucht oft Instagram zwischen 10-11 Uhr morgens.' Aber dank HTTPS sieht er
+nicht, was Emma postet oder anschaut._
+
+#### 2. Der Man-in-the-Middle:
+
+_Irgendwo in einem Router in London versucht ein Hacker, die Verbindung zu
+unterbrechen. Er will sich als Instagram ausgeben und Emmas Passwort stehlen.
+Aber HTTPS hat einen **Zertifikatscheck**:_
+
+- Emmas Browser fragt: 'Bist du wirklich Instagram?'
+- Der Server zeigt ein digitales Zertifikat: 'Ja, signiert von Google Trust
+  Services!'
+- Der Browser checkt: 'Stimmt, dieses Zertifikat ist echt!'
+
+_Der Hacker hat kein echtes Zertifikat. Emmas Browser würde eine fette Warnung
+zeigen:_
+
+```
+⚠️ ACHTUNG! Diese Verbindung ist nicht sicher!
+```
+
+_Der Angriff schlägt fehl!_
+
+#### 3. Die Firewall:
+
+_Bei Emmas ISP steht eine Firewall. Sie prüft jedes eingehende Paket:_
+
+- Ist das eine Antwort auf eine Anfrage? ✅
+- Oder ein unerwünschter Angriff? ❌
+
+_Jeden Tag werden Millionen Angriffspakete abgeblockt, ohne dass ihr es merkt._
+
+_Die Pakete erreichen Emmas Modem, dann ihren Router, dann ihr Handy. Der
+Browser setzt alles zusammen und – voilà! – Emma sieht ihren Feed."_
+
+</Section>
+
+<Section className="full-height">
+
+### Kapitel 8: Was wäre ohne HTTPS? (Das Horror-Szenario)
+
+_"Lasst uns jetzt ein Paralleluniversum besuchen. Ein Universum, in dem Emma auf
+eine HTTP-Seite geht – ohne das 'S'. Ohne Verschlüsselung._
+
+_Emma geht auf: `http://billig-shop.com` und will sich einloggen._
+
+**Was passiert:**
+
+#### 1. Im WLAN:
+
+_Max sieht mit Wireshark:_
+
+```
+POST /login HTTP/1.1
+username=emma@email.com
+password=SuperSecret123
+```
+
+_Max grinst. Er hat Emmas Passwort!_
+
+#### 2. Beim ISP:
+
+_Das Logbuch speichert:_
+
+```
+Emma kauft Produkt: "Akne-Creme"
+Kreditkarte: 1234-5678-9012-3456
+```
+
+_Ein Mitarbeiter verkauft diese Daten an eine Werbeagentur. Plötzlich bekommt
+Emma überall Akne-Werbung._
+
+#### 3. Im öffentlichen WLAN am Flughafen:
+
+_Ein Hacker mit einem Laptop fängt alle Pakete ab. Er sammelt Passwörter,
+Kreditkarten, private Nachrichten. Hunderte Menschen pro Tag fallen ihm zum
+Opfer._
+
+#### 4. Ein Fake-Router:
+
+_Jemand hat einen Router aufgestellt: "Gratis Flughafen WiFi". Jeder verbindet
+sich. Aber dieser Router ist gefälscht! Er schickt euch auf falsche Webseiten:_
+
+- Ihr wollt auf `bank.com`
+- Der Router leitet euch um auf `bank-secure-login.com` (eine Fälschung!)
+- Ihr gebt euer Passwort ein
+- Der Hacker hat es!
+
+_ABER: Wenn die Bank HTTPS benutzt, funktioniert dieser Angriff nicht! Der
+Browser würde warnen:_
+
+```
+⚠️ Ungültiges Zertifikat!
+```
+
+_Deshalb: **Niemals niemals niemals** Passwörter oder Kreditkarten auf
+HTTP-Seiten eingeben! Niemals!"_
+
+<Figure
+  src="https://www.cloudflare.com/img/learning/security/glossary/what-is-ssl/http-vs-https.svg"
+  alt="HTTP vs HTTPS"
+  caption="Vergleich zwischen unverschlüsselter (HTTP) und verschlüsselter (HTTPS) Verbindung"
+  origin="https://www.cloudflare.com/de-de/learning/ssl/why-is-http-not-secure/"
+/>
+
+</Section>
+
+<Section className="full-height">
+
+### Kapitel 9: Die Helden – Wie HTTPS uns rettet
+
+_"HTTPS funktioniert durch ein geniales System:_
+
+#### 1. Schlüsselaustausch (zu Beginn der Verbindung):
+
+- Emma: 'Hallo Instagram, ich will sicher kommunizieren!'
+- Instagram: 'Hier ist mein öffentlicher Schlüssel und mein Zertifikat!'
+- Emma prüft das Zertifikat
+- Emma und Instagram einigen sich auf einen geheimen Session-Schlüssel
+- Nur sie beide kennen diesen Schlüssel!
+
+#### 2. Verschlüsselung:
+
+_Alle Daten werden mit dem Session-Schlüssel verschlüsselt. Das ist wie eine
+Geheimsprache, die nur Emma und Instagram verstehen._
+
+#### 3. Integritätsprüfung:
+
+_Jedes Paket hat eine digitale Signatur. Wenn jemand ein Paket verändert, merkt
+der Empfänger das sofort:_
+
+- 'Hey, dieses Paket wurde manipuliert!'
+- Paket wird verworfen
+
+_So schützt HTTPS euch vor:_
+
+- ✅ Abhören (Encryption)
+- ✅ Manipulation (Integrity)
+- ✅ Fälschungen (Authentication)
+
+_Das kleine 'S' ist euer digitaler Superheld!"_
+
+<Figure
+  src="https://www.ra-plutte.de/wp-content/uploads/2017/01/https_plutte_schwenke_titelbild_schloss-800x426.png.webp"
+  alt="Browser Vorhängeschloss"
+  caption="Das Vorhängeschloss zeigt eine sichere HTTPS-Verbindung an"
+  origin="https://www.ra-plutte.de/gastbeitrag-warum-sie-ihre-website-auf-https-umstellen-sollten/"
+/>
+
+</Section>
+
+<Section className="full-height">
+
+### Abschluss: Die Moral der Geschichte
+
+_"Emma hat ihre Instagram-App geöffnet. Die ganze Reise – quer über den Atlantik
+und zurück – hat 150 Millisekunden gedauert. Weniger als ein Wimpernschlag._
+
+_Emma hat keine Ahnung, was gerade passiert ist. Sie sieht nur ihre Freunde,
+ihre Likes, ihre Stories. Aber hinter den Kulissen haben Millionen von
+Datenpaketen eine unglaubliche Reise gemacht._
+
+**Was können wir lernen?**
+
+1. **Das Internet ist öffentlich.** Jedes Paket wird von dutzenden Routern und
+   ISPs gesehen.
+
+2. **HTTPS ist überlebenswichtig.** Ohne Verschlüsselung sind eure Daten wie
+   Postkarten – jeder kann mitlesen.
+
+3. **Achtet auf das Vorhängeschloss!** Besonders bei:
+   - Online-Banking
+   - Shopping
+   - Login-Seiten
+   - E-Mails
+   - Allem mit persönlichen Daten!
+
+4. **Öffentliche WLANs sind gefährlich.** Benutzt nur HTTPS-Seiten, oder noch
+   besser: ein VPN.
+
+5. **Euer ISP sieht alles.** Er kann nicht lesen, was ihr schreibt (dank HTTPS),
+   aber er sieht, mit wem ihr kommuniziert.
+
+_Das Internet ist wie eine große Stadt: Wunderschön, voller Möglichkeiten, aber
+auch mit dunklen Ecken. Mit HTTPS habt ihr einen Bodyguard, der euch beschützt._
+
+_Und denkt dran: Bei jedem Klick, bei jedem Wischen, bei jedem Post – da draußen
+rasen tausende kleine Pakete durch die Welt. Sie alle haben eine Geschichte. Sie
+alle sind kleine Helden auf einer gefährlichen Mission._
+
+**Ende."**
+
+<Figure
+  src="https://www.bsi.bund.de/SharedDocs/Bilder/DE/Video/BSI/VerbraucherInnen/Sicher_im_Internet/WLAN.jpg?__blob=normal&v=1"
+  alt="Gefahren in öffentlichen WLANs"
+  caption="In öffentlichen WLANs können andere Nutzer Ihren Datenverkehr mitlesen"
+  origin="https://www.bsi.bund.de/DE/Themen/Verbraucherinnen-und-Verbraucher/Informationen-und-Empfehlungen/Cyber-Sicherheitsempfehlungen/Router-WLAN-VPN/Sicherheitstipps-fuer-privates-und-oeffentliches-WLAN/sicherheitstipps-fuer-privates-und-oeffentliches-wlan_node.html"
+/>
+
+</Section>
+
+<Section className="full-height">
+
+## Interaktive Elemente für den Vortrag
+
+### Visualisierungen
+
+1. **Weltkarte mit Routen**: Zeigen Sie eine animierte Weltkarte mit den Wegen
+   der Datenpakete
+2. **Live-Demo mit Wireshark**: Öffnen Sie Wireshark und zeigen Sie echte Pakete
+   im Netzwerk
+3. **Browser-Check**: Lassen Sie die Klasse verschiedene Webseiten checken (HTTP
+   vs HTTPS)
+
+### Quiz-Fragen zum Einstreuen
+
+- "Wer kann alles eure Daten sehen?"
+- "Was bedeutet das 'S' in HTTPS?"
+- "Würdet ihr euer Passwort auf einer HTTP-Seite eingeben?"
+- "Was passiert mit euren Daten im öffentlichen WLAN?"
+- "Wie viele Pakete werden für eine einfache Webseite verschickt?"
+
+### Praktische Übungen
+
+1. **Ping und Traceroute**: Lassen Sie Schüler mit `ping` und `traceroute` die
+   Route zu verschiedenen Servern nachverfolgen
+
+   ```bash
+   ping google.com
+   traceroute instagram.com
+   ```
+
+2. **HTTPS-Check**: Besuchen Sie verschiedene Webseiten und prüfen Sie das
+   Vorhängeschloss-Symbol
+
+3. **Zertifikate anschauen**: Zeigen Sie, wie man in einem Browser das
+   SSL-Zertifikat einer Webseite anschaut
+
+### Diskussionsfragen
+
+- Wie sicher fühlt ihr euch im Internet?
+- Habt ihr schon einmal öffentliches WLAN benutzt? Was habt ihr dort gemacht?
+- Sollte der ISP das Recht haben, eure Verbindungsdaten zu speichern?
+- Was denkt ihr über Überwachung im Internet?
+
+</Section>
