@@ -29,8 +29,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --header-height: 80px;
-  --footer-height: 60px;
+  --header-height: 94px;
+  --footer-height: 40px;
   --body-height: calc(100dvh - var(--header-height) - var(--footer-height));
 }
 
@@ -75,36 +75,30 @@ header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  position: sticky;
-  inset: 0;
+  justify-content: flex-start;
   background-color: var(--color-bg);
-  padding: 1rem 2rem;
   font-weight: 700;
-  font-family: "Georgia", serif;
+    padding-block: 1rem;
   text-transform: uppercase;
   border-bottom: 2px solid var(--color-fg);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   z-index: 10;
-  font-size: clamp(1.5rem, 5vw, 2.5rem);
-}
-
-.icon {
-  position: absolute;
-  left: 1rem;
 }
 
 h1 {
-  margin: 0;
-  font-size: clamp(2rem, 5vw, 2.5rem);
-  /* font-size: 2.5rem; */
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  text-align: center;
   font-weight: 900;
   font-family: "Georgia", serif;
   letter-spacing: 0.15em;
   color: var(--color-yellow);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
   flex-grow: 1;
   flex-shrink: 0;
+
+  & > a {
+  text-decoration: none;
+  color: inherit;
+}
 }
 
 h2,
@@ -119,30 +113,12 @@ footer {
   grid-area: footer;
   text-align: center;
   font-size: 0.8rem;
-  margin-top: 20px;
   padding: 10px;
   border-top: 0.5px solid var(--color-gray);
 }
 
 .sidenav:not(.show) {
   display: none;
-}
-
-h1 a {
-  text-decoration: none;
-  color: inherit;
-}
-
-h1 > .back {
-  font-size: 12pt;
-}
-
-h1 {
-  margin: 0px 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
 }
 
 ol.nav a {
@@ -335,6 +311,8 @@ section ol {
 }
 
 .full-height {
+    margin: 0;
+    padding: 0;
   min-height: calc(100vh - 80px);
 }
 

@@ -5,12 +5,13 @@
 
 .gridContainer {
     display: grid;
-    grid-template-columns: 500px 1fr;
+    grid-template-columns: max(1fr, 500px) 1fr;
     gap: 1em;
     overflow: hidden;
     grid-template-areas:
         "controlls html"
         "css iframe";
+    height: 100%;
 }
 
 .controlls {
@@ -31,7 +32,7 @@
 
 .formControll {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: max(200px, 1fr) 1fr;
 }
 
 .flexWrapper {
@@ -50,8 +51,9 @@
     padding: 0.5rem;
 }
 
-@container (width < 600px) {
+@container (width < 800px) {
     .gridContainer {
+        width: 100%;
         grid-template-areas: 
             "controlls"
             "css"
