@@ -70,38 +70,8 @@ body {
   text-align: justify;
 }
 
-header {
-  grid-area: header;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: var(--color-bg);
-  font-weight: 700;
-    padding-block: 1rem;
-    padding-inline: 2rem;
-  text-transform: uppercase;
-  border-bottom: 2px solid var(--color-fg);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-}
 
-h1 {
-  font-size: clamp(1.5rem, 5vw, 2.5rem);
-  text-align: center;
-  font-weight: 900;
-  font-family: "Georgia", serif;
-  letter-spacing: 0.15em;
-  color: var(--color-yellow);
-  flex-grow: 1;
-  flex-shrink: 0;
-
-  & > a {
-  text-decoration: none;
-  color: inherit;
-}
-}
-
+h1,
 h2,
 h3,
 h4,

@@ -10,7 +10,7 @@ export default function PrismBlock({ lang = "html", code = "" }) {
   }, []);
 
   return (
-    <div className={"line-numbers match-braces"}>
+    <div className={`${styles.codeBlock} line-numbers match-braces`}>
       <pre className={`language-${lang}`}>
         <code className={`language-${lang}`}>{code}</code>
       </pre>

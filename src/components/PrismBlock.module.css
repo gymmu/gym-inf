@@ -1,4 +1,8 @@
 .codeBlock {
-  max-width: 100%;
-  overflow-x: scroll;
+  max-width: 40em;
+  margin-inline: auto;
+}
+
+.codeBlock > pre {
+  overflow-x: auto;
 }
