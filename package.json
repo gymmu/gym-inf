@@ -25,6 +25,7 @@
     "mdx.macro": "^0.1.0",
     "mermaid": "^11.12.0",
     "prism-js": "^1.0.0",
+    "prismjs": "^1.30.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^6.0.0",
@@ -48,6 +49,7 @@
     "prettier": "^3.6.2",
     "serve": "^10.1.2",
     "vite": "^7.1.1",
+    "vite-plugin-prismjs": "^0.0.11",
     "vite-plugin-static-copy": "^3.1.1"
   }
 }

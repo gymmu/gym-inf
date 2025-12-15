@@ -1,0 +1,120 @@
+import PrismBlock from "@components/PrismBlock.jsx";
+import Video from "@components/Video.jsx";
+
+export default function FmsWebdesign() {
+  return (
+    <>
+      <h2>Besseres Webdesign mit Flexbox und Grid</h2>
+
+      <p>
+        Im letzten Kapitel haben wir und die Grundlagen vom Webdesign
+        angeschaut. Hier schauen wir uns an, wie man es tatsächlich auch besser
+        machen kann. Dafür brauchen wir hauptsächlich die Konzepte `grid` und
+        `flexbox` die neuer sind in CSS, aber überall unterstützt werden. Wir
+        werden auch `media-queries` und `container-queries` anschauen, damit wir
+        unser Layout auf die grösse der Webseite anpassen können.
+      </p>
+
+      <p>
+        Sie finden hier den Starter-Code den Sie auf Ihrem{" "}
+        <a href="https://codepen.io" target="_blank">
+          CodePen
+        </a>{" "}
+        brauchen, damit Sie nur dem CSS Teil im Video folgen müssen. Sie können
+        natürlich gerne den Inhalt jederzeit abändern.
+      </p>
+
+      <h3>HTML</h3>
+
+      <PrismBlock
+        lang="html"
+        code={`<header>
+  <h1>Flexbox und Grid</h1>
+  <button onclick="toggleNav()">X</button>
+</header>
+
+<aside class="">
+  <nav class="navbar">
+    <ul class="navbar-list">
+      <li class="navbar-item"><a href="#flexbox">Flexbox</a></li>
+      <li class="navbar-item"><a href="#grid">Grid</a></li>
+      <li class="navbar-item"><a href="#grid-boxes">Boxen</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<main>
+  <section>
+    <h2 id="flexbox">Flexbox</h2>
+    <p>Fexbox ist sehr praktisch für einfache Layouts die nicht dem standart Block und Inline Modell von HTML folgen.</p>
+  </section>
+  <section>
+    <h2 id="grid">Grid</h2>
+    <p>Grid ist sehr praktisch wenn Sie ein Gitter darstellen möchten, kann aber auch sehr gut für responsive Webseiten verwendet werden.</p>
+  </section>
+  <section>
+    <h2 id="grid-boxes">Boxen</h2>
+    <p>Grid kann nürrlich auch verwendet werden, um ein Gitter-Layout anzuzeigen.</p>
+    <div class="box-wrapper">
+      <div class="box"><img src="https://plus.unsplash.com/premium_photo-1673292293042-cafd9c8a3ab3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687" alt=""></div>
+      <div class="box">
+        <img src="https://images.unsplash.com/photo-1529419412599-7bb870e11810?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687" alt="">
+      </div>
+      <div class="box">
+        <img src="https://plus.unsplash.com/premium_photo-1669741909413-08072ccaedde?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzN8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500" alt="">
+      </div>
+      <div class="box">
+        <img src="https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDJ8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500" alt="">
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>Footer</footer>
+`}
+      />
+
+      <h3>CSS</h3>
+
+      <PrismBlock
+        lang="css"
+        code={`* {
+  box-sizing: border-box;
+}
+
+:root {
+  --section-color: hsl(30, 5%, 50%);
+}
+
+header,
+aside,
+main,
+footer {
+  border: 4px solid black;
+}
+`}
+      />
+
+      <h3>Javascript</h3>
+
+      <PrismBlock
+        lang="js"
+        code={`function toggleNav() {
+  const sidenav = document.querySelector("aside");
+  sidenav.classList.toggle("hide");
+}
+`}
+      />
+
+      <h2>Video</h2>
+
+      <p>
+        Das folgende Video erklärt Ihnen alles was Sie für die Webseite
+        brauchen. Das Video ist länger wie gewöhnlich, Sie sollten also
+        versuchen schnell zu arbeiten.
+      </p>
+
+      <Video url="MNd4mSmZq4E" />
+    </>
+  );
+}

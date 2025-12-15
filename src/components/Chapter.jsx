@@ -1,16 +1,11 @@
-import { useEffect, useContext } from "react"
-import Prism from "./prism"
-import "./prism.css"
-import { NavContext } from "../context/NavContext"
+import { useContext, useEffect } from "react";
+import { NavContext } from "../context/NavContext";
 
-export default function Chapter({ children, hash, setFmsNav = false }) {
-    const {setFms} = useContext(NavContext)
+export default function Chapter({ children, setFmsNav = false }) {
+  const { setFms } = useContext(NavContext);
   useEffect(() => {
+    setFms(setFmsNav);
+  }, []);
 
-    setFms(setFmsNav)
-
-    Prism.highlightAll()
-  }, [])
-
-  return <div className="outlet">{children}</div>
+  return <div className="outlet">{children}</div>;
 }

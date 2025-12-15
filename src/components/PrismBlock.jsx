@@ -1,13 +1,19 @@
-import { useEffect } from "react"
-import Prism from "./prism"
-import "./prism.css"
+import Prism from "prismjs";
+import { useEffect } from "react";
+import "prismjs/themes/prism-dark.css";
 
-import styles from "@components/PrismBlock.module.css"
+import styles from "@components/PrismBlock.module.css";
 
-export default function PrismBlock({ children }) {
+export default function PrismBlock({ lang = "html", code = "" }) {
   useEffect(() => {
-    Prism.highlightAll()
-  }, [])
+    Prism.highlightAll();
+  }, []);
 
-  return <div className={styles.codeBlock}>{children}</div>
+  return (
+    <div className={"line-numbers match-braces"}>
+      <pre className={`language-${lang}`}>
+        <code className={`language-${lang}`}>{code}</code>
+      </pre>
+    </div>
+  );
 }
