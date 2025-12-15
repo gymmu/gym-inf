@@ -2,25 +2,55 @@ aside.sidenav {
   grid-area: navbar;
   border-right: 1px solid var(--color-fg);
   height: 100%;
-  position: sticky;
-  align-self: start;
-  top: calc(var(--header-height) + 1rem);
   overflow-y: scroll;
   margin: 0;
-  background-color: var(--color-bg);
-  z-index: 1000;
+}
+
+.sidenav:not(.show) {
   display: none;
 }
 
-@media (width < 820px) {
-  aside.sidenav {
-    position: fixed;
-    z-index: 10;
-    background-color: var(--color-bg);
-    width: 320px;
-    display: none;
-  }
-  aside.sidenav.show {
-    display: block;
-  }
+ol.nav a {
+  text-decoration: none;
+  color: var(--color-fg);
+  padding: 5px 0;
+}
+
+ol.nav > li {
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--color-gray);
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  padding-left: 20px;
+  color: var(--color-yellow);
+}
+
+ol.nav > li > a {
+  color: var(--color-yellow);
+}
+
+ol.nav li:hover > a {
+  text-decoration: underline;
+}
+
+ol.nav > li {
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--color-gray);
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  padding-left: 20px;
+}
+
+ol.nav * {
+  font-weight: normal;
+  font-size: 1rem;
+}
+
+ol.nav {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
