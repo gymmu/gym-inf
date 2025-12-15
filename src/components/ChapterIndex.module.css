@@ -1,0 +1,14 @@
+.container {
+  container-type: inline-size;
+
+  .selectSchool {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    h2 {
+      cursor: pointer;
+    }
+  }
+}

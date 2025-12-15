@@ -70,7 +70,6 @@ body {
   text-align: justify;
 }
 
-
 h1,
 h2,
 h3,
@@ -86,55 +85,6 @@ footer {
   font-size: 0.8rem;
   padding: 10px;
   border-top: 0.5px solid var(--color-gray);
-}
-
-.sidenav:not(.show) {
-  display: none;
-}
-
-ol.nav a {
-  text-decoration: none;
-  color: var(--color-fg);
-  padding: 5px 0;
-}
-
-ol.nav > li {
-  font-weight: bold;
-  font-size: 1.2rem;
-  border-bottom: 1px solid var(--color-gray);
-  margin-bottom: 25px;
-  padding-bottom: 25px;
-  padding-left: 20px;
-  color: var(--color-yellow);
-}
-
-ol.nav > li > a {
-  color: var(--color-yellow);
-}
-
-ol.nav li:hover > a {
-  text-decoration: underline;
-}
-
-ol.nav > li {
-  font-weight: bold;
-  font-size: 1.2rem;
-  border-bottom: 1px solid var(--color-gray);
-  margin-bottom: 25px;
-  padding-bottom: 25px;
-  padding-left: 20px;
-}
-
-ol.nav * {
-  font-weight: normal;
-  font-size: 1rem;
-}
-
-ol.nav {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
 .btn {
@@ -182,13 +132,7 @@ ol.nav {
   stroke: var(--color-fg);
 }
 
-main {
-  grid-area: main;
-    overflow-y:scroll;
-    margin: 0;
-}
-
-section ol {
+main section ol {
   margin-left: 0px; /* Fügt einen linken Rand hinzu */
   list-style-type: none; /* Entfernt die Standardnummerierung */
   counter-reset: list-counter; /* Initialisiert den Zähler */
@@ -253,7 +197,7 @@ section ol {
   font-family: monospace; /* Monospace Schriftart für Hashes */
 }
 
-.rainbow-table tr:nth-child(2n-1) {
+.rainbow-table tr:nth-child(2n - 1) {
   background-color: var(
     --color-gray-medium-dark
   ); /* Leicht dunklerer Hintergrund für jede zweite Zeile */
@@ -281,8 +225,8 @@ section ol {
 }
 
 .full-height {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
   min-height: var(--body-height);
 }
 

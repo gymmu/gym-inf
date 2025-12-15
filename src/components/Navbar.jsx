@@ -1,16 +1,12 @@
-import { useAppContext } from "../context/AppContext"
-import ChapterIndex from "./ChapterIndex"
-
-import style from "@components/Navbar.module.css"
+import style from "@components/Navbar.module.css";
+import { useAppContext } from "../context/AppContext";
+import ChapterIndex from "./ChapterIndex";
 
 export default function Navbar() {
-  const { menuVisible } = useAppContext()
+  const { menuVisible } = useAppContext();
   return (
-    <aside
-      className={
-        menuVisible ? `${style.show} ${style.sidenav}` : style.sidenav
-      }>
+    <aside className={`${style.sidenav} ${menuVisible ? style.show : ""}`}>
       <ChapterIndex />
     </aside>
-  )
+  );
 }

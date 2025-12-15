@@ -1,4 +1,4 @@
-aside.sidenav {
+.sidenav {
   grid-area: navbar;
   border-right: 1px solid var(--color-fg);
   height: 100%;
@@ -6,46 +6,51 @@ aside.sidenav {
   margin: 0;
 }
 
+/* Muss das behalten, sonst kollabiert mein main. Weiss leider nicht weshalb. */
 .sidenav:not(.show) {
   display: none;
 }
 
-ol.nav a {
-  text-decoration: none;
-  color: var(--color-fg);
-  padding: 5px 0;
-}
+.navList {
+  h2 {
+    text-align: center;
+    margin: 0;
+    padding: 1rem;
+  }
 
-ol.nav > li {
-  font-weight: bold;
-  font-size: 1.2rem;
-  border-bottom: 1px solid var(--color-gray);
-  margin-bottom: 25px;
-  padding-bottom: 25px;
-  padding-left: 20px;
-  color: var(--color-yellow);
-}
+  section {
+    margin: 0;
+    background-color: hsl(from var(--color-bg) h s calc(l + 3));
+  }
 
-ol.nav > li > a {
-  color: var(--color-yellow);
-}
+  section:nth-child(even) {
+    background-color: var(--color-bg);
+  }
 
-ol.nav li:hover > a {
-  text-decoration: underline;
-}
+  a {
+    font-weight: normal;
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--color-yellow);
+    padding: 5px 0;
+  }
 
-ol.nav > li {
-  font-weight: bold;
-  font-size: 1.2rem;
-  border-bottom: 1px solid var(--color-gray);
-  margin-bottom: 25px;
-  padding-bottom: 25px;
-  padding-left: 20px;
-}
+  li:hover > a {
+    text-decoration: underline;
+  }
 
-ol.nav * {
-  font-weight: normal;
-  font-size: 1rem;
+  .nav {
+    list-style: none;
+  }
+
+  .nav > li {
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--color-gray);
+    padding-block: 1.5rem;
+    padding-left: 20px;
+    color: var(--color-yellow);
+  }
 }
 
 ol.nav {
