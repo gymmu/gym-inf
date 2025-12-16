@@ -1,6 +1,6 @@
-import style from "@components/Navbar.module.css";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "@context/AppContext";
 import ChapterIndex from "./ChapterIndex";
+import style from "./Navbar.module.css";
 
 export default function Navbar() {
   const { menuVisible } = useAppContext();

@@ -1,4 +1,4 @@
-import style from "@components/Navbar.module.css";
+import style from "./Navbar.module.css";
 import NavLink from "./NavLink";
 
 export default function GymIndex() {

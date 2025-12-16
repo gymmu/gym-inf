@@ -1,6 +1,6 @@
-import style from "@components/ChapterIndex.module.css";
+import { NavContext } from "@context/NavContext";
 import { useContext } from "react";
-import { NavContext } from "../context/NavContext";
+import style from "./ChapterIndex.module.css";
 import FmsIndex from "./FmsIndex";
 import GymIndex from "./GymIndex";
 
