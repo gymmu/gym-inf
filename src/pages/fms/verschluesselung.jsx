@@ -83,6 +83,57 @@ export default function FmsVerschluesselung() {
           Alphabet wieder um 7 Stellen zurück verschieben.
         </p>
         <Caesar />
+        <h3>Aufgabe</h3>
+        <p>
+          Suchen Sie sich eine beliebige Nachricht aus und verschlüsseln Sie
+          diese mit dem Caesar-Verfahren. Nun nehmen Sie die verschlüsselte
+          Nachricht, und geben diese als Klartext ein. Schieben Sie das Alphabet
+          so lange herum, bis eine sinnvolle Nachricht erscheint. Wie schwer war
+          es diese Nachricht zu knacken?
+        </p>
+      </Section>
+      <section>
+        <h2>Verschlüsselungen knacken</h2>
+        <p>
+          Eine Verschlüsselung knacken zu können, ist für einen Hacker immer
+          interessant. Denn man könnte ja an ein Passwort, oder andere geheime
+          Dinge kommen. Aber wie würde man vorgehen um eine Verschlüsselung zu
+          knacken?
+        </p>
+        <p>
+          Im Prinzip ist es ganz einfach. Sie wählen ein
+          Verschlüsselungsverfahren aus, dieses kennen Sie meistens schon im
+          voraus, denn im Internet müssen die Kommunikationspartner zuvor
+          abmachen, welches Verfahren Sie verwenden möchten. Wir nehmen jetzt
+          hier mal das Caesar-Verfahren, auch wenn dieses im digitalen niemals
+          verwendet wird.
+        </p>
+        <p>
+          Jetzt wo wir das Verfahren kennen, raten wir einfach drauf los, also
+          wir testen systematisch alle möglichen Schlüssel für dieses Verfahren
+          durch. Eine solche Attacke nennt man eine{" "}
+          <strong>Brute-Force-Attacke</strong>. Eine solche Attacke funktioniert
+          besonders gut, wenn es nicht so viele Schlüssel gibt, also wenn der{" "}
+          <strong>Schlüsselraum</strong> relativ klein ist.
+        </p>
+        <p>
+          Aber wieso funktioniert eine solche Attacke? Das ist ganz einfach, der
+          Computer kann extrem schnell rechnen, und mehrere Millionen
+          Möglichkeiten in der Sekunde ausprobieren. Der Computer gibt auch
+          nicht auf vor Ermüdung, sondern er rechnet einfach weiter, bis alle
+          Schlüssel durch sind, oder eine Nachricht entschlüsselt werden konnte.
+        </p>
+      </section>
+      <Section>
+        <h2>Schlüsselraum und Sicherheit</h2>
+        <p>
+          Das aller wichtigste bei einem Verschlüsselungsverfahren, ist die
+          Grösse des <strong>Schlüsselraums</strong>. Wenn es genügend viele
+          Schlüssel gibt, die ein Hacker nicht gezielt erraten kann, dann ist
+          das Verfahren vor <strong>Brute-Force-Attacken</strong> sicher. Aber
+          wie gross muss ein solcher Schlüsselraum sein, und wie können wir die
+          Grösse von einem Schlüsselraum bestimmen?
+        </p>
       </Section>
     </>
   );
