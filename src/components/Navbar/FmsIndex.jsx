@@ -44,8 +44,8 @@ export default function FmsIndex() {
               <NavLink to="fms/internet-quiz">Quiz: Internet</NavLink>
               <NavLink to="fms/vpn">VPN</NavLink>
               <NavLink to="fms/vpn-quiz">Quiz: VPN</NavLink>
-              {/*<NavLink to="fms/verschluesselung">Verschlüsselung</NavLink>
-            <NavLink to="fms/verschluesselung-quiz">
+              <NavLink to="fms/verschluesselung">Verschlüsselung</NavLink>
+              {/*<NavLink to="fms/verschluesselung-quiz">
               Quiz: Verschlüsselung
             </NavLink> */}
             </ol>

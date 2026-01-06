@@ -39,10 +39,10 @@ import FmsInternet from "@pages/fms/internet.mdx";
 import FmsInternetQuiz from "@pages/fms/internet-quiz.mdx";
 import FmsInternetStory from "@pages/fms/internet-story.mdx";
 import FmsJavascript from "@pages/fms/javascript.mdx";
-import FmsVerschluesselung from "@pages/fms/verschluesselung.mdx";
 import FmsVerschluesselungQuiz from "@pages/fms/verschluesselung-quiz.mdx";
 import FmsVPN from "@pages/fms/vpn.mdx";
 import FmsVPNQuiz from "@pages/fms/vpn-quiz.mdx";
+import FmsVerschluesselung from "@pages-fms/verschluesselung.jsx";
 import FmsWebdesign from "@pages-fms/webdesign.jsx";
 import BoxModel from "../components/BoxModel";
 // Weitere eigenständige imports. Diese sind nicht verlinkt.

@@ -1,0 +1,47 @@
+.caesarWrapper {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.formGroup,
+.output {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+
+.alphabet {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.alphabet > span {
+  height: 1.2rem;
+  width: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border: 1px solid var(--color-fg);
+  gap: 0.5rem;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.shiftCtrl {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.output {
+}
+
+@container (width < 600px) {
+  .message {
+    color: blue;
+  }
+}

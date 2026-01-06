@@ -1,5 +1,7 @@
 .codeBlock {
-  max-width: 40em;
+  /* FIXME: Bricht das Layout, brauche eine andere Berechnung. Schaue die
+    * media-queries an. */
+  max-width: min(540px, calc(100vw - 42px));
   margin-inline: auto;
 }
 
