@@ -1,6 +1,8 @@
 import Caesar from "@components/Caesar.jsx";
+import { Math } from "@components/Katex.jsx";
 import LearningGoals from "@components/LearningGoals.jsx";
 import Section from "@components/Section.jsx";
+import Vigenere from "@components/Vigenere.jsx";
 
 export default function FmsVerschluesselung() {
   return (
@@ -134,7 +136,61 @@ export default function FmsVerschluesselung() {
           wie gross muss ein solcher Schlüsselraum sein, und wie können wir die
           Grösse von einem Schlüsselraum bestimmen?
         </p>
+        <p>
+          Die Grösse eines Schlüsselraums zu bestimmen, ist im Prinzip sehr
+          einfach, denn es sind einfach die Anzahl an Schlüsseln, die für das
+          Verfahren möglich sind. Beim Caesar-Verfahren, sind das die Anzahl an
+          Verschiebungen die möglich sind, also 26. Das ist ein extrem kleiner
+          Schlüsselraum, und deshalb gilt das Caesar-Verfahren als extrem
+          unsicher. Dieses Verfahren können wir sogar von Hand knacken, nicht
+          einmal das braucht sehr viel Zeit.
+        </p>
+        <p>
+          Möchten wir ein Verschlüsselungsverfahren also sicherer machen, müssen
+          wir ein Verfahren mit einem grösseren Schlüsselraum erstellen. Eine
+          einfache Idee ist die folgende, wir nutzen statt einer Verschiebung,
+          einfach <Math>{String.raw`n`}</Math> Verschiebungen, immer für den
+          nächsten Buchstaben, und wenn alle <Math>{String.raw`n`}</Math>{" "}
+          Verschiebungen durch sind, dann starten wir wieder von vorne. Somit
+          ist unser Schlüsselraum von der Grösse <Math>{String.raw`26^n`}</Math>
+          . Wenn wir unser <Math>{String.raw`n`}</Math> gross genug wählen, dann
+          sollte unser Verfahren sicher sein.
+        </p>
+        <p>
+          Es gibt ein Verfahren das genau sowas macht. Das Verfahren ist auch
+          schon sehr alt, und nicht für Computer gemacht. Wir schauen uns das
+          Verfahren hier an, weil es relativ einfach zu verstehen ist. Später
+          schauen wir dann Verfahren an, die für den Computer gemacht sind.
+        </p>
       </Section>
+      <section>
+        <h2>Das Vigenère-Verfahren</h2>
+        <p>
+          Dieses Verfahren können wir sehr einfach als mehrstufiges
+          Caesar-Verfahren betrachten. Auch hier wird jeder Buchstabe im
+          Alphabet verschoben, jedoch nicht immer mit der gleichen Verschiebung,
+          sondern immer mit einer neuen. Die Frage die sich hier aufwirft, ist:
+          "Wie können wir all diese Verschiebungen merken, also wie können wir
+          uns auf einen Schlüssel einigen?".
+        </p>
+        <p>
+          Da es generell schwer ist sich einen Haufen von Zahlen zu merken, oder
+          zu wissen wie eine grosse Zahl (z.B. 1297623152129) aufgeteilt wird,
+          lösen wir dieses Problem mit einem <strong>Schlüsselwort</strong>. Der
+          Trick ist sehr einfach, die Verschiebung ist immer genau die Position
+          des Buchstabens im Schlüsselwort. Wählen wir zum Beispiel das
+          Schlüsselwort:
+          <strong style={{ color: "var(--color-red)" }}> supersicher</strong>,
+          so gehen wir jeden Buchstaben im Text und im Schlüsselwort durch. Wir
+          schauen schauen jeweils wo sich die beiden Treffen, und markieren
+          diesen Buchstaben. So wird aus der Nachricht{" "}
+          <strong style={{ color: "var(--color-green)" }}>hallowelt</strong> und
+          dem Schlüsselwort{" "}
+          <strong style={{ color: "var(--color-red)" }}>geheim</strong> die
+          verschlüsselte Nachricht: <strong>nespwikpa</strong>.
+        </p>
+        <Vigenere />
+      </section>
     </>
   );
 }
