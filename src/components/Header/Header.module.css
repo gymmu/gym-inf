@@ -13,7 +13,7 @@
     align-items: center;
     justify-content: flex-start;
     font-weight: 700;
-    padding-block: 1rem;
+    padding-block: 0rem;
     padding-inline: 2rem;
     border-bottom: 2px solid var(--color-fg);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -41,6 +41,7 @@
       color: var(--color-yellow);
       flex-grow: 1; /* Damit der Text zentriert bleibt. */
       flex-shrink: 0; /* Damit alles auf einer Zeile bleibt. */
+      margin-block: 0.5rem;
 
       @container (width < 400px) {
         & {

@@ -3,6 +3,7 @@ import { Math } from "@components/Katex.jsx";
 import LearningGoals from "@components/LearningGoals.jsx";
 import Section from "@components/Section.jsx";
 import Vigenere from "@components/Vigenere.jsx";
+import Xor from "@components/Xor.jsx";
 
 export default function FmsVerschluesselung() {
   return (
@@ -190,6 +191,72 @@ export default function FmsVerschluesselung() {
           verschlüsselte Nachricht: <strong>nespwikpa</strong>.
         </p>
         <Vigenere />
+        <p>
+          Wenn wir einen genügend langen Text und auch ein genügend langes
+          Schlüsselwort wählen, ist es nicht mehr möglich dieses Verfahren zu
+          knacken.
+        </p>
+      </section>
+      <Section classes="learning">
+        <h2>Gezielte Angriffe</h2>
+        <p>
+          Neben dem blinden raten von Passwörtern, können wir auch gezielte
+          Angriffe machen. Hier spricht man dann oftmals von einem{" "}
+          <strong>Dictionary-Angriff</strong>. Hier wird versucht mit gezielten
+          Wörtern und Wortkombinationen eine Verschlüsselung zu knacken. Bei der
+          Vigenère-Verschlüsselung könnte sowas auch funktionieren, denn es ist
+          einfacher sich ein Wort zu merken, statt einer zufälligen
+          Buchstabenfolge. Genau dieser Fehler wird sehr oft gemacht wenn wir
+          Passwörter verwenden. Irgendwie müssen wir uns das Passwort ja merken
+          können, also darf es nicht zu kompliziert werden. Aber genau das ist
+          ein Fehler, denn so wird der Schlüsselraum deutlich kleiner. Das
+          spielt bei der normalen Verschlüsselung im Internet zum Glück keine
+          Rolle, da wir dort den Schlüssel in der Regel nicht selber wählen.
+        </p>
+        <p>
+          Bei gezielten Angriffen wird auch immer ausgenutzt dass der Geheimtext
+          aus einer bestimmten Sprache kommt, und diese Sprache unterschiedliche
+          Häufigkeiten in den Buchstaben haben. Zum Beispiel sind die Buchstaben{" "}
+          <strong>a</strong> und <strong>e</strong> sehr verbreitet in der
+          deutschen Sprache. So könnten wir bei einem langen Text, der mit
+          Caesar verschlüsselt wurde, einfach schauen wie oft diese Buchstaben
+          vorkommen, das gibt uns einen guten Hinweis für einen möglichen
+          Schlüssel.
+        </p>
+        <p>
+          Ausserdem müssen wir nicht immer den ganzen Text übersetzen, oftmals
+          reicht es schon von den ersten 3 Buchstaben sagen zu können ob es ein
+          deutsches Wort sein könnte, oder nicht.
+        </p>
+      </Section>
+      <section>
+        <h2>Verschlüsselung auf dem Computer</h2>
+        <p>
+          Der Computer verschlüsselt mit einem anderen Prinzip wie wir das mit
+          dem verschieben des Alphabets machen. Wie Sie sicherlich noch wissen,
+          arbeitet der Computer immer auf <strong>Bits</strong>. Und da gibt es
+          eine wunderschöne einfache Methode, wie man eine Reihe von Bytes
+          verschlüsseln kann, so dass man diese nur noch mit dem Schlüssel
+          selber wieder entschlüsseln kann. Wir schauen uns nur das grundlegende
+          Konzept an, denn alle Verschlüsselungsverfahren basieren darauf. Die
+          restlichen Unterschiede bei diesen Verfahren ist dann mehr wie oft das
+          ganze gemacht wird, und in wie grossen Stücken.
+        </p>
+        <p>
+          Das wichtigste hier ist das sogenannte <strong>XOR</strong>-Verfahren.
+          Das ist eine ganze einfache logische Operation, die für jedes Bit
+          ausgeführt wird. Wir brauchen also einen Klartext (in Bits) und einen
+          Schlüssel (in Bits), damit wir die <strong>XOR</strong>-Operation
+          anwenden können.
+        </p>
+        <Xor />
+        <p>
+          Mit längeren Wörtern, werden es einfach mehr Bits die dann gedreht
+          werden. Das schöne daran ist, dass das ganze unglaublich schnell geht,
+          die Operation ist extrem einfach für den Computer, aber wenn Sie den
+          Schlüssel nicht kennen, ist es absolut unmöglich von der
+          Geheimbotschaft auf den Klartext zu kommen.
+        </p>
       </section>
     </>
   );

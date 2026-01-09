@@ -1,0 +1,14 @@
+.xorContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.xorContainer pre {
+  font-size: 1.2rem;
+}
+
+.borderBottom {
+  border-bottom: 2px solid var(--color-fg);
+}
