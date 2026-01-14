@@ -1,5 +1,7 @@
 import LearningGoals from "@components/LearningGoals.jsx";
 import Section from "@components/Section.jsx";
+import { DH1, DH2 } from "@components/DiffieHellman.jsx";
+import ModuloClock from "@components/ModuloClock.jsx";
 
 export default function Schluesselaustausch() {
   return (
@@ -119,22 +121,49 @@ export default function Schluesselaustausch() {
           noch eine eigene Geheimzahl. Diese Zahl wird niemals übertragen.
         </p>
         <DH1 />
+        <h3>Modulo-Rechnung verstehen</h3>
+        <p>
+          Bevor wir zum zweiten Schritt kommen, müssen wir die{" "}
+          <strong>Modulo-Rechnung</strong> verstehen. Die Modulo-Operation gibt
+          uns den Rest einer Division zurück. Eine intuitive Art, sich dies
+          vorzustellen, ist eine Uhr: Wenn es jetzt 10 Uhr ist und Sie 5 Stunden
+          hinzufügen, ist es 3 Uhr - nicht 15 Uhr. Das ist, weil eine Uhr
+          "modulo 12" funktioniert.
+        </p>
+        <p>
+          Mathematisch ausgedrückt: <em>17 mod 12 = 5</em>, weil 17 geteilt
+          durch 12 gleich 1 Rest 5 ist. Die Zahl macht eine volle Runde um die
+          Uhr und landet bei 5.
+        </p>
+        <ModuloClock />
+        <p>
+          Die Modulo-Operation ist extrem wichtig für die Sicherheit des
+          Diffie-Hellman-Verfahrens. Selbst wenn jemand die öffentlichen Werte
+          kennt, ist es praktisch unmöglich, die ursprünglichen Geheimzahlen
+          zurückzurechnen - besonders bei sehr grossen Primzahlen.
+        </p>
+        <h3>Zweite Runde: Berechnung der öffentlichen Werte</h3>
+        <p>
+          Im zweiten Schritt berechnen Alice und Bob jeweils einen öffentlichen
+          Wert aus ihrer Geheimzahl und den gemeinsamen öffentlichen Parametern.
+          Diese Berechnung verwendet Potenzierung und die Modulo-Operation:
+        </p>
+        <ul>
+          <li>
+            Alice berechnet: A = g<sup>a</sup> mod p
+          </li>
+          <li>
+            Bob berechnet: B = g<sup>b</sup> mod p
+          </li>
+        </ul>
+        <p>
+          Diese berechneten Werte <em>A</em> und <em>B</em> werden dann über das
+          unsichere Netzwerk ausgetauscht. Aber aufgrund der Modulo-Operation
+          kann niemand, der diese Werte abfängt, die ursprünglichen Geheimzahlen{" "}
+          <em>a</em> und <em>b</em> zurückberechnen.
+        </p>
+        <DH2 />
       </Section>
     </>
-  );
-}
-
-function DH1() {
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-      }}
-    >
-      <div>Alice</div>
-      <div>Public</div>
-      <div>Bob</div>
-    </div>
   );
 }
