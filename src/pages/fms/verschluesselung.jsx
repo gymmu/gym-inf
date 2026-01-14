@@ -1,3 +1,4 @@
+import AsciiConverter from "@components/AsciiConverter.jsx";
 import Caesar from "@components/Caesar.jsx";
 import { DMath, Math } from "@components/Katex.jsx";
 import LearningGoals from "@components/LearningGoals.jsx";
@@ -242,12 +243,29 @@ export default function FmsVerschluesselung() {
           restlichen Unterschiede bei diesen Verfahren ist dann mehr wie oft das
           ganze gemacht wird, und in wie grossen Stücken.
         </p>
+        <h3>ASCII und Binär-Darstellung</h3>
+        <p>
+          Bevor wir uns das <strong>XOR</strong>-Verfahren anschauen, müssen wir
+          verstehen wie der Computer Zeichen speichert. Jedes Zeichen hat einen
+          sogenannten <strong>ASCII-Wert</strong>, das ist einfach eine Zahl die
+          diesem Zeichen zugeordnet ist. Zum Beispiel hat der Buchstabe "A" den
+          ASCII-Wert 65. Diese Zahl wird dann in <strong>Binär</strong>{" "}
+          dargestellt, also als eine Folge von 0 und 1. Mit dem folgenden Tool
+          können Sie selber ausprobieren wie die Umwandlung funktioniert. Sie
+          können jedes der drei Felder ändern, und die anderen werden
+          automatisch aktualisiert.
+        </p>
+        <AsciiConverter />
+        <h3>Das XOR-Verfahren</h3>
         <p>
           Das wichtigste hier ist das sogenannte <strong>XOR</strong>-Verfahren.
           Das ist eine ganze einfache logische Operation, die für jedes Bit
           ausgeführt wird. Wir brauchen also einen Klartext (in Bits) und einen
           Schlüssel (in Bits), damit wir die <strong>XOR</strong>-Operation
-          anwenden können.
+          anwenden können. Die XOR-Operation vergleicht jedes Bit vom Klartext
+          mit dem entsprechenden Bit vom Schlüssel. Wenn beide Bits gleich sind
+          (beide 0 oder beide 1), wird das Ergebnis 0. Wenn die Bits
+          unterschiedlich sind, wird das Ergebnis 1.
         </p>
         <Xor />
         <p>

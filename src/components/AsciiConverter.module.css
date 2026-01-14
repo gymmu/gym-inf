@@ -1,0 +1,52 @@
+.converterContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 500px;
+  border: 1px solid var(--color-gray);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputGroup label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--color-yellow);
+}
+
+.inputGroup input {
+  padding: 0.75rem;
+  font-size: 1.2rem;
+  font-family: monospace;
+  border: 1px solid var(--color-gray);
+  background-color: var(--color-gray-darker);
+  color: var(--color-fg);
+  transition: border-color 0.2s;
+}
+
+.inputGroup input:focus {
+  outline: none;
+  border-color: var(--color-blue);
+}
+
+.inputChar {
+  text-align: center;
+  font-size: 2rem !important;
+  font-weight: bold;
+}
+
+.inputAscii {
+  text-align: center;
+}
+
+.inputBinary {
+  letter-spacing: 0.5em;
+  text-align: center;
+  font-family: monospace;
+}
