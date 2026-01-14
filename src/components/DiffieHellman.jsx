@@ -36,8 +36,7 @@ export function DH1() {
           <div className={style.values}>
             <div className={`${style.valueBox} ${style.secret}`}>
               <span className={style.label}>Geheimzahl</span>
-              <span className={style.variable}>a</span>
-              <span className={style.value}>{a}</span>
+              <span className={style.equation}>a = {a}</span>
             </div>
           </div>
         </div>
@@ -48,13 +47,11 @@ export function DH1() {
           <div className={style.values}>
             <div className={`${style.valueBox} ${style.publicValue}`}>
               <span className={style.label}>Primzahl</span>
-              <span className={style.variable}>p</span>
-              <span className={style.value}>{p}</span>
+              <span className={style.equation}>p = {p}</span>
             </div>
             <div className={`${style.valueBox} ${style.publicValue}`}>
               <span className={style.label}>Generator</span>
-              <span className={style.variable}>g</span>
-              <span className={style.value}>{g}</span>
+              <span className={style.equation}>g = {g}</span>
             </div>
           </div>
         </div>
@@ -65,8 +62,7 @@ export function DH1() {
           <div className={style.values}>
             <div className={`${style.valueBox} ${style.secret}`}>
               <span className={style.label}>Geheimzahl</span>
-              <span className={style.variable}>b</span>
-              <span className={style.value}>{b}</span>
+              <span className={style.equation}>b = {b}</span>
             </div>
           </div>
         </div>
@@ -109,8 +105,7 @@ export function DH2() {
           <div className={style.values}>
             <div className={`${style.valueBox} ${style.secret}`}>
               <span className={style.label}>Geheimzahl</span>
-              <span className={style.variable}>a</span>
-              <span className={style.value}>{a}</span>
+              <span className={style.equation}>a = {a}</span>
             </div>
             <div className={`${style.valueBox} ${style.computed}`}>
               <span className={style.label}>Berechnet</span>
@@ -124,8 +119,7 @@ export function DH2() {
               <span className={style.calculation}>
                 = {formatNumberCH(gPowA)} mod {p}
               </span>
-              <span className={style.variable}>A</span>
-              <span className={style.value}>{A}</span>
+              <span className={style.equation}>A = {A}</span>
             </div>
           </div>
         </div>
@@ -136,13 +130,11 @@ export function DH2() {
           <div className={style.values}>
             <div className={`${style.valueBox} ${style.publicValue}`}>
               <span className={style.label}>Primzahl</span>
-              <span className={style.variable}>p</span>
-              <span className={style.value}>{p}</span>
+              <span className={style.equation}>p = {p}</span>
             </div>
             <div className={`${style.valueBox} ${style.publicValue}`}>
               <span className={style.label}>Generator</span>
-              <span className={style.variable}>g</span>
-              <span className={style.value}>{g}</span>
+              <span className={style.equation}>g = {g}</span>
             </div>
           </div>
         </div>
@@ -153,8 +145,7 @@ export function DH2() {
           <div className={style.values}>
             <div className={`${style.valueBox} ${style.secret}`}>
               <span className={style.label}>Geheimzahl</span>
-              <span className={style.variable}>b</span>
-              <span className={style.value}>{b}</span>
+              <span className={style.equation}>b = {b}</span>
             </div>
             <div className={`${style.valueBox} ${style.computed}`}>
               <span className={style.label}>Berechnet</span>
@@ -168,8 +159,7 @@ export function DH2() {
               <span className={style.calculation}>
                 = {formatNumberCH(gPowB)} mod {p}
               </span>
-              <span className={style.variable}>B</span>
-              <span className={style.value}>{B}</span>
+              <span className={style.equation}>B = {B}</span>
             </div>
           </div>
         </div>
@@ -195,6 +185,125 @@ export function DH2() {
           Netzwerk ausgetauscht werden. Die Modulo-Operation sorgt dafür, dass
           aus diesen Werten nicht auf die geheimen Zahlen <em>a</em> und{" "}
           <em>b</em> zurückgeschlossen werden kann.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export function DH3() {
+  // Berechne öffentliche Werte (aus Schritt 2)
+  const A = modPow(g, a, p); // A = g^a mod p = 5^6 mod 23 = 8
+  const B = modPow(g, b, p); // B = g^b mod p = 5^15 mod 23 = 19
+
+  // Berechne gemeinsamen Schlüssel
+  const keyAlice = modPow(B, a, p); // s = B^a mod p = 19^6 mod 23
+  const keyBob = modPow(A, b, p); // s = A^b mod p = 8^15 mod 23
+
+  // Für die Anzeige: zeige auch die "rohen" Werte vor Modulo
+  const BPowA = Math.pow(B, a); // 19^6 = 47045881
+  const APowB = Math.pow(A, b); // 8^15 = 35184372088832
+
+  return (
+    <div className={style.dhContainer}>
+      <div className={style.dhGrid}>
+        {/* Alice Spalte */}
+        <div className={style.party}>
+          <h3 className={style.partyName}>Alice</h3>
+          <div className={style.values}>
+            <div className={`${style.valueBox} ${style.secret}`}>
+              <span className={style.label}>Geheimzahl</span>
+              <span className={style.equation}>a = {a}</span>
+            </div>
+            <div className={`${style.valueBox} ${style.publicValue}`}>
+              <span className={style.label}>Empfangen</span>
+              <span className={style.equation}>B = {B}</span>
+            </div>
+            <div className={`${style.valueBox} ${style.sharedKey}`}>
+              <span className={style.label}>Schlüssel</span>
+              <span className={style.calculation}>
+                s = B<sup>a</sup> mod p
+              </span>
+              <span className={style.calculation}>
+                = {B}
+                <sup>{a}</sup> mod {p}
+              </span>
+              <span className={style.calculation}>
+                = {formatNumberCH(BPowA)} mod {p}
+              </span>
+              <span className={style.equation}>s = {keyAlice}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Public/Mitte Spalte */}
+        <div className={style.public}>
+          <h3 className={style.partyName}>Öffentlich</h3>
+          <div className={style.values}>
+            <div className={`${style.valueBox} ${style.publicValue}`}>
+              <span className={style.label}>Alice sendet</span>
+              <span className={style.equation}>A = {A}</span>
+            </div>
+            <div className={`${style.valueBox} ${style.publicValue}`}>
+              <span className={style.label}>Bob sendet</span>
+              <span className={style.equation}>B = {B}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Bob Spalte */}
+        <div className={style.party}>
+          <h3 className={style.partyName}>Bob</h3>
+          <div className={style.values}>
+            <div className={`${style.valueBox} ${style.secret}`}>
+              <span className={style.label}>Geheimzahl</span>
+              <span className={style.equation}>b = {b}</span>
+            </div>
+            <div className={`${style.valueBox} ${style.publicValue}`}>
+              <span className={style.label}>Empfangen</span>
+              <span className={style.equation}>A = {A}</span>
+            </div>
+            <div className={`${style.valueBox} ${style.sharedKey}`}>
+              <span className={style.label}>Schlüssel</span>
+              <span className={style.calculation}>
+                s = A<sup>b</sup> mod p
+              </span>
+              <span className={style.calculation}>
+                = {A}
+                <sup>{b}</sup> mod {p}
+              </span>
+              <span className={style.calculation}>
+                = {formatNumberCH(APowB)} mod {p}
+              </span>
+              <span className={style.equation}>s = {keyBob}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={style.explanation}>
+        <p>
+          <strong>Schritt 3: Berechnung des gemeinsamen Schlüssels</strong>
+        </p>
+        <p>
+          Alice empfängt <em>B = {B}</em> von Bob und berechnet: s = B
+          <sup>a</sup> mod p = {B}
+          <sup>{a}</sup> mod {p} = {formatNumberCH(BPowA)} mod {p} ={" "}
+          <strong>{keyAlice}</strong>
+        </p>
+        <p>
+          Bob empfängt <em>A = {A}</em> von Alice und berechnet: s = A
+          <sup>b</sup> mod p = {A}
+          <sup>{b}</sup> mod {p} = {formatNumberCH(APowB)} mod {p} ={" "}
+          <strong>{keyBob}</strong>
+        </p>
+        <p>
+          Beide Parteien haben nun denselben gemeinsamen Schlüssel{" "}
+          <strong>s = {keyAlice}</strong> berechnet, ohne ihre geheimen Zahlen{" "}
+          <em>a</em> und <em>b</em> jemals übertragen zu haben. Dies
+          funktioniert aufgrund der mathematischen Eigenschaft: (g<sup>a</sup>)
+          <sup>b</sup> mod p = (g<sup>b</sup>)<sup>a</sup> mod p = g
+          <sup>ab</sup> mod p
         </p>
       </div>
     </div>

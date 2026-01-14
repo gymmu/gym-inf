@@ -77,6 +77,12 @@
   font-family: monospace;
 }
 
+.equation {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: monospace;
+}
+
 /* Secret values - rötlich */
 .secret {
   background-color: rgba(255, 100, 100, 0.1);
@@ -93,13 +99,14 @@
 
 /* Computed values - bläulich (für spätere Schritte) */
 .computed {
-  background-color: rgba(100, 150, 255, 0.1);
-  border-color: #6c5ce7;
-  color: #5f3dc4;
+  background-color: rgba(100, 150, 255, 0.05);
+  border-color: #7c6ce7;
+  color: #4338ca;
 }
 
 /* Shared secret - gold (für letzten Schritt) */
-.sharedSecret {
+.sharedSecret,
+.sharedKey {
   background-color: rgba(255, 200, 50, 0.1);
   border-color: #fdcb6e;
   color: #e17055;

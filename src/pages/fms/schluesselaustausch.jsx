@@ -1,6 +1,6 @@
 import LearningGoals from "@components/LearningGoals.jsx";
 import Section from "@components/Section.jsx";
-import { DH1, DH2 } from "@components/DiffieHellman.jsx";
+import { DH1, DH2, DH3 } from "@components/DiffieHellman.jsx";
 import ModuloClock from "@components/ModuloClock.jsx";
 
 export default function Schluesselaustausch() {
@@ -163,6 +163,53 @@ export default function Schluesselaustausch() {
           <em>a</em> und <em>b</em> zurückberechnen.
         </p>
         <DH2 />
+        <h3>Dritte Runde: Berechnung des gemeinsamen Schlüssels</h3>
+        <p>
+          Im finalen Schritt tauschen Alice und Bob ihre öffentlichen Werte{" "}
+          <em>A</em> und <em>B</em> über das Netzwerk aus. Jede Partei verwendet
+          dann den empfangenen öffentlichen Wert zusammen mit ihrer eigenen
+          Geheimzahl, um den gemeinsamen Schlüssel zu berechnen:
+        </p>
+        <ul>
+          <li>
+            Alice berechnet: s = B<sup>a</sup> mod p (empfangenes <em>B</em> mit
+            eigenem geheimen <em>a</em>)
+          </li>
+          <li>
+            Bob berechnet: s = A<sup>b</sup> mod p (empfangenes <em>A</em> mit
+            eigenem geheimen <em>b</em>)
+          </li>
+        </ul>
+        <p>
+          Die Magie des Diffie-Hellman-Verfahrens liegt darin, dass beide
+          Berechnungen zum <strong>gleichen Ergebnis</strong> führen! Dies
+          funktioniert aufgrund der mathematischen Eigenschaft:
+        </p>
+        <p style={{ textAlign: "center", fontStyle: "italic" }}>
+          (g<sup>a</sup>)<sup>b</sup> mod p = (g<sup>b</sup>)<sup>a</sup> mod p
+          = g<sup>ab</sup> mod p
+        </p>
+        <p>
+          Beide Parteien haben nun denselben geheimen Schlüssel <em>s</em>, ohne
+          dass dieser jemals über das Netzwerk übertragen wurde. Ein Angreifer,
+          der alle öffentlichen Werte (<em>p</em>, <em>g</em>, <em>A</em>,{" "}
+          <em>B</em>) kennt, kann den Schlüssel nicht berechnen, da er die
+          geheimen Zahlen <em>a</em> und <em>b</em> nicht kennt - und diese aus
+          den öffentlichen Werten zurückzurechnen ist bei ausreichend grossen
+          Primzahlen praktisch unmöglich (das sogenannte{" "}
+          <strong>Diskrete-Logarithmus-Problem</strong>).
+        </p>
+        <DH3 />
+        <h3>Sicherheit in der Praxis</h3>
+        <p>
+          In unserem Beispiel haben wir zur Veranschaulichung kleine Zahlen
+          verwendet (<em>p = 23</em>). In der realen Anwendung werden jedoch
+          Primzahlen mit mehreren hundert oder tausend Stellen verwendet, was
+          das Verfahren extrem sicher macht. Das Diffie-Hellman-Verfahren ist
+          ein fundamentaler Baustein der modernen Internet-Sicherheit und wird
+          in Protokollen wie TLS/SSL verwendet, um sichere HTTPS-Verbindungen
+          aufzubauen.
+        </p>
       </Section>
     </>
   );
