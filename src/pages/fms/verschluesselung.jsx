@@ -1,5 +1,5 @@
 import Caesar from "@components/Caesar.jsx";
-import { Math } from "@components/Katex.jsx";
+import { DMath, Math } from "@components/Katex.jsx";
 import LearningGoals from "@components/LearningGoals.jsx";
 import Section from "@components/Section.jsx";
 import Vigenere from "@components/Vigenere.jsx";
@@ -255,9 +255,128 @@ export default function FmsVerschluesselung() {
           werden. Das schöne daran ist, dass das ganze unglaublich schnell geht,
           die Operation ist extrem einfach für den Computer, aber wenn Sie den
           Schlüssel nicht kennen, ist es absolut unmöglich von der
-          Geheimbotschaft auf den Klartext zu kommen.
+          Geheimbotschaft auf den Klartext zu kommen. Genau das machen sich
+          moderne Verschlüsselungsverfahren zu nutzen.
         </p>
       </section>
+      <Section>
+        <h2>AES - Advanced Encryption Standard</h2>
+        <p>
+          Das <strong>AES</strong>-Verfahren ist ein modernen
+          Verschlüsselungsverfahren, welches oftmals auf dem Computer angewendet
+          wird. Es wird zum Beispiel bei WLAN-Verbindungen mit Verschlüsselung
+          eingesetzt, wie auch bei <strong>https</strong>.
+        </p>
+        <p>
+          Das AES-Verfahren verwendet mehrere Runden der Verschlüsselung (10 -
+          14) und jede Runde besteht aus 4 Phasen. Wir werden uns diese Phasen
+          nicht genau anschauen, Sie müssen jedoch wissen wofür diese Phasen
+          verwendet werden.
+        </p>
+        <h3>4 Phasen von AES</h3>
+        <p>
+          Der Verschlüsselungsschritt in AES ist die letzte Phase pro Runde, da
+          wird das <strong>XOR</strong>-Verfahren von weiter oben verwendet. Wie
+          wir bereits gesehen haben, ist es nicht möglich wegen der Grösse des
+          Schlüsselraums auf diesen Schlüssel zu kommen. Jedoch können wir
+          klevere Tricks anwenden, denn wir wissen ja, das ein Text herauskommen
+          sollte. So können wir wegen dem <strong>XOR</strong>-Verfahren
+          versuchen den Schlüssel systematisch zu erraten, was den potenziellen
+          Schlüsselraum deutlich kleiner macht. Um dieses Problem zu umgehen,
+          führt <strong>AES</strong> diese ersten 3 Schritte ein. Da werden im
+          Prinzip einfach Bits nach einem Schema vermischt, so das wir keine
+          systematische Analyse mehr machen können. Dadurch bleibt der
+          Schlüsselraum so gross wie er eigentlich sein sollte.
+          <DMath>{String.raw`2^{128}=340282366920938463463374607431768211456`}</DMath>
+        </p>
+        <ol>
+          <li>
+            <strong>Sub Bytes:</strong> Hier werden Bytes nach einem fixen
+            Muster ersetzt.
+          </li>
+          <li>
+            <strong>Shift Row:</strong> Hier werden die Reihen nach einem fixen
+            Muster verschoben.
+          </li>
+          <li>
+            <strong>Mix Column:</strong> Hier werden die Zeilen nach einem fixen
+            Muster durchmischt.
+          </li>
+          <li>
+            <strong>Key Addition:</strong> Dies ist der Verschlüsselungsschritt,
+            hier wird die
+            <strong>XOR</strong>-Operation mit Schlüssel und den gemischten
+            Bytes angewendet. Ohne diese Operation wäre das Verfahren nicht
+            verschlüsselt, da alle anderen Schritte auch ohne Schlüssel
+            umkehrbar sind.
+          </li>
+        </ol>
+        <p>
+          Die Details hier sind absichtlich weggelassen worden, denn für Sie ist
+          nur wichtig zu wissen, die Verschlüsselung passiert nur im
+          <strong>XOR</strong>-Schritt. Alle anderen Schritte sind nur dazu
+          gedacht, dass man nicht systematisch nach dem Schlüssel raten kann.
+        </p>
+      </Section>
+      <section>
+        <h2>Systematisches Raten</h2>
+        <p>
+          Wieso ist es denn wichtig, das wir uns vor dem systematischen Erraten
+          schützen können, der Schlüsselraum ist ja viel zu gross. Um das zu
+          verstehen, müssen wir besser verstehen was denn eigentlich passiert.
+          <strong>AES</strong> verschlüsselt alle Daten in Blöcken, und
+          verwendet für diese Blöcke den gleichen Schlüssel. Wir nehmen für
+          unser Beispiel mal an, das wir nur Text im ASCII-Format verschicken,
+          dann passen genau <Math>{String.raw`128 : 8 = 16`}</Math> Buchstaben
+          in einen Block.
+        </p>
+        <p>
+          Als Hacker würden wir nun ganz viele von diesen Blöcken sammeln. Da
+          wir hier von Text ausgehen, können wir davon ausgehen dass das
+          <pre>Leerzeichen</pre> am häufigsten vorkommt. Somit können wir nach
+          dem häufigsten Byte suchen, und die <strong>XOR</strong>-Operation für
+          dieses Byte mit dem <pre>Leerzeichen</pre> durchführen. So können wir
+          bereits einige Stellen des Schlüssels erraten. Da in 16 Buchstaben das{" "}
+          <pre>Leerzeichen</pre> mit grosser Wahrscheinlichkeit mindestens 1-mal
+          vorkommt, können wir sehr gut danach suchen.
+        </p>
+        <p>
+          Auch wenn dies jetzt relativ einfach klingt, in der Praxis ist das
+          überhaupt nicht einfach, und oft brauchen Sie sehr viele Blöcke um ein
+          solches Verfahren wirklich anzugehen. Damit man solche Methoden aber
+          keinesfalls anwenden kann, hat man beim <strong>AES</strong>
+          mehrere Runden und auch diese Vermischungsschritte eingeführt.
+        </p>
+        <p>
+          Aktuell geht man davon aus, dass das <strong>AES</strong>-Verfahren
+          sicher ist, jedoch gilt es zu Bedenken den Schlüssel auf 256-Bits zu
+          vergrössern, denn man rechnet damit dass die Computer so schnell
+          werden, dass ein 128-Bit Schlüssel und absehbarer Zukunft geknackt
+          werden kann. Das ist jedoch kein Problem, diese Verfahren werden
+          bereits automatisch durchgeführt, und sind bereits oder werden noch
+          auf 256-Bits hochgestuft.
+        </p>
+      </section>
+      <Section>
+        <h2>Sichere Verbindung prüfen</h2>
+        <p>
+          Nun wissen Sie alles über Verschlüsselung und weshalb es wichtig ist,
+          um genügend Angst zu haben eine nicht verschlüsselte Verbindung zu
+          haben. Also wie können Sie das ganze Prüfen? Oftmals ist das ganz
+          einfach, denn Sie haben ein kleines Vorhängeschloss in Ihrer URL-Bar.
+          Wenn das Schloss angezeigt wird, dann sind Sie sicher.
+        </p>
+        <p>
+          Wenn Sie jetzt aber noch mehr Informationen möchten, weil Ihnen etwas
+          merkwürdig erscheint, dann können Sie auf das Schloss klicken, und die
+          Details anschauen, oder Sie öffnen die Entwickerwerkzeuge des Browsers
+          mit <pre>CRTL + SHIFT + I</pre> und suchen nach einem Tab das mit{" "}
+          <pre>Sicherheit</pre> angeschrieben ist. Dort finden Sie alles nötige
+          zur Verbindung, und Sie sehen auch welcher Algorithmus verwendet
+          wurde. Wenn Sie das für diese Seite machen, dann ist es vermutlich ein{" "}
+          <pre>AES-128</pre>.
+        </p>
+      </Section>
     </>
   );
 }

@@ -42,6 +42,7 @@ import FmsJavascript from "@pages/fms/javascript.mdx";
 import FmsVerschluesselungQuiz from "@pages/fms/verschluesselung-quiz.mdx";
 import FmsVPN from "@pages/fms/vpn.mdx";
 import FmsVPNQuiz from "@pages/fms/vpn-quiz.mdx";
+import Schluesselaustausch from "@pages-fms/schluesselaustausch.jsx";
 import FmsVerschluesselung from "@pages-fms/verschluesselung.jsx";
 import FmsWebdesign from "@pages-fms/webdesign.jsx";
 import BoxModel from "../components/BoxModel";
@@ -102,6 +103,10 @@ export const createRouter = () => {
           { path: "/fms/vpn", element: <FmsVPN /> },
           { path: "/fms/vpn-quiz", element: <FmsVPNQuiz /> },
           { path: "/fms/verschluesselung", element: <FmsVerschluesselung /> },
+          {
+            path: "/fms/schluesselaustausch",
+            element: <Schluesselaustausch />,
+          },
           {
             path: "/fms/verschluesselung-quiz",
             element: <FmsVerschluesselungQuiz />,
