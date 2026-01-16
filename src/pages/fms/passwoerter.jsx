@@ -71,7 +71,36 @@ export default function Passwoerter() {
         {/* 
           Beispiel für Datenbankauszug mit Passwörter, bzw den Hashes.
           */}
+        <p>
+          Ein Online-Dienstanbieter, speichert also nur den Hash zu Ihrem
+          Passwort. Wenn dann eine Login-Anfrage von Ihnen kommt, wird Ihr
+          Passwort direkt gehashed und mit dem Eintrag in der Datenbank
+          verglichen. So kann einfach getestet werde, ob Sie das richtige
+          Passwort kennen, ohne das der Dienstanbieter Ihr eigentliches Passwort
+          jemals gesehen hat. Das ist für unser Gewissen super gut, denn so
+          müssen wir uns nicht darum kümmern was der Dienstanbieter mit diesem
+          Passwort macht.
+        </p>
       </Section>
+      <section>
+        <h2>Passwort Hacking</h2>
+        <p>
+          Wie Sie aber sicher schon erraten haben, ist das Hacken von
+          Passwörtern sehr lukrativ. Hacker haben also sicher bereits einen Weg
+          gesucht wie man diese Hashes umgehen kann. Und tatsächlich kann man
+          das auch sehr einfach. Das ganze funktioniert mit einer einfachen
+          <em>Brute-Force</em>-Attacke, wie wir das schon von der
+          Verschlüsselung kennen. Wir versuchen also einfach das Passwort zu
+          raten, denn wir können ja systematisch alle möglichen Passwörter
+          durchgehen und jeweils den Hash prüfen.
+        </p>
+        <p>
+          Von diesem Verfahren gibt es noch eine verbesserte Variante, denn man
+          kann sich ganz einfach das Resultat auch speichern, dann werden diese
+          Hash-Funktionen quasi umkehrbar, denn Sie können einfach die Hashes in
+          der Datenbank suchen.
+        </p>
+      </section>
     </>
   );
 }
