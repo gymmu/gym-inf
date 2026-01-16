@@ -1,5 +1,6 @@
 import style from "@components/Xor.module.css";
 import { useMemo, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Xor({ initMsg = "hallo", initKey = "KEY" }) {
   const [plaintext, setPlaintext] = useState(initMsg);
@@ -14,12 +15,6 @@ export default function Xor({ initMsg = "hallo", initKey = "KEY" }) {
   const isValidInput = (str) => {
     // Alle Zeichen müssen druckbar sein
     return str.split("").every(isPrintableChar);
-  };
-
-  // Prüfe ob XOR-Ergebnis druckbar ist
-  const isPrintableResult = (plainCode, keyCode) => {
-    const encryptedCode = plainCode ^ keyCode;
-    return encryptedCode >= 32 && encryptedCode <= 126;
   };
 
   // Berechne XOR für jeden Buchstaben und prüfe ob Ergebnis druckbar
@@ -42,6 +37,7 @@ export default function Xor({ initMsg = "hallo", initKey = "KEY" }) {
       }
 
       result.push({
+        id: uuidv4(),
         plainChar,
         keyChar,
         encryptedChar: String.fromCharCode(encryptedCode),
@@ -98,7 +94,7 @@ export default function Xor({ initMsg = "hallo", initKey = "KEY" }) {
 
       {encryptedData.hasNonPrintable && (
         <div className={style.warning}>
-          ! Achtung: Einige verschlüsselte Zeichen liegen außerhalb des
+          ! Achtung: Einige verschlüsselte Zeichen liegen ausserhalb des
           druckbaren ASCII-Bereichs (32-126) und werden rot markiert. Versuchen
           Sie einen anderen Schlüssel für bessere Lesbarkeit.
         </div>
@@ -106,8 +102,8 @@ export default function Xor({ initMsg = "hallo", initKey = "KEY" }) {
 
       <div className={style.xorContainer}>
         <div className={style.scrollWrapper}>
-          {encryptedData.data.map((data, index) => (
-            <div key={index} className={style.column}>
+          {encryptedData.data.map((data) => (
+            <div key={data.id} className={style.column}>
               <div className={style.row}>
                 <pre className={style.char}>{data.plainChar}</pre>
                 <pre className={style.binary}>{data.plainBinary}</pre>

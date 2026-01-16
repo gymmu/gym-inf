@@ -1,5 +1,5 @@
-import { useState } from "react";
 import style from "@components/DiffieHellman.module.css";
+import { useState } from "react";
 
 export default function ModuloClock() {
   const [dividend, setDividend] = useState(17);
@@ -45,7 +45,7 @@ export default function ModuloClock() {
       </div>
 
       <svg className={style.clock} viewBox="0 0 200 200">
-        {/* Äußerer Kreis */}
+        {/* Äusserer Kreis */}
         <circle
           cx="100"
           cy="100"

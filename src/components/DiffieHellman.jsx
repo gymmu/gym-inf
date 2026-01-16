@@ -6,7 +6,7 @@ const g = 5; // Generator
 const a = 6; // Alices Geheimzahl
 const b = 15; // Bobs Geheimzahl
 
-// Hilfsfunktion für modulare Potenzierung (effizient für große Zahlen)
+// Hilfsfunktion für modulare Potenzierung (effizient für grosse Zahlen)
 function modPow(base, exponent, modulus) {
   if (modulus === 1) return 0;
   let result = 1;
