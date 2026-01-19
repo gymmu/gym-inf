@@ -98,8 +98,66 @@ export default function Passwoerter() {
           Von diesem Verfahren gibt es noch eine verbesserte Variante, denn man
           kann sich ganz einfach das Resultat auch speichern, dann werden diese
           Hash-Funktionen quasi umkehrbar, denn Sie können einfach die Hashes in
-          der Datenbank suchen.
+          der Datenbank suchen. Dieses Verfahren nennt man Rainbow-Tables.
         </p>
+      </section>
+      <Section>
+        <h2>Rainbow-Tables</h2>
+        <p>
+          Eine Rainbow-Table ist im Prinzip etwas ganz einfaches. Es ist einfach
+          nur eine Datenbank, in der alle bekannten Passwörter mit deren Hashes
+          gespeichert werden. Einen Grundstock kann man ganz einfach selber
+          schnell erzeugen, denn wir könnten alle möglichen Passwörter bis zur
+          Länge 8 einfach generieren und deren Hashes berechnen lassen. Diese
+          Resultate speichert man dann in einer Datenbank, und kann das auch mit
+          anderen Teilen.
+        </p>
+        <p>
+          Der Online-Dienst{" "}
+          <a href="https://haveibeenpwned.com/">Have I Been Pwned</a> kann Ihnen
+          anzeigen ob Ihre Passwörter in einer bekannten Rainbow-Table
+          vorkommen, da können Sie das also schnell prüfen, und nötigenfalls
+          Ihre Passwörter gleich ändern.
+        </p>
+        <p>
+          Gegen schwache / kurze Passwörter ist eine solche Attacke sehr
+          effektiv, denn wir können kurze Passwörter sehr schnell erzeugen und
+          auch deren Hashes, so können wir unglaublich schnell testen was das
+          eigentliche Passwort ist. Passwörter mit beliebigen Zeichen aber nur
+          bis zu einer Länge von 6 Zeichen, können mit einem herkömmlichen
+          Laptop in ca. 10 Minuten geknackt werden, und dafür wurden noch nicht
+          einmal alle Kerne im Prozessor verwendet. Mit Zugriff zu mehreren
+          starken GPUs, können kurze Passwörter sehr schnell geknackt werden,
+          bzw man kann systematisch ganze Rainbow-Tables erzeugen und diese mit
+          anderen Hackern teilen.
+        </p>
+        <p>
+          Sie sehen also das diese mühsamen Richtlinien über die Länge und
+          Komplexität Ihres Passwortes durchaus ernst zu nehmen sind, denn
+          ansonsten kann Ihr Passwort ganz schnell und einfach geknackt werden.
+        </p>
+        <h2>Schutz vor Rainbow-Tables</h2>
+        <p>
+          So wie das hier klingt, ist es nur eine Frage der Zeit bis alle
+          Passwörter bis zu einer gewissen Länge geknackt sind, und man diese in
+          einer Rainbow-Table finden kann. Zum Glück ist das nicht ganz so
+          einfach wie es hier klingt, denn es gibt den einfachen Trick das
+          Passwort zu <em>salzen</em>. Hier wird an einer bestimmten Position im
+          Passwort ein zufälliger Text angehängt, und dann wird davon der Hash
+          genommen und gespeichert. Auf diese Art wird eigentlich nur Ihr
+          Passwort künstlich länger gemacht, so kann der Hash der gespeichert
+          ist, nicht mehr in einer Rainbow-Table auftreten, und Ihr Passwort ist
+          sicher. Oftmals werden für zusätzliche Sicherheit mehrere Runden des
+          Hashes durchgeführt, oder es können auch mehrere Salze angewendet
+          werden. Das Ziel dabei ist immer möglichst viel lange Arbeit für den
+          Hacker zu machen, so das er nicht mehrere Konten mit nur einem Aufwand
+          knacken kann, sondern nur eines, und auch dieses nur mit unglaublich
+          viel Aufwand. So lohnt es sich für einen Angreifer schnell nicht mehr,
+          also müssen andere Arten des Passwort-Knackens erfunden werden.
+        </p>
+      </Section>
+      <section>
+        <h2>Phishing</h2>
       </section>
     </>
   );
