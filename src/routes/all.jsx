@@ -26,6 +26,7 @@ import ObsidianMarkdown from "@pages/obsidian-md.mdx";
 // Importiere Unterseiten fürs Gym Praktikum
 import PInstall from "@pages/praktikum/installation.mdx";
 import Regex from "@pages/regex.mdx";
+import GymJSConditions from "@pages-gym/js-bedingungen.jsx";
 import GymJSVariables from "@pages-gym/js-variables.jsx";
 import { createBrowserRouter, Link } from "react-router-dom";
 
@@ -75,6 +76,7 @@ export const createRouter = () => {
           { path: "css", element: <GymCSS /> },
           { path: "javascript", element: <GymJS /> },
           { path: "js-variables", element: <GymJSVariables /> },
+          { path: "js-bedingungen", element: <GymJSConditions /> },
 
           // Gym Praktikum
           { path: "praktikum/install", element: <PInstall /> },
