@@ -6,7 +6,7 @@ export default function Passwoerter() {
     <>
       <h1>Passwörter</h1>
       <p>
-        Das ein sicherer Umgang mit Passwörtern wichtig ist, und das welche
+        Dass ein sicherer Umgang mit Passwörtern wichtig ist, und dass welche
         Sicherheitsmassnahmen gut sind, sollte relativ offensichtlich sein. Das
         Problem dabei ist aber immer, es ist mühsam so viele unterschiedliche
         und auch sichere Passwörter zu kennen. Wir können uns hier leider nicht
@@ -33,19 +33,20 @@ export default function Passwoerter() {
         <p>
           Haben Sie sich schon einmal überlegt was eigentlich passiert wenn Sie
           Ihr Passwort bei einem Onlinedienst angeben? Verwenden Sie für jeden
-          Dienst ein anderes Passwort? Falls nicht, weshalb nicht? Erschient es
-          Ihnen nicht unlogisch, das Sie für Meta das Passwort zu Ihrem
+          Dienst ein anderes Passwort? Falls nicht, weshalb nicht? Erscheint es
+          Ihnen nicht unlogisch, dass Sie für Meta das Passwort zu Ihrem
           Google-Account geben und umgekehrt?
         </p>
         <p>
           Damit Ihr Passwort verifiziert werden kann, muss Ihr Passwort ja
           irgendwo gespeichert sein. Vielleicht ist Ihr Passwort ja
-          verschlüsselt, das bedeutet aber trotzdem, dass der Onlinedienst Ihr
+          verschlüsselt, dass bedeutet aber trotzdem, dass der Onlinedienst Ihr
           Passwort kennt, denn er könnte es ja entschlüsseln. Diese Überlegung
           stellt uns vor ein riesiges Vertrauensproblem im Internet. Und alleine
           diese Überlegung sollte Ihnen klar machen, dass Sie pro Dienst ein
           unterschiedliches Passwort verwenden sollten.
         </p>
+        {/* TODO: Erstelle komponente die einen kleinen Datenbankauszug anzeigt. Es soll möglich sein neue einträge in diese datenbank einzugügen, und auch zu testen ob ein benutzername bereits mit dem korrekten Passwort in der datenbank ist. Speichere diese datenbank in localStorage, und füge einen Button hinzu der die Datenbank auch löschen kann. */}
         <p>
           Zum Glück gibt es aber spezielle "Verschlüsselungsverfahren" die nur
           in eine Richtung funktionieren. Diese Verfahren nennt man "Hashing".
@@ -60,26 +61,27 @@ export default function Passwoerter() {
           verwenden, um auf den korrekten Inhalt zu testen.
         </p>
         <p>
-          Wie bereits bei der Verschlüsselung, ist es wichtig das die Ergebnisse
-          nach der Verschlüsselung eindeutig sind. Diese Eindeutigkeit können
-          wir verwenden um zu testen ob die Eingabe identisch ist. Genau das
-          brauchen wir für Passwörter. Hier ist es nicht wichtig das Passwort zu
-          kennen, wir müssen nur testen können, ob das richtige Passwort
-          eingegeben wurde. Am besten wir schauen und ein Beispiel an, dann
-          sollte alles viel klarer werden.
+          Wie bereits bei der Verschlüsselung, ist es wichtig dass die
+          Ergebnisse nach der Verschlüsselung eindeutig sind. Diese
+          Eindeutigkeit können wir verwenden um zu testen ob die Eingabe
+          identisch ist. Genau das brauchen wir für Passwörter. Hier ist es
+          nicht wichtig das Passwort zu kennen, wir müssen nur testen können, ob
+          das richtige Passwort eingegeben wurde. Am besten wir schauen uns ein
+          Beispiel an, dann sollte alles viel klarer werden.
         </p>
         {/* 
           Beispiel für Datenbankauszug mit Passwörter, bzw den Hashes.
+          Hier soll das Beispiel von oben erweitert werden. Die Passwörter werden zwar noch angezeigt, aber ausgegraut, so das sie nur noch zur kontrolle gesehen werden können. Auch hier wird wieder eine überprüfung ein ein hinzufügen von neuen Einträgen gemacht. Bei der überprüfung wird aber der Hash getestet, und dies auch dem Benutzer kommuniziert.
           */}
         <p>
           Ein Online-Dienstanbieter, speichert also nur den Hash zu Ihrem
           Passwort. Wenn dann eine Login-Anfrage von Ihnen kommt, wird Ihr
           Passwort direkt gehashed und mit dem Eintrag in der Datenbank
-          verglichen. So kann einfach getestet werde, ob Sie das richtige
-          Passwort kennen, ohne das der Dienstanbieter Ihr eigentliches Passwort
-          jemals gesehen hat. Das ist für unser Gewissen super gut, denn so
-          müssen wir uns nicht darum kümmern was der Dienstanbieter mit diesem
-          Passwort macht.
+          verglichen. So kann einfach getestet werden, ob Sie das richtige
+          Passwort kennen, ohne dass der Dienstanbieter Ihr eigentliches
+          Passwort jemals gesehen hat. Das ist für unser Gewissen super gut,
+          denn so müssen wir uns nicht darum kümmern was der Dienstanbieter mit
+          diesem Passwort macht.
         </p>
       </Section>
       <section>
@@ -100,6 +102,7 @@ export default function Passwoerter() {
           Hash-Funktionen quasi umkehrbar, denn Sie können einfach die Hashes in
           der Datenbank suchen. Dieses Verfahren nennt man Rainbow-Tables.
         </p>
+        {/* Hier kommt eine komponente hin, die eine kleine Rainbowtable anzeigt. Das ganze wird in localStorage gespeichert und kann zurückgesetzt werden. Wir haben auch hier die möglichkeit neue einträge hinzuzufügen, sowie die einträge in der Tabelle zu suchen. Wenn wir nach einem Hash suchen den wir bereits in der Tabelle haben, bekommen wir das passwort zurück. */}
       </section>
       <Section>
         <h2>Rainbow-Tables</h2>
@@ -132,7 +135,7 @@ export default function Passwoerter() {
           anderen Hackern teilen.
         </p>
         <p>
-          Sie sehen also das diese mühsamen Richtlinien über die Länge und
+          Sie sehen also dass diese mühsamen Richtlinien über die Länge und
           Komplexität Ihres Passwortes durchaus ernst zu nehmen sind, denn
           ansonsten kann Ihr Passwort ganz schnell und einfach geknackt werden.
         </p>
@@ -149,12 +152,14 @@ export default function Passwoerter() {
           ist, nicht mehr in einer Rainbow-Table auftreten, und Ihr Passwort ist
           sicher. Oftmals werden für zusätzliche Sicherheit mehrere Runden des
           Hashes durchgeführt, oder es können auch mehrere Salze angewendet
-          werden. Das Ziel dabei ist immer möglichst viel lange Arbeit für den
-          Hacker zu machen, so das er nicht mehrere Konten mit nur einem Aufwand
-          knacken kann, sondern nur eines, und auch dieses nur mit unglaublich
-          viel Aufwand. So lohnt es sich für einen Angreifer schnell nicht mehr,
-          also müssen andere Arten des Passwort-Knackens erfunden werden.
+          werden. Das Ziel dabei ist immer möglichst langwierige Arbeit für den
+          Hacker zu machen, so dass er nicht mehrere Konten mit nur einem
+          Aufwand knacken kann, sondern nur eines, und auch dieses nur mit
+          unglaublich viel Aufwand. So lohnt es sich für einen Angreifer schnell
+          nicht mehr, also müssen andere Arten des Passwort-Knackens erfunden
+          werden.
         </p>
+        {/* Hier wird die Komponente von weiter oben mit den Hashes und den Passwörtern nochmals erweitert, hier kommt dann noch ein salz dazu. Das Salz wird auch in der Datenbank gespeichert, Angezeigt werden alle Einträge, auch die zusammensetzung von passwort und salz. Es wird aber alles ausgegraut, ausser dem Benutzernamen, salz und dem endgültigen Hash, um klar zu machen dass dies die Einträge in einer solchen Datenbank sind. Alles andere ist nur zum verstehen da. */}
       </Section>
       <section>
         <h2>Phishing</h2>
