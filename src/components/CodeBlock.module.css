@@ -1,0 +1,131 @@
+/* Container für den gesamten Code-Block */
+.codeBlockContainer {
+  max-width: min(540px, calc(100vw - 42px));
+  margin-inline: auto;
+  margin-block: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background-color: #1d2021; /* Gruvbox darker bg */
+}
+
+/* Header mit Language Badge und Copy Button */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #1d2021; /* Gruvbox darker bg */
+  border-bottom: 1px solid #3c3836; /* Gruvbox bg2 */
+}
+
+/* Linke Seite des Headers (Language, Filename, Badges) */
+.leftHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Language Badge */
+.language {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #928374; /* Gruvbox gray */
+  letter-spacing: 0.05em;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Filename (optional) */
+.filename {
+  font-size: 0.75rem;
+  color: #ebdbb2; /* Gruvbox fg */
+  font-family: "Courier New", Courier, monospace;
+  opacity: 0.8;
+}
+
+/* Diff Badge */
+.diffBadge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #fe8019; /* Gruvbox orange */
+  background-color: rgba(254, 128, 25, 0.15);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(254, 128, 25, 0.3);
+}
+
+/* Copy Button */
+.copyButton {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  background-color: #3c3836; /* Gruvbox bg2 */
+  color: #ebdbb2; /* Gruvbox fg */
+  border: 1px solid #504945; /* Gruvbox bg3 */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.copyButton:hover {
+  background-color: #504945; /* Gruvbox bg3 */
+  border-color: #665c54; /* Gruvbox bg4 */
+}
+
+.copyButton:active {
+  transform: scale(0.95);
+}
+
+.copyButton:focus {
+  outline: 2px solid #83a598; /* Gruvbox blue */
+  outline-offset: 2px;
+}
+
+/* Überschreibe SyntaxHighlighter overflow für horizontal scrolling */
+.codeBlockContainer :global(pre) {
+  overflow-x: auto !important;
+  margin: 0 !important;
+}
+
+/* Scrollbar Styling für bessere Ästhetik (WebKit Browser) */
+.codeBlockContainer :global(pre)::-webkit-scrollbar {
+  height: 8px;
+}
+
+.codeBlockContainer :global(pre)::-webkit-scrollbar-track {
+  background: #1d2021; /* Gruvbox darker bg */
+}
+
+.codeBlockContainer :global(pre)::-webkit-scrollbar-thumb {
+  background: #504945; /* Gruvbox bg3 */
+  border-radius: 4px;
+}
+
+.codeBlockContainer :global(pre)::-webkit-scrollbar-thumb:hover {
+  background: #665c54; /* Gruvbox bg4 */
+}
+
+/* Firefox Scrollbar */
+.codeBlockContainer :global(pre) {
+  scrollbar-width: thin;
+  scrollbar-color: #504945 #1d2021;
+}
+
+/* Diff Mode - Hinzugefügte Zeilen (grün) */
+.diffLineAdded {
+  background-color: rgba(184, 187, 38, 0.25) !important; /* Gruvbox green */
+}
+
+/* Diff Mode - Entfernte Zeilen (rot) */
+.diffLineRemoved {
+  background-color: rgba(251, 73, 52, 0.25) !important; /* Gruvbox red */
+}
+
+/* Highlighted Lines (blau) */
+.highlightedLine {
+  background-color: rgba(131, 165, 152, 0.2) !important; /* Gruvbox blue */
+}
