@@ -1,4 +1,8 @@
+import HashedPasswordDatabase from "@components/HashedPasswordDatabase";
 import LearningGoals from "@components/LearningGoals";
+import PlainPasswordDatabase from "@components/PlainPasswordDatabase";
+import RainbowTable from "@components/RainbowTable";
+import SaltedPasswordDatabase from "@components/SaltedPasswordDatabase";
 import Section from "@components/Section";
 
 export default function Passwoerter() {
@@ -46,7 +50,7 @@ export default function Passwoerter() {
           diese Überlegung sollte Ihnen klar machen, dass Sie pro Dienst ein
           unterschiedliches Passwort verwenden sollten.
         </p>
-        {/* TODO: Erstelle komponente die einen kleinen Datenbankauszug anzeigt. Es soll möglich sein neue einträge in diese datenbank einzugügen, und auch zu testen ob ein benutzername bereits mit dem korrekten Passwort in der datenbank ist. Speichere diese datenbank in localStorage, und füge einen Button hinzu der die Datenbank auch löschen kann. */}
+        <PlainPasswordDatabase />
         <p>
           Zum Glück gibt es aber spezielle "Verschlüsselungsverfahren" die nur
           in eine Richtung funktionieren. Diese Verfahren nennt man "Hashing".
@@ -69,10 +73,7 @@ export default function Passwoerter() {
           das richtige Passwort eingegeben wurde. Am besten wir schauen uns ein
           Beispiel an, dann sollte alles viel klarer werden.
         </p>
-        {/* 
-          Beispiel für Datenbankauszug mit Passwörter, bzw den Hashes.
-          Hier soll das Beispiel von oben erweitert werden. Die Passwörter werden zwar noch angezeigt, aber ausgegraut, so das sie nur noch zur kontrolle gesehen werden können. Auch hier wird wieder eine überprüfung ein ein hinzufügen von neuen Einträgen gemacht. Bei der überprüfung wird aber der Hash getestet, und dies auch dem Benutzer kommuniziert.
-          */}
+        <HashedPasswordDatabase />
         <p>
           Ein Online-Dienstanbieter, speichert also nur den Hash zu Ihrem
           Passwort. Wenn dann eine Login-Anfrage von Ihnen kommt, wird Ihr
@@ -102,7 +103,7 @@ export default function Passwoerter() {
           Hash-Funktionen quasi umkehrbar, denn Sie können einfach die Hashes in
           der Datenbank suchen. Dieses Verfahren nennt man Rainbow-Tables.
         </p>
-        {/* Hier kommt eine komponente hin, die eine kleine Rainbowtable anzeigt. Das ganze wird in localStorage gespeichert und kann zurückgesetzt werden. Wir haben auch hier die möglichkeit neue einträge hinzuzufügen, sowie die einträge in der Tabelle zu suchen. Wenn wir nach einem Hash suchen den wir bereits in der Tabelle haben, bekommen wir das passwort zurück. */}
+        <RainbowTable />
       </section>
       <Section>
         <h2>Rainbow-Tables</h2>
@@ -159,11 +160,81 @@ export default function Passwoerter() {
           nicht mehr, also müssen andere Arten des Passwort-Knackens erfunden
           werden.
         </p>
-        {/* Hier wird die Komponente von weiter oben mit den Hashes und den Passwörtern nochmals erweitert, hier kommt dann noch ein salz dazu. Das Salz wird auch in der Datenbank gespeichert, Angezeigt werden alle Einträge, auch die zusammensetzung von passwort und salz. Es wird aber alles ausgegraut, ausser dem Benutzernamen, salz und dem endgültigen Hash, um klar zu machen dass dies die Einträge in einer solchen Datenbank sind. Alles andere ist nur zum verstehen da. */}
+        <SaltedPasswordDatabase />
       </Section>
       <section>
         <h2>Phishing</h2>
+        <p>
+          Wie Sie gesehen haben, sind Passwörter sehr schwer zu knacken,{" "}
+          <em>wenn</em> die richtigen Methoden angewendet werden. Da ein Hacker
+          aber oft ein Passwort braucht um Zugang zu einem System zu bekommen,
+          braucht es andere Methoden, um an Passwörter zu kommen. Sehr häufig
+          wird dann <strong>social hacking</strong> verwendet. Hier geht es
+          darum von einer Person das Passwort direkt zu erhalten. Die
+          beliebteste Methode hier ist das <strong>Phishing</strong>.
+        </p>
+        <p>
+          Beim <strong>Phishing</strong> werden sehr oft E-Mails versendet, mit
+          der Aufforderung sich irgendwo einzuloggen. Was dann eigentlich
+          passiert, ist das man sein Passwort und seine E-Mailadresse, oftmals
+          noch den Benutzernamen an den Hacker direkt verschickt. So kann ein
+          Hacker versuchen sich überall mit Ihren Zugangsdaten einzuloggen.
+          Sollte er Zugriff auf Ihren Haupt-E-Mail-Account bekommen, ist das
+          absolut verheerend, dann so kann er die Passwörter von all Ihren
+          Accounts einfach zurücksetzen. Deshalb sollten Sie Ihren
+          Haupt-E-Mail-Account so gut wie möglich schützen, am besten mit
+          2-Faktor-Authentifizierung.
+        </p>
+        <p>
+          Dank modernen KIs wird es immer wie schwieriger einen Phishing-Angriff
+          zu erkennen. Die E-Mails können in guter Sprache verfasst werden, und
+          die Webseite auf der Sie sich einloggen sieht aus wie das Original.
+          Somit ist es also wichtig dass Sie immer prüfen wo Sie ein Link
+          hinführt, ob dieser <strong>HTTPS</strong> aktiviert hat und auch ob
+          die E-Mail von einer vertrauenswürdigen Adresse kommt.
+        </p>
       </section>
+      <Section>
+        <h2>Passwort-Manager</h2>
+        <p>
+          Es ist schwierig sich so viele Passwörter zu merken und dann auch für
+          jeden Account ein starkes Passwort zu haben, hier können Sie
+          Passwort-Manager verwenden. Diese tippen die Passwörter automatisch
+          für Sie ein, und Sie müssen sich die Passwörter nicht merken. So
+          können Sie für jeden Account ein eigenes starkes Passwort machen.
+          Falls der Passwort-Manager einmal nicht funktionieren sollte, können
+          Sie das Passwort ja auch zurücksetzen lassen, und trotzdem Zugriff zum
+          Dienst bekommen. So müssen Sie sich nur noch ganz wenige Passwörter
+          merken können, und zwar:
+        </p>
+        <ul>
+          <li>Passwort-Manager</li>
+          <li>Haupt-E-Mail-Account</li>
+          <li>Passwort für Ihren Computer</li>
+          <li>Passwort zum Schulnetz</li>
+          <li>Passwort für Ihr Smartphone</li>
+        </ul>
+        <p>
+          Diese Liste kann natürlich variieren, vielleicht haben Sie noch mehr
+          wichtige Dinge zu denen Sie Zugriff ohne Passwort-Manager brauchen,
+          oder Sie haben den Zugriff zum Smartphone oder Computer nur über
+          biometrische Sensoren ermöglicht.
+        </p>
+        <h3>Gefahren eines Passwort-Managers</h3>
+        <p>
+          Das Problem bei einem Passwort-Manager ist die Verschlüsselung. Hier
+          können die Passwörter nicht gehashed gespeichert werden, da man die
+          Passwörter ja entschlüsseln und eintippen können muss. Und immer wenn
+          es Verschlüsselung gibt, ist es potenziell möglich diese zu knacken,
+          oder den Dienst so auszunutzen, das er ein Passwort eintippt. Alles
+          was es für uns komfortabler macht, mit der digitalen Welt umzugehen,
+          ist meistens ein direktes Sicherheitsrisiko. Für Hacker ist es
+          natürlich auch Interessant einen Dienst wie einen grossen
+          Online-Passwort-Manager zu hacken, denn damit bekommen Sie direkt fast
+          überall Zugriff. Das sollten Sie also alles bedenken wenn Sie einen
+          Passwort-Manager auswählen.
+        </p>
+      </Section>
     </>
   );
 }
