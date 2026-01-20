@@ -216,11 +216,11 @@ main section ol {
   grid-column: content;
 }
 
-.breakout {
+.content-grid > .breakout {
   grid-column: breakout;
 }
 
-.full-width {
+.content-grid > .full-width {
   grid-column: full-width;
 }
 

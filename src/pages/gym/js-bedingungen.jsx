@@ -36,20 +36,25 @@ export default function GymJSConditions() {
           `}
         </CodeBlock>
       </section>
-      <section>
+      <Section>
+        <h2>Code testen</h2>
+        <p>Den Code können Sie gleich hier testen</p>
         <JSTerminal
           filename="example-01.js"
-          initialCode={`console.log('Hello World!')
-     console.log(process.argv)`}
           height="300px" // optional
           terminalHeight="250px" // optional
         >
           {`
-            const name = process.argv[2]
-            console.log(\`Hello \${name}\`)
+            const age = process.argv[2]
+
+            if (age >= 18) {
+              console.log("Sie sind volljährig")
+            } else {
+              console.log("Sie sind noch nicht volljährig")
+            }
           `}
         </JSTerminal>
-      </section>
+      </Section>
     </>
   );
 }

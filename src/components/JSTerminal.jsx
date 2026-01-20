@@ -616,7 +616,7 @@ export default function JSTerminal(props) {
   };
 
   return (
-    <div className={styles.jsTerminalWrapper}>
+    <div className={`${styles.jsTerminalWrapper} full-width`}>
       <div className={styles.mainContent}>
         {/* Code Editor */}
         <div className={styles.editorSection}>
