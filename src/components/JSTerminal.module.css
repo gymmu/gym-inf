@@ -74,55 +74,46 @@
 
 .terminalContent {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background-color: #1d2021; /* Gruvbox darker bg */
-  cursor: text;
-}
-
-.terminalOutput {
-  flex: 1;
   overflow-y: auto;
   padding: 0.75rem 1rem;
+  background-color: #1d2021; /* Gruvbox darker bg */
+  cursor: text;
   font-family: "Courier New", Courier, monospace;
   font-size: 0.875rem;
   line-height: 1.5;
   color: #ebdbb2; /* Gruvbox fg */
 }
 
-/* Scrollbar styling for terminal */
-.terminalOutput::-webkit-scrollbar {
+/* Scrollbar styling for terminal content */
+.terminalContent::-webkit-scrollbar {
   width: 8px;
 }
 
-.terminalOutput::-webkit-scrollbar-track {
+.terminalContent::-webkit-scrollbar-track {
   background: #1d2021; /* Gruvbox darker bg */
 }
 
-.terminalOutput::-webkit-scrollbar-thumb {
+.terminalContent::-webkit-scrollbar-thumb {
   background: #504945; /* Gruvbox bg3 */
   border-radius: 4px;
 }
 
-.terminalOutput::-webkit-scrollbar-thumb:hover {
+.terminalContent::-webkit-scrollbar-thumb:hover {
   background: #665c54; /* Gruvbox bg4 */
 }
 
 /* Firefox scrollbar */
-.terminalOutput {
+.terminalContent {
   scrollbar-width: thin;
   scrollbar-color: #504945 #1d2021;
 }
 
-/* Terminal input form */
-.terminalInputForm {
+/* Inline terminal input (like VSCode) */
+.terminalInputLine {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background-color: #282828; /* Gruvbox bg0 */
-  border-top: 1px solid #3c3836; /* Gruvbox bg2 */
   gap: 0.5rem;
+  margin-top: 0.25rem;
 }
 
 .prompt {
@@ -151,10 +142,10 @@
 
 /* Terminal line entries */
 .terminalLine {
-  margin-bottom: 0.25rem;
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
+  margin-bottom: 0.1rem;
 }
 
 .commandText {
@@ -234,7 +225,7 @@
     display: none;
   }
 
-  .terminalOutput,
+  .terminalContent,
   .terminalInput {
     font-size: 0.8rem;
   }

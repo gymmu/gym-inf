@@ -43,7 +43,12 @@ export default function GymJSConditions() {
      console.log(process.argv)`}
           height="300px" // optional
           terminalHeight="250px" // optional
-        />
+        >
+          {`
+            const name = process.argv[2]
+            console.log(\`Hello \${name}\`)
+          `}
+        </JSTerminal>
       </section>
     </>
   );

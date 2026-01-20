@@ -5,17 +5,32 @@ import styles from "@components/JSTerminal.module.css";
 export default function JSTerminal(props) {
   const {
     filename,
-    initialCode = "// Your JavaScript code here\nconsole.log('Hello World!')",
+    initialCode,
+    children,
     height = "300px",
     terminalHeight = "250px",
   } = props;
 
-  const [code, setCode] = useState(initialCode);
+  // Determine code source: children has priority over initialCode
+  const sourceCode = children
+    ? dedent(extractText(children))
+    : initialCode ||
+      "// Your JavaScript code here\nconsole.log('Hello World!')";
+
+  const [code, setCode] = useState(sourceCode);
   const [terminalHistory, setTerminalHistory] = useState([]);
   const [commandInput, setCommandInput] = useState("");
+  const [commandHistory, setCommandHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [tabCompletionIndex, setTabCompletionIndex] = useState(-1);
+  const [tabCompletions, setTabCompletions] = useState([]);
   const iframeRef = useRef(null);
   const terminalEndRef = useRef(null);
   const inputRef = useRef(null);
+  const terminalContentRef = useRef(null);
+
+  // Available commands for tab completion
+  const availableCommands = ["node", "clear", "ls"];
 
   // Auto-scroll to bottom when terminal history updates
   useEffect(() => {
@@ -122,7 +137,21 @@ export default function JSTerminal(props) {
 
     if (!cmd) return;
 
-    // Add command to history
+    // Reset tab completion and history navigation
+    setTabCompletionIndex(-1);
+    setTabCompletions([]);
+    setHistoryIndex(-1);
+
+    // Add command to command history (only non-empty, non-duplicate commands)
+    if (
+      cmd &&
+      (commandHistory.length === 0 ||
+        commandHistory[commandHistory.length - 1] !== cmd)
+    ) {
+      setCommandHistory((prev) => [...prev, cmd]);
+    }
+
+    // Add command to terminal display history
     addToHistory({ type: "command", content: cmd });
     setCommandInput("");
 
@@ -137,6 +166,7 @@ export default function JSTerminal(props) {
         break;
       case "clear":
         setTerminalHistory([]);
+        // Keep command history for arrow key navigation
         break;
       case "ls":
         addToHistory({ type: "log", content: filename });
@@ -148,6 +178,102 @@ export default function JSTerminal(props) {
         });
         break;
     }
+  };
+
+  const handleKeyDown = (e) => {
+    // Handle Tab key for completion
+    if (e.key === "Tab") {
+      e.preventDefault(); // Prevent focus change
+      handleTabCompletion();
+      return;
+    }
+
+    // Handle Arrow Up - Previous command in history
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (commandHistory.length === 0) return;
+
+      const newIndex =
+        historyIndex === -1
+          ? commandHistory.length - 1
+          : Math.max(0, historyIndex - 1);
+
+      setHistoryIndex(newIndex);
+      setCommandInput(commandHistory[newIndex]);
+      return;
+    }
+
+    // Handle Arrow Down - Next command in history
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (commandHistory.length === 0 || historyIndex === -1) return;
+
+      const newIndex = historyIndex + 1;
+
+      if (newIndex >= commandHistory.length) {
+        setHistoryIndex(-1);
+        setCommandInput("");
+      } else {
+        setHistoryIndex(newIndex);
+        setCommandInput(commandHistory[newIndex]);
+      }
+      return;
+    }
+
+    // Reset tab completion on any other key
+    if (e.key !== "Tab") {
+      setTabCompletionIndex(-1);
+      setTabCompletions([]);
+    }
+  };
+
+  const handleTabCompletion = () => {
+    const input = commandInput;
+    const parts = input.split(/\s+/);
+    const currentPart = parts[parts.length - 1];
+
+    // Determine what to complete
+    let completions = [];
+
+    if (parts.length === 1 && !input.endsWith(" ")) {
+      // Complete command name
+      completions = availableCommands.filter((cmd) =>
+        cmd.startsWith(currentPart),
+      );
+    } else if (parts[0] === "node" && parts.length <= 2) {
+      // Complete filename after 'node' command
+      if (filename.startsWith(currentPart)) {
+        completions = [filename];
+      }
+    }
+
+    if (completions.length === 0) {
+      // No completions available
+      setTabCompletionIndex(-1);
+      setTabCompletions([]);
+      return;
+    }
+
+    // If this is a new tab completion cycle, initialize
+    if (
+      tabCompletions.length === 0 ||
+      tabCompletions.join() !== completions.join()
+    ) {
+      setTabCompletions(completions);
+      setTabCompletionIndex(0);
+      applyCompletion(input, completions[0]);
+    } else {
+      // Cycle through completions
+      const nextIndex = (tabCompletionIndex + 1) % completions.length;
+      setTabCompletionIndex(nextIndex);
+      applyCompletion(input, completions[nextIndex]);
+    }
+  };
+
+  const applyCompletion = (input, completion) => {
+    const parts = input.split(/\s+/);
+    parts[parts.length - 1] = completion;
+    setCommandInput(parts.join(" "));
   };
 
   const executeNodeCommand = (args) => {
@@ -311,22 +437,24 @@ export default function JSTerminal(props) {
       <div
         className={styles.terminalSection}
         style={{ height: terminalHeight }}
-        onClick={handleTerminalClick}
       >
         <div className={styles.terminalHeader}>
           <span className={styles.terminalTitle}>Terminal</span>
           <span className={styles.terminalHint}>
-            Type: node {filename} [args...]
+            Use ↑/↓ for history, Tab for completion
           </span>
         </div>
-        <div className={styles.terminalContent}>
-          <div className={styles.terminalOutput}>
-            {terminalHistory.map((entry, index) => (
-              <TerminalEntry key={index} entry={entry} />
-            ))}
-            <div ref={terminalEndRef} />
-          </div>
-          <form onSubmit={handleCommand} className={styles.terminalInputForm}>
+        <div
+          className={styles.terminalContent}
+          ref={terminalContentRef}
+          onClick={handleTerminalClick}
+        >
+          {terminalHistory.map((entry, index) => (
+            <TerminalEntry key={index} entry={entry} />
+          ))}
+
+          {/* Inline command input (like VSCode) */}
+          <form onSubmit={handleCommand} className={styles.terminalInputLine}>
             <span className={styles.prompt}>$</span>
             <input
               ref={inputRef}
@@ -334,10 +462,12 @@ export default function JSTerminal(props) {
               className={styles.terminalInput}
               value={commandInput}
               onChange={(e) => setCommandInput(e.target.value)}
+              onKeyDown={handleKeyDown}
               autoComplete="off"
               spellCheck="false"
             />
           </form>
+          <div ref={terminalEndRef} />
         </div>
       </div>
 
@@ -406,4 +536,42 @@ function TerminalEntry({ entry }) {
     default:
       return null;
   }
+}
+
+/**
+ * Extrahiert Text aus children (kann String oder React Element sein)
+ */
+function extractText(children) {
+  if (typeof children === "string") return children;
+  if (Array.isArray(children)) return children.join("");
+  return String(children);
+}
+
+/**
+ * Entfernt überflüssige Einrückung aus Code-Blöcken
+ * - Entfernt erste/letzte leere Zeile
+ * - Findet minimale Einrückung
+ * - Entfernt diese von allen Zeilen
+ */
+function dedent(text) {
+  const lines = text.split("\n");
+
+  // Entferne erste/letzte leere Zeile (typisch bei template literals)
+  if (lines[0]?.trim() === "") lines.shift();
+  if (lines[lines.length - 1]?.trim() === "") lines.pop();
+
+  if (lines.length === 0) return "";
+
+  // Finde minimale Einrückung (ignoriere leere Zeilen)
+  const minIndent = lines
+    .filter((line) => line.trim().length > 0)
+    .reduce((min, line) => {
+      const indent = line.match(/^\s*/)[0].length;
+      return Math.min(min, indent);
+    }, Infinity);
+
+  // Entferne minimale Einrückung von allen Zeilen
+  return lines
+    .map((line) => line.slice(minIndent === Infinity ? 0 : minIndent))
+    .join("\n");
 }
