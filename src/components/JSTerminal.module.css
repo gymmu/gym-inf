@@ -1,0 +1,241 @@
+/* Main wrapper for the entire component */
+.jsTerminalWrapper {
+  max-width: min(800px, calc(100vw - 42px));
+  margin-inline: auto;
+  margin-block: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background-color: #1d2021; /* Gruvbox darker bg */
+}
+
+/* Editor Section */
+.editorSection {
+  border-bottom: 1px solid #3c3836; /* Gruvbox bg2 */
+}
+
+.editorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #1d2021; /* Gruvbox darker bg */
+  border-bottom: 1px solid #3c3836; /* Gruvbox bg2 */
+}
+
+.filename {
+  font-size: 0.875rem;
+  color: #ebdbb2; /* Gruvbox fg */
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 500;
+}
+
+.language {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #928374; /* Gruvbox gray */
+  letter-spacing: 0.05em;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Terminal Section */
+.terminalSection {
+  background-color: #1d2021; /* Gruvbox darker bg */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.terminalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #282828; /* Gruvbox bg0 */
+  border-bottom: 1px solid #3c3836; /* Gruvbox bg2 */
+}
+
+.terminalTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #928374; /* Gruvbox gray */
+  letter-spacing: 0.05em;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.terminalHint {
+  font-size: 0.7rem;
+  color: #665c54; /* Gruvbox bg4 */
+  font-family: "Courier New", Courier, monospace;
+  font-style: italic;
+}
+
+.terminalContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #1d2021; /* Gruvbox darker bg */
+  cursor: text;
+}
+
+.terminalOutput {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem 1rem;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #ebdbb2; /* Gruvbox fg */
+}
+
+/* Scrollbar styling for terminal */
+.terminalOutput::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminalOutput::-webkit-scrollbar-track {
+  background: #1d2021; /* Gruvbox darker bg */
+}
+
+.terminalOutput::-webkit-scrollbar-thumb {
+  background: #504945; /* Gruvbox bg3 */
+  border-radius: 4px;
+}
+
+.terminalOutput::-webkit-scrollbar-thumb:hover {
+  background: #665c54; /* Gruvbox bg4 */
+}
+
+/* Firefox scrollbar */
+.terminalOutput {
+  scrollbar-width: thin;
+  scrollbar-color: #504945 #1d2021;
+}
+
+/* Terminal input form */
+.terminalInputForm {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #282828; /* Gruvbox bg0 */
+  border-top: 1px solid #3c3836; /* Gruvbox bg2 */
+  gap: 0.5rem;
+}
+
+.prompt {
+  color: #b8bb26; /* Gruvbox green */
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.terminalInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ebdbb2; /* Gruvbox fg */
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.875rem;
+  padding: 0;
+  caret-color: #ebdbb2; /* Gruvbox fg */
+}
+
+.terminalInput::placeholder {
+  color: #665c54; /* Gruvbox bg4 */
+}
+
+/* Terminal line entries */
+.terminalLine {
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.commandText {
+  color: #ebdbb2; /* Gruvbox fg */
+  font-family: "Courier New", Courier, monospace;
+}
+
+.logText {
+  color: #ebdbb2; /* Gruvbox fg */
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.warnText {
+  color: #fabd2f; /* Gruvbox yellow */
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.errorText {
+  color: #fb4934; /* Gruvbox red */
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.returnText {
+  color: #b8bb26; /* Gruvbox green */
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-weight: 500;
+}
+
+.groupText {
+  color: #83a598; /* Gruvbox blue */
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.structuredOutput {
+  color: #d3869b; /* Gruvbox purple */
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  padding: 0.5rem;
+  background-color: #282828; /* Gruvbox bg0 */
+  border-left: 3px solid #d3869b; /* Gruvbox purple */
+  border-radius: 2px;
+}
+
+.stackTrace {
+  color: #fe8019; /* Gruvbox orange */
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0.25rem 0 0 0;
+  padding: 0.5rem;
+  background-color: #282828; /* Gruvbox bg0 */
+  border-left: 3px solid #fb4934; /* Gruvbox red */
+  border-radius: 2px;
+  opacity: 0.9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .jsTerminalWrapper {
+    max-width: calc(100vw - 24px);
+  }
+
+  .terminalHint {
+    display: none;
+  }
+
+  .terminalOutput,
+  .terminalInput {
+    font-size: 0.8rem;
+  }
+}

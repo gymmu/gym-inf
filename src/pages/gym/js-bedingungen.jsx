@@ -1,4 +1,5 @@
 import CodeBlock from "@components/CodeBlock";
+import JSTerminal from "@components/JSTerminal";
 import { DMath } from "@components/Katex.jsx";
 import Section from "@components/Section";
 
@@ -34,6 +35,15 @@ export default function GymJSConditions() {
             }
           `}
         </CodeBlock>
+      </section>
+      <section>
+        <JSTerminal
+          filename="example-01.js"
+          initialCode={`console.log('Hello World!')
+     console.log(process.argv)`}
+          height="300px" // optional
+          terminalHeight="250px" // optional
+        />
       </section>
     </>
   );
