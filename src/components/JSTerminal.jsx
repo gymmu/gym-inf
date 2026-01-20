@@ -17,10 +17,51 @@ export default function JSTerminal(props) {
     : initialCode ||
       "// Your JavaScript code here\nconsole.log('Hello World!')";
 
-  const [code, setCode] = useState(sourceCode);
+  // Create a unique storage key based on the initial filename
+  const storageKey = `jsterminal_${filename}`;
+
+  // Initialize state from localStorage or use defaults
+  const getInitialState = () => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          files: parsed.files || {
+            [filename]: { name: filename, content: sourceCode },
+          },
+          openFiles: parsed.openFiles || [filename],
+          activeFile: parsed.activeFile || filename,
+          commandHistory: parsed.commandHistory || [],
+        };
+      }
+    } catch (error) {
+      console.error("Error loading from localStorage:", error);
+    }
+    return {
+      files: { [filename]: { name: filename, content: sourceCode } },
+      openFiles: [filename],
+      activeFile: filename,
+      commandHistory: [],
+    };
+  };
+
+  const initialState = getInitialState();
+
+  // File system state - stores all files
+  const [files, setFiles] = useState(initialState.files);
+
+  // Track which files are open in tabs
+  const [openFiles, setOpenFiles] = useState(initialState.openFiles);
+
+  // Track the currently active file
+  const [activeFile, setActiveFile] = useState(initialState.activeFile);
+
   const [terminalHistory, setTerminalHistory] = useState([]);
   const [commandInput, setCommandInput] = useState("");
-  const [commandHistory, setCommandHistory] = useState([]);
+  const [commandHistory, setCommandHistory] = useState(
+    initialState.commandHistory,
+  );
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [tabCompletionIndex, setTabCompletionIndex] = useState(-1);
   const [tabCompletions, setTabCompletions] = useState([]);
@@ -30,7 +71,31 @@ export default function JSTerminal(props) {
   const terminalContentRef = useRef(null);
 
   // Available commands for tab completion
-  const availableCommands = ["node", "clear", "ls"];
+  const availableCommands = ["node", "clear", "ls", "touch", "rm", "reset"];
+
+  // Get current file's code
+  const code = files[activeFile]?.content || "";
+  const setCode = (newCode) => {
+    setFiles((prev) => ({
+      ...prev,
+      [activeFile]: { ...prev[activeFile], content: newCode },
+    }));
+  };
+
+  // Save state to localStorage whenever files, openFiles, activeFile, or commandHistory changes
+  useEffect(() => {
+    try {
+      const stateToSave = {
+        files,
+        openFiles,
+        activeFile,
+        commandHistory,
+      };
+      localStorage.setItem(storageKey, JSON.stringify(stateToSave));
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
+  }, [files, openFiles, activeFile, commandHistory, storageKey]);
 
   // Auto-scroll to bottom when terminal history updates
   useEffect(() => {
@@ -169,7 +234,16 @@ export default function JSTerminal(props) {
         // Keep command history for arrow key navigation
         break;
       case "ls":
-        addToHistory({ type: "log", content: filename });
+        executeLsCommand();
+        break;
+      case "touch":
+        executeTouchCommand(args);
+        break;
+      case "rm":
+        executeRmCommand(args);
+        break;
+      case "reset":
+        executeResetCommand();
         break;
       default:
         addToHistory({
@@ -240,11 +314,12 @@ export default function JSTerminal(props) {
       completions = availableCommands.filter((cmd) =>
         cmd.startsWith(currentPart),
       );
-    } else if (parts[0] === "node" && parts.length <= 2) {
-      // Complete filename after 'node' command
-      if (filename.startsWith(currentPart)) {
-        completions = [filename];
-      }
+    } else if (
+      (parts[0] === "node" || parts[0] === "rm") &&
+      parts.length <= 2
+    ) {
+      // Complete filename after 'node' or 'rm' command
+      completions = Object.keys(files).filter((f) => f.startsWith(currentPart));
     }
 
     if (completions.length === 0) {
@@ -276,6 +351,118 @@ export default function JSTerminal(props) {
     setCommandInput(parts.join(" "));
   };
 
+  const executeLsCommand = () => {
+    const fileList = Object.keys(files).sort().join("\n");
+    addToHistory({ type: "log", content: fileList });
+  };
+
+  const executeResetCommand = () => {
+    try {
+      localStorage.removeItem(storageKey);
+      addToHistory({
+        type: "log",
+        content: "Storage cleared. Reloading...",
+      });
+      // Reload after a short delay to show the message
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    } catch (error) {
+      addToHistory({
+        type: "error",
+        content: `Failed to reset: ${error.message}`,
+      });
+    }
+  };
+
+  const executeTouchCommand = (args) => {
+    if (args.length === 0) {
+      addToHistory({
+        type: "error",
+        content: "Usage: touch <filename>",
+      });
+      return;
+    }
+
+    const newFilename = args[0];
+
+    // Check if file already exists
+    if (files[newFilename]) {
+      addToHistory({
+        type: "log",
+        content: `File '${newFilename}' already exists`,
+      });
+      return;
+    }
+
+    // Create new file
+    setFiles((prev) => ({
+      ...prev,
+      [newFilename]: {
+        name: newFilename,
+        content: "// Your JavaScript code here\nconsole.log('Hello World!')",
+      },
+    }));
+
+    addToHistory({
+      type: "log",
+      content: `Created file '${newFilename}'`,
+    });
+  };
+
+  const executeRmCommand = (args) => {
+    if (args.length === 0) {
+      addToHistory({
+        type: "error",
+        content: "Usage: rm <filename>",
+      });
+      return;
+    }
+
+    const fileToRemove = args[0];
+
+    // Check if file exists
+    if (!files[fileToRemove]) {
+      addToHistory({
+        type: "error",
+        content: `rm: cannot remove '${fileToRemove}': No such file`,
+      });
+      return;
+    }
+
+    // Don't allow removing the initial file
+    if (fileToRemove === filename) {
+      addToHistory({
+        type: "error",
+        content: `rm: cannot remove '${fileToRemove}': Initial file cannot be deleted`,
+      });
+      return;
+    }
+
+    // Remove file
+    setFiles((prev) => {
+      const newFiles = { ...prev };
+      delete newFiles[fileToRemove];
+      return newFiles;
+    });
+
+    // Close the file if it's open
+    setOpenFiles((prev) => prev.filter((f) => f !== fileToRemove));
+
+    // Switch to another file if this was the active file
+    if (activeFile === fileToRemove) {
+      const remainingFiles = Object.keys(files).filter(
+        (f) => f !== fileToRemove,
+      );
+      setActiveFile(remainingFiles[0] || filename);
+    }
+
+    addToHistory({
+      type: "log",
+      content: `Removed file '${fileToRemove}'`,
+    });
+  };
+
   const executeNodeCommand = (args) => {
     if (args.length === 0) {
       addToHistory({
@@ -289,7 +476,7 @@ export default function JSTerminal(props) {
     const scriptArgs = args.slice(1);
 
     // Validate filename
-    if (scriptName !== filename) {
+    if (!files[scriptName]) {
       addToHistory({
         type: "error",
         content: `Error: Cannot find module '${scriptName}'`,
@@ -298,13 +485,15 @@ export default function JSTerminal(props) {
     }
 
     // Execute the code
-    runCode(scriptArgs);
+    runCode(scriptName, scriptArgs);
   };
 
-  const runCode = (argv) => {
+  const runCode = (scriptName, argv) => {
+    const scriptCode = files[scriptName]?.content || "";
+
     // Build process.argv mock
     // Format: ['node', '/path/to/filename', ...args]
-    const processArgv = ["node", `/workspace/${filename}`, ...argv];
+    const processArgv = ["node", `/workspace/${scriptName}`, ...argv];
 
     // Generate HTML with code execution
     const htmlContent = `
@@ -380,7 +569,7 @@ export default function JSTerminal(props) {
             // Execute user code and capture return value
             try {
               const result = (function() {
-                ${code}
+                ${scriptCode}
               })();
               
               // Send return value if it exists
@@ -409,28 +598,96 @@ export default function JSTerminal(props) {
     inputRef.current?.focus();
   };
 
+  const openFile = (fileName) => {
+    setActiveFile(fileName);
+    if (!openFiles.includes(fileName)) {
+      setOpenFiles((prev) => [...prev, fileName]);
+    }
+  };
+
+  const closeFile = (fileName, e) => {
+    e.stopPropagation();
+    const newOpenFiles = openFiles.filter((f) => f !== fileName);
+    setOpenFiles(newOpenFiles);
+
+    if (activeFile === fileName && newOpenFiles.length > 0) {
+      setActiveFile(newOpenFiles[newOpenFiles.length - 1]);
+    }
+  };
+
   return (
     <div className={styles.jsTerminalWrapper}>
-      {/* Code Editor */}
-      <div className={styles.editorSection}>
-        <div className={styles.editorHeader}>
-          <span className={styles.filename}>{filename}</span>
-          <span className={styles.language}>JavaScript</span>
+      <div className={styles.mainContent}>
+        {/* Code Editor */}
+        <div className={styles.editorSection}>
+          {/* Tab Bar */}
+          {openFiles.length > 1 && (
+            <div className={styles.tabBar}>
+              {openFiles.map((fileName) => (
+                <div
+                  key={fileName}
+                  className={`${styles.tab} ${activeFile === fileName ? styles.activeTab : ""}`}
+                  onClick={() => setActiveFile(fileName)}
+                >
+                  <span className={styles.tabName}>{fileName}</span>
+                  {openFiles.length > 1 && (
+                    <button
+                      className={styles.closeTab}
+                      onClick={(e) => closeFile(fileName, e)}
+                      title="Close"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className={styles.editorHeader}>
+            <span className={styles.filename}>{activeFile}</span>
+            <span className={styles.language}>JavaScript</span>
+          </div>
+          <MEditor
+            key={activeFile}
+            defaultLanguage="javascript"
+            value={code}
+            theme="vs-dark"
+            onChange={setCode}
+            height={height}
+            options={{
+              minimap: { enabled: false },
+              fontSize: 14,
+              lineNumbers: "on",
+              scrollBeyondLastLine: false,
+              automaticLayout: true,
+            }}
+          />
         </div>
-        <MEditor
-          defaultLanguage="javascript"
-          value={code}
-          theme="vs-dark"
-          onChange={setCode}
-          height={height}
-          options={{
-            minimap: { enabled: false },
-            fontSize: 14,
-            lineNumbers: "on",
-            scrollBeyondLastLine: false,
-            automaticLayout: true,
-          }}
-        />
+
+        {/* File Explorer */}
+        {Object.keys(files).length > 1 && (
+          <div className={styles.explorerSection}>
+            <div className={styles.explorerHeader}>
+              <span className={styles.explorerTitle}>Files</span>
+            </div>
+            <div className={styles.explorerContent}>
+              {Object.keys(files)
+                .sort()
+                .map((fileName) => (
+                  <div
+                    key={fileName}
+                    className={`${styles.explorerItem} ${activeFile === fileName ? styles.activeExplorerItem : ""}`}
+                    onClick={() => openFile(fileName)}
+                    title={fileName}
+                  >
+                    <span className={styles.fileIcon}>📄</span>
+                    <span className={styles.explorerFileName}>{fileName}</span>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Terminal */}

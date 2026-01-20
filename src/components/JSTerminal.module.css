@@ -1,6 +1,6 @@
 /* Main wrapper for the entire component */
 .jsTerminalWrapper {
-  max-width: min(800px, calc(100vw - 42px));
+  max-width: min(1200px, calc(100vw - 42px));
   margin-inline: auto;
   margin-block: 1.5rem;
   border-radius: 8px;
@@ -9,9 +9,167 @@
   background-color: #1d2021; /* Gruvbox darker bg */
 }
 
+/* Main content area with editor and explorer */
+.mainContent {
+  display: flex;
+  flex-direction: row;
+}
+
 /* Editor Section */
 .editorSection {
+  flex: 1;
   border-bottom: 1px solid #3c3836; /* Gruvbox bg2 */
+  min-width: 0; /* Allow flex shrinking */
+}
+
+/* Tab Bar */
+.tabBar {
+  display: flex;
+  background-color: #1d2021; /* Gruvbox darker bg */
+  border-bottom: 1px solid #3c3836; /* Gruvbox bg2 */
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #504945 #1d2021;
+}
+
+.tabBar::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tabBar::-webkit-scrollbar-track {
+  background: #1d2021;
+}
+
+.tabBar::-webkit-scrollbar-thumb {
+  background: #504945;
+  border-radius: 2px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #282828; /* Gruvbox bg0 */
+  border-right: 1px solid #3c3836; /* Gruvbox bg2 */
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.tab:hover {
+  background-color: #3c3836; /* Gruvbox bg2 */
+}
+
+.activeTab {
+  background-color: #1d2021; /* Gruvbox darker bg */
+  border-bottom: 2px solid #b8bb26; /* Gruvbox green */
+}
+
+.tabName {
+  font-size: 0.875rem;
+  color: #ebdbb2; /* Gruvbox fg */
+  font-family: "Courier New", Courier, monospace;
+}
+
+.closeTab {
+  background: none;
+  border: none;
+  color: #928374; /* Gruvbox gray */
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.closeTab:hover {
+  background-color: #fb4934; /* Gruvbox red */
+  color: #ebdbb2; /* Gruvbox fg */
+}
+
+/* Explorer Section */
+.explorerSection {
+  width: 200px;
+  background-color: #282828; /* Gruvbox bg0 */
+  border-left: 1px solid #3c3836; /* Gruvbox bg2 */
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.explorerHeader {
+  padding: 0.5rem 1rem;
+  background-color: #1d2021; /* Gruvbox darker bg */
+  border-bottom: 1px solid #3c3836; /* Gruvbox bg2 */
+}
+
+.explorerTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #928374; /* Gruvbox gray */
+  letter-spacing: 0.05em;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.explorerContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.explorerContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.explorerContent::-webkit-scrollbar-track {
+  background: #282828;
+}
+
+.explorerContent::-webkit-scrollbar-thumb {
+  background: #504945;
+  border-radius: 3px;
+}
+
+.explorerItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  margin-bottom: 0.25rem;
+}
+
+.explorerItem:hover {
+  background-color: #3c3836; /* Gruvbox bg2 */
+}
+
+.activeExplorerItem {
+  background-color: #504945; /* Gruvbox bg3 */
+  border-left: 3px solid #b8bb26; /* Gruvbox green */
+}
+
+.fileIcon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.explorerFileName {
+  font-size: 0.8rem;
+  color: #ebdbb2; /* Gruvbox fg */
+  font-family: "Courier New", Courier, monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .editorHeader {
@@ -221,6 +379,17 @@
     max-width: calc(100vw - 24px);
   }
 
+  .mainContent {
+    flex-direction: column;
+  }
+
+  .explorerSection {
+    width: 100%;
+    max-height: 150px;
+    border-left: none;
+    border-top: 1px solid #3c3836;
+  }
+
   .terminalHint {
     display: none;
   }
@@ -228,5 +397,13 @@
   .terminalContent,
   .terminalInput {
     font-size: 0.8rem;
+  }
+
+  .tabBar {
+    font-size: 0.8rem;
+  }
+
+  .tab {
+    padding: 0.4rem 0.75rem;
   }
 }
