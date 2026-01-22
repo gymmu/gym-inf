@@ -175,6 +175,42 @@ export default function GymJSConditions() {
           wie oben, wenn uns eine Eingabe fehlt, dann brechen wir einfach ab.
         </p>
       </section>
+      <Section>
+        <h2>Ternary-Operator</h2>
+        <p>
+          Oftmals kommt es beim Programmieren vor dass Sie einen oder einen
+          anderen Wert haben möchten, je nachdem ob eine Bedingung erfüllt ist
+          oder nicht. Das können Sie mit einem <pre>if-else</pre> ganz einfach
+          machen. Oftmals verwendet man aber einen anderen Operator, der die
+          Leserlichkeit verbessern soll. Das ist der Ternary-Operator.
+        </p>
+        <p>
+          Ein einfaches Szenario dafür ist das folgende. Wenn <pre>CAPS</pre>
+          aktiv ist, dann möchten Sie alles gross geschrieben haben, ansonsten
+          normal. Dafür schauen wir uns diesen einfachen Code an:
+        </p>
+        <CodeBlock language="javascript">
+          {`
+            const caps = process.argv[2]
+            const answer = caps ? "ALLES GROSS" : "Alles normal"
+
+            console.log(answer)
+
+          `}
+        </CodeBlock>
+        <p>
+          Der Operator funktioniert ganz einfach, wenn man ihn mal verstanden
+          hat. Die Syntax ist wie folgt{" "}
+          <pre>Bedingung ? Wahr-Fall : Falsch-Fall</pre>. Wenn Sie das
+          verstanden haben, dann ist der Operator sehr einfach.
+        </p>
+        <p>
+          Wir haben oben bereits gesagt das man diesen Operator nicht unbedingt
+          braucht, denn Sie können alles auch mit <pre>if-else</pre> machen. Er
+          wird aber sehr oft von KIs verwendet, was bedeutet dass Sie den Code
+          zumindest lesen können müssen.
+        </p>
+      </Section>
     </>
   );
 }
