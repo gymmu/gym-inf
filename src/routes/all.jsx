@@ -48,6 +48,7 @@ import FmsPasswoerter from "@pages-fms/passwoerter.jsx";
 import Schluesselaustausch from "@pages-fms/schluesselaustausch.jsx";
 import FmsVerschluesselung from "@pages-fms/verschluesselung.jsx";
 import FmsWebdesign from "@pages-fms/webdesign.jsx";
+import FmsInternetKarte from "@pages-fms/internet-karte.jsx";
 import BoxModel from "../components/BoxModel";
 // Weitere eigenständige imports. Diese sind nicht verlinkt.
 import CodePen from "../components/CodePen";
@@ -103,6 +104,7 @@ export const createRouter = () => {
           },
           // Internet und Sicherheit
           { path: "/fms/internet", element: <FmsInternet /> },
+          { path: "/fms/internet-karte", element: <FmsInternetKarte /> },
           { path: "/fms/internet-story", element: <FmsInternetStory /> },
           { path: "/fms/internet-quiz", element: <FmsInternetQuiz /> },
           { path: "/fms/vpn", element: <FmsVPN /> },

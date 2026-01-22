@@ -41,6 +41,7 @@ export default function FmsIndex() {
             Internet und Sicherheit
             <ol>
               <NavLink to="fms/internet">Internet</NavLink>
+              <NavLink to="fms/internet-karte">Karte des Internets</NavLink>
               <NavLink to="fms/internet-quiz">Quiz: Internet</NavLink>
               <NavLink to="fms/vpn">VPN</NavLink>
               <NavLink to="fms/vpn-quiz">Quiz: VPN</NavLink>
