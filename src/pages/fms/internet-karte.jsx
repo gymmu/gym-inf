@@ -1,3 +1,4 @@
+import ImageMagnifier from "@components/ImageMagnifier.jsx";
 import Section from "@components/Section.jsx";
 
 export default function FmsInternetKarte() {
@@ -10,6 +11,11 @@ export default function FmsInternetKarte() {
           sie miteinander verbunden sind. Jedes Element spielt eine wichtige
           Rolle in der globalen Vernetzung.
         </p>
+        <p>
+          <em>
+            Bewegen Sie die Maus über die Karte, um Details zu vergrößern.
+          </em>
+        </p>
       </section>
 
       <Section>
@@ -21,14 +27,11 @@ export default function FmsInternetKarte() {
             padding: "1rem",
           }}
         >
-          <img
+          <ImageMagnifier
             src="/gym-inf/svg/map-of-the-internet.svg"
             alt="Karte des Internets"
-            style={{
-              maxWidth: "100%",
-              height: "auto",
-              backgroundColor: "white",
-            }}
+            magnifierRadius={400}
+            zoomLevel={1.75}
           />
         </div>
       </Section>
