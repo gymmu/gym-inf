@@ -99,7 +99,12 @@ export default function JSTerminal(props) {
 
   // Auto-scroll to bottom when terminal history updates
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (terminalContentRef.current) {
+      terminalContentRef.current.scrollTo({
+        top: terminalContentRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }, [terminalHistory]);
 
   // Handle messages from iframe (console output)
