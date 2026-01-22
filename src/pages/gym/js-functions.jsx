@@ -1,5 +1,7 @@
 import CodeBlock from "@components/CodeBlock";
 import JSTerminal from "@components/JSTerminal";
+import { Math } from "@components/Katex";
+import Section from "@components/Section";
 
 export default function GymJSFunctions() {
   return (
@@ -72,6 +74,37 @@ export default function GymJSFunctions() {
           `}
         </JSTerminal>
       </section>
+      <Section>
+        <h2>Funktionswächter</h2>
+        <p>
+          Bei Funktionen kann es sein dass diese mit Argumenten aufgerufen
+          werden, die keinen Sinn ergeben, oder das Argumente fehlen die Sie
+          eigentlich brauchen. Für solche Fälle verwendet man Funktionswächter.
+        </p>
+        <p>
+          Ein Funktionswächter prüft die Argumente und bricht die Funktion ab,
+          wenn die Argumente keinen Sinn ergeben. Nehmen Sie an Sie haben die
+          Funktion <Math>{`f(x) = 2 \cdot x + 3`}</Math> und nun möchten Sie
+          <Math>{`f(2)`}</Math> bestimmen. Falls keine Zahl eingegeben wird,
+          brechen Sie die Funktion ab, und geben einfach nichts zurück.
+        </p>
+        <CodeBlock language="javascript">
+          {`
+            function f(input) {
+              const x = Number(input)
+              if (!x) {
+                console.error("Sie müssen eine Zahl eingeben")
+                return
+              }
+
+              return 2 * x + 3
+            }
+
+
+            console.log(f(process.argv[2]))
+          `}
+        </CodeBlock>
+      </Section>
     </>
   );
 }
