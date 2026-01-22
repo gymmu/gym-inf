@@ -27,6 +27,7 @@ import ObsidianMarkdown from "@pages/obsidian-md.mdx";
 import PInstall from "@pages/praktikum/installation.mdx";
 import Regex from "@pages/regex.mdx";
 import GymJSConditions from "@pages-gym/js-bedingungen.jsx";
+import GymJSFunctions from "@pages-gym/js-functions.jsx";
 import GymJSVariables from "@pages-gym/js-variables.jsx";
 import { createBrowserRouter, Link } from "react-router-dom";
 
@@ -44,11 +45,11 @@ import FmsJavascript from "@pages/fms/javascript.mdx";
 import FmsVerschluesselungQuiz from "@pages/fms/verschluesselung-quiz.mdx";
 import FmsVPN from "@pages/fms/vpn.mdx";
 import FmsVPNQuiz from "@pages/fms/vpn-quiz.mdx";
+import FmsInternetKarte from "@pages-fms/internet-karte.jsx";
 import FmsPasswoerter from "@pages-fms/passwoerter.jsx";
 import Schluesselaustausch from "@pages-fms/schluesselaustausch.jsx";
 import FmsVerschluesselung from "@pages-fms/verschluesselung.jsx";
 import FmsWebdesign from "@pages-fms/webdesign.jsx";
-import FmsInternetKarte from "@pages-fms/internet-karte.jsx";
 import BoxModel from "../components/BoxModel";
 // Weitere eigenständige imports. Diese sind nicht verlinkt.
 import CodePen from "../components/CodePen";
@@ -78,6 +79,7 @@ export const createRouter = () => {
           { path: "javascript", element: <GymJS /> },
           { path: "js-variables", element: <GymJSVariables /> },
           { path: "js-bedingungen", element: <GymJSConditions /> },
+          { path: "js-functions", element: <GymJSFunctions /> },
 
           // Gym Praktikum
           { path: "praktikum/install", element: <PInstall /> },

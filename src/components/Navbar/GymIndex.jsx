@@ -40,6 +40,7 @@ export default function GymIndex() {
             <ol>
               <NavLink to="js-variables">Variablen</NavLink>
               <NavLink to="js-bedingungen">Bedingungen</NavLink>
+              <NavLink to="js-functions">Funktionen</NavLink>
             </ol>
           </li>
         </ol>
