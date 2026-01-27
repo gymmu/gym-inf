@@ -13,7 +13,7 @@ export default function FmsInternetKarte() {
         </p>
         <p>
           <em>
-            Bewegen Sie die Maus über die Karte, um Details zu vergrößern.
+            Bewegen Sie die Maus über die Karte, um Details zu vergrössern.
           </em>
         </p>
       </section>

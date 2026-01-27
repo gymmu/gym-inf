@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function ImageMagnifier({
   src,
@@ -37,14 +37,14 @@ export default function ImageMagnifier({
 
     const { x, y, width, height } = magnifierPosition;
 
-    // Berechne die Position im vergrößerten Bild
+    // Berechne die Position im vergrösserten Bild
     const bgPosX = -x * zoomLevel + magnifierRadius / 2;
     const bgPosY = -y * zoomLevel + magnifierRadius / 2;
 
     return `${bgPosX}px ${bgPosY}px`;
   };
 
-  // Berechne die Background-Größe für die Lupe
+  // Berechne die Background-Grösse für die Lupe
   const getBackgroundSize = () => {
     if (!magnifierPosition.width || !magnifierPosition.height) return "auto";
 
