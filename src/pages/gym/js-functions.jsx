@@ -84,7 +84,7 @@ export default function GymJSFunctions() {
         <p>
           Ein Funktionswächter prüft die Argumente und bricht die Funktion ab,
           wenn die Argumente keinen Sinn ergeben. Nehmen Sie an Sie haben die
-          Funktion <Math>{`f(x) = 2 \cdot x + 3`}</Math> und nun möchten Sie
+          Funktion <Math>{`f(x) = 2 \\cdot x + 3`}</Math> und nun möchten Sie
           <Math>{`f(2)`}</Math> bestimmen. Falls keine Zahl eingegeben wird,
           brechen Sie die Funktion ab, und geben einfach nichts zurück.
         </p>

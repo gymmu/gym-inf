@@ -16,7 +16,9 @@
   --color-orange: #fe8019;
   --color-white: #ffffff;
 
-  font-family: sans-serif;
+  font-family:
+    "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
   line-height: 1.5;
   font-weight: 400;
 
