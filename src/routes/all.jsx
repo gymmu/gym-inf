@@ -28,6 +28,7 @@ import PInstall from "@pages/praktikum/installation.mdx";
 import Regex from "@pages/regex.mdx";
 import GymJSConditions from "@pages-gym/js-bedingungen.jsx";
 import GymJSFunctions from "@pages-gym/js-functions.jsx";
+import GymJSLists from "@pages-gym/js-lists.jsx";
 import GymJSVariables from "@pages-gym/js-variables.jsx";
 import { createBrowserRouter, Link } from "react-router-dom";
 
@@ -80,6 +81,7 @@ export const createRouter = () => {
           { path: "js-variables", element: <GymJSVariables /> },
           { path: "js-bedingungen", element: <GymJSConditions /> },
           { path: "js-functions", element: <GymJSFunctions /> },
+          { path: "js-lists", element: <GymJSLists /> },
 
           // Gym Praktikum
           { path: "praktikum/install", element: <PInstall /> },

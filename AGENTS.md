@@ -2,10 +2,9 @@
 
 ## Build, Lint, and Test Commands
 
-- **Build**: `npm run build`
+- **Build**: Do not run a build, I will run the build on my own if needed
 - **Lint**: `npm run lint`
-- **Run Tests**: Use `npm test` to run all tests. For a single test, use
-  `npm test -- <test-file>`.
+- **Run Tests**: Do not run any tests.
 
 ## Code Style Guidelines
 
