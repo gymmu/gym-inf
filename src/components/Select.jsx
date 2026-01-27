@@ -1,5 +1,3 @@
-import "crypto"
-
 export default function Select({ options, value, onChange }) {
   return (
     <select value={value} onChange={onChange}>
@@ -7,5 +5,5 @@ export default function Select({ options, value, onChange }) {
         <option key={crypto.randomUUID()}>{option}</option>
       ))}
     </select>
-  )
+  );
 }
