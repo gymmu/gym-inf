@@ -1,0 +1,274 @@
+/* Container für die gesamte Komponente */
+.container {
+  margin-block: 1rem;
+  width: min(540px, calc(100vw - 42px));
+  min-width: min(540px, calc(100vw - 42px));
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Code-Block Container mit fester Breite */
+.codeBlockContainer {
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background-color: #1d2021; /* Gruvbox darker bg */
+}
+
+/* Erster Block (Beispiel) */
+.codeBlockContainer:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+/* Zweiter Block (Hinweis/Lösung) */
+.codeBlockContainer:last-child {
+  border-radius: 0 0 8px 8px;
+  border-top: 2px solid #504945; /* Trennlinie zwischen den Blöcken */
+}
+
+/* Header mit Buttons oder Language Badge */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #1d2021; /* Gruvbox darker bg */
+  border-bottom: 1px solid #3c3836; /* Gruvbox bg2 */
+  min-height: 40px;
+}
+
+/* Linke Seite des Headers */
+.leftHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Language Badge */
+.language {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #928374; /* Gruvbox gray */
+  letter-spacing: 0.05em;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Example Badge */
+.exampleBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #83a598; /* Gruvbox blue */
+  background-color: rgba(131, 165, 152, 0.15);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(131, 165, 152, 0.3);
+}
+
+/* Hint Badge */
+.hintBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #fabd2f; /* Gruvbox yellow */
+  background-color: rgba(250, 189, 47, 0.15);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(250, 189, 47, 0.3);
+}
+
+/* Solution Badge */
+.solutionBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #b8bb26; /* Gruvbox green */
+  background-color: rgba(184, 187, 38, 0.15);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(184, 187, 38, 0.3);
+}
+
+/* Hint Button */
+.hintButton {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  background-color: #fabd2f; /* Gruvbox yellow */
+  color: #1d2021;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.hintButton:hover {
+  background-color: #d79921; /* Darker yellow */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hintButton:active {
+  transform: translateY(0);
+}
+
+/* Solution Button */
+.solutionButton {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  background-color: #b8bb26; /* Gruvbox green */
+  color: #1d2021;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.solutionButton:hover {
+  background-color: #98971a; /* Darker green */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.solutionButton:active {
+  transform: translateY(0);
+}
+
+.solutionButton.locked {
+  background-color: #504945; /* Gruvbox bg3 */
+  color: #fb4934; /* Gruvbox red */
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.solutionButton.locked:hover {
+  background-color: #504945;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Timer Display */
+.timer {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fabd2f; /* Gruvbox yellow */
+  font-family: "Courier New", Courier, monospace;
+  background-color: rgba(250, 189, 47, 0.15);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(250, 189, 47, 0.3);
+}
+
+/* Close Button */
+.closeButton {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.9rem;
+  background-color: transparent;
+  color: #fb4934; /* Gruvbox red */
+  border: 1px solid #fb4934;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.closeButton:hover {
+  background-color: #fb4934;
+  color: #1d2021;
+}
+
+/* Progress Bar für Lösung */
+.progressBar {
+  height: 3px;
+  background-color: #3c3836; /* Gruvbox bg2 */
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #b8bb26,
+    #fabd2f
+  ); /* Gruvbox green to yellow */
+  transition: width 1s linear;
+}
+
+/* Solution Wrapper - verhindert Textauswahl */
+.solutionWrapper {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.solutionWrapper * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Copy Button */
+.copyButton {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  background-color: #3c3836; /* Gruvbox bg2 */
+  color: #ebdbb2; /* Gruvbox fg */
+  border: 1px solid #504945; /* Gruvbox bg3 */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.copyButton:hover {
+  background-color: #504945; /* Gruvbox bg3 */
+  border-color: #665c54; /* Gruvbox bg4 */
+}
+
+.copyButton:active {
+  transform: scale(0.95);
+}
+
+.copyButton:focus {
+  outline: 2px solid #83a598; /* Gruvbox blue */
+  outline-offset: 2px;
+}
+
+/* Scrollbar Styling */
+.codeBlockContainer :global(pre)::-webkit-scrollbar {
+  height: 8px;
+}
+
+.codeBlockContainer :global(pre)::-webkit-scrollbar-track {
+  background: #1d2021;
+}
+
+.codeBlockContainer :global(pre)::-webkit-scrollbar-thumb {
+  background: #504945;
+  border-radius: 4px;
+}
+
+.codeBlockContainer :global(pre)::-webkit-scrollbar-thumb:hover {
+  background: #665c54;
+}
+
+.codeBlockContainer :global(pre) {
+  scrollbar-width: thin;
+  scrollbar-color: #504945 #1d2021;
+}

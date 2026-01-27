@@ -26,6 +26,7 @@ import ObsidianMarkdown from "@pages/obsidian-md.mdx";
 // Importiere Unterseiten fürs Gym Praktikum
 import PInstall from "@pages/praktikum/installation.mdx";
 import Regex from "@pages/regex.mdx";
+import GymJSAufgaben from "@pages-gym/js-aufgaben.jsx";
 import GymJSConditions from "@pages-gym/js-bedingungen.jsx";
 import GymJSFunctions from "@pages-gym/js-functions.jsx";
 import GymJSLists from "@pages-gym/js-lists.jsx";
@@ -86,6 +87,7 @@ export const createRouter = () => {
           { path: "js-lists", element: <GymJSLists /> },
           { path: "js-loops", element: <GymJSLoops /> },
           { path: "js-loops-functions", element: <GymJSLoopsFunctions /> },
+          { path: "js-aufgaben", element: <GymJSAufgaben /> },
 
           // Gym Praktikum
           { path: "praktikum/install", element: <PInstall /> },

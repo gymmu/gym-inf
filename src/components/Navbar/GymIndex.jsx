@@ -46,6 +46,7 @@ export default function GymIndex() {
               <NavLink to="js-loops-functions">
                 Schleifen mit Funktionen
               </NavLink>
+              <NavLink to="js-aufgaben">Aufgaben</NavLink>
             </ol>
           </li>
         </ol>
