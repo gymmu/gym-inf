@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="de"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/gym-inf/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+    <script type="text/javascript">
+    (function (l) {
+      if (l.search[1] === "/") {
+        var decoded = l.search
+          .slice(1)
+          .split("&")
+          .map(function (s) {
+            return s.replace(/~and~/g, "&");
+          })
+          .join("?");
+        window.history.replaceState(
+          null,
+          null,
+          l.pathname.slice(0, -1) + decoded + l.hash,
+        );
+      }
+    })(window.location);
+    </script>
+    <title>Informatik</title>
+    <script type="module" async="" crossorigin="" src="/gym-inf/assets/app-COFD0Vvk.js"></script>
+    <link rel="stylesheet" crossorigin="" href="/gym-inf/assets/app-DOZWZo-h.css">
+  </head>
+
+  <body>
+    <div id="root" class="" data-server-rendered="true"><div id="_app_ytdfr_1" class=""><div class="_container_lbmsp_1"><header><img src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'%20standalone='no'?%3e%3csvg%20width='30'%20height='30'%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20xmlns:sketch='http://www.bohemiancoding.com/sketch/ns'%3e%3cpath%20stroke='%23ebdbb2'%20d='M5%205%20h%2020%20M%205%2015%20h%2020%20M%205%2025%20h%2020'%20id='hamburger'%3e%3c/path%3e%3c/svg%3e" alt="Haburger Menu Icon"><h1><a href="/gym-inf/">Informatik Skript</a></h1></header></div><aside class="_sidenav_1oka1_1 "><div class="_container_cm1se_1"><div class="_selectSchool_cm1se_4"><h2 class="active-school">Gym</h2><h2 class="">FMS</h2></div><div class="_navList_1oka1_14"><section><h2>Theorie</h2><ol class="_nav_1oka1_14"><li>Obsidian<ol><li><a href="/gym-inf/obsidian">Obsidian</a></li><li><a href="/gym-inf/obsidian-md">Markdown in Obsidian</a></li></ol></li><li>Einführung<ol><li><a href="/gym-inf/fms/hardware">Computer Hardware</a></li><li><a href="/gym-inf/fms/binary">Binärsystem</a></li><li><a href="/gym-inf/fms/Hex">Hexadezimalsystem</a></li><li><a href="/gym-inf/information">Daten und Informationen</a></li><li><a href="/gym-inf/colors">Farben</a></li></ol></li><li>Sprachen<ol><li><a href="/gym-inf/sprachen">Sprachen</a></li><li><a href="/gym-inf/grammar">Grammatik</a></li><li><a href="/gym-inf/regex">Regex</a></li><li><a href="/gym-inf/html">HTML</a></li><li><a href="/gym-inf/css">CSS</a></li><li><a href="/gym-inf/javascript">Javascript</a></li></ol></li><li>Programmieren<ol><li><a href="/gym-inf/js-variables">Variablen</a></li><li><a href="/gym-inf/js-bedingungen">Bedingungen</a></li><li><a href="/gym-inf/js-functions">Funktionen</a></li><li><a href="/gym-inf/js-lists">Listen</a></li><li><a href="/gym-inf/js-loops">Schleifen</a></li><li><a href="/gym-inf/js-loops-functions">Schleifen mit Funktionen</a></li><li><a href="/gym-inf/js-aufgaben">Aufgaben</a></li></ol></li></ol></section><section><h2>Praktikum</h2><ol class="_nav_1oka1_14"><li><ol><li><a href="/gym-inf/praktikum/install">Installation</a></li></ol></li></ol></section></div></div></aside><main class="content-grid"><h2>Besseres Webdesign mit Flexbox und Grid</h2><p>Im letzten Kapitel haben wir und die Grundlagen vom Webdesign angeschaut. Hier schauen wir uns an, wie man es tatsächlich auch besser machen kann. Dafür brauchen wir hauptsächlich die Konzepte `grid` und `flexbox` die neuer sind in CSS, aber überall unterstützt werden. Wir werden auch `media-queries` und `container-queries` anschauen, damit wir unser Layout auf die grösse der Webseite anpassen können.</p><p>Sie finden hier den Starter-Code den Sie auf Ihrem<!-- --> <a href="https://codepen.io" target="_blank">CodePen</a> <!-- -->brauchen, damit Sie nur dem CSS Teil im Video folgen müssen. Sie können natürlich gerne den Inhalt jederzeit abändern.</p><h3>HTML</h3><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html">&lt;header&gt;
+  &lt;h1&gt;Flexbox und Grid&lt;/h1&gt;
+  &lt;button onclick="toggleNav()"&gt;X&lt;/button&gt;
+&lt;/header&gt;
+
+&lt;aside class=""&gt;
+  &lt;nav class="navbar"&gt;
+    &lt;ul class="navbar-list"&gt;
+      &lt;li class="navbar-item"&gt;&lt;a href="#flexbox"&gt;Flexbox&lt;/a&gt;&lt;/li&gt;
+      &lt;li class="navbar-item"&gt;&lt;a href="#grid"&gt;Grid&lt;/a&gt;&lt;/li&gt;
+      &lt;li class="navbar-item"&gt;&lt;a href="#grid-boxes"&gt;Boxen&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/aside&gt;
+
+&lt;main&gt;
+  &lt;section&gt;
+    &lt;h2 id="flexbox"&gt;Flexbox&lt;/h2&gt;
+    &lt;p&gt;Fexbox ist sehr praktisch für einfache Layouts die nicht dem standart Block und Inline Modell von HTML folgen.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section&gt;
+    &lt;h2 id="grid"&gt;Grid&lt;/h2&gt;
+    &lt;p&gt;Grid ist sehr praktisch wenn Sie ein Gitter darstellen möchten, kann aber auch sehr gut für responsive Webseiten verwendet werden.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section&gt;
+    &lt;h2 id="grid-boxes"&gt;Boxen&lt;/h2&gt;
+    &lt;p&gt;Grid kann nürrlich auch verwendet werden, um ein Gitter-Layout anzuzeigen.&lt;/p&gt;
+    &lt;div class="box-wrapper"&gt;
+      &lt;div class="box"&gt;&lt;img src="https://plus.unsplash.com/premium_photo-1673292293042-cafd9c8a3ab3?ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;q=80&amp;w=687" alt=""&gt;&lt;/div&gt;
+      &lt;div class="box"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1529419412599-7bb870e11810?ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;q=80&amp;w=687" alt=""&gt;
+      &lt;/div&gt;
+      &lt;div class="box"&gt;
+        &lt;img src="https://plus.unsplash.com/premium_photo-1669741909413-08072ccaedde?ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzN8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D&amp;auto=format&amp;fit=crop&amp;q=60&amp;w=500" alt=""&gt;
+      &lt;/div&gt;
+      &lt;div class="box"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDJ8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D&amp;auto=format&amp;fit=crop&amp;q=60&amp;w=500" alt=""&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;Footer&lt;/footer&gt;
+</code></pre></div><h3>CSS</h3><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-css"><code class="language-css">* {
+  box-sizing: border-box;
+}
+
+:root {
+  --section-color: hsl(30, 5%, 50%);
+}
+
+header,
+aside,
+main,
+footer {
+  border: 4px solid black;
+}
+</code></pre></div><h3>Javascript</h3><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-js"><code class="language-js">function toggleNav() {
+  const sidenav = document.querySelector("aside");
+  sidenav.classList.toggle("hide");
+}
+</code></pre></div><h2>Video</h2><p>Das folgende Video erklärt Ihnen alles was Sie für die Webseite brauchen. Das Video ist länger wie gewöhnlich, Sie sollten also versuchen schnell zu arbeiten.</p><center><iframe width="560" height="315" src="https://www.youtube.com/embed/MNd4mSmZq4E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></center></main><footer>Informatik Gymnasium Muttenz</footer></div><script>window.__staticRouterHydrationData = JSON.parse("{\"loaderData\":{\"0\":null,\"0-44\":null},\"actionData\":null,\"errors\":null}");</script></div>
+<script>window.__VITE_REACT_SSG_HASH__ = 'pc41nwzni3'</script>
+  
+
+</body></html>

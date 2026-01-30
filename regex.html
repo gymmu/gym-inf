@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="de"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/gym-inf/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+    <script type="text/javascript">
+    (function (l) {
+      if (l.search[1] === "/") {
+        var decoded = l.search
+          .slice(1)
+          .split("&")
+          .map(function (s) {
+            return s.replace(/~and~/g, "&");
+          })
+          .join("?");
+        window.history.replaceState(
+          null,
+          null,
+          l.pathname.slice(0, -1) + decoded + l.hash,
+        );
+      }
+    })(window.location);
+    </script>
+    <title>Informatik</title>
+    <script type="module" async="" crossorigin="" src="/gym-inf/assets/app-COFD0Vvk.js"></script>
+    <link rel="stylesheet" crossorigin="" href="/gym-inf/assets/app-DOZWZo-h.css">
+  </head>
+
+  <body>
+    <div id="root" class="" data-server-rendered="true"><div id="_app_ytdfr_1" class=""><div class="_container_lbmsp_1"><header><img src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'%20standalone='no'?%3e%3csvg%20width='30'%20height='30'%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20xmlns:sketch='http://www.bohemiancoding.com/sketch/ns'%3e%3cpath%20stroke='%23ebdbb2'%20d='M5%205%20h%2020%20M%205%2015%20h%2020%20M%205%2025%20h%2020'%20id='hamburger'%3e%3c/path%3e%3c/svg%3e" alt="Haburger Menu Icon"><h1><a href="/gym-inf/">Informatik Skript</a></h1></header></div><aside class="_sidenav_1oka1_1 "><div class="_container_cm1se_1"><div class="_selectSchool_cm1se_4"><h2 class="active-school">Gym</h2><h2 class="">FMS</h2></div><div class="_navList_1oka1_14"><section><h2>Theorie</h2><ol class="_nav_1oka1_14"><li>Obsidian<ol><li><a href="/gym-inf/obsidian">Obsidian</a></li><li><a href="/gym-inf/obsidian-md">Markdown in Obsidian</a></li></ol></li><li>Einführung<ol><li><a href="/gym-inf/fms/hardware">Computer Hardware</a></li><li><a href="/gym-inf/fms/binary">Binärsystem</a></li><li><a href="/gym-inf/fms/Hex">Hexadezimalsystem</a></li><li><a href="/gym-inf/information">Daten und Informationen</a></li><li><a href="/gym-inf/colors">Farben</a></li></ol></li><li>Sprachen<ol><li><a href="/gym-inf/sprachen">Sprachen</a></li><li><a href="/gym-inf/grammar">Grammatik</a></li><li><a href="/gym-inf/regex">Regex</a></li><li><a href="/gym-inf/html">HTML</a></li><li><a href="/gym-inf/css">CSS</a></li><li><a href="/gym-inf/javascript">Javascript</a></li></ol></li><li>Programmieren<ol><li><a href="/gym-inf/js-variables">Variablen</a></li><li><a href="/gym-inf/js-bedingungen">Bedingungen</a></li><li><a href="/gym-inf/js-functions">Funktionen</a></li><li><a href="/gym-inf/js-lists">Listen</a></li><li><a href="/gym-inf/js-loops">Schleifen</a></li><li><a href="/gym-inf/js-loops-functions">Schleifen mit Funktionen</a></li><li><a href="/gym-inf/js-aufgaben">Aufgaben</a></li></ol></li></ol></section><section><h2>Praktikum</h2><ol class="_nav_1oka1_14"><li><ol><li><a href="/gym-inf/praktikum/install">Installation</a></li></ol></li></ol></section></div></div></aside><main class="content-grid"><h2>Reguläre Ausdrücke (Regex)</h2>
+<p>Reguläre Ausdrücke sind ein wichtiger Teil von Grammatiken und Sprachen. Man kann Reguläre Ausdrücke als eine eigene Sprache ansehen, mit deren Hilfe man die Syntaxdiagramme aus den Grammatiken sehr kompakt beschreiben kann.</p>
+<div class="highlight learning full-width content-grid"><h2 id="goals">Lernziele</h2><ul>
+<li>Sie wissen was Reguläre Ausdrücke sind.</li>
+<li>Sie können eine Regex erkennen, wenn Sie eine Sehen.</li>
+<li>Sie können einfache Regex selber erstellen.</li>
+<li>Sie können entscheiden ob ein Ausdruck von einer Regex abgedeckt wird.</li>
+</ul></div>
+<h2>Hexadezimalzahlen erkennen</h2>
+<p>Im vorherigen Kapitel, haben wir Syntaxdiagramme erstellt, mit deren Hilfe wir Hexadezimalzahlen erkennen konnten. Nun packen wir das ganze in eine einfache Regex <code>[0-9A-F][0-9A-F]</code>.</p>
+<div class="_codePenWrapper_svwpb_1 full-width"><div class="_pane_svwpb_8 _paneLeft_svwpb_12"><h3>Eingabe Text</h3><input type="text" value="A3 B3 777 90G d0D"><div class="_editorWrapper_svwpb_38"><h2>Regex</h2><section style="display:flex;position:relative;text-align:initial;width:100%;height:300px"><div style="display:flex;height:100%;width:100%;justify-content:center;align-items:center">Loading...</div><div style="width:100%;display:none"></div></section></div></div><div class="_pane_svwpb_8"><div><h3>Erkannte Teile</h3><div></div></div><div><h3>Matches</h3><div></div></div></div></div>
+<p>Sie können hier sehen dass diese Regex genau eine 2-stellige Hexadezimalzahl matched, aber nur wenn die Buchstaben grossgeschrieben sind. Anstatt ein kompliziertes Syntaxdiagramm aufzustellen, können wir diesen relativ kurzen Ausdruck angeben, der uns dann exakt einen Teil des Textes matched.</p>
+<div class="full-width content-grid highlight "><h2>Reguläre Ausdrücke lesen können</h2><p>Wie oben bereits erwähnt, sind Reguläre Ausdrücke wie eine eigene Sprache. Da gibt es einige Regeln die man beachten muss. Diese Regeln werden im folgenden erklärt. Ganz generell gilt die Regel, wenn ein Buchstabe einfach so da steht, dann wird genau dieser Buchstabe gematched, genau wie bei einer normalen Textsuche. Am besten ist es sowieso als Textsuche über diese Regulären Ausdrücke nachzudenken. Möchten Sie zum Beispiel das Wort <code>cat</code> in einem Text suchen, dann machen Sie das mit der Regex <code>cat</code>. Möchten Sie nun aber auch diejenigen finden, die grossgeschrieben sind, dann machen Sie das mit <code>[C|c]at</code>. Hier sind <code>at</code> ganz normale Buchstaben die im Wort vorkommen müssen, und <code>[C|c]</code> ist eine Regel die sagt: entweder ein grosses oder ein kleines <code>c</code>.</p><h3>Regeln</h3><ul>
+<li><code>[abc]</code> genau ein Buchstabe aus <code>a</code>,  <code>b</code> oder <code>c</code>.</li>
+<li><code>[^abc]</code> genau ein Buchstabe, aber <strong>nicht</strong> <code>a</code>, <code>b</code> oder <code>c</code>.</li>
+<li><code>[a-z]</code> genau ein Buchstabe von <code>a</code> bis <code>z</code>.</li>
+<li><code>[^a-z]</code> genau ein Buchstabe, aber <strong>nicht</strong> <code>a</code> bis <code>z</code>.</li>
+<li><code>[a-zA-Z]</code> genau ein Buchstabe von <code>a</code> bis <code>z</code>, oder <code>A</code> bis <code>Z</code>.</li>
+<li><code>.</code> irgend ein einzelnes Zeichen.</li>
+<li><code>a|b</code> entweder <code>a</code> oder <code>b</code>.</li>
+<li><code>\s</code> irgend eine Art von Leerzeichen (Leerschlag oder Tab).</li>
+<li><code>\S</code> alles ausser ein Leerzeichen.</li>
+<li><code>\d</code> eine Ziffer. Kann man auch als <code>[0-9]</code> angeben.</li>
+<li><code>\D</code> alles ausser eine Ziffer. Kann man auch als <code>[^0-9]</code> angeben.</li>
+<li><code>\w</code> irgend ein Zeichen das in einem Wort vorkommen kann. Das sind Buchstaben und <code>-</code> und weitere Spezialzeichen.</li>
+<li><code>\W</code> alles ausser einem Wortzeichen. Also Leerzeichen, Punkt, Komma, etc.</li>
+<li><code>\b</code> alle Zeichen die ein Wort begrenzen.</li>
+<li><code>\B</code> alle Zeichen die ein Wort <strong>nicht</strong> begrenzen.</li>
+<li><code>\n</code> Zeilenumbruch.</li>
+<li><code>\t</code> Tabulatorzeichen.</li>
+<li><code>a?</code> 0 oder 1 <code>a</code>.</li>
+<li><code>a*</code> 0 oder mehrere <code>a</code>.</li>
+<li><code>a+</code> 1 oder mehrere <code>a</code>.</li>
+<li><code>a{3}</code> genau 3 <code>a</code>.</li>
+<li><code>a{3,}</code> 3 oder mehr <code>a</code></li>
+<li><code>a{3,6}</code> zwischen 3 und 6 <code>a</code>.</li>
+<li><code>^a</code> es muss ein <code>a</code> ganz am Anfang haben.</li>
+<li><code>a$</code> es muss ein <code>a</code> ganz am Ende haben.</li>
+<li><code>(...)</code> erfasst den Inhalt in einer Gruppe. Gruppen werden einfach durchnummeriert, startet mit 1.</li>
+<li><code>(?:...)</code> Gruppe die nicht erfasst wird.</li>
+<li><code>(?&lt;name&gt;...)</code> benannte Gruppe, kann später mit <code>&lt;name&gt;</code> abgerufen werden.</li>
+<li><code>$1</code> Inhalt der Gruppe 1. Wird oftmals auch als <code>\1</code> geschrieben.</li>
+<li><code>$$</code> das Zeichen <code>$</code>.</li>
+<li><code>$`</code> Inhalt vor einem Match.</li>
+<li><code>$'</code> Inhalt nach einem Match.</li>
+<li><code>$&amp;</code> alles was gematched wurde.</li>
+<li><code>$&lt;name&gt;</code> Inhalt der benannten Gruppe <code>&lt;name&gt;</code>. Diese Form wird nicht überall unterstützt, wir verwenden Sie nur in der Theorie.</li>
+</ul><h3>Zeichen escapen</h3><p>Dafür gibt es leider keine gute deutsche Übersetzung. Ein Zeichen <strong>escapen</strong> bedeutet es von seiner eigentlichen Funktion zu sperren. Wenn wir also einen Punkt (<code>.</code>) matchen möchten, dann müssen wir das so schreiben: <code>\.</code>. Damit wird die eigentliche Funktion des Zeichens <code>.</code> in einem regulären Ausdruck unterdrückt, und wir können es als das Zeichen selbst nehmen. Das müssen wir mit allen Zeichen machen, die eine spezielle Bedeutung in regulären Ausdrücken haben.</p></div>
+<h2>Einfache Beispiele</h2>
+<p>Schauen wir uns ein paar einfache Beispiele an. Wenn wir einen regulären Ausdruck angeben möchten, dann möchten wir das immer für eine ganze Reihe von ausdrücken machen, und alle sollen gematched werden. Daher geben wir immer ein paar Einträge an, für diese erstellen wir dann eine Regex, die alle matchen kann.</p>
+<p>Sie können alle diese Ausdrücke auf <a href="https://regex101.com/" target="_blank">Regex101</a> testen.</p>
+<ul>
+<li><strong>Uhrzeit</strong>: Wir nehmen das 24-Stunden-Format, ohne Sekunden.</li>
+</ul>
+<div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div>
+<p>Diese können wir alle mit dem folgenden Ausdruck matchen: <code>^[0-2]?[0-9]:[0-5][0-9]$</code>.</p>
+<ul>
+<li><strong>Telefonnummer</strong>: Wir gehen Hier von schweizer Handy-Nummern aus, die können in unterschiedlichen Formaten angegeben werden, wir möchten alle treffen.</li>
+</ul>
+<div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div>
+<p>Diese können wir alle mit dem folgenden Ausdruck matchen: <code>^(\+41 ?|0)7\d ?\d{3} ?\d{2} ?\d{2}$</code></p>
+<div class="full-width content-grid highlight exercise"><h2>Aufgaben</h2><p>Öffnen Sie die Webseite <a href="https://regex101.com/" target="_blank">Regex101</a>. Und erstellen Sie reguläre Ausdrücke für die folgenden Listen von Ausdrücken. Versuchen Sie möglichst alle Ausdrücke zu treffen.</p><ol>
+<li>Datum</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="2">
+<li>Uhrzeit</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="3">
+<li>Vollnamen</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="4">
+<li>Email-Adressen</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="5">
+<li>Adressen</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="6">
+<li>Webadressen</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="7">
+<li>IBAN-Nummern</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="8">
+<li>RGB-Farbwerte</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="9">
+<li>Einfache Gleichungen</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="10">
+<li>Komplexere Gleichungen</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="11">
+<li>RGB Farbwerte, aber jeder Farbkanal ist eine Schnappszahl</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="12">
+<li>Doppelte Wörter</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div></div>
+<h2>Suche und ersetzen</h2>
+<p>Reguläre Ausdrücke werden nicht nur im Programmieren eingesetzt, sie können auch bei einfachen Anwendungen wie Google Docs, Google Sheets und auch VSCode zum suchen und ersetzen verwendet werden. Testen können Sie das aber auch auf der Webseite <a href="https://regex101.com/" target="_blank">Regex101</a>.</p>
+<p>Mit normalem suchen und ersetzen, sind Sie sehr eingeschränkt. Mit regulären Ausdrücken, sind Sie aber sehr flexibler. Sie können sogar das gesuchte in ein anderes Format bringen.</p>
+<div class="full-width content-grid highlight exercise"><h2>Aufgaben</h2><ol>
+<li>Finden Sie alle vorkommen von <code>cat</code> oder <code>Cat</code> und ersetzen Sie diese mit Katze.</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="2">
+<li>Bringen Sie das Datum in das Format <code>YYYY-MM-DD</code>.</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="3">
+<li>Bringen Sie die Telefonnummern in das Format <code>+41 7x xxx xx xx</code>.</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="4">
+<li>Bringen Sie die Preisliste in das Format <code>CHF \d+.\d{2}</code>. Sie müssen den Wechselkurs nicht beachten, es geht nur um das Format.</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="5">
+<li>Bringen Sie die folgenden Emailadressen in das Format: <code>Vorname: ..., Nachname: ..., Provider: ..., Top-Level-Domain: ...</code></li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="6">
+<li>Entfernen Sie die Nummerierung aus der Liste.</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="7">
+<li>Bringen Sie diese Aufzählung in eine Listenform mit dem Format: <code>- Eintrag 1\n - Eintrag 2\n</code></li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="8">
+<li>Setzen Sie alle Einträge dieser TODO-Liste zurück, ausser es hat ein <code>[x]</code>.</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div></div>
+<h2>Syntax prüfen</h2>
+<p>Wenn Sie Computer Code schreiben, dann muss dieser einer bestimmten Syntax folgen, dam der Computer den Code überhaupt lesen kann. Da können sehr oft bereits Fehler passieren, und der Computer kann mit dem Code gar nichts anfangen. Damit dies nicht passiert, gibt es Hilfsprogramme wie <code>Linter</code> die den Code anschauen und eine Fehlermeldung zurückgeben, wenn etwas mit der Syntax nicht stimmt. Wir möchten nun auch ganz einfache <code>Linter</code> erstellen, die für uns einige Objekte in <strong>SVG</strong> erkennen können.</p>
+<div class="full-width content-grid highlight exercise"><h2>Aufgabe</h2><ol>
+<li>Erkennen Sie alle gültigen <code>circle</code>-Elemente.</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="2">
+<li>Erkennen Sie alle gültigen <code>rect</code>-Elemente.</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div><ol start="3">
+<li>Erkenne ob dies ein gültiges <code>d</code>-Attribut für ein <code>path</code>-Element ist.</li>
+</ol><div class="_codeBlock_6h54l_1 line-numbers match-braces"><pre class="language-html"><code class="language-html"></code></pre></div></div></main><footer>Informatik Gymnasium Muttenz</footer></div><script>window.__staticRouterHydrationData = JSON.parse("{\"loaderData\":{\"0\":null,\"0-7\":null},\"actionData\":null,\"errors\":null}");</script></div>
+<script>window.__VITE_REACT_SSG_HASH__ = 'pc41nwzni3'</script>
+  
+
+</body></html>

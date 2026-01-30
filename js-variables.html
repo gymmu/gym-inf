@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="de"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/gym-inf/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+    <script type="text/javascript">
+    (function (l) {
+      if (l.search[1] === "/") {
+        var decoded = l.search
+          .slice(1)
+          .split("&")
+          .map(function (s) {
+            return s.replace(/~and~/g, "&");
+          })
+          .join("?");
+        window.history.replaceState(
+          null,
+          null,
+          l.pathname.slice(0, -1) + decoded + l.hash,
+        );
+      }
+    })(window.location);
+    </script>
+    <title>Informatik</title>
+    <script type="module" async="" crossorigin="" src="/gym-inf/assets/app-COFD0Vvk.js"></script>
+    <link rel="stylesheet" crossorigin="" href="/gym-inf/assets/app-DOZWZo-h.css">
+  </head>
+
+  <body>
+    <div id="root" class="" data-server-rendered="true"><div id="_app_ytdfr_1" class=""><div class="_container_lbmsp_1"><header><img src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'%20standalone='no'?%3e%3csvg%20width='30'%20height='30'%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20xmlns:sketch='http://www.bohemiancoding.com/sketch/ns'%3e%3cpath%20stroke='%23ebdbb2'%20d='M5%205%20h%2020%20M%205%2015%20h%2020%20M%205%2025%20h%2020'%20id='hamburger'%3e%3c/path%3e%3c/svg%3e" alt="Haburger Menu Icon"><h1><a href="/gym-inf/">Informatik Skript</a></h1></header></div><aside class="_sidenav_1oka1_1 "><div class="_container_cm1se_1"><div class="_selectSchool_cm1se_4"><h2 class="active-school">Gym</h2><h2 class="">FMS</h2></div><div class="_navList_1oka1_14"><section><h2>Theorie</h2><ol class="_nav_1oka1_14"><li>Obsidian<ol><li><a href="/gym-inf/obsidian">Obsidian</a></li><li><a href="/gym-inf/obsidian-md">Markdown in Obsidian</a></li></ol></li><li>Einführung<ol><li><a href="/gym-inf/fms/hardware">Computer Hardware</a></li><li><a href="/gym-inf/fms/binary">Binärsystem</a></li><li><a href="/gym-inf/fms/Hex">Hexadezimalsystem</a></li><li><a href="/gym-inf/information">Daten und Informationen</a></li><li><a href="/gym-inf/colors">Farben</a></li></ol></li><li>Sprachen<ol><li><a href="/gym-inf/sprachen">Sprachen</a></li><li><a href="/gym-inf/grammar">Grammatik</a></li><li><a href="/gym-inf/regex">Regex</a></li><li><a href="/gym-inf/html">HTML</a></li><li><a href="/gym-inf/css">CSS</a></li><li><a href="/gym-inf/javascript">Javascript</a></li></ol></li><li>Programmieren<ol><li><a href="/gym-inf/js-variables">Variablen</a></li><li><a href="/gym-inf/js-bedingungen">Bedingungen</a></li><li><a href="/gym-inf/js-functions">Funktionen</a></li><li><a href="/gym-inf/js-lists">Listen</a></li><li><a href="/gym-inf/js-loops">Schleifen</a></li><li><a href="/gym-inf/js-loops-functions">Schleifen mit Funktionen</a></li><li><a href="/gym-inf/js-aufgaben">Aufgaben</a></li></ol></li></ol></section><section><h2>Praktikum</h2><ol class="_nav_1oka1_14"><li><ol><li><a href="/gym-inf/praktikum/install">Installation</a></li></ol></li></ol></section></div></div></aside><main class="content-grid"><section><h2>Variablen</h2><p>Variablen beim Programmieren sind einfache Speicherzellen. Ein Muster das beim Programmieren immer wieder vorkommt, ist es einen Wert zu speichern, und diesen später wieder zu verwenden, das wird beim Programmieren mit Variablen und Zuweisungen gelöst.</p><p>Stellen Sie sich das einfache mathematische Problem von dieser Rechnung hier vor.</p><div class="_wrapper_1yelo_9"><div class="_display_1yelo_5">(5+3) \cdot 2</div></div><p>Wir müssen hier in 2 Schritten rechnen, und dem Computer jeweils sagen, dass er das Resultat speichern soll. Wir Können das einfach mit dem folgenden Code machen:</p><div class="_codeBlockContainer_1qps1_2"><div class="_header_1qps1_13"><div class="_leftHeader_1qps1_23"><span class="_language_1qps1_30">javascript</span></div><button class="_copyButton_1qps1_61" aria-label="Code kopieren" title="Code in Zwischenablage kopieren">Kopieren</button></div><pre class="language-javascript" style="background:#1e1e1e;padding:1em;overflow:auto"><code>let sum = 5 + 3;
+let prod = sum * 2;
+
+console.log(`Das Resultat ist ${prod}`);</code></pre></div></section><section><h2>Benutzereingabe Speichern</h2><p>Sehr oft kommt es beim Programmieren vor, das Sie einen Wert vom Benutzer erfragen müssen, bzw. einen Wert von der Kommandozeile einlesen, diesen aber erst später wieder brauchen, dann ist es nützlich wenn man diese Werte einfach nur abspeichern kann, wie zum Beispiel hier:</p><div class="_codeBlockContainer_1qps1_2"><div class="_header_1qps1_13"><div class="_leftHeader_1qps1_23"><span class="_language_1qps1_30">javascript</span><span class="_diffBadge_1qps1_48">diff</span></div><button class="_copyButton_1qps1_61" aria-label="Code kopieren" title="Code in Zwischenablage kopieren">Kopieren</button></div><pre class="language-javascript" style="background:#1e1e1e;padding:1em;overflow:auto"><code>const name = process.argv[2]
+
+console.log(`Hello ${name}!`)</code></pre></div><p>Wir könnten das speichern der Variable hier auch weglassen, aber hier gibt es uns einen zusätzlichen Hinweis darauf was wir vom Code erwarten, denn </p><pre>process.argv[2]</pre> ist nicht wirklich aussagekräftig, im Code wissen wir nun aber das wir einen Namen erwarten. Das abspeichern in Variablen hilft uns also auch gleich den Code zu dokumentieren.<p></p></section><div class="full-width content-grid highlight "><h2>Der Unterschied von <pre>let</pre> und <pre>const</pre></h2><p>In den Beispielen oben haben wir einmal </p><pre>let</pre> und einmal<pre>const</pre> verwendet. Beides sind Schlüsselwörter und werden verwendet wenn eine neue Variable erstellt werden soll. Wenn<!-- --> <pre>let</pre> verwendet wird, dann kann man der Variable später einen anderen Wert zuweisen. Bei <pre>const</pre> ist das nicht möglich, wir können eine Variable also for dem überschreiben schützen. Wir ändern das Beispiel 1 ganz leicht ab, so dass wir nur eine Variable brauchen.<p></p><div class="_codeBlockContainer_1qps1_2"><div class="_header_1qps1_13"><div class="_leftHeader_1qps1_23"><span class="_language_1qps1_30">javascript</span></div><button class="_copyButton_1qps1_61" aria-label="Code kopieren" title="Code in Zwischenablage kopieren">Kopieren</button></div><pre class="language-javascript" style="background:#1e1e1e;padding:1em;overflow:auto"><code>let result = 5 + 3;
+result = result * 2;
+
+console.log(`Das Resultat ist ${result}`);</code></pre></div><p>Wann sollte man </p><pre>let</pre> und wann <pre>const</pre> verwenden. Da gibt es ganz unterschiedliche Ansichten, und Sie könnten alles nur mit<!-- --> <pre>let</pre> machen. Wir versuche jedoch alles mit <pre>const</pre> <!-- -->zu machen, denn so müssen wir in jedem Schritt eine neue Variable erstellen, was uns zwingt explizit zu sein, und dadurch unseren Code direkt erklärt.<p></p></div></main><footer>Informatik Gymnasium Muttenz</footer></div><script>window.__staticRouterHydrationData = JSON.parse("{\"loaderData\":{\"0\":null,\"0-11\":null},\"actionData\":null,\"errors\":null}");</script></div>
+<script>window.__VITE_REACT_SSG_HASH__ = 'pc41nwzni3'</script>
+  
+
+</body></html>
