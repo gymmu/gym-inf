@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react"
-import Editor from "@monaco-editor/react"
+import { useState, useEffect } from "react";
+import { Editor } from "@monaco-editor/react";
 
-import "./components.css"
+import "./components.css";
 
 export default function Fiddle({ html, css }) {
-  const [HTMLSource, setHTMLSource] = useState(html || "")
-  const [CSSSource, setCSSSource] = useState(css || "")
-  const [source, setSource] = useState("")
+  const [HTMLSource, setHTMLSource] = useState(html || "");
+  const [CSSSource, setCSSSource] = useState(css || "");
+  const [source, setSource] = useState("");
 
   useEffect(() => {
-    setSource(`<style>${CSSSource}</style>${HTMLSource}`)
-  }, [CSSSource, HTMLSource])
+    setSource(`<style>${CSSSource}</style>${HTMLSource}`);
+  }, [CSSSource, HTMLSource]);
 
   const handleHTMLChange = (e) => {
-    setHTMLSource(e)
-  }
+    setHTMLSource(e);
+  };
 
   const handleCSSChange = (e) => {
-    setCSSSource(e)
-  }
+    setCSSSource(e);
+  };
 
   return (
     <>
@@ -49,9 +49,10 @@ export default function Fiddle({ html, css }) {
           <h5 className="sm">Webseite</h5>
           <div
             className="renderOutput wide"
-            dangerouslySetInnerHTML={{ __html: source }}></div>
+            dangerouslySetInnerHTML={{ __html: source }}
+          ></div>
         </div>
       </div>
     </>
-  )
+  );
 }

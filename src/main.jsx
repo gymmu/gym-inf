@@ -1,5 +1,8 @@
-import ReactDOM from "react-dom/client"
-import App from "./App.jsx"
-import "./index.css"
+import { ViteReactSSG } from "vite-react-ssg";
+import { routes } from "./routes/all.jsx";
+import "./index.css";
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />)
+export const createRoot = ViteReactSSG({
+  routes,
+  basename: "/gym-inf/",
+});

@@ -1,14 +1,14 @@
-import { useState } from "react"
-import Editor from "@monaco-editor/react"
+import { useState } from "react";
+import { Editor } from "@monaco-editor/react";
 
-import "./components.css"
+import "./components.css";
 
 export default function FiddleSVG({ svg, classes = "" }) {
-  const [source, setSource] = useState(svg || "")
+  const [source, setSource] = useState(svg || "");
 
   const handleSVGChange = (e) => {
-    setSource(e)
-  }
+    setSource(e);
+  };
 
   return (
     <div className={`fiddleContainer ${classes}`}>
@@ -34,8 +34,9 @@ export default function FiddleSVG({ svg, classes = "" }) {
         <h5 className="sm">Webseite</h5>
         <div
           className="renderOutput"
-          dangerouslySetInnerHTML={{ __html: source }}></div>
+          dangerouslySetInnerHTML={{ __html: source }}
+        ></div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,83 +1,83 @@
-import { useRef, useEffect, useState } from "react"
-import MonacoEditor from "react-monaco-editor"
+import { useRef, useEffect, useState } from "react";
+import { Editor as MonacoEditor } from "@monaco-editor/react";
 
 export default function HexImgCell() {
-  const [hex, setHex] = useState("48 65 6c 6c 6f 20 57 6f 72 6c 64 21")
-  const [asciiOut, setAsciiOut] = useState("")
+  const [hex, setHex] = useState("48 65 6c 6c 6f 20 57 6f 72 6c 64 21");
+  const [asciiOut, setAsciiOut] = useState("");
 
-  const outputRef = useRef(null)
+  const outputRef = useRef(null);
 
   useEffect(() => {
-    handleEditorChange(hex)
-  }, [hex])
+    handleEditorChange(hex);
+  }, [hex]);
 
   const handleEditorChange = (value) => {
-    updateImg(value)
-    updateASCII(value)
-  }
+    updateImg(value);
+    updateASCII(value);
+  };
 
   function updateASCII(value) {
     const newValue = value.split(" ").map((hex) => {
-      return String.fromCharCode(parseInt(hex, 16))
-    })
-    setAsciiOut(newValue)
+      return String.fromCharCode(parseInt(hex, 16));
+    });
+    setAsciiOut(newValue);
   }
 
   function updateImg(value) {
-    const ctx = outputRef.current.getContext("2d")
+    const ctx = outputRef.current.getContext("2d");
     const filterValue = value.split("").filter((c) => {
-      const ascii = c.toUpperCase().charCodeAt(0)
+      const ascii = c.toUpperCase().charCodeAt(0);
       if (ascii >= 48 && ascii <= 57) {
-        return true
+        return true;
       } else if (ascii >= 65 && ascii <= 70) {
-        return true
+        return true;
       }
-      return false
-    })
+      return false;
+    });
     const filterStr = filterValue
       .map((c, i) => {
         if (i % 2 === 1) {
-          return c.toUpperCase() + " "
+          return c.toUpperCase() + " ";
         }
-        return c.toUpperCase()
+        return c.toUpperCase();
       })
-      .join("")
+      .join("");
 
     if (value.length === 0) {
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-      return
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      return;
     }
 
-    const hexArr = filterStr.split(" ").filter((c) => c !== "")
+    const hexArr = filterStr.split(" ").filter((c) => c !== "");
 
     // Die Anzahl der Pixel die dargestellt werden können
-    const numPixels = Math.ceil(hexArr.length / 4)
+    const numPixels = Math.ceil(hexArr.length / 4);
 
-    const buffer = new Array(numPixels * 4).fill(255)
+    const buffer = new Array(numPixels * 4).fill(255);
     for (let i = 0; i < value.length; i++) {
-      const num = parseInt(hexArr[i], 16)
-      buffer[i] = isNaN(num) ? 255 : num
+      const num = parseInt(hexArr[i], 16);
+      buffer[i] = isNaN(num) ? 255 : num;
     }
 
     // Berechne aus der Länge der Eingabe, wie gross das Bild sein wird
-    const width = Math.ceil(Math.sqrt(numPixels))
+    const width = Math.ceil(Math.sqrt(numPixels));
 
-    outputRef.current.width = width
-    outputRef.current.height = width
+    outputRef.current.width = width;
+    outputRef.current.height = width;
 
-    const myImageData = ctx.createImageData(width, width)
-    const data = myImageData.data
+    const myImageData = ctx.createImageData(width, width);
+    const data = myImageData.data;
 
     // TODO: Jedes zeichen steht für einen Farbwert pro Pixel und
     // farbkanal. ich kann also mein Bild als Text ausdrücken.
     // Iteriere über die Anzahl an Zeichen, und erstelle damit ein Bild
     for (let i = 0; i < buffer.length; i++) {
-      data[i] = buffer[i]
+      data[i] = buffer[i];
     }
 
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.putImageData(myImageData, 0, 0)
-    setHex((_) => filterStr)
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.putImageData(myImageData, 0, 0);
+    setHex((_) => filterStr);
   }
 
   return (
@@ -87,7 +87,8 @@ export default function HexImgCell() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       {/* Controlpanel */}
       <div
         style={{
@@ -96,7 +97,8 @@ export default function HexImgCell() {
           alignItems: "center",
           justifyContent: "center",
           gap: "1rem",
-        }}></div>
+        }}
+      ></div>
 
       <div
         style={{
@@ -105,14 +107,17 @@ export default function HexImgCell() {
           justifyContent: "space-between",
           width: "100%",
           gap: "1em",
-        }}>
+        }}
+      >
         <MonacoEditor
-          language="json"
+          defaultLanguage="json"
           value={hex}
           height="300px"
           theme="vs-dark"
           onChange={handleEditorChange}
-          // automaticLayout={true}
+          options={{
+            minimap: { enabled: false },
+          }}
         />
 
         <div style={{}}>
@@ -126,9 +131,10 @@ export default function HexImgCell() {
               width: "200px",
               height: "200px",
               imageRendering: "pixelated",
-            }}></canvas>
+            }}
+          ></canvas>
         </div>
       </div>
     </div>
-  )
+  );
 }

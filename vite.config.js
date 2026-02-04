@@ -10,9 +10,30 @@ function generateAlias(absolutePath) {
   return path.resolve(process.cwd(), absolutePath);
 }
 
+// Plugin to mock react-syntax-highlighter during SSR
+function mockSyntaxHighlighterForSSR() {
+  return {
+    name: "mock-syntax-highlighter-ssr",
+    enforce: "pre",
+    resolveId(id, importer, options) {
+      // Only mock during SSR build
+      if (options?.ssr) {
+        if (id === "react-syntax-highlighter") {
+          return generateAlias("src/mocks/react-syntax-highlighter.jsx");
+        }
+        if (id.startsWith("react-syntax-highlighter/dist/esm/styles")) {
+          return generateAlias("src/mocks/react-syntax-highlighter-styles.js");
+        }
+      }
+      return null;
+    },
+  };
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    mockSyntaxHighlighterForSSR(),
     {
       enforce: "pre",
       ...mdx({
@@ -77,4 +98,23 @@ export default defineConfig({
     outDir: "docs",
   },
   base: "/gym-inf/",
+  // SSR/SSG Configuration
+  ssr: {
+    // Exclude browser-only modules from SSR
+    noExternal: [/@mdx-js/],
+    external: [
+      "react-syntax-highlighter",
+      "matter-js", // Physics engine is browser-only
+      "reveal.js", // Presentation library is browser-only
+    ],
+  },
+  // SSG-specific options
+  ssgOptions: {
+    script: "async",
+    formatting: "minify",
+    mock: true, // Mock browser globals during SSG
+    onBeforePageRender(route, appCtx) {
+      // Optional: Custom logic before rendering each page
+    },
+  },
 });

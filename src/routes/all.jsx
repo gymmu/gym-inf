@@ -60,113 +60,143 @@ import CodePen from "../components/CodePen";
 import CodePenSVG from "../components/CodePenSVG";
 import RegexEditor from "../components/RegexEditor";
 
-export const createRouter = () => {
-  return createBrowserRouter(
-    [
+// Route configuration as plain objects (SSG-compatible)
+export const routes = [
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      // Alle
+      { path: "/", element: <Index /> },
+
+      // Gym Theorie
+      { path: "obsidian", element: <Obsidian /> },
+      { path: "obsidian-md", element: <ObsidianMarkdown /> },
+      { path: "colors", element: <Colors /> },
+      { path: "information", element: <Information /> },
+      { path: "sprachen", element: <Languages /> },
+      { path: "grammar", element: <Grammar /> },
+      { path: "regex", element: <Regex /> },
+      { path: "html", element: <GymHTML /> },
+      { path: "css", element: <GymCSS /> },
+      { path: "javascript", element: <GymJS /> },
+      { path: "js-variables", element: <GymJSVariables /> },
+      { path: "js-bedingungen", element: <GymJSConditions /> },
+      { path: "js-functions", element: <GymJSFunctions /> },
+      { path: "js-lists", element: <GymJSLists /> },
+      { path: "js-loops", element: <GymJSLoops /> },
+      { path: "js-loops-functions", element: <GymJSLoopsFunctions /> },
+      { path: "js-aufgaben", element: <GymJSAufgaben /> },
+
+      // Gym Praktikum
+      { path: "praktikum/install", element: <PInstall /> },
+
+      // FMS Routes 1. Klasse
+      { path: "fms-theorie", element: <FMSIndex /> },
+      { path: "fms/hardware", element: <Hardware /> },
+      { path: "fms/binary", element: <Binary /> },
+      { path: "fms/hex", element: <Hex /> },
+      // FMS: Bilder und SVG
+      { path: "pictures", element: <Pictures /> },
+      { path: "/fms/svg", element: <FmsSVG /> },
+      { path: "/fms/svg-line", element: <FmsSVGLine /> },
+      { path: "/fms/svg-path", element: <FmsSVGPath /> },
+      { path: "/fms/svg-aufgaben", element: <FmsSVGAufgaben /> },
+      { path: "/fms/svg-path-2", element: <FmsSVGPath02 /> },
       {
-        path: "/",
-        element: <Layout />,
-        children: [
-          // Alle
-          { path: "/", element: <Index /> },
+        path: "/fms/svg-transformation",
+        element: <FmsSVGTransformation />,
+      },
+      {
+        path: "/fms/svg-animation",
+        element: <FmsSVGAnimation />,
+      },
+      // Internet und Sicherheit
+      { path: "/fms/internet", element: <FmsInternet /> },
+      { path: "/fms/internet-karte", element: <FmsInternetKarte /> },
+      { path: "/fms/internet-story", element: <FmsInternetStory /> },
+      { path: "/fms/internet-quiz", element: <FmsInternetQuiz /> },
+      { path: "/fms/vpn", element: <FmsVPN /> },
+      { path: "/fms/vpn-quiz", element: <FmsVPNQuiz /> },
+      { path: "/fms/verschluesselung", element: <FmsVerschluesselung /> },
+      { path: "/fms/passwoerter", element: <FmsPasswoerter /> },
+      {
+        path: "/fms/schluesselaustausch",
+        element: <Schluesselaustausch />,
+      },
+      {
+        path: "/fms/verschluesselung-quiz",
+        element: <FmsVerschluesselungQuiz />,
+      },
 
-          // Gym Theorie
-          { path: "obsidian", element: <Obsidian /> },
-          { path: "obsidian-md", element: <ObsidianMarkdown /> },
-          { path: "colors", element: <Colors /> },
-          { path: "information", element: <Information /> },
-          { path: "sprachen", element: <Languages /> },
-          { path: "grammar", element: <Grammar /> },
-          { path: "regex", element: <Regex /> },
-          { path: "html", element: <GymHTML /> },
-          { path: "css", element: <GymCSS /> },
-          { path: "javascript", element: <GymJS /> },
-          { path: "js-variables", element: <GymJSVariables /> },
-          { path: "js-bedingungen", element: <GymJSConditions /> },
-          { path: "js-functions", element: <GymJSFunctions /> },
-          { path: "js-lists", element: <GymJSLists /> },
-          { path: "js-loops", element: <GymJSLoops /> },
-          { path: "js-loops-functions", element: <GymJSLoopsFunctions /> },
-          { path: "js-aufgaben", element: <GymJSAufgaben /> },
+      // FMS Routes 2. Klasse
+      { path: "fms/excel", element: <Excel /> },
+      {
+        path: "fms/excel-spielplan",
+        element: <ExcelSpielplan />,
+      },
 
-          // Gym Praktikum
-          { path: "praktikum/install", element: <PInstall /> },
+      { path: "fms/html", element: <FmsHTML /> },
+      { path: "fms/webdesign", element: <FmsWebdesign /> },
+      { path: "fms/javascript", element: <FmsJavascript /> },
 
-          // FMS Routes 1. Klasse
-          { path: "fms-theorie", element: <FMSIndex /> },
-          { path: "fms/hardware", element: <Hardware /> },
-          { path: "fms/binary", element: <Binary /> },
-          { path: "fms/hex", element: <Hex /> },
-          // FMS: Bilder und SVG
-          { path: "pictures", element: <Pictures /> },
-          { path: "/fms/svg", element: <FmsSVG /> },
-          { path: "/fms/svg-line", element: <FmsSVGLine /> },
-          { path: "/fms/svg-path", element: <FmsSVGPath /> },
-          { path: "/fms/svg-aufgaben", element: <FmsSVGAufgaben /> },
-          { path: "/fms/svg-path-2", element: <FmsSVGPath02 /> },
-          {
-            path: "/fms/svg-transformation",
-            element: <FmsSVGTransformation />,
-          },
-          {
-            path: "/fms/svg-animation",
-            element: <FmsSVGAnimation />,
-          },
-          // Internet und Sicherheit
-          { path: "/fms/internet", element: <FmsInternet /> },
-          { path: "/fms/internet-karte", element: <FmsInternetKarte /> },
-          { path: "/fms/internet-story", element: <FmsInternetStory /> },
-          { path: "/fms/internet-quiz", element: <FmsInternetQuiz /> },
-          { path: "/fms/vpn", element: <FmsVPN /> },
-          { path: "/fms/vpn-quiz", element: <FmsVPNQuiz /> },
-          { path: "/fms/verschluesselung", element: <FmsVerschluesselung /> },
-          { path: "/fms/passwoerter", element: <FmsPasswoerter /> },
-          {
-            path: "/fms/schluesselaustausch",
-            element: <Schluesselaustausch />,
-          },
-          {
-            path: "/fms/verschluesselung-quiz",
-            element: <FmsVerschluesselungQuiz />,
-          },
+      // TODO: Comment these out if no longer tested
+      { path: "codepen", element: <CodePen /> },
+      { path: "codepensvg", element: <CodePenSVG /> },
+      { path: "regexeditor", element: <RegexEditor /> },
+      { path: "boxmodel", element: <BoxModel /> },
 
-          // FMS Routes 2. Klasse
-          { path: "fms/excel", element: <Excel /> },
-          {
-            path: "fms/excel-spielplan",
-            element: <ExcelSpielplan />,
-          },
+      { path: "path-editor", element: <Path /> },
 
-          { path: "fms/html", element: <FmsHTML /> },
-          { path: "fms/webdesign", element: <FmsWebdesign /> },
-          { path: "fms/javascript", element: <FmsJavascript /> },
-
-          // TODO: Comment these out if no longer tested
-          { path: "codepen", element: <CodePen /> },
-          { path: "codepensvg", element: <CodePenSVG /> },
-          { path: "regexeditor", element: <RegexEditor /> },
-          { path: "boxmodel", element: <BoxModel /> },
-
-          { path: "path-editor", element: <Path /> },
-
-          // Was passiert wenn die Route falsch ist.
-          {
-            path: "*", // Catch-all route for invalid paths
-            // TODO: Beim Reload oder externen aufruf, muss die richtige seite
-            // geladen werden. Im Moment wird die Startseite geladen
-            // element: <Navigate to="/" replace />,
-            element: (
-              <div>
-                Leider wurde hier keine Webseite gefunden. Gehe zurück zum{" "}
-                <Link to="/">Start</Link>
-              </div>
-            ),
-          },
-        ],
+      // Was passiert wenn die Route falsch ist.
+      {
+        path: "*", // Catch-all route for invalid paths
+        // TODO: Beim Reload oder externen aufruf, muss die richtige seite
+        // geladen werden. Im Moment wird die Startseite geladen
+        // element: <Navigate to="/" replace />,
+        element: (
+          <div>
+            Leider wurde hier keine Webseite gefunden. Gehe zurück zum{" "}
+            <Link to="/">Start</Link>
+          </div>
+        ),
       },
     ],
-    {
-      basename: "/gym-inf/",
-    },
-  );
+  },
+];
+
+// Extract all route paths for SSG (excluding catch-all)
+export const getAllRoutePaths = () => {
+  const paths = [];
+
+  routes.forEach((route) => {
+    if (route.children) {
+      route.children.forEach((child) => {
+        // Skip catch-all route and test routes
+        if (
+          child.path &&
+          child.path !== "*" &&
+          !child.path.includes("codepen") &&
+          !child.path.includes("regexeditor") &&
+          !child.path.includes("boxmodel") &&
+          !child.path.includes("path-editor")
+        ) {
+          // Normalize paths (remove leading slash for consistency)
+          const normalizedPath = child.path.startsWith("/")
+            ? child.path.slice(1)
+            : child.path;
+          paths.push(normalizedPath === "/" ? "/" : `/${normalizedPath}`);
+        }
+      });
+    }
+  });
+
+  return paths;
+};
+
+// Create browser router (existing functionality)
+export const createRouter = () => {
+  return createBrowserRouter(routes, {
+    basename: "/gym-inf/",
+  });
 };
