@@ -96,6 +96,49 @@ export default defineConfig({
   },
   build: {
     outDir: "docs",
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Separate large dependencies into their own chunks
+          if (id.includes("node_modules")) {
+            // Monaco Editor is very large (~800KB)
+            if (id.includes("monaco-editor")) {
+              return "monaco";
+            }
+            // Mermaid is large (~200KB)
+            if (id.includes("mermaid")) {
+              return "mermaid";
+            }
+            // Reveal.js for presentations
+            if (id.includes("reveal.js")) {
+              return "reveal";
+            }
+            // Matter.js for physics simulations
+            if (id.includes("matter-js")) {
+              return "matter";
+            }
+            // React Router
+            if (id.includes("react-router")) {
+              return "router";
+            }
+            // React and React-DOM
+            if (id.includes("react") || id.includes("react-dom")) {
+              return "react-vendor";
+            }
+            // All other node_modules
+            return "vendor";
+          }
+
+          // Group MDX pages by category for better caching
+          if (id.includes("/pages/fms/") || id.includes("/pages-fms/")) {
+            return "fms-pages";
+          }
+          if (id.includes("/pages/gym/") || id.includes("/pages-gym/")) {
+            return "gym-pages";
+          }
+        },
+      },
+    },
   },
   base: "/gym-inf/",
   // SSR/SSG Configuration

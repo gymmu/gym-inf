@@ -27,6 +27,9 @@ export default function CodeBlockWithHintsAndSolution({
   // Prüfe beim Laden ob die Lösung gesperrt ist
   useEffect(() => {
     if (!taskId) return;
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
 
     const lockKey = `solution_lock_${taskId}`;
     const lockUntil = localStorage.getItem(lockKey);
@@ -51,7 +54,11 @@ export default function CodeBlockWithHintsAndSolution({
         setLockTimeRemaining((prev) => {
           if (prev <= 1) {
             setIsLocked(false);
-            if (taskId) {
+            if (
+              taskId &&
+              typeof window !== "undefined" &&
+              typeof localStorage !== "undefined"
+            ) {
               localStorage.removeItem(`solution_lock_${taskId}`);
             }
             if (lockIntervalRef.current) {
@@ -82,7 +89,11 @@ export default function CodeBlockWithHintsAndSolution({
             setIsLocked(true);
 
             // Speichere Sperrzeit im localStorage
-            if (taskId) {
+            if (
+              taskId &&
+              typeof window !== "undefined" &&
+              typeof localStorage !== "undefined"
+            ) {
               const lockUntil = Date.now() + SOLUTION_LOCK_TIME * 1000;
               localStorage.setItem(
                 `solution_lock_${taskId}`,

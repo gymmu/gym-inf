@@ -13,6 +13,9 @@ export default function PlainPasswordDatabase() {
 
   // Load from localStorage on mount
   useEffect(() => {
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
@@ -25,12 +28,18 @@ export default function PlainPasswordDatabase() {
 
   // Save to localStorage whenever entries change
   useEffect(() => {
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
     if (entries.length > 0 || localStorage.getItem(STORAGE_KEY)) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
     }
   }, [entries]);
 
   const handleReload = () => {
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {

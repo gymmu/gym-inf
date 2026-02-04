@@ -40,7 +40,7 @@ export default function Caesar({ initMsg = "hallo", initShift = 1 }) {
       </div>
       <div className={style.alphabet}>
         {Array.from(Array(26).keys()).map((_, index) => {
-          return <span>{String.fromCharCode(97 + index)}</span>;
+          return <span key={index}>{String.fromCharCode(97 + index)}</span>;
         })}
       </div>
       <div className={style.shiftCtrl}>
@@ -51,7 +51,7 @@ export default function Caesar({ initMsg = "hallo", initShift = 1 }) {
       <div className={style.alphabet}>
         {Array.from(Array(26).keys()).map((_, index) => {
           return (
-            <span>
+            <span key={index}>
               {String.fromCharCode(97 + ((index + (shift + 26 * 100)) % 26))}
             </span>
           );

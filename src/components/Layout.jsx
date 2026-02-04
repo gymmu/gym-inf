@@ -1,15 +1,15 @@
 import { Outlet } from "react-router-dom";
+import { useEffect, useState, Suspense } from "react";
 
 import Header from "@components/Header";
 import Footer from "@components/Footer";
 import Navbar from "@components/Navbar";
+import SkeletonScreen from "@components/SkeletonScreen";
 import { useNavContext, NavContext } from "@context/NavContext";
 import { useAppContext, AppProvider } from "@context/AppContext";
 import { NavProvider } from "@context/NavContext";
 
 import style from "@components/Layout.module.css";
-import { useEffect } from "react";
-import { useState } from "react";
 
 // Inner layout component with context hooks
 function LayoutContent() {
@@ -46,7 +46,9 @@ function LayoutContent() {
       <Header />
       <Navbar />
       <main className="content-grid">
-        <Outlet />
+        <Suspense fallback={<SkeletonScreen />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </div>

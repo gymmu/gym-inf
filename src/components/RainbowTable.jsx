@@ -23,6 +23,9 @@ export default function RainbowTable() {
 
   // Load from localStorage on mount
   useEffect(() => {
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
@@ -35,6 +38,9 @@ export default function RainbowTable() {
 
   // Save to localStorage whenever entries change
   useEffect(() => {
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
   }, [entries]);
 

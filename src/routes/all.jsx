@@ -1,64 +1,69 @@
-import Layout from "@components/Layout";
-import Colors from "@pages/colors.mdx";
-import GymCSS from "@pages/css.mdx";
-import Binary from "@pages/fms/binary.mdx";
-import Hardware from "@pages/fms/hardware.mdx";
-import Hex from "@pages/fms/hex.mdx";
-// Importiere Unterseiten für die FMS
-import FMSIndex from "@pages/fms/index.mdx";
-import Pictures from "@pages/fms/pictures.mdx";
-import FmsSVG from "@pages/fms/svg.mdx";
-import FmsSVGAnimation from "@pages/fms/svg-animation.mdx";
-import FmsSVGAufgaben from "@pages/fms/svg-aufgaben.mdx";
-import FmsSVGLine from "@pages/fms/svg-line.mdx";
-import FmsSVGPath from "@pages/fms/svg-path.mdx";
-import FmsSVGPath02 from "@pages/fms/svg-path-2.mdx";
-import FmsSVGTransformation from "@pages/fms/svg-transform.mdx";
-import Grammar from "@pages/grammar.mdx";
-import GymHTML from "@pages/html.mdx";
-// Importiere Unterseiten fürs Gym
-import Index from "@pages/index.mdx";
-import Information from "@pages/information.mdx";
-import GymJS from "@pages/javascript.mdx";
-import Languages from "@pages/languages.mdx";
-import Obsidian from "@pages/obsidian.mdx";
-import ObsidianMarkdown from "@pages/obsidian-md.mdx";
-// Importiere Unterseiten fürs Gym Praktikum
-import PInstall from "@pages/praktikum/installation.mdx";
-import Regex from "@pages/regex.mdx";
-import GymJSAufgaben from "@pages-gym/js-aufgaben.jsx";
-import GymJSConditions from "@pages-gym/js-bedingungen.jsx";
-import GymJSFunctions from "@pages-gym/js-functions.jsx";
-import GymJSLists from "@pages-gym/js-lists.jsx";
-import GymJSLoops from "@pages-gym/js-loops.jsx";
-import GymJSLoopsFunctions from "@pages-gym/js-loops-functions.jsx";
-import GymJSVariables from "@pages-gym/js-variables.jsx";
+import { lazy } from "react";
 import { createBrowserRouter, Link } from "react-router-dom";
 
-// import FmsSVGUse from "@pages/fms/svg-use.mdx"
+// Critical components: Normal import (always needed)
+import Layout from "@components/Layout";
 
-import Path from "@components/Path.jsx";
-// FMS Praktikum
-import Excel from "@pages/fms/excel.mdx";
-import ExcelSpielplan from "@pages/fms/excel-spielplan.mdx";
-import FmsHTML from "@pages/fms/html.mdx";
-import FmsInternet from "@pages/fms/internet.mdx";
-import FmsInternetQuiz from "@pages/fms/internet-quiz.mdx";
-import FmsInternetStory from "@pages/fms/internet-story.mdx";
-import FmsJavascript from "@pages/fms/javascript.mdx";
-import FmsVerschluesselungQuiz from "@pages/fms/verschluesselung-quiz.mdx";
-import FmsVPN from "@pages/fms/vpn.mdx";
-import FmsVPNQuiz from "@pages/fms/vpn-quiz.mdx";
-import FmsInternetKarte from "@pages-fms/internet-karte.jsx";
-import FmsPasswoerter from "@pages-fms/passwoerter.jsx";
-import Schluesselaustausch from "@pages-fms/schluesselaustausch.jsx";
-import FmsVerschluesselung from "@pages-fms/verschluesselung.jsx";
-import FmsWebdesign from "@pages-fms/webdesign.jsx";
-import BoxModel from "../components/BoxModel";
-// Weitere eigenständige imports. Diese sind nicht verlinkt.
-import CodePen from "../components/CodePen";
-import CodePenSVG from "../components/CodePenSVG";
-import RegexEditor from "../components/RegexEditor";
+// All pages: Lazy loading
+const Colors = lazy(() => import("@pages/colors.mdx"));
+const GymCSS = lazy(() => import("@pages/css.mdx"));
+const Binary = lazy(() => import("@pages/fms/binary.mdx"));
+const Hardware = lazy(() => import("@pages/fms/hardware.mdx"));
+const Hex = lazy(() => import("@pages/fms/hex.mdx"));
+const FMSIndex = lazy(() => import("@pages/fms/index.mdx"));
+const Pictures = lazy(() => import("@pages/fms/pictures.mdx"));
+const FmsSVG = lazy(() => import("@pages/fms/svg.mdx"));
+const FmsSVGAnimation = lazy(() => import("@pages/fms/svg-animation.mdx"));
+const FmsSVGAufgaben = lazy(() => import("@pages/fms/svg-aufgaben.mdx"));
+const FmsSVGLine = lazy(() => import("@pages/fms/svg-line.mdx"));
+const FmsSVGPath = lazy(() => import("@pages/fms/svg-path.mdx"));
+const FmsSVGPath02 = lazy(() => import("@pages/fms/svg-path-2.mdx"));
+const FmsSVGTransformation = lazy(() => import("@pages/fms/svg-transform.mdx"));
+const Grammar = lazy(() => import("@pages/grammar.mdx"));
+const GymHTML = lazy(() => import("@pages/html.mdx"));
+const Index = lazy(() => import("@pages/index.mdx"));
+const Information = lazy(() => import("@pages/information.mdx"));
+const GymJS = lazy(() => import("@pages/javascript.mdx"));
+const Languages = lazy(() => import("@pages/languages.mdx"));
+const Obsidian = lazy(() => import("@pages/obsidian.mdx"));
+const ObsidianMarkdown = lazy(() => import("@pages/obsidian-md.mdx"));
+const PInstall = lazy(() => import("@pages/praktikum/installation.mdx"));
+const Regex = lazy(() => import("@pages/regex.mdx"));
+const GymJSAufgaben = lazy(() => import("@pages-gym/js-aufgaben.jsx"));
+const GymJSConditions = lazy(() => import("@pages-gym/js-bedingungen.jsx"));
+const GymJSFunctions = lazy(() => import("@pages-gym/js-functions.jsx"));
+const GymJSLists = lazy(() => import("@pages-gym/js-lists.jsx"));
+const GymJSLoops = lazy(() => import("@pages-gym/js-loops.jsx"));
+const GymJSLoopsFunctions = lazy(
+  () => import("@pages-gym/js-loops-functions.jsx"),
+);
+const GymJSVariables = lazy(() => import("@pages-gym/js-variables.jsx"));
+const Path = lazy(() => import("@components/Path.jsx"));
+const Excel = lazy(() => import("@pages/fms/excel.mdx"));
+const ExcelSpielplan = lazy(() => import("@pages/fms/excel-spielplan.mdx"));
+const FmsHTML = lazy(() => import("@pages/fms/html.mdx"));
+const FmsInternet = lazy(() => import("@pages/fms/internet.mdx"));
+const FmsInternetQuiz = lazy(() => import("@pages/fms/internet-quiz.mdx"));
+const FmsInternetStory = lazy(() => import("@pages/fms/internet-story.mdx"));
+const FmsJavascript = lazy(() => import("@pages/fms/javascript.mdx"));
+const FmsVerschluesselungQuiz = lazy(
+  () => import("@pages/fms/verschluesselung-quiz.mdx"),
+);
+const FmsVPN = lazy(() => import("@pages/fms/vpn.mdx"));
+const FmsVPNQuiz = lazy(() => import("@pages/fms/vpn-quiz.mdx"));
+const FmsInternetKarte = lazy(() => import("@pages-fms/internet-karte.jsx"));
+const FmsPasswoerter = lazy(() => import("@pages-fms/passwoerter.jsx"));
+const Schluesselaustausch = lazy(
+  () => import("@pages-fms/schluesselaustausch.jsx"),
+);
+const FmsVerschluesselung = lazy(
+  () => import("@pages-fms/verschluesselung.jsx"),
+);
+const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"));
+const BoxModel = lazy(() => import("../components/BoxModel"));
+const CodePen = lazy(() => import("../components/CodePen"));
+const CodePenSVG = lazy(() => import("../components/CodePenSVG"));
+const RegexEditor = lazy(() => import("../components/RegexEditor"));
 
 // Route configuration as plain objects (SSG-compatible)
 export const routes = [

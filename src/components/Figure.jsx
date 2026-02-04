@@ -7,10 +7,10 @@ export default function Figure({
   origin = null,
 }) {
   return (
-    <figure class={style.figureContainer}>
+    <figure className={style.figureContainer}>
       <img src={src} alt={alt} />
       <figcaption>{caption}</figcaption>
-      <div class={style.origin}>
+      <div className={style.origin}>
         Ursprung des Bildes:{" "}
         <a href={origin} target="_blank">
           {origin}

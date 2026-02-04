@@ -37,6 +37,12 @@ export default function SaltedPasswordDatabase() {
   // Load from localStorage on mount
   useEffect(() => {
     const loadData = async () => {
+      if (
+        typeof window === "undefined" ||
+        typeof localStorage === "undefined"
+      ) {
+        return;
+      }
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         try {
@@ -70,12 +76,18 @@ export default function SaltedPasswordDatabase() {
 
   // Save to localStorage whenever entries change
   useEffect(() => {
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
     if (entries.length > 0 || localStorage.getItem(STORAGE_KEY)) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
     }
   }, [entries]);
 
   const handleReload = async () => {
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {

@@ -22,6 +22,16 @@ export default function JSTerminal(props) {
 
   // Initialize state from localStorage or use defaults
   const getInitialState = () => {
+    // Check if we're in a browser environment (not SSR)
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return {
+        files: { [filename]: { name: filename, content: sourceCode } },
+        openFiles: [filename],
+        activeFile: filename,
+        commandHistory: [],
+      };
+    }
+
     try {
       const saved = localStorage.getItem(storageKey);
       if (saved) {
@@ -36,7 +46,7 @@ export default function JSTerminal(props) {
         };
       }
     } catch (error) {
-      console.error("Error loading from localStorage:", error);
+      // Silently fail during SSR
     }
     return {
       files: { [filename]: { name: filename, content: sourceCode } },
@@ -84,6 +94,11 @@ export default function JSTerminal(props) {
 
   // Save state to localStorage whenever files, openFiles, activeFile, or commandHistory changes
   useEffect(() => {
+    // Only save to localStorage in browser environment
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
+
     try {
       const stateToSave = {
         files,

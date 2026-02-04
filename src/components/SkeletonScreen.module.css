@@ -1,0 +1,87 @@
+.skeleton {
+  padding: 2rem 0;
+  width: 100%;
+  max-width: 100%;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.skeletonHeader {
+  margin-bottom: 2rem;
+}
+
+.skeletonContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skeletonSpacer {
+  height: 2rem;
+}
+
+.skeletonBox {
+  background: linear-gradient(
+    90deg,
+    var(--color-gray-darker) 0%,
+    var(--color-gray) 50%,
+    var(--color-gray-darker) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.title {
+  height: 2.5rem;
+  width: 60%;
+  max-width: 500px;
+  margin-bottom: 0.5rem;
+}
+
+.subheading {
+  height: 2rem;
+  width: 40%;
+  max-width: 350px;
+}
+
+.paragraph {
+  height: 1rem;
+  width: 100%;
+}
+
+.paragraphShort {
+  height: 1rem;
+  width: 75%;
+}
+
+@media (width < 820px) {
+  .skeleton {
+    padding: 1rem 0;
+  }
+
+  .title {
+    width: 80%;
+  }
+
+  .subheading {
+    width: 60%;
+  }
+}

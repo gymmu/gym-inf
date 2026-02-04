@@ -7,11 +7,11 @@ export default function Vigenere() {
       <div className={style.square}>
         <div className={style.header}>
           {Array.from(Array(26)).map((_, index) => (
-            <span>{String.fromCharCode(97 + index)} </span>
+            <span key={index}>{String.fromCharCode(97 + index)} </span>
           ))}
         </div>
         {Array.from(Array(26)).map((_, index) => (
-          <Alphabet shift={index} />
+          <Alphabet key={index} shift={index} />
         ))}
       </div>
     </div>
@@ -19,13 +19,14 @@ export default function Vigenere() {
 }
 
 function Alphabet({ shift = 0 }) {
-  console.log(shift);
   return (
     <div className={style.row}>
       <span>{String.fromCharCode(97 + shift)}</span>
       <div className={style.alphabet}>
         {Array.from(Array(26)).map((_, index) => (
-          <span>{String.fromCharCode(97 + ((index + shift) % 26))}</span>
+          <span key={index}>
+            {String.fromCharCode(97 + ((index + shift) % 26))}
+          </span>
         ))}
       </div>
     </div>
