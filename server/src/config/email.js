@@ -1,6 +1,5 @@
-import FormData from "form-data";
-import Mailgun from "mailgun.js";
 import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import logger from "../utils/logger.js";
 
 let emailClient = null;
@@ -8,34 +7,29 @@ let emailClient = null;
 function createEmailClient() {
 	if (emailClient) return emailClient;
 
-	// Use Mailgun HTTP API if configured
-	if (process.env.MAILGUN_API_KEY && process.env.MAILGUN_DOMAIN) {
-		const mailgun = new Mailgun(FormData);
-		const mg = mailgun.client({
-			username: "api",
-			key: process.env.MAILGUN_API_KEY,
-			url: "https://api.mailgun.net", // US region
-		});
+	// Use Resend API if configured
+	if (process.env.RESEND_API_KEY) {
+		const resend = new Resend(process.env.RESEND_API_KEY);
 
 		emailClient = {
 			sendEmail: async ({ from, to, subject, html, text }) => {
 				try {
-					const result = await mg.messages.create(process.env.MAILGUN_DOMAIN, {
-						from,
+					const result = await resend.emails.send({
+						from: from || process.env.RESEND_FROM || "onboarding@resend.dev",
 						to: Array.isArray(to) ? to : [to],
 						subject,
 						html,
 						text,
 					});
-					logger.info(`Email sent via Mailgun API: ${result.id}`);
-					return { messageId: result.id, status: result.status };
+					logger.info(`Email sent via Resend: ${result.data?.id || result.id}`);
+					return { messageId: result.data?.id || result.id };
 				} catch (error) {
-					logger.error("Mailgun API error:", error);
+					logger.error("Resend API error:", error);
 					throw error;
 				}
 			},
 		};
-		logger.info("Email client configured with Mailgun HTTP API");
+		logger.info("Email client configured with Resend");
 		return emailClient;
 	}
 

@@ -3,7 +3,7 @@ import logger from "../utils/logger.js";
 
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 const FROM_EMAIL =
-	process.env.MAILGUN_FROM || process.env.GMAIL_USER || "noreply@localhost";
+	process.env.RESEND_FROM || process.env.GMAIL_USER || "onboarding@resend.dev";
 
 export async function sendVerificationEmail(email, token) {
 	const emailClient = getEmailClient();
