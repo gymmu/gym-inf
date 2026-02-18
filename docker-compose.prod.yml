@@ -85,9 +85,11 @@ volumes:
   server_logs:
     driver: local
   certbot_www:
-    driver: local
+    external: true
+    name: gym-inf_certbot_www
   certbot_conf:
-    driver: local
+    external: true
+    name: gym-inf_certbot_conf
 
 networks:
   gym-inf-network:

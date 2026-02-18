@@ -16,9 +16,13 @@ cd "$PROJECT_DIR"
 
 echo "[$(date)] Starting SSL certificate renewal..."
 
-docker compose -f docker-compose.prod.yml run --rm certbot certbot renew --quiet
+docker run --rm \
+    -v gym-inf_certbot_www:/var/www/certbot \
+    -v gym-inf_certbot_conf:/etc/letsencrypt \
+    certbot/certbot \
+    renew --quiet
 
 # Reload nginx to pick up renewed certificates
-docker compose -f docker-compose.prod.yml exec nginx nginx -s reload
+docker compose -f docker-compose.prod.yml exec nginx nginx -s reload 2>/dev/null || true
 
 echo "[$(date)] SSL renewal check complete."
