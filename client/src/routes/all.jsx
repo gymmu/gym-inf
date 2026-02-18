@@ -239,7 +239,8 @@ export const getAllRoutePaths = () => {
 
 // Create browser router (existing functionality)
 export const createRouter = () => {
+  const basename = import.meta.env.VITE_BASE_PATH || "/gym-inf/"
   return createBrowserRouter(routes, {
-    basename: "/gym-inf/",
+    basename,
   })
 }

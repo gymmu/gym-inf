@@ -54,6 +54,16 @@ services:
       - gym-inf-network
     command: sh -c "npx prisma migrate deploy && node src/index.js"
 
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: gym-inf-client
+    restart: always
+    # No exposed ports - only reachable via nginx
+    networks:
+      - gym-inf-network
+
   nginx:
     image: nginx:alpine
     container_name: gym-inf-nginx
@@ -67,6 +77,7 @@ services:
       - certbot_conf:/etc/letsencrypt:ro
     depends_on:
       - server
+      - client
     networks:
       - gym-inf-network
 

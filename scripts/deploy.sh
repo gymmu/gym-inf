@@ -86,7 +86,8 @@ if echo "$HEALTH" | grep -q "ok"; then
     echo "Services running:"
     docker compose -f docker-compose.prod.yml ps
     echo ""
-    echo "API available at: https://$DOMAIN"
+    echo "Site available at: https://$DOMAIN"
+    echo "API available at:  https://$DOMAIN/api"
     echo ""
     echo "Useful commands:"
     echo "  Logs:    docker compose -f docker-compose.prod.yml logs -f server"

@@ -140,7 +140,7 @@ export default defineConfig({
       },
     },
   },
-  base: "/gym-inf/",
+  base: process.env.VITE_BASE_PATH || "/gym-inf/",
   // Dev server proxy: /api calls go to nginx (or directly to server)
   server: {
     proxy: {

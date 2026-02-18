@@ -15,6 +15,11 @@ export function AuthProvider({ children }) {
   const [error, setError] = useState(null)
 
   const checkAuth = useCallback(async () => {
+    // Skip auth check during SSR/SSG (no browser, no cookies)
+    if (typeof window === "undefined") {
+      setLoading(false)
+      return
+    }
     try {
       const data = await authApi.checkAuth()
       if (data.authenticated) {
