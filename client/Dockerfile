@@ -3,6 +3,9 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
+# Increase Node memory for SSG build
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 # Install dependencies first (better layer caching)
 COPY package*.json ./
 RUN npm ci
@@ -10,7 +13,7 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Build for production: base path "/" and API on same origin (no CORS needed)
+# Build for production: base path "/" and API on same origin
 ENV VITE_BASE_PATH=/
 ENV VITE_API_URL=
 RUN npm run build
@@ -31,7 +34,6 @@ RUN echo 'server { \
         try_files $uri $uri/ /index.html; \
     } \
     \
-    # Cache static assets \
     location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ { \
         expires 1y; \
         add_header Cache-Control "public, immutable"; \

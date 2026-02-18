@@ -20,9 +20,7 @@ services:
       - gym-inf-network
 
   server:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
+    image: ${SERVER_IMAGE:-ghcr.io/gymmu/gym-inf-server:latest}
     container_name: gym-inf-server
     restart: always
     environment:
@@ -55,9 +53,7 @@ services:
     command: sh -c "npx prisma migrate deploy && node src/index.js"
 
   client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+    image: ${CLIENT_IMAGE:-ghcr.io/gymmu/gym-inf-client:latest}
     container_name: gym-inf-client
     restart: always
     # No exposed ports - only reachable via nginx

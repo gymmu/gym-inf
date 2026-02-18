@@ -66,9 +66,9 @@ if [ -z "$CERT_CHECK" ]; then
     fi
 fi
 
-# Build and deploy
-echo "Building containers..."
-docker compose -f docker-compose.prod.yml build
+# Pull latest images and deploy
+echo "Pulling latest images..."
+docker compose -f docker-compose.prod.yml pull
 
 echo "Starting services..."
 docker compose -f docker-compose.prod.yml up -d
