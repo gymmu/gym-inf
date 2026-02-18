@@ -9,6 +9,7 @@
 		"prisma:migrate": "prisma migrate dev",
 		"prisma:migrate:prod": "prisma migrate deploy",
 		"prisma:studio": "prisma studio",
+		"prisma:studio:prod": "prisma studio --port 5555 --browser none",
 		"prisma:seed": "node prisma/seed.js",
 		"db:push": "prisma db push",
 		"db:reset": "prisma migrate reset"

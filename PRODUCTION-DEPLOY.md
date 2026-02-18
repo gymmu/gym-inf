@@ -207,8 +207,12 @@ gunzip -c backup_20260218_120000.sql.gz | docker exec -i gym-inf-postgres psql -
 # Prisma Migrationen ausführen (automatisch bei Container-Start)
 docker exec gym-inf-server npx prisma migrate deploy
 
-# Prisma Studio (DB-GUI)
-docker exec -it gym-inf-server npx prisma studio
+# Prisma Studio (DB-GUI) - siehe PRISMA-STUDIO.md für Details
+./scripts/prisma-studio.sh start    # Start Prisma Studio
+./scripts/prisma-studio.sh stop     # Stop Prisma Studio
+./scripts/prisma-studio.sh status   # Check Status
+
+# Zugriff: https://your-domain.com/prisma-studio/
 ```
 
 ---

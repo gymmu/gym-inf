@@ -1,0 +1,32 @@
+# =============================================================================
+# Prisma Studio Service für Production
+#
+# Verwendung:
+#   # Prisma Studio starten:
+#   docker compose -f docker-compose.prod.yml -f docker-compose.prisma-studio.yml up -d prisma-studio
+#
+#   # Prisma Studio stoppen:
+#   docker compose -f docker-compose.prod.yml -f docker-compose.prisma-studio.yml stop prisma-studio
+#
+#   # Zugriff:
+#   https://your-domain.com/prisma-studio/
+# =============================================================================
+
+services:
+  prisma-studio:
+    image: ${SERVER_IMAGE:-ghcr.io/gymmu/gym-inf-server:latest}
+    container_name: gym-inf-prisma-studio
+    restart: "no" # Manual start/stop only
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL:-postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}}
+    depends_on:
+      - postgres
+    networks:
+      - gym-inf-network
+    command: npx prisma studio --port 5555 --browser none --hostname 0.0.0.0
+
+networks:
+  gym-inf-network:
+    external: true
+    name: gym-inf_gym-inf-network
