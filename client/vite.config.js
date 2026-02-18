@@ -101,6 +101,18 @@ export default defineConfig({
         manualChunks(id) {
           // Separate large dependencies into their own chunks
           if (id.includes("node_modules")) {
+            // React and React-DOM MUST be checked first before react-router
+            // to ensure correct bundling order
+            if (id.includes("react-dom")) {
+              return "react-vendor"
+            }
+            if (id.includes("react") && !id.includes("react-router")) {
+              return "react-vendor"
+            }
+            // React Router - comes after React check
+            if (id.includes("react-router")) {
+              return "react-vendor"
+            }
             // Monaco Editor is very large (~800KB)
             if (id.includes("monaco-editor")) {
               return "monaco"
@@ -112,14 +124,6 @@ export default defineConfig({
             // Matter.js for physics simulations
             if (id.includes("matter-js")) {
               return "matter"
-            }
-            // React Router
-            if (id.includes("react-router")) {
-              return "router"
-            }
-            // React and React-DOM
-            if (id.includes("react") || id.includes("react-dom")) {
-              return "react-vendor"
             }
             // All other node_modules
             return "vendor"
