@@ -28,7 +28,7 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3000
-      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}}
       SESSION_SECRET: ${SESSION_SECRET}
       SESSION_NAME: ${SESSION_NAME:-gym-inf.sid}
       SESSION_MAX_AGE: ${SESSION_MAX_AGE:-604800000}

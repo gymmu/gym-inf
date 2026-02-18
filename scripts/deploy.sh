@@ -35,12 +35,12 @@ if [ -z "$DOMAIN" ]; then
     exit 1
 fi
 
-if [ -z "$DB_PASSWORD" ] || [ "$DB_PASSWORD" = "CHANGE_ME_GENERATE_WITH_openssl_rand_-base64_24" ]; then
+if [ -z "$DB_PASSWORD" ] || echo "$DB_PASSWORD" | grep -q "CHANGE_ME"; then
     echo "Error: DB_PASSWORD must be changed from the default value."
     exit 1
 fi
 
-if [ -z "$SESSION_SECRET" ] || [ "$SESSION_SECRET" = "CHANGE_ME_GENERATE_WITH_openssl_rand_-base64_48" ]; then
+if [ -z "$SESSION_SECRET" ] || echo "$SESSION_SECRET" | grep -q "CHANGE_ME"; then
     echo "Error: SESSION_SECRET must be changed from the default value."
     exit 1
 fi
