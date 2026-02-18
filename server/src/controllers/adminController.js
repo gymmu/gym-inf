@@ -1,4 +1,5 @@
 import prisma from "../config/prisma.js";
+import { UserModel } from "../models/user.js";
 import logger from "../utils/logger.js";
 
 export const adminController = {
@@ -12,6 +13,13 @@ export const adminController = {
 					role: true,
 					isVerified: true,
 					createdAt: true,
+					classId: true,
+					class: {
+						select: {
+							id: true,
+							name: true,
+						},
+					},
 					profile: {
 						select: {
 							firstName: true,
@@ -50,6 +58,8 @@ export const adminController = {
 					role: user.role,
 					isVerified: user.isVerified,
 					createdAt: user.createdAt,
+					classId: user.classId,
+					className: user.class?.name || null,
 					name: user.profile
 						? `${user.profile.firstName || ""} ${user.profile.lastName || ""}`.trim()
 						: null,
@@ -177,6 +187,43 @@ export const adminController = {
 		} catch (error) {
 			logger.error("Get stats error:", error);
 			res.status(500).json({ message: "Failed to fetch statistics" });
+		}
+	},
+
+	// PATCH /api/admin/users/:userId/profile - Update user profile (Admin only)
+	async updateUserProfile(req, res) {
+		try {
+			const { userId } = req.params;
+			const { firstName, lastName } = req.body;
+			const userIdInt = parseInt(userId, 10);
+
+			if (isNaN(userIdInt)) {
+				return res.status(400).json({ message: "Invalid user ID" });
+			}
+
+			// Verify user exists
+			const user = await prisma.user.findUnique({
+				where: { id: userIdInt },
+			});
+
+			if (!user) {
+				return res.status(404).json({ message: "User not found" });
+			}
+
+			const profileData = {};
+			if (firstName !== undefined)
+				profileData.firstName = firstName?.trim() || null;
+			if (lastName !== undefined)
+				profileData.lastName = lastName?.trim() || null;
+
+			const profile = await UserModel.updateProfile(userIdInt, profileData);
+
+			res.json({
+				profile,
+			});
+		} catch (error) {
+			logger.error("Update user profile error:", error);
+			res.status(500).json({ message: "Failed to update user profile" });
 		}
 	},
 };

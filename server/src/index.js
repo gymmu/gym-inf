@@ -10,6 +10,8 @@ import sessionConfig from "./config/session.js";
 import { generalLimiter } from "./middleware/rateLimiter.js";
 import adminRoutes from "./routes/admin.js";
 import authRoutes from "./routes/auth.js";
+import classRoutes from "./routes/class.js";
+import filterRoutes from "./routes/filter.js";
 import progressRoutes from "./routes/progress.js";
 import logger from "./utils/logger.js";
 
@@ -66,6 +68,8 @@ app.get("/api/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/progress", progressRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/classes", classRoutes);
+app.use("/api/filters", filterRoutes);
 
 // 404 handler
 app.use((req, res) => {

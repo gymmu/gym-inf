@@ -23,15 +23,24 @@ async function request(endpoint, options = {}) {
   return data
 }
 
-export const getAllUsersProgress = () => request("/api/admin/progress")
+export const getAllClasses = () => request("/api/classes")
 
-export const getUserProgress = (userId) =>
-  request(`/api/admin/progress/${userId}`)
+export const createClass = (name) =>
+  request("/api/classes", {
+    method: "POST",
+    body: JSON.stringify({ name }),
+  })
 
-export const getStats = () => request("/api/admin/stats")
+export const deleteClass = (classId) =>
+  request(`/api/classes/${classId}`, {
+    method: "DELETE",
+  })
 
-export const updateUserProfile = (userId, firstName, lastName) =>
-  request(`/api/admin/users/${userId}/profile`, {
+export const getClassUsers = (classId) =>
+  request(`/api/classes/${classId}/users`)
+
+export const assignUserToClass = (userId, classId) =>
+  request(`/api/classes/users/${userId}/class`, {
     method: "PATCH",
-    body: JSON.stringify({ firstName, lastName }),
+    body: JSON.stringify({ classId }),
   })

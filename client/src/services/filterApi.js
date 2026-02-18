@@ -23,15 +23,21 @@ async function request(endpoint, options = {}) {
   return data
 }
 
-export const getAllUsersProgress = () => request("/api/admin/progress")
+export const getAllFilters = () => request("/api/filters")
 
-export const getUserProgress = (userId) =>
-  request(`/api/admin/progress/${userId}`)
+export const createFilter = (name, chapters) =>
+  request("/api/filters", {
+    method: "POST",
+    body: JSON.stringify({ name, chapters }),
+  })
 
-export const getStats = () => request("/api/admin/stats")
+export const updateFilter = (filterId, name, chapters) =>
+  request(`/api/filters/${filterId}`, {
+    method: "PUT",
+    body: JSON.stringify({ name, chapters }),
+  })
 
-export const updateUserProfile = (userId, firstName, lastName) =>
-  request(`/api/admin/users/${userId}/profile`, {
-    method: "PATCH",
-    body: JSON.stringify({ firstName, lastName }),
+export const deleteFilter = (filterId) =>
+  request(`/api/filters/${filterId}`, {
+    method: "DELETE",
   })

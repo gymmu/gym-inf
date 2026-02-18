@@ -19,6 +19,9 @@ model User {
   password String @map("password_hash")
   role     Role   @default(USER)
 
+  // Class assignment
+  classId Int? @map("class_id")
+
   // Email verification
   isVerified              Boolean   @default(false) @map("is_verified")
   verificationToken       String?   @unique @map("verification_token")
@@ -35,10 +38,13 @@ model User {
   // Relations
   profile         UserProfile?
   chapterProgress ChapterProgress[]
+  class           Class?            @relation(fields: [classId], references: [id], onDelete: SetNull)
+  chapterFilters  ChapterFilter[]
 
   @@index([email])
   @@index([verificationToken])
   @@index([resetPasswordToken])
+  @@index([classId])
   @@map("users")
 }
 
@@ -70,6 +76,32 @@ model ChapterProgress {
   @@unique([userId, chapterSlug])
   @@index([userId])
   @@map("chapter_progress")
+}
+
+model Class {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(50) // z.B. "F1c", "1Wb"
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  users User[]
+
+  @@map("classes")
+}
+
+model ChapterFilter {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  name      String   @db.VarChar(100) // z.B. "Nur JavaScript", "FMS Themen"
+  chapters  String[] // Array of chapter slugs
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("chapter_filters")
 }
 
 // Note: The "session" table is managed by connect-pg-simple (createTableIfMissing: true).

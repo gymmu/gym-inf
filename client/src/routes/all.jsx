@@ -78,6 +78,8 @@ const RegexEditor = lazy(() => import("../components/RegexEditor"))
 
 // Admin pages
 const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboard.jsx"))
+const ClassManagement = lazy(() => import("@/pages/admin/ClassManagement.jsx"))
+const ClassOverview = lazy(() => import("@/pages/admin/ClassOverview.jsx"))
 
 // Route configuration as plain objects (SSG-compatible)
 export const routes = [
@@ -193,6 +195,22 @@ export const routes = [
         element: (
           <ProtectedRoute>
             <AdminDashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "admin/classes",
+        element: (
+          <ProtectedRoute>
+            <ClassManagement />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "admin/classes/:id",
+        element: (
+          <ProtectedRoute>
+            <ClassOverview />
           </ProtectedRoute>
         ),
       },

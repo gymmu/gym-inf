@@ -17,4 +17,7 @@ router.get("/progress/:userId", adminController.getUserProgress);
 // GET /api/admin/stats - Get overall statistics
 router.get("/stats", adminController.getStats);
 
+// PATCH /api/admin/users/:userId/profile - Update user profile
+router.patch("/users/:userId/profile", adminController.updateUserProfile);
+
 export default router;

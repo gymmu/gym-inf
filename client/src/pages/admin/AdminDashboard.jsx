@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "@context/AuthContext"
-import { Navigate } from "react-router-dom"
+import { Navigate, Link } from "react-router-dom"
 import * as adminApi from "@/services/adminApi"
 import style from "./AdminDashboard.module.css"
 
@@ -23,6 +23,25 @@ function UserRow({ user }) {
         <td>
           <div className={style.userEmail}>{user.email}</div>
           {user.name && <div className={style.userName}>{user.name}</div>}
+        </td>
+        <td>
+          {user.className ? (
+            <span
+              style={{
+                padding: "0.25rem 0.5rem",
+                borderRadius: "4px",
+                background: "var(--color-purple)",
+                color: "var(--color-white)",
+                fontSize: "0.85rem",
+              }}>
+              {user.className}
+            </span>
+          ) : (
+            <span
+              style={{ color: "var(--color-gray-light)", fontSize: "0.85rem" }}>
+              -
+            </span>
+          )}
         </td>
         <td>
           <span
@@ -53,7 +72,7 @@ function UserRow({ user }) {
       </tr>
       {expanded && (
         <tr className={style.detailsRow}>
-          <td colSpan="5">
+          <td colSpan="6">
             <h4>Kapitelfortschritt</h4>
             <div className={style.chapterList}>
               {progressArray.map(([slug, data]) => (
@@ -148,6 +167,21 @@ export default function AdminDashboard() {
       <div className={style.header}>
         <h1>Admin Dashboard</h1>
         <p>Übersicht über alle Benutzer und deren Lernfortschritt</p>
+        <div style={{ marginTop: "1rem" }}>
+          <Link
+            to="/admin/classes"
+            style={{
+              display: "inline-block",
+              padding: "0.5rem 1rem",
+              background: "var(--color-purple)",
+              color: "var(--color-white)",
+              textDecoration: "none",
+              borderRadius: "4px",
+              fontSize: "0.9rem",
+            }}>
+            Klassenverwaltung →
+          </Link>
+        </div>
       </div>
 
       {stats && (
@@ -175,6 +209,7 @@ export default function AdminDashboard() {
         <thead>
           <tr>
             <th>Benutzer</th>
+            <th>Klasse</th>
             <th>Rolle</th>
             <th>Kapitel</th>
             <th>Fortschritt</th>
