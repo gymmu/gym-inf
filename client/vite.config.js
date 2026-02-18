@@ -105,10 +105,6 @@ export default defineConfig({
             if (id.includes("monaco-editor")) {
               return "monaco"
             }
-            // Mermaid is large (~200KB)
-            if (id.includes("mermaid")) {
-              return "mermaid"
-            }
             // Reveal.js for presentations
             if (id.includes("reveal.js")) {
               return "reveal"
