@@ -1,4 +1,4 @@
-import { getTransporter } from "../config/email.js";
+import { getEmailClient } from "../config/email.js";
 import logger from "../utils/logger.js";
 
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
@@ -6,10 +6,10 @@ const FROM_EMAIL =
 	process.env.MAILGUN_FROM || process.env.GMAIL_USER || "noreply@localhost";
 
 export async function sendVerificationEmail(email, token) {
-	const transporter = getTransporter();
+	const emailClient = getEmailClient();
 	const verificationUrl = `${CLIENT_URL}/verify-email/${token}`;
 
-	const mailOptions = {
+	const emailOptions = {
 		from: FROM_EMAIL,
 		to: email,
 		subject: "E-Mail-Adresse verifizieren - Gym Inf",
@@ -32,7 +32,7 @@ export async function sendVerificationEmail(email, token) {
 	};
 
 	try {
-		const result = await transporter.sendMail(mailOptions);
+		const result = await emailClient.sendEmail(emailOptions);
 		logger.info(`Verification email sent to ${email}: ${result.messageId}`);
 		return result;
 	} catch (error) {
@@ -42,10 +42,10 @@ export async function sendVerificationEmail(email, token) {
 }
 
 export async function sendPasswordResetEmail(email, token) {
-	const transporter = getTransporter();
+	const emailClient = getEmailClient();
 	const resetUrl = `${CLIENT_URL}/reset-password/${token}`;
 
-	const mailOptions = {
+	const emailOptions = {
 		from: FROM_EMAIL,
 		to: email,
 		subject: "Passwort zur&uuml;cksetzen - Gym Inf",
@@ -71,7 +71,7 @@ export async function sendPasswordResetEmail(email, token) {
 	};
 
 	try {
-		const result = await transporter.sendMail(mailOptions);
+		const result = await emailClient.sendEmail(emailOptions);
 		logger.info(`Password reset email sent to ${email}: ${result.messageId}`);
 		return result;
 	} catch (error) {
