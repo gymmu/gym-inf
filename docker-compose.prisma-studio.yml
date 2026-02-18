@@ -16,12 +16,14 @@ services:
   prisma-studio:
     image: ${SERVER_IMAGE:-ghcr.io/gymmu/gym-inf-server:latest}
     container_name: gym-inf-prisma-studio
-    restart: "no" # Manual start/stop only
+    restart: "no"
     environment:
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL:-postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}}
     depends_on:
       - postgres
+    ports:
+      - "5555:5555" # Expose port directly - access via http://server-ip:5555
     networks:
       - gym-inf-network
     command: npx prisma studio --port 5555 --browser none --hostname 0.0.0.0

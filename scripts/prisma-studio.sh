@@ -88,8 +88,12 @@ case "${1:-}" in
         echo "  $0 logs     - View logs"
         echo "  $0 dev      - Start locally in dev mode"
         echo ""
-        echo "Production Access: https://your-domain.com/prisma-studio/"
-        echo "Dev Access:        http://localhost:5555"
+        echo "Production Access (via SSH Tunnel):"
+        echo "  ./scripts/prisma-studio-tunnel.sh"
+        echo "  Then open: http://localhost:5555"
+        echo ""
+        echo "Dev Access:"
+        echo "  http://localhost:5555"
         exit 1
         ;;
 esac
