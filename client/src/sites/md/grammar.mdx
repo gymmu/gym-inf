@@ -85,52 +85,6 @@ Start → (+|-) → End
 Start → (0|1|2|3|4|5|6|7|8|9) → End
 ```
 
-**Zahl**:
-
-<Mermaid>
-  {String.raw`
----
-config:
-  theme: 'dark'
----
-graph LR
-  A[Start] --> Z[Ziffer] -->Z
-  Z --> E[End]
-`}
-</Mermaid>
-
-**Operation**:
-
-<Mermaid>
-  {String.raw`
-graph LR
-  A[Start] --> P[+] -->E[End]
-  A --> M[-] --> E
-`}
-</Mermaid>
-
-**Ziffer:**
-
-<Mermaid>
-  {String.raw`
----
-config:
-  theme: 'dark'
----
-graph LR
-  A[Start] --> 0(0) --> C[End]
-  A --> 1(1) --> C
-  A --> 2(2) --> C
-  A --> 3(3) --> C
-  A --> 4(4) --> C
-  A --> 5(5) --> C
-  A --> 6(6) --> C
-  A --> 7(7) --> C
-  A --> 8(8) --> C
-  A --> 9(9) --> C
-`}
-</Mermaid>
-
 Mit dieser Grammatik können wir alle Additionen und Subtraktionen darstellen. Ob
 diese dann richtig gerechnet werden, kann die Grammatik nicht entscheiden. Aber
 dank der Grammatik können wir eine Rechnung in der Form
