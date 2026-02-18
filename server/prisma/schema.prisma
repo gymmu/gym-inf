@@ -33,7 +33,8 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  profile UserProfile?
+  profile         UserProfile?
+  chapterProgress ChapterProgress[]
 
   @@index([email])
   @@index([verificationToken])
@@ -54,6 +55,21 @@ model UserProfile {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("user_profiles")
+}
+
+model ChapterProgress {
+  id                 Int      @id @default(autoincrement())
+  userId             Int      @map("user_id")
+  chapterSlug        String   @map("chapter_slug") @db.VarChar(200)
+  understandingLevel Int      @map("understanding_level") // 1 = rot, 2 = gelb, 3 = grün
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, chapterSlug])
+  @@index([userId])
+  @@map("chapter_progress")
 }
 
 // Note: The "session" table is managed by connect-pg-simple (createTableIfMissing: true).

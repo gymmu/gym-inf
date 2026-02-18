@@ -76,6 +76,9 @@ const CodePen = lazy(() => import("../components/CodePen"))
 const CodePenSVG = lazy(() => import("../components/CodePenSVG"))
 const RegexEditor = lazy(() => import("../components/RegexEditor"))
 
+// Admin pages
+const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboard.jsx"))
+
 // Route configuration as plain objects (SSG-compatible)
 export const routes = [
   {
@@ -180,6 +183,16 @@ export const routes = [
         element: (
           <ProtectedRoute>
             <ProtectedDemo />
+          </ProtectedRoute>
+        ),
+      },
+
+      // Admin routes (protected)
+      {
+        path: "admin",
+        element: (
+          <ProtectedRoute>
+            <AdminDashboard />
           </ProtectedRoute>
         ),
       },

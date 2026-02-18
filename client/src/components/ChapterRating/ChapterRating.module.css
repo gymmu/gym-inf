@@ -1,0 +1,87 @@
+.container {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+  text-align: center;
+  background-color: hsl(from var(--color-bg) h s calc(l + 3));
+}
+
+.title {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  color: var(--color-fg);
+  font-weight: normal;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.ratingButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-fg);
+  font-family: inherit;
+  font-size: 0.85rem;
+}
+
+.ratingButton:hover {
+  background-color: hsl(from var(--color-bg) h s calc(l + 8));
+}
+
+.dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.ratingButton:hover .dot {
+  transform: scale(1.2);
+}
+
+.dotRed {
+  background-color: var(--color-red);
+}
+
+.dotYellow {
+  background-color: var(--color-yellow);
+}
+
+.dotGreen {
+  background-color: var(--color-green);
+}
+
+.active {
+  border-color: var(--color-fg);
+  background-color: hsl(from var(--color-bg) h s calc(l + 8));
+}
+
+.active .dot {
+  transform: scale(1.2);
+  box-shadow: 0 0 8px currentColor;
+}
+
+.active.red {
+  border-color: var(--color-red);
+}
+
+.active.yellow {
+  border-color: var(--color-yellow);
+}
+
+.active.green {
+  border-color: var(--color-green);
+}

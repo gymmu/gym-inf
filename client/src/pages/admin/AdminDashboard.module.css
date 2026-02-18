@@ -1,0 +1,215 @@
+.container {
+  padding: 2rem 0;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  margin: 0 0 0.5rem;
+}
+
+.header p {
+  color: var(--color-gray-light);
+  margin: 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  padding: 1.5rem;
+  background: hsl(from var(--color-bg) h s calc(l + 3));
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+}
+
+.statCard h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-gray-light);
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statCard p {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-yellow);
+}
+
+.loading,
+.error {
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+}
+
+.error {
+  background: rgba(251, 73, 52, 0.1);
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.userTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: hsl(from var(--color-bg) h s calc(l + 2));
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.userTable thead {
+  background: hsl(from var(--color-bg) h s calc(l + 5));
+}
+
+.userTable th,
+.userTable td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-gray);
+}
+
+.userTable th {
+  font-weight: bold;
+  color: var(--color-yellow);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.userTable tbody tr:hover {
+  background: hsl(from var(--color-bg) h s calc(l + 6));
+}
+
+.userTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.userEmail {
+  color: var(--color-blue);
+}
+
+.userName {
+  color: var(--color-gray-light);
+  font-size: 0.9rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.badgeAdmin {
+  background: var(--color-purple);
+  color: var(--color-white);
+}
+
+.badgeUser {
+  background: var(--color-gray);
+  color: var(--color-fg);
+}
+
+.progressDots {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.progressDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dotRed {
+  background-color: var(--color-red);
+}
+
+.dotYellow {
+  background-color: var(--color-yellow);
+}
+
+.dotGreen {
+  background-color: var(--color-green);
+}
+
+.expandBtn {
+  background: none;
+  border: none;
+  color: var(--color-blue);
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0;
+}
+
+.expandBtn:hover {
+  color: var(--color-purple);
+}
+
+.detailsRow td {
+  padding: 1.5rem;
+  background: hsl(from var(--color-bg) h s calc(l + 8));
+}
+
+.chapterList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.75rem;
+}
+
+.chapterItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: hsl(from var(--color-bg) h s calc(l + 3));
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.chapterSlug {
+  flex: 1;
+  color: var(--color-fg);
+}
+
+.chapterDate {
+  font-size: 0.75rem;
+  color: var(--color-gray-light);
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .userTable {
+    font-size: 0.85rem;
+  }
+
+  .userTable th,
+  .userTable td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .chapterList {
+    grid-template-columns: 1fr;
+  }
+}

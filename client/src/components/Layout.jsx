@@ -5,10 +5,12 @@ import Header from "@components/Header"
 import Footer from "@components/Footer"
 import Navbar from "@components/Navbar"
 import SkeletonScreen from "@components/SkeletonScreen"
+import ChapterRating from "@components/ChapterRating/ChapterRating"
 import { useNavContext, NavContext } from "@context/NavContext"
 import { useAppContext, AppProvider } from "@context/AppContext"
 import { NavProvider } from "@context/NavContext"
 import { AuthProvider } from "@context/AuthContext"
+import { ProgressProvider } from "@context/ProgressContext"
 
 import style from "@components/Layout.module.css"
 
@@ -50,6 +52,7 @@ function LayoutContent() {
         <Suspense fallback={<SkeletonScreen />}>
           <Outlet />
         </Suspense>
+        <ChapterRating />
       </main>
       <Footer />
     </div>
@@ -62,7 +65,9 @@ export default function Layout() {
     <AppProvider>
       <NavProvider>
         <AuthProvider>
-          <LayoutContent />
+          <ProgressProvider>
+            <LayoutContent />
+          </ProgressProvider>
         </AuthProvider>
       </NavProvider>
     </AppProvider>

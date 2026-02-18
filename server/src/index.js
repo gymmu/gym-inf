@@ -8,7 +8,9 @@ import passport from "./config/passport.js";
 import prisma from "./config/prisma.js";
 import sessionConfig from "./config/session.js";
 import { generalLimiter } from "./middleware/rateLimiter.js";
+import adminRoutes from "./routes/admin.js";
 import authRoutes from "./routes/auth.js";
+import progressRoutes from "./routes/progress.js";
 import logger from "./utils/logger.js";
 
 const app = express();
@@ -62,6 +64,8 @@ app.get("/api/health", (req, res) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/progress", progressRoutes);
+app.use("/api/admin", adminRoutes);
 
 // 404 handler
 app.use((req, res) => {

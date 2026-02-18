@@ -6,7 +6,7 @@ import style from "./Header.module.css"
 
 function Header() {
   const { menuVisible, setMenuVisible } = useAppContext()
-  const { user, isAuthenticated, logout } = useAuth()
+  const { user, isAuthenticated, logout, hasRole } = useAuth()
   const navigate = useNavigate()
 
   const toggleSide = () => {
@@ -28,6 +28,11 @@ function Header() {
         <div className={style.authNav}>
           {isAuthenticated ? (
             <>
+              {hasRole(["ADMIN"]) && (
+                <Link to="/admin" className={style.adminLink}>
+                  Admin
+                </Link>
+              )}
               <span className={style.userEmail}>{user.email}</span>
               <button className={style.authBtn} onClick={handleLogout}>
                 Abmelden
