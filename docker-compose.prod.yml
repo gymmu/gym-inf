@@ -1,0 +1,94 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gym-inf-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # No exposed ports in production - only reachable within Docker network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - gym-inf-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: gym-inf-server
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+      SESSION_SECRET: ${SESSION_SECRET}
+      SESSION_NAME: ${SESSION_NAME:-gym-inf.sid}
+      SESSION_MAX_AGE: ${SESSION_MAX_AGE:-604800000}
+      CLIENT_URL: ${CLIENT_URL}
+      MAILGUN_SMTP_HOST: ${MAILGUN_SMTP_HOST:-}
+      MAILGUN_SMTP_PORT: ${MAILGUN_SMTP_PORT:-587}
+      MAILGUN_SMTP_USER: ${MAILGUN_SMTP_USER:-}
+      MAILGUN_SMTP_PASS: ${MAILGUN_SMTP_PASS:-}
+      MAILGUN_FROM: ${MAILGUN_FROM:-}
+      GMAIL_USER: ${GMAIL_USER:-}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
+      JWT_SECRET: ${JWT_SECRET}
+      TOKEN_EXPIRY: ${TOKEN_EXPIRY:-3600000}
+      RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-900000}
+      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-5}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    # No exposed ports - only reachable via nginx
+    volumes:
+      - server_logs:/app/logs
+    networks:
+      - gym-inf-network
+    command: sh -c "npx prisma migrate deploy && node src/index.js"
+
+  nginx:
+    image: nginx:alpine
+    container_name: gym-inf-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.prod.active.conf:/etc/nginx/nginx.conf:ro
+      - certbot_www:/var/www/certbot:ro
+      - certbot_conf:/etc/letsencrypt:ro
+    depends_on:
+      - server
+    networks:
+      - gym-inf-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: gym-inf-certbot
+    volumes:
+      - certbot_www:/var/www/certbot
+      - certbot_conf:/etc/letsencrypt
+    # Runs once, then exits. Renewal via cron or separate command.
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+volumes:
+  postgres_data:
+    driver: local
+  server_logs:
+    driver: local
+  certbot_www:
+    driver: local
+  certbot_conf:
+    driver: local
+
+networks:
+  gym-inf-network:
+    driver: bridge

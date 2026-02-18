@@ -1,0 +1,107 @@
+.container {
+  /* 
+   * Wir verwenden den container hier, damit wir die breite des Elements
+   * messen können. Sobald nicht mehr genügend Platz ist, müssen gewisse Dinge
+   * angepasst werden. 
+   */
+  container-type: inline-size;
+  grid-area: header;
+
+  header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: 700;
+    padding-block: 0rem;
+    padding-inline: 2rem;
+    border-bottom: 2px solid var(--color-fg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    overflow-x: hidden;
+
+    @container (width < 450px) {
+      & {
+        padding-inline: 1rem;
+        padding-block: 0.5rem;
+      }
+      @container (width < 330px) {
+        & {
+          padding-inline: 0;
+        }
+      }
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      text-transform: uppercase;
+      text-align: center;
+      font-weight: 900;
+      font-family: "Georgia", serif;
+      letter-spacing: 0.15em;
+      color: var(--color-yellow);
+      flex-grow: 1; /* Damit der Text zentriert bleibt. */
+      flex-shrink: 0; /* Damit alles auf einer Zeile bleibt. */
+      margin-block: 0.5rem;
+
+      @container (width < 400px) {
+        & {
+          letter-spacing: unset;
+        }
+      }
+
+      @container (width < 300px) {
+        font-size: 1.2rem;
+      }
+
+      & > a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+
+    .authNav {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .userEmail {
+      font-size: 0.8rem;
+      color: var(--color-gray-light);
+      font-weight: normal;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 160px;
+    }
+
+    .authBtn {
+      font-size: 0.8rem;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--color-blue);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--color-blue);
+      cursor: pointer;
+      text-decoration: none;
+      font-family: inherit;
+      white-space: nowrap;
+      transition:
+        background-color 0.2s,
+        color 0.2s;
+
+      &:hover {
+        background-color: var(--color-blue);
+        color: var(--color-white);
+      }
+    }
+
+    @container (width < 500px) {
+      .userEmail {
+        display: none;
+      }
+    }
+  }
+}

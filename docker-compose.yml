@@ -1,0 +1,84 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gym-inf-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-gyminfdb}
+      POSTGRES_USER: ${DB_USER:-gyminfuser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-devpassword123}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USER:-gyminfuser} -d ${DB_NAME:-gyminfdb}",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - gym-inf-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    container_name: gym-inf-server
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgresql://${DB_USER:-gyminfuser}:${DB_PASSWORD:-devpassword123}@postgres:5432/${DB_NAME:-gyminfdb}
+      SESSION_SECRET: ${SESSION_SECRET:-dev-secret-change-in-production}
+      SESSION_NAME: ${SESSION_NAME:-gym-inf.sid}
+      SESSION_MAX_AGE: ${SESSION_MAX_AGE:-604800000}
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:5173}
+      MAILGUN_SMTP_HOST: ${MAILGUN_SMTP_HOST:-}
+      MAILGUN_SMTP_PORT: ${MAILGUN_SMTP_PORT:-}
+      MAILGUN_SMTP_USER: ${MAILGUN_SMTP_USER:-}
+      MAILGUN_SMTP_PASS: ${MAILGUN_SMTP_PASS:-}
+      MAILGUN_FROM: ${MAILGUN_FROM:-noreply@localhost}
+      GMAIL_USER: ${GMAIL_USER:-}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
+      JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret}
+      TOKEN_EXPIRY: ${TOKEN_EXPIRY:-3600000}
+      RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-900000}
+      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-10}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server/src:/app/src:ro
+      - ./server/prisma:/app/prisma:ro
+      - /app/node_modules
+    networks:
+      - gym-inf-network
+    command: sh -c "npx prisma db push --accept-data-loss && npx prisma db seed && npm run dev"
+
+  nginx:
+    image: nginx:alpine
+    container_name: gym-inf-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - server
+    networks:
+      - gym-inf-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  gym-inf-network:
+    driver: bridge
