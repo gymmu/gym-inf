@@ -1,0 +1,12 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install dependencies
+COPY package*.json ./
+RUN npm install
+
+EXPOSE 5173
+
+# Vite dev server with HMR
+CMD ["npx", "vite", "--host", "0.0.0.0", "--port", "5173"]

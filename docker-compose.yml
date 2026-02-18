@@ -37,7 +37,7 @@ services:
       SESSION_SECRET: ${SESSION_SECRET:-dev-secret-change-in-production}
       SESSION_NAME: ${SESSION_NAME:-gym-inf.sid}
       SESSION_MAX_AGE: ${SESSION_MAX_AGE:-604800000}
-      CLIENT_URL: ${CLIENT_URL:-http://localhost:5173}
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:8080}
       MAILGUN_SMTP_HOST: ${MAILGUN_SMTP_HOST:-}
       MAILGUN_SMTP_PORT: ${MAILGUN_SMTP_PORT:-}
       MAILGUN_SMTP_USER: ${MAILGUN_SMTP_USER:-}
@@ -55,12 +55,41 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./server/src:/app/src:ro
-      - ./server/prisma:/app/prisma:ro
+      - ./server/src:/app/src
+      - ./server/prisma:/app/prisma
       - /app/node_modules
     networks:
       - gym-inf-network
     command: sh -c "npx prisma db push --accept-data-loss && npx prisma db seed && npm run dev"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: gym-inf-client
+    restart: unless-stopped
+    environment:
+      VITE_API_URL: ""
+      VITE_BASE_PATH: "/"
+      VITE_HMR_PORT: 8080
+    volumes:
+      - ./client/src:/app/src
+      - ./client/public:/app/public
+      - ./client/index.html:/app/index.html
+      - ./client/vite.config.js:/app/vite.config.js
+      - /app/node_modules
+    networks:
+      - gym-inf-network
+    develop:
+      watch:
+        - action: sync
+          path: ./client/src
+          target: /app/src
+        - action: sync
+          path: ./client/public
+          target: /app/public
+        - action: rebuild
+          path: ./client/package.json
 
   nginx:
     image: nginx:alpine
@@ -72,6 +101,7 @@ services:
       - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - server
+      - client
     networks:
       - gym-inf-network
 
