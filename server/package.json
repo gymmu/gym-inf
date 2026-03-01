@@ -29,15 +29,15 @@
 		"express-validator": "^7.2.1",
 		"helmet": "^8.0.0",
 		"morgan": "^1.10.0",
-		"nodemailer": "^6.9.16",
+		"nodemailer": "^8.0.1",
 		"passport": "^0.7.0",
 		"passport-local": "^1.0.0",
-		"pg": "^8.13.1",
-		"resend": "^6.9.2",
+		"pg": "^8.19.0",
+		"resend": "^6.9.3",
 		"winston": "^3.17.0"
 	},
 	"devDependencies": {
-		"nodemon": "^3.1.7",
+		"nodemon": "^3.1.14",
 		"prisma": "^5.22.0"
 	}
 }
