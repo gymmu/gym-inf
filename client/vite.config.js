@@ -10,10 +10,10 @@ function generateAlias(absolutePath) {
   return path.resolve(process.cwd(), absolutePath)
 }
 
-// Plugin to mock react-syntax-highlighter during SSR
-function mockSyntaxHighlighterForSSR() {
+// Plugin to mock browser-only libraries during SSR
+function mockBrowserLibsForSSR() {
   return {
-    name: "mock-syntax-highlighter-ssr",
+    name: "mock-browser-libs-ssr",
     enforce: "pre",
     resolveId(id, importer, options) {
       // Only mock during SSR build
@@ -24,6 +24,16 @@ function mockSyntaxHighlighterForSSR() {
         if (id.startsWith("react-syntax-highlighter/dist/esm/styles")) {
           return generateAlias("src/mocks/react-syntax-highlighter-styles.js")
         }
+        if (id === "react-x-mermaid") {
+          return generateAlias("src/mocks/react-x-mermaid.jsx")
+        }
+        // Mock our custom Mermaid component
+        if (
+          id.endsWith("components/Mermaid") ||
+          id.endsWith("components/Mermaid.jsx")
+        ) {
+          return generateAlias("src/mocks/Mermaid.jsx")
+        }
       }
       return null
     },
@@ -33,7 +43,7 @@ function mockSyntaxHighlighterForSSR() {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    mockSyntaxHighlighterForSSR(),
+    mockBrowserLibsForSSR(),
     {
       enforce: "pre",
       ...mdx({
@@ -168,6 +178,8 @@ export default defineConfig({
       "react-syntax-highlighter",
       "matter-js", // Physics engine is browser-only
       "reveal.js", // Presentation library is browser-only
+      "mermaid", // Mermaid requires browser APIs
+      "react-x-mermaid", // Mermaid wrapper is browser-only
     ],
   },
   // SSG-specific options

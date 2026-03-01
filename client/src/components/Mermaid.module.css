@@ -1,0 +1,93 @@
+/* XKCD-style hand-drawn look for Mermaid diagrams */
+.mermaidContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Force Kalam on the entire SVG */
+.mermaidContainer :global(svg) {
+  font-family: "Kalam", "Comic Sans MS", cursive !important;
+}
+
+/* Force Comic Sans on the entire SVG */
+.mermaidContainer :global(svg) {
+  font-family:
+    "Comic Sans MS", "Chalkboard SE", "Comic Neue", cursive !important;
+}
+
+/* Add hand-drawn effect to SVG elements */
+.mermaidContainer :global(svg) {
+  /* Add slight irregularity to lines */
+  filter: url(#rough-paper);
+}
+
+/* Style the flowchart elements with XKCD-like appearance */
+.mermaidContainer :global(.node rect),
+.mermaidContainer :global(.node circle),
+.mermaidContainer :global(.node ellipse),
+.mermaidContainer :global(.node polygon),
+.mermaidContainer :global(.node path) {
+  stroke-width: 2.5px !important;
+  stroke: #333 !important;
+  fill: #fff !important;
+}
+
+/* Style edges (arrows) */
+.mermaidContainer :global(.edgePath path) {
+  stroke: #333 !important;
+  stroke-width: 2.5px !important;
+}
+
+/* Arrow heads */
+.mermaidContainer :global(.arrowheadPath) {
+  fill: #333 !important;
+  stroke: #333 !important;
+}
+
+/* Text labels - Force Kalam everywhere */
+.mermaidContainer :global(.nodeLabel),
+.mermaidContainer :global(.edgeLabel),
+.mermaidContainer :global(text),
+.mermaidContainer :global(tspan),
+.mermaidContainer :global(.label) {
+  font-family: "Kalam", "Comic Sans MS", cursive !important;
+  font-size: 18px !important;
+  color: #333 !important;
+  fill: #333 !important;
+}
+
+/* Edge labels background */
+.mermaidContainer :global(.edgeLabel rect) {
+  fill: #fff !important;
+  stroke: none !important;
+}
+
+/* Decision nodes (diamonds) - highlight with slight color */
+.mermaidContainer :global(.node.decision polygon) {
+  fill: #f9f9f9 !important;
+}
+
+/* Error display */
+.errorContainer {
+  color: #d32f2f;
+  padding: 1em;
+  border: 2px solid #d32f2f;
+  border-radius: 8px;
+  background-color: #ffebee;
+}
+
+.errorContainer strong {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.errorContainer pre {
+  font-size: 0.9em;
+  margin-top: 0.5em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
