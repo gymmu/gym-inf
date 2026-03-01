@@ -50,6 +50,12 @@ export default function FmsIndex() {
               <NavLink to="fms/passwoerter">Passwörter</NavLink>
             </ol>
           </li>
+          <li>
+            Algorithmen
+            <ol>
+              <NavLink to="/fms/algorithmen">Was sind Algorithmen?</NavLink>
+            </ol>
+          </li>
         </ol>
       </section>
       <section>

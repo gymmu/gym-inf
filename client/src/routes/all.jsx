@@ -70,6 +70,7 @@ const Schluesselaustausch = lazy(
 const FmsVerschluesselung = lazy(
   () => import("@pages-fms/verschluesselung.jsx"),
 )
+const FmsAlgorithmen = lazy(() => import("@pages-fms/algorithmen.jsx"))
 const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"))
 const BoxModel = lazy(() => import("../components/BoxModel"))
 const CodePen = lazy(() => import("../components/CodePen"))
@@ -148,6 +149,10 @@ export const routes = [
       {
         path: "/fms/verschluesselung-quiz",
         element: <FmsVerschluesselungQuiz />,
+      },
+      {
+        path: "/fms/algorithmen",
+        element: <FmsAlgorithmen />
       },
 
       // FMS Routes 2. Klasse
