@@ -49,6 +49,12 @@ export default function GymIndex() {
               <NavLink to="js-aufgaben">Aufgaben</NavLink>
             </ol>
           </li>
+          <li>
+            Spielprojekt mit Kaplay
+            <ol>
+            <NavLink to="kaplay-intro">Einführung</NavLink>
+            </ol>
+          </li>
         </ol>
       </section>
 
