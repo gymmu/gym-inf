@@ -1,0 +1,1 @@
+import{j as i}from"./react-vendor-DPtW2uLn.js";import"./gym-pages-B1WatTOA.js";function h({children:t,title:e="Beispiel",classes:r="",id:s=""}){return i.jsxs("div",{className:`full-width content-grid highlight ${r}`,children:[i.jsx("h3",{id:s,children:`${e}`}),t]})}export{h as E};
