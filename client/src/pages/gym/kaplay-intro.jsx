@@ -25,7 +25,7 @@ export default function KaplayIntro() {
           Falls Sie also beim ersten mal etwas nicht verstanden oder gefunden
           haben, schauen Sie einfach nochmals rein.
         </p>
-        <p style={{textAlign: "center"}}><a href="https://v4000.kaplayjs.com/docs/guides/">Kaplay Docs</a></p>
+        <p style={{textAlign: "center"}}><a href="https://v4000.kaplayjs.com/docs/guides/" target="_blank"  rel="noreferrer">Kaplay Docs</a></p>
       </section>
       <section>
         <h3>Sammlung von Beispielen</h3>
@@ -38,7 +38,7 @@ export default function KaplayIntro() {
           Diese gelingen aber sehr einfach, je besser man sich in dem Projekt
           auskennt.
         </p>
-        <p style={{textAlign: "center"}}><a href="https://play.kaplayjs.com/?example=basicEventsObject">Kaplay Sammlung</a></p>
+        <p style={{textAlign: "center"}}><a href="https://play.kaplayjs.com/?example=basicEventsObject" target="_blank"  rel="noreferrer">Kaplay Sammlung</a></p>
       </section>
       <section>
         <h3>KI-Unterstützung</h3>
@@ -51,7 +51,7 @@ export default function KaplayIntro() {
           ist <strong>nicht</strong> dazu da um das ganze Projekt für Sie zu
           machen, verlangen Sie also keinen grossen Code-Stücke von dem Bot.
         </p>
-        <p style={{textAlign: "center"}}><a href="https://app.fobizz.com/ai/chats/public_assistants/1864dbea-0869-4667-b88a-b4d0ba60f336?token=e1f2d087a4ed9ab17005be1a7cb5d13e">Kaplay Bot</a></p>
+        <p style={{textAlign: "center"}}><a href="https://app.fobizz.com/ai/chats/public_assistants/1864dbea-0869-4667-b88a-b4d0ba60f336?token=e1f2d087a4ed9ab17005be1a7cb5d13e" target="_blank"  rel="noreferrer">Kaplay Bot</a></p>
       </section>
       <section>
         <h2>Video Hilfe</h2>
@@ -67,9 +67,9 @@ export default function KaplayIntro() {
       <section>
         <h2>Projekt Setup</h2>
         <p>
-          Das Projekt können Sie hier unter diesem <a href="https://github.com"
-          target="_blank">Github Classroom</a> finden, und sich direkt einer
-          Gruppe anschliessen.
+          Das Projekt können Sie hier unter diesem 
+          <a href="https://classroom.github.com/a/hyWJLy2_" target="_blank" rel="noreferrer">Github Classroom</a>
+          finden, und sich direkt einer Gruppe anschliessen.
         </p>
         <p>
           Das folgende Video erklärt Ihnen wie das Projekt aufgebaut ist.
