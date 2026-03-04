@@ -49,6 +49,20 @@ const GymJSLoopsFunctions = lazy(
   () => import("@pages-gym/js-loops-functions.jsx"),
 )
 const GymJSVariables = lazy(() => import("@pages-gym/js-variables.jsx"))
+const KaplayIntro = lazy(() => import("@pages-gym/kaplay-intro.jsx"))
+const KaplayGameObjects = lazy(
+  () => import("@pages-gym/kaplay-gameobjects.jsx"),
+)
+const KaplayInteraction = lazy(
+  () => import("@pages-gym/kaplay-interaction.jsx"),
+)
+const KaplayScenes = lazy(() => import("@pages-gym/kaplay-scenes.jsx"))
+const KaplayComponents = lazy(() => import("@pages-gym/kaplay-components.jsx"))
+const KaplayEvents = lazy(() => import("@pages-gym/kaplay-events.jsx"))
+const KaplayTags = lazy(() => import("@pages-gym/kaplay-tags.jsx"))
+const KaplayCollisions = lazy(() => import("@pages-gym/kaplay-collisions.jsx"))
+const KaplayCamera = lazy(() => import("@pages-gym/kaplay-camera.jsx"))
+const KaplayTeamwork = lazy(() => import("@pages-gym/kaplay-teamwork.jsx"))
 const Path = lazy(() => import("@components/Path.jsx"))
 const Excel = lazy(() => import("@pages/fms/excel.mdx"))
 const ExcelSpielplan = lazy(() => import("@pages/fms/excel-spielplan.mdx"))
@@ -110,6 +124,18 @@ export const routes = [
       { path: "js-loops-functions", element: <GymJSLoopsFunctions /> },
       { path: "js-aufgaben", element: <GymJSAufgaben /> },
 
+      // Gym Kaplay
+      { path: "kaplay-intro", element: <KaplayIntro /> },
+      { path: "kaplay-gameobjects", element: <KaplayGameObjects /> },
+      { path: "kaplay-interaction", element: <KaplayInteraction /> },
+      { path: "kaplay-scenes", element: <KaplayScenes /> },
+      { path: "kaplay-components", element: <KaplayComponents /> },
+      { path: "kaplay-events", element: <KaplayEvents /> },
+      { path: "kaplay-tags", element: <KaplayTags /> },
+      { path: "kaplay-collisions", element: <KaplayCollisions /> },
+      { path: "kaplay-camera", element: <KaplayCamera /> },
+      { path: "kaplay-teamwork", element: <KaplayTeamwork /> },
+
       // Gym Praktikum
       { path: "praktikum/install", element: <PInstall /> },
 
@@ -152,7 +178,7 @@ export const routes = [
       },
       {
         path: "/fms/algorithmen",
-        element: <FmsAlgorithmen />
+        element: <FmsAlgorithmen />,
       },
 
       // FMS Routes 2. Klasse

@@ -1,3 +1,6 @@
+import CodeBlock from "@components/CodeBlock";
+import Video from "@components/Video"
+
 export default function KaplayIntro() {
 
   return (
@@ -60,6 +63,45 @@ export default function KaplayIntro() {
           und Hilfe gedacht, nicht unbedingt um direkt mitzuarbeiten.
         </p>
         
+      </section>
+      <section>
+        <h2>Projekt Setup</h2>
+        <p>
+          Das Projekt können Sie hier unter diesem <a href="https://github.com"
+          target="_blank">Github Classroom</a> finden, und sich direkt einer
+          Gruppe anschliessen.
+        </p>
+        <p>
+          Das folgende Video erklärt Ihnen wie das Projekt aufgebaut ist.
+        </p>
+        <Video url="fECohz732gc"/>
+
+      </section>
+      <section>
+        <h2>Kaplay Spiel erstellen</h2>
+        <p>
+          Um ein Kaplay Spiel zu erstellen brauchen Sie ein Kaplay-Objekt,
+          welches Sie auf Ihrer Webseite hinzufügen. Keine Angst, das ist
+          deutlich einfacher wie es klingt. Sie finden hier den Basis Code
+          dafür, und in dem Video wird Ihnen mehr dazu erklärt.
+        </p>
+
+        <CodeBlock lang="javascript">
+          {`
+            import kaplay from "kaplay"
+
+            const k = kaplay({...})
+          `}
+        </CodeBlock>
+
+      </section>
+      <section>
+        <h2>Video</h2>
+        <p>
+          In diesem Video wir Ihnen erklärt wie Sie das Kaplay-Objekt erstellen
+          und zu Ihrer Webseite hinzufügen.
+        </p>
+        <Video url="mKyV3Ij7NOE"/>
       </section>
     </>
   )

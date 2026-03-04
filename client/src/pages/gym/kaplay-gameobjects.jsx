@@ -1,4 +1,5 @@
 import CodeBlock from "@components/CodeBlock";
+import Video from "@components/Video"
 
 export default function KaplayGameObjects() {
 
@@ -24,6 +25,11 @@ export default function KaplayGameObjects() {
       </section>
       <section>
         <h2>Video</h2>
+        <p>
+          In dem Video erfahren Sie mehr über Spielobjekte und auch wie Sie
+          Gravitation zum Spiel hinzufügen können.
+        </p>
+        <Video url="DbM5PQPgPcY" />
       </section>
     </>
   )

@@ -1,5 +1,5 @@
-import style from "./Navbar.module.css";
-import NavLink from "./NavLink";
+import style from "./Navbar.module.css"
+import NavLink from "./NavLink"
 
 export default function GymIndex() {
   return (
@@ -52,7 +52,16 @@ export default function GymIndex() {
           <li>
             Spielprojekt mit Kaplay
             <ol>
-            <NavLink to="kaplay-intro">Einführung</NavLink>
+              <NavLink to="kaplay-intro">Einführung</NavLink>
+              <NavLink to="kaplay-gameobjects">Spielobjekte</NavLink>
+              <NavLink to="kaplay-interaction">Interaktionen</NavLink>
+              <NavLink to="kaplay-scenes">Szenen</NavLink>
+              <NavLink to="kaplay-components">Komponenten</NavLink>
+              <NavLink to="kaplay-events">Ereignisse</NavLink>
+              <NavLink to="kaplay-tags">Tags</NavLink>
+              <NavLink to="kaplay-collisions">Kollisionen</NavLink>
+              <NavLink to="kaplay-camera">Kamera zentrieren</NavLink>
+              <NavLink to="kaplay-teamwork">Arbeiten im Team</NavLink>
             </ol>
           </li>
         </ol>
@@ -69,5 +78,5 @@ export default function GymIndex() {
         </ol>
       </section>
     </div>
-  );
+  )
 }
