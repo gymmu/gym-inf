@@ -1,0 +1,1 @@
+const p="_codePenWrapper_svwpb_1",e="_pane_svwpb_8",r="_paneLeft_svwpb_12",a="_outputPane_svwpb_23",t="_markgroup_svwpb_29",o="_mark_svwpb_29",_="_editorWrapper_svwpb_38",n={codePenWrapper:p,pane:e,paneLeft:r,outputPane:a,markgroup:t,mark:o,editorWrapper:_};export{n as s};

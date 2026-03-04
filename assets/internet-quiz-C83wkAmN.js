@@ -1,0 +1,20 @@
+import{j as e}from"./react-vendor-DPtW2uLn.js";import{Q as s}from"./QuizFromJson-BO6iTUK_.js";import"./vendor-BscfZStV.js";import"./monaco-DSiUpym4.js";const i="Internet Quiz",c="Quiz zu den Grundlagen des Internets, Datenübertragung und Sicherheit",a=[{id:"q1",type:"multiple-choice",question:"Was ist die Hauptaufgabe eines Routers?",answers:[{text:"Daten verschlüsseln",correct:!1},{text:"Verschiedene Netzwerke miteinander verbinden",correct:!0},{text:"Webseiten speichern",correct:!1},{text:"Viren scannen",correct:!1}]},{id:"q2",type:"true-false",question:"Alle Daten im Internet werden standardmässig verschlüsselt übertragen.",answers:[{text:"Wahr",correct:!1},{text:"Falsch",correct:!0}]},{id:"q3",type:"multiple-choice",question:"Was bedeutet das 'S' in HTTPS?",answers:[{text:"Server",correct:!1},{text:"Secure",correct:!0},{text:"Speed",correct:!1},{text:"System",correct:!1}]},{id:"q4",type:"multiple-choice",question:"In welche Teile werden Daten bei der Übertragung im Internet aufgeteilt?",answers:[{text:"Bytes",correct:!1},{text:"Pakete",correct:!0},{text:"Chunks",correct:!1},{text:"Frames",correct:!1}]},{id:"q5",type:"true-false",question:"Ihr ISP (Internet Service Provider) kann sehen, welche Webseiten Sie besuchen.",answers:[{text:"Wahr",correct:!0},{text:"Falsch",correct:!1}]},{id:"q6",type:"multiple-choice",question:"Wann sollten Sie besonders auf HTTPS achten?",answers:[{text:"Nur beim Online-Banking",correct:!1},{text:"Beim Einloggen und bei sensiblen Daten",correct:!0},{text:"Nur auf unsicheren Webseiten",correct:!1},{text:"Nie, HTTP ist auch sicher",correct:!1}]},{id:"q7",type:"true-false",question:"In öffentlichen WLANs können andere Personen Ihren Datenverkehr abfangen.",answers:[{text:"Wahr",correct:!0},{text:"Falsch",correct:!1}]},{id:"q8",type:"multiple-choice",question:"Was ist NAT (Network Address Translation)?",answers:[{text:"Ein Verschlüsselungsprotokoll",correct:!1},{text:"Eine Methode um private IP-Adressen in öffentliche zu übersetzen",correct:!0},{text:"Ein Browser-Plugin",correct:!1},{text:"Ein Virenscanner",correct:!1}]},{id:"q9",type:"true-false",question:"Mit HTTPS kann der ISP sehen, was Sie auf einer Webseite genau tun.",answers:[{text:"Wahr",correct:!1},{text:"Falsch",correct:!0}]},{id:"q10",type:"multiple-choice",question:"Wie erkennen Sie eine sichere HTTPS-Verbindung im Browser?",answers:[{text:"An der grünen Adressleiste",correct:!1},{text:"Am Vorhängeschloss-Symbol in der Adresszeile",correct:!0},{text:"An der Geschwindigkeit der Webseite",correct:!1},{text:"Am Logo der Webseite",correct:!1}]}],l={title:i,description:c,questions:a};function r(t){const n={a:"a",h2:"h2",hr:"hr",li:"li",p:"p",ul:"ul",...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(n.h2,{children:"Internet Quiz"}),`
+`,e.jsx(n.p,{children:"Testen Sie Ihr Wissen über das Internet, Datenübertragung und Sicherheit!"}),`
+`,e.jsxs(n.p,{children:["Dieses Quiz basiert auf den Inhalten des ",e.jsx(n.a,{href:"./internet",children:"Internet-Kapitels"}),`. Falls
+Sie Schwierigkeiten mit den Fragen haben, schauen Sie sich das Kapitel noch
+einmal an.`]}),`
+`,e.jsx(n.hr,{}),`
+`,e.jsx(s,{quizData:l}),`
+`,e.jsx(n.hr,{}),`
+`,e.jsx(n.h2,{children:"Zusammenfassung der Lernziele"}),`
+`,e.jsx(n.p,{children:"Nach Abschluss dieses Quiz sollten Sie:"}),`
+`,e.jsxs(n.ul,{children:[`
+`,e.jsx(n.li,{children:"✅ Verstehen wie Daten im Internet übertragen werden"}),`
+`,e.jsx(n.li,{children:"✅ Wissen dass unverschlüsselte Übertragungen öffentlich einsehbar sind"}),`
+`,e.jsx(n.li,{children:"✅ Den Unterschied zwischen HTTP und HTTPS kennen"}),`
+`,e.jsx(n.li,{children:"✅ Wissen wann Daten sicher versendet werden"}),`
+`,e.jsx(n.li,{children:"✅ Die Rolle von Router und ISP verstehen"}),`
+`,e.jsx(n.li,{children:"✅ Sicherheitsrisiken in öffentlichen WLANs kennen"}),`
+`]}),`
+`,e.jsxs(n.p,{children:[`Haben Sie Fragen oder möchten Sie mehr über ein bestimmtes Thema erfahren?
+Schauen Sie sich das `,e.jsx(n.a,{href:"./internet",children:"Internet-Kapitel"})," noch einmal an!"]})]})}function x(t={}){const{wrapper:n}=t.components||{};return n?e.jsx(n,{...t,children:e.jsx(r,{...t})}):r(t)}export{x as default};
