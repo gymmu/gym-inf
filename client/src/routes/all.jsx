@@ -85,6 +85,12 @@ const FmsVerschluesselung = lazy(
   () => import("@pages-fms/verschluesselung.jsx"),
 )
 const FmsAlgorithmen = lazy(() => import("@pages-fms/algorithmen.jsx"))
+const FmsAlgorithmenLoops = lazy(
+  () => import("@pages-fms/algorithmen-loops.jsx"),
+)
+const FmsAlgorithmenAufgaben = lazy(
+  () => import("@pages-fms/algorithmen-aufgaben.jsx"),
+)
 const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"))
 const BoxModel = lazy(() => import("../components/BoxModel"))
 const CodePen = lazy(() => import("../components/CodePen"))
@@ -179,6 +185,14 @@ export const routes = [
       {
         path: "/fms/algorithmen",
         element: <FmsAlgorithmen />,
+      },
+      {
+        path: "/fms/algorithmen-loops",
+        element: <FmsAlgorithmenLoops />,
+      },
+      {
+        path: "/fms/algorithmen-aufgaben",
+        element: <FmsAlgorithmenAufgaben />,
       },
 
       // FMS Routes 2. Klasse

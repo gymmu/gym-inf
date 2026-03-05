@@ -1,5 +1,5 @@
-import style from "./Navbar.module.css";
-import NavLink from "./NavLink";
+import style from "./Navbar.module.css"
+import NavLink from "./NavLink"
 
 export default function FmsIndex() {
   return (
@@ -54,6 +54,8 @@ export default function FmsIndex() {
             Algorithmen
             <ol>
               <NavLink to="/fms/algorithmen">Was sind Algorithmen?</NavLink>
+              <NavLink to="/fms/algorithmen-loops">Schleifen</NavLink>
+              <NavLink to="/fms/algorithmen-aufgaben">Aufgaben</NavLink>
             </ol>
           </li>
         </ol>
@@ -81,5 +83,5 @@ export default function FmsIndex() {
         </ol>
       </section>
     </div>
-  );
+  )
 }
