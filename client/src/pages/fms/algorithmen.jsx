@@ -1,4 +1,6 @@
 import Mermaid from "@components/Mermaid"
+import Section from "@components/Section" 
+
 
 export default function FmsAlgorithmen() {
   // Einfaches Beispiel: Zahlenprüfung
@@ -59,10 +61,55 @@ flowchart TD
           null ist:
         </p>
         <Mermaid chart={zahlenPruefung} id="zahlen-pruefung" />
+      <p>
+          Wie Sie sehen können, besteht ein Algorithmus immer aus mindestens 2 
+          Teilen. Sie haben ein <strong>Start</strong> und ein <strong>Ende</strong>. 
+          Diese Knoten sind speziell, und können nur einmal vorkommen. Es ist
+          wichtig das ein Algorithmus <strong>endlich</strong> ist. Es muss
+          also einen Weg vom <strong>Start</strong> zum <strong>Ende</strong>
+          geben, ansonsten zählt es nicht als Algorithmus.
+      </p>
+        <p>
+          Neben diesen beiden speziellen Knoten, gibt es in einem Flussdiagramm
+          noch 2 weitere Arten von Knoten: <strong>Anweisungen</strong> und 
+          <strong>Entscheidungen</strong>. Das sind die einzigen Elemente die
+          wir in einem Flussdiagramm verwenden werden.
+        </p>
       </section>
+      <Section>
+        <h3>Anweisungen</h3>
+        <p>
+          In einem Anweisungsknoten, beschreiben wir was für eine Aktion
+          gemacht werden soll. Beim Programmieren müssen das später Funktionen
+          sein die in der Programmiersprache vorhanden sind, und sie müssen der
+          korrekten Syntax folgen, so wie Sie das eigentlich aus der Mathematik
+          kennen. Hier in den Flussdiagrammen können wir viel flexibler sein,
+          und das ganze in natürlicher Sprache erklären. Dabei muss man aber
+          beachten, das alles was man in einem solchen <strong>Anweisungsknoten</strong>
+          angibt, mit einem eigenen Algorithmus lösbar sein muss. Beispiele
+          dazu werden wir später noch sehen.
+        </p>
+        <h3>Entscheidungsknoten</h3>
+        <p>
+          Bei einem <strong>Entscheidungsknoten</strong>, stellen wir meistens
+          eine <strong>Wahr-Falsch-Frage</strong>, und können dann den
+          jeweiligen Weg aufzeichnen. So können wir unterschiedliche Wege durch
+          ein Flussdiagramm wählen. Es gibt auch die Möglichkeit mehr als nur 2
+          Antwortmöglichkeiten zu verwenden, dann gibt es einfach mehr Pfeile
+          die von einem <strong>Entscheidungsknoten</strong> wegführen.
+        </p>
+      </Section>
       <section>
         <h3>Flussdiagramm - Komplexeres Beispiel</h3>
-        <p>Dieser Algorithmus findet die größte von drei Zahlen:</p>
+        <p>Flussdiagramme können recht schnell gross und auch komplex werden.
+          Wenn Sie ein solches Flussdiagramm ausführen möchten, ist es wichtig
+        dass Sie den genauen Weg durch das Diagramm festhalten, und sich alle
+          Werte die verwendet werden, bei jedem Schritt aufschreiben.</p>
+        <p>
+          Dieser Algorithmus findet die grösste von 3 Zahlen, wenn Sie diesen
+          ausführen, erhalten Sie die folgenden Schritte:
+        </p>
+        {/* TODO: schriebe hier die schritte mit den werten auf. */}
         <Mermaid chart={maximumFinder} id="maximum-finder" />
       </section>
     </>
