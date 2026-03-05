@@ -111,6 +111,7 @@ flowchart TD
           Dieser Algorithmus findet die grösste von 3 Zahlen, wenn Sie diesen
           ausführen, erhalten Sie die folgenden Schritte:
         </p>
+        <Mermaid chart={maximumFinder} id="maximum-finder" />
         <h4>Beispiel 1: Drei Zahlen vergleichen (a=5, b=12, c=8)</h4>
         <table
           style={{
@@ -381,7 +382,6 @@ flowchart TD
             </tr>
           </tbody>
         </table>
-        <Mermaid chart={maximumFinder} id="maximum-finder" />
       </section>
     </>
   )
