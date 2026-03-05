@@ -1,4 +1,4 @@
-import{j as e}from"./react-vendor-DPtW2uLn.js";import{L as a,S as s}from"./gym-pages-B1WatTOA.js";import{P as i}from"./fms-pages-I6H3F12C.js";import"./vendor-BscfZStV.js";import"./monaco-DSiUpym4.js";function t(r){const n={code:"code",h2:"h2",li:"li",p:"p",pre:"pre",strong:"strong",ul:"ul",...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(n.h2,{children:"Einführung in Javascript"}),`
+import{j as e}from"./react-vendor-DPtW2uLn.js";import{L as a,S as s}from"./gym-pages-B1WatTOA.js";import{P as i}from"./fms-pages-L2bI9as4.js";import"./vendor-BscfZStV.js";import"./monaco-DSiUpym4.js";function t(r){const n={code:"code",h2:"h2",li:"li",p:"p",pre:"pre",strong:"strong",ul:"ul",...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(n.h2,{children:"Einführung in Javascript"}),`
 `,e.jsx(n.p,{children:`Javascript ist eine von sehr vielen Programmiersprachen. Javascript wird in der
 Webentwicklung verwendet, und ist dafür auch optimiert. Javascript kann in jedem
 modernen Webbrowser ausgeführt werden, es muss also nicht zusätzliches
