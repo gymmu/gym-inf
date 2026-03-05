@@ -1,6 +1,5 @@
 import Mermaid from "@components/Mermaid"
-import Section from "@components/Section" 
-
+import Section from "@components/Section"
 
 export default function FmsAlgorithmen() {
   // Einfaches Beispiel: Zahlenprüfung
@@ -61,17 +60,18 @@ flowchart TD
           null ist:
         </p>
         <Mermaid chart={zahlenPruefung} id="zahlen-pruefung" />
-      <p>
-          Wie Sie sehen können, besteht ein Algorithmus immer aus mindestens 2 
-          Teilen. Sie haben ein <strong>Start</strong> und ein <strong>Ende</strong>. 
-          Diese Knoten sind speziell, und können nur einmal vorkommen. Es ist
-          wichtig das ein Algorithmus <strong>endlich</strong> ist. Es muss
-          also einen Weg vom <strong>Start</strong> zum <strong>Ende</strong>
+        <p>
+          Wie Sie sehen können, besteht ein Algorithmus immer aus mindestens 2
+          Teilen. Sie haben ein <strong>Start</strong> und ein{" "}
+          <strong>Ende</strong>. Diese Knoten sind speziell, und können nur
+          einmal vorkommen. Es ist wichtig das ein Algorithmus{" "}
+          <strong>endlich</strong> ist. Es muss also einen Weg vom{" "}
+          <strong>Start</strong> zum <strong>Ende</strong>
           geben, ansonsten zählt es nicht als Algorithmus.
-      </p>
+        </p>
         <p>
           Neben diesen beiden speziellen Knoten, gibt es in einem Flussdiagramm
-          noch 2 weitere Arten von Knoten: <strong>Anweisungen</strong> und 
+          noch 2 weitere Arten von Knoten: <strong>Anweisungen</strong> und
           <strong>Entscheidungen</strong>. Das sind die einzigen Elemente die
           wir in einem Flussdiagramm verwenden werden.
         </p>
@@ -79,15 +79,15 @@ flowchart TD
       <Section>
         <h3>Anweisungen</h3>
         <p>
-          In einem Anweisungsknoten, beschreiben wir was für eine Aktion
-          gemacht werden soll. Beim Programmieren müssen das später Funktionen
-          sein die in der Programmiersprache vorhanden sind, und sie müssen der
-          korrekten Syntax folgen, so wie Sie das eigentlich aus der Mathematik
-          kennen. Hier in den Flussdiagrammen können wir viel flexibler sein,
-          und das ganze in natürlicher Sprache erklären. Dabei muss man aber
-          beachten, das alles was man in einem solchen <strong>Anweisungsknoten</strong>
-          angibt, mit einem eigenen Algorithmus lösbar sein muss. Beispiele
-          dazu werden wir später noch sehen.
+          In einem Anweisungsknoten, beschreiben wir was für eine Aktion gemacht
+          werden soll. Beim Programmieren müssen das später Funktionen sein die
+          in der Programmiersprache vorhanden sind, und sie müssen der korrekten
+          Syntax folgen, so wie Sie das eigentlich aus der Mathematik kennen.
+          Hier in den Flussdiagrammen können wir viel flexibler sein, und das
+          ganze in natürlicher Sprache erklären. Dabei muss man aber beachten,
+          das alles was man in einem solchen <strong>Anweisungsknoten</strong>
+          angibt, mit einem eigenen Algorithmus lösbar sein muss. Beispiele dazu
+          werden wir später noch sehen.
         </p>
         <h3>Entscheidungsknoten</h3>
         <p>
@@ -101,15 +101,286 @@ flowchart TD
       </Section>
       <section>
         <h3>Flussdiagramm - Komplexeres Beispiel</h3>
-        <p>Flussdiagramme können recht schnell gross und auch komplex werden.
+        <p>
+          Flussdiagramme können recht schnell gross und auch komplex werden.
           Wenn Sie ein solches Flussdiagramm ausführen möchten, ist es wichtig
-        dass Sie den genauen Weg durch das Diagramm festhalten, und sich alle
-          Werte die verwendet werden, bei jedem Schritt aufschreiben.</p>
+          dass Sie den genauen Weg durch das Diagramm festhalten, und sich alle
+          Werte die verwendet werden, bei jedem Schritt aufschreiben.
+        </p>
         <p>
           Dieser Algorithmus findet die grösste von 3 Zahlen, wenn Sie diesen
           ausführen, erhalten Sie die folgenden Schritte:
         </p>
-        {/* TODO: schriebe hier die schritte mit den werten auf. */}
+        <h4>Beispiel 1: Drei Zahlen vergleichen (a=5, b=12, c=8)</h4>
+        <table
+          style={{
+            marginBottom: "1.5rem",
+            width: "100%",
+            borderCollapse: "collapse",
+          }}>
+          <thead>
+            <tr>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                Schritt
+              </th>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                Aktion / Bedingung
+              </th>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                a
+              </th>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                b
+              </th>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                c
+              </th>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                max
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>1</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Start
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>-</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>-</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>-</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>-</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>2</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Drei Zahlen eingeben: a, b, c
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>8</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>-</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>3</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                max = a
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>8</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>4</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Ist b {">"} max? → 12 {">"} 5? → Ja
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>8</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                max = b
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>8</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>6</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Ist c {">"} max? → 8 {">"} 12? → Nein
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>8</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>7</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Ausgabe: max
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>8</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>8</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>Ende</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>8</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>12</td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>Beispiel 2: Erste Zahl ist die grösste (a=20, b=15, c=10)</h4>
+        <table
+          style={{
+            marginBottom: "1.5rem",
+            width: "100%",
+            borderCollapse: "collapse",
+          }}>
+          <thead>
+            <tr>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                Schritt
+              </th>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                Aktion / Bedingung
+              </th>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                a
+              </th>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                b
+              </th>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                c
+              </th>
+              <th
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  textAlign: "left",
+                }}>
+                max
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>1</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Start
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>-</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>-</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>-</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>-</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>2</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Drei Zahlen eingeben: a, b, c
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>15</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>10</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>-</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>3</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                max = a
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>15</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>10</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>4</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Ist b {">"} max? → 15 {">"} 20? → Nein
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>15</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>10</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>5</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Ist c {">"} max? → 10 {">"} 20? → Nein
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>15</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>10</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>6</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                Ausgabe: max
+              </td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>15</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>10</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>7</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>Ende</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>15</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>10</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>20</td>
+            </tr>
+          </tbody>
+        </table>
         <Mermaid chart={maximumFinder} id="maximum-finder" />
       </section>
     </>
