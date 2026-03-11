@@ -1,4 +1,5 @@
 import CodeBlock from "@components/CodeBlock"
+import Video from "@components/Video" 
 
 export default function KaplayTeamwork() {
   return (
@@ -21,10 +22,10 @@ export default function KaplayTeamwork() {
         <CodeBlock lang="bash">
           {`
             # Neuen Branch erstellen und wechseln
-            git checkout -b feature/mein-feature
+            git checkout -b mein-feature
 
             # Oder in neueren Git-Versionen:
-            git switch -c feature/mein-feature
+            git switch -c mein-feature
           `}
         </CodeBlock>
         <p>Benennen Sie Ihre Branches sinnvoll, z.B.:</p>
@@ -55,24 +56,18 @@ export default function KaplayTeamwork() {
             git commit -m "Add player jump functionality"
 
             # Auf GitHub hochladen
-            git push origin feature/mein-feature
+            git push origin mein-feature
           `}
         </CodeBlock>
       </section>
       <section>
-        <h3>Pull Requests</h3>
+        <h2>Video zu Git Branches</h2>
         <p>
-          Wenn Ihr Feature fertig ist, erstellen Sie einen Pull Request auf
-          GitHub. So können Ihre Teammitglieder Ihren Code überprüfen, bevor er
-          in den Hauptbranch (main) übernommen wird.
+          Das Video zeigt Ihnen wie Sie in VSCode mit einer grafischen 
+          Oberfläche mit Git arbeiten können, und erklärt Ihnen auch nochmals
+          alle wichtigen Konzepte.
         </p>
-        <ol>
-          <li>Gehen Sie zu Ihrem Repository auf GitHub</li>
-          <li>Klicken Sie auf "Pull requests" und dann "New pull request"</li>
-          <li>Wählen Sie Ihren Branch aus</li>
-          <li>Beschreiben Sie Ihre Änderungen</li>
-          <li>Bitten Sie Teammitglieder um Review</li>
-        </ol>
+        <Video url="ReuQ_Rrf7Aw" />
       </section>
       <section>
         <h3>Änderungen von anderen holen</h3>
@@ -89,7 +84,7 @@ export default function KaplayTeamwork() {
             git pull origin main
 
             # Zurück zu Ihrem Feature-Branch
-            git checkout feature/mein-feature
+            git checkout mein-feature
 
             # Hauptbranch in Ihren Branch mergen
             git merge main
@@ -107,12 +102,12 @@ export default function KaplayTeamwork() {
         </ul>
       </section>
       <section>
-        <h2>Video</h2>
+        <h2>Video zu Git Merges</h2>
         <p>
-          Dieses Video zeigt Ihnen wie Sie mit Git im Team arbeiten und welche
-          Workflows sich bewährt haben.
+          Dieses Video zeigt Ihnen wie Sie die Änderungen von anderen erhalten
+          können, und was Sie machen wenn es Konflikte gibt.
         </p>
-        {/* TODO: Add Video */}
+        <Video url="tVWaWF6xW4U" />
       </section>
     </>
   )
