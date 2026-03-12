@@ -97,16 +97,23 @@ export default function MermaidWithHighlight({
 
   // Apply highlighting when highlightNode changes
   useEffect(() => {
-    if (!svgReady || !containerRef.current || !highlightNode) return
+    if (!svgReady || !containerRef.current) return
 
     const svg = containerRef.current.querySelector("svg")
     if (!svg) return
 
     // Remove previous overlays
     svg.querySelectorAll("[data-overlay='true']").forEach(el => el.remove())
+    
+    // If no highlightNode, just clear and return
+    if (!highlightNode) return
+    
+    console.log("🔍 Highlighting node:", highlightNode)
 
     // Find foreignObjects
     const allForeignObjects = svg.querySelectorAll("foreignObject")
+    
+    console.log("📊 Total foreignObjects found:", allForeignObjects.length)
     
     // First pass: find ALL potential matches
     const potentialMatches = []
@@ -132,12 +139,16 @@ export default function MermaidWithHighlight({
           contentNorm === highlightNorm ||
           content.replace(/\s+/g, ' ').trim() === highlightNode) {
         potentialMatches.push({ fo, content, index })
+        console.log("✅ Match found:", content)
       }
     })
+    
+    console.log("🎯 Total matches:", potentialMatches.length)
     
     // Use only the FIRST match
     if (potentialMatches.length > 0) {
       const { fo } = potentialMatches[0]
+      console.log("🎨 Creating highlight overlay for first match")
       
       // Found match, find parent shapes
       let parent = fo.parentElement
@@ -336,28 +347,7 @@ export default function MermaidWithHighlight({
         </div>
       </div>
 
-      {/* Instructions - Kompakter unten */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "8px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          gap: "10px",
-          zIndex: 10,
-          backgroundColor: "rgba(60, 56, 54, 0.95)",
-          padding: "6px 12px",
-          borderRadius: "6px",
-          border: "1px solid var(--color-gray)",
-          fontSize: "11px",
-          color: "var(--color-gray-light)",
-          whiteSpace: "nowrap",
-        }}>
-        <span>Strg+Scroll = Zoom</span>
-        <span style={{ opacity: 0.5 }}>|</span>
-        <span>Ziehen = Verschieben</span>
-      </div>
+
 
       <div
         ref={containerRef}

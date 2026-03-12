@@ -41,26 +41,60 @@ export default function SimpleSplitView({
     })
   }, [])
 
-  // Listen to frame updates
+  // Listen to frame updates - use both frameupdate and timeupdate for reliability
   useEffect(() => {
-    const { current } = playerRef
-    if (!current) return
-
-    const onFrameUpdate = (event) => {
-      const frame = event.detail.frame
-      setCurrentFrame(frame)
-      const step = Math.floor(frame / framesPerStep)
-      setCurrentStep(step)
+    if (!PlayerComponent) {
+      console.log("⚠️ Player component not loaded yet")
+      return
     }
 
-    current.addEventListener("frameupdate", onFrameUpdate)
-    return () => current.removeEventListener("frameupdate", onFrameUpdate)
-  }, [framesPerStep])
+    let cleanupFn = null
+
+    // Small delay to ensure player is mounted
+    const timeoutId = setTimeout(() => {
+      const { current } = playerRef
+      if (!current) {
+        console.log("⚠️ Player ref not ready yet")
+        return
+      }
+
+      console.log("✅ Setting up frame listeners")
+
+      const onFrameUpdate = (event) => {
+        const frame = event.detail.frame
+        setCurrentFrame(frame)
+        const step = Math.floor(frame / framesPerStep)
+        setCurrentStep(step)
+        console.log("📹 Frame:", frame, "=> Step:", step)
+      }
+
+      // Use both events for better compatibility
+      current.addEventListener("frameupdate", onFrameUpdate)
+      current.addEventListener("timeupdate", onFrameUpdate)
+      console.log("✅ Frame update listeners registered on player")
+      
+      // Store cleanup function
+      cleanupFn = () => {
+        current.removeEventListener("frameupdate", onFrameUpdate)
+        current.removeEventListener("timeupdate", onFrameUpdate)
+        console.log("❌ Frame update listeners removed")
+      }
+    }, 100)
+    
+    return () => {
+      clearTimeout(timeoutId)
+      if (cleanupFn) {
+        cleanupFn()
+      }
+    }
+  }, [framesPerStep, PlayerComponent])
 
   const currentDescription =
     stepDescriptions[currentStep] || "Algorithmus läuft..."
   
   const currentNodeId = getNodeId ? getNodeId(currentStep) : null
+  
+  console.log("🎯 Current step:", currentStep, "NodeId:", currentNodeId)
 
   // Manual step controls
   const goToStep = (step) => {
@@ -75,6 +109,31 @@ export default function SimpleSplitView({
   const nextStep = () => goToStep(currentStep + 1)
   const prevStep = () => goToStep(currentStep - 1)
   const reset = () => goToStep(0)
+  
+  const [isPlaying, setIsPlaying] = useState(false)
+  
+  const togglePlayPause = () => {
+    if (playerRef.current) {
+      playerRef.current.toggle()
+    }
+  }
+  
+  // Listen to play/pause events
+  useEffect(() => {
+    const { current } = playerRef
+    if (!current) return
+    
+    const onPlay = () => setIsPlaying(true)
+    const onPause = () => setIsPlaying(false)
+    
+    current.addEventListener("play", onPlay)
+    current.addEventListener("pause", onPause)
+    
+    return () => {
+      current.removeEventListener("play", onPlay)
+      current.removeEventListener("pause", onPause)
+    }
+  }, [PlayerComponent])
 
   // Show loading state until client-side components are loaded
   if (!isClient || !MermaidComponent || !PlayerComponent) {
@@ -127,6 +186,11 @@ export default function SimpleSplitView({
         <div className={style.animationSide}>
           <h3 className={style.sideTitle}>Visualisierung</h3>
           <div className={style.playerContainer}>
+            {/* Schritt-Anzeige innerhalb des Containers */}
+            <div className={style.stepInfo}>
+              Schritt {currentStep + 1} von {totalSteps}
+            </div>
+            
             <PlayerComponent
               ref={playerRef}
               component={component}
@@ -141,16 +205,16 @@ export default function SimpleSplitView({
               playbackRate={1.0}
               showVolumeControls={false}
             />
-          </div>
-          
-          {/* Schritt-Beschreibung direkt unter dem Player */}
-          <div className={style.stepDescription}>
-            <strong>Aktueller Schritt:</strong> {currentDescription}
+            
+            {/* Schritt-Beschreibung direkt unter dem Player */}
+            <div className={style.stepDescription}>
+              <strong>Aktueller Schritt:</strong> {currentDescription}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Schritt-Anzeige mit Stepper-Controls */}
+      {/* Stepper-Controls */}
       <div className={style.stepControls}>
         <button 
           onClick={reset} 
@@ -164,9 +228,12 @@ export default function SimpleSplitView({
           className={style.controlButton}>
           ◀ Zurück
         </button>
-        <div className={style.stepInfo}>
-          Schritt {currentStep + 1} von {totalSteps}
-        </div>
+        <button 
+          onClick={togglePlayPause}
+          className={style.controlButton}
+          style={{ backgroundColor: isPlaying ? "var(--color-red)" : "var(--color-green)" }}>
+          {isPlaying ? "⏸ Pause" : "▶ Play"}
+        </button>
         <button 
           onClick={nextStep} 
           disabled={currentStep === totalSteps - 1}
