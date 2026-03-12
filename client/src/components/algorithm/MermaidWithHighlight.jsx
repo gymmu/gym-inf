@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import mermaid from "mermaid"
 import styles from "./MermaidDark.module.css"
 
 export default function MermaidWithHighlight({
@@ -15,19 +16,47 @@ export default function MermaidWithHighlight({
 
   // Render Mermaid once
   useEffect(() => {
-    if (!chart || !containerRef.current || typeof window === "undefined") return
+    if (!chart || !containerRef.current) return
 
     const renderChart = async () => {
       try {
-        const mermaid = window.mermaid
-        if (!mermaid) {
-          setTimeout(renderChart, 100)
-          return
-        }
+        // Use window.mermaid (CDN in production) or imported mermaid (dev)
+        const mermaidInstance = (typeof window !== "undefined" && window.mermaid) || mermaid
+        
+        // Initialize mermaid with Gruvbox dark theme
+        mermaidInstance.initialize({
+          startOnLoad: false,
+          theme: "base",
+          themeVariables: {
+            primaryColor: "#3c3836",
+            primaryTextColor: "#ebdbb2",
+            primaryBorderColor: "#83a598",
+            lineColor: "#fabd2f",
+            secondaryColor: "#504945",
+            tertiaryColor: "#665c54",
+            textColor: "#ebdbb2",
+            fontSize: "20px",
+            fontFamily: '"Kalam", "Comic Sans MS", cursive',
+            nodeBorder: "#83a598",
+            mainBkg: "#3c3836",
+            nodeTextColor: "#ebdbb2",
+            arrowheadColor: "#fabd2f",
+            edgeLabelBackground: "#282828",
+            clusterBkg: "#504945",
+            clusterBorder: "#83a598",
+          },
+          securityLevel: "loose",
+          flowchart: {
+            htmlLabels: true,
+            useMaxWidth: true,
+            curve: "basis",
+          },
+          look: "handDrawn",
+        })
         
         const uniqueId = id || `mermaid-${Date.now()}`
         
-        const { svg } = await mermaid.render(uniqueId, chart)
+        const { svg } = await mermaidInstance.render(uniqueId, chart)
         
         // Inject CSS for highlighting and fonts
         const styleTag = `<style>
