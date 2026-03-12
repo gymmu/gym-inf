@@ -11,6 +11,15 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet" />
+    <!-- Load Mermaid from CDN to avoid bundling issues -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+    <script>
+      // Wait for mermaid to be available globally
+      if (typeof mermaid !== 'undefined') {
+        window.mermaid = mermaid;
+        console.log('Mermaid loaded from CDN');
+      }
+    </script>
     <script type="text/javascript">
       ;(function (l) {
         if (l.search[1] === "/") {

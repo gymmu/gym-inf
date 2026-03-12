@@ -1,41 +1,56 @@
 import { useEffect, useRef, useState } from "react"
-import mermaid from "mermaid"
 import styles from "./Mermaid.module.css"
 
-// Initialize mermaid with XKCD-style theme (Dark Mode)
-mermaid.initialize({
-  startOnLoad: false,
-  theme: "base",
-  themeVariables: {
-    // Dark theme colors (Gruvbox palette)
-    primaryColor: "#3c3836",
-    primaryTextColor: "#ebdbb2",
-    primaryBorderColor: "#83a598",
-    lineColor: "#fabd2f",
-    secondaryColor: "#504945",
-    tertiaryColor: "#665c54",
-    textColor: "#ebdbb2",
-    fontSize: "18px",
-    fontFamily: '"Kalam", "Comic Sans MS", cursive',
-    nodeBorder: "#83a598",
-    mainBkg: "#3c3836",
-    nodeTextColor: "#ebdbb2",
-    arrowheadColor: "#fabd2f",
-    edgeLabelBackground: "#282828",
-    clusterBkg: "#504945",
-    clusterBorder: "#83a598",
-  },
-  securityLevel: "loose",
-  flowchart: {
-    useMaxWidth: true,
-    htmlLabels: true,
-    curve: "basis",
-    padding: 15,
-    rankSpacing: 30,
-    nodeSpacing: 40,
-  },
-  look: "handDrawn",
-})
+// Get mermaid from window (loaded via CDN in index.html)
+const getMermaid = () => {
+  if (typeof window !== "undefined" && window.mermaid) {
+    return window.mermaid
+  }
+  return null
+}
+
+// Initialize mermaid once
+let initialized = false
+const initializeMermaid = () => {
+  if (initialized) return
+  const mermaid = getMermaid()
+  if (!mermaid) return
+  
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: "base",
+    themeVariables: {
+      // Dark theme colors (Gruvbox palette)
+      primaryColor: "#3c3836",
+      primaryTextColor: "#ebdbb2",
+      primaryBorderColor: "#83a598",
+      lineColor: "#fabd2f",
+      secondaryColor: "#504945",
+      tertiaryColor: "#665c54",
+      textColor: "#ebdbb2",
+      fontSize: "18px",
+      fontFamily: '"Kalam", "Comic Sans MS", cursive',
+      nodeBorder: "#83a598",
+      mainBkg: "#3c3836",
+      nodeTextColor: "#ebdbb2",
+      arrowheadColor: "#fabd2f",
+      edgeLabelBackground: "#282828",
+      clusterBkg: "#504945",
+      clusterBorder: "#83a598",
+    },
+    securityLevel: "loose",
+    flowchart: {
+      useMaxWidth: true,
+      htmlLabels: true,
+      curve: "basis",
+      padding: 15,
+      rankSpacing: 30,
+      nodeSpacing: 40,
+    },
+    look: "handDrawn",
+  })
+  initialized = true
+}
 
 export default function Mermaid({ chart, id }) {
   const containerRef = useRef(null)
@@ -47,6 +62,15 @@ export default function Mermaid({ chart, id }) {
 
     const renderChart = async () => {
       try {
+        const mermaid = getMermaid()
+        if (!mermaid) {
+          setError("Mermaid lädt noch...")
+          setTimeout(renderChart, 100)
+          return
+        }
+        
+        initializeMermaid()
+        
         const uniqueId =
           id || `mermaid-${Math.random().toString(36).substr(2, 9)}`
 

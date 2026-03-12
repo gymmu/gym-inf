@@ -27,12 +27,23 @@ function mockBrowserLibsForSSR() {
         if (id === "react-x-mermaid") {
           return generateAlias("src/mocks/react-x-mermaid.jsx")
         }
-        // Mock our custom Mermaid component
+        // Mock our custom Mermaid components
         if (
           id.endsWith("components/Mermaid") ||
-          id.endsWith("components/Mermaid.jsx")
+          id.endsWith("components/Mermaid.jsx") ||
+          id.includes("components/algorithm/MermaidWithHighlight") ||
+          id.includes("components/algorithm/MermaidDark") ||
+          id.includes("components/algorithm/MermaidWithNodes") ||
+          id.includes("components/algorithm/MermaidHighlightable")
         ) {
           return generateAlias("src/mocks/Mermaid.jsx")
+        }
+        // Mock Remotion packages (browser-only)
+        if (id === "remotion" || id.includes("@remotion")) {
+          if (id.includes("@remotion/player")) {
+            return generateAlias("src/mocks/remotion-player.jsx")
+          }
+          return generateAlias("src/mocks/remotion.jsx")
         }
       }
       return null
@@ -103,10 +114,16 @@ export default defineConfig({
       "@quizzes": generateAlias("src/data/quizzes"),
     },
     extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".mdx"],
+    dedupe: ["react", "react-dom"],
+  },
+  optimizeDeps: {
+    exclude: ["mermaid"],
   },
   build: {
     outDir: "docs",
+    minify: "esbuild",
     rollupOptions: {
+      external: ["mermaid"],
       output: {
         manualChunks(id) {
           // Separate large dependencies into their own chunks
@@ -116,12 +133,20 @@ export default defineConfig({
             if (id.includes("react-dom")) {
               return "react-vendor"
             }
-            if (id.includes("react") && !id.includes("react-router")) {
+            if (id.includes("react") && !id.includes("react-router") && !id.includes("remotion")) {
               return "react-vendor"
             }
             // React Router - comes after React check
             if (id.includes("react-router")) {
               return "react-vendor"
+            }
+            // Remotion - separate chunk
+            if (id.includes("remotion") || id.includes("@remotion")) {
+              return "remotion"
+            }
+            // Skip mermaid - loaded via CDN
+            if (id.includes("mermaid")) {
+              return null
             }
             // Monaco Editor is very large (~800KB)
             if (id.includes("monaco-editor")) {
@@ -180,15 +205,15 @@ export default defineConfig({
       "reveal.js", // Presentation library is browser-only
       "mermaid", // Mermaid requires browser APIs
       "react-x-mermaid", // Mermaid wrapper is browser-only
+      "@remotion/player", // Remotion Player is browser-only
+      "@remotion/cli",
+      "remotion",
     ],
   },
-  // SSG-specific options
-  ssgOptions: {
-    script: "async",
-    formatting: "minify",
-    mock: true, // Mock browser globals during SSG
-    onBeforePageRender(route, appCtx) {
-      // Optional: Custom logic before rendering each page
-    },
-  },
+  // SSG-specific options - Disabled for SPA mode
+  // ssgOptions: {
+  //   script: "async",
+  //   formatting: "minify",
+  //   mock: true,
+  // },
 })

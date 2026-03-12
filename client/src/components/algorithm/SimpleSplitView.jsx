@@ -1,6 +1,4 @@
-import { Player } from "@remotion/player"
 import { useState, useEffect, useRef } from "react"
-import MermaidWithHighlight from "@components/algorithm/MermaidWithHighlight"
 import style from "./SimpleSplitView.module.css"
 
 export default function SimpleSplitView({
@@ -17,9 +15,37 @@ export default function SimpleSplitView({
 }) {
   const [currentStep, setCurrentStep] = useState(0)
   const [currentFrame, setCurrentFrame] = useState(0)
+  const [isClient, setIsClient] = useState(typeof window !== "undefined")
+  const [MermaidComponent, setMermaidComponent] = useState(null)
+  const [PlayerComponent, setPlayerComponent] = useState(null)
   const playerRef = useRef(null)
-  const framesPerStep = fps * 1.5 // 1.5 Sekunden pro Schritt (vorher 0.5 Sekunden)
+  const framesPerStep = fps * 1.5 // 1.5 Sekunden pro Schritt
   const durationInFrames = totalSteps * framesPerStep
+
+  // Load components only in browser
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    
+    setIsClient(true)
+    
+    // Use simple Mermaid component (without highlighting) for production
+    // This avoids the bundling issues with MermaidWithHighlight
+    Promise.all([
+      import("@components/Mermaid"),
+      import("@remotion/player")
+    ]).then(([mermaidMod, playerMod]) => {
+      // Wrapper for Mermaid to match API (ignore highlightNode for now)
+      setMermaidComponent(() => {
+        return function MermaidWrapper({ chart, id }) {
+          const Mermaid = mermaidMod.default
+          return <Mermaid chart={chart} id={id} />
+        }
+      })
+      setPlayerComponent(() => playerMod.Player)
+    }).catch(err => {
+      console.error("Failed to load components:", err)
+    })
+  }, [])
 
   // Listen to frame updates
   useEffect(() => {
@@ -56,6 +82,38 @@ export default function SimpleSplitView({
   const prevStep = () => goToStep(currentStep - 1)
   const reset = () => goToStep(0)
 
+  // Show loading state until client-side components are loaded
+  if (!isClient || !MermaidComponent || !PlayerComponent) {
+    return (
+      <div className={style.container}>
+        <div className={style.splitView}>
+          <div className={style.flowchartSide}>
+            <h3 className={style.sideTitle}>Flussdiagramm</h3>
+            <div className={style.flowchartContainer}>
+              <div style={{ padding: "40px", textAlign: "center", color: "var(--color-gray)" }}>
+                Lade Diagramm...
+              </div>
+            </div>
+          </div>
+          <div className={style.animationSide}>
+            <h3 className={style.sideTitle}>Visualisierung</h3>
+            <div className={style.playerContainer}>
+              <div style={{ padding: "40px", textAlign: "center", color: "var(--color-gray)" }}>
+                Lade Animation...
+              </div>
+            </div>
+            <div className={style.stepDescription}>
+              <strong>Aktueller Schritt:</strong> Lädt...
+            </div>
+          </div>
+        </div>
+        <div className={style.stepInfo}>
+          Schritt 1 von {totalSteps}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className={style.container}>
       <div className={style.splitView}>
@@ -63,7 +121,7 @@ export default function SimpleSplitView({
         <div className={style.flowchartSide}>
           <h3 className={style.sideTitle}>Flussdiagramm</h3>
           <div className={style.flowchartContainer}>
-            <MermaidWithHighlight 
+            <MermaidComponent 
               chart={flowchart} 
               id={flowchartId}
               highlightNode={currentNodeId}
@@ -75,7 +133,7 @@ export default function SimpleSplitView({
         <div className={style.animationSide}>
           <h3 className={style.sideTitle}>Visualisierung</h3>
           <div className={style.playerContainer}>
-            <Player
+            <PlayerComponent
               ref={playerRef}
               component={component}
               inputProps={inputProps}

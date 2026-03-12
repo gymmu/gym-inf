@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react"
-import mermaid from "mermaid"
 
 export default function MermaidTest() {
   const [highlightTarget, setHighlightTarget] = useState(null)
   const containerRef = useRef(null)
   const [svgReady, setSvgReady] = useState(false)
+  const [mermaidReady, setMermaidReady] = useState(false)
 
   const testChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -17,13 +17,28 @@ flowchart TD
     Action2 --> End
   `
 
+  // Wait for window.mermaid to be available
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.mermaid) {
+      setMermaidReady(true)
+    } else {
+      const checkMermaid = setInterval(() => {
+        if (typeof window !== "undefined" && window.mermaid) {
+          setMermaidReady(true)
+          clearInterval(checkMermaid)
+        }
+      }, 100)
+      return () => clearInterval(checkMermaid)
+    }
+  }, [])
+
   // Render Mermaid
   useEffect(() => {
-    if (!containerRef.current) return
+    if (!containerRef.current || !mermaidReady || !window.mermaid) return
 
     const renderChart = async () => {
       try {
-        mermaid.initialize({
+        window.mermaid.initialize({
           startOnLoad: false,
           theme: "dark",
           securityLevel: "loose",
@@ -32,7 +47,7 @@ flowchart TD
           },
         })
 
-        const { svg } = await mermaid.render("test-chart", testChart)
+        const { svg } = await window.mermaid.render("test-chart", testChart)
         
         // Inject custom CSS directly into SVG
         const styleTag = `<style>
@@ -66,7 +81,7 @@ flowchart TD
     }
 
     renderChart()
-  }, [])
+  }, [mermaidReady])
 
   // Apply highlighting
   const highlightNode = (nodeName) => {

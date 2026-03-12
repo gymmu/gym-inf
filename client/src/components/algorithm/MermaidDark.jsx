@@ -1,63 +1,72 @@
 import { useEffect, useRef, useState } from "react"
-import mermaid from "mermaid"
 import styles from "./MermaidDark.module.css"
-
-// Separate mermaid instance for algorithm visualizations
-const algorithmMermaid = mermaid.mermaidAPI
-
-// Initialize with dark theme optimized for algorithms
-algorithmMermaid.initialize({
-  startOnLoad: false,
-  theme: "base",
-  themeVariables: {
-    // Dark theme colors (Gruvbox palette)
-    primaryColor: "#3c3836",
-    primaryTextColor: "#ebdbb2",
-    primaryBorderColor: "#83a598",
-    lineColor: "#fabd2f",
-    secondaryColor: "#504945",
-    tertiaryColor: "#665c54",
-    textColor: "#ebdbb2",
-    fontSize: "18px",
-    fontFamily: '"Kalam", "Comic Sans MS", cursive',
-    nodeBorder: "#83a598",
-    mainBkg: "#3c3836",
-    nodeTextColor: "#ebdbb2",
-    arrowheadColor: "#fabd2f",
-    edgeLabelBackground: "#282828",
-    clusterBkg: "#504945",
-    clusterBorder: "#83a598",
-  },
-  securityLevel: "loose",
-  flowchart: {
-    useMaxWidth: true,
-    htmlLabels: true,
-    curve: "basis",
-    padding: 15,
-    rankSpacing: 30,
-    nodeSpacing: 40,
-  },
-  look: "handDrawn",
-})
 
 export default function MermaidDark({ chart, id, highlightNode = null }) {
   const containerRef = useRef(null)
   const [svg, setSvg] = useState("")
   const [error, setError] = useState(null)
+  const [mermaidReady, setMermaidReady] = useState(false)
+
+  // Wait for window.mermaid
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.mermaid) {
+      setMermaidReady(true)
+    } else {
+      const checkMermaid = setInterval(() => {
+        if (typeof window !== "undefined" && window.mermaid) {
+          setMermaidReady(true)
+          clearInterval(checkMermaid)
+        }
+      }, 100)
+      return () => clearInterval(checkMermaid)
+    }
+  }, [])
 
   useEffect(() => {
-    if (!chart) return
+    if (!chart || !mermaidReady || !window.mermaid) return
 
     const renderChart = async () => {
       try {
+        window.mermaid.initialize({
+          startOnLoad: false,
+          theme: "base",
+          themeVariables: {
+            primaryColor: "#3c3836",
+            primaryTextColor: "#ebdbb2",
+            primaryBorderColor: "#83a598",
+            lineColor: "#fabd2f",
+            secondaryColor: "#504945",
+            tertiaryColor: "#665c54",
+            textColor: "#ebdbb2",
+            fontSize: "18px",
+            fontFamily: '"Kalam", "Comic Sans MS", cursive',
+            nodeBorder: "#83a598",
+            mainBkg: "#3c3836",
+            nodeTextColor: "#ebdbb2",
+            arrowheadColor: "#fabd2f",
+            edgeLabelBackground: "#282828",
+            clusterBkg: "#504945",
+            clusterBorder: "#83a598",
+          },
+          securityLevel: "loose",
+          flowchart: {
+            useMaxWidth: true,
+            htmlLabels: true,
+            curve: "basis",
+            padding: 15,
+            rankSpacing: 30,
+            nodeSpacing: 40,
+          },
+          look: "handDrawn",
+        })
+
         const uniqueId =
           id || `mermaid-dark-${Math.random().toString(36).substr(2, 9)}`
 
         setSvg("")
         setError(null)
 
-        // Render the mermaid chart
-        const { svg: renderedSvg } = await algorithmMermaid.render(
+        const { svg: renderedSvg } = await window.mermaid.render(
           uniqueId,
           chart,
         )
@@ -87,7 +96,7 @@ export default function MermaidDark({ chart, id, highlightNode = null }) {
     }
 
     renderChart()
-  }, [chart, id])
+  }, [chart, id, mermaidReady])
 
   // Apply highlighting when highlightNode changes
   useEffect(() => {

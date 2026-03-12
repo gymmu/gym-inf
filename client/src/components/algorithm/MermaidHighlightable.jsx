@@ -1,22 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import mermaid from "mermaid"
 import styles from "./MermaidHighlightable.module.css"
-
-// Simple mermaid config without handDrawn
-mermaid.initialize({
-  startOnLoad: false,
-  theme: "dark",
-  themeVariables: {
-    fontSize: "18px",
-    fontFamily: '"Kalam", "Comic Sans MS", cursive',
-  },
-  securityLevel: "loose",
-  flowchart: {
-    useMaxWidth: true,
-    htmlLabels: false, // Use SVG text instead of HTML
-    curve: "basis",
-  },
-})
 
 export default function MermaidHighlightable({
   chart,
@@ -25,15 +8,46 @@ export default function MermaidHighlightable({
 }) {
   const containerRef = useRef(null)
   const [isReady, setIsReady] = useState(false)
+  const [mermaidReady, setMermaidReady] = useState(false)
+
+  // Wait for window.mermaid
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.mermaid) {
+      setMermaidReady(true)
+    } else {
+      const checkMermaid = setInterval(() => {
+        if (typeof window !== "undefined" && window.mermaid) {
+          setMermaidReady(true)
+          clearInterval(checkMermaid)
+        }
+      }, 100)
+      return () => clearInterval(checkMermaid)
+    }
+  }, [])
 
   // Render chart once
   useEffect(() => {
-    if (!chart || !containerRef.current) return
+    if (!chart || !containerRef.current || !mermaidReady || !window.mermaid) return
 
     const renderChart = async () => {
       try {
+        window.mermaid.initialize({
+          startOnLoad: false,
+          theme: "dark",
+          themeVariables: {
+            fontSize: "18px",
+            fontFamily: '"Kalam", "Comic Sans MS", cursive',
+          },
+          securityLevel: "loose",
+          flowchart: {
+            useMaxWidth: true,
+            htmlLabels: false,
+            curve: "basis",
+          },
+        })
+
         const uniqueId = id || `mermaid-${Date.now()}`
-        const { svg } = await mermaid.render(uniqueId, chart)
+        const { svg } = await window.mermaid.render(uniqueId, chart)
         
         containerRef.current.innerHTML = svg
         setIsReady(true)
@@ -44,7 +58,7 @@ export default function MermaidHighlightable({
     }
 
     renderChart()
-  }, [chart, id])
+  }, [chart, id, mermaidReady])
 
   // Apply highlighting when node changes
   useEffect(() => {
