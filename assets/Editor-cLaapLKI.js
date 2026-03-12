@@ -1,0 +1,1 @@
+import{j as e,d as i}from"./react-vendor-B6C3K7RQ.js";import{s as o}from"./CodePen.module-BfICubSo.js";function h(a){const{title:s,language:t,value:n,handleChange:r}=a;return e.jsxs("div",{className:o.editorWrapper,children:[e.jsx("h2",{children:s}),e.jsx(i,{defaultLanguage:t,value:n,theme:"vs-dark",onChange:r,height:"300px",options:{minimap:{enabled:!1}}})]})}export{h as E};

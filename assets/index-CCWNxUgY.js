@@ -1,0 +1,2 @@
+import{j as e}from"./react-vendor-B6C3K7RQ.js";import"./vendor-DID4YVBO.js";import"./monaco-B8ymEbop.js";function o(n){const t={h2:"h2",p:"p",...n.components};return e.jsxs(e.Fragment,{children:[e.jsx(t.h2,{children:"FMS Theorie"}),`
+`,e.jsx(t.p,{children:"Theorie für die FMS."})]})}function s(n={}){const{wrapper:t}=n.components||{};return t?e.jsx(t,{...n,children:e.jsx(o,{...n})}):o(n)}export{s as default};
