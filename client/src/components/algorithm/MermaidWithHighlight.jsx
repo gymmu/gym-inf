@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react"
-import mermaid from "mermaid"
 import styles from "./MermaidDark.module.css"
 
 export default function MermaidWithHighlight({
@@ -20,8 +19,14 @@ export default function MermaidWithHighlight({
 
     const renderChart = async () => {
       try {
-        // Use window.mermaid (CDN in production) or imported mermaid (dev)
-        const mermaidInstance = (typeof window !== "undefined" && window.mermaid) || mermaid
+        // Use window.mermaid (CDN)
+        const mermaidInstance = typeof window !== "undefined" && window.mermaid
+        
+        if (!mermaidInstance) {
+          // Wait for mermaid to load from CDN
+          setTimeout(renderChart, 100)
+          return
+        }
         
         // Initialize mermaid with Gruvbox dark theme
         mermaidInstance.initialize({

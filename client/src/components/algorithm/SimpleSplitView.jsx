@@ -28,19 +28,13 @@ export default function SimpleSplitView({
     
     setIsClient(true)
     
-    // Use simple Mermaid component (without highlighting) for production
-    // This avoids the bundling issues with MermaidWithHighlight
+    // Use MermaidWithHighlight component which supports highlightNode prop and has zoom/pan
     Promise.all([
-      import("@components/Mermaid"),
+      import("@components/algorithm/MermaidWithHighlight"),
       import("@remotion/player")
     ]).then(([mermaidMod, playerMod]) => {
-      // Wrapper for Mermaid to match API (ignore highlightNode for now)
-      setMermaidComponent(() => {
-        return function MermaidWrapper({ chart, id }) {
-          const Mermaid = mermaidMod.default
-          return <Mermaid chart={chart} id={id} />
-        }
-      })
+      // Use MermaidWithHighlight directly - it supports highlightNode, zoom, and pan
+      setMermaidComponent(() => mermaidMod.default)
       setPlayerComponent(() => playerMod.Player)
     }).catch(err => {
       console.error("Failed to load components:", err)
