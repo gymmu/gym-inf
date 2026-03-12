@@ -1,22 +1,19 @@
-/* XKCD-style hand-drawn look for Mermaid diagrams */
+/* XKCD-style hand-drawn look for Mermaid diagrams (Dark Mode) */
 .mermaidContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: var(--color-bg);
   padding: 20px;
   border-radius: 8px;
+  border: 1px solid var(--color-gray);
 }
 
 /* Force Kalam on the entire SVG */
 .mermaidContainer :global(svg) {
   font-family: "Kalam", "Comic Sans MS", cursive !important;
-}
-
-/* Force Comic Sans on the entire SVG */
-.mermaidContainer :global(svg) {
-  font-family:
-    "Comic Sans MS", "Chalkboard SE", "Comic Neue", cursive !important;
+  background-color: transparent !important;
+  color-scheme: dark !important;
 }
 
 /* Add hand-drawn effect to SVG elements */
@@ -25,30 +22,30 @@
   filter: url(#rough-paper);
 }
 
-/* Style the flowchart elements with XKCD-like appearance */
+/* Style the flowchart elements with XKCD-like appearance (Dark Mode) */
 .mermaidContainer :global(.node rect),
 .mermaidContainer :global(.node circle),
 .mermaidContainer :global(.node ellipse),
 .mermaidContainer :global(.node polygon),
 .mermaidContainer :global(.node path) {
   stroke-width: 2.5px !important;
-  stroke: #333 !important;
-  fill: #fff !important;
+  stroke: var(--color-blue) !important;
+  fill: var(--color-bg-light) !important;
 }
 
 /* Style edges (arrows) */
 .mermaidContainer :global(.edgePath path) {
-  stroke: #333 !important;
+  stroke: var(--color-yellow) !important;
   stroke-width: 2.5px !important;
 }
 
 /* Arrow heads */
 .mermaidContainer :global(.arrowheadPath) {
-  fill: #333 !important;
-  stroke: #333 !important;
+  fill: var(--color-yellow) !important;
+  stroke: var(--color-yellow) !important;
 }
 
-/* Text labels - Force Kalam everywhere */
+/* Text labels - Force Kalam everywhere with light text */
 .mermaidContainer :global(.nodeLabel),
 .mermaidContainer :global(.edgeLabel),
 .mermaidContainer :global(text),
@@ -56,28 +53,35 @@
 .mermaidContainer :global(.label) {
   font-family: "Kalam", "Comic Sans MS", cursive !important;
   font-size: 18px !important;
-  color: #333 !important;
-  fill: #333 !important;
+  color: var(--color-fg) !important;
+  fill: var(--color-fg) !important;
 }
 
 /* Edge labels background */
 .mermaidContainer :global(.edgeLabel rect) {
-  fill: #fff !important;
+  fill: var(--color-bg) !important;
   stroke: none !important;
 }
 
-/* Decision nodes (diamonds) - highlight with slight color */
+/* Decision nodes (diamonds) - highlight with green border */
 .mermaidContainer :global(.node.decision polygon) {
-  fill: #f9f9f9 !important;
+  stroke: var(--color-green) !important;
+  fill: var(--color-bg-light) !important;
 }
 
-/* Error display */
+/* Start/End nodes (ovals) - highlight with purple border */
+.mermaidContainer :global(.node ellipse),
+.mermaidContainer :global(.node circle) {
+  stroke: var(--color-purple) !important;
+}
+
+/* Error display (Dark Mode) */
 .errorContainer {
-  color: #d32f2f;
+  color: var(--color-red);
   padding: 1em;
-  border: 2px solid #d32f2f;
+  border: 2px solid var(--color-red);
   border-radius: 8px;
-  background-color: #ffebee;
+  background-color: rgba(251, 73, 52, 0.15);
 }
 
 .errorContainer strong {

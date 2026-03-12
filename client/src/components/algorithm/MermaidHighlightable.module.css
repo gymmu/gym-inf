@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+}
+
+.container svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Simple highlighting without complex selectors */
+.container [data-highlight="true"] {
+  stroke: red !important;
+  stroke-width: 8px !important;
+  fill: yellow !important;
+  animation: blink 1s ease-in-out infinite !important;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

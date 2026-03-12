@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import mermaid from "mermaid"
-import styles from "./Mermaid.module.css"
+import styles from "./MermaidDark.module.css"
 
-// Initialize mermaid with XKCD-style theme (Dark Mode)
-mermaid.initialize({
+// Separate mermaid instance for algorithm visualizations
+const algorithmMermaid = mermaid.mermaidAPI
+
+// Initialize with dark theme optimized for algorithms
+algorithmMermaid.initialize({
   startOnLoad: false,
   theme: "base",
   themeVariables: {
@@ -37,7 +40,7 @@ mermaid.initialize({
   look: "handDrawn",
 })
 
-export default function Mermaid({ chart, id }) {
+export default function MermaidDark({ chart, id, highlightNode = null }) {
   const containerRef = useRef(null)
   const [svg, setSvg] = useState("")
   const [error, setError] = useState(null)
@@ -48,13 +51,16 @@ export default function Mermaid({ chart, id }) {
     const renderChart = async () => {
       try {
         const uniqueId =
-          id || `mermaid-${Math.random().toString(36).substr(2, 9)}`
+          id || `mermaid-dark-${Math.random().toString(36).substr(2, 9)}`
 
         setSvg("")
         setError(null)
 
         // Render the mermaid chart
-        const { svg: renderedSvg } = await mermaid.render(uniqueId, chart)
+        const { svg: renderedSvg } = await algorithmMermaid.render(
+          uniqueId,
+          chart,
+        )
 
         // Add Kalam font and extra padding via simple string injection
         const fontStyle = `<style>
@@ -62,6 +68,7 @@ export default function Mermaid({ chart, id }) {
           text, tspan { 
             font-family: "Kalam", "Comic Sans MS", cursive !important; 
             font-size: 18px !important; 
+            fill: #ebdbb2 !important;
           }
           .label { 
             padding: 5px 20px !important; 
@@ -81,6 +88,23 @@ export default function Mermaid({ chart, id }) {
 
     renderChart()
   }, [chart, id])
+
+  // Apply highlighting when highlightNode changes
+  useEffect(() => {
+    if (!containerRef.current || !highlightNode) return
+
+    // Remove all previous highlights
+    const allHighlighted = containerRef.current.querySelectorAll(
+      `.${styles.highlight}`,
+    )
+    allHighlighted.forEach((el) => el.classList.remove(styles.highlight))
+
+    // Add highlight to the specified node
+    const node = containerRef.current.querySelector(`#${highlightNode}`)
+    if (node) {
+      node.classList.add(styles.highlight)
+    }
+  }, [highlightNode, svg])
 
   if (error) {
     return (

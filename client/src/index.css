@@ -16,6 +16,11 @@
   --color-orange: #fe8019;
   --color-white: #ffffff;
 
+  /* Neue Variablen für Algorithmen-Visualisierungen */
+  --color-bg-light: #3c3836;
+  --color-bg-lighter: #504945;
+  --color-bg-dark: #1d2021;
+
   font-family:
     "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";
@@ -404,4 +409,29 @@ main section ol {
 
 .auth-required a:hover {
   background-color: var(--color-purple);
+}
+
+/* Color Scheme Enforcement - verhindert Browser-Einfluss auf Dark Theme */
+html,
+body {
+  color-scheme: dark !important;
+}
+
+/* Stelle sicher, dass SVGs das richtige Theme verwenden */
+svg {
+  color-scheme: dark;
+}
+
+/* Vermeide automatische Farbanpassungen durch Browser bei hellem System-Theme */
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: dark !important;
+  }
+}
+
+/* Explizite Bestätigung bei dunklem System-Theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark !important;
+  }
 }
