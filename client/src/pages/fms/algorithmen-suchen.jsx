@@ -1,8 +1,7 @@
 import { useState } from "react"
-import { Player } from "@remotion/player"
 import Section from "@components/Section"
 import SolutionBlock from "@components/SolutionBlock"
-import MermaidDark from "@components/algorithm/MermaidDark"
+import SimpleSplitView from "@components/algorithm/SimpleSplitView"
 import {
   LinearSearchAnimation,
   BinarySearchAnimation,
@@ -13,8 +12,8 @@ import {
 export default function FmsAlgorithmenSuchen() {
   const [linearArray, setLinearArray] = useState([5, 2, 8, 1, 9, 4, 7])
   const [linearTarget, setLinearTarget] = useState(9)
-  const [binaryArray, setBinaryArray] = useState([1, 3, 5, 7, 9, 11, 13])
-  const [binaryTarget, setBinaryTarget] = useState(7)
+  const [binaryArray, setBinaryArray] = useState([1, 3, 5, 7, 9, 11, 13, 15])
+  const [binaryTarget, setBinaryTarget] = useState(11)
 
   // Flussdiagramme
   const linearSearchChart = `
@@ -35,12 +34,12 @@ flowchart TD
   const binarySearchChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input["Sortiertes Array und<br/>Zielwert eingeben"]
-    Input --> Init["left = 0<br/>right = Länge - 1"]
+    Start([Start]) --> Input["Sortiertes Array und Zielwert eingeben"]
+    Input --> Init["left = 0 right = Länge - 1"]
     Init --> Check{"left &lt;= right?"}
     Check -->|Nein| NotFound[Ausgabe: Nicht gefunden]
     NotFound --> End([Ende])
-    Check -->|Ja| Mid["mid = (left + right) / 2<br/>abgerundet"]
+    Check -->|Ja| Mid["mid = (left + right) / 2 abgerundet"]
     Mid --> Compare{"Array[mid] === Zielwert?"}
     Compare -->|Ja| Found["Ausgabe: Gefunden bei Index mid"]
     Found --> End
@@ -54,6 +53,10 @@ flowchart TD
   // Berechne Schritte
   const linearSteps = generateLinearSearchSteps(linearArray, linearTarget)
   const binarySteps = generateBinarySearchSteps(binaryArray, binaryTarget)
+
+  // Extrahiere Beschreibungen
+  const linearDescriptions = linearSteps.map((s) => s.description)
+  const binaryDescriptions = binarySteps.map((s) => s.description)
 
   return (
     <>
@@ -92,29 +95,7 @@ flowchart TD
           <li>Wiederhole, bis entweder gefunden oder das Ende erreicht ist</li>
         </ol>
 
-        <MermaidDark chart={linearSearchChart} id="linear-search-chart" />
-
-        <h3>Eigenschaften</h3>
-        <ul>
-          <li>
-            <strong>Best Case:</strong> O(1) - Element ist gleich das erste
-          </li>
-          <li>
-            <strong>Average Case:</strong> O(n/2) - Element ist in der Mitte
-          </li>
-          <li>
-            <strong>Worst Case:</strong> O(n) - Element ist das letzte oder nicht
-            vorhanden
-          </li>
-          <li>
-            <strong>Vorteil:</strong> Funktioniert mit unsortierten Arrays
-          </li>
-          <li>
-            <strong>Nachteil:</strong> Langsam bei großen Datenmengen
-          </li>
-        </ul>
-
-        <h3>Interaktive Visualisierung</h3>
+        <h3>Visualisierung</h3>
 
         <div style={{ marginBottom: "20px" }}>
           <label style={{ display: "block", marginBottom: "10px" }}>
@@ -173,26 +154,36 @@ flowchart TD
           </label>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            margin: "20px 0",
-          }}>
-          <Player
-            component={LinearSearchAnimation}
-            inputProps={{ array: linearArray, target: linearTarget, fps: 30 }}
-            durationInFrames={linearSteps.length * 15}
-            compositionWidth={800}
-            compositionHeight={400}
-            fps={30}
-            controls={true}
-            loop={false}
-            style={{ width: "100%", maxWidth: "800px" }}
-            playbackRate={1.0}
-            showVolumeControls={false}
-          />
-        </div>
+        <SimpleSplitView
+          component={LinearSearchAnimation}
+          inputProps={{ array: linearArray, target: linearTarget, fps: 30 }}
+          flowchart={linearSearchChart}
+          flowchartId="linear-search"
+          totalSteps={linearSteps.length}
+          stepDescriptions={linearDescriptions}
+          getNodeId={(step) => linearSteps[step]?.mermaidNode}
+          fps={30}
+        />
+
+        <h3>Eigenschaften</h3>
+        <ul>
+          <li>
+            <strong>Best Case:</strong> O(1) - Element ist gleich das erste
+          </li>
+          <li>
+            <strong>Average Case:</strong> O(n/2) - Element ist in der Mitte
+          </li>
+          <li>
+            <strong>Worst Case:</strong> O(n) - Element ist das letzte oder nicht
+            vorhanden
+          </li>
+          <li>
+            <strong>Vorteil:</strong> Funktioniert mit unsortierten Arrays
+          </li>
+          <li>
+            <strong>Nachteil:</strong> Langsam bei großen Datenmengen
+          </li>
+        </ul>
       </Section>
 
       <Section classes="exercise">
@@ -240,28 +231,7 @@ flowchart TD
           <li>Wiederhole, bis gefunden oder der Suchbereich leer ist</li>
         </ol>
 
-        <MermaidDark chart={binarySearchChart} id="binary-search-chart" />
-
-        <h3>Eigenschaften</h3>
-        <ul>
-          <li>
-            <strong>Best Case:</strong> O(1) - Element ist in der Mitte
-          </li>
-          <li>
-            <strong>Average Case:</strong> O(log n) - Sehr schnell!
-          </li>
-          <li>
-            <strong>Worst Case:</strong> O(log n) - Immer noch sehr schnell
-          </li>
-          <li>
-            <strong>Voraussetzung:</strong> Array muss sortiert sein
-          </li>
-          <li>
-            <strong>Vorteil:</strong> Extrem schnell bei großen Datenmengen
-          </li>
-        </ul>
-
-        <h3>Interaktive Visualisierung</h3>
+        <h3>Visualisierung</h3>
 
         <div style={{ marginBottom: "20px" }}>
           <label style={{ display: "block", marginBottom: "10px" }}>
@@ -320,26 +290,35 @@ flowchart TD
           </label>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            margin: "20px 0",
-          }}>
-          <Player
-            component={BinarySearchAnimation}
-            inputProps={{ array: binaryArray, target: binaryTarget, fps: 30 }}
-            durationInFrames={binarySteps.length * 15}
-            compositionWidth={800}
-            compositionHeight={400}
-            fps={30}
-            controls={true}
-            loop={false}
-            style={{ width: "100%", maxWidth: "800px" }}
-            playbackRate={1.0}
-            showVolumeControls={false}
-          />
-        </div>
+        <SimpleSplitView
+          component={BinarySearchAnimation}
+          inputProps={{ array: binaryArray, target: binaryTarget, fps: 30 }}
+          flowchart={binarySearchChart}
+          flowchartId="binary-search"
+          totalSteps={binarySteps.length}
+          stepDescriptions={binaryDescriptions}
+          getNodeId={(step) => binarySteps[step]?.mermaidNode}
+          fps={30}
+        />
+
+        <h3>Eigenschaften</h3>
+        <ul>
+          <li>
+            <strong>Best Case:</strong> O(1) - Element ist in der Mitte
+          </li>
+          <li>
+            <strong>Average Case:</strong> O(log n) - Sehr schnell!
+          </li>
+          <li>
+            <strong>Worst Case:</strong> O(log n) - Immer noch sehr schnell
+          </li>
+          <li>
+            <strong>Voraussetzung:</strong> Array muss sortiert sein
+          </li>
+          <li>
+            <strong>Vorteil:</strong> Extrem schnell bei großen Datenmengen
+          </li>
+        </ul>
       </Section>
 
       <Section classes="exercise">
@@ -421,91 +400,14 @@ flowchart TD
                 ~10 Vergleiche (Maximum!)
               </td>
             </tr>
-            <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
-                Bei 1.000.000 Elementen
-              </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
-                ~500.000 Vergleiche
-              </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
-                ~20 Vergleiche (!)
-              </td>
-            </tr>
-            <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
-                Wann verwenden?
-              </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
-                Kleine Arrays oder unsortierte Daten
-              </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
-                Große sortierte Arrays
-              </td>
-            </tr>
           </tbody>
         </table>
 
         <h3 style={{ marginTop: "30px" }}>Warum ist Binäre Suche so schnell?</h3>
         <p>
           Bei jedem Schritt <strong>halbiert</strong> die binäre Suche den
-          Suchbereich. Das bedeutet:
+          Suchbereich!
         </p>
-        <ul>
-          <li>Nach 1 Schritt: 1.000.000 → 500.000 Elemente</li>
-          <li>Nach 2 Schritten: 500.000 → 250.000 Elemente</li>
-          <li>Nach 3 Schritten: 250.000 → 125.000 Elemente</li>
-          <li>...</li>
-          <li>Nach ~20 Schritten: nur noch 1 Element übrig!</li>
-        </ul>
-        <p>
-          <strong>Analogie:</strong> Stellen Sie sich vor, Sie suchen eine Seite
-          in einem Telefonbuch. Lineare Suche würde bedeuten, dass Sie bei Seite
-          1 anfangen und jede Seite durchblättern. Binäre Suche ist wie das
-          Aufschlagen in der Mitte und dann entscheiden "links oder rechts?" –
-          viel schneller!
-        </p>
-      </Section>
-
-      <Section classes="exercise">
-        <h3>Übung 3: Welcher Algorithmus?</h3>
-        <p>
-          Entscheiden Sie für jede Situation, welcher Suchalgorithmus besser
-          geeignet ist:
-        </p>
-        <ol style={{ listStyleType: "lower-alpha" }}>
-          <li>
-            Suche nach einem Namen in einer unsortierten Liste von 50 Schülern
-          </li>
-          <li>
-            Suche nach einer Telefonnummer in einem Telefonbuch (alphabetisch
-            sortiert) mit 100.000 Einträgen
-          </li>
-          <li>
-            Suche nach einer Zahl in einem kleinen Array [4, 2, 7, 1] (nicht
-            sortiert)
-          </li>
-        </ol>
-        <SolutionBlock taskId="search-comparison-1">
-          <p>
-            <strong>Lösungen:</strong>
-          </p>
-          <ol style={{ listStyleType: "lower-alpha" }}>
-            <li>
-              <strong>Lineare Suche</strong> - Die Liste ist unsortiert und mit
-              50 Elementen relativ klein
-            </li>
-            <li>
-              <strong>Binäre Suche</strong> - Das Telefonbuch ist sortiert und
-              sehr groß (100.000 Einträge). Binäre Suche braucht nur ~17
-              Vergleiche statt durchschnittlich 50.000!
-            </li>
-            <li>
-              <strong>Lineare Suche</strong> - Array ist unsortiert und sehr klein
-              (4 Elemente), nicht lohnenswert zu sortieren
-            </li>
-          </ol>
-        </SolutionBlock>
       </Section>
     </>
   )

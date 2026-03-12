@@ -55,8 +55,11 @@ export default function FmsIndex() {
             <ol>
               <NavLink to="/fms/algorithmen">Was sind Algorithmen?</NavLink>
               <NavLink to="/fms/algorithmen-loops">Schleifen</NavLink>
-              <NavLink to="/fms/algorithmen-sortieren">Sortieralgorithmen</NavLink>
+              <NavLink to="/fms/algorithmen-alltag">Alltag</NavLink>
+              <NavLink to="/fms/algorithmen-mathematik">Mathematik</NavLink>
+              <NavLink to="/fms/algorithmen-strings">Strings</NavLink>
               <NavLink to="/fms/algorithmen-suchen">Suchalgorithmen</NavLink>
+              <NavLink to="/fms/algorithmen-sortieren">Sortieralgorithmen</NavLink>
               <NavLink to="/fms/algorithmen-aufgaben">Aufgaben</NavLink>
             </ol>
           </li>

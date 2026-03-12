@@ -98,6 +98,15 @@ const FmsAlgorithmenSuchen = lazy(
   () => import("@pages-fms/algorithmen-suchen.jsx"),
 )
 const FmsMermaidTest = lazy(() => import("@pages-fms/mermaid-test.jsx"))
+const FmsAlgorithmenMathematik = lazy(
+  () => import("@pages-fms/algorithmen-mathematik.jsx"),
+)
+const FmsAlgorithmenStrings = lazy(
+  () => import("@pages-fms/algorithmen-strings.jsx"),
+)
+const FmsAlgorithmenAlltag = lazy(
+  () => import("@pages-fms/algorithmen-alltag.jsx"),
+)
 const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"))
 const BoxModel = lazy(() => import("../components/BoxModel"))
 const CodePen = lazy(() => import("../components/CodePen"))
@@ -212,6 +221,18 @@ export const routes = [
       {
         path: "/fms/mermaid-test",
         element: <FmsMermaidTest />,
+      },
+      {
+        path: "/fms/algorithmen-mathematik",
+        element: <FmsAlgorithmenMathematik />,
+      },
+      {
+        path: "/fms/algorithmen-strings",
+        element: <FmsAlgorithmenStrings />,
+      },
+      {
+        path: "/fms/algorithmen-alltag",
+        element: <FmsAlgorithmenAlltag />,
       },
 
       // FMS Routes 2. Klasse

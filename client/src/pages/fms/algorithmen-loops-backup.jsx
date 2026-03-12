@@ -136,18 +136,7 @@ flowchart TD
           Schleifen können auch rückwärts zählen. Hier ist ein Countdown von 10
           bis 0:
         </p>
-        
-        <SimpleSplitView 
-          component={CountdownAnimation} 
-          inputProps={{ fps: 30 }} 
-          flowchart={countdown} 
-          flowchartId="countdown" 
-          totalSteps={countdownSteps.length} 
-          stepDescriptions={countdownDescriptions} 
-          getNodeId={(step) => countdownSteps[step]?.mermaidNode} 
-          fps={30} 
-        />
-        
+        <Mermaid chart={countdown} id="countdown" />
         <h4>Ablauf des Countdowns:</h4>
         <ol>
           <li>
@@ -190,50 +179,7 @@ flowchart TD
           Dieser Algorithmus findet die grösste Zahl in einer Liste beliebiger
           Länge:
         </p>
-        
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block" }}>
-            <strong>Eigene Liste (Zahlen mit Komma):</strong>
-            <br />
-            <input
-              type="text"
-              defaultValue={maxArray.join(", ")}
-              onBlur={(e) => {
-                const newArray = e.target.value
-                  .split(",")
-                  .map((n) => parseInt(n.trim()))
-                  .filter((n) => !isNaN(n) && n > 0 && n <= 20)
-                if (newArray.length >= 3 && newArray.length <= 10) {
-                  setMaxArray(newArray)
-                } else {
-                  alert("Bitte 3-10 Zahlen zwischen 1 und 20 eingeben!")
-                }
-              }}
-              style={{
-                marginTop: "10px",
-                padding: "8px",
-                width: "100%",
-                maxWidth: "400px",
-                backgroundColor: "var(--color-bg-light)",
-                color: "var(--color-fg)",
-                border: "1px solid var(--color-gray)",
-                borderRadius: "4px",
-              }}
-            />
-          </label>
-        </div>
-        
-        <SimpleSplitView 
-          component={MaxListeAnimation} 
-          inputProps={{ array: maxArray, fps: 30 }} 
-          flowchart={maxListe} 
-          flowchartId="max-liste" 
-          totalSteps={maxListeSteps.length} 
-          stepDescriptions={maxListeDescriptions} 
-          getNodeId={(step) => maxListeSteps[step]?.mermaidNode} 
-          fps={30} 
-        />
-        
+        <Mermaid chart={maxListe} id="max-liste" />
         <h4>So funktioniert der Algorithmus:</h4>
         <ol>
           <li>

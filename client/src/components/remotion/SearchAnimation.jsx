@@ -6,22 +6,59 @@ import { useMemo } from "react"
 // Generiere alle Schritte für Lineare Suche
 export function generateLinearSearchSteps(array, target) {
   const steps = []
+  const n = array.length
 
   steps.push({
     array: [...array],
     currentIndex: -1,
     found: false,
     foundIndex: -1,
-    description: `Suche nach ${target} im Array`,
+    description: "Start",
+    mermaidNode: "Start",
+    variables: {},
+  })
+
+  steps.push({
+    array: [...array],
+    currentIndex: -1,
+    found: false,
+    foundIndex: -1,
+    description: `Array und Zielwert ${target} eingeben`,
+    mermaidNode: "Array und Zielwert eingeben",
+    variables: { target, n },
+  })
+
+  steps.push({
+    array: [...array],
+    currentIndex: 0,
+    found: false,
+    foundIndex: -1,
+    description: "Initialisiere: i = 0",
+    mermaidNode: "i = 0",
+    variables: { i: 0, target },
   })
 
   for (let i = 0; i < array.length; i++) {
+    // Loop check
     steps.push({
       array: [...array],
       currentIndex: i,
       found: false,
       foundIndex: -1,
-      description: `Prüfe Index ${i}: ${array[i]} === ${target}?`,
+      description: `Prüfe: i=${i} < ${n}?`,
+      mermaidNode: "i < Länge?",
+      variables: { i, target, n },
+    })
+
+    // Comparison
+    steps.push({
+      array: [...array],
+      currentIndex: i,
+      found: false,
+      foundIndex: -1,
+      description: `Vergleiche: Array[${i}]=${array[i]} === ${target}?`,
+      mermaidNode: "Array[i] === Zielwert?",
+      variables: { i, target },
     })
 
     if (array[i] === target) {
@@ -31,18 +68,64 @@ export function generateLinearSearchSteps(array, target) {
         found: true,
         foundIndex: i,
         description: `Gefunden! ${target} ist an Index ${i}`,
+        mermaidNode: "Ausgabe: Gefunden bei Index i",
+        variables: { i, target },
       })
+      
+      steps.push({
+        array: [...array],
+        currentIndex: i,
+        found: true,
+        foundIndex: i,
+        description: "Ende - Erfolgreich gefunden",
+        mermaidNode: "Ende",
+        variables: {},
+      })
+      
       return steps
     }
+
+    // Increment i
+    steps.push({
+      array: [...array],
+      currentIndex: i,
+      found: false,
+      foundIndex: -1,
+      description: `i erhöhen: ${i} → ${i + 1}`,
+      mermaidNode: "i = i + 1",
+      variables: { i: i + 1, target },
+    })
   }
 
-  // Nicht gefunden
+  // Loop exit - not found
+  steps.push({
+    array: [...array],
+    currentIndex: -1,
+    found: false,
+    foundIndex: -1,
+    description: `Prüfe: i=${n} < ${n}? Nein`,
+    mermaidNode: "i < Länge?",
+    variables: { i: n, n },
+  })
+
   steps.push({
     array: [...array],
     currentIndex: -1,
     found: false,
     foundIndex: -1,
     description: `${target} wurde nicht gefunden`,
+    mermaidNode: "Ausgabe: Nicht gefunden",
+    variables: {},
+  })
+
+  steps.push({
+    array: [...array],
+    currentIndex: -1,
+    found: false,
+    foundIndex: -1,
+    description: "Ende",
+    mermaidNode: "Ende",
+    variables: {},
   })
 
   return steps
@@ -52,21 +135,61 @@ export function generateLinearSearchSteps(array, target) {
 export function generateBinarySearchSteps(array, target) {
   const steps = []
   const sortedArray = [...array].sort((a, b) => a - b)
+  const n = sortedArray.length
 
   steps.push({
     array: sortedArray,
     left: 0,
-    right: sortedArray.length - 1,
+    right: n - 1,
     mid: -1,
     found: false,
     foundIndex: -1,
-    description: `Suche nach ${target} im sortierten Array`,
+    description: "Start",
+    mermaidNode: "Start",
+    variables: {},
+  })
+
+  steps.push({
+    array: sortedArray,
+    left: 0,
+    right: n - 1,
+    mid: -1,
+    found: false,
+    foundIndex: -1,
+    description: `Sortiertes Array und Zielwert ${target} eingeben`,
+    mermaidNode: "Sortiertes Array und Zielwert eingeben",
+    variables: { target, n },
   })
 
   let left = 0
-  let right = sortedArray.length - 1
+  let right = n - 1
+
+  steps.push({
+    array: sortedArray,
+    left,
+    right,
+    mid: -1,
+    found: false,
+    foundIndex: -1,
+    description: `Initialisiere: left = 0, right = ${n - 1}`,
+    mermaidNode: "left = 0 right = Länge - 1",
+    variables: { left, right, target },
+  })
 
   while (left <= right) {
+    // Loop check
+    steps.push({
+      array: sortedArray,
+      left,
+      right,
+      mid: -1,
+      found: false,
+      foundIndex: -1,
+      description: `Prüfe: left=${left} <= right=${right}? Ja`,
+      mermaidNode: "left <= right?",
+      variables: { left, right, target },
+    })
+
     const mid = Math.floor((left + right) / 2)
 
     steps.push({
@@ -76,7 +199,21 @@ export function generateBinarySearchSteps(array, target) {
       mid,
       found: false,
       foundIndex: -1,
-      description: `Prüfe Mitte bei Index ${mid}: ${sortedArray[mid]}`,
+      description: `Berechne Mitte: mid = ⌊(${left} + ${right}) / 2⌋ = ${mid}`,
+      mermaidNode: "mid = (left + right) / 2 abgerundet",
+      variables: { left, right, mid, target },
+    })
+
+    steps.push({
+      array: sortedArray,
+      left,
+      right,
+      mid,
+      found: false,
+      foundIndex: -1,
+      description: `Vergleiche: Array[${mid}]=${sortedArray[mid]} === ${target}?`,
+      mermaidNode: "Array[mid] === Zielwert?",
+      variables: { left, right, mid, target },
     })
 
     if (sortedArray[mid] === target) {
@@ -87,35 +224,83 @@ export function generateBinarySearchSteps(array, target) {
         mid,
         found: true,
         foundIndex: mid,
-        description: `Gefunden! ${target} ist an Index ${mid}`,
+        description: `Ja! Gefunden bei Index ${mid}`,
+        mermaidNode: "Ausgabe: Gefunden bei Index mid",
+        variables: { mid, target },
       })
-      return steps
-    } else if (sortedArray[mid] < target) {
+      
       steps.push({
         array: sortedArray,
-        left: mid + 1,
+        left,
+        right,
+        mid,
+        found: true,
+        foundIndex: mid,
+        description: "Ende - Erfolgreich",
+        mermaidNode: "Ende",
+        variables: {},
+      })
+      
+      return steps
+    }
+    
+    // Check which direction
+    steps.push({
+      array: sortedArray,
+      left,
+      right,
+      mid,
+      found: false,
+      foundIndex: -1,
+      description: `Prüfe: Array[${mid}]=${sortedArray[mid]} < ${target}?`,
+      mermaidNode: "Array[mid] < Zielwert?",
+      variables: { left, right, mid, target },
+    })
+    
+    if (sortedArray[mid] < target) {
+      left = mid + 1
+      
+      steps.push({
+        array: sortedArray,
+        left,
         right,
         mid,
         found: false,
         foundIndex: -1,
-        description: `${sortedArray[mid]} < ${target} → Suche rechts weiter`,
+        description: `Ja! Setze left = mid + 1 = ${left}`,
+        mermaidNode: "left = mid + 1",
+        variables: { left, right, target },
       })
-      left = mid + 1
     } else {
+      right = mid - 1
+      
       steps.push({
         array: sortedArray,
         left,
-        right: mid - 1,
+        right,
         mid,
         found: false,
         foundIndex: -1,
-        description: `${sortedArray[mid]} > ${target} → Suche links weiter`,
+        description: `Nein! Setze right = mid - 1 = ${right}`,
+        mermaidNode: "right = mid - 1",
+        variables: { left, right, target },
       })
-      right = mid - 1
     }
   }
 
-  // Nicht gefunden
+  // Loop exit - not found
+  steps.push({
+    array: sortedArray,
+    left,
+    right,
+    mid: -1,
+    found: false,
+    foundIndex: -1,
+    description: `Prüfe: left=${left} <= right=${right}? Nein`,
+    mermaidNode: "left <= right?",
+    variables: { left, right },
+  })
+
   steps.push({
     array: sortedArray,
     left,
@@ -124,6 +309,20 @@ export function generateBinarySearchSteps(array, target) {
     found: false,
     foundIndex: -1,
     description: `${target} wurde nicht gefunden`,
+    mermaidNode: "Ausgabe: Nicht gefunden",
+    variables: {},
+  })
+
+  steps.push({
+    array: sortedArray,
+    left,
+    right,
+    mid: -1,
+    found: false,
+    foundIndex: -1,
+    description: "Ende",
+    mermaidNode: "Ende",
+    variables: {},
   })
 
   return steps
@@ -215,7 +414,7 @@ export function LinearSearchAnimation({
   fps = 30,
 }) {
   const frame = useCurrentFrame()
-  const framesPerStep = Math.floor(fps / 2) // 2 Schritte pro Sekunde
+  const framesPerStep = fps * 1.5 // 1.5 Sekunden pro Schritt
 
   const steps = useMemo(() => generateLinearSearchSteps(array, target), [
     array,
@@ -242,22 +441,35 @@ export function LinearSearchAnimation({
       <h2
         style={{
           textAlign: "center",
-          marginBottom: 30,
+          marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
         }}>
         Lineare Suche - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
-      <div
-        style={{
-          marginBottom: 20,
-          fontSize: "20px",
-          color: "#ebdbb2",
-          fontWeight: "bold",
-        }}>
-        Suche nach: <span style={{ color: "#4CAF50" }}>{target}</span>
-      </div>
+      {/* Zählvariablen anzeigen */}
+      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            gap: "20px",
+            marginBottom: 20,
+            padding: "10px 20px",
+            backgroundColor: "#3c3836",
+            borderRadius: "8px",
+            fontSize: "18px",
+            color: "#ebdbb2",
+          }}>
+          {Object.entries(currentStep.variables).map(([key, value]) => (
+            <div key={key}>
+              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
+              {" = "}
+              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
       <SearchArrayBars
         array={currentStep.array}
@@ -296,7 +508,7 @@ export function BinarySearchAnimation({
   fps = 30,
 }) {
   const frame = useCurrentFrame()
-  const framesPerStep = Math.floor(fps / 2)
+  const framesPerStep = fps * 1.5 // 1.5 Sekunden pro Schritt
 
   const steps = useMemo(() => generateBinarySearchSteps(array, target), [
     array,
@@ -323,27 +535,35 @@ export function BinarySearchAnimation({
       <h2
         style={{
           textAlign: "center",
-          marginBottom: 30,
+          marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
         }}>
         Binäre Suche - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
-      <div
-        style={{
-          marginBottom: 20,
-          fontSize: "20px",
-          color: "#ebdbb2",
-          fontWeight: "bold",
-        }}>
-        Suche nach: <span style={{ color: "#4CAF50" }}>{target}</span>
-        {currentStep.left >= 0 && currentStep.right >= 0 && (
-          <span style={{ marginLeft: 20, fontSize: "18px", opacity: 0.8 }}>
-            | Bereich: [{currentStep.left}...{currentStep.right}]
-          </span>
-        )}
-      </div>
+      {/* Zählvariablen anzeigen */}
+      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            gap: "20px",
+            marginBottom: 20,
+            padding: "10px 20px",
+            backgroundColor: "#3c3836",
+            borderRadius: "8px",
+            fontSize: "18px",
+            color: "#ebdbb2",
+          }}>
+          {Object.entries(currentStep.variables).map(([key, value]) => (
+            <div key={key}>
+              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
+              {" = "}
+              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
       <SearchArrayBars
         array={currentStep.array}
