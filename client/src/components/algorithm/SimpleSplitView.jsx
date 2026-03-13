@@ -44,7 +44,6 @@ export default function SimpleSplitView({
   // Listen to frame updates - use both frameupdate and timeupdate for reliability
   useEffect(() => {
     if (!PlayerComponent) {
-      console.log("⚠️ Player component not loaded yet")
       return
     }
 
@@ -54,30 +53,24 @@ export default function SimpleSplitView({
     const timeoutId = setTimeout(() => {
       const { current } = playerRef
       if (!current) {
-        console.log("⚠️ Player ref not ready yet")
         return
       }
-
-      console.log("✅ Setting up frame listeners")
 
       const onFrameUpdate = (event) => {
         const frame = event.detail.frame
         setCurrentFrame(frame)
         const step = Math.floor(frame / framesPerStep)
         setCurrentStep(step)
-        console.log("📹 Frame:", frame, "=> Step:", step)
       }
 
       // Use both events for better compatibility
       current.addEventListener("frameupdate", onFrameUpdate)
       current.addEventListener("timeupdate", onFrameUpdate)
-      console.log("✅ Frame update listeners registered on player")
       
       // Store cleanup function
       cleanupFn = () => {
         current.removeEventListener("frameupdate", onFrameUpdate)
         current.removeEventListener("timeupdate", onFrameUpdate)
-        console.log("❌ Frame update listeners removed")
       }
     }, 100)
     
@@ -93,8 +86,6 @@ export default function SimpleSplitView({
     stepDescriptions[currentStep] || "Algorithmus läuft..."
   
   const currentNodeId = getNodeId ? getNodeId(currentStep) : null
-  
-  console.log("🎯 Current step:", currentStep, "NodeId:", currentNodeId)
 
   // Manual step controls
   const goToStep = (step) => {

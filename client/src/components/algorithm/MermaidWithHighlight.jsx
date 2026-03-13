@@ -107,13 +107,9 @@ export default function MermaidWithHighlight({
     
     // If no highlightNode, just clear and return
     if (!highlightNode) return
-    
-    console.log("🔍 Highlighting node:", highlightNode)
 
     // Find foreignObjects
     const allForeignObjects = svg.querySelectorAll("foreignObject")
-    
-    console.log("📊 Total foreignObjects found:", allForeignObjects.length)
     
     // First pass: find ALL potential matches
     const potentialMatches = []
@@ -139,16 +135,12 @@ export default function MermaidWithHighlight({
           contentNorm === highlightNorm ||
           content.replace(/\s+/g, ' ').trim() === highlightNode) {
         potentialMatches.push({ fo, content, index })
-        console.log("✅ Match found:", content)
       }
     })
-    
-    console.log("🎯 Total matches:", potentialMatches.length)
     
     // Use only the FIRST match
     if (potentialMatches.length > 0) {
       const { fo } = potentialMatches[0]
-      console.log("🎨 Creating highlight overlay for first match")
       
       // Found match, find parent shapes
       let parent = fo.parentElement

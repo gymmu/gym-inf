@@ -16,13 +16,13 @@ export default function FmsAlgorithmenLoops() {
   const summe1bis10 = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Init1[summe = 0]
-    Init1 --> Init2[zahl = 1]
-    Init2 --> Check{zahl <= 10?}
-    Check -->|Ja| Add[summe = summe + zahl]
-    Add --> Increment[zahl = zahl + 1]
+    Start([Start]) --> Init1[Setze Summe auf 0]
+    Init1 --> Init2[Setze Zahl auf 1]
+    Init2 --> Check{Ist Zahl ≤ 10?}
+    Check -->|Ja| Add[Addiere Zahl zu Summe]
+    Add --> Increment[Erhöhe Zahl um 1]
     Increment --> Check
-    Check -->|Nein| Output[Ausgabe: summe]
+    Check -->|Nein| Output[Gib Summe aus]
     Output --> End([Ende])
   `
 
@@ -30,12 +30,12 @@ flowchart TD
   const countdown = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Init[zaehler = 10]
-    Init --> Check{zaehler > 0?}
-    Check -->|Ja| Output1[Ausgabe: zaehler]
-    Output1 --> Decrement[zaehler = zaehler - 1]
+    Start([Start]) --> Init[Setze Zähler auf 10]
+    Init --> Check{Ist Zähler > 0?}
+    Check -->|Ja| Output1[Gib Zähler aus]
+    Output1 --> Decrement[Verringere Zähler um 1]
     Decrement --> Check
-    Check -->|Nein| Output2[Ausgabe: Start!]
+    Check -->|Nein| Output2[Gib 'Start!' aus]
     Output2 --> End([Ende])
   `
 
@@ -43,17 +43,15 @@ flowchart TD
   const maxListe = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Liste eingeben]
-    Input --> Init[max = erstes Element]
-    Init --> InitI["i = 1"]
-    InitI --> CheckEnd{Noch Elemente vorhanden?}
+    Start([Start]) --> Input[Gib Liste ein]
+    Input --> Init[Setze Maximum auf erstes Element]
+    Init --> CheckEnd{Noch Elemente vorhanden?}
     CheckEnd -->|Ja| Next[Gehe zum nächsten Element]
-    Next --> Compare{Element > max?}
-    Compare -->|Ja| Update[max = Element]
-    Compare -->|Nein| Incr["i = i + 1"]
-    Update --> Incr
-    Incr --> CheckEnd
-    CheckEnd -->|Nein| Output[Ausgabe: max]
+    Next --> Compare{Ist Element > Maximum?}
+    Compare -->|Ja| Update[Setze Maximum auf Element]
+    Compare -->|Nein| CheckEnd
+    Update --> CheckEnd
+    CheckEnd -->|Nein| Output[Gib Maximum aus]
     Output --> End([Ende])
   `
   
@@ -70,6 +68,19 @@ flowchart TD
     <>
       <section>
         <h2>Algorithmen mit Schleifen</h2>
+        
+        <div style={{ 
+          backgroundColor: "var(--color-bg-light)", 
+          padding: "15px", 
+          borderRadius: "8px",
+          marginBottom: "20px",
+          borderLeft: "4px solid var(--color-primary)"
+        }}>
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
+          Wenn dir Begriffe unklar sind, schaue im{" "}
+          <a href="/fms/algorithmen-glossar">Flowchart-Glossar</a> nach.
+        </div>
+
         <p>
           Bis jetzt haben wir nur Algorithmen angeschaut, die einen direkten,
           linearen Fluss haben. In der Praxis müssen wir aber oft Aktionen

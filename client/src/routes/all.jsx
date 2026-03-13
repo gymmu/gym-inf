@@ -107,6 +107,9 @@ const FmsAlgorithmenStrings = lazy(
 const FmsAlgorithmenAlltag = lazy(
   () => import("@pages-fms/algorithmen-alltag.jsx"),
 )
+const FmsAlgorithmenGlossar = lazy(
+  () => import("@pages-fms/algorithmen-glossar.jsx"),
+)
 const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"))
 const BoxModel = lazy(() => import("../components/BoxModel"))
 const CodePen = lazy(() => import("../components/CodePen"))
@@ -233,6 +236,10 @@ export const routes = [
       {
         path: "/fms/algorithmen-alltag",
         element: <FmsAlgorithmenAlltag />,
+      },
+      {
+        path: "/fms/algorithmen-glossar",
+        element: <FmsAlgorithmenGlossar />,
       },
 
       // FMS Routes 2. Klasse

@@ -20,25 +20,25 @@ export function generateSumme1Bis10Steps() {
   steps.push({
     summe: 0,
     zahl: null,
-    description: "Initialisiere: summe = 0",
-    mermaidNode: "summe = 0",
+    description: "Setze die Summe auf 0",
+    mermaidNode: "Init1",
     variables: { summe: 0 },
   })
 
   steps.push({
     summe: 0,
     zahl: 1,
-    description: "Initialisiere: zahl = 1",
-    mermaidNode: "zahl = 1",
-    variables: { summe: 0, zahl: 1 },
+    description: "Beginne mit der Zahl 1",
+    mermaidNode: "Init2",
+    variables: { zahl: 1 },
   })
 
   while (zahl <= 10) {
     steps.push({
       summe,
       zahl,
-      description: `Prüfe: zahl=${zahl} <= 10?`,
-      mermaidNode: "zahl <= 10?",
+      description: `Ist ${zahl} kleiner oder gleich 10? Ja`,
+      mermaidNode: "Check",
       variables: { summe, zahl },
     })
 
@@ -47,17 +47,17 @@ export function generateSumme1Bis10Steps() {
     steps.push({
       summe,
       zahl,
-      description: `Addiere: summe = ${summe - zahl} + ${zahl} = ${summe}`,
-      mermaidNode: "summe = summe + zahl",
+      description: `Addiere ${zahl} zur Summe: ${summe - zahl} + ${zahl} = ${summe}`,
+      mermaidNode: "Add",
       variables: { summe, zahl },
     })
 
     steps.push({
       summe,
       zahl,
-      description: `Erhöhe: zahl = ${zahl} + 1 = ${zahl + 1}`,
-      mermaidNode: "zahl = zahl + 1",
-      variables: { summe, zahl: zahl + 1 },
+      description: `Gehe zur nächsten Zahl: ${zahl + 1}`,
+      mermaidNode: "Increment",
+      variables: { zahl: zahl + 1 },
     })
 
     zahl++
@@ -66,16 +66,16 @@ export function generateSumme1Bis10Steps() {
   steps.push({
     summe,
     zahl,
-    description: `Prüfe: zahl=${zahl} <= 10? Nein`,
-    mermaidNode: "zahl <= 10?",
+    description: `Ist ${zahl} kleiner oder gleich 10? Nein`,
+    mermaidNode: "Check",
     variables: { summe, zahl },
   })
 
   steps.push({
     summe,
     zahl,
-    description: `Ergebnis: summe = ${summe}`,
-    mermaidNode: "Ausgabe: summe",
+    description: `Das Ergebnis ist: ${summe}`,
+    mermaidNode: "Output",
     variables: { summe },
   })
 
@@ -104,29 +104,68 @@ export function generateCountdownSteps() {
 
   steps.push({
     zaehler: 10,
-    description: "Initialisiere: zaehler = 10",
-    mermaidNode: "zaehler = 10",
+    description: "Setze den Zähler auf 10",
+    mermaidNode: "Init",
     variables: { zaehler: 10 },
   })
 
   while (zaehler > 0) {
     steps.push({
       zaehler,
-      description: `Prüfe: zaehler=${zaehler} > 0?`,
+      description: `Ist ${zaehler} grösser als 0? Ja`,
+      mermaidNode: "Check",
+      variables: {},
+    })
+
+    steps.push({
+      zaehler,
+      description: `Gib die Zahl ${zaehler} aus`,
+      mermaidNode: "Output1",
+      variables: {},
+    })
+
+    steps.push({
+      zaehler,
+      description: `Zähle einen Schritt runter zu ${zaehler - 1}`,
+      mermaidNode: "Decrement",
+      variables: { zaehler: zaehler - 1 },
+    })
+
+    zaehler--
+  }
+
+  steps.push({
+    zaehler,
+    description: `Ist ${zaehler} grösser als 0? Nein`,
+    mermaidNode: "Check",
+    variables: {},
+  })
+
+  steps.push({
+    zaehler,
+    description: "Gib 'Start!' aus",
+    mermaidNode: "Output2",
+    variables: {},
+  })
+
+  while (zaehler > 0) {
+    steps.push({
+      zaehler,
+      description: `Ist ${zaehler} größer als 0? Ja`,
       mermaidNode: "zaehler > 0?",
-      variables: { zaehler },
+      variables: {},
     })
 
     steps.push({
       zaehler,
-      description: `Ausgabe: ${zaehler}`,
+      description: `Gib die Zahl ${zaehler} aus`,
       mermaidNode: "Ausgabe: zaehler",
-      variables: { zaehler },
+      variables: {},
     })
 
     steps.push({
       zaehler,
-      description: `Verringere: zaehler = ${zaehler} - 1 = ${zaehler - 1}`,
+      description: `Zähle einen Schritt runter zu ${zaehler - 1}`,
       mermaidNode: "zaehler = zaehler - 1",
       variables: { zaehler: zaehler - 1 },
     })
@@ -136,14 +175,14 @@ export function generateCountdownSteps() {
 
   steps.push({
     zaehler,
-    description: `Prüfe: zaehler=${zaehler} > 0? Nein`,
+    description: `Ist ${zaehler} größer als 0? Nein`,
     mermaidNode: "zaehler > 0?",
-    variables: { zaehler },
+    variables: {},
   })
 
   steps.push({
     zaehler,
-    description: "Ausgabe: Start!",
+    description: "Gib 'Start!' aus",
     mermaidNode: "Ausgabe: Start!",
     variables: {},
   })
@@ -178,7 +217,7 @@ export function generateMaxListeSteps(array) {
     array,
     max: null,
     i: null,
-    description: `Liste eingeben: [${array.join(", ")}]`,
+    description: `Gegeben ist die Liste: [${array.join(", ")}]`,
     mermaidNode: "Liste eingeben",
     variables: { n },
   })
@@ -187,87 +226,74 @@ export function generateMaxListeSteps(array) {
     array,
     max: array[0],
     i: 0,
-    description: `Initialisiere: max = erstes Element = ${array[0]}`,
-    mermaidNode: "max = erstes Element",
-    variables: { max: array[0], i: 0 },
+    description: `Nehme das erste Element (${array[0]}) als bisheriges Maximum`,
+    mermaidNode: "Init",
+    variables: { max: array[0] },
   })
 
-  steps.push({
-    array,
-    max,
-    i: 1,
-    description: `Starte bei: i = 1`,
-    mermaidNode: "i = 1",
-    variables: { max, i: 1 },
-  })
+  i = 1
 
   while (i < n) {
     steps.push({
       array,
       max,
       i,
-      description: `Prüfe: i=${i} < ${n}?`,
-      mermaidNode: "Noch Elemente vorhanden?",
-      variables: { max, i, n },
+      description: `Noch nicht alle Elemente angeschaut`,
+      mermaidNode: "CheckEnd",
+      variables: {},
     })
 
     steps.push({
       array,
       max,
       i,
-      description: `Betrachte Element: Array[${i}] = ${array[i]}`,
-      mermaidNode: "Gehe zum nächsten Element",
-      variables: { max, i, current: array[i] },
+      description: `Schaue das nächste Element an: ${array[i]}`,
+      mermaidNode: "Next",
+      variables: { current: array[i] },
     })
 
+    const currentElement = array[i]
+    const isLarger = currentElement > max
+    
     steps.push({
       array,
       max,
       i,
-      description: `Vergleiche: ${array[i]} > ${max}?`,
-      mermaidNode: "Element > max?",
-      variables: { max, i, current: array[i] },
+      description: `Ist ${currentElement} grösser als das bisherige Maximum (${max})?`,
+      mermaidNode: "Compare",
+      variables: { current: currentElement, max },
     })
 
-    if (array[i] > max) {
-      max = array[i]
+    if (isLarger) {
+      max = currentElement
       steps.push({
         array,
         max,
         i,
-        description: `Ja! Neues Maximum: max = ${max}`,
-        mermaidNode: "max = Element",
-        variables: { max, i },
+        description: `Ja! ${max} ist das neue Maximum`,
+        mermaidNode: "Update",
+        variables: { max },
       })
     }
 
     i++
-
-    steps.push({
-      array,
-      max,
-      i,
-      description: `Weiter zum nächsten: i = ${i}`,
-      mermaidNode: "i = i + 1",
-      variables: { max, i },
-    })
   }
 
   steps.push({
     array,
     max,
     i,
-    description: `Prüfe: i=${i} < ${n}? Nein`,
-    mermaidNode: "Noch Elemente vorhanden?",
-    variables: { i, n },
+    description: `Alle Elemente wurden angeschaut`,
+    mermaidNode: "CheckEnd",
+    variables: {},
   })
 
   steps.push({
     array,
     max,
     i,
-    description: `Maximum gefunden: ${max}`,
-    mermaidNode: "Ausgabe: max",
+    description: `Das Maximum ist: ${max}`,
+    mermaidNode: "Output",
     variables: { max },
   })
 
