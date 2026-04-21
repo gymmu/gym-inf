@@ -1,0 +1,247 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Figure from "@components/Figure.jsx"
+
+## VPN — Virtual Private Network
+
+Ein VPN ist mehr als nur ein Werkzeug für Anonymität. Es ist eine
+Netzwerktechnik, die ursprünglich entwickelt wurde, damit Mitarbeitende von
+überall sicher auf Firmennetzwerke zugreifen können — daher der Name "Virtual
+**Private** Network". Heute wird VPN in vielen verschiedenen Kontexten
+eingesetzt.
+
+<LearningGoals>
+
+    - Sie verstehen, wie ein VPN-Tunnel technisch aufgebaut wird und welche Protokolle dabei eingesetzt werden.
+    - Sie kennen den Unterschied zwischen WireGuard und OpenVPN.
+    - Sie wissen, was Split Tunneling ist und wann es sinnvoll ist.
+    - Sie verstehen die Grenzen von VPN in Bezug auf Anonymität und Sicherheit.
+    - Sie kennen das Tor-Netzwerk als Alternative und dessen Vor- und Nachteile gegenüber VPN.
+
+</LearningGoals>
+
+## Wie funktioniert ein VPN-Tunnel?
+
+Ein VPN erstellt einen **verschlüsselten Tunnel** zwischen Ihrem Gerät und dem
+VPN-Server. Technisch gesehen geschieht folgendes:
+
+1. **Tunneling:** Ihre IP-Pakete werden in neue Pakete eingepackt
+   (Enkapsulierung). Das originale Paket mit Ihrer echten IP-Adresse wird zum
+   Inhalt des neuen Pakets.
+
+2. **Verschlüsselung:** Der Inhalt des Tunnels wird verschlüsselt, sodass
+   niemand auf dem Weg — auch nicht Ihr ISP — den Inhalt lesen kann.
+
+3. **Neue Absenderadresse:** Die äussere Hülle des Pakets trägt Ihre IP-Adresse
+   und die Adresse des VPN-Servers. Alle auf dem Weg sehen nur diese Verbindung.
+
+4. **Entpacken beim VPN-Server:** Dort wird entschlüsselt und das originale
+   Paket mit Ihrer echten IP herausgenommen, an das Ziel weitergeleitet.
+
+5. **Rückweg:** Die Antwort kommt zum VPN-Server, wird verschlüsselt und durch
+   den Tunnel zurück zu Ihnen geschickt.
+
+<Figure
+  src="https://www.auvik.com/wp-content/uploads/2021/01/pasted-image-1.png"
+  alt="VPN Tunnel Visualisierung"
+  caption="Ein VPN-Tunnel: Daten werden verschlüsselt durch ein fremdes Netz geleitet"
+  origin="https://www.auvik.com/franklyit/blog/vpn-split-tunneling/"
+/>
+
+### Was sieht wer?
+
+| Beobachter    | Ohne VPN                     | Mit VPN                           |
+| ------------- | ---------------------------- | --------------------------------- |
+| ISP           | Alle Domains und IPs         | Nur: "verbunden mit VPN-Server X" |
+| Lokales WLAN  | Alle unverschlüsselten Daten | Nur verschlüsselte Pakete zum VPN |
+| Ziel-Webseite | Ihre echte IP-Adresse        | IP des VPN-Servers                |
+| VPN-Anbieter  | —                            | Alle Ihre Anfragen (!)            |
+
+## VPN-Protokolle: WireGuard vs. OpenVPN
+
+Nicht alle VPNs sind gleich. Das verwendete **Protokoll** bestimmt die
+Sicherheit, Geschwindigkeit und Implementierungskomplexität.
+
+### OpenVPN
+
+OpenVPN ist seit 2001 der De-facto-Standard für kommerzielle VPN-Dienste:
+
+- **Technologie:** Nutzt TLS/SSL für den Schlüsselaustausch und OpenSSL für die
+  Verschlüsselung
+- **Algorithmen:** AES-256-GCM für Datenverschlüsselung, RSA oder ECDH für
+  Schlüsselaustausch
+- **Protokoll:** Läuft über TCP oder UDP (Port 1194 oder beliebige andere Ports)
+- **Code:** ~70.000 Zeilen Code — gross und komplex, schwerer zu auditieren
+- **Kompatibilität:** Sehr weit verbreitet, funktioniert auf fast allen Systemen
+
+### WireGuard
+
+WireGuard ist ein modernes VPN-Protokoll (2015), das mit einem anderen
+Designprinzip entwickelt wurde:
+
+- **Technologie:** Nutzt moderne Kryptographie: ChaCha20 für Verschlüsselung,
+  Poly1305 für Authentifizierung, Curve25519 für Schlüsselaustausch, BLAKE2 für
+  Hashing
+- **Code:** Nur ~4.000 Zeilen Code — radikal einfacher, leichter zu auditieren
+  und weniger Angriffsfläche
+- **Performance:** Deutlich schneller als OpenVPN, besonders auf mobilen Geräten
+- **Verbindungswechsel:** Nahtloser Wechsel zwischen WLAN und Mobilnetz
+- **Integriert in Linux-Kernel:** Seit Linux 5.6 (2020) direkt im Kernel
+
+| Eigenschaft     | OpenVPN                  | WireGuard          |
+| --------------- | ------------------------ | ------------------ |
+| Codegrösse      | ~70.000 Zeilen           | ~4.000 Zeilen      |
+| Geschwindigkeit | Mittel                   | Sehr schnell       |
+| Verschlüsselung | AES-256                  | ChaCha20-Poly1305  |
+| Reife           | Sehr erprobt (seit 2001) | Modern (seit 2015) |
+| Mobilgeräte     | Gut                      | Ausgezeichnet      |
+
+**Empfehlung:** WireGuard ist heute für die meisten Anwendungsfälle die bessere
+Wahl. OpenVPN bleibt relevant für Kompatibilität und spezielle
+Unternehmensanforderungen.
+
+## Split Tunneling — Nicht alles durch den Tunnel
+
+Standardmässig leitet ein VPN **allen** Datenverkehr durch den Tunnel. Das ist
+manchmal ineffizient oder unerwünscht. **Split Tunneling** ermöglicht es, nur
+bestimmten Datenverkehr durch den VPN-Tunnel zu leiten:
+
+**Verwendungsszenarien:**
+
+- **Firmennetzwerk:** Nur interne Firmenanwendungen laufen über den VPN-Tunnel
+  zum Firmenserver. Normal-Browsing geht direkt ins Internet — schneller und
+  entlastet den Firmen-VPN.
+- **Streaming:** Netflix direkt (für bessere Geschwindigkeit), aber E-Mails und
+  Banking über VPN.
+- **Geo-Bypass:** Nur spezifische Apps (z.B. ein Streaming-Dienst) nutzen den
+  ausländischen VPN-Server.
+
+**Technisch:** Split Tunneling konfiguriert Routing-Regeln, die bestimmten
+Datenverkehr (nach IP-Adresse, Domain oder Anwendung) am Tunnel vorbeileiten.
+
+**Sicherheitsrisiko:** Mit Split Tunneling kann nicht-getunnelter Datenverkehr
+weiterhin vom ISP eingesehen werden. In Unternehmensumgebungen kann das zu
+Datenlecks führen.
+
+<Figure
+  src="https://www.auvik.com/wp-content/uploads/2021/01/split-tunneling-1.png"
+  alt="Split Tunneling Visualisierung"
+  caption="Split Tunneling: Nur ein Teil des Datenverkehrs geht durch den VPN-Tunnel"
+  origin="https://www.auvik.com/franklyit/blog/vpn-split-tunneling/"
+/>
+
+## VPN vs. HTTPS — Zwei verschiedene Schutzschichten
+
+VPN und HTTPS lösen **unterschiedliche Probleme** und ergänzen sich:
+
+| Schutz gegen...            | HTTPS | VPN              |
+| -------------------------- | ----- | ---------------- |
+| ISP sieht Inhalte          | Ja    | Ja               |
+| ISP sieht besuchte Domains | Nein  | Ja               |
+| Mitlauschen im WLAN        | Ja    | Ja               |
+| Webseite sieht Ihre IP     | Nein  | Ja               |
+| VPN-Anbieter sieht Inhalte | —     | Nein (bei HTTPS) |
+
+**Die beste Kombination:** HTTPS + VPN. VPN schützt vor Ihrem ISP und dem
+lokalen Netz, HTTPS schützt die Inhalte sogar vor dem VPN-Anbieter.
+
+## Das Tor-Netzwerk — Anonymität durch Zwiebel-Routing
+
+**Tor** (The Onion Router) verfolgt ein anderes Ziel als kommerzielles VPN:
+maximale Anonymität. Anstatt einen einzigen VPN-Server zu nutzen, leitet Tor
+Ihren Datenverkehr durch **drei zufällig ausgewählte Relais** (Tor-Nodes):
+
+```
+Sie → Entry Node → Middle Node → Exit Node → Ziel
+```
+
+### Wie Tor Anonymität erreicht
+
+**Mehrschichtige Verschlüsselung:** Die Daten werden vor dem Senden dreifach
+verschlüsselt (wie eine Zwiebel mit mehreren Schichten):
+
+1. Die äusserste Schicht kann nur der Entry Node entschlüsseln (kennt Ihre echte
+   IP, aber nicht das Ziel)
+2. Die mittlere Schicht kann nur der Middle Node entschlüsseln (kennt weder
+   Quelle noch Ziel)
+3. Die innerste Schicht kann nur der Exit Node entschlüsseln (kennt das Ziel,
+   aber nicht Sie)
+
+**Kein einzelner Knoten** kennt sowohl den Absender als auch das Ziel — das ist
+der fundamentale Unterschied zu VPN.
+
+### Tor vs. VPN im Vergleich
+
+| Eigenschaft        | VPN                               | Tor                            |
+| ------------------ | --------------------------------- | ------------------------------ |
+| Anonymität         | Mittel (VPN-Anbieter kennt alles) | Hoch (kein Knoten kennt alles) |
+| Geschwindigkeit    | Gut                               | Langsam (3 Hops)               |
+| Vertrauen benötigt | VPN-Anbieter                      | Niemanden (dezentral)          |
+| Betrieben von      | Unternehmen                       | Freiwillige weltweit           |
+| Geeignet für       | Alltag, Streaming                 | Hohe Anonymitätsanforderungen  |
+| .onion-Seiten      | Nein                              | Ja                             |
+
+### Grenzen von Tor
+
+- **Geschwindigkeit:** 3 Hops bedeuten höhere Latenz — ungeeignet für Streaming
+  oder Gaming
+- **Exit-Node-Problem:** Der Exit Node sieht den unverschlüsselten Datenverkehr
+  (bei HTTP). HTTPS über Tor verwenden!
+- **Keine totale Anonymität:** Browser-Fingerprinting, Cookies, Login-Daten
+  können trotzdem zur Identifizierung führen
+- **Blockiert:** Viele Webseiten blockieren bekannte Tor-Exit-Nodes
+
+## Grenzen von VPN
+
+### Mythen vs. Realität
+
+**Mythos: "Mit VPN bin ich 100% anonym"** Falsch. Der VPN-Anbieter kennt Ihre
+echte IP und alle Ihre Anfragen. Dazu kommen Browser-Fingerprinting, Cookies und
+Login-Daten, die unabhängig von Ihrer IP-Adresse zur Identifikation führen
+können.
+
+**Mythos: "VPN schützt vor Malware"** Falsch. VPN verschlüsselt nur die
+Übertragung. Malware auf Ihrem Gerät ist ein anderes Problem — dafür sind
+Antivirensoftware und Updates zuständig.
+
+**Mythos: "Kostenlose VPNs sind gleichwertig"** Falsch. Ein VPN-Dienst kostet
+Geld (Server, Bandbreite, Personal). Wenn Sie nichts bezahlen, sind Sie das
+Produkt: Verkauf von Nutzungsdaten, Einblendung von Werbung oder sogar
+Weiterverkauf von Bandbreite.
+
+### No-Logs-Policy — Vertrauen oder Kontrolle?
+
+Viele VPN-Anbieter werben mit einer "No-Logs-Policy" (keine Aufzeichnungen).
+Technisch ist das prüfbar: Unabhängige Audits können die Server und den Code
+überprüfen. Achten Sie auf:
+
+- **Unabhängige Audits** durch bekannte Sicherheitsfirmen
+- **Gerichtsbarkeit:** Ist der Anbieter in einem Land registriert, das keine
+  Herausgabe von Daten erzwingen kann?
+- **Open-Source-Code:** Ist der Client-Code öffentlich einsehbar?
+
+## Wofür VPN sinnvoll ist
+
+**Empfehlenswert:**
+
+- Öffentliche WLANs (Café, Flughafen, Hotel)
+- Schutz vor ISP-Überwachung
+- Umgehung geografischer Sperren
+- Fernzugriff auf Firmennetzwerke
+
+**Weniger sinnvoll:**
+
+- Als einzige Sicherheitsmassnahme (kein Ersatz für HTTPS, Updates, starke
+  Passwörter)
+- Wenn maximale Anonymität benötigt wird (→ Tor ist besser)
+- Für sehr latenzempfindliche Anwendungen (Gaming)
+
+## Zusammenfassung
+
+Ein VPN erstellt einen verschlüsselten Tunnel zwischen Ihrem Gerät und einem
+VPN-Server, indem Pakete eingekapselt und verschlüsselt werden. **WireGuard**
+ist das moderne, schlanke Protokoll der Wahl; **OpenVPN** ist erprobt und weit
+kompatibel. **Split Tunneling** ermöglicht selektives Routing, birgt aber
+Sicherheitsrisiken. Das **Tor-Netzwerk** bietet durch
+Mehrschicht-Verschlüsselung über drei Knoten deutlich höhere Anonymität auf
+Kosten der Geschwindigkeit. Kein VPN garantiert vollständige Anonymität — es
+verschiebt das Vertrauensproblem nur vom ISP zum VPN-Anbieter.
