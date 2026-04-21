@@ -1,0 +1,295 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Figure from "@components/Figure.jsx"
+
+## Passwörter und Authentifizierung
+
+Passwörter sind die älteste und verbreitetste Methode zur Authentifizierung im
+Internet. Aber wie sicher sind sie wirklich? In diesem Kapitel schauen wir uns
+an, wie Passwörter serverseitig gespeichert werden, welche Angriffe es gibt, wie
+moderne Authentifizierungsverfahren Passwörter ergänzen oder ersetzen, und wie
+ein Passwortmanager technisch funktioniert.
+
+<LearningGoals>
+
+    - Sie verstehen, wie Passwörter mit Hashing und Salting sicher gespeichert werden.
+    - Sie kennen die wichtigsten Angriffsmethoden (Brute-Force, Rainbow Tables, Credential Stuffing, Phishing).
+    - Sie wissen, wie Zwei-Faktor-Authentifizierung (2FA) funktioniert und welche Typen es gibt.
+    - Sie kennen FIDO2/Passkeys als passwortlosen Authentifizierungsstandard und seine technische Grundlage.
+    - Sie verstehen, wie ein Passwortmanager Passwörter sicher speichert und abruft.
+
+</LearningGoals>
+
+## Wie werden Passwörter gespeichert?
+
+Ein Webserver muss bei der Anmeldung prüfen, ob das eingegebene Passwort korrekt
+ist. Er braucht also eine Möglichkeit, das Passwort mit dem gespeicherten Wert
+zu vergleichen.
+
+### Schlechte Methode: Klartext
+
+Passwörter im Klartext zu speichern ist das Schlimmste, was ein Dienst tun kann.
+Bei einem Datenbankeinbruch sind alle Passwörter sofort lesbar — und da viele
+Menschen Passwörter wiederverwenden, kompromittiert ein Einbruch oft Dutzende
+weiterer Konten.
+
+Leider passiert das bis heute: RockYou (2009): 32 Mio. Passwörter im Klartext,
+Adobe (2013): 150 Mio. schwach verschlüsselte Passwörter.
+
+### Hashing
+
+**Hash-Funktionen** sind mathematische Einwegfunktionen:
+
+- **Deterministisch:** Gleiches Eingabe → gleicher Hash
+- **Einweg:** Vom Hash zurück zum Passwort: praktisch unmöglich
+- **Kollisionsresistenz:** Zwei verschiedene Passwörter sollen (idealerweise)
+  nie den gleichen Hash erzeugen
+
+```
+SHA-256("hallo")    = 2cf24dba5fb0a30e...
+SHA-256("Hallo")    = 185f8db32921bd46...  ← Ein Grossbuchstabe: komplett anderer Hash
+SHA-256("password") = 5e884898da280471...
+```
+
+**Beim Login:**
+
+1. Nutzer gibt Passwort ein
+2. Server berechnet Hash des eingegebenen Passworts
+3. Vergleich mit gespeichertem Hash
+4. Übereinstimmung → angemeldet
+
+Der Server kennt das Passwort selbst nie — nur dessen Hash.
+
+**Geeignete Hash-Algorithmen für Passwörter:**
+
+- **bcrypt:** Speziell für Passwörter entwickelt, hat eingebautes Salting,
+  einstellbarer "Work Factor" (Kosten)
+- **Argon2:** Gewinner des Password Hashing Competition 2015, aktuell empfohlen
+- **scrypt:** Speicher-intensiv, erschwert parallele GPU-Angriffe
+
+**Nicht geeignet für Passwörter:** SHA-256, MD5 — zu schnell! Ein moderner GPU
+kann Milliarden von SHA-256-Hashes pro Sekunde berechnen.
+
+### Salting
+
+**Problem mit einfachem Hashing:** Gleiche Passwörter erzeugen gleiche Hashes.
+Wenn zwei Nutzer "password123" verwenden, haben beide denselben Hash in der
+Datenbank. Rainbow Tables — vorgefertigte Hash-zu-Passwort-Tabellen — machen
+sich das zunutze.
+
+**Lösung: Salt** — eine zufällige, einzigartige Zeichenkette, die **vor dem
+Hashing** ans Passwort angehängt wird:
+
+```
+Nutzer 1: salt₁ = "x7k3p9", Passwort = "password123"
+          → hash(salt₁ + "password123") = 8f2a...
+
+Nutzer 2: salt₂ = "m2q8r1", Passwort = "password123"
+          → hash(salt₂ + "password123") = 3c9d...  ← komplett anderer Hash!
+```
+
+Der Salt wird im Klartext neben dem Hash in der Datenbank gespeichert — das ist
+unproblematisch, denn das Salt macht Rainbow Tables unbrauchbar. Ein Angreifer
+müsste für jeden Nutzer neu eine Brute-Force-Attacke starten.
+
+## Angriffsmethoden
+
+### Brute-Force
+
+Systematisches Durchprobieren aller möglichen Passwortkombinationen:
+
+| Zeichensatz              | Passwortlänge 8 | Zeit bei 10⁹ H/s |
+| ------------------------ | --------------- | ---------------- |
+| Nur Ziffern (10 Zeichen) | 10⁸ = 100 Mio.  | < 1 Sekunde      |
+| Nur Kleinbuchstaben (26) | 26⁸ ≈ 200 Mrd.  | ~3 Minuten       |
+| Klein+Gross+Ziffern (62) | 62⁸ ≈ 218 Bio.  | ~60 Stunden      |
+| Alle Sonderzeichen (95)  | 95⁸ ≈ 6.6 Bio.  | ~76 Tage         |
+
+_Bei GPU-Clustern sind Milliarden von Hashes pro Sekunde möglich — diese Tabelle
+zeigt SHA-256 ohne Salt._
+
+**Mit bcrypt (Work Factor 12):** Nur ~100 Hashes/Sekunde → 76 Tage werden zu
+2000 Jahren!
+
+### Dictionary-Angriff
+
+Statt zufälliger Zeichen werden zuerst bekannte Passwörter und Wortlisten
+durchprobiert: `rockyou.txt` enthält 14 Millionen reale Passwörter aus einem
+Datenbankeinbruch.
+
+### Rainbow Tables
+
+Vorgefertigte Tabellen von Hash → Passwort für häufige Passwörter. Salting macht
+sie vollständig unwirksam.
+
+### Credential Stuffing
+
+Gestohlene Benutzername-Passwort-Kombinationen aus einem Datenbankeinbruch
+werden automatisiert bei anderen Diensten ausprobiert. Funktioniert, weil viele
+Menschen dasselbe Passwort für mehrere Dienste verwenden.
+
+**Gegenmassnahme:** Einzigartiges Passwort für jeden Dienst → Passwortmanager
+nötig.
+
+### Phishing
+
+Technisch starke Passwörter nützen nichts, wenn Nutzer durch gefälschte
+Webseiten oder E-Mails dazu gebracht werden, sie preiszugeben. Phishing ist
+heute der häufigste Weg, an Passwörter zu gelangen.
+
+## Zwei-Faktor-Authentifizierung (2FA)
+
+Das Prinzip von 2FA: Authentifizierung durch **zwei verschiedene Faktoren** aus
+unterschiedlichen Kategorien:
+
+| Faktor                    | Kategorie  | Beispiel                   |
+| ------------------------- | ---------- | -------------------------- |
+| Etwas, das Sie **wissen** | Knowledge  | Passwort, PIN              |
+| Etwas, das Sie **haben**  | Possession | Smartphone, Hardware-Token |
+| Etwas, das Sie **sind**   | Inherence  | Fingerabdruck, Gesicht     |
+
+2FA kombiniert typischerweise "Wissen" (Passwort) mit "Haben" (Gerät).
+
+### TOTP — Time-based One-Time Password (RFC 6238)
+
+Das verbreitetste 2FA-Verfahren für Web-Dienste:
+
+1. Bei der Einrichtung teilt der Server einen **Secret Key** (Base32-kodiert)
+   mit der Authenticator-App (oft als QR-Code dargestellt).
+2. Beim Login berechnen sowohl Server als auch App unabhängig voneinander:
+   ```
+   TOTP = HMAC-SHA1(secret_key, floor(aktuelle_Unix-Zeit / 30))
+   ```
+3. Das Ergebnis wird auf 6 Stellen gekürzt und ist **30 Sekunden gültig**.
+4. Server und App kommen zum gleichen Ergebnis, wenn die Uhren synchron sind.
+
+**Warum sicher:** Jeder Code ist einmalig, zeitgebunden, und der Secret Key
+verlässt das Gerät nie. Phishing ist trotzdem möglich (Echtzeit-Weitergabe),
+daher besser: FIDO2.
+
+### SMS-2FA
+
+Einmalcode per SMS — gilt heute als unsicher:
+
+- **SS7-Angriffe:** Das alte Telefonnetz-Protokoll kann kompromittiert werden
+- **SIM-Swapping:** Angreifer überzeugen den Mobilanbieter, die Nummer auf eine
+  neue SIM zu übertragen
+- Besser als kein 2FA, aber wenn möglich durch TOTP oder FIDO2 ersetzen
+
+### Hardware-Token (FIDO U2F / FIDO2)
+
+Physische Geräte wie YubiKey — das stärkste 2FA für Kontos ohne Passkeys.
+
+## FIDO2 / Passkeys — Die passwortlose Zukunft
+
+**FIDO2** (Fast IDentity Online) ist ein offener Standard der FIDO Alliance, der
+Passwörter durch kryptographisch starke Authentifizierung ersetzt. **Passkeys**
+sind die Implementierung von FIDO2 in Betriebssystemen wie iOS, Android, Windows
+und macOS.
+
+### Wie Passkeys funktionieren
+
+FIDO2 basiert auf **asymmetrischer Kryptographie (Public-Key-Kryptographie)**:
+
+**Registrierung:**
+
+1. Nutzer möchte sich bei `example.com` registrieren
+2. Das Gerät generiert ein **Schlüsselpaar**: privater Schlüssel + öffentlicher
+   Schlüssel
+3. Der **öffentliche Schlüssel** wird an den Server übertragen und gespeichert
+4. Der **private Schlüssel** verlässt das Gerät **niemals** (gespeichert im
+   sicheren Element des Geräts: Secure Enclave, TPM-Chip)
+
+**Anmeldung:**
+
+1. Server schickt eine zufällige **Challenge** an den Browser
+2. Das Gerät signiert die Challenge mit dem privaten Schlüssel (nach
+   biometrischer Bestätigung: Fingerabdruck, Gesicht oder PIN)
+3. Browser schickt die **Signatur** an den Server
+4. Server prüft die Signatur mit dem gespeicherten öffentlichen Schlüssel →
+   angemeldet
+
+```
+Server → Challenge (zufällige Zahl)
+Gerät  → challenge + private_key → Signatur
+Server → verify(Signatur, public_key) → OK
+```
+
+### Warum Passkeys besser sind als Passwörter + 2FA
+
+| Eigenschaft            | Passwort + TOTP                    | Passkey                                      |
+| ---------------------- | ---------------------------------- | -------------------------------------------- |
+| Phishing-resistent     | Nein (Echtzeit-Weitergabe möglich) | **Ja** (Domain ist in Signatur eingebettet)  |
+| Brute-Force möglich    | Ja                                 | Nein (privater Schlüssel niemals übertragen) |
+| Datenbank-Einbruch     | Passwort-Hash gestohlen            | Nur öffentlicher Schlüssel → wertlos         |
+| Benutzerfreundlichkeit | Mühsam (Passwort + Code)           | Einfach (Fingerabdruck)                      |
+
+**Phishing-Schutz durch Domain-Binding:** Die Challenge enthält die Domain des
+Servers. Wenn ein Angreifer eine gefälschte Seite `examp1e.com` betreibt, ist
+die Signatur des Nutzers für `example.com` wertlos — das Gerät signiert
+`examp1e.com`, der echte Server erwartet `example.com`.
+
+### Passkeys und Synchronisation
+
+Passkeys können (je nach Implementierung):
+
+- **Gerätegebunden:** Nur auf dem einen Gerät — sehr sicher, aber schwer zu
+  teilen
+- **Synchronisiert:** Über iCloud Keychain (Apple), Google Password Manager,
+  Windows Hello → Komfort bei mehreren Geräten
+
+## Passwortmanager — Wie funktionieren sie technisch?
+
+Ein guter Passwortmanager speichert für jeden Dienst ein einzigartiges, langes,
+zufälliges Passwort — damit ist Credential Stuffing wirkungslos.
+
+### Technischer Aufbau
+
+**Master-Passwort → Schlüsselableitung → Verschlüsselungsschlüssel:**
+
+```
+Master-Passwort + Salt → PBKDF2/Argon2 → Vault-Schlüssel (256 Bit)
+```
+
+**PBKDF2** (Password-Based Key Derivation Function 2) ist absichtlich langsam —
+das macht Brute-Force gegen das Master-Passwort teuer.
+
+**Vault-Verschlüsselung:**
+
+```
+Vault-Daten (JSON mit Passwörtern) → AES-256-GCM → verschlüsselter Blob
+```
+
+**Zero-Knowledge-Architektur (z.B. Bitwarden, 1Password):**
+
+- Nur der verschlüsselte Blob wird auf Servern gespeichert
+- Der Vault-Schlüssel wird aus dem Master-Passwort lokal abgeleitet
+- Der Anbieter sieht die Passwörter **niemals** — selbst wenn sein Server
+  gehackt wird, sind die Daten wertlos ohne das Master-Passwort
+
+### Wichtige Merkmale bei der Wahl
+
+- **Open Source:** Code öffentlich → unabhängige Prüfung möglich (z.B.
+  Bitwarden)
+- **Unabhängige Audits:** Externe Sicherheitsfirmen prüfen regelmässig
+- **Zero-Knowledge:** Anbieter kann nicht auf Ihre Passwörter zugreifen
+- **2FA für den Manager selbst:** Besonders wichtig!
+
+### Risiken
+
+- **Vergessenes Master-Passwort:** Daten nicht wiederherstellbar
+  (Zero-Knowledge)
+- **Kompromittiertes Master-Passwort:** Alle Passwörter exponiert →
+  Master-Passwort sehr stark wählen und nirgendwo wiederverwenden
+- **Gerätekompromittierung:** Wenn das Gerät mit Malware befallen ist, kann der
+  Passwortmanager beim Entsperren kompromittiert werden
+
+## Zusammenfassung
+
+Passwörter werden sicher durch **Hashing + Salting** (idealerweise bcrypt oder
+Argon2) gespeichert. Angriffe wie Brute-Force, Rainbow Tables und Credential
+Stuffing unterstreichen, warum einzigartige, lange Passwörter nötig sind.
+**Zwei-Faktor-Authentifizierung** mit TOTP erhöht die Sicherheit erheblich;
+SMS-2FA ist unsicher. **FIDO2/Passkeys** ersetzen Passwörter durch
+kryptographisch starke Public-Key-Authentifizierung und sind als einzige Methode
+komplett phishing-resistent. **Passwortmanager** ermöglichen einzigartige
+Passwörter für alle Dienste und schützen sie mit Zero-Knowledge-Verschlüsselung.

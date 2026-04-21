@@ -1,0 +1,224 @@
+{
+  "title": "Quiz: Diffie-Hellman-Schlüsselaustausch",
+  "description": "Testen Sie Ihr Verständnis des Diffie-Hellman-Protokolls, des diskreten Logarithmus und von ECDH.",
+  "questions": [
+    {
+      "id": 1,
+      "type": "multiple-choice",
+      "question": "Was löst das Diffie-Hellman-Protokoll?",
+      "answers": [
+        {
+          "text": "Zwei Parteien können über einen öffentlich einsehbaren Kanal einen gemeinsamen geheimen Schlüssel vereinbaren.",
+          "correct": true
+        },
+        {
+          "text": "Daten werden mit einem gemeinsamen Schlüssel verschlüsselt übertragen.",
+          "correct": false
+        },
+        {
+          "text": "Die Identität der Kommunikationspartner wird verifiziert.",
+          "correct": false
+        },
+        { "text": "Nachrichten werden digital signiert.", "correct": false }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "multiple-choice",
+      "question": "Was ist der 'diskrete Logarithmus' im Kontext von Diffie-Hellman?",
+      "answers": [
+        {
+          "text": "Das Problem, bei gegebenem g^a mod p und g, den Exponenten a zu finden — bei grossen Zahlen praktisch unlösbar.",
+          "correct": true
+        },
+        {
+          "text": "Die Division zweier Primzahlen ohne Rest.",
+          "correct": false
+        },
+        {
+          "text": "Der Logarithmus einer Zahl in einem binären Zahlensystem.",
+          "correct": false
+        },
+        {
+          "text": "Eine Methode, den öffentlichen aus dem privaten Schlüssel zu berechnen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "multiple-choice",
+      "question": "In der Farbmischungs-Analogie für DH: Was entspricht dem 'privaten Schlüssel'?",
+      "answers": [
+        {
+          "text": "Die eigene geheime Farbe, die nie preisgegeben wird.",
+          "correct": true
+        },
+        {
+          "text": "Die öffentlich bekannte gemeinsame Ausgangsfarbe.",
+          "correct": false
+        },
+        {
+          "text": "Die Mischfarbe, die an den Partner geschickt wird.",
+          "correct": false
+        },
+        { "text": "Die gemeinsam errechnete Endfarbe.", "correct": false }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "true-false",
+      "question": "Beim klassischen Diffie-Hellman-Protokoll wird der gemeinsame geheime Schlüssel direkt über das Netz übertragen.",
+      "answers": [
+        { "text": "Wahr", "correct": false },
+        {
+          "text": "Falsch – der gemeinsame Schlüssel wird von beiden Seiten unabhängig berechnet, nie übertragen.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "multiple-choice",
+      "question": "Was ist die kritische Schwäche des klassischen Diffie-Hellman-Protokolls?",
+      "answers": [
+        {
+          "text": "Es bietet keine Authentifizierung — ein Angreifer kann sich als Man-in-the-Middle einklinken.",
+          "correct": true
+        },
+        {
+          "text": "Der diskrete Logarithmus lässt sich bei kleinen Parametern leicht berechnen.",
+          "correct": false
+        },
+        { "text": "Es ist zu langsam für die Praxis.", "correct": false },
+        {
+          "text": "Es funktioniert nur mit geraden Primzahlen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "multiple-choice",
+      "question": "Berechnen Sie: Was ist 7 mod 3?",
+      "answers": [
+        { "text": "1", "correct": true },
+        { "text": "2", "correct": false },
+        { "text": "3", "correct": false },
+        { "text": "0", "correct": false }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "multiple-choice",
+      "question": "Was ist 'Ephemeral Diffie-Hellman' (DHE)?",
+      "answers": [
+        {
+          "text": "Für jede TLS-Verbindung werden neue, kurzlebige DH-Schlüssel generiert und nach der Sitzung gelöscht.",
+          "correct": true
+        },
+        {
+          "text": "Ein DH-Protokoll, das nur einmal konfiguriert werden muss.",
+          "correct": false
+        },
+        {
+          "text": "Eine vereinfachte Version von DH für eingebettete Systeme.",
+          "correct": false
+        },
+        {
+          "text": "DH mit sehr kurzen Schlüsseln für schnelle Verbindungen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "multiple-choice",
+      "question": "Warum ist ECDH (Elliptic Curve DH) effizienter als klassisches DH?",
+      "answers": [
+        {
+          "text": "Weil elliptische Kurven mit kürzeren Schlüsseln die gleiche Sicherheit bieten — ECC-256 entspricht ca. RSA/DH-3072.",
+          "correct": true
+        },
+        { "text": "Weil ECDH keine Primzahlen benötigt.", "correct": false },
+        {
+          "text": "Weil ECDH nur einen statt zwei öffentliche Parameter benötigt.",
+          "correct": false
+        },
+        {
+          "text": "Weil ECDH keine Modulo-Operation benötigt.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "multiple-choice",
+      "question": "Wie verhindert Perfect Forward Secrecy (PFS), dass aufgezeichneter Verkehr später entschlüsselt wird?",
+      "answers": [
+        {
+          "text": "Die ephemeren Sitzungsschlüssel werden nach jeder Verbindung sicher gelöscht — selbst der Server kann sie nicht rekonstruieren.",
+          "correct": true
+        },
+        {
+          "text": "Indem die Verbindung mehrfach verschlüsselt wird.",
+          "correct": false
+        },
+        {
+          "text": "Indem der Server-Schlüssel täglich geändert wird.",
+          "correct": false
+        },
+        {
+          "text": "Indem alle Daten nach dem Senden sofort gelöscht werden.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "true-false",
+      "question": "TLS 1.3 erzwingt Perfect Forward Secrecy durch ausschliessliche Verwendung von ECDHE für den Schlüsselaustausch.",
+      "answers": [
+        { "text": "Wahr", "correct": true },
+        {
+          "text": "Falsch – TLS 1.3 erlaubt weiterhin statisches RSA.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "multiple-choice",
+      "question": "Was sind die öffentlichen Parameter beim Diffie-Hellman-Protokoll?",
+      "answers": [
+        {
+          "text": "Eine grosse Primzahl p und ein Generator g — beide können öffentlich bekannt sein.",
+          "correct": true
+        },
+        {
+          "text": "Die geheimen Zufallszahlen a und b der beiden Parteien.",
+          "correct": false
+        },
+        {
+          "text": "Die berechneten Werte A und B nach der Modulo-Operation.",
+          "correct": false
+        },
+        { "text": "Der gemeinsame geheime Schlüssel K.", "correct": false }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "multiple-choice",
+      "question": "Welche moderne elliptische Kurve wird bevorzugt in TLS 1.3 eingesetzt?",
+      "answers": [
+        {
+          "text": "x25519 (Curve25519), entwickelt von Daniel J. Bernstein",
+          "correct": true
+        },
+        { "text": "RSA-4096", "correct": false },
+        { "text": "DES-EDE3", "correct": false },
+        { "text": "MD5-Curve", "correct": false }
+      ]
+    }
+  ]
+}

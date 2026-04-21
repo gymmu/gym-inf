@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import Section from "@components/Section"
 import SolutionBlock from "@components/SolutionBlock"
 import SimpleSplitView from "@components/algorithm/SimpleSplitView"
@@ -16,14 +17,16 @@ export default function FmsAlgorithmenStrings() {
   const palindromChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[String eingeben]
-    Input --> Init["left = 0 right = Länge - 1"]
-    Init --> Check{"left &lt; right?"}
-    Check -->|Nein| IsPalindrom[Ausgabe: Palindrom]
-    Check -->|Ja| Compare{"String[left] === String[right]?"}
-    Compare -->|Nein| NotPalindrom[Ausgabe: Kein Palindrom]
-    Compare -->|Ja| Move["left = left + 1 right = right - 1"]
-    Move --> Check
+    Start([Start]) --> Input[Gib String ein]
+    Input --> Init1[Setze links auf 0]
+    Init1 --> Init2[Setze rechts auf Länge minus 1]
+    Init2 --> Check{Ist links &lt; rechts?}
+    Check -->|Nein| IsPalindrom[Gib aus: Palindrom]
+    Check -->|Ja| Compare{Ist Zeichen links = Zeichen rechts?}
+    Compare -->|Nein| NotPalindrom[Gib aus: Kein Palindrom]
+    Compare -->|Ja| Move1[Erhöhe links um 1]
+    Move1 --> Move2[Verringere rechts um 1]
+    Move2 --> Check
     IsPalindrom --> End([Ende])
     NotPalindrom --> End
   `
@@ -31,17 +34,18 @@ flowchart TD
   const charCountChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[String eingeben]
-    Input --> Init["i = 0 counts = {}"]
-    Init --> Check{"i &lt; Länge?"}
-    Check -->|Nein| Output[Ausgabe: counts]
-    Check -->|Ja| GetChar["char = String[i]"]
-    GetChar --> Exists{"char in counts?"}
-    Exists -->|Ja| Increment["counts[char] = counts[char] + 1"]
-    Exists -->|Nein| InitCount["counts[char] = 1"]
-    Increment --> IncI["i = i + 1"]
-    InitCount --> IncI
-    IncI --> Check
+    Start([Start]) --> Input[Gib String ein]
+    Input --> Init1[Setze i auf 0]
+    Init1 --> Init2[Erstelle leere Zähltabelle]
+    Init2 --> Check{Ist i &lt; Länge?}
+    Check -->|Nein| Output[Gib Zähltabelle aus]
+    Check -->|Ja| GetChar[Hole Zeichen an Position i]
+    GetChar --> Exists{Ist Zeichen schon in Tabelle?}
+    Exists -->|Ja| Increment[Erhöhe Zähler für Zeichen um 1]
+    Exists -->|Nein| InitCount[Setze Zähler für Zeichen auf 1]
+    Increment --> Next[Gehe zum nächsten Zeichen]
+    InitCount --> Next
+    Next --> Check
     Output --> End([Ende])
   `
 
@@ -55,6 +59,19 @@ flowchart TD
     <>
       <section>
         <h2>String-Algorithmen</h2>
+        
+        <div style={{ 
+          backgroundColor: "var(--color-bg-light)", 
+          padding: "15px", 
+          borderRadius: "8px",
+          marginBottom: "20px",
+          borderLeft: "4px solid var(--color-primary)"
+        }}>
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
+          Wenn dir Begriffe unklar sind, schaue im{" "}
+          <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
+        </div>
+
         <p>
           Strings (Zeichenketten) sind in der Programmierung allgegenwärtig. Wir
           schauen uns zwei grundlegende String-Algorithmen an:

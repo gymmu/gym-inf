@@ -1,0 +1,215 @@
+{
+  "title": "Quiz: VPN und Anonymität",
+  "description": "Testen Sie Ihr Wissen über VPN-Protokolle, Split Tunneling, das Tor-Netzwerk und die Grenzen von Anonymität.",
+  "questions": [
+    {
+      "id": 1,
+      "type": "multiple-choice",
+      "question": "Was ist der wesentliche Unterschied zwischen WireGuard und OpenVPN?",
+      "answers": [
+        {
+          "text": "WireGuard hat deutlich weniger Code (~4.000 vs. ~70.000 Zeilen), ist schneller und nutzt moderne Kryptographie.",
+          "correct": true
+        },
+        {
+          "text": "OpenVPN ist neuer und sicherer als WireGuard.",
+          "correct": false
+        },
+        {
+          "text": "WireGuard funktioniert nur auf Linux, OpenVPN auf allen Systemen.",
+          "correct": false
+        },
+        {
+          "text": "OpenVPN ist kostenlos, WireGuard kostenpflichtig.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "multiple-choice",
+      "question": "Was ist 'Split Tunneling' bei einem VPN?",
+      "answers": [
+        {
+          "text": "Nur ein Teil des Datenverkehrs wird durch den VPN-Tunnel geleitet, der Rest geht direkt ins Internet.",
+          "correct": true
+        },
+        {
+          "text": "Die VPN-Verbindung wird auf zwei Server aufgeteilt für mehr Sicherheit.",
+          "correct": false
+        },
+        {
+          "text": "Die Bandbreite wird zwischen VPN und direktem Internet aufgeteilt.",
+          "correct": false
+        },
+        {
+          "text": "Zwei VPN-Verbindungen werden gleichzeitig verwendet.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "multiple-choice",
+      "question": "Wie viele Relais (Nodes) leitet das Tor-Netzwerk Ihren Datenverkehr durch?",
+      "answers": [
+        { "text": "3 (Entry Node, Middle Node, Exit Node)", "correct": true },
+        { "text": "1 (wie bei einem VPN)", "correct": false },
+        { "text": "2 (Entry Node und Exit Node)", "correct": false },
+        { "text": "Variable Anzahl, immer mindestens 5", "correct": false }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "true-false",
+      "question": "Mit einem VPN ist man vollständig anonym im Internet, da die eigene IP-Adresse verborgen ist.",
+      "answers": [
+        { "text": "Wahr", "correct": false },
+        {
+          "text": "Falsch – der VPN-Anbieter kennt die echte IP, und Browser-Fingerprinting kann zur Identifikation führen.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "multiple-choice",
+      "question": "Was sieht der ISP, wenn Sie ein VPN verwenden?",
+      "answers": [
+        {
+          "text": "Nur dass Sie mit einem VPN-Server verbunden sind, aber nicht welche Webseiten Sie besuchen.",
+          "correct": true
+        },
+        {
+          "text": "Gar nichts — der ISP ist vollständig blind.",
+          "correct": false
+        },
+        { "text": "Genau das Gleiche wie ohne VPN.", "correct": false },
+        {
+          "text": "Die IP-Adresse des Zielservers, aber nicht den Inhalt.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "multiple-choice",
+      "question": "Welcher Algorithmus wird von WireGuard für die Datenverschlüsselung verwendet?",
+      "answers": [
+        { "text": "ChaCha20-Poly1305", "correct": true },
+        { "text": "AES-256-GCM", "correct": false },
+        { "text": "RSA-4096", "correct": false },
+        { "text": "Blowfish", "correct": false }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "multiple-choice",
+      "question": "Warum bietet Tor mehr Anonymität als ein normales VPN?",
+      "answers": [
+        {
+          "text": "Kein einzelner Knoten kennt sowohl den Absender als auch das Ziel der Kommunikation.",
+          "correct": true
+        },
+        { "text": "Tor verschlüsselt stärker als VPN.", "correct": false },
+        {
+          "text": "Tor wird von der Regierung betrieben und ist daher vertrauenswürdiger.",
+          "correct": false
+        },
+        {
+          "text": "Tor verwendet mehr Bandbreite und ist deshalb anonymer.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "true-false",
+      "question": "Kostenlose VPN-Anbieter sind gleich sicher wie bezahlte, da VPN-Technologie kostenlos ist.",
+      "answers": [
+        { "text": "Wahr", "correct": false },
+        {
+          "text": "Falsch – kostenlose VPNs finanzieren sich oft durch den Verkauf von Nutzerdaten.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "multiple-choice",
+      "question": "Was schützt HTTPS, das ein VPN allein nicht schützt?",
+      "answers": [
+        {
+          "text": "Den Inhalt der Kommunikation vor dem VPN-Anbieter selbst.",
+          "correct": true
+        },
+        { "text": "Die IP-Adresse vor der Ziel-Webseite.", "correct": false },
+        { "text": "Die DNS-Anfragen vor dem ISP.", "correct": false },
+        { "text": "Den Standort vor der Ziel-Webseite.", "correct": false }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "multiple-choice",
+      "question": "Was ist ein Nachteil des Tor-Netzwerks gegenüber einem VPN?",
+      "answers": [
+        {
+          "text": "Deutlich höhere Latenz durch die drei Hops, ungeeignet für Streaming und Gaming.",
+          "correct": true
+        },
+        { "text": "Tor ist weniger anonym als ein VPN.", "correct": false },
+        {
+          "text": "Tor kann keine HTTPS-Verbindungen nutzen.",
+          "correct": false
+        },
+        {
+          "text": "Tor kostet mehr als kommerzielle VPN-Dienste.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "multiple-choice",
+      "question": "Was ist 'Tunneling' in Bezug auf VPN?",
+      "answers": [
+        {
+          "text": "Die originalen IP-Pakete werden in neue Pakete eingepackt (Enkapsulierung) und verschlüsselt übertragen.",
+          "correct": true
+        },
+        {
+          "text": "Eine direkte physische Verbindung unter der Erde zwischen VPN-Servern.",
+          "correct": false
+        },
+        {
+          "text": "Eine Technik, die VPN-Traffic durch Firewalls leitet.",
+          "correct": false
+        },
+        {
+          "text": "Das Komprimieren von Datenpaketen für schnellere Übertragung.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "multiple-choice",
+      "question": "Worauf sollte man bei der Wahl eines VPN-Anbieters besonders achten?",
+      "answers": [
+        {
+          "text": "Unabhängige Audits, No-Logs-Policy und Gerichtsbarkeit des Unternehmens.",
+          "correct": true
+        },
+        {
+          "text": "Nur die Anzahl der verfügbaren Server weltweit.",
+          "correct": false
+        },
+        {
+          "text": "Ob der Anbieter viele Werbung macht und bekannte Influencer wirbt.",
+          "correct": false
+        },
+        { "text": "Ob der Anbieter kostenlos ist.", "correct": false }
+      ]
+    }
+  ]
+}

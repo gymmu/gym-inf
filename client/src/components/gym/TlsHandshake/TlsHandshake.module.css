@@ -1,0 +1,108 @@
+.container {
+  margin: 1.5rem 0;
+  font-size: 0.88rem;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 2.5rem 1fr;
+  gap: 0;
+}
+
+.colHeader {
+  font-weight: 700;
+  text-align: center;
+  padding: 0.4rem;
+  background-color: rgba(128, 128, 128, 0.1);
+  border: 1px solid var(--color-gray);
+  margin-bottom: 0.5rem;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding-top: 0.5rem;
+}
+
+.phase {
+  display: grid;
+  grid-template-columns: 1fr 2.5rem 1fr;
+  grid-column: 1 / 4;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+
+.phaseLeft,
+.phaseRight {
+  padding: 0.45rem 0.7rem;
+  border-radius: 4px;
+  font-size: 0.83rem;
+  line-height: 1.5;
+}
+
+.phaseLeft {
+  background-color: rgba(108, 92, 231, 0.08);
+  border: 1px solid rgba(108, 92, 231, 0.25);
+  text-align: right;
+}
+
+.phaseRight {
+  background-color: rgba(0, 184, 148, 0.08);
+  border: 1px solid rgba(0, 184, 148, 0.25);
+  text-align: left;
+}
+
+.phaseCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  gap: 0.15rem;
+  padding: 0 0.2rem;
+}
+
+.phaseArrow {
+  font-size: 1rem;
+}
+
+.phaseLabel {
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.empty {
+  background: none;
+  border: none;
+}
+
+.finalBanner {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  background-color: rgba(0, 184, 148, 0.1);
+  border: 1px solid rgba(0, 184, 148, 0.35);
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 500px) {
+  .columns,
+  .phase {
+    grid-template-columns: 1fr;
+  }
+
+  .phaseLeft {
+    text-align: left;
+  }
+
+  .phaseCenter {
+    flex-direction: row;
+    justify-content: center;
+  }
+}

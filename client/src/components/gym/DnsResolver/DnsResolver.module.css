@@ -1,0 +1,67 @@
+.container {
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.stepNumber {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: rgba(128, 128, 128, 0.15);
+  border: 2px solid var(--color-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-top: 0.1rem;
+}
+
+.stepContent {
+  padding-bottom: 1.2rem;
+  flex: 1;
+}
+
+.stepContent strong {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.connector {
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.connectorLine {
+  width: 2px;
+  height: 1.2rem;
+  background-color: var(--color-gray);
+  opacity: 0.4;
+}
+
+.flow {
+  margin-top: 1.2rem;
+  padding: 0.8rem 1rem;
+  background-color: rgba(128, 128, 128, 0.07);
+  border-left: 3px solid var(--color-gray);
+  font-family: monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+}

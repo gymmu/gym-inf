@@ -1,0 +1,30 @@
+import QuizFromJson from "@components/QuizFromJson.jsx"
+import quizData from "@quizzes/gym-passwoerter-quiz.json"
+
+## Quiz: Passwörter und Authentifizierung
+
+Testen Sie Ihr Wissen über Hashing, Salting, Zwei-Faktor-Authentifizierung,
+FIDO2/Passkeys und Passwortmanager!
+
+Dieses Quiz basiert auf den Inhalten des [Passwörter-Kapitels](./passwoerter).
+Falls Sie Schwierigkeiten mit den Fragen haben, schauen Sie sich das Kapitel
+noch einmal an.
+
+---
+
+<QuizFromJson quizData={quizData} />
+
+---
+
+## Zusammenfassung der Lernziele
+
+Nach Abschluss dieses Quiz sollten Sie:
+
+- Erklären können, warum bcrypt/Argon2 besser als SHA-256 für Passwörter sind
+- Den Unterschied zwischen Hashing und Salting kennen
+- Die Funktionsweise von TOTP (Authenticator Apps) beschreiben können
+- FIDO2/Passkeys und ihre Phishing-Resistenz erklären können
+- Die Zero-Knowledge-Architektur eines Passwortmanagers verstehen
+
+Haben Sie Fragen? Schauen Sie sich das [Passwörter-Kapitel](./passwoerter)
+nochmals an!

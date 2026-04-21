@@ -91,6 +91,12 @@ export default defineConfig({
           dest: "./assets/sites/md/praktikum/",
         },
         {
+          src: normalizePath(
+            path.resolve(__dirname, "src/sites/md/gym") + "/*.mdx",
+          ),
+          dest: "./assets/sites/md/gym/",
+        },
+        {
           src: normalizePath(path.resolve(__dirname, "public/icons") + "/*svg"),
           dest: "./assets/icons/",
         },
@@ -133,7 +139,11 @@ export default defineConfig({
             if (id.includes("react-dom")) {
               return "react-vendor"
             }
-            if (id.includes("react") && !id.includes("react-router") && !id.includes("remotion")) {
+            if (
+              id.includes("react") &&
+              !id.includes("react-router") &&
+              !id.includes("remotion")
+            ) {
               return "react-vendor"
             }
             // React Router - comes after React check

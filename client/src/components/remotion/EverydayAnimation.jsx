@@ -19,7 +19,7 @@ export function generateSchaltjahrSteps(year) {
     year,
     isLeap: null,
     description: `Jahr eingeben: ${year}`,
-    mermaidNode: "Jahr eingeben",
+    mermaidNode: "Gib Jahr ein",
     variables: { year },
   })
 
@@ -28,7 +28,7 @@ export function generateSchaltjahrSteps(year) {
     year,
     isLeap: null,
     description: `Prüfe: ${year} mod 4 = ${year % 4}`,
-    mermaidNode: "Jahr mod 4 = 0?",
+    mermaidNode: "Ist Rest bei Division durch 4 gleich 0?",
     variables: { year, rest4: year % 4 },
   })
 
@@ -37,7 +37,7 @@ export function generateSchaltjahrSteps(year) {
       year,
       isLeap: false,
       description: `Nein! ${year} ist kein Schaltjahr`,
-      mermaidNode: "Ausgabe: Kein Schaltjahr",
+      mermaidNode: "Gib aus: Kein Schaltjahr",
       variables: {},
     })
 
@@ -57,7 +57,7 @@ export function generateSchaltjahrSteps(year) {
     year,
     isLeap: null,
     description: `Ja! Prüfe weiter: ${year} mod 100 = ${year % 100}`,
-    mermaidNode: "Jahr mod 100 = 0?",
+    mermaidNode: "Ist Rest bei Division durch 100 gleich 0?",
     variables: { year, rest100: year % 100 },
   })
 
@@ -66,7 +66,7 @@ export function generateSchaltjahrSteps(year) {
       year,
       isLeap: true,
       description: `Nein! ${year} ist ein Schaltjahr`,
-      mermaidNode: "Ausgabe: Schaltjahr",
+      mermaidNode: "Gib aus: Schaltjahr",
       variables: {},
     })
 
@@ -86,7 +86,7 @@ export function generateSchaltjahrSteps(year) {
     year,
     isLeap: null,
     description: `Ja! Letzte Prüfung: ${year} mod 400 = ${year % 400}`,
-    mermaidNode: "Jahr mod 400 = 0?",
+    mermaidNode: "Ist Rest bei Division durch 400 gleich 0?",
     variables: { year, rest400: year % 400 },
   })
 
@@ -95,7 +95,7 @@ export function generateSchaltjahrSteps(year) {
       year,
       isLeap: true,
       description: `Ja! ${year} ist ein Schaltjahr`,
-      mermaidNode: "Ausgabe: Schaltjahr",
+      mermaidNode: "Gib aus: Schaltjahr",
       variables: {},
     })
   } else {
@@ -103,7 +103,7 @@ export function generateSchaltjahrSteps(year) {
       year,
       isLeap: false,
       description: `Nein! ${year} ist kein Schaltjahr`,
-      mermaidNode: "Ausgabe: Kein Schaltjahr",
+      mermaidNode: "Gib aus: Kein Schaltjahr",
       variables: {},
     })
   }
@@ -141,7 +141,7 @@ export function generateDurchschnittSteps(array) {
     sum: 0,
     average: null,
     description: `Array eingeben: [${array.join(", ")}]`,
-    mermaidNode: "Array eingeben",
+    mermaidNode: "Gib Liste ein",
     variables: { n },
   })
 
@@ -150,9 +150,19 @@ export function generateDurchschnittSteps(array) {
     i: 0,
     sum: 0,
     average: null,
-    description: "Initialisiere: i = 0, sum = 0",
-    mermaidNode: "i = 0 sum = 0",
-    variables: { i: 0, sum: 0 },
+    description: "Setze i auf 0",
+    mermaidNode: "Setze i auf 0",
+    variables: { i: 0 },
+  })
+
+  steps.push({
+    array,
+    i: 0,
+    sum: 0,
+    average: null,
+    description: "Setze Summe auf 0",
+    mermaidNode: "Setze Summe auf 0",
+    variables: { sum: 0 },
   })
 
   for (let i = 0; i < n; i++) {
@@ -163,7 +173,7 @@ export function generateDurchschnittSteps(array) {
       sum,
       average: null,
       description: `Prüfe: i=${i} < ${n}?`,
-      mermaidNode: "i < Länge?",
+      mermaidNode: "Ist i < Länge?",
       variables: { i, n, sum },
     })
 
@@ -176,7 +186,7 @@ export function generateDurchschnittSteps(array) {
       sum,
       average: null,
       description: `Addiere: sum = ${sum - array[i]} + ${array[i]} = ${sum}`,
-      mermaidNode: "sum = sum + Array[i]",
+      mermaidNode: "Addiere Element an Position i zu Summe",
       variables: { i, sum },
     })
 
@@ -185,8 +195,8 @@ export function generateDurchschnittSteps(array) {
       i,
       sum,
       average: null,
-      description: `i erhöhen: ${i} → ${i + 1}`,
-      mermaidNode: "i = i + 1",
+      description: `Gehe zum nächsten Element`,
+      mermaidNode: "Gehe zum nächsten Element",
       variables: { i: i + 1, sum },
     })
   }
@@ -198,7 +208,7 @@ export function generateDurchschnittSteps(array) {
     sum,
     average: null,
     description: `Prüfe: i=${n} < ${n}? Nein`,
-    mermaidNode: "i < Länge?",
+    mermaidNode: "Ist i < Länge?",
     variables: { i: n, sum },
   })
 
@@ -210,7 +220,7 @@ export function generateDurchschnittSteps(array) {
     sum,
     average,
     description: `Berechne: average = ${sum} / ${n} = ${average.toFixed(2)}`,
-    mermaidNode: "average = sum / Länge",
+    mermaidNode: "Berechne Durchschnitt: Summe geteilt durch Länge",
     variables: { sum, n, average: average.toFixed(2) },
   })
 
@@ -220,7 +230,7 @@ export function generateDurchschnittSteps(array) {
     sum,
     average,
     description: `Durchschnitt: ${average.toFixed(2)}`,
-    mermaidNode: "Ausgabe: average",
+    mermaidNode: "Gib Durchschnitt aus",
     variables: { average: average.toFixed(2) },
   })
 
@@ -253,7 +263,7 @@ export function generateNotenSteps(punkte) {
     punkte,
     note: null,
     description: `Punkte eingeben: ${punkte}`,
-    mermaidNode: "Punkte eingeben",
+    mermaidNode: "Gib Punkte ein",
     variables: { punkte },
   })
 
@@ -264,7 +274,7 @@ export function generateNotenSteps(punkte) {
     punkte,
     note: null,
     description: `Prüfe: ${punkte} >= 90?`,
-    mermaidNode: "Punkte >= 90?",
+    mermaidNode: "Sind Punkte ≥ 90?",
     variables: { punkte },
   })
 
@@ -274,7 +284,7 @@ export function generateNotenSteps(punkte) {
       punkte,
       note,
       description: `Ja! Note = ${note}`,
-      mermaidNode: "Note = Sehr gut",
+      mermaidNode: "Setze Note auf Sehr gut",
       variables: { punkte, note },
     })
   } else {
@@ -283,7 +293,7 @@ export function generateNotenSteps(punkte) {
       punkte,
       note: null,
       description: `Nein. Prüfe: ${punkte} >= 75?`,
-      mermaidNode: "Punkte >= 75?",
+      mermaidNode: "Sind Punkte ≥ 75?",
       variables: { punkte },
     })
 
@@ -293,7 +303,7 @@ export function generateNotenSteps(punkte) {
         punkte,
         note,
         description: `Ja! Note = ${note}`,
-        mermaidNode: "Note = Gut",
+        mermaidNode: "Setze Note auf Gut",
         variables: { punkte, note },
       })
     } else {
@@ -302,7 +312,7 @@ export function generateNotenSteps(punkte) {
         punkte,
         note: null,
         description: `Nein. Prüfe: ${punkte} >= 60?`,
-        mermaidNode: "Punkte >= 60?",
+        mermaidNode: "Sind Punkte ≥ 60?",
         variables: { punkte },
       })
 
@@ -312,7 +322,7 @@ export function generateNotenSteps(punkte) {
           punkte,
           note,
           description: `Ja! Note = ${note}`,
-          mermaidNode: "Note = Befriedigend",
+          mermaidNode: "Setze Note auf Befriedigend",
           variables: { punkte, note },
         })
       } else {
@@ -321,7 +331,7 @@ export function generateNotenSteps(punkte) {
           punkte,
           note: null,
           description: `Nein. Prüfe: ${punkte} >= 50?`,
-          mermaidNode: "Punkte >= 50?",
+          mermaidNode: "Sind Punkte ≥ 50?",
           variables: { punkte },
         })
 
@@ -331,7 +341,7 @@ export function generateNotenSteps(punkte) {
             punkte,
             note,
             description: `Ja! Note = ${note}`,
-            mermaidNode: "Note = Ausreichend",
+            mermaidNode: "Setze Note auf Ausreichend",
             variables: { punkte, note },
           })
         } else {
@@ -340,7 +350,7 @@ export function generateNotenSteps(punkte) {
             punkte,
             note,
             description: `Nein. Note = ${note}`,
-            mermaidNode: "Note = Ungenügend",
+            mermaidNode: "Setze Note auf Ungenügend",
             variables: { punkte, note },
           })
         }
@@ -352,7 +362,7 @@ export function generateNotenSteps(punkte) {
     punkte,
     note,
     description: `Ausgabe: ${note}`,
-    mermaidNode: "Ausgabe: Note",
+    mermaidNode: "Gib Note aus",
     variables: { note },
   })
 

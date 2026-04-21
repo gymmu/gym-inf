@@ -1,0 +1,100 @@
+.container {
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.title {
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.diagram {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.4rem;
+}
+
+.box {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--color-gray);
+  border-radius: 4px;
+  text-align: center;
+  min-width: 7rem;
+}
+
+.boxLabel {
+  font-size: 0.78rem;
+  opacity: 0.65;
+  margin-bottom: 0.2rem;
+}
+
+.boxAddr {
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.arrow {
+  font-size: 1.2rem;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.routerBox {
+  background-color: rgba(128, 128, 128, 0.12);
+  border-color: var(--color-gray);
+  padding: 0.5rem 0.9rem;
+  border-radius: 4px;
+  text-align: center;
+  min-width: 7rem;
+}
+
+.routerLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  opacity: 0.7;
+  margin-bottom: 0.2rem;
+}
+
+.routerDetail {
+  font-family: monospace;
+  font-size: 0.78rem;
+}
+
+.tableTitle {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.88rem;
+}
+
+.natTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  font-family: monospace;
+}
+
+.natTable th,
+.natTable td {
+  border: 1px solid var(--color-gray);
+  padding: 0.4rem 0.8rem;
+}
+
+.natTable th {
+  background-color: rgba(128, 128, 128, 0.12);
+  font-family: inherit;
+  font-weight: 600;
+}
+
+@media (max-width: 560px) {
+  .diagram {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .arrow {
+    transform: rotate(90deg);
+  }
+}

@@ -1,0 +1,316 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Figure from "@components/Figure.jsx"
+
+## Das Internet
+
+Das Internet ist ein globales Netzwerk aus Millionen von Computern, Servern und
+Routern. Es verbindet Geräte auf der ganzen Welt miteinander und ermöglicht den
+Austausch von Daten in Millisekunden. Um zu verstehen, wie das Internet
+funktioniert, müssen wir uns anschauen, wie Daten tatsächlich übertragen werden
+— von der physischen Signalübertragung bis hin zu Protokollen, die
+sicherstellen, dass die richtigen Daten beim richtigen Empfänger ankommen.
+
+<LearningGoals>
+
+    - Sie wissen, wie Daten in Paketen übertragen werden und warum diese Aufteilung sinnvoll ist.
+    - Sie verstehen das TCP/IP-Modell mit seinen vier Schichten.
+    - Sie kennen den Unterschied zwischen TCP und UDP und wissen, wann welches Protokoll verwendet wird.
+    - Sie können den Ablauf einer DNS-Auflösung vom Browser bis zum autoritativen Nameserver erklären.
+    - Sie verstehen, was HTTP und HTTPS sind und was HTTPS tatsächlich schützt.
+    - Sie wissen, warum alle Verbindungen ohne Verschlüsselung öffentlich einsehbar sind.
+
+</LearningGoals>
+
+## Was ist das Internet?
+
+Das Internet ist kein einzelnes Gerät und kein einzelnes Unternehmen — es ist
+ein **Netzwerk von Netzwerken**. Tausende von Internet Service Providers (ISPs),
+Universitäten, Unternehmen und Regierungen betreiben eigene Netzwerke, die alle
+miteinander verbunden sind. Das Herzstück dieser Verbindungen sind **Router**:
+Geräte, die Datenpakete entgegennehmen und gezielt weiterleiten.
+
+<Figure
+  src="https://media.geeksforgeeks.org/wp-content/uploads/20230420093202/Internet-image-(2).webp"
+  alt="Darstellung des Internets"
+  caption="Das Internet als Netzwerk von Netzwerken"
+  origin="https://www.geeksforgeeks.org/computer-science-fundamentals/what-is-internet-definition-uses-working-advantages-and-disadvantages/"
+/>
+
+## Wie werden Daten übertragen? — Pakete
+
+Wenn Sie eine Webseite aufrufen, wird die Anfrage nicht als ganzes Stück
+verschickt, sondern in viele kleine **Pakete** aufgeteilt. Jedes Paket:
+
+- enthält einen Teil der Daten (Nutzdaten / Payload)
+- hat einen **Header** mit Metainformationen: Absender-IP, Empfänger-IP,
+  Paketnummer, Prüfsumme
+- kann einen anderen Weg durch das Netz nehmen als andere Pakete der gleichen
+  Übertragung
+- wird am Ziel wieder in der richtigen Reihenfolge zusammengesetzt
+
+Diese Aufteilung hat grosse Vorteile: Wenn ein Paket verloren geht, muss nur
+dieses eine Paket wiederholt werden. Ausserdem kann das Netz die Last auf
+verschiedene Wege verteilen (**Load Balancing**).
+
+<Figure
+  src="https://cdn.kastatic.org/ka-perseus-images/337190cba133e19ee9d8b5878453f915971a59cd.svg"
+  alt="Visualisierung von IP-Paketen"
+  caption="Daten werden in Pakete aufgeteilt und können verschiedene Wege nehmen"
+  origin="https://www.khanacademy.org/computing/computers-and-internet/xcae6f4a7ff015e7d:the-internet/xcae6f4a7ff015e7d:routing-with-redundancy/a/ip-packets"
+/>
+
+## Das TCP/IP-Modell (Internet-Schichtenmodell)
+
+Um die Komplexität des Internets zu bewältigen, wurde das Protokoll-Stack in
+**Schichten** aufgeteilt. Jede Schicht hat eine klar definierte Aufgabe und
+kommuniziert nur mit der Schicht direkt darunter und darüber. Das
+**TCP/IP-Modell** (auch Internet-Modell genannt) kennt vier Schichten:
+
+| Schicht | Name               | Aufgabe                                 | Beispiel-Protokolle          |
+| ------- | ------------------ | --------------------------------------- | ---------------------------- |
+| 4       | Anwendungsschicht  | Direkte Kommunikation mit der Anwendung | HTTP, HTTPS, DNS, SMTP, FTP  |
+| 3       | Transportschicht   | Zuverlässige Ende-zu-Ende-Übertragung   | TCP, UDP                     |
+| 2       | Internetschicht    | Adressierung und Routing                | IP (IPv4, IPv6), ICMP        |
+| 1       | Netzzugangsschicht | Physische Übertragung im lokalen Netz   | Ethernet, WLAN (IEEE 802.11) |
+
+**Wie das in der Praxis funktioniert:**
+
+Wenn Ihr Browser eine Webseite anfordert, fügt jede Schicht beim Senden einen
+**Header** hinzu (Enkapsulierung). Beim Empfänger wird jeder Header Schicht für
+Schicht wieder entfernt (Dekapsulierung):
+
+```
+[HTTP-Header | HTTP-Daten]           ← Anwendungsschicht
+[TCP-Header | HTTP-Header | Daten]   ← Transportschicht
+[IP-Header | TCP-Header | ... ]      ← Internetschicht
+[Ethernet-Header | IP-Header | ...]  ← Netzzugangsschicht
+```
+
+### Warum Schichten?
+
+Das Schichtenmodell ermöglicht **Modularität**: Wenn Ethernet durch eine neue
+Technologie ersetzt wird, müssen TCP, IP und HTTP nicht verändert werden. Die
+Schichten arbeiten unabhängig voneinander.
+
+## TCP vs. UDP — Zuverlässig oder schnell?
+
+Die Transportschicht kennt zwei grundlegende Protokolle, die ganz
+unterschiedliche Ziele verfolgen:
+
+### TCP — Transmission Control Protocol
+
+TCP garantiert, dass alle Pakete ankommen und in der richtigen Reihenfolge
+zusammengesetzt werden:
+
+1. **Verbindungsaufbau** (3-Way-Handshake): Client schickt `SYN` → Server
+   antwortet `SYN-ACK` → Client bestätigt `ACK`
+2. **Zuverlässige Übertragung**: Jedes Paket wird quittiert (`ACK`). Fehlende
+   Pakete werden automatisch wiederholt.
+3. **Flusskontrolle**: Die Übertragungsrate wird an den langsameren Partner
+   angepasst.
+4. **Verbindungsabbau**: Sauberer Abschluss mit `FIN`-Paketen.
+
+**Verwendet für:** HTTP/HTTPS, E-Mail (SMTP, IMAP), SSH, Dateitransfer (FTP)
+
+**Nachteil:** Der Overhead durch Quittungen und Handshake verlangsamt die
+Übertragung leicht.
+
+### UDP — User Datagram Protocol
+
+UDP ist ein verbindungsloses Protokoll ohne Garantien — "fire and forget":
+
+- Kein Verbindungsaufbau, kein Handshake
+- Keine Quittierungen, keine Wiederholung verlorener Pakete
+- Sehr geringe Latenz (Verzögerung)
+
+**Verwendet für:** DNS-Anfragen, Video-Streaming, Online-Gaming, VoIP
+(Telefonie), DNS over HTTPS (DoH)
+
+**Warum UDP für Streaming?** Bei einem Video-Stream ist ein verlorenes Paket
+unwichtig — besser ein kurzer Aussetzer als eine Verzögerung durch Wiederholung.
+
+| Eigenschaft        | TCP               | UDP                    |
+| ------------------ | ----------------- | ---------------------- |
+| Verbindung         | Ja (Handshake)    | Nein                   |
+| Zuverlässigkeit    | Garantiert        | Keine Garantie         |
+| Reihenfolge        | Garantiert        | Keine Garantie         |
+| Latenz             | Höher             | Sehr niedrig           |
+| Overhead           | Höher             | Minimal                |
+| Typische Anwendung | HTTP, E-Mail, SSH | DNS, Streaming, Gaming |
+
+## IP-Adressen — Die Postadresse des Internets
+
+Jedes Gerät im Internet benötigt eine eindeutige Adresse: die **IP-Adresse**.
+
+### IPv4
+
+Eine IPv4-Adresse besteht aus 4 Bytes (32 Bit), dargestellt als vier
+Dezimalzahlen:
+
+```
+192.168.1.42
+```
+
+Maximale Anzahl IPv4-Adressen: 2³² = **4.294.967.296** — zu wenig für alle
+Geräte weltweit!
+
+**Private IP-Adressen** (nicht im öffentlichen Internet routbar):
+
+- `10.0.0.0/8` — grosses Firmennetzwerk
+- `172.16.0.0/12` — mittleres Netzwerk
+- `192.168.0.0/16` — Heimnetzwerk (Ihr Router hat z.B. `192.168.1.1`)
+
+**Spezielle Adressen:**
+
+- `127.0.0.1` — Loopback (der eigene Computer, "localhost")
+- `8.8.8.8` — öffentlicher DNS-Server von Google
+
+### IPv6
+
+IPv6 löst das Adressenknappheitsproblem mit 128-Bit-Adressen:
+
+```
+2001:0db8:85a3:0000:0000:8a2e:0370:7334
+```
+
+Maximale Anzahl: 2¹²⁸ ≈ **340 Sextillionen** Adressen — genug für jedes Gerät
+auf der Welt.
+
+### NAT — Network Address Translation
+
+Da nicht jedes Gerät eine öffentliche IPv4-Adresse bekommt, verwendet Ihr Router
+**NAT**: Er übersetzt die privaten IP-Adressen in Ihrem Heimnetz in seine eine
+öffentliche IP-Adresse. Von aussen sieht alles Ihres Heimnetzes nach einer
+einzigen IP-Adresse aus.
+
+<Figure
+  src="https://www.cloudflare.com/img/learning/network-layer/what-is-nat/nat-example.svg"
+  alt="NAT Beispiel"
+  caption="NAT: Mehrere Geräte im Heimnetz teilen sich eine öffentliche IP-Adresse"
+  origin="https://www.cloudflare.com/learning/network-layer/what-is-nat/"
+/>
+
+## DNS — Das Telefonbuch des Internets
+
+Menschen merken sich Domainnamen wie `github.com` — Computer sprechen aber
+ausschliesslich über IP-Adressen. Das **Domain Name System (DNS)** übersetzt
+Domainnamen in IP-Adressen.
+
+### DNS-Auflösung: Schritt für Schritt
+
+Wenn Sie `https://www.github.com` eingeben:
+
+1. **Browser-Cache prüfen:** Hat der Browser die IP-Adresse kürzlich abgefragt?
+   → direkt verwenden (kein weiterer DNS-Aufruf nötig)
+
+2. **Betriebssystem-Cache / hosts-Datei:** Ist die Adresse lokal gespeichert?
+
+3. **Anfrage an den Resolver:** Ihr Router oder Ihr ISP betreibt einen
+   **DNS-Resolver** (rekursiver Nameserver). Dieser übernimmt die weitere Suche
+   für Sie.
+
+4. **Resolver fragt Root-Nameserver:** Es gibt 13 Root-Nameserver-Gruppen
+   weltweit (A bis M). Der Resolver fragt: "Wer ist zuständig für `.com`?"
+
+5. **TLD-Nameserver:** Der Root-Server verweist auf den **TLD-Nameserver**
+   (Top-Level-Domain) für `.com`. Dieser weiss: "Für `github.com` ist Nameserver
+   X zuständig."
+
+6. **Autoritativer Nameserver:** Dieser kennt die tatsächliche IP-Adresse von
+   `www.github.com` und antwortet mit z.B. `140.82.121.4`.
+
+7. **Resolver gibt Antwort zurück** und speichert sie im Cache (TTL = Time to
+   Live).
+
+```
+Browser → Resolver → Root-NS → TLD-NS (.com) → Autoritativer NS (github.com)
+                                                 ← IP: 140.82.121.4
+```
+
+**Sicherheitsaspekt:** DNS-Anfragen sind standardmässig **unverschlüsselt** (UDP
+Port 53)! Ihr ISP sieht jede DNS-Anfrage. Lösungen:
+
+- **DNS over HTTPS (DoH):** DNS-Anfragen über verschlüsselte HTTPS-Verbindung
+- **DNS over TLS (DoT):** DNS über TLS-Tunnel
+
+## Das Problem: Alles ist öffentlich sichtbar
+
+Standardmässig sind alle IP-Pakete **unverschlüsselt**. Das bedeutet: Jeder
+Knoten auf dem Weg (Router, ISP, öffentliches WLAN) kann die Paketinhalte lesen.
+
+Das ist wie Postkarten statt verschlossene Briefe: Jeder Briefträger kann
+mitlesen.
+
+Konkrete Risiken:
+
+- **ISP** sieht alle Domains, die Sie aufrufen
+- Im **öffentlichen WLAN** kann jeder im gleichen Netz mitlauschen
+- **Passwörter, Kreditkartendaten** können bei unverschlüsselten Verbindungen
+  gestohlen werden
+- **Man-in-the-Middle-Angriffe**: Jemand schaltet sich in die Verbindung ein und
+  liest/manipuliert den Datenverkehr
+
+## HTTP vs. HTTPS
+
+### HTTP — unverschlüsselt
+
+**HTTP** (HyperText Transfer Protocol) ist das Protokoll für die Übertragung von
+Webseiten. Alle Daten werden im Klartext übertragen — jeder auf dem Weg kann sie
+lesen.
+
+### HTTPS — verschlüsselt
+
+**HTTPS** (HTTP Secure) verschlüsselt die Verbindung mit **TLS** (Transport
+Layer Security). Die Verschlüsselung findet in der Transportschicht statt, bevor
+die HTTP-Daten übermittelt werden.
+
+Was HTTPS schützt:
+
+- Den **Inhalt** der Kommunikation (Passwörter, Formulardaten, Seiteninhalte)
+- Die **Integrität** der Daten (keine Manipulation unterwegs möglich)
+- Die **Authentizität** des Servers (Sie sprechen wirklich mit der richtigen
+  Webseite, nicht mit einem Imitator)
+
+Was HTTPS **nicht** schützt:
+
+- Ihr ISP sieht immer noch **welche Domain** Sie aufrufen (aber nicht den Pfad
+  oder den Inhalt)
+- Metadaten wie Zeitpunkt, Datenmenge und IP-Adresse sind weiterhin sichtbar
+
+<Figure
+  src="https://www.cloudflare.com/img/learning/security/glossary/what-is-ssl/http-vs-https.svg"
+  alt="HTTP vs HTTPS"
+  caption="Vergleich: Unverschlüsselte HTTP- vs. verschlüsselte HTTPS-Verbindung"
+  origin="https://www.cloudflare.com/de-de/learning/ssl/why-is-http-not-secure/"
+/>
+
+## Router und das Routing-Protokoll
+
+Router entscheiden, wohin jedes Paket als nächstes gesendet wird. Sie bauen
+dafür **Routing-Tabellen** auf, die den besten Weg zu jedem Netzwerk
+beschreiben.
+
+Im Internet kommunizieren Router untereinander über **BGP** (Border Gateway
+Protocol): Das "Klebeprotokoll des Internets", das die Routen zwischen den
+grossen Netzwerken (Autonomous Systems, AS) aushandelt. Jeder ISP, jedes grosse
+Unternehmen hat eine eigene AS-Nummer.
+
+**Traceroute** ist ein Tool, mit dem Sie sehen können, über welche Router ein
+Paket läuft:
+
+```bash
+traceroute github.com
+```
+
+## Zusammenfassung
+
+Das Internet ist ein Netzwerk von Netzwerken, das auf dem
+**TCP/IP-Schichtenmodell** basiert. Daten werden in **Pakete** aufgeteilt und
+über **Router** weitergeleitet. **IP-Adressen** identifizieren Geräte, **DNS**
+übersetzt Domainnamen in IP-Adressen. **TCP** garantiert zuverlässige
+Übertragung, **UDP** maximiert die Geschwindigkeit. Standardmässig sind alle
+Verbindungen öffentlich lesbar — **HTTPS** verschlüsselt den Inhalt der
+Kommunikation, schützt aber nicht vollständig vor Metadaten-Analyse.
+
+**Schlüsselbegriffe:** IP, TCP, UDP, DNS, HTTP/HTTPS, Router, NAT, BGP,
+OSI-Schichtenmodell

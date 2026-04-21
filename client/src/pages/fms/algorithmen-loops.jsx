@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import Section from "@components/Section"
 import SimpleSplitView from "@components/algorithm/SimpleSplitView"
 import {
@@ -78,7 +79,7 @@ flowchart TD
         }}>
           <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
           Wenn dir Begriffe unklar sind, schaue im{" "}
-          <a href="/fms/algorithmen-glossar">Flowchart-Glossar</a> nach.
+          <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
         </div>
 
         <p>

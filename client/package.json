@@ -10,7 +10,7 @@
     "build:ssg": "vite-react-ssg build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview --host",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build:ssg",
     "deploy": "gh-pages -d docs"
   },
   "dependencies": {

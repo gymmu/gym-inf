@@ -1,0 +1,248 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Figure from "@components/Figure.jsx"
+
+## Diffie-Hellman-Schlüsselaustausch
+
+Das Diffie-Hellman-Protokoll ist eine der genialsten Erfindungen der modernen
+Kryptographie. Es löst ein scheinbar unlösbares Problem: Wie können zwei
+Parteien über einen öffentlich einsehbaren Kanal einen gemeinsamen geheimen
+Schlüssel vereinbaren, ohne dass jemand, der die gesamte Kommunikation mithört,
+diesen Schlüssel herleiten kann?
+
+Whitfield Diffie und Martin Hellman veröffentlichten dieses Protokoll 1976 — es
+revolutionierte die Kryptographie und macht das moderne Internet möglich.
+
+<LearningGoals>
+
+    - Sie verstehen das Schlüsselaustausch-Problem und warum es nicht trivial lösbar ist.
+    - Sie können den Diffie-Hellman-Schlüsselaustausch Schritt für Schritt erklären.
+    - Sie verstehen das Konzept des diskreten Logarithmus als Sicherheitsgrundlage.
+    - Sie kennen die Schwäche des klassischen DH und wie Man-in-the-Middle-Angriffe funktionieren.
+    - Sie wissen, was Ephemeral Diffie-Hellman (DHE/ECDHE) ist und wie er Perfect Forward Secrecy ermöglicht.
+    - Sie kennen die elliptische Kurven-Variante (ECDH) und warum sie effizient ist.
+
+</LearningGoals>
+
+## Das Problem: Gemeinsamer Schlüssel über unsichere Leitung
+
+Stellen Sie sich vor, Alice und Bob möchten verschlüsselt kommunizieren. Sie
+brauchen einen gemeinsamen geheimen Schlüssel. Aber sie haben bisher noch nie
+kommuniziert, und jede Kommunikation wird von Eve (Eavesdropper = Lauscherin)
+mitgehört.
+
+**Naive Ansätze und warum sie scheitern:**
+
+1. **Alice schickt den Schlüssel direkt:** Eve hört ihn mit → wertlos.
+2. **Trifft sich vorher:** Nicht praktisch für Millionen von
+   Internet-Verbindungen.
+3. **Vertrauenswürdiger Dritter:** Skaliert nicht und erfordert Vertrauen.
+
+Diffie-Hellman löst das mit Mathematik.
+
+## Die Farbmischungs-Analogie
+
+Bevor wir zur Mathematik kommen, hilft eine intuitive Analogie:
+
+**Annahmen:**
+
+- Farben mischen ist einfach
+- Eine Mischfarbe wieder zu trennen ist praktisch unmöglich
+- Jeder sieht die öffentliche Ausgangsfarbe (gelb)
+
+**Ablauf:**
+
+1. Alice und Bob einigen sich öffentlich auf eine **gemeinsame Farbe**: Gelb
+2. Alice wählt ihre **geheime Farbe**: Blau → mischt Gelb + Blau = **Türkis**
+   (schickt Türkis an Bob)
+3. Bob wählt seine **geheime Farbe**: Rot → mischt Gelb + Rot = **Orange**
+   (schickt Orange an Alice)
+4. Alice nimmt Bobs Orange und mischt ihre geheime Farbe Blau dazu:
+   Gelb+Rot+Blau
+5. Bob nimmt Alices Türkis und mischt seine geheime Farbe Rot dazu:
+   Gelb+Blau+Rot
+6. **Ergebnis: Beide haben die gleiche Mischfarbe** — obwohl Eve nur Gelb,
+   Türkis und Orange gesehen hat!
+
+Eve kann die geheime Endfarbe nicht berechnen, weil sie Türkis nicht in Gelb und
+Blau trennen kann.
+
+## Die Mathematik: Modulare Arithmetik
+
+Die Farbanalogie ist schön, aber für Computer brauchen wir Mathematik. Der
+Schlüssel ist die **Modulo-Operation** (Rest bei ganzzahliger Division):
+
+```
+17 mod 5 = 2    (17 = 3 × 5 + 2)
+23 mod 7 = 2    (23 = 3 × 7 + 2)
+100 mod 13 = 9  (100 = 7 × 13 + 9)
+```
+
+**Modulare Potenzen** sind leicht zu berechnen:
+
+```
+3^4 mod 17 = 81 mod 17 = 13
+```
+
+**Aber:** Gegeben `13` und Basis `3`, Modulus `17` — was ist der Exponent?
+
+```
+3^? mod 17 = 13   →  ? = 4
+```
+
+Diese Umkehrung ist der **diskrete Logarithmus** — und bei grossen Zahlen
+praktisch unlösbar. Das ist die mathematische Grundlage von Diffie-Hellman.
+
+## Das Diffie-Hellman-Protokoll
+
+### Öffentliche Parameter
+
+Alice und Bob einigen sich öffentlich auf zwei Zahlen (die Eve ruhig kennen
+darf):
+
+- **p** = eine grosse Primzahl (in der Praxis: 2048-4096 Bit)
+- **g** = ein Generator (eine Basis, meist 2 oder 5)
+
+### Schritt-für-Schritt-Beispiel (vereinfacht mit kleinen Zahlen)
+
+```
+Öffentlich bekannt: p = 23, g = 5
+```
+
+**Alice:**
+
+- Wählt geheime Zahl `a = 6` (behält sie für sich)
+- Berechnet: A = g^a mod p = 5^6 mod 23 = 15625 mod 23 = **8**
+- Schickt **A = 8** an Bob
+
+**Bob:**
+
+- Wählt geheime Zahl `b = 15` (behält er für sich)
+- Berechnet: B = g^b mod p = 5^15 mod 23 = 30517578125 mod 23 = **19**
+- Schickt **B = 19** an Alice
+
+**Alice berechnet den gemeinsamen Schlüssel:**
+
+```
+K = B^a mod p = 19^6 mod 23 = 47045881 mod 23 = 2
+```
+
+**Bob berechnet den gemeinsamen Schlüssel:**
+
+```
+K = A^b mod p = 8^15 mod 23 = 35184372088832 mod 23 = 2
+```
+
+**Beide erhalten K = 2** — das ist der gemeinsame geheime Schlüssel!
+
+### Warum Eve nicht mithören kann
+
+Eve sieht: `p = 23`, `g = 5`, `A = 8`, `B = 19`
+
+Um den Schlüssel zu berechnen, bräuchte Eve Alices geheimes `a` oder Bobs
+geheimes `b`. Das wäre der **diskrete Logarithmus**:
+
+```
+5^a mod 23 = 8   →  finde a
+```
+
+Mit kleinen Zahlen geht das noch (a = 6). Aber mit echten DH-Parametern:
+
+```
+p = 2048-Bit-Primzahl (eine Zahl mit ~617 Dezimalstellen)
+g = 2
+A = g^a mod p  (ebenfalls ~617 Dezimalstellen)
+```
+
+Das diskrete Logarithmusproblem bei solchen Grössen ist mit heutigen Computern
+**praktisch unlösbar** — die bekanntesten Algorithmen würden länger als das
+Alter des Universums benötigen.
+
+## Man-in-the-Middle — Die Schwäche von DH
+
+DH löst das Schlüsselaustausch-Problem, aber hat eine kritische Schwäche: Es
+bietet keine **Authentifizierung**. Eve kann sich als Mittelsmann einschalten:
+
+```
+Alice ←→ Eve ←→ Bob
+```
+
+1. Alice schickt A an Bob → Eve fängt ab, antwortet mit eigenem E_a
+2. Bob schickt B an Alice → Eve fängt ab, antwortet mit eigenem E_b
+3. Eve hat **zwei separate** DH-Verbindungen: eine mit Alice, eine mit Bob
+4. Eve kann alles lesen und weiterleiten — Alice und Bob merken nichts
+
+**Lösung:** Digitale Zertifikate. Der Server beweist seine Identität durch eine
+von einer CA signierte digitale Signatur. So kann Eve nicht einfach ihren
+eigenen Schlüssel unterjubeln, ohne dass Ihr Browser warnt.
+
+## Ephemeral Diffie-Hellman (DHE/ECDHE)
+
+### Das Problem mit statischen Schlüsseln
+
+Wenn immer der gleiche private DH-Schlüssel verwendet wird:
+
+- Aufgezeichneter Verkehr kann entschlüsselt werden, sobald der Schlüssel
+  irgendwann kompromittiert wird
+
+### Ephemeral DH — Einmalschlüssel für jede Sitzung
+
+**Ephemeral** (kurzlebig) bedeutet: Für jede TLS-Verbindung werden **neue,
+zufällige DH-Schlüssel** generiert und nach der Sitzung sicher gelöscht.
+
+```
+Verbindung 1: Neues DH-Schlüsselpaar (a₁, A₁) → Sitzungsschlüssel K₁ → gelöscht
+Verbindung 2: Neues DH-Schlüsselpaar (a₂, A₂) → Sitzungsschlüssel K₂ → gelöscht
+Verbindung 3: Neues DH-Schlüsselpaar (a₃, A₃) → Sitzungsschlüssel K₃ → gelöscht
+```
+
+Das ist **Perfect Forward Secrecy**: Selbst wenn ein Angreifer irgendwann den
+langfristigen Server-Schlüssel kompromittiert, kann er keine vergangenen
+Sitzungen entschlüsseln, weil die ephemeren Schlüssel längst gelöscht sind.
+
+**TLS 1.3** erzwingt PFS — nur noch ECDHE ist erlaubt.
+
+## Elliptic Curve Diffie-Hellman (ECDH)
+
+Das klassische DH arbeitet mit Zahlen in `Z_p` (ganzzahlige Modulo-Arithmetik).
+Die **elliptische Kurven-Variante** (ECDH) arbeitet stattdessen mit Punkten auf
+einer elliptischen Kurve.
+
+### Was ist eine elliptische Kurve?
+
+Eine elliptische Kurve hat die Form:
+
+```
+y² = x³ + ax + b  (über einem endlichen Körper)
+```
+
+Auf dieser Kurve kann man Punkte "addieren" — das Ergebnis ist immer wieder ein
+Punkt auf der Kurve. Diese Punktaddition ist die Einwegoperation:
+
+- **Leicht:** Punkt P k-mal addieren: `k × P = Q`
+- **Schwer:** Gegeben P und Q, finde k → elliptischer Kurven diskreter
+  Logarithmus
+
+### Warum ECDH besser ist als klassisches DH
+
+| Eigenschaft                | DH (klassisch)   | ECDH              |
+| -------------------------- | ---------------- | ----------------- |
+| Sicherheitsniveau 128 Bit  | 3072-Bit-Modulus | 256-Bit-Kurve     |
+| Schlüssellänge             | Gross            | Klein             |
+| Rechenaufwand              | Höher            | Deutlich geringer |
+| Geeignet für mobile Geräte | Eingeschränkt    | Ausgezeichnet     |
+
+**Heute verwendete Kurven in TLS 1.3:**
+
+- `x25519` (Curve25519): Modern, sehr schnell, von Daniel J. Bernstein
+- `P-256` (secp256r1): NIST-Standard
+
+## Zusammenfassung
+
+Das **Diffie-Hellman-Protokoll** löst das Schlüsselaustausch-Problem durch
+modulare Exponentiation: Beide Parteien berechnen denselben geheimen Wert, ohne
+ihn jemals zu übertragen. Die Sicherheit beruht auf der Schwierigkeit des
+**diskreten Logarithmusproblem**. Die Schwäche — fehlende Authentifizierung —
+wird durch **digitale Zertifikate** behoben. **Ephemeral DH (DHE/ECDHE)**
+erzeugt für jede Verbindung neue Schlüssel, was **Perfect Forward Secrecy**
+garantiert. **ECDH** bietet dieselbe Sicherheit mit viel kleineren Schlüsseln
+und ist daher der heutige Standard in TLS 1.3.

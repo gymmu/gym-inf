@@ -1,0 +1,224 @@
+{
+  "title": "Quiz: Netzwerkkomponenten und -sicherheit",
+  "description": "Testen Sie Ihr Wissen über Router, Switches, Subnetting, NAT, Firewalls und Port-Forwarding.",
+  "questions": [
+    {
+      "id": 1,
+      "type": "multiple-choice",
+      "question": "Was ist der wesentliche Unterschied zwischen einem Hub und einem Switch?",
+      "answers": [
+        {
+          "text": "Ein Switch leitet Pakete gezielt an den richtigen Port weiter (anhand der MAC-Adresse), ein Hub sendet an alle.",
+          "correct": true
+        },
+        { "text": "Ein Hub ist schneller als ein Switch.", "correct": false },
+        {
+          "text": "Ein Switch arbeitet mit IP-Adressen, ein Hub mit MAC-Adressen.",
+          "correct": false
+        },
+        {
+          "text": "Ein Hub kann mehrere Netzwerke verbinden, ein Switch nicht.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "multiple-choice",
+      "question": "Wie viele nutzbare Hosts gibt es in einem /28-Subnetz?",
+      "answers": [
+        { "text": "14 Hosts", "correct": true },
+        { "text": "16 Hosts", "correct": false },
+        { "text": "28 Hosts", "correct": false },
+        { "text": "30 Hosts", "correct": false }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "multiple-choice",
+      "question": "Was speichert ein Router in seiner Routing-Tabelle?",
+      "answers": [
+        {
+          "text": "Welche Netzwerke über welchen nächsten Hop (Next Hop) erreichbar sind.",
+          "correct": true
+        },
+        {
+          "text": "Eine Liste aller verbundenen Geräte mit ihren MAC-Adressen.",
+          "correct": false
+        },
+        {
+          "text": "Alle besuchten Webseiten der Netzwerkteilnehmer.",
+          "correct": false
+        },
+        { "text": "Die IP-Adressen aller DNS-Server.", "correct": false }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "multiple-choice",
+      "question": "Wie funktioniert NAT beim Weiterleiten von Antwortpaketen an das richtige Gerät im lokalen Netz?",
+      "answers": [
+        {
+          "text": "Durch eine NAT-Tabelle, die interne IP:Port auf externe IP:Port abbildet, und beim Eingang die Übersetzung umkehrt.",
+          "correct": true
+        },
+        {
+          "text": "Das Zielgerät sendet regelmässig eine Anfrage, und der Router merkt sich die letzte Anfrage.",
+          "correct": false
+        },
+        {
+          "text": "Alle Antwortpakete werden an alle Geräte im Netzwerk gesendet.",
+          "correct": false
+        },
+        {
+          "text": "NAT verwendet DNS, um das richtige Gerät zu finden.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "true-false",
+      "question": "NAT allein ist ein ausreichender Ersatz für eine Firewall.",
+      "answers": [
+        { "text": "Wahr", "correct": false },
+        {
+          "text": "Falsch – NAT bietet indirekten Schutz, ist aber kein vollwertiger Ersatz für eine Firewall.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "multiple-choice",
+      "question": "Was ist der Vorteil einer 'stateful' Firewall gegenüber einer 'stateless' Firewall?",
+      "answers": [
+        {
+          "text": "Sie verfolgt den Zustand von Verbindungen und erlaubt Antwortpakete automatisch, ohne explizite Regeln.",
+          "correct": true
+        },
+        {
+          "text": "Sie ist schneller, weil sie keinen Zustand speichern muss.",
+          "correct": false
+        },
+        {
+          "text": "Sie blockiert alle eingehenden Verbindungen.",
+          "correct": false
+        },
+        { "text": "Sie kann nur HTTP-Verkehr filtern.", "correct": false }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "multiple-choice",
+      "question": "Wofür wird Port-Forwarding benötigt?",
+      "answers": [
+        {
+          "text": "Um von aussen auf einen Server im lokalen Netzwerk zugreifen zu können, der hinter NAT versteckt ist.",
+          "correct": true
+        },
+        {
+          "text": "Um die Internetgeschwindigkeit zu erhöhen.",
+          "correct": false
+        },
+        { "text": "Um DNS-Anfragen zu beschleunigen.", "correct": false },
+        {
+          "text": "Um WLAN-Geräte mit dem kabelgebundenen Netz zu verbinden.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "multiple-choice",
+      "question": "Was ist eine DMZ (Demilitarized Zone) in der Netzwerkarchitektur?",
+      "answers": [
+        {
+          "text": "Ein Netzwerksegment zwischen Internet und internem Netz für öffentlich zugängliche Server, das bei Kompromittierung das interne Netz schützt.",
+          "correct": true
+        },
+        {
+          "text": "Ein Netzwerk ohne Sicherheitsregeln für Tests.",
+          "correct": false
+        },
+        {
+          "text": "Eine Zone, in der keine Verschlüsselung verwendet wird.",
+          "correct": false
+        },
+        {
+          "text": "Ein VPN-Server für externe Mitarbeitende.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "true-false",
+      "question": "WPA2 mit einem starken Passwort gilt heute noch als sicher für WLAN-Verschlüsselung.",
+      "answers": [
+        {
+          "text": "Wahr – WPA2 (AES) ist weiterhin sicher bei einem starken Passwort.",
+          "correct": true
+        },
+        {
+          "text": "Falsch – WPA2 ist vollständig veraltet und unsicher.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "multiple-choice",
+      "question": "Was ist ein VLAN und wozu dient es?",
+      "answers": [
+        {
+          "text": "Ein virtuelles LAN, das ein physisches Netzwerk logisch in getrennte Segmente aufteilt, ohne separate Hardware.",
+          "correct": true
+        },
+        { "text": "Ein VPN für lokale Netzwerke.", "correct": false },
+        {
+          "text": "Ein drahtloses Netzwerk mit erhöhter Reichweite.",
+          "correct": false
+        },
+        {
+          "text": "Ein Netzwerkprotokoll für virtuelle Maschinen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "multiple-choice",
+      "question": "Welche IP-Adresse gehört zum privaten Adressbereich gemäss RFC 1918?",
+      "answers": [
+        { "text": "172.20.0.1", "correct": true },
+        { "text": "8.8.8.8", "correct": false },
+        { "text": "142.250.74.14", "correct": false },
+        { "text": "1.1.1.1", "correct": false }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "multiple-choice",
+      "question": "Was ist ein DNS-Sinkhole?",
+      "answers": [
+        {
+          "text": "Ein lokaler DNS-Server, der bekannte Werbe- und Tracking-Domains mit einer ungültigen IP beantwortet und so Werbung netzwerkweit blockiert.",
+          "correct": true
+        },
+        {
+          "text": "Ein Angriff, der DNS-Anfragen auf gefälschte Server umleitet.",
+          "correct": false
+        },
+        {
+          "text": "Ein DNS-Server, der alle Anfragen verwirft.",
+          "correct": false
+        },
+        {
+          "text": "Eine Methode, DNS-Anfragen zu verschlüsseln.",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

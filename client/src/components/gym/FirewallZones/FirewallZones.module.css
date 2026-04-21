@@ -1,0 +1,66 @@
+.container {
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.zones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.zone {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.zoneName {
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.zoneDesc {
+  font-size: 0.82rem;
+  opacity: 0.75;
+}
+
+.untrusted {
+  background-color: rgba(255, 80, 80, 0.1);
+  border: 1px solid rgba(255, 80, 80, 0.35);
+}
+
+.dmz {
+  background-color: rgba(255, 165, 0, 0.1);
+  border: 1px solid rgba(255, 165, 0, 0.35);
+}
+
+.trusted {
+  background-color: rgba(0, 184, 148, 0.1);
+  border: 1px solid rgba(0, 184, 148, 0.35);
+}
+
+.firewall {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0;
+  font-size: 0.82rem;
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+.firewallLine {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-gray);
+  opacity: 0.4;
+}
+
+.arrow {
+  opacity: 0.5;
+  font-size: 1rem;
+}

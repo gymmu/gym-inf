@@ -1,55 +1,174 @@
 .vigenereContainer {
-}
-
-.alphabet {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.alphabet > span {
-  border: 1px solid var(--color-fg);
-  height: 1.2rem;
-  width: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-.square {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  max-width: 720px;
-  margin-inline: auto;
+  gap: 0.8rem;
+  padding: 1.2rem 1.4rem;
+  background-color: var(--color-bg-light);
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
 }
 
-.row {
+/* ── Legend ──────────────────────────────────────────────── */
+
+.legend {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 0.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.78rem;
+  opacity: 0.8;
 }
 
-.row > span {
-  color: var(--color-red);
-  height: 1.2rem;
-  width: 1.2rem;
-}
-
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  gap: 0.5rem;
-}
-
-.header > span {
-  height: 1.2rem;
-  width: 1.2rem;
+.legend > span {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: var(--color-green);
+  gap: 0.35rem;
+}
+
+.legend > span::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legendKey {
+  color: #d63031;
+  font-weight: 700;
+}
+
+.legend > .legendKey::before {
+  background-color: rgba(214, 48, 49, 0.5);
+}
+
+.legendPlain {
+  color: #0984e3;
+  font-weight: 700;
+}
+
+.legend > .legendPlain::before {
+  background-color: rgba(9, 132, 227, 0.5);
+}
+
+.legendCipher {
+  color: #6c5ce7;
+  font-weight: 700;
+}
+
+.legend > .legendCipher::before {
+  background-color: rgba(108, 92, 231, 0.5);
+}
+
+/* ── Active info bar ─────────────────────────────────────── */
+
+.activeInfo {
+  font-family: monospace;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  padding: 0.4rem 0.8rem;
+  background-color: rgba(108, 92, 231, 0.1);
+  border: 1px solid rgba(108, 92, 231, 0.3);
+  border-radius: 4px;
+  height: calc(
+    0.88rem * 1.4 + 2 * 0.4rem + 2px
+  ); /* font-size * line-height + padding + border */
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  overflow: hidden;
+}
+
+.activeInfoHint {
+  opacity: 0.35;
+  font-style: italic;
+}
+
+/* ── Scroll wrapper ──────────────────────────────────────── */
+
+.scrollWrapper {
+  overflow-x: auto;
+}
+
+/* ── Table ───────────────────────────────────────────────── */
+
+.square {
+  border-collapse: collapse;
+  font-family: monospace;
+  font-size: 0.72rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.square td,
+.square th {
+  width: 1.45rem;
+  height: 1.45rem;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0;
+}
+
+/* corner */
+.cornerCell {
+  background-color: transparent;
+}
+
+/* column header row (Klartextbuchstaben) */
+.colHeader {
+  color: #0984e3;
+  font-weight: 700;
+  font-size: 0.7rem;
+  border-bottom: 2px solid rgba(9, 132, 227, 0.35);
+  cursor: default;
+  transition: background-color 0.1s;
+}
+
+.colHeaderActive {
+  background-color: rgba(9, 132, 227, 0.2) !important;
+  color: #4dabf7;
+}
+
+/* row header column (Schlüsselbuchstaben) */
+.rowHeader {
+  color: #d63031;
+  font-weight: 700;
+  font-size: 0.7rem;
+  border-right: 2px solid rgba(214, 48, 49, 0.35);
+  cursor: default;
+  transition: background-color 0.1s;
+}
+
+.rowHeaderActive {
+  background-color: rgba(214, 48, 49, 0.2) !important;
+  color: #ff6b6b;
+}
+
+/* data cells */
+.cell {
+  color: var(--color-fg);
+  opacity: 0.6;
+  cursor: default;
+  transition:
+    background-color 0.07s,
+    color 0.07s;
+  border: 1px solid rgba(146, 131, 116, 0.12);
+}
+
+.cellInRow {
+  background-color: rgba(214, 48, 49, 0.07);
+  opacity: 0.85;
+}
+
+.cellInCol {
+  background-color: rgba(9, 132, 227, 0.07);
+  opacity: 0.85;
+}
+
+.cellActive {
+  background-color: rgba(108, 92, 231, 0.45) !important;
+  color: #d3b7ff;
+  font-weight: 900;
+  opacity: 1;
+  border-color: rgba(108, 92, 231, 0.8);
+  font-size: 0.82rem;
 }

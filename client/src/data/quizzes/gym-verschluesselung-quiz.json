@@ -1,0 +1,248 @@
+{
+  "title": "Quiz: Verschlüsselung und digitale Signaturen",
+  "description": "Testen Sie Ihr Verständnis von Kryptographie: symmetrisch, asymmetrisch, TLS-Handshake, digitale Signaturen und Perfect Forward Secrecy.",
+  "questions": [
+    {
+      "id": 1,
+      "type": "multiple-choice",
+      "question": "Welche drei Sicherheitsziele kann Kryptographie erfüllen?",
+      "answers": [
+        {
+          "text": "Vertraulichkeit, Integrität und Authentizität",
+          "correct": true
+        },
+        {
+          "text": "Vertraulichkeit, Geschwindigkeit und Verfügbarkeit",
+          "correct": false
+        },
+        {
+          "text": "Anonymität, Integrität und Skalierbarkeit",
+          "correct": false
+        },
+        {
+          "text": "Verschlüsselung, Komprimierung und Signierung",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "multiple-choice",
+      "question": "Was ist das 'Schlüsselaustausch-Problem' der symmetrischen Verschlüsselung?",
+      "answers": [
+        {
+          "text": "Wie kann ein gemeinsamer Schlüssel sicher übertragen werden, wenn jede Kommunikation abgehört werden kann?",
+          "correct": true
+        },
+        {
+          "text": "Wie kann man verhindern, dass der Schlüssel zu lang wird?",
+          "correct": false
+        },
+        {
+          "text": "Wie findet man einen Schlüssel, der für alle Algorithmen passt?",
+          "correct": false
+        },
+        {
+          "text": "Wie oft muss der Schlüssel geändert werden?",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "multiple-choice",
+      "question": "Was ist die mathematische Grundlage von RSA?",
+      "answers": [
+        {
+          "text": "Die Schwierigkeit, das Produkt zweier grosser Primzahlen zu faktorisieren.",
+          "correct": true
+        },
+        {
+          "text": "Die Schwierigkeit, den diskreten Logarithmus auf elliptischen Kurven zu berechnen.",
+          "correct": false
+        },
+        { "text": "Die Einwegfunktion von SHA-256.", "correct": false },
+        {
+          "text": "Die Unmöglichkeit, AES rückwärts zu berechnen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "multiple-choice",
+      "question": "Wie funktioniert eine digitale Signatur?",
+      "answers": [
+        {
+          "text": "Der Absender berechnet einen Hash des Dokuments und verschlüsselt ihn mit seinem privaten Schlüssel.",
+          "correct": true
+        },
+        {
+          "text": "Der Absender verschlüsselt das gesamte Dokument mit seinem öffentlichen Schlüssel.",
+          "correct": false
+        },
+        {
+          "text": "Ein vertrauenswürdiger Dritter signiert das Dokument mit seinem eigenen Schlüssel.",
+          "correct": false
+        },
+        {
+          "text": "Das Dokument wird mit AES verschlüsselt und der Schlüssel ist die Signatur.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "true-false",
+      "question": "ECC (Elliptic Curve Cryptography) bietet bei kleineren Schlüsseln die gleiche Sicherheit wie RSA mit grösseren Schlüsseln.",
+      "answers": [
+        {
+          "text": "Wahr – ECC-256 entspricht ungefähr RSA-3072 in der Sicherheitsstufe.",
+          "correct": true
+        },
+        { "text": "Falsch – ECC ist weniger sicher als RSA.", "correct": false }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "multiple-choice",
+      "question": "Was überprüft Ihr Browser beim Empfang eines TLS-Zertifikats?",
+      "answers": [
+        {
+          "text": "Ob die CA-Signatur gültig ist, ob das Zertifikat noch nicht abgelaufen ist, und ob der Domainname übereinstimmt.",
+          "correct": true
+        },
+        {
+          "text": "Ob die Webseite eine sichere Verbindung anbietet.",
+          "correct": false
+        },
+        { "text": "Ob der Webserver IPv6 unterstützt.", "correct": false },
+        {
+          "text": "Ob das Passwort für die Webseite sicher ist.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "multiple-choice",
+      "question": "Was ist 'Perfect Forward Secrecy'?",
+      "answers": [
+        {
+          "text": "Jede TLS-Verbindung verwendet einen neuen, kurzlebigen Schlüssel, sodass vergangene Sitzungen auch bei Kompromittierung des Server-Schlüssels sicher bleiben.",
+          "correct": true
+        },
+        {
+          "text": "Daten werden mehrfach verschlüsselt für maximale Sicherheit.",
+          "correct": false
+        },
+        {
+          "text": "Der TLS-Schlüssel wird niemals geändert, damit keine Schwachstellen entstehen.",
+          "correct": false
+        },
+        {
+          "text": "Alle zukünftigen Verbindungen sind automatisch sicher.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "multiple-choice",
+      "question": "Was ist Certificate Transparency (CT)?",
+      "answers": [
+        {
+          "text": "Öffentliche, unveränderliche Logs, in die alle TLS-Zertifikate eingetragen werden müssen, damit Missbrauch erkennbar ist.",
+          "correct": true
+        },
+        {
+          "text": "Ein Protokoll, das TLS-Verbindungen für alle öffentlich sichtbar macht.",
+          "correct": false
+        },
+        {
+          "text": "Eine Methode, kostenlose TLS-Zertifikate auszustellen.",
+          "correct": false
+        },
+        {
+          "text": "Ein Standard, der Zertifikate automatisch erneuert.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "multiple-choice",
+      "question": "Warum kombiniert HTTPS asymmetrische und symmetrische Verschlüsselung?",
+      "answers": [
+        {
+          "text": "Asymmetrisch für den Schlüsselaustausch (sicher, aber langsam), symmetrisch für die eigentlichen Daten (schnell).",
+          "correct": true
+        },
+        {
+          "text": "Weil asymmetrische Verschlüsselung nicht für grosse Datenmengen geeignet ist und symmetrische das Schlüsselaustauschproblem hat.",
+          "correct": true
+        },
+        {
+          "text": "Weil Browser nur symmetrische Verschlüsselung verstehen.",
+          "correct": false
+        },
+        {
+          "text": "Weil zwei Verschlüsselungen doppelt so sicher sind.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "multiple-choice",
+      "question": "Was ist OCSP Stapling?",
+      "answers": [
+        {
+          "text": "Der Webserver holt sich eine signierte OCSP-Antwort von der CA und liefert sie beim TLS-Handshake mit, damit der Browser die CA nicht direkt kontaktieren muss.",
+          "correct": true
+        },
+        {
+          "text": "Ein Protokoll zum automatischen Erneuern von Zertifikaten.",
+          "correct": false
+        },
+        {
+          "text": "Eine Methode, mehrere Zertifikate zu einem zusammenzufassen.",
+          "correct": false
+        },
+        {
+          "text": "Ein Verfahren, um Zertifikate zu signieren.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "true-false",
+      "question": "TLS 1.3 erzwingt Perfect Forward Secrecy — nur noch ECDHE-Schlüsselaustausch ist erlaubt.",
+      "answers": [
+        { "text": "Wahr", "correct": true },
+        {
+          "text": "Falsch – TLS 1.3 erlaubt auch statische RSA-Schlüssel.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "multiple-choice",
+      "question": "Was garantiert eine digitale Signatur im Vergleich zu einer normalen Verschlüsselung zusätzlich?",
+      "answers": [
+        {
+          "text": "Authentizität (wer hat gesendet) und Integrität (wurde nichts verändert).",
+          "correct": true
+        },
+        {
+          "text": "Vertraulichkeit (niemand kann mitlesen).",
+          "correct": false
+        },
+        { "text": "Geschwindigkeit der Übertragung.", "correct": false },
+        { "text": "Anonymität des Absenders.", "correct": false }
+      ]
+    }
+  ]
+}

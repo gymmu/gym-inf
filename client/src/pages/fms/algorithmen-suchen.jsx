@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import Section from "@components/Section"
 import SolutionBlock from "@components/SolutionBlock"
 import SimpleSplitView from "@components/algorithm/SimpleSplitView"
@@ -19,33 +20,34 @@ export default function FmsAlgorithmenSuchen() {
   const linearSearchChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Array und Zielwert eingeben]
-    Input --> Init["i = 0"]
-    Init --> Check{"i &lt; Länge?"}
-    Check -->|Nein| NotFound[Ausgabe: Nicht gefunden]
+    Start([Start]) --> Input[Gib Liste und Zielwert ein]
+    Input --> Init[Setze i auf 0]
+    Init --> Check{Ist i &lt; Länge?}
+    Check -->|Nein| NotFound[Gib aus: Nicht gefunden]
     NotFound --> End([Ende])
-    Check -->|Ja| Compare{"Array[i] === Zielwert?"}
-    Compare -->|Ja| Found["Ausgabe: Gefunden bei Index i"]
+    Check -->|Ja| Compare{Ist Element an Position i = Zielwert?}
+    Compare -->|Ja| Found[Gib aus: Gefunden bei Index i]
     Found --> End
-    Compare -->|Nein| Increment["i = i + 1"]
-    Increment --> Check
+    Compare -->|Nein| Next[Gehe zum nächsten Element]
+    Next --> Check
   `
 
   const binarySearchChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input["Sortiertes Array und Zielwert eingeben"]
-    Input --> Init["left = 0 right = Länge - 1"]
-    Init --> Check{"left &lt;= right?"}
-    Check -->|Nein| NotFound[Ausgabe: Nicht gefunden]
+    Start([Start]) --> Input[Gib sortierte Liste und Zielwert ein]
+    Input --> Init1[Setze links auf 0]
+    Init1 --> Init2[Setze rechts auf Länge minus 1]
+    Init2 --> Check{Ist links ≤ rechts?}
+    Check -->|Nein| NotFound[Gib aus: Nicht gefunden]
     NotFound --> End([Ende])
-    Check -->|Ja| Mid["mid = (left + right) / 2 abgerundet"]
-    Mid --> Compare{"Array[mid] === Zielwert?"}
-    Compare -->|Ja| Found["Ausgabe: Gefunden bei Index mid"]
+    Check -->|Ja| Mid[Berechne Mitte: links plus rechts geteilt durch 2]
+    Mid --> Compare{Ist Element in Mitte = Zielwert?}
+    Compare -->|Ja| Found[Gib aus: Gefunden bei Index Mitte]
     Found --> End
-    Compare -->|Nein| LessOrGreater{"Array[mid] &lt; Zielwert?"}
-    LessOrGreater -->|Ja| MoveLeft["left = mid + 1"]
-    LessOrGreater -->|Nein| MoveRight["right = mid - 1"]
+    Compare -->|Nein| LessOrGreater{Ist Element in Mitte &lt; Zielwert?}
+    LessOrGreater -->|Ja| MoveLeft[Setze links auf Mitte plus 1]
+    LessOrGreater -->|Nein| MoveRight[Setze rechts auf Mitte minus 1]
     MoveLeft --> Check
     MoveRight --> Check
   `
@@ -62,6 +64,19 @@ flowchart TD
     <>
       <section>
         <h2>Suchalgorithmen</h2>
+        
+        <div style={{ 
+          backgroundColor: "var(--color-bg-light)", 
+          padding: "15px", 
+          borderRadius: "8px",
+          marginBottom: "20px",
+          borderLeft: "4px solid var(--color-primary)"
+        }}>
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
+          Wenn dir Begriffe unklar sind, schaue im{" "}
+          <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
+        </div>
+        
         <p>
           Suchen ist eine der häufigsten Operationen in der Informatik. Egal ob
           Sie nach einem Namen in einer Liste, einer Datei auf Ihrem Computer

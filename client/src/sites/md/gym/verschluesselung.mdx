@@ -1,0 +1,308 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Figure from "@components/Figure.jsx"
+
+## Verschlüsselung und digitale Signaturen
+
+Moderne Kryptographie ist die Grundlage für sicheres Kommunizieren im Internet.
+Ohne sie wäre Online-Banking, verschlüsselte Kommunikation oder
+Software-Updates, denen man vertrauen kann, nicht möglich. In diesem Kapitel
+betrachten wir nicht nur _was_ Verschlüsselung ist, sondern auch _wie_ sie
+mathematisch funktioniert und welche weiteren Sicherheitsziele — neben
+Vertraulichkeit — Kryptographie erreicht.
+
+<LearningGoals>
+
+    - Sie verstehen das Schlüsselaustausch-Problem und warum symmetrische Verschlüsselung allein nicht ausreicht.
+    - Sie kennen das Prinzip der asymmetrischen Verschlüsselung mit öffentlichem und privatem Schlüssel.
+    - Sie verstehen den vollständigen TLS-Handshake-Ablauf.
+    - Sie wissen, was digitale Signaturen sind und welches Sicherheitsziel sie erfüllen.
+    - Sie kennen die Zertifikatskette und wie Ihr Browser Vertrauen aufbaut.
+    - Sie verstehen, was Perfect Forward Secrecy bedeutet und warum sie wichtig ist.
+
+</LearningGoals>
+
+## Die drei Ziele der Kryptographie
+
+Kryptographie löst nicht nur das Problem der **Vertraulichkeit** (niemand darf
+mitlesen). Es gibt drei fundamentale Sicherheitsziele:
+
+| Ziel                | Bedeutung                                             | Beispiel              |
+| ------------------- | ----------------------------------------------------- | --------------------- |
+| **Vertraulichkeit** | Nur Befugte können die Nachricht lesen                | Verschlüsselte E-Mail |
+| **Integrität**      | Die Nachricht wurde nicht verändert                   | Prüfsumme, HTTPS      |
+| **Authentizität**   | Der Absender ist wirklich der, der er vorgibt zu sein | Digitale Signatur     |
+
+Symmetrische und asymmetrische Verschlüsselung allein erfüllen nur die
+Vertraulichkeit. **Digitale Signaturen** — das zweite Thema dieses Kapitels —
+liefern Integrität und Authentizität.
+
+## Das Schlüsselaustausch-Problem
+
+### Symmetrische Verschlüsselung — Ein Schlüssel, zwei Probleme
+
+Bei **symmetrischer Verschlüsselung** verwenden Sender und Empfänger denselben
+Schlüssel zum Ver- und Entschlüsseln. Das ist sehr schnell und effizient (z.B.
+AES-256 verschlüsselt mehrere Gigabytes pro Sekunde).
+
+**Das fundamentale Problem:** Wie kommt der gemeinsame Schlüssel von Alice zu
+Bob, ohne dass ein Angreifer ihn abhören kann? Man kann den Schlüssel nicht
+unverschlüsselt schicken — und wenn er schon verschlüsselt ist, braucht man
+wieder einen gemeinsamen Schlüssel, um ihn zu entschlüsseln. Ein Zirkelschluss.
+
+### Asymmetrische Verschlüsselung — Der Ausweg
+
+**Asymmetrische Verschlüsselung** (auch Public-Key-Kryptographie) löst dieses
+Problem elegant: Es gibt **zwei mathematisch verknüpfte Schlüssel**:
+
+- **Öffentlicher Schlüssel (Public Key):** Darf jeder wissen. Wird zum
+  _Verschlüsseln_ und zum _Prüfen von Signaturen_ verwendet.
+- **Privater Schlüssel (Private Key):** Streng geheim, darf das Gerät nie
+  verlassen. Wird zum _Entschlüsseln_ und zum _Erstellen von Signaturen_
+  verwendet.
+
+Die entscheidende Eigenschaft: Was mit dem öffentlichen Schlüssel verschlüsselt
+wird, kann **nur** mit dem zugehörigen privaten Schlüssel entschlüsselt werden —
+und umgekehrt.
+
+**Analogie mit Vorhängeschloss:**
+
+- Bob schickt Alice ein offenes Vorhängeschloss (= seinen öffentlichen
+  Schlüssel)
+- Alice legt ihre Nachricht in eine Kiste und schliesst sie mit Bobs Schloss ab
+- Nur Bob kann sie öffnen, denn nur er hat den Schlüssel (= privaten Schlüssel)
+
+Der Schlüssel selbst wurde **nie übertragen** — das ist das Geniale.
+
+## Die mathematische Grundlage: Einwegfunktionen
+
+Asymmetrische Verschlüsselung basiert auf **Einwegfunktionen**: mathematische
+Operationen, die in eine Richtung leicht, in die andere aber praktisch unmöglich
+zu berechnen sind.
+
+### RSA — Faktorisierung grosser Zahlen
+
+RSA (Rivest, Shamir, Adleman, 1977) basiert auf der Schwierigkeit, das Produkt
+zweier grosser Primzahlen zu faktorisieren:
+
+- **Leicht:** Zwei Primzahlen multiplizieren: `p × q = n`
+- **Schwer:** Gegeben `n`, finde `p` und `q` zurück
+
+**Beispiel (vereinfacht):**
+
+```
+p = 61,  q = 53  →  n = 61 × 53 = 3233  (trivial)
+Gegeben 3233: Was sind p und q?           (schwer)
+```
+
+Bei echtem RSA sind `p` und `q` 512 bis 2048 Bit grosse Primzahlen. Das
+zugehörige `n` hat dann bis zu 4096 Bit. Die Faktorisierung würde mit heutigen
+Computern Tausende von Jahren dauern.
+
+**Schlüssellängen:**
+
+- RSA-2048 Bit: Aktuell als sicher eingestuft
+- RSA-4096 Bit: Sehr sicher, aber langsamer
+- RSA-1024 Bit: Veraltet, nicht mehr sicher!
+
+### ECC — Elliptische Kurven
+
+**ECC (Elliptic Curve Cryptography)** basiert auf dem schwierigen Problem des
+diskreten Logarithmus auf elliptischen Kurven. Der Vorteil gegenüber RSA:
+
+- Kürzere Schlüssel bei gleicher Sicherheit: ECC-256 ≈ RSA-3072
+- Schneller bei Schlüsselgenerierung und Signaturprüfung
+- Daher ideal für mobile Geräte
+
+**Heute verwendete Kurven:**
+
+- `P-256` (NIST): Standard in TLS 1.3
+- `Curve25519`: Modern, von D.J. Bernstein, sehr schnell
+
+## Digitale Signaturen — Authentizität und Integrität
+
+Eine **digitale Signatur** erfüllt die gleiche Funktion wie eine
+handschriftliche Unterschrift, ist aber mathematisch beweisbar:
+
+### Wie Signaturen funktionieren
+
+**Signieren** (Alice signiert ein Dokument):
+
+1. Aus dem Dokument wird ein **Hash** berechnet (z.B. SHA-256): Eine
+   Fingerabdruck-Funktion, die den Inhalt auf eine feste Länge (256 Bit)
+   reduziert. Jede Änderung des Dokuments erzeugt einen völlig anderen Hash.
+
+2. Der Hash wird mit Alices **privatem Schlüssel** verschlüsselt → das ist die
+   **Signatur**.
+
+3. Alice schickt Dokument + Signatur.
+
+**Prüfen** (Bob prüft die Signatur):
+
+1. Bob berechnet selbst den Hash des Dokuments.
+2. Bob entschlüsselt die Signatur mit Alices **öffentlichem Schlüssel** → erhält
+   den Hash, den Alice berechnet hat.
+3. Stimmen beide Hashes überein? → Dokument unverändert, Absender ist Alice.
+
+```
+Alice:  Hash(Dokument) → mit privatem Schlüssel verschlüsseln → Signatur
+Bob:    Signatur mit öffentlichem Schlüssel entschlüsseln → Hash_A
+        Hash(empfangenes Dokument) → Hash_B
+        Hash_A == Hash_B? → gültig!
+```
+
+**Was Signaturen garantieren:**
+
+- **Authentizität:** Nur Alice hat den privaten Schlüssel — niemand sonst konnte
+  diese Signatur erstellen
+- **Integrität:** Jede Änderung am Dokument verändert den Hash → Signatur
+  ungültig
+
+### Anwendungen digitaler Signaturen
+
+- **TLS-Zertifikate:** Die CA signiert das Zertifikat einer Webseite
+- **Software-Updates:** Betriebssystem-Updates werden vom Hersteller signiert
+- **Git-Commits:** Entwickler können Commits kryptographisch signieren
+- **E-Mail (S/MIME, PGP):** Signierte E-Mails mit beweisbarem Absender
+- **Blockchain:** Transaktionen werden durch digitale Signaturen autorisiert
+
+## TLS-Handshake — Schritt für Schritt
+
+Wenn Ihr Browser `https://www.bank.ch` aufruft, läuft dieser Prozess ab:
+
+### Phase 1: ClientHello
+
+Browser → Server:
+
+```
+Hallo! Ich unterstütze TLS 1.3, diese Cipher Suites:
+- TLS_AES_256_GCM_SHA384
+- TLS_CHACHA20_POLY1305_SHA256
+Meine zufällige Nonce: 0x3f8a...
+Meine unterstützten Kurven: x25519, P-256
+```
+
+### Phase 2: ServerHello + Zertifikat
+
+Server → Browser:
+
+```
+Wir verwenden: TLS_AES_256_GCM_SHA384
+Meine zufällige Nonce: 0x91b2...
+Hier ist mein Zertifikat (enthält öffentlichen Schlüssel + CA-Signatur)
+```
+
+### Phase 3: Zertifikatsprüfung
+
+Browser überprüft:
+
+1. Ist die Signatur des Zertifikats von einer vertrauenswürdigen CA?
+2. Ist das Zertifikat noch gültig (Ablaufdatum)?
+3. Stimmt der Domainname im Zertifikat mit der aufgerufenen Domain überein?
+4. Wurde das Zertifikat widerrufen (OCSP-Prüfung)?
+
+### Phase 4: Schlüsselaustausch (Diffie-Hellman)
+
+In TLS 1.3 wird kein Schlüssel direkt übertragen. Stattdessen einigen sich beide
+Seiten über **Diffie-Hellman** auf einen gemeinsamen Sitzungsschlüssel, ohne ihn
+jemals über das Netz zu schicken (→ Details im Kapitel Schlüsselaustausch).
+
+### Phase 5: Fertig — Symmetrische Kommunikation
+
+```
+Browser: "Finished" (mit neuem Schlüssel verschlüsselt)
+Server:  "Finished" (Bestätigung)
+← Ab hier: AES-256-GCM mit dem ausgehandelten Sitzungsschlüssel →
+```
+
+## Zertifikatskette und Certificate Authorities
+
+### Das Vertrauensproblem
+
+Woher weiss Ihr Browser, dass das Zertifikat von `bank.ch` echt ist? Er könnte
+selbst nicht jede der Millionen Webseiten kennen. Die Lösung ist eine
+**Zertifikatskette** (Chain of Trust):
+
+```
+Root-CA (im Browser vorinstalliert)
+    ↓ hat signiert
+Intermediate CA (z.B. Let's Encrypt R3)
+    ↓ hat signiert
+Enduser-Zertifikat (www.bank.ch)
+```
+
+Ihr Browser hat ca. 150 **Root-CAs** vorinstalliert und vertraut ihnen
+bedingungslos. Diese signieren **Intermediate CAs**, die wiederum
+Webseiten-Zertifikate signieren.
+
+### Certificate Transparency (CT)
+
+Seit 2018 müssen alle öffentlich vertrauenswürdigen Zertifikate in öffentliche
+**Certificate Transparency Logs** eingetragen werden. Diese sind
+unveränderliche, öffentlich einsehbare Protokolle.
+
+**Warum das wichtig ist:**
+
+- Missbrauch wird erkennbar: Wenn eine CA fälschlicherweise ein Zertifikat für
+  `google.com` ausstellt, sieht das jeder
+- Browser prüfen, ob ein Zertifikat im CT-Log vorhanden ist
+- Beispiel: 2017 stellte Symantec unautorisierten Domains Zertifikate aus —
+  wurde durch CT-Logs entdeckt
+
+**OCSP (Online Certificate Status Protocol):** Ihr Browser kann in Echtzeit beim
+OCSP-Server der CA anfragen, ob ein Zertifikat noch gültig ist oder widerrufen
+wurde.
+
+**OCSP Stapling:** Der Webserver holt sich regelmässig eine signierte
+OCSP-Antwort von der CA und liefert sie beim TLS-Handshake mit. Das ist
+privatsphärenfreundlicher (die CA sieht nicht, welche Webseiten Sie besuchen).
+
+## Perfect Forward Secrecy (PFS)
+
+**Problem ohne PFS:** Wenn ein Angreifer den gesamten verschlüsselten Verkehr
+aufzeichnet und irgendwann den privaten Schlüssel des Servers kompromittiert,
+kann er **rückwirkend** alle aufgezeichneten Verbindungen entschlüsseln.
+
+**Perfect Forward Secrecy** verhindert das: Für jede TLS-Verbindung wird ein
+**neuer, kurzlebiger (ephemeral) Sitzungsschlüssel** generiert, der nach dem
+Ende der Sitzung sicher gelöscht wird.
+
+Der langfristige private Schlüssel des Servers wird nur noch für die
+**Authentifizierung** (Signatur) verwendet, nicht mehr für den
+Schlüsselaustausch.
+
+**Technisch:** Ephemeral Diffie-Hellman (DHE) oder Elliptic Curve Diffie-Hellman
+(ECDHE) erzeugt für jede Verbindung ein frisches Schlüsselpaar.
+
+```
+Sitzung 1: Ephemeral-Schlüssel K1 → nach Sitzungsende gelöscht
+Sitzung 2: Ephemeral-Schlüssel K2 → nach Sitzungsende gelöscht
+Sitzung 3: Ephemeral-Schlüssel K3 → nach Sitzungsende gelöscht
+```
+
+Kompromittierung des Server-Schlüssels heute → kann keine vergangenen Sitzungen
+entschlüsseln!
+
+TLS 1.3 erzwingt PFS — es sind nur noch ECDHE-Schlüsselaustauschmethoden
+erlaubt.
+
+## Hybridverschlüsselung in der Praxis
+
+HTTPS kombiniert beide Verschlüsselungstypen optimal:
+
+| Phase              | Methode                       | Warum                               |
+| ------------------ | ----------------------------- | ----------------------------------- |
+| Schlüsselaustausch | Asymmetrisch (ECDHE)          | Kein gemeinsamer Schlüssel nötig    |
+| Authentifizierung  | Digitale Signatur (ECDSA/RSA) | Server-Identität beweisen           |
+| Datentransfer      | Symmetrisch (AES-256-GCM)     | Sehr schnell für grosse Datenmengen |
+
+## Zusammenfassung
+
+Verschlüsselung erfüllt drei Ziele: **Vertraulichkeit**, **Integrität** und
+**Authentizität**. Symmetrische Verschlüsselung (AES) ist schnell, hat aber das
+Schlüsselaustausch-Problem. Asymmetrische Verschlüsselung (RSA, ECC) löst dieses
+durch mathematische Einwegfunktionen. **Digitale Signaturen** (Hash +
+Verschlüsselung mit privatem Schlüssel) garantieren Authentizität und
+Integrität. Der **TLS-Handshake** kombiniert all das: Diffie-Hellman für den
+Schlüsselaustausch, Zertifikate für das Vertrauen, AES für die Daten. **Perfect
+Forward Secrecy** schützt vergangene Sitzungen auch bei zukünftiger
+Kompromittierung.

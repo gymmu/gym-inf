@@ -1,0 +1,239 @@
+{
+  "title": "Quiz: Passwörter und Authentifizierung",
+  "description": "Testen Sie Ihr Wissen über Hashing, Salting, 2FA, FIDO2/Passkeys und Passwortmanager.",
+  "questions": [
+    {
+      "id": 1,
+      "type": "multiple-choice",
+      "question": "Warum sind spezielle Passwort-Hash-Algorithmen wie bcrypt oder Argon2 besser als SHA-256 für das Speichern von Passwörtern?",
+      "answers": [
+        {
+          "text": "Weil sie absichtlich langsam sind, was Brute-Force-Angriffe massiv erschwert.",
+          "correct": true
+        },
+        {
+          "text": "Weil sie sicherere Hashes erzeugen, die nicht geknackt werden können.",
+          "correct": false
+        },
+        { "text": "Weil sie automatisch salzen.", "correct": false },
+        {
+          "text": "Weil SHA-256 nicht für Passwörter zugelassen ist.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "multiple-choice",
+      "question": "Was ist der Zweck von 'Salting' beim Speichern von Passwörtern?",
+      "answers": [
+        {
+          "text": "Ein einzigartiger zufälliger Wert wird ans Passwort angehängt, sodass gleiche Passwörter unterschiedliche Hashes erzeugen und Rainbow Tables unwirksam werden.",
+          "correct": true
+        },
+        {
+          "text": "Das Passwort wird vor dem Hashing verschlüsselt.",
+          "correct": false
+        },
+        {
+          "text": "Das Passwort wird verlängert, damit es schwerer zu erraten ist.",
+          "correct": false
+        },
+        {
+          "text": "Der Hash wird mit einem geheimen Server-Schlüssel kombiniert.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "multiple-choice",
+      "question": "Was ist 'Credential Stuffing'?",
+      "answers": [
+        {
+          "text": "Gestohlene Benutzername-Passwort-Kombinationen aus einem Einbruch werden automatisiert bei anderen Diensten ausprobiert.",
+          "correct": true
+        },
+        {
+          "text": "Ein Angriff, der viele verschiedene Passwörter auf ein einzelnes Konto ausprobiert.",
+          "correct": false
+        },
+        {
+          "text": "Das Verstecken von Malware in scheinbar harmlosen Dateien.",
+          "correct": false
+        },
+        {
+          "text": "Ein Angriff auf die Datenbankstruktur eines Webservers.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "multiple-choice",
+      "question": "Wie funktioniert TOTP (Time-based One-Time Password)?",
+      "answers": [
+        {
+          "text": "Server und App berechnen unabhängig denselben Code aus einem geteilten Secret Key und der aktuellen Zeit (30-Sekunden-Fenster).",
+          "correct": true
+        },
+        {
+          "text": "Der Server sendet einen Code per SMS, den der Nutzer eingeben muss.",
+          "correct": false
+        },
+        {
+          "text": "Ein zufälliger Code wird beim Login vom Server generiert und per E-Mail geschickt.",
+          "correct": false
+        },
+        {
+          "text": "Der Code wird aus dem Passwort des Nutzers berechnet.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "true-false",
+      "question": "SMS-basierte Zwei-Faktor-Authentifizierung gilt heute als sicher und wird von Sicherheitsexperten empfohlen.",
+      "answers": [
+        { "text": "Wahr", "correct": false },
+        {
+          "text": "Falsch – SMS-2FA ist anfällig für SS7-Angriffe und SIM-Swapping.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "multiple-choice",
+      "question": "Wie verhindert FIDO2/Passkeys Phishing-Angriffe?",
+      "answers": [
+        {
+          "text": "Die Domain ist in die Challenge eingebettet — eine Signatur für eine gefälschte Domain ist für die echte Domain wertlos.",
+          "correct": true
+        },
+        {
+          "text": "Passkeys blockieren alle Verbindungen zu unbekannten Webseiten.",
+          "correct": false
+        },
+        {
+          "text": "Passkeys verschlüsseln alle Kommunikation stark genug, dass Phishing nicht möglich ist.",
+          "correct": false
+        },
+        {
+          "text": "Passkeys erfordern eine zweite Bestätigung per E-Mail.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "multiple-choice",
+      "question": "Wo wird der private Schlüssel eines Passkeys gespeichert?",
+      "answers": [
+        {
+          "text": "Im sicheren Element des Geräts (z.B. Secure Enclave, TPM-Chip) und verlässt das Gerät niemals.",
+          "correct": true
+        },
+        { "text": "Beim Webserver als Teil des Kontos.", "correct": false },
+        { "text": "In der Browser-History des Nutzers.", "correct": false },
+        { "text": "Beim FIDO-Alliance-Server.", "correct": false }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "multiple-choice",
+      "question": "Was bedeutet 'Zero-Knowledge' bei einem Passwortmanager?",
+      "answers": [
+        {
+          "text": "Der Anbieter kann die gespeicherten Passwörter nicht lesen — selbst wenn sein Server gehackt wird, sind die Daten ohne das Master-Passwort wertlos.",
+          "correct": true
+        },
+        {
+          "text": "Der Passwortmanager speichert nichts und generiert Passwörter immer neu.",
+          "correct": false
+        },
+        {
+          "text": "Der Nutzer muss kein Passwort wissen, weil biometrische Daten verwendet werden.",
+          "correct": false
+        },
+        {
+          "text": "Das Passwort wird in der Cloud mit null Verschlüsselung gespeichert.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "true-false",
+      "question": "Bei einer Zero-Knowledge-Architektur eines Passwortmanagers ist ein vergessenes Master-Passwort in der Regel nicht wiederherstellbar.",
+      "answers": [
+        {
+          "text": "Wahr – ohne Master-Passwort kann der Vault nicht entschlüsselt werden.",
+          "correct": true
+        },
+        {
+          "text": "Falsch – der Anbieter kann immer helfen, das Passwort zurückzusetzen.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "multiple-choice",
+      "question": "Welche Authentifizierungskategorie ist 'Fingerabdruck' oder 'Gesichtserkennung'?",
+      "answers": [
+        { "text": "Inherence ('Etwas, das Sie sind')", "correct": true },
+        { "text": "Knowledge ('Etwas, das Sie wissen')", "correct": false },
+        { "text": "Possession ('Etwas, das Sie haben')", "correct": false },
+        { "text": "Location ('Wo Sie sich befinden')", "correct": false }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "multiple-choice",
+      "question": "Welche Funktion hat PBKDF2 in einem Passwortmanager?",
+      "answers": [
+        {
+          "text": "Es leitet aus dem Master-Passwort und einem Salt einen starken Verschlüsselungsschlüssel ab und ist absichtlich langsam.",
+          "correct": true
+        },
+        {
+          "text": "Es verschlüsselt die gespeicherten Passwörter direkt.",
+          "correct": false
+        },
+        {
+          "text": "Es überprüft die Stärke eines eingegebenen Passworts.",
+          "correct": false
+        },
+        {
+          "text": "Es synchronisiert Passwörter zwischen Geräten.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "multiple-choice",
+      "question": "Was ist der Hauptvorteil von Passkeys gegenüber Passwort + TOTP?",
+      "answers": [
+        {
+          "text": "Passkeys sind phishing-resistent durch Domain-Binding, während TOTP-Codes in Echtzeit weitergegeben werden können.",
+          "correct": true
+        },
+        {
+          "text": "Passkeys sind einfacher zu merken als ein langes Passwort.",
+          "correct": false
+        },
+        {
+          "text": "Passkeys benötigen keine Internetverbindung.",
+          "correct": false
+        },
+        {
+          "text": "Passkeys sind kostenlos, während TOTP-Apps kostenpflichtig sind.",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

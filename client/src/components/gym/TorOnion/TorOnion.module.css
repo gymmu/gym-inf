@@ -1,0 +1,100 @@
+.container {
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.path {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.node {
+  padding: 0.5rem 0.9rem;
+  border-radius: 4px;
+  text-align: center;
+  min-width: 6rem;
+  border: 1px solid;
+}
+
+.nodeLabel {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-bottom: 0.15rem;
+}
+
+.nodeName {
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.you {
+  background-color: rgba(0, 184, 148, 0.1);
+  border-color: rgba(0, 184, 148, 0.5);
+}
+
+.entry {
+  background-color: rgba(108, 92, 231, 0.1);
+  border-color: rgba(108, 92, 231, 0.4);
+}
+
+.middle {
+  background-color: rgba(253, 203, 110, 0.15);
+  border-color: rgba(253, 203, 110, 0.5);
+}
+
+.exit {
+  background-color: rgba(255, 118, 117, 0.1);
+  border-color: rgba(255, 118, 117, 0.4);
+}
+
+.dest {
+  background-color: rgba(128, 128, 128, 0.1);
+  border-color: var(--color-gray);
+}
+
+.arrow {
+  opacity: 0.45;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.knowledgeGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.knowledgeRow {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  font-size: 0.88rem;
+}
+
+.knowledgeNode {
+  font-weight: 600;
+  min-width: 7rem;
+  flex-shrink: 0;
+}
+
+.knows {
+  opacity: 0.8;
+}
+
+.notKnows {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+@media (max-width: 560px) {
+  .path {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .arrow {
+    transform: rotate(90deg);
+  }
+}

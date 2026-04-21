@@ -40,6 +40,27 @@ const Obsidian = lazy(() => import("@pages/obsidian.mdx"))
 const ObsidianMarkdown = lazy(() => import("@pages/obsidian-md.mdx"))
 const PInstall = lazy(() => import("@pages/praktikum/installation.mdx"))
 const Regex = lazy(() => import("@pages/regex.mdx"))
+const GymInternet = lazy(() => import("@pages-gym/internet.jsx"))
+const GymInternetKarte = lazy(() => import("@pages-gym/internet-karte.jsx"))
+const GymInternetQuiz = lazy(() => import("@pages-gym/internet-quiz.jsx"))
+const GymNetzwerke = lazy(() => import("@pages-gym/netzwerke.jsx"))
+const GymNetzwerkeQuiz = lazy(() => import("@pages-gym/netzwerke-quiz.jsx"))
+const GymVPN = lazy(() => import("@pages-gym/vpn.jsx"))
+const GymVPNQuiz = lazy(() => import("@pages-gym/vpn-quiz.jsx"))
+const GymVerschluesselung = lazy(
+  () => import("@pages-gym/verschluesselung.jsx"),
+)
+const GymVerschluesselungQuiz = lazy(
+  () => import("@pages-gym/verschluesselung-quiz.jsx"),
+)
+const GymSchluesselaustausch = lazy(
+  () => import("@pages-gym/schluesselaustausch.jsx"),
+)
+const GymSchluesselaustauschQuiz = lazy(
+  () => import("@pages-gym/schluesselaustausch-quiz.jsx"),
+)
+const GymPasswoerter = lazy(() => import("@pages-gym/passwoerter.jsx"))
+const GymPasswoerterQuiz = lazy(() => import("@pages-gym/passwoerter-quiz.jsx"))
 const GymJSAufgaben = lazy(() => import("@pages-gym/js-aufgaben.jsx"))
 const GymJSConditions = lazy(() => import("@pages-gym/js-bedingungen.jsx"))
 const GymJSFunctions = lazy(() => import("@pages-gym/js-functions.jsx"))
@@ -163,6 +184,27 @@ export const routes = [
 
       // Gym Praktikum
       { path: "praktikum/install", element: <PInstall /> },
+
+      // Gym Internet und Sicherheit
+      { path: "gym/internet", element: <GymInternet /> },
+      { path: "gym/internet-karte", element: <GymInternetKarte /> },
+      { path: "gym/internet-quiz", element: <GymInternetQuiz /> },
+      { path: "gym/netzwerke", element: <GymNetzwerke /> },
+      { path: "gym/netzwerke-quiz", element: <GymNetzwerkeQuiz /> },
+      { path: "gym/vpn", element: <GymVPN /> },
+      { path: "gym/vpn-quiz", element: <GymVPNQuiz /> },
+      { path: "gym/verschluesselung", element: <GymVerschluesselung /> },
+      {
+        path: "gym/verschluesselung-quiz",
+        element: <GymVerschluesselungQuiz />,
+      },
+      { path: "gym/schluesselaustausch", element: <GymSchluesselaustausch /> },
+      {
+        path: "gym/schluesselaustausch-quiz",
+        element: <GymSchluesselaustauschQuiz />,
+      },
+      { path: "gym/passwoerter", element: <GymPasswoerter /> },
+      { path: "gym/passwoerter-quiz", element: <GymPasswoerterQuiz /> },
 
       // FMS Routes 1. Klasse
       { path: "fms-theorie", element: <FMSIndex /> },

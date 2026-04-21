@@ -23,7 +23,7 @@ export function generateGGTSteps(a, b) {
     b: num2,
     rest: null,
     description: `Zwei Zahlen eingeben: a=${num1}, b=${num2}`,
-    mermaidNode: "Zwei Zahlen eingeben: a, b",
+    mermaidNode: "Gib zwei Zahlen ein: a und b",
     variables: { a: num1, b: num2 },
   })
 
@@ -34,7 +34,7 @@ export function generateGGTSteps(a, b) {
       b: num2,
       rest: null,
       description: `Prüfe: b=${num2} = 0?`,
-      mermaidNode: "b = 0?",
+      mermaidNode: "Ist b = 0?",
       variables: { a: num1, b: num2 },
     })
 
@@ -45,7 +45,7 @@ export function generateGGTSteps(a, b) {
       b: num2,
       rest,
       description: `Berechne: rest = ${num1} mod ${num2} = ${rest}`,
-      mermaidNode: "rest = a mod b",
+      mermaidNode: "Berechne Rest von a geteilt durch b",
       variables: { a: num1, b: num2, rest },
     })
 
@@ -54,7 +54,7 @@ export function generateGGTSteps(a, b) {
       b: num2,
       rest,
       description: `Setze a = b = ${num2}`,
-      mermaidNode: "a = b",
+      mermaidNode: "Setze a auf den Wert von b",
       variables: { a: num2, b: num2, rest },
     })
 
@@ -66,7 +66,7 @@ export function generateGGTSteps(a, b) {
       b: num2,
       rest,
       description: `Setze b = rest = ${num2}`,
-      mermaidNode: "b = rest",
+      mermaidNode: "Setze b auf den Wert von Rest",
       variables: { a: num1, b: num2 },
     })
   }
@@ -77,7 +77,7 @@ export function generateGGTSteps(a, b) {
     b: num2,
     rest: null,
     description: `Prüfe: b=${num2} = 0? Ja!`,
-    mermaidNode: "b = 0?",
+    mermaidNode: "Ist b = 0?",
     variables: { a: num1, b: num2 },
   })
 
@@ -86,7 +86,7 @@ export function generateGGTSteps(a, b) {
     b: num2,
     rest: null,
     description: `GGT gefunden: ${num1}`,
-    mermaidNode: "Ausgabe: a ist GGT",
+    mermaidNode: "Gib aus: a ist GGT",
     variables: { ggt: num1 },
   })
 
@@ -120,7 +120,7 @@ export function generatePrimzahlSteps(n) {
     i: null,
     isPrime: null,
     description: `Zahl eingeben: ${n}`,
-    mermaidNode: "Zahl eingeben",
+    mermaidNode: "Gib Zahl ein",
     variables: { n },
   })
 
@@ -130,7 +130,7 @@ export function generatePrimzahlSteps(n) {
     i: null,
     isPrime: null,
     description: `Prüfe: ${n} <= 1?`,
-    mermaidNode: "n <= 1?",
+    mermaidNode: "Ist n ≤ 1?",
     variables: { n },
   })
 
@@ -140,7 +140,7 @@ export function generatePrimzahlSteps(n) {
       i: null,
       isPrime: false,
       description: `${n} ist nicht prim (zu klein)`,
-      mermaidNode: "Ausgabe: Nicht prim",
+      mermaidNode: "Gib aus: Nicht prim",
       variables: { n },
     })
 
@@ -162,7 +162,7 @@ export function generatePrimzahlSteps(n) {
     i: 2,
     isPrime: null,
     description: "Starte Teilersuche: i = 2",
-    mermaidNode: "i = 2",
+    mermaidNode: "Setze i auf 2",
     variables: { n, i: 2 },
   })
 
@@ -175,7 +175,7 @@ export function generatePrimzahlSteps(n) {
       i,
       isPrime: null,
       description: `Prüfe: i=${i} <= √${n}≈${sqrtN}?`,
-      mermaidNode: "i <= √n?",
+      mermaidNode: "Ist i ≤ √n?",
       variables: { n, i, sqrtN },
     })
 
@@ -185,7 +185,7 @@ export function generatePrimzahlSteps(n) {
       i,
       isPrime: null,
       description: `Prüfe: ${n} mod ${i} = ${n % i}`,
-      mermaidNode: "n mod i = 0?",
+      mermaidNode: "Ist Rest von n geteilt durch i gleich 0?",
       variables: { n, i, rest: n % i },
     })
 
@@ -195,7 +195,7 @@ export function generatePrimzahlSteps(n) {
         i,
         isPrime: false,
         description: `${n} ist durch ${i} teilbar → Nicht prim!`,
-        mermaidNode: "Ausgabe: Nicht prim",
+        mermaidNode: "Gib aus: Nicht prim",
         variables: { n, i },
       })
 
@@ -217,7 +217,7 @@ export function generatePrimzahlSteps(n) {
       i,
       isPrime: null,
       description: `i erhöhen: ${i} → ${i + 1}`,
-      mermaidNode: "i = i + 1",
+      mermaidNode: "Erhöhe i um 1",
       variables: { n, i: i + 1 },
     })
   }
@@ -228,7 +228,7 @@ export function generatePrimzahlSteps(n) {
     i: sqrtN + 1,
     isPrime: null,
     description: `Prüfe: i=${sqrtN + 1} <= √${n}≈${sqrtN}? Nein`,
-    mermaidNode: "i <= √n?",
+    mermaidNode: "Ist i ≤ √n?",
     variables: { n, i: sqrtN + 1 },
   })
 
@@ -237,7 +237,7 @@ export function generatePrimzahlSteps(n) {
     i: null,
     isPrime: true,
     description: `${n} ist prim!`,
-    mermaidNode: "Ausgabe: Prim",
+    mermaidNode: "Gib aus: Prim",
     variables: { n },
   })
 
@@ -272,7 +272,7 @@ export function generateFibonacciSteps(count) {
     i: null,
     current: null,
     description: `Anzahl eingeben: ${count} Fibonacci-Zahlen`,
-    mermaidNode: "Anzahl eingeben",
+    mermaidNode: "Gib Anzahl ein",
     variables: { count },
   })
 
@@ -282,7 +282,7 @@ export function generateFibonacciSteps(count) {
     i: 0,
     current: 0,
     description: "Erste Zahl: F(0) = 0",
-    mermaidNode: "F(0) = 0",
+    mermaidNode: "Setze F(0) auf 0",
     variables: { i: 0 },
   })
 
@@ -294,7 +294,7 @@ export function generateFibonacciSteps(count) {
       i: 1,
       current: 1,
       description: "Zweite Zahl: F(1) = 1",
-      mermaidNode: "F(1) = 1",
+      mermaidNode: "Setze F(1) auf 1",
       variables: { i: 1 },
     })
 
@@ -305,7 +305,7 @@ export function generateFibonacciSteps(count) {
       i: 2,
       current: null,
       description: "Starte Schleife: i = 2",
-      mermaidNode: "i = 2",
+      mermaidNode: "Setze i auf 2",
       variables: { i: 2, count },
     })
 
@@ -316,7 +316,7 @@ export function generateFibonacciSteps(count) {
         i,
         current: null,
         description: `Prüfe: i=${i} < ${count}?`,
-        mermaidNode: "i < Anzahl?",
+        mermaidNode: "Ist i < Anzahl?",
         variables: { i, count },
       })
 
@@ -327,7 +327,7 @@ export function generateFibonacciSteps(count) {
         i,
         current: next,
         description: `Berechne: F(${i}) = F(${i - 1}) + F(${i - 2}) = ${sequence[i - 1]} + ${sequence[i - 2]} = ${next}`,
-        mermaidNode: "F(i) = F(i-1) + F(i-2)",
+        mermaidNode: "Berechne F(i) = F(i-1) + F(i-2)",
         variables: { i, prev1: sequence[i - 1], prev2: sequence[i - 2], current: next },
       })
 
@@ -338,7 +338,7 @@ export function generateFibonacciSteps(count) {
         i,
         current: next,
         description: `i erhöhen: ${i} → ${i + 1}`,
-        mermaidNode: "i = i + 1",
+        mermaidNode: "Erhöhe i um 1",
         variables: { i: i + 1 },
       })
     }
@@ -349,7 +349,7 @@ export function generateFibonacciSteps(count) {
       i: count,
       current: null,
       description: `Prüfe: i=${count} < ${count}? Nein`,
-      mermaidNode: "i < Anzahl?",
+      mermaidNode: "Ist i < Anzahl?",
       variables: { i: count, count },
     })
   }
@@ -359,7 +359,7 @@ export function generateFibonacciSteps(count) {
     i: null,
     current: null,
     description: `Fertig! Fibonacci-Folge: [${sequence.join(", ")}]`,
-    mermaidNode: "Ausgabe: Folge",
+    mermaidNode: "Gib Folge aus",
     variables: {},
   })
 
@@ -394,7 +394,7 @@ export function generateFakultaetSteps(n) {
     i: null,
     result: null,
     description: `Zahl eingeben: ${n}`,
-    mermaidNode: "Zahl n eingeben",
+    mermaidNode: "Gib Zahl n ein",
     variables: { n },
   })
 
@@ -404,7 +404,7 @@ export function generateFakultaetSteps(n) {
     i: null,
     result: null,
     description: `Prüfe: ${n} <= 1?`,
-    mermaidNode: "n <= 1?",
+    mermaidNode: "Ist n ≤ 1?",
     variables: { n },
   })
 
@@ -414,7 +414,7 @@ export function generateFakultaetSteps(n) {
       i: null,
       result: 1,
       description: `Ja! ${n}! = 1`,
-      mermaidNode: "Ausgabe: 1",
+      mermaidNode: "Gib aus: 1",
       variables: { result: 1 },
     })
 
@@ -435,9 +435,18 @@ export function generateFakultaetSteps(n) {
     n,
     i: 1,
     result: 1,
-    description: "Initialisiere: i = 1, result = 1",
-    mermaidNode: "i = 1 result = 1",
-    variables: { i: 1, result: 1 },
+    description: "Setze i auf 1",
+    mermaidNode: "Setze i auf 1",
+    variables: { i: 1 },
+  })
+
+  steps.push({
+    n,
+    i: 1,
+    result: 1,
+    description: "Setze Ergebnis auf 1",
+    mermaidNode: "Setze Ergebnis auf 1",
+    variables: { result: 1 },
   })
 
   for (let i = 1; i <= n; i++) {
@@ -447,7 +456,7 @@ export function generateFakultaetSteps(n) {
       i,
       result,
       description: `Prüfe: i=${i} <= ${n}?`,
-      mermaidNode: "i <= n?",
+      mermaidNode: "Ist i ≤ n?",
       variables: { i, n, result },
     })
 
@@ -458,7 +467,7 @@ export function generateFakultaetSteps(n) {
       i,
       result,
       description: `Multipliziere: result = ${result / i} × ${i} = ${result}`,
-      mermaidNode: "result = result × i",
+      mermaidNode: "Multipliziere Ergebnis mit i",
       variables: { i, result },
     })
 
@@ -467,7 +476,7 @@ export function generateFakultaetSteps(n) {
       i,
       result,
       description: `i erhöhen: ${i} → ${i + 1}`,
-      mermaidNode: "i = i + 1",
+      mermaidNode: "Erhöhe i um 1",
       variables: { i: i + 1, result },
     })
   }
@@ -478,7 +487,7 @@ export function generateFakultaetSteps(n) {
     i: n + 1,
     result,
     description: `Prüfe: i=${n + 1} <= ${n}? Nein`,
-    mermaidNode: "i <= n?",
+    mermaidNode: "Ist i ≤ n?",
     variables: { i: n + 1, n },
   })
 
@@ -487,7 +496,7 @@ export function generateFakultaetSteps(n) {
     i: n + 1,
     result,
     description: `${n}! = ${result}`,
-    mermaidNode: "Ausgabe: result",
+    mermaidNode: "Gib Ergebnis aus",
     variables: { result },
   })
 
@@ -524,7 +533,7 @@ export function generatePotenzSteps(base, exponent) {
     i: null,
     result: null,
     description: `Basis und Exponent eingeben: ${base}^${exponent}`,
-    mermaidNode: "Basis und Exponent eingeben",
+    mermaidNode: "Gib Basis und Exponent ein",
     variables: { base, exponent },
   })
 
@@ -533,9 +542,19 @@ export function generatePotenzSteps(base, exponent) {
     exponent,
     i: 0,
     result: 1,
-    description: "Initialisiere: i = 0, result = 1",
-    mermaidNode: "i = 0 result = 1",
-    variables: { i: 0, result: 1 },
+    description: "Setze i auf 0",
+    mermaidNode: "Setze i auf 0",
+    variables: { i: 0 },
+  })
+
+  steps.push({
+    base,
+    exponent,
+    i: 0,
+    result: 1,
+    description: "Setze Ergebnis auf 1",
+    mermaidNode: "Setze Ergebnis auf 1",
+    variables: { result: 1 },
   })
 
   for (let i = 0; i < exponent; i++) {
@@ -546,7 +565,7 @@ export function generatePotenzSteps(base, exponent) {
       i,
       result,
       description: `Prüfe: i=${i} < ${exponent}?`,
-      mermaidNode: "i < Exponent?",
+      mermaidNode: "Ist i < Exponent?",
       variables: { i, exponent, result },
     })
 
@@ -558,7 +577,7 @@ export function generatePotenzSteps(base, exponent) {
       i,
       result,
       description: `Multipliziere: result = ${result / base} × ${base} = ${result}`,
-      mermaidNode: "result = result × Basis",
+      mermaidNode: "Multipliziere Ergebnis mit Basis",
       variables: { base, i, result },
     })
 
@@ -568,7 +587,7 @@ export function generatePotenzSteps(base, exponent) {
       i,
       result,
       description: `i erhöhen: ${i} → ${i + 1}`,
-      mermaidNode: "i = i + 1",
+      mermaidNode: "Erhöhe i um 1",
       variables: { i: i + 1, result },
     })
   }
@@ -580,7 +599,7 @@ export function generatePotenzSteps(base, exponent) {
     i: exponent,
     result,
     description: `Prüfe: i=${exponent} < ${exponent}? Nein`,
-    mermaidNode: "i < Exponent?",
+    mermaidNode: "Ist i < Exponent?",
     variables: { i: exponent, exponent },
   })
 
@@ -590,7 +609,7 @@ export function generatePotenzSteps(base, exponent) {
     i: exponent,
     result,
     description: `${base}^${exponent} = ${result}`,
-    mermaidNode: "Ausgabe: result",
+    mermaidNode: "Gib Ergebnis aus",
     variables: { result },
   })
 

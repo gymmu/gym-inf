@@ -25,7 +25,7 @@ export function generateBubbleSortSteps(array) {
     swapped: false,
     highlight: [],
     description: "Array eingeben",
-    mermaidNode: "Array eingeben",
+    mermaidNode: "Gib Liste ein",
     variables: { n },
   })
 
@@ -35,7 +35,7 @@ export function generateBubbleSortSteps(array) {
     swapped: false,
     highlight: [],
     description: "Initialisiere: i = 0",
-    mermaidNode: "i = 0",
+    mermaidNode: "Setze i auf 0",
     variables: { i: 0, n },
   })
 
@@ -47,7 +47,7 @@ export function generateBubbleSortSteps(array) {
       swapped: false,
       highlight: [],
       description: `Prüfe: i=${i} < ${n - 1}?`,
-      mermaidNode: "i < Länge - 1?",
+      mermaidNode: "Ist i < Länge minus 1?",
       variables: { i, n },
     })
 
@@ -58,7 +58,7 @@ export function generateBubbleSortSteps(array) {
       swapped: false,
       highlight: [],
       description: `Starte innere Schleife: j = 0`,
-      mermaidNode: "j = 0",
+      mermaidNode: "Setze j auf 0",
       variables: { i, j: 0 },
     })
 
@@ -70,7 +70,7 @@ export function generateBubbleSortSteps(array) {
         swapped: false,
         highlight: [],
         description: `Prüfe: j=${j} < ${n - i - 1}?`,
-        mermaidNode: "j < Länge - i - 1?",
+        mermaidNode: "Ist j < Länge minus i minus 1?",
         variables: { i, j },
       })
 
@@ -81,7 +81,7 @@ export function generateBubbleSortSteps(array) {
         swapped: false,
         highlight: [],
         description: `Vergleiche ${arr[j]} und ${arr[j + 1]}`,
-        mermaidNode: "Array[j] > Array[j+1]?",
+        mermaidNode: "Ist Element an j > Element an j+1?",
         variables: { i, j },
       })
 
@@ -94,7 +94,7 @@ export function generateBubbleSortSteps(array) {
           swapped: true,
           highlight: [j, j + 1],
           description: `Tausche ${arr[j]} und ${arr[j + 1]}`,
-          mermaidNode: "Tausche Array[j] mit Array[j+1]",
+          mermaidNode: "Tausche Element an j mit Element an j+1",
           variables: { i, j },
         })
       }
@@ -106,7 +106,7 @@ export function generateBubbleSortSteps(array) {
         swapped: false,
         highlight: [],
         description: `j erhöhen: ${j} → ${j + 1}`,
-        mermaidNode: "j = j + 1",
+        mermaidNode: "Erhöhe j um 1",
         variables: { i, j: j + 1 },
       })
     }
@@ -118,7 +118,7 @@ export function generateBubbleSortSteps(array) {
       swapped: false,
       highlight: Array.from({ length: i + 1 }, (_, idx) => n - 1 - idx),
       description: `Prüfe: j=${n - i - 1} < ${n - i - 1}? Nein`,
-      mermaidNode: "j < Länge - i - 1?",
+      mermaidNode: "Ist j < Länge minus i minus 1?",
       variables: { i, j: n - i - 1 },
     })
 
@@ -129,7 +129,7 @@ export function generateBubbleSortSteps(array) {
       swapped: false,
       highlight: Array.from({ length: i + 1 }, (_, idx) => n - 1 - idx),
       description: `i erhöhen: ${i} → ${i + 1}. Element ${arr[n - 1 - i]} sortiert`,
-      mermaidNode: "i = i + 1",
+      mermaidNode: "Erhöhe i um 1",
       variables: { i: i + 1 },
     })
   }
@@ -141,7 +141,7 @@ export function generateBubbleSortSteps(array) {
     swapped: false,
     highlight: Array.from({ length: n }, (_, i) => i),
     description: `Prüfe: i=${n - 1} < ${n - 1}? Nein - Fertig!`,
-    mermaidNode: "i < Länge - 1?",
+    mermaidNode: "Ist i < Länge minus 1?",
     variables: { i: n - 1 },
   })
 
@@ -152,7 +152,7 @@ export function generateBubbleSortSteps(array) {
     swapped: false,
     highlight: Array.from({ length: n }, (_, i) => i),
     description: "Array vollständig sortiert!",
-    mermaidNode: "Ende - Array sortiert",
+    mermaidNode: "Ende - Liste sortiert",
     variables: {},
   })
 
@@ -170,18 +170,8 @@ export function generateSelectionSortSteps(array) {
     minIndex: -1,
     currentIndex: -1,
     highlight: [],
-    description: "Start: Array unsortiert",
-    mermaidNode: "Start",
-    variables: {},
-  })
-
-  steps.push({
-    array: [...arr],
-    minIndex: -1,
-    currentIndex: -1,
-    highlight: [],
     description: "Array wurde eingegeben",
-    mermaidNode: "Array eingeben",
+    mermaidNode: "Input",
     variables: { n },
   })
 
@@ -191,7 +181,7 @@ export function generateSelectionSortSteps(array) {
     currentIndex: -1,
     highlight: [],
     description: "Initialisiere äußere Schleife: i = 0",
-    mermaidNode: "i = 0",
+    mermaidNode: "OuterInit",
     variables: { i: 0, n },
   })
 
@@ -203,7 +193,7 @@ export function generateSelectionSortSteps(array) {
       currentIndex: -1,
       highlight: Array.from({ length: i }, (_, idx) => idx),
       description: `Prüfe: i=${i} < ${n - 1}?`,
-      mermaidNode: "i < Länge - 1?",
+      mermaidNode: "OuterCheck",
       variables: { i, n },
     })
 
@@ -216,7 +206,7 @@ export function generateSelectionSortSteps(array) {
       currentIndex: i,
       highlight: Array.from({ length: i }, (_, idx) => idx),
       description: `Setze minIndex = ${i}`,
-      mermaidNode: "minIndex = i",
+      mermaidNode: "MinInit",
       variables: { i, minIndex: i },
     })
 
@@ -227,7 +217,7 @@ export function generateSelectionSortSteps(array) {
       currentIndex: i + 1,
       highlight: Array.from({ length: i }, (_, idx) => idx),
       description: `Starte innere Schleife: j = ${i + 1}`,
-      mermaidNode: "j = i + 1",
+      mermaidNode: "InnerInit",
       variables: { i, j: i + 1, minIndex },
     })
 
@@ -239,7 +229,7 @@ export function generateSelectionSortSteps(array) {
         currentIndex: j,
         highlight: Array.from({ length: i }, (_, idx) => idx),
         description: `Prüfe: j=${j} < ${n}?`,
-        mermaidNode: "j < Länge?",
+        mermaidNode: "InnerCheck",
         variables: { i, j, minIndex },
       })
 
@@ -250,7 +240,7 @@ export function generateSelectionSortSteps(array) {
         currentIndex: j,
         highlight: Array.from({ length: i }, (_, idx) => idx),
         description: `Vergleiche ${arr[j]} mit aktuellem Minimum ${arr[minIndex]}`,
-        mermaidNode: "Array[j] < Array[minIndex]?",
+        mermaidNode: "Compare",
         variables: { i, j, minIndex },
       })
 
@@ -262,7 +252,7 @@ export function generateSelectionSortSteps(array) {
           currentIndex: j,
           highlight: Array.from({ length: i }, (_, idx) => idx),
           description: `Neues Minimum gefunden: ${arr[minIndex]}`,
-          mermaidNode: "minIndex = j",
+          mermaidNode: "UpdateMin",
           variables: { i, j, minIndex },
         })
       }
@@ -274,7 +264,7 @@ export function generateSelectionSortSteps(array) {
         currentIndex: j,
         highlight: Array.from({ length: i }, (_, idx) => idx),
         description: `j erhöhen: ${j} → ${j + 1}`,
-        mermaidNode: "j = j + 1",
+        mermaidNode: "InnerIncr",
         variables: { i, j: j + 1, minIndex },
       })
     }
@@ -286,7 +276,7 @@ export function generateSelectionSortSteps(array) {
       currentIndex: -1,
       highlight: Array.from({ length: i }, (_, idx) => idx),
       description: `Prüfe: j=${n} < ${n}? Nein - Innere Schleife beendet`,
-      mermaidNode: "j < Länge?",
+      mermaidNode: "InnerCheck",
       variables: { i, j: n, minIndex },
     })
 
@@ -297,7 +287,7 @@ export function generateSelectionSortSteps(array) {
       currentIndex: -1,
       highlight: Array.from({ length: i }, (_, idx) => idx),
       description: `Prüfe ob Tausch nötig: i=${i} != minIndex=${minIndex}?`,
-      mermaidNode: "i != minIndex?",
+      mermaidNode: "SwapCheck",
       variables: { i, minIndex },
     })
 
@@ -310,7 +300,7 @@ export function generateSelectionSortSteps(array) {
         currentIndex: minIndex,
         highlight: Array.from({ length: i + 1 }, (_, idx) => idx),
         description: `Tausche: Position ${i} ↔ Position ${minIndex}`,
-        mermaidNode: "Tausche Array[i] mit Array[minIndex]",
+        mermaidNode: "Swap",
         variables: { i, minIndex },
       })
     }
@@ -322,7 +312,7 @@ export function generateSelectionSortSteps(array) {
       currentIndex: -1,
       highlight: Array.from({ length: i + 1 }, (_, idx) => idx),
       description: `i erhöhen: ${i} → ${i + 1}`,
-      mermaidNode: "i = i + 1",
+      mermaidNode: "OuterIncr",
       variables: { i: i + 1 },
     })
   }
@@ -334,7 +324,171 @@ export function generateSelectionSortSteps(array) {
     currentIndex: -1,
     highlight: Array.from({ length: n }, (_, i) => i),
     description: `Prüfe: i=${n - 1} < ${n - 1}? Nein - Fertig!`,
-    mermaidNode: "i < Länge - 1?",
+    mermaidNode: "OuterCheck",
+    variables: { i: n - 1 },
+  })
+
+  // Finale Ansicht
+  steps.push({
+    array: [...arr],
+    minIndex: -1,
+    currentIndex: -1,
+    highlight: [],
+    description: "Array wurde eingegeben",
+    mermaidNode: "Gib Liste ein",
+    variables: { n },
+  })
+
+  steps.push({
+    array: [...arr],
+    minIndex: -1,
+    currentIndex: -1,
+    highlight: [],
+    description: "Initialisiere äußere Schleife: i = 0",
+    mermaidNode: "Setze i auf 0",
+    variables: { i: 0, n },
+  })
+
+  for (let i = 0; i < n - 1; i++) {
+    // Outer loop check
+    steps.push({
+      array: [...arr],
+      minIndex: -1,
+      currentIndex: -1,
+      highlight: Array.from({ length: i }, (_, idx) => idx),
+      description: `Prüfe: i=${i} < ${n - 1}?`,
+      mermaidNode: "Ist i < Länge minus 1?",
+      variables: { i, n },
+    })
+
+    let minIndex = i
+
+    // Initialize minIndex
+    steps.push({
+      array: [...arr],
+      minIndex: i,
+      currentIndex: i,
+      highlight: Array.from({ length: i }, (_, idx) => idx),
+      description: `Setze minIndex = ${i}`,
+      mermaidNode: "Setze Minimum-Index auf i",
+      variables: { i, minIndex: i },
+    })
+
+    // Initialize inner loop
+    steps.push({
+      array: [...arr],
+      minIndex,
+      currentIndex: i + 1,
+      highlight: Array.from({ length: i }, (_, idx) => idx),
+      description: `Starte innere Schleife: j = ${i + 1}`,
+      mermaidNode: "Setze j auf i plus 1",
+      variables: { i, j: i + 1, minIndex },
+    })
+
+    for (let j = i + 1; j < n; j++) {
+      // Inner loop check
+      steps.push({
+        array: [...arr],
+        minIndex,
+        currentIndex: j,
+        highlight: Array.from({ length: i }, (_, idx) => idx),
+        description: `Prüfe: j=${j} < ${n}?`,
+        mermaidNode: "Ist j < Länge?",
+        variables: { i, j, minIndex },
+      })
+
+      // Vergleichsschritt
+      steps.push({
+        array: [...arr],
+        minIndex,
+        currentIndex: j,
+        highlight: Array.from({ length: i }, (_, idx) => idx),
+        description: `Vergleiche ${arr[j]} mit aktuellem Minimum ${arr[minIndex]}`,
+        mermaidNode: "Ist Element an j < Element an Minimum-Index?",
+        variables: { i, j, minIndex },
+      })
+
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j
+        steps.push({
+          array: [...arr],
+          minIndex,
+          currentIndex: j,
+          highlight: Array.from({ length: i }, (_, idx) => idx),
+          description: `Neues Minimum gefunden: ${arr[minIndex]}`,
+          mermaidNode: "Setze Minimum-Index auf j",
+          variables: { i, j, minIndex },
+        })
+      }
+      
+      // Increment j (happens always after comparison)
+      steps.push({
+        array: [...arr],
+        minIndex,
+        currentIndex: j,
+        highlight: Array.from({ length: i }, (_, idx) => idx),
+        description: `j erhöhen: ${j} → ${j + 1}`,
+        mermaidNode: "Erhöhe j um 1",
+        variables: { i, j: j + 1, minIndex },
+      })
+    }
+
+    // Final j < Länge? check (when j == n, exit loop)
+    steps.push({
+      array: [...arr],
+      minIndex,
+      currentIndex: -1,
+      highlight: Array.from({ length: i }, (_, idx) => idx),
+      description: `Prüfe: j=${n} < ${n}? Nein - Innere Schleife beendet`,
+      mermaidNode: "Ist j < Länge?",
+      variables: { i, j: n, minIndex },
+    })
+
+    // Swap check
+    steps.push({
+      array: [...arr],
+      minIndex,
+      currentIndex: -1,
+      highlight: Array.from({ length: i }, (_, idx) => idx),
+      description: `Prüfe ob Tausch nötig: i=${i} != minIndex=${minIndex}?`,
+      mermaidNode: "Ist i ≠ Minimum-Index?",
+      variables: { i, minIndex },
+    })
+
+    // Tausche oder nicht
+    if (minIndex !== i) {
+      ;[arr[i], arr[minIndex]] = [arr[minIndex], arr[i]]
+      steps.push({
+        array: [...arr],
+        minIndex: i,
+        currentIndex: minIndex,
+        highlight: Array.from({ length: i + 1 }, (_, idx) => idx),
+        description: `Tausche: Position ${i} ↔ Position ${minIndex}`,
+        mermaidNode: "Tausche Element an i mit Element an Minimum-Index",
+        variables: { i, minIndex },
+      })
+    }
+    
+    // Increment i
+    steps.push({
+      array: [...arr],
+      minIndex: -1,
+      currentIndex: -1,
+      highlight: Array.from({ length: i + 1 }, (_, idx) => idx),
+      description: `i erhöhen: ${i} → ${i + 1}`,
+      mermaidNode: "Erhöhe i um 1",
+      variables: { i: i + 1 },
+    })
+  }
+
+  // Final outer loop check
+  steps.push({
+    array: [...arr],
+    minIndex: -1,
+    currentIndex: -1,
+    highlight: Array.from({ length: n }, (_, i) => i),
+    description: `Prüfe: i=${n - 1} < ${n - 1}? Nein - Fertig!`,
+    mermaidNode: "Ist i < Länge minus 1?",
     variables: { i: n - 1 },
   })
 
@@ -345,7 +499,7 @@ export function generateSelectionSortSteps(array) {
     currentIndex: -1,
     highlight: Array.from({ length: n }, (_, i) => i),
     description: "Array vollständig sortiert!",
-    mermaidNode: "Ende - Array sortiert",
+    mermaidNode: "Ende - Liste sortiert",
     variables: {},
   })
 
@@ -374,7 +528,7 @@ export function generateInsertionSortSteps(array) {
     sorted: [0],
     comparing: [],
     description: "Array eingeben",
-    mermaidNode: "Array eingeben",
+    mermaidNode: "Gib Liste ein",
     variables: { n },
   })
 
@@ -384,7 +538,7 @@ export function generateInsertionSortSteps(array) {
     sorted: [0],
     comparing: [],
     description: "Initialisiere: i = 1 (erstes Element als sortiert)",
-    mermaidNode: "i = 1",
+    mermaidNode: "Setze i auf 1",
     variables: { i: 1, n },
   })
 
@@ -396,7 +550,7 @@ export function generateInsertionSortSteps(array) {
       sorted: Array.from({ length: i }, (_, idx) => idx),
       comparing: [],
       description: `Prüfe: i=${i} < ${n}?`,
-      mermaidNode: "i < Länge?",
+      mermaidNode: "Ist i < Länge?",
       variables: { i, n },
     })
 
@@ -408,7 +562,7 @@ export function generateInsertionSortSteps(array) {
       sorted: Array.from({ length: i }, (_, idx) => idx),
       comparing: [],
       description: `Speichere key = ${key} (Array[${i}])`,
-      mermaidNode: "key = Array[i]",
+      mermaidNode: "Merke Element an Position i als Schlüssel",
       variables: { i, key },
     })
 
@@ -418,7 +572,7 @@ export function generateInsertionSortSteps(array) {
       sorted: Array.from({ length: i }, (_, idx) => idx),
       comparing: [],
       description: `Setze j = ${i - 1}`,
-      mermaidNode: "j = i - 1",
+      mermaidNode: "Setze j auf i minus 1",
       variables: { i, j: i - 1, key },
     })
 
@@ -432,7 +586,7 @@ export function generateInsertionSortSteps(array) {
         sorted: Array.from({ length: i }, (_, idx) => idx),
         comparing: [j, j + 1],
         description: `Prüfe: j=${j} >= 0 UND Array[${j}]=${arr[j]} > key=${key}?`,
-        mermaidNode: "j >= 0 UND Array[j] > key?",
+        mermaidNode: "Ist j ≥ 0 UND Element an j > Schlüssel?",
         variables: { i, j, key },
       })
 
@@ -443,7 +597,7 @@ export function generateInsertionSortSteps(array) {
         sorted: Array.from({ length: i }, (_, idx) => idx),
         comparing: [j, j + 1],
         description: `Verschiebe ${arr[j]} nach rechts`,
-        mermaidNode: "Array[j+1] = Array[j]",
+        mermaidNode: "Verschiebe Element an j nach rechts",
         variables: { i, j, key },
       })
 
@@ -455,7 +609,7 @@ export function generateInsertionSortSteps(array) {
         sorted: Array.from({ length: i }, (_, idx) => idx),
         comparing: [j],
         description: `j verringern: ${j} → ${j - 1}`,
-        mermaidNode: "j = j - 1",
+        mermaidNode: "Verringere j um 1",
         variables: { i, j: j - 1, key },
       })
       
@@ -470,7 +624,7 @@ export function generateInsertionSortSteps(array) {
       sorted: Array.from({ length: i }, (_, idx) => idx),
       comparing: j >= 0 ? [j] : [],
       description: `Prüfe: ${exitReason}? Nein - Schleife beendet`,
-      mermaidNode: "j >= 0 UND Array[j] > key?",
+      mermaidNode: "Ist j ≥ 0 UND Element an j > Schlüssel?",
       variables: { i, j, key },
     })
 
@@ -483,7 +637,7 @@ export function generateInsertionSortSteps(array) {
       sorted: Array.from({ length: i + 1 }, (_, idx) => idx),
       comparing: [],
       description: `Füge key=${key} an Position ${j + 1} ein`,
-      mermaidNode: "Array[j+1] = key",
+      mermaidNode: "Setze Element an Position j+1 auf Schlüssel",
       variables: { i, j: j + 1, key },
     })
 
@@ -494,7 +648,7 @@ export function generateInsertionSortSteps(array) {
       sorted: Array.from({ length: i + 1 }, (_, idx) => idx),
       comparing: [],
       description: `i erhöhen: ${i} → ${i + 1}`,
-      mermaidNode: "i = i + 1",
+      mermaidNode: "Erhöhe i um 1",
       variables: { i: i + 1 },
     })
   }
@@ -506,7 +660,7 @@ export function generateInsertionSortSteps(array) {
     sorted: Array.from({ length: n }, (_, i) => i),
     comparing: [],
     description: `Prüfe: i=${n} < ${n}? Nein - Fertig!`,
-    mermaidNode: "i < Länge?",
+    mermaidNode: "Ist i < Länge?",
     variables: { i: n },
   })
 
@@ -517,7 +671,7 @@ export function generateInsertionSortSteps(array) {
     sorted: Array.from({ length: n }, (_, i) => i),
     comparing: [],
     description: "Array vollständig sortiert!",
-    mermaidNode: "Ende - Array sortiert",
+    mermaidNode: "Ende - Liste sortiert",
     variables: {},
   })
 

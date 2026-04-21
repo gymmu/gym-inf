@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import Section from "@components/Section"
 import SolutionBlock from "@components/SolutionBlock"
 import SimpleSplitView from "@components/algorithm/SimpleSplitView"
@@ -20,21 +21,21 @@ export default function FmsAlgorithmenSortieren() {
   const selectionSortChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Array eingeben]
-    Input --> OuterInit["i = 0"]
-    OuterInit --> OuterCheck{"i &lt; Länge - 1?"}
-    OuterCheck -->|Nein| End([Ende - Array sortiert])
-    OuterCheck -->|Ja| MinInit["minIndex = i"]
-    MinInit --> InnerInit["j = i + 1"]
-    InnerInit --> InnerCheck{"j &lt; Länge?"}
-    InnerCheck -->|Nein| SwapCheck{"i != minIndex?"}
-    InnerCheck -->|Ja| Compare{"Array[j] &lt; Array[minIndex]?"}
-    Compare -->|Ja| UpdateMin["minIndex = j"]
-    Compare -->|Nein| InnerIncr["j = j + 1"]
+    Start([Start]) --> Input[Gib Liste ein]
+    Input --> OuterInit[Setze i auf 0]
+    OuterInit --> OuterCheck{Ist i &lt; Länge minus 1?}
+    OuterCheck -->|Nein| End([Ende - Liste sortiert])
+    OuterCheck -->|Ja| MinInit[Setze Minimum-Index auf i]
+    MinInit --> InnerInit[Setze j auf i plus 1]
+    InnerInit --> InnerCheck{Ist j &lt; Länge?}
+    InnerCheck -->|Nein| SwapCheck{Ist i ≠ Minimum-Index?}
+    InnerCheck -->|Ja| Compare{Ist Element an j &lt; Element an Minimum-Index?}
+    Compare -->|Ja| UpdateMin[Setze Minimum-Index auf j]
+    Compare -->|Nein| InnerIncr[Erhöhe j um 1]
     UpdateMin --> InnerIncr
     InnerIncr --> InnerCheck
-    SwapCheck -->|Ja| Swap["Tausche Array[i] mit Array[minIndex]"]
-    SwapCheck -->|Nein| OuterIncr["i = i + 1"]
+    SwapCheck -->|Ja| Swap[Tausche Element an i mit Element an Minimum-Index]
+    SwapCheck -->|Nein| OuterIncr[Erhöhe i um 1]
     Swap --> OuterIncr
     OuterIncr --> OuterCheck
   `
@@ -42,34 +43,34 @@ flowchart TD
   const insertionSortChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Array eingeben]
-    Input --> OuterInit["i = 1"]
-    OuterInit --> OuterCheck{"i &lt; Länge?"}
-    OuterCheck -->|Nein| End([Ende - Array sortiert])
-    OuterCheck -->|Ja| Key["key = Array[i]"]
-    Key --> JInit["j = i - 1"]
-    JInit --> InnerCheck{"j &gt;= 0 UND<br/>Array[j] &gt; key?"}
-    InnerCheck -->|Nein| Insert["Array[j+1] = key"]
-    InnerCheck -->|Ja| Shift["Array[j+1] = Array[j]"]
-    Shift --> JDecr["j = j - 1"]
+    Start([Start]) --> Input[Gib Liste ein]
+    Input --> OuterInit[Setze i auf 1]
+    OuterInit --> OuterCheck{Ist i &lt; Länge?}
+    OuterCheck -->|Nein| End([Ende - Liste sortiert])
+    OuterCheck -->|Ja| Key[Merke Element an Position i als Schlüssel]
+    Key --> JInit[Setze j auf i minus 1]
+    JInit --> InnerCheck{Ist j ≥ 0 UND<br/>Element an j > Schlüssel?}
+    InnerCheck -->|Nein| Insert[Setze Element an Position j+1 auf Schlüssel]
+    InnerCheck -->|Ja| Shift[Verschiebe Element an j nach rechts]
+    Shift --> JDecr[Verringere j um 1]
     JDecr --> InnerCheck
-    Insert --> OuterIncr["i = i + 1"]
+    Insert --> OuterIncr[Erhöhe i um 1]
     OuterIncr --> OuterCheck
   `
 
   const bubbleSortChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Array eingeben]
-    Input --> OuterInit["i = 0"]
-    OuterInit --> OuterCheck{"i &lt; Länge - 1?"}
-    OuterCheck -->|Nein| End([Ende - Array sortiert])
-    OuterCheck -->|Ja| InnerInit["j = 0"]
-    InnerInit --> InnerCheck{"j &lt; Länge - i - 1?"}
-    InnerCheck -->|Nein| OuterIncr["i = i + 1"]
-    InnerCheck -->|Ja| Compare{"Array[j] &gt; Array[j+1]?"}
-    Compare -->|Ja| Swap["Tausche Array[j] mit Array[j+1]"]
-    Compare -->|Nein| InnerIncr["j = j + 1"]
+    Start([Start]) --> Input[Gib Liste ein]
+    Input --> OuterInit[Setze i auf 0]
+    OuterInit --> OuterCheck{Ist i &lt; Länge minus 1?}
+    OuterCheck -->|Nein| End([Ende - Liste sortiert])
+    OuterCheck -->|Ja| InnerInit[Setze j auf 0]
+    InnerInit --> InnerCheck{Ist j &lt; Länge minus i minus 1?}
+    InnerCheck -->|Nein| OuterIncr[Erhöhe i um 1]
+    InnerCheck -->|Ja| Compare{Ist Element an j > Element an j+1?}
+    Compare -->|Ja| Swap[Tausche Element an j mit Element an j+1]
+    Compare -->|Nein| InnerIncr[Erhöhe j um 1]
     Swap --> InnerIncr
     InnerIncr --> InnerCheck
     OuterIncr --> OuterCheck
@@ -89,6 +90,19 @@ flowchart TD
     <>
       <section>
         <h2>Sortieralgorithmen</h2>
+        
+        <div style={{ 
+          backgroundColor: "var(--color-bg-light)", 
+          padding: "15px", 
+          borderRadius: "8px",
+          marginBottom: "20px",
+          borderLeft: "4px solid var(--color-primary)"
+        }}>
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
+          Wenn dir Begriffe unklar sind, schaue im{" "}
+          <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
+        </div>
+        
         <p>
           Sortieren ist eine der häufigsten Aufgaben in der Informatik. Ein
           sortiertes Array ermöglicht schnelleres Suchen und macht Daten

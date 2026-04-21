@@ -1,0 +1,227 @@
+{
+  "title": "Quiz: Internet und Netzwerke",
+  "description": "Testen Sie Ihr Wissen über die Grundlagen des Internets, das TCP/IP-Modell, DNS und Protokolle.",
+  "questions": [
+    {
+      "id": 1,
+      "type": "multiple-choice",
+      "question": "Welche Aussage beschreibt den Unterschied zwischen TCP und UDP am besten?",
+      "answers": [
+        {
+          "text": "TCP garantiert die Zustellung und Reihenfolge der Pakete, UDP nicht.",
+          "correct": true
+        },
+        {
+          "text": "UDP ist langsamer als TCP, dafür sicherer.",
+          "correct": false
+        },
+        {
+          "text": "TCP wird für Streaming verwendet, UDP für E-Mails.",
+          "correct": false
+        },
+        {
+          "text": "UDP verwendet einen 3-Way-Handshake, TCP nicht.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "multiple-choice",
+      "question": "In welcher Schicht des TCP/IP-Modells arbeitet das DNS-Protokoll?",
+      "answers": [
+        { "text": "Anwendungsschicht", "correct": true },
+        { "text": "Transportschicht", "correct": false },
+        { "text": "Internetschicht", "correct": false },
+        { "text": "Netzzugangsschicht", "correct": false }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "multiple-choice",
+      "question": "Was ist ein Root-Nameserver in der DNS-Hierarchie?",
+      "answers": [
+        {
+          "text": "Der oberste DNS-Server, der weiss, welche Nameserver für die TLDs (z.B. .com, .ch) zuständig sind.",
+          "correct": true
+        },
+        {
+          "text": "Der DNS-Server bei Ihrem ISP, der Anfragen für Sie ausführt.",
+          "correct": false
+        },
+        {
+          "text": "Der Nameserver, der die IP-Adresse einer konkreten Domain kennt.",
+          "correct": false
+        },
+        {
+          "text": "Ein DNS-Server, der nur im lokalen Netzwerk funktioniert.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "true-false",
+      "question": "HTTPS schützt vollständig davor, dass Ihr ISP sehen kann, welche Webseiten Sie besuchen.",
+      "answers": [
+        { "text": "Wahr", "correct": false },
+        {
+          "text": "Falsch – der ISP sieht weiterhin die Domains (aber nicht den Inhalt).",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "multiple-choice",
+      "question": "Warum wird UDP für DNS-Anfragen verwendet?",
+      "answers": [
+        {
+          "text": "Weil DNS-Anfragen klein und schnell sind, und ein verlorenes Paket einfach erneut gesendet werden kann.",
+          "correct": true
+        },
+        { "text": "Weil UDP verschlüsselter ist als TCP.", "correct": false },
+        {
+          "text": "Weil TCP von DNS-Servern nicht unterstützt wird.",
+          "correct": false
+        },
+        {
+          "text": "Weil UDP keine Ports verwendet und deshalb sicherer ist.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "multiple-choice",
+      "question": "Was passiert beim TCP 3-Way-Handshake?",
+      "answers": [
+        {
+          "text": "Client sendet SYN → Server antwortet SYN-ACK → Client bestätigt ACK.",
+          "correct": true
+        },
+        {
+          "text": "Client sendet ACK → Server antwortet SYN → Client bestätigt FIN.",
+          "correct": false
+        },
+        {
+          "text": "Server sendet SYN → Client antwortet ACK → Server bestätigt FIN.",
+          "correct": false
+        },
+        {
+          "text": "Client und Server tauschen gleichzeitig SYN-Pakete aus.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "multiple-choice",
+      "question": "Wie viele Hosts kann ein /26-Subnetz (255.255.255.192) enthalten?",
+      "answers": [
+        { "text": "62 Hosts", "correct": true },
+        { "text": "64 Hosts", "correct": false },
+        { "text": "126 Hosts", "correct": false },
+        { "text": "254 Hosts", "correct": false }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "true-false",
+      "question": "IPv6-Adressen sind 128 Bit lang und lösen das IPv4-Adressknappheitsproblem.",
+      "answers": [
+        { "text": "Wahr", "correct": true },
+        { "text": "Falsch", "correct": false }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "multiple-choice",
+      "question": "Was ist DNS over HTTPS (DoH)?",
+      "answers": [
+        {
+          "text": "Ein Verfahren, das DNS-Anfragen über verschlüsselte HTTPS-Verbindungen sendet, sodass der ISP sie nicht mitlesen kann.",
+          "correct": true
+        },
+        {
+          "text": "Ein Protokoll, das Webseiten-Domains in HTTPS umwandelt.",
+          "correct": false
+        },
+        {
+          "text": "Ein DNS-Server, der nur HTTPS-Webseiten auflöst.",
+          "correct": false
+        },
+        {
+          "text": "Eine Erweiterung, die HTTPS-Zertifikate im DNS speichert.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "multiple-choice",
+      "question": "Was zeigt der Befehl 'traceroute' an?",
+      "answers": [
+        {
+          "text": "Die Router (Hops), über die ein Paket vom eigenen Gerät bis zum Ziel läuft.",
+          "correct": true
+        },
+        {
+          "text": "Die Geschwindigkeit der eigenen Internetverbindung.",
+          "correct": false
+        },
+        {
+          "text": "Alle aktuell geöffneten Netzwerkverbindungen des eigenen Geräts.",
+          "correct": false
+        },
+        { "text": "Die DNS-Auflösungszeit für eine Domain.", "correct": false }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "multiple-choice",
+      "question": "Welche Aussage über Datenpakete im Internet ist korrekt?",
+      "answers": [
+        {
+          "text": "Pakete einer Übertragung können verschiedene Wege nehmen und am Ziel wieder zusammengesetzt werden.",
+          "correct": true
+        },
+        {
+          "text": "Alle Pakete einer Verbindung nehmen immer den gleichen Weg.",
+          "correct": false
+        },
+        {
+          "text": "Pakete werden als ganzes Stück gesendet, nicht aufgeteilt.",
+          "correct": false
+        },
+        {
+          "text": "Nur TCP-Pakete können verschiedene Wege nehmen, UDP-Pakete nicht.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "multiple-choice",
+      "question": "Was bedeutet 'BGP' im Kontext des Internets?",
+      "answers": [
+        {
+          "text": "Border Gateway Protocol — das Protokoll, mit dem grosse Netzwerke (Autonomous Systems) Routing-Informationen austauschen.",
+          "correct": true
+        },
+        {
+          "text": "Browser Gateway Protocol — ein Protokoll für sichere Browser-Kommunikation.",
+          "correct": false
+        },
+        {
+          "text": "Basic Gateway Protocol — ein vereinfachtes Routing-Protokoll für Heimnetzwerke.",
+          "correct": false
+        },
+        {
+          "text": "Backup Gateway Protocol — ein Sicherheitsprotokoll für Redundanz.",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

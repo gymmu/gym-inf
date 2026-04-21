@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import Section from "@components/Section"
 import SolutionBlock from "@components/SolutionBlock"
 import SimpleSplitView from "@components/algorithm/SimpleSplitView"
@@ -28,12 +29,12 @@ export default function FmsAlgorithmenMathematik() {
   const ggtChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Zwei Zahlen eingeben: a, b]
-    Input --> Check{"b = 0?"}
-    Check -->|Ja| Output[Ausgabe: a ist GGT]
-    Check -->|Nein| Modulo["rest = a mod b"]
-    Modulo --> Update1["a = b"]
-    Update1 --> Update2["b = rest"]
+    Start([Start]) --> Input[Gib zwei Zahlen ein: a und b]
+    Input --> Check{Ist b = 0?}
+    Check -->|Ja| Output[Gib aus: a ist GGT]
+    Check -->|Nein| Modulo[Berechne Rest von a geteilt durch b]
+    Modulo --> Update1[Setze a auf den Wert von b]
+    Update1 --> Update2[Setze b auf den Wert von Rest]
     Update2 --> Check
     Output --> End([Ende])
   `
@@ -41,15 +42,15 @@ flowchart TD
   const primzahlChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Zahl eingeben]
-    Input --> CheckSmall{"n &lt;= 1?"}
-    CheckSmall -->|Ja| NotPrime1[Ausgabe: Nicht prim]
-    CheckSmall -->|Nein| Init["i = 2"]
-    Init --> Check{"i &lt;= √n?"}
-    Check -->|Nein| IsPrime[Ausgabe: Prim]
-    Check -->|Ja| Mod{"n mod i = 0?"}
-    Mod -->|Ja| NotPrime2[Ausgabe: Nicht prim]
-    Mod -->|Nein| Incr["i = i + 1"]
+    Start([Start]) --> Input[Gib Zahl ein]
+    Input --> CheckSmall{Ist n ≤ 1?}
+    CheckSmall -->|Ja| NotPrime1[Gib aus: Nicht prim]
+    CheckSmall -->|Nein| Init[Setze i auf 2]
+    Init --> Check{Ist i ≤ √n?}
+    Check -->|Nein| IsPrime[Gib aus: Prim]
+    Check -->|Ja| Mod{Ist Rest von n geteilt durch i gleich 0?}
+    Mod -->|Ja| NotPrime2[Gib aus: Nicht prim]
+    Mod -->|Nein| Incr[Erhöhe i um 1]
     Incr --> Check
     IsPrime --> End([Ende])
     NotPrime1 --> End
@@ -59,14 +60,15 @@ flowchart TD
   const fakultaetChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Zahl n eingeben]
-    Input --> CheckSmall{"n &lt;= 1?"}
-    CheckSmall -->|Ja| Output1[Ausgabe: 1]
-    CheckSmall -->|Nein| Init["i = 1 result = 1"]
-    Init --> Check{"i &lt;= n?"}
-    Check -->|Nein| Output2[Ausgabe: result]
-    Check -->|Ja| Multiply["result = result × i"]
-    Multiply --> Incr["i = i + 1"]
+    Start([Start]) --> Input[Gib Zahl n ein]
+    Input --> CheckSmall{Ist n ≤ 1?}
+    CheckSmall -->|Ja| Output1[Gib aus: 1]
+    CheckSmall -->|Nein| Init1[Setze i auf 1]
+    Init1 --> Init2[Setze Ergebnis auf 1]
+    Init2 --> Check{Ist i ≤ n?}
+    Check -->|Nein| Output2[Gib Ergebnis aus]
+    Check -->|Ja| Multiply[Multipliziere Ergebnis mit i]
+    Multiply --> Incr[Erhöhe i um 1]
     Incr --> Check
     Output1 --> End([Ende])
     Output2 --> End
@@ -75,12 +77,13 @@ flowchart TD
   const potenzChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Basis und Exponent eingeben]
-    Input --> Init["i = 0 result = 1"]
-    Init --> Check{"i &lt; Exponent?"}
-    Check -->|Nein| Output[Ausgabe: result]
-    Check -->|Ja| Multiply["result = result × Basis"]
-    Multiply --> Incr["i = i + 1"]
+    Start([Start]) --> Input[Gib Basis und Exponent ein]
+    Input --> Init1[Setze i auf 0]
+    Init1 --> Init2[Setze Ergebnis auf 1]
+    Init2 --> Check{Ist i &lt; Exponent?}
+    Check -->|Nein| Output[Gib Ergebnis aus]
+    Check -->|Ja| Multiply[Multipliziere Ergebnis mit Basis]
+    Multiply --> Incr[Erhöhe i um 1]
     Incr --> Check
     Output --> End([Ende])
   `
@@ -88,14 +91,14 @@ flowchart TD
   const fibonacciChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Anzahl eingeben]
-    Input --> Init1["F(0) = 0"]
-    Init1 --> Init2["F(1) = 1"]
-    Init2 --> LoopInit["i = 2"]
-    LoopInit --> Check{"i &lt; Anzahl?"}
-    Check -->|Nein| Output[Ausgabe: Folge]
-    Check -->|Ja| Calc["F(i) = F(i-1) + F(i-2)"]
-    Calc --> Incr["i = i + 1"]
+    Start([Start]) --> Input[Gib Anzahl ein]
+    Input --> Init1[Setze F(0) auf 0]
+    Init1 --> Init2[Setze F(1) auf 1]
+    Init2 --> LoopInit[Setze i auf 2]
+    LoopInit --> Check{Ist i &lt; Anzahl?}
+    Check -->|Nein| Output[Gib Folge aus]
+    Check -->|Ja| Calc[Berechne F(i) = F(i-1) + F(i-2)]
+    Calc --> Incr[Erhöhe i um 1]
     Incr --> Check
     Output --> End([Ende])
   `
@@ -117,6 +120,19 @@ flowchart TD
     <>
       <section>
         <h2>Mathematische Algorithmen</h2>
+        
+        <div style={{ 
+          backgroundColor: "var(--color-bg-light)", 
+          padding: "15px", 
+          borderRadius: "8px",
+          marginBottom: "20px",
+          borderLeft: "4px solid var(--color-primary)"
+        }}>
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
+          Wenn dir Begriffe unklar sind, schaue im{" "}
+          <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
+        </div>
+        
         <p>
           Viele mathematische Probleme lassen sich mit einfachen Algorithmen
           lösen. Wir schauen uns fünf klassische Beispiele an:

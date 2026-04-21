@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import Section from "@components/Section"
 import SolutionBlock from "@components/SolutionBlock"
 import SimpleSplitView from "@components/algorithm/SimpleSplitView"
@@ -19,31 +20,32 @@ export default function FmsAlgorithmenAlltag() {
   const durchschnittChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Array eingeben]
-    Input --> Init["i = 0 sum = 0"]
-    Init --> Check{"i &lt; Länge?"}
-    Check -->|Nein| Calc["average = sum / Länge"]
-    Check -->|Ja| Add["sum = sum + Array[i]"]
-    Add --> Incr["i = i + 1"]
-    Incr --> Check
-    Calc --> Output[Ausgabe: average]
+    Start([Start]) --> Input[Gib Liste ein]
+    Input --> Init1[Setze i auf 0]
+    Init1 --> Init2[Setze Summe auf 0]
+    Init2 --> Check{Ist i &lt; Länge?}
+    Check -->|Nein| Calc[Berechne Durchschnitt: Summe geteilt durch Länge]
+    Check -->|Ja| Add[Addiere Element an Position i zu Summe]
+    Add --> Next[Gehe zum nächsten Element]
+    Next --> Check
+    Calc --> Output[Gib Durchschnitt aus]
     Output --> End([Ende])
   `
 
   const notenChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Punkte eingeben]
-    Input --> Check90{"Punkte &gt;= 90?"}
-    Check90 -->|Ja| Note1[Note = Sehr gut]
-    Check90 -->|Nein| Check75{"Punkte &gt;= 75?"}
-    Check75 -->|Ja| Note2[Note = Gut]
-    Check75 -->|Nein| Check60{"Punkte &gt;= 60?"}
-    Check60 -->|Ja| Note3[Note = Befriedigend]
-    Check60 -->|Nein| Check50{"Punkte &gt;= 50?"}
-    Check50 -->|Ja| Note4[Note = Ausreichend]
-    Check50 -->|Nein| Note5[Note = Ungenügend]
-    Note1 --> Output[Ausgabe: Note]
+    Start([Start]) --> Input[Gib Punkte ein]
+    Input --> Check90{Sind Punkte ≥ 90?}
+    Check90 -->|Ja| Note1[Setze Note auf Sehr gut]
+    Check90 -->|Nein| Check75{Sind Punkte ≥ 75?}
+    Check75 -->|Ja| Note2[Setze Note auf Gut]
+    Check75 -->|Nein| Check60{Sind Punkte ≥ 60?}
+    Check60 -->|Ja| Note3[Setze Note auf Befriedigend]
+    Check60 -->|Nein| Check50{Sind Punkte ≥ 50?}
+    Check50 -->|Ja| Note4[Setze Note auf Ausreichend]
+    Check50 -->|Nein| Note5[Setze Note auf Ungenügend]
+    Note1 --> Output[Gib Note aus]
     Note2 --> Output
     Note3 --> Output
     Note4 --> Output
@@ -54,14 +56,14 @@ flowchart TD
   const schaltjahrChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
 flowchart TD
-    Start([Start]) --> Input[Jahr eingeben]
-    Input --> Check4{"Jahr mod 4 = 0?"}
-    Check4 -->|Nein| NotLeap1[Ausgabe: Kein Schaltjahr]
-    Check4 -->|Ja| Check100{"Jahr mod 100 = 0?"}
-    Check100 -->|Nein| IsLeap1[Ausgabe: Schaltjahr]
-    Check100 -->|Ja| Check400{"Jahr mod 400 = 0?"}
-    Check400 -->|Ja| IsLeap2[Ausgabe: Schaltjahr]
-    Check400 -->|Nein| NotLeap2[Ausgabe: Kein Schaltjahr]
+    Start([Start]) --> Input[Gib Jahr ein]
+    Input --> Check4{Ist Rest bei Division durch 4 gleich 0?}
+    Check4 -->|Nein| NotLeap1[Gib aus: Kein Schaltjahr]
+    Check4 -->|Ja| Check100{Ist Rest bei Division durch 100 gleich 0?}
+    Check100 -->|Nein| IsLeap1[Gib aus: Schaltjahr]
+    Check100 -->|Ja| Check400{Ist Rest bei Division durch 400 gleich 0?}
+    Check400 -->|Ja| IsLeap2[Gib aus: Schaltjahr]
+    Check400 -->|Nein| NotLeap2[Gib aus: Kein Schaltjahr]
     NotLeap1 --> End([Ende])
     IsLeap1 --> End
     IsLeap2 --> End
@@ -80,6 +82,19 @@ flowchart TD
     <>
       <section>
         <h2>Algorithmen im Alltag</h2>
+        
+        <div style={{ 
+          backgroundColor: "var(--color-bg-light)", 
+          padding: "15px", 
+          borderRadius: "8px",
+          marginBottom: "20px",
+          borderLeft: "4px solid var(--color-primary)"
+        }}>
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
+          Wenn dir Begriffe unklar sind, schaue im{" "}
+          <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
+        </div>
+
         <p>
           Algorithmen begegnen uns täglich, oft ohne dass wir es merken. Hier
           sind drei praktische Beispiele, sortiert vom einfachsten zum komplexesten:

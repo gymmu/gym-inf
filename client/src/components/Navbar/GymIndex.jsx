@@ -64,6 +64,28 @@ export default function GymIndex() {
               <NavLink to="kaplay-teamwork">Arbeiten im Team</NavLink>
             </ol>
           </li>
+          <li>
+            Internet und Sicherheit
+            <ol>
+              <NavLink to="gym/internet">Internet</NavLink>
+              <NavLink to="gym/internet-karte">Karte des Internets</NavLink>
+              <NavLink to="gym/internet-quiz">Quiz: Internet</NavLink>
+              <NavLink to="gym/netzwerke">Netzwerkkomponenten</NavLink>
+              <NavLink to="gym/netzwerke-quiz">Quiz: Netzwerke</NavLink>
+              <NavLink to="gym/vpn">VPN</NavLink>
+              <NavLink to="gym/vpn-quiz">Quiz: VPN</NavLink>
+              <NavLink to="gym/verschluesselung">Verschlüsselung</NavLink>
+              <NavLink to="gym/verschluesselung-quiz">
+                Quiz: Verschlüsselung
+              </NavLink>
+              <NavLink to="gym/schluesselaustausch">Schlüsselaustausch</NavLink>
+              <NavLink to="gym/schluesselaustausch-quiz">
+                Quiz: Schlüsselaustausch
+              </NavLink>
+              <NavLink to="gym/passwoerter">Passwörter</NavLink>
+              <NavLink to="gym/passwoerter-quiz">Quiz: Passwörter</NavLink>
+            </ol>
+          </li>
         </ol>
       </section>
 

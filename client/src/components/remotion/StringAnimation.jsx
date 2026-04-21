@@ -25,7 +25,7 @@ export function generatePalindromSteps(str) {
     right: -1,
     isPalindrom: null,
     description: `String eingeben: "${str}"`,
-    mermaidNode: "String eingeben",
+    mermaidNode: "Gib String ein",
     variables: { str, n },
   })
 
@@ -34,12 +34,22 @@ export function generatePalindromSteps(str) {
 
   steps.push({
     chars,
+    left: 0,
+    right: -1,
+    isPalindrom: null,
+    description: `Setze links auf 0`,
+    mermaidNode: "Setze links auf 0",
+    variables: { left: 0 },
+  })
+
+  steps.push({
+    chars,
     left,
     right,
     isPalindrom: null,
-    description: `Initialisiere: left = 0, right = ${n - 1}`,
-    mermaidNode: "left = 0 right = Länge - 1",
-    variables: { left, right },
+    description: `Setze rechts auf ${n - 1}`,
+    mermaidNode: "Setze rechts auf Länge minus 1",
+    variables: { right },
   })
 
   while (left < right) {
@@ -50,7 +60,7 @@ export function generatePalindromSteps(str) {
       right,
       isPalindrom: null,
       description: `Prüfe: left=${left} < right=${right}?`,
-      mermaidNode: "left < right?",
+      mermaidNode: "Ist links < rechts?",
       variables: { left, right },
     })
 
@@ -61,7 +71,7 @@ export function generatePalindromSteps(str) {
       right,
       isPalindrom: null,
       description: `Vergleiche: '${chars[left]}' === '${chars[right]}'?`,
-      mermaidNode: "String[left] === String[right]?",
+      mermaidNode: "Ist Zeichen links = Zeichen rechts?",
       variables: { left, right, charLeft: chars[left], charRight: chars[right] },
     })
 
@@ -72,7 +82,7 @@ export function generatePalindromSteps(str) {
         right,
         isPalindrom: false,
         description: `Unterschiedlich! "${str}" ist kein Palindrom`,
-        mermaidNode: "Ausgabe: Kein Palindrom",
+        mermaidNode: "Gib aus: Kein Palindrom",
         variables: {},
       })
 
@@ -89,18 +99,30 @@ export function generatePalindromSteps(str) {
       return steps
     }
 
-    // Increment/decrement
+    // Increment left
     steps.push({
       chars,
       left,
       right,
       isPalindrom: null,
-      description: `Gleich! Bewege Zeiger: left++, right--`,
-      mermaidNode: "left = left + 1 right = right - 1",
-      variables: { left: left + 1, right: right - 1 },
+      description: `Gleich! Erhöhe links um 1`,
+      mermaidNode: "Erhöhe links um 1",
+      variables: { left: left + 1, right },
     })
 
     left++
+
+    // Decrement right
+    steps.push({
+      chars,
+      left,
+      right,
+      isPalindrom: null,
+      description: `Verringere rechts um 1`,
+      mermaidNode: "Verringere rechts um 1",
+      variables: { left, right: right - 1 },
+    })
+
     right--
   }
 
@@ -111,7 +133,7 @@ export function generatePalindromSteps(str) {
     right,
     isPalindrom: null,
     description: `Prüfe: left=${left} < right=${right}? Nein`,
-    mermaidNode: "left < right?",
+    mermaidNode: "Ist links < rechts?",
     variables: { left, right },
   })
 
@@ -121,7 +143,7 @@ export function generatePalindromSteps(str) {
     right,
     isPalindrom: true,
     description: `"${str}" ist ein Palindrom!`,
-    mermaidNode: "Ausgabe: Palindrom",
+    mermaidNode: "Gib aus: Palindrom",
     variables: {},
   })
 
@@ -160,7 +182,7 @@ export function generateCharCountSteps(str) {
     currentChar: null,
     counts: {},
     description: `String eingeben: "${str}"`,
-    mermaidNode: "String eingeben",
+    mermaidNode: "Gib String ein",
     variables: { str, n: chars.length },
   })
 
@@ -169,9 +191,19 @@ export function generateCharCountSteps(str) {
     i: 0,
     currentChar: null,
     counts: {},
-    description: "Initialisiere: i = 0, counts = {}",
-    mermaidNode: "i = 0 counts = {}",
+    description: "Setze i auf 0",
+    mermaidNode: "Setze i auf 0",
     variables: { i: 0 },
+  })
+
+  steps.push({
+    chars,
+    i: 0,
+    currentChar: null,
+    counts: {},
+    description: "Erstelle leere Zähltabelle",
+    mermaidNode: "Erstelle leere Zähltabelle",
+    variables: {},
   })
 
   for (let i = 0; i < chars.length; i++) {
@@ -182,7 +214,7 @@ export function generateCharCountSteps(str) {
       currentChar: null,
       counts: { ...counts },
       description: `Prüfe: i=${i} < ${chars.length}?`,
-      mermaidNode: "i < Länge?",
+      mermaidNode: "Ist i < Länge?",
       variables: { i, n: chars.length },
     })
 
@@ -194,7 +226,7 @@ export function generateCharCountSteps(str) {
       currentChar: char,
       counts: { ...counts },
       description: `Zeichen: '${char}'`,
-      mermaidNode: "char = String[i]",
+      mermaidNode: "Hole Zeichen an Position i",
       variables: { i, char },
     })
 
@@ -205,7 +237,7 @@ export function generateCharCountSteps(str) {
       currentChar: char,
       counts: { ...counts },
       description: `Prüfe: '${char}' bereits in counts?`,
-      mermaidNode: "char in counts?",
+      mermaidNode: "Ist Zeichen schon in Tabelle?",
       variables: { char, count: counts[char] || 0 },
     })
 
@@ -217,7 +249,7 @@ export function generateCharCountSteps(str) {
         currentChar: char,
         counts: { ...counts },
         description: `Ja! Erhöhe: counts['${char}'] = ${counts[char]}`,
-        mermaidNode: "counts[char] = counts[char] + 1",
+        mermaidNode: "Erhöhe Zähler für Zeichen um 1",
         variables: { char, count: counts[char] },
       })
     } else {
@@ -228,7 +260,7 @@ export function generateCharCountSteps(str) {
         currentChar: char,
         counts: { ...counts },
         description: `Nein! Neu: counts['${char}'] = 1`,
-        mermaidNode: "counts[char] = 1",
+        mermaidNode: "Setze Zähler für Zeichen auf 1",
         variables: { char, count: 1 },
       })
     }
@@ -238,8 +270,8 @@ export function generateCharCountSteps(str) {
       i,
       currentChar: char,
       counts: { ...counts },
-      description: `i erhöhen: ${i} → ${i + 1}`,
-      mermaidNode: "i = i + 1",
+      description: `Gehe zum nächsten Zeichen`,
+      mermaidNode: "Gehe zum nächsten Zeichen",
       variables: { i: i + 1 },
     })
   }
@@ -251,7 +283,7 @@ export function generateCharCountSteps(str) {
     currentChar: null,
     counts: { ...counts },
     description: `Prüfe: i=${chars.length} < ${chars.length}? Nein`,
-    mermaidNode: "i < Länge?",
+    mermaidNode: "Ist i < Länge?",
     variables: { i: chars.length },
   })
 
@@ -261,7 +293,7 @@ export function generateCharCountSteps(str) {
     currentChar: null,
     counts: { ...counts },
     description: `Fertig! Häufigkeiten: ${JSON.stringify(counts)}`,
-    mermaidNode: "Ausgabe: counts",
+    mermaidNode: "Gib Zähltabelle aus",
     variables: counts,
   })
 

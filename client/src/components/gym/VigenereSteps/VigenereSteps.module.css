@@ -1,0 +1,147 @@
+.container {
+  margin: 1.2rem 0;
+  font-size: 0.9rem;
+}
+
+.inputs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+.label {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.input {
+  font-family: monospace;
+  font-size: 0.95rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--color-gray);
+  border-radius: 4px;
+  background-color: transparent;
+  color: var(--color-fg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #6c5ce7;
+}
+
+/* ── Table ──────────────────────────────────────────────── */
+
+.tableWrapper {
+  overflow-x: auto;
+  margin-bottom: 0.8rem;
+}
+
+.table {
+  border-collapse: collapse;
+  font-family: monospace;
+  font-size: 0.85rem;
+  min-width: 100%;
+}
+
+.table th,
+.table td {
+  border: 1px solid var(--color-gray);
+  padding: 0.3rem 0.55rem;
+  text-align: center;
+  min-width: 2rem;
+}
+
+.table th {
+  opacity: 0.55;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.rowLabel {
+  text-align: left !important;
+  opacity: 0.65;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  padding-right: 0.8rem !important;
+}
+
+.plain {
+  color: var(--color-fg);
+  font-weight: 700;
+}
+
+.key {
+  color: #d63031;
+  font-weight: 700;
+}
+
+.keyRepeat {
+  opacity: 0.6;
+}
+
+.shift {
+  color: #0984e3;
+  font-size: 0.78rem;
+}
+
+.cipher {
+  color: #6c5ce7;
+  font-weight: 700;
+}
+
+/* ── Result & Hint ──────────────────────────────────────── */
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.9rem;
+  background-color: rgba(108, 92, 231, 0.08);
+  border: 1px solid rgba(108, 92, 231, 0.3);
+  border-radius: 4px;
+  font-family: monospace;
+  margin-bottom: 0.7rem;
+}
+
+.resultLabel {
+  opacity: 0.65;
+  font-size: 0.82rem;
+}
+
+.resultValue {
+  color: #6c5ce7;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.hint {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  line-height: 1.5;
+  padding: 0.4rem 0.6rem;
+  border-left: 2px solid var(--color-gray);
+}
+
+.keyInline {
+  color: #d63031;
+  font-family: monospace;
+  font-weight: 700;
+}
+
+.empty {
+  opacity: 0.5;
+  font-style: italic;
+  font-size: 0.85rem;
+}

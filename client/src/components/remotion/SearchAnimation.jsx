@@ -24,7 +24,7 @@ export function generateLinearSearchSteps(array, target) {
     found: false,
     foundIndex: -1,
     description: `Array und Zielwert ${target} eingeben`,
-    mermaidNode: "Array und Zielwert eingeben",
+    mermaidNode: "Gib Liste und Zielwert ein",
     variables: { target, n },
   })
 
@@ -33,8 +33,8 @@ export function generateLinearSearchSteps(array, target) {
     currentIndex: 0,
     found: false,
     foundIndex: -1,
-    description: "Initialisiere: i = 0",
-    mermaidNode: "i = 0",
+    description: "Setze i auf 0",
+    mermaidNode: "Setze i auf 0",
     variables: { i: 0, target },
   })
 
@@ -46,7 +46,7 @@ export function generateLinearSearchSteps(array, target) {
       found: false,
       foundIndex: -1,
       description: `Prüfe: i=${i} < ${n}?`,
-      mermaidNode: "i < Länge?",
+      mermaidNode: "Ist i < Länge?",
       variables: { i, target, n },
     })
 
@@ -57,7 +57,7 @@ export function generateLinearSearchSteps(array, target) {
       found: false,
       foundIndex: -1,
       description: `Vergleiche: Array[${i}]=${array[i]} === ${target}?`,
-      mermaidNode: "Array[i] === Zielwert?",
+      mermaidNode: "Ist Element an Position i = Zielwert?",
       variables: { i, target },
     })
 
@@ -68,7 +68,7 @@ export function generateLinearSearchSteps(array, target) {
         found: true,
         foundIndex: i,
         description: `Gefunden! ${target} ist an Index ${i}`,
-        mermaidNode: "Ausgabe: Gefunden bei Index i",
+        mermaidNode: "Gib aus: Gefunden bei Index i",
         variables: { i, target },
       })
       
@@ -85,14 +85,14 @@ export function generateLinearSearchSteps(array, target) {
       return steps
     }
 
-    // Increment i
+    // Next element
     steps.push({
       array: [...array],
       currentIndex: i,
       found: false,
       foundIndex: -1,
-      description: `i erhöhen: ${i} → ${i + 1}`,
-      mermaidNode: "i = i + 1",
+      description: `Gehe zum nächsten Element`,
+      mermaidNode: "Gehe zum nächsten Element",
       variables: { i: i + 1, target },
     })
   }
@@ -104,7 +104,7 @@ export function generateLinearSearchSteps(array, target) {
     found: false,
     foundIndex: -1,
     description: `Prüfe: i=${n} < ${n}? Nein`,
-    mermaidNode: "i < Länge?",
+    mermaidNode: "Ist i < Länge?",
     variables: { i: n, n },
   })
 
@@ -114,7 +114,7 @@ export function generateLinearSearchSteps(array, target) {
     found: false,
     foundIndex: -1,
     description: `${target} wurde nicht gefunden`,
-    mermaidNode: "Ausgabe: Nicht gefunden",
+    mermaidNode: "Gib aus: Nicht gefunden",
     variables: {},
   })
 
@@ -157,7 +157,7 @@ export function generateBinarySearchSteps(array, target) {
     found: false,
     foundIndex: -1,
     description: `Sortiertes Array und Zielwert ${target} eingeben`,
-    mermaidNode: "Sortiertes Array und Zielwert eingeben",
+    mermaidNode: "Gib sortierte Liste und Zielwert ein",
     variables: { target, n },
   })
 
@@ -166,14 +166,26 @@ export function generateBinarySearchSteps(array, target) {
 
   steps.push({
     array: sortedArray,
+    left: 0,
+    right: -1,
+    mid: -1,
+    found: false,
+    foundIndex: -1,
+    description: `Setze links auf 0`,
+    mermaidNode: "Setze links auf 0",
+    variables: { left: 0, target },
+  })
+
+  steps.push({
+    array: sortedArray,
     left,
     right,
     mid: -1,
     found: false,
     foundIndex: -1,
-    description: `Initialisiere: left = 0, right = ${n - 1}`,
-    mermaidNode: "left = 0 right = Länge - 1",
-    variables: { left, right, target },
+    description: `Setze rechts auf ${n - 1}`,
+    mermaidNode: "Setze rechts auf Länge minus 1",
+    variables: { right, target },
   })
 
   while (left <= right) {
@@ -186,7 +198,7 @@ export function generateBinarySearchSteps(array, target) {
       found: false,
       foundIndex: -1,
       description: `Prüfe: left=${left} <= right=${right}? Ja`,
-      mermaidNode: "left <= right?",
+      mermaidNode: "Ist links ≤ rechts?",
       variables: { left, right, target },
     })
 
@@ -200,7 +212,7 @@ export function generateBinarySearchSteps(array, target) {
       found: false,
       foundIndex: -1,
       description: `Berechne Mitte: mid = ⌊(${left} + ${right}) / 2⌋ = ${mid}`,
-      mermaidNode: "mid = (left + right) / 2 abgerundet",
+      mermaidNode: "Berechne Mitte: links plus rechts geteilt durch 2",
       variables: { left, right, mid, target },
     })
 
@@ -212,7 +224,7 @@ export function generateBinarySearchSteps(array, target) {
       found: false,
       foundIndex: -1,
       description: `Vergleiche: Array[${mid}]=${sortedArray[mid]} === ${target}?`,
-      mermaidNode: "Array[mid] === Zielwert?",
+      mermaidNode: "Ist Element in Mitte = Zielwert?",
       variables: { left, right, mid, target },
     })
 
@@ -225,7 +237,7 @@ export function generateBinarySearchSteps(array, target) {
         found: true,
         foundIndex: mid,
         description: `Ja! Gefunden bei Index ${mid}`,
-        mermaidNode: "Ausgabe: Gefunden bei Index mid",
+        mermaidNode: "Gib aus: Gefunden bei Index Mitte",
         variables: { mid, target },
       })
       
@@ -253,7 +265,7 @@ export function generateBinarySearchSteps(array, target) {
       found: false,
       foundIndex: -1,
       description: `Prüfe: Array[${mid}]=${sortedArray[mid]} < ${target}?`,
-      mermaidNode: "Array[mid] < Zielwert?",
+      mermaidNode: "Ist Element in Mitte < Zielwert?",
       variables: { left, right, mid, target },
     })
     
@@ -268,7 +280,7 @@ export function generateBinarySearchSteps(array, target) {
         found: false,
         foundIndex: -1,
         description: `Ja! Setze left = mid + 1 = ${left}`,
-        mermaidNode: "left = mid + 1",
+        mermaidNode: "Setze links auf Mitte plus 1",
         variables: { left, right, target },
       })
     } else {
@@ -282,7 +294,7 @@ export function generateBinarySearchSteps(array, target) {
         found: false,
         foundIndex: -1,
         description: `Nein! Setze right = mid - 1 = ${right}`,
-        mermaidNode: "right = mid - 1",
+        mermaidNode: "Setze rechts auf Mitte minus 1",
         variables: { left, right, target },
       })
     }
@@ -297,7 +309,7 @@ export function generateBinarySearchSteps(array, target) {
     found: false,
     foundIndex: -1,
     description: `Prüfe: left=${left} <= right=${right}? Nein`,
-    mermaidNode: "left <= right?",
+    mermaidNode: "Ist links ≤ rechts?",
     variables: { left, right },
   })
 
@@ -309,7 +321,7 @@ export function generateBinarySearchSteps(array, target) {
     found: false,
     foundIndex: -1,
     description: `${target} wurde nicht gefunden`,
-    mermaidNode: "Ausgabe: Nicht gefunden",
+    mermaidNode: "Gib aus: Nicht gefunden",
     variables: {},
   })
 
