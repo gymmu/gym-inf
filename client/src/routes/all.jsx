@@ -61,6 +61,12 @@ const GymSchluesselaustauschQuiz = lazy(
 )
 const GymPasswoerter = lazy(() => import("@pages-gym/passwoerter.jsx"))
 const GymPasswoerterQuiz = lazy(() => import("@pages-gym/passwoerter-quiz.jsx"))
+const GymPraesentationNetzwerke = lazy(
+  () => import("@pages-gym/praesentation-netzwerke.jsx"),
+)
+const GymPraesentationKrypto = lazy(
+  () => import("@pages-gym/praesentation-krypto.jsx"),
+)
 const GymJSAufgaben = lazy(() => import("@pages-gym/js-aufgaben.jsx"))
 const GymJSConditions = lazy(() => import("@pages-gym/js-bedingungen.jsx"))
 const GymJSFunctions = lazy(() => import("@pages-gym/js-functions.jsx"))
@@ -184,6 +190,16 @@ export const routes = [
 
       // Gym Praktikum
       { path: "praktikum/install", element: <PInstall /> },
+
+      // Gym Internet und Sicherheit — Präsentationen
+      {
+        path: "gym/praesentation-netzwerke",
+        element: <GymPraesentationNetzwerke />,
+      },
+      {
+        path: "gym/praesentation-krypto",
+        element: <GymPraesentationKrypto />,
+      },
 
       // Gym Internet und Sicherheit
       { path: "gym/internet", element: <GymInternet /> },

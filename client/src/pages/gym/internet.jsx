@@ -232,22 +232,116 @@ export default function GymInternet() {
 
       <Section>
         <h2>DNS — Das Telefonbuch des Internets</h2>
+
+        <h3>Was ist DNS und warum brauchen wir es?</h3>
         <p>
-          Menschen merken sich Domainnamen wie <code>github.com</code> —
-          Computer sprechen aber ausschliesslich über IP-Adressen. Das{" "}
-          <strong>Domain Name System (DNS)</strong> übersetzt Domainnamen in
-          IP-Adressen.
+          Computer im Internet kommunizieren ausschliesslich über{" "}
+          <strong>IP-Adressen</strong> wie <code>140.82.121.4</code>. Menschen
+          merken sich aber keine Zahlenreihen — sie tippen{" "}
+          <code>github.com</code> ein. Das{" "}
+          <strong>Domain Name System (DNS)</strong> ist der weltweite Dienst,
+          der Domainnamen automatisch in IP-Adressen übersetzt.
         </p>
         <p>
+          Ohne DNS müsste man für jeden Webseitenaufruf die genaue IP-Adresse
+          kennen — so wie ein Telefon ohne Kontaktliste, bei dem man jede Nummer
+          auswendig lernen müsste. DNS ist also das globale
+          &ldquo;Telefonbuch&rdquo; des Internets: Man gibt den Namen ein, DNS
+          liefert die Nummer.
+        </p>
+        <p>
+          DNS ist dabei <strong>hierarchisch</strong> aufgebaut — ähnlich wie
+          eine Postadresse, die von grob (Land) nach fein (Hausnummer) wird:
+        </p>
+        <ul>
+          <li>
+            <strong>Root-Ebene (.)</strong> — die oberste Instanz; 13
+            Root-Nameserver-Gruppen (A–M) weltweit kennen alle Top-Level-Domains
+          </li>
+          <li>
+            <strong>Top-Level-Domain (TLD)</strong> — <code>.com</code>,{" "}
+            <code>.ch</code>, <code>.org</code> usw.; TLD-Nameserver wissen,
+            welche Nameserver für jede Domain zuständig sind
+          </li>
+          <li>
+            <strong>Second-Level-Domain</strong> — z. B. <code>github</code> in{" "}
+            <code>github.com</code>; hier liegt der autoritative Nameserver der
+            Organisation
+          </li>
+          <li>
+            <strong>Subdomain</strong> — z. B. <code>www</code> oder{" "}
+            <code>mail</code>; wird vom autoritativen Nameserver der
+            Organisation selbst verwaltet
+          </li>
+        </ul>
+
+        <h3>DNS-Record-Typen</h3>
+        <p>
+          Ein DNS-Server speichert nicht nur IP-Adressen. Er verwaltet
+          verschiedene <strong>Record-Typen</strong>, die unterschiedliche
+          Aufgaben erfüllen:
+        </p>
+        <DataTable
+          headers={["Typ", "Bedeutung", "Beispiel"]}
+          rows={[
+            [
+              <code key="a">A</code>,
+              "IPv4-Adresse einer Domain",
+              <span key="av">
+                <code>github.com</code> → <code>140.82.121.4</code>
+              </span>,
+            ],
+            [
+              <code key="aaaa">AAAA</code>,
+              "IPv6-Adresse einer Domain",
+              <span key="aaaav">
+                <code>github.com</code> → <code>2606:50c0::1</code>
+              </span>,
+            ],
+            [
+              <code key="cname">CNAME</code>,
+              "Alias — verweist auf einen anderen Domainnamen",
+              <span key="cnamev">
+                <code>www.github.com</code> → <code>github.com</code>
+              </span>,
+            ],
+            [
+              <code key="mx">MX</code>,
+              "Mail Exchange — zuständiger Mailserver",
+              <span key="mxv">
+                E-Mails an <code>@github.com</code> → Mailserver
+              </span>,
+            ],
+            [
+              <code key="txt">TXT</code>,
+              "Beliebiger Text — oft für Verifikation oder Anti-Spam (SPF)",
+              "Domain-Inhaber-Nachweis, SPF-Regeln",
+            ],
+            [
+              <code key="ns">NS</code>,
+              "Nameserver — welche Server für diese Domain zuständig sind",
+              <span key="nsv">
+                <code>github.com</code> NS → <code>ns1.p16.dynect.net</code>
+              </span>,
+            ],
+          ]}
+        />
+
+        <h3>Wie läuft eine DNS-Auflösung ab?</h3>
+        <p>
           Wenn Sie <code>https://www.github.com</code> eingeben, läuft folgende
-          Auflösung ab:
+          Auflösung ab. Klicken Sie auf die einzelnen Schritte, um zu sehen, was
+          dabei passiert:
         </p>
         <DnsResolver />
         <p>
           <strong>Sicherheitsaspekt:</strong> DNS-Anfragen sind standardmässig{" "}
-          <strong>unverschlüsselt</strong> (UDP Port 53)! Lösungen:{" "}
+          <strong>unverschlüsselt</strong> (UDP Port 53) — der ISP und jeder
+          Router auf dem Weg können mitlesen, welche Domains Sie aufrufen, auch
+          wenn die eigentliche Verbindung per HTTPS verschlüsselt ist. Lösungen:{" "}
           <strong>DNS over HTTPS (DoH)</strong> oder{" "}
-          <strong>DNS over TLS (DoT)</strong>.
+          <strong>DNS over TLS (DoT)</strong> verschlüsseln auch die
+          DNS-Anfrage.
         </p>
       </Section>
 

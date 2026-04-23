@@ -67,6 +67,9 @@ export default function GymIndex() {
           <li>
             Internet und Sicherheit
             <ol>
+              <NavLink to="gym/praesentation-netzwerke">
+                ▶ Präs.: Netz &amp; Internet
+              </NavLink>
               <NavLink to="gym/internet">Internet</NavLink>
               <NavLink to="gym/internet-karte">Karte des Internets</NavLink>
               <NavLink to="gym/internet-quiz">Quiz: Internet</NavLink>
@@ -74,6 +77,9 @@ export default function GymIndex() {
               <NavLink to="gym/netzwerke-quiz">Quiz: Netzwerke</NavLink>
               <NavLink to="gym/vpn">VPN</NavLink>
               <NavLink to="gym/vpn-quiz">Quiz: VPN</NavLink>
+              <NavLink to="gym/praesentation-krypto">
+                ▶ Präs.: Kryptographie
+              </NavLink>
               <NavLink to="gym/verschluesselung">Verschlüsselung</NavLink>
               <NavLink to="gym/verschluesselung-quiz">
                 Quiz: Verschlüsselung

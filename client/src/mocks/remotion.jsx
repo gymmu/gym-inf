@@ -15,7 +15,7 @@ export const AbsoluteFill = ({ children, style }) => {
         ...style,
       },
     },
-    children
+    children,
   )
 }
 
@@ -34,10 +34,14 @@ export const useVideoConfig = () => ({
 
 export const Sequence = ({ children }) => children
 
+// Mock spring animation — returns end value immediately during SSR
+export const spring = () => 1
+
 export default {
   useCurrentFrame,
   AbsoluteFill,
   interpolate,
   useVideoConfig,
   Sequence,
+  spring,
 }

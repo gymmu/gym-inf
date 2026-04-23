@@ -1,0 +1,189 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--color-gray);
+}
+
+.toggleBtn {
+  background: var(--color-bg-lighter);
+  color: var(--color-fg);
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: 4px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.toggleBtn:hover,
+.toggleBtn.active {
+  background: var(--color-bg-light);
+  border-color: var(--color-yellow);
+  color: var(--color-yellow);
+}
+
+/* ─── Stack ─────────────────────────────────────────────────── */
+.stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 80px;
+  transition: gap 0.35s ease;
+}
+
+.stack.exploded {
+  gap: 0.5rem;
+}
+
+/* ─── Layer ─────────────────────────────────────────────────── */
+.layer {
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  border-left: 5px solid rgba(0, 0, 0, 0.2);
+  transition:
+    filter 0.15s,
+    box-shadow 0.15s,
+    transform 0.3s ease;
+  position: relative;
+}
+
+.layer:hover {
+  filter: brightness(1.12);
+}
+
+.activeLayer {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
+  filter: brightness(1.08);
+}
+
+.layerLabel {
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+/* ─── Fields ─────────────────────────────────────────────────── */
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.field {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1.5px solid;
+  border-radius: 4px;
+  padding: 0.3rem 0.55rem;
+  cursor: pointer;
+  transition:
+    background 0.12s,
+    transform 0.12s;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 80px;
+}
+
+.field:hover {
+  background: rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.activeField {
+  background: rgba(255, 255, 255, 0.18) !important;
+  transform: translateY(-2px);
+}
+
+.fieldName {
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.fieldSize {
+  font-size: 0.65rem;
+  font-family: monospace;
+  opacity: 0.65;
+}
+
+.fieldValue {
+  font-size: 0.75rem;
+  font-family: monospace;
+  opacity: 0.9;
+}
+
+.payloadField {
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.6;
+  padding: 0.3rem 0.5rem;
+  width: 100%;
+}
+
+/* ─── Info panel ─────────────────────────────────────────────── */
+.info {
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  min-height: 3.5rem;
+}
+
+.infoTitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.infoSize {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--color-gray);
+  font-weight: 400;
+}
+
+.infoValue {
+  margin-bottom: 0.3rem;
+}
+
+.infoValue code {
+  background: var(--color-bg-lighter);
+  color: var(--color-green);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85rem;
+}
+
+.infoDesc {
+  font-size: 0.85rem;
+  color: var(--color-fg);
+  line-height: 1.45;
+}
+
+.infoHint {
+  font-size: 0.78rem;
+  color: var(--color-gray);
+  margin-top: 0.3rem;
+  font-style: italic;
+}

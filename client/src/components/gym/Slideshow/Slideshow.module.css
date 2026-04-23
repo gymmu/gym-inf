@@ -1,0 +1,490 @@
+/* ─── Wrapper ──────────────────────────────────────────────── */
+.wrapper {
+  position: relative;
+  width: 100%;
+  margin-block: 2rem;
+}
+
+/* ─── Header bar ───────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-gray);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--color-gray);
+  flex-wrap: wrap;
+}
+
+.headerTitle {
+  color: var(--color-yellow);
+  font-weight: bold;
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.headerHint {
+  font-size: 0.76rem;
+  color: var(--color-gray);
+}
+
+.headerHint kbd {
+  display: inline-block;
+  background: var(--color-bg-lighter);
+  color: var(--color-fg);
+  border: 1px solid var(--color-gray);
+  border-radius: 3px;
+  padding: 0 5px;
+  font-size: 0.82em;
+  font-family: monospace;
+  line-height: 1.6;
+}
+
+.fullscreenBtn {
+  background: var(--color-blue);
+  color: var(--color-bg-dark);
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.fullscreenBtn:hover {
+  background: var(--color-yellow);
+}
+
+/* ─── Embedded container ───────────────────────────────────── */
+.container {
+  position: relative;
+  width: 100%;
+  height: 75vh;
+  min-height: 540px;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-gray);
+  border-radius: 0 0 6px 6px;
+  overflow: hidden;
+}
+
+/* ─── Portal fullscreen overlay ───────────────────────────── */
+.fullscreenOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #1d2021;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 100000;
+  background: rgba(60, 56, 54, 0.85);
+  color: var(--color-fg, #ebdbb2);
+  border: 1px solid #928374;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.closeBtn:hover {
+  background: rgba(251, 73, 52, 0.7);
+}
+
+.fullscreenDeck {
+  position: absolute;
+  inset: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REVEAL.JS GRUVBOX THEME OVERRIDES
+   Applied inside both .container and .fullscreenOverlay
+   ═══════════════════════════════════════════════════════════ */
+
+/* Scope to both embedded and fullscreen contexts */
+.container :global(.reveal-viewport),
+.fullscreenDeck :global(.reveal-viewport) {
+  border-radius: 0;
+  background-color: #1d2021 !important;
+  color: #ebdbb2;
+}
+
+.container :global(.reveal),
+.fullscreenDeck :global(.reveal) {
+  font-family:
+    "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: clamp(16px, 1.9vw, 24px);
+  color: #ebdbb2;
+  background: #1d2021;
+}
+
+/* ── Backgrounds ─────────────────────────────────────── */
+.container :global(.reveal .backgrounds .slide-background),
+.fullscreenDeck :global(.reveal .backgrounds .slide-background) {
+  background: #1d2021 !important;
+}
+
+/* ── Headings ────────────────────────────────────────── */
+.container :global(.reveal h1),
+.container :global(.reveal h2),
+.container :global(.reveal h3),
+.container :global(.reveal h4),
+.fullscreenDeck :global(.reveal h1),
+.fullscreenDeck :global(.reveal h2),
+.fullscreenDeck :global(.reveal h3),
+.fullscreenDeck :global(.reveal h4) {
+  color: #fabd2f;
+  font-family: "Noto Sans", sans-serif;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  text-shadow: none;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+}
+
+.container :global(.reveal h1),
+.fullscreenDeck :global(.reveal h1) {
+  font-size: 1.9em;
+}
+
+.container :global(.reveal h2),
+.fullscreenDeck :global(.reveal h2) {
+  font-size: 1.35em;
+}
+
+.container :global(.reveal h3),
+.fullscreenDeck :global(.reveal h3) {
+  font-size: 1em;
+  color: #8ec07c;
+  margin-top: 0.6em;
+}
+
+/* ── Body text ───────────────────────────────────────── */
+.container :global(.reveal p),
+.fullscreenDeck :global(.reveal p) {
+  color: #ebdbb2;
+  line-height: 1.5;
+  margin-bottom: 0.4em;
+}
+
+.container :global(.reveal strong),
+.fullscreenDeck :global(.reveal strong) {
+  color: #fe8019;
+  font-weight: 700;
+}
+
+.container :global(.reveal em),
+.fullscreenDeck :global(.reveal em) {
+  color: #8ec07c;
+  font-style: italic;
+}
+
+.container :global(.reveal a),
+.fullscreenDeck :global(.reveal a) {
+  color: #83a598;
+  text-decoration: none;
+}
+
+.container :global(.reveal a:hover),
+.fullscreenDeck :global(.reveal a:hover) {
+  color: #d3869b;
+  text-decoration: underline;
+}
+
+/* ── Inline code ─────────────────────────────────────── */
+.container :global(.reveal code),
+.fullscreenDeck :global(.reveal code) {
+  background: #3c3836;
+  color: #b8bb26;
+  padding: 0.08em 0.3em;
+  border-radius: 3px;
+  font-size: 0.85em;
+  font-family: monospace;
+}
+
+.container :global(.reveal pre),
+.fullscreenDeck :global(.reveal pre) {
+  background: #3c3836;
+  border-left: 4px solid #b8bb26;
+  border-radius: 4px;
+  padding: 0.7em 1em;
+  box-shadow: none;
+  width: 100%;
+  margin: 0.5em 0;
+}
+
+.container :global(.reveal pre code),
+.fullscreenDeck :global(.reveal pre code) {
+  background: transparent;
+  color: #b8bb26;
+  padding: 0;
+  font-size: 0.82em;
+  line-height: 1.5;
+}
+
+/* ── Lists — override global counter styles ──────────── */
+.container :global(.reveal ul),
+.container :global(.reveal ol),
+.fullscreenDeck :global(.reveal ul),
+.fullscreenDeck :global(.reveal ol) {
+  display: block;
+  margin-left: 1.3em;
+  list-style: revert;
+  counter-reset: none;
+  padding: 0;
+}
+
+.container :global(.reveal ul li),
+.fullscreenDeck :global(.reveal ul li) {
+  list-style-type: disc;
+  color: #ebdbb2;
+  margin-bottom: 0.3em;
+  padding-left: 0;
+  position: static;
+}
+
+/* Reset the global counter pseudo-element on ol > li */
+.container :global(.reveal ol),
+.fullscreenDeck :global(.reveal ol) {
+  list-style-type: decimal;
+  counter-reset: none;
+}
+
+.container :global(.reveal ol li),
+.fullscreenDeck :global(.reveal ol li) {
+  list-style-type: decimal;
+  color: #ebdbb2;
+  margin-bottom: 0.3em;
+  padding-left: 0;
+  position: static;
+}
+
+/* Explicitly kill the ::before counter pseudo-element injected by index.css */
+.container :global(.reveal ol li::before),
+.fullscreenDeck :global(.reveal ol li::before) {
+  content: none !important;
+  display: none !important;
+}
+
+/* ── Slide sections ──────────────────────────────────── */
+.container :global(.reveal .slides section),
+.fullscreenDeck :global(.reveal .slides section) {
+  background: transparent;
+  padding: 1.2em 1.8em;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* ── Title slide ─────────────────────────────────────── */
+.container :global(.reveal .slides section.title-slide),
+.fullscreenDeck :global(.reveal .slides section.title-slide) {
+  background: #1d2021;
+}
+
+.container :global(.reveal .slides section.title-slide h1),
+.fullscreenDeck :global(.reveal .slides section.title-slide h1) {
+  font-size: 2em;
+  border-bottom: 2px solid #fabd2f;
+  padding-bottom: 0.25em;
+  margin-bottom: 0.4em;
+}
+
+/* ── Section separator slide ─────────────────────────── */
+.container :global(.reveal .slides section.section-slide),
+.fullscreenDeck :global(.reveal .slides section.section-slide) {
+  background: #3c3836;
+  border-left: 6px solid #83a598;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* section-slide gets zoom transition instead of fade */
+.container :global(.reveal .slides section.section-slide),
+.fullscreenDeck :global(.reveal .slides section.section-slide) {
+  /* Reveal picks up data-transition per section */
+}
+
+.container :global(.reveal .slides section.section-slide h2),
+.fullscreenDeck :global(.reveal .slides section.section-slide h2) {
+  font-size: 1.8em;
+}
+
+/* ── Navigation controls ─────────────────────────────── */
+.container :global(.reveal .controls),
+.fullscreenDeck :global(.reveal .controls) {
+  color: #fabd2f;
+}
+
+.container :global(.reveal .controls button),
+.fullscreenDeck :global(.reveal .controls button) {
+  color: #fabd2f;
+}
+
+/* ── Progress bar ────────────────────────────────────── */
+.container :global(.reveal .progress),
+.fullscreenDeck :global(.reveal .progress) {
+  background: #3c3836;
+  height: 3px;
+}
+
+.container :global(.reveal .progress span),
+.fullscreenDeck :global(.reveal .progress span) {
+  background: #fabd2f;
+}
+
+/* ── Slide number ────────────────────────────────────── */
+.container :global(.reveal .slide-number),
+.fullscreenDeck :global(.reveal .slide-number) {
+  background: rgba(60, 56, 54, 0.8);
+  color: #928374;
+  font-size: 0.7em;
+  padding: 3px 7px;
+  border-radius: 3px;
+}
+
+/* ── Fragments ───────────────────────────────────────── */
+/* ── Fragments ───────────────────────────────────────── */
+.container :global(.reveal .fragment),
+.fullscreenDeck :global(.reveal .fragment) {
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.container :global(.reveal .fragment.visible),
+.fullscreenDeck :global(.reveal .fragment.visible) {
+  opacity: 1;
+}
+
+/* fade-up: slides up gently while fading in */
+.container :global(.reveal .fragment.fade-up),
+.fullscreenDeck :global(.reveal .fragment.fade-up) {
+  transform: translateY(20px);
+  transition:
+    opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.container :global(.reveal .fragment.fade-up.visible),
+.fullscreenDeck :global(.reveal .fragment.fade-up.visible) {
+  transform: translateY(0);
+}
+
+/* highlight-current-blue: dims non-active items */
+.container :global(.reveal .fragment.highlight-current-blue.current-fragment),
+.fullscreenDeck
+  :global(.reveal .fragment.highlight-current-blue.current-fragment) {
+  color: #83a598;
+  font-weight: 700;
+}
+
+/* ── Auto-animate transition refinement ──────────────── */
+.container :global(.reveal [data-auto-animate-target]),
+.fullscreenDeck :global(.reveal [data-auto-animate-target]) {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ── Tables ──────────────────────────────────────────── */
+.container :global(.reveal table),
+.fullscreenDeck :global(.reveal table) {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82em;
+  margin: 0.4em 0;
+}
+
+.container :global(.reveal table th),
+.fullscreenDeck :global(.reveal table th) {
+  background: #3c3836;
+  color: #fabd2f;
+  padding: 0.35em 0.6em;
+  text-align: left;
+  border-bottom: 2px solid #928374;
+  font-weight: 700;
+}
+
+.container :global(.reveal table td),
+.fullscreenDeck :global(.reveal table td) {
+  padding: 0.3em 0.6em;
+  border-bottom: 1px solid #3c3836;
+  color: #ebdbb2;
+  vertical-align: top;
+}
+
+.container :global(.reveal table tr:nth-child(even) td),
+.fullscreenDeck :global(.reveal table tr:nth-child(even) td) {
+  background: rgba(60, 56, 54, 0.5);
+}
+
+/* ── Utility boxes ───────────────────────────────────── */
+.container :global(.reveal .highlight-box),
+.fullscreenDeck :global(.reveal .highlight-box) {
+  border-left: 4px solid #b8bb26;
+  background: rgba(60, 56, 54, 0.7);
+  padding: 0.5em 0.9em;
+  border-radius: 0 4px 4px 0;
+  margin: 0.4em 0;
+  font-size: 0.9em;
+}
+
+.container :global(.reveal .warning-box),
+.fullscreenDeck :global(.reveal .warning-box) {
+  border-left: 4px solid #fb4934;
+  background: rgba(60, 56, 54, 0.7);
+  padding: 0.5em 0.9em;
+  border-radius: 0 4px 4px 0;
+  margin: 0.4em 0;
+  font-size: 0.9em;
+}
+
+.container :global(.reveal .info-box),
+.fullscreenDeck :global(.reveal .info-box) {
+  border-left: 4px solid #83a598;
+  background: rgba(60, 56, 54, 0.7);
+  padding: 0.5em 0.9em;
+  border-radius: 0 4px 4px 0;
+  margin: 0.4em 0;
+  font-size: 0.9em;
+}
+
+/* ── Two-column layout ───────────────────────────────── */
+.container :global(.reveal .cols),
+.fullscreenDeck :global(.reveal .cols) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2em;
+  align-items: start;
+}
+
+/* ── HR divider ──────────────────────────────────────── */
+.container :global(.reveal hr),
+.fullscreenDeck :global(.reveal hr) {
+  border: none;
+  border-top: 1px solid #504945;
+  margin: 0.7em 0;
+}
