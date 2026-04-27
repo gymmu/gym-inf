@@ -56,7 +56,7 @@
 }
 
 .playBtn {
-  background: #fabd2f;
+  background: #83a598;
   color: #1d2021;
   border: none;
   border-radius: 4px;
@@ -77,52 +77,85 @@
   cursor: not-allowed;
 }
 
-/* NAT-Tabelle */
-.tableWrap {
-  margin-top: 0.2rem;
+/* Header-Panels */
+.panelsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
 }
 
-.tableTitle {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #a89984;
-  margin-bottom: 0.3rem;
-}
-
-.natTable {
-  width: 100%;
-  border-collapse: collapse;
+.panel {
+  background: #1d2021;
+  border: 1px solid #3c3836;
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
   font-size: 0.8rem;
 }
 
-.natTable th,
-.natTable td {
-  border: 1px solid #3c3836;
-  padding: 0.3rem 0.7rem;
-  text-align: left;
+.panelVisible {
+  opacity: 1;
+  transform: none;
 }
 
-.natTable th {
-  background: #282828;
-  color: #a89984;
-  font-weight: 600;
-  font-size: 0.78rem;
-}
-
-.natTable td code {
-  font-size: 0.78rem;
-  color: #83a598;
-}
-
-.activeRow td {
-  background: rgba(254, 128, 25, 0.15);
-  border-color: #fe8019;
-  transition:
-    background 0.3s,
-    border-color 0.3s;
-}
-
-.activeRow td code {
-  color: #fe8019;
+.panelTitle {
+  font-size: 0.75rem;
   font-weight: 700;
+  color: #a89984;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.headerList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.headerRow {
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: #ebdbb2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headerMethod {
+  color: #83a598;
+  font-weight: 700;
+}
+
+.headerStatus {
+  font-weight: 700;
+}
+
+.headerName {
+  color: #a89984;
+}
+
+.headerValue {
+  color: #ebdbb2;
+}
+
+.bodyRow {
+  margin-top: 0.3rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid #3c3836;
+  font-family: monospace;
+  font-size: 0.78rem;
+}
+
+.bodyLabel {
+  color: #a89984;
+  margin-right: 0.3rem;
+}
+
+.bodyValue {
+  color: #fe8019;
 }

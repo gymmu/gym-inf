@@ -1,0 +1,257 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0.4rem 0;
+}
+
+/* Toggle HTTP / HTTPS */
+.toggle {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.toggleBtn {
+  background: #3c3836;
+  border: 2px solid #504945;
+  color: #a89984;
+  border-radius: 4px;
+  padding: 0.3rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: monospace;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.toggleBtn:hover {
+  background: #504945;
+}
+
+.toggleBtnActive {
+  background: #282828;
+}
+
+/* Main layout */
+.main {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 0.8rem;
+  align-items: start;
+}
+
+/* Paket */
+.packetCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.packetLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #a89984;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.packetStack {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.packetHint {
+  font-size: 0.72rem;
+  color: #504945;
+  text-align: center;
+  margin-top: 0.1rem;
+}
+
+/* Einzelne Schicht */
+.layer {
+  border: 2px solid var(--layer-color, #504945);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  background: #1d2021;
+  transition: background 0.15s;
+  user-select: none;
+}
+
+.layer:hover {
+  background: #282828;
+}
+
+.layerExpanded {
+  background: #282828;
+}
+
+.layerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.layerName {
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: monospace;
+}
+
+.layerSub {
+  font-size: 0.72rem;
+  color: #928374;
+}
+
+.layerRight {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.lockIcon {
+  font-size: 0.9rem;
+}
+
+.expandHint {
+  font-size: 0.65rem;
+  color: #504945;
+}
+
+/* Felder (aufgeklappt) */
+.fields {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  border-top: 1px solid #3c3836;
+  padding-top: 0.4rem;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.76rem;
+  font-family: monospace;
+  padding: 0.15rem 0.25rem;
+  border-radius: 3px;
+}
+
+.fieldOpen {
+  background: rgba(80, 73, 69, 0.2);
+}
+
+.fieldEncrypted {
+  background: rgba(184, 187, 38, 0.08);
+}
+
+.fieldName {
+  color: #a89984;
+  white-space: nowrap;
+}
+
+.fieldValue {
+  color: #ebdbb2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.encValue {
+  color: #b8bb26;
+  letter-spacing: 0.05em;
+}
+
+.fieldBadge {
+  white-space: nowrap;
+}
+
+.badgeOpen {
+  font-size: 0.68rem;
+  background: rgba(251, 73, 52, 0.15);
+  color: #fb4934;
+  border: 1px solid rgba(251, 73, 52, 0.3);
+  border-radius: 3px;
+  padding: 0.1rem 0.3rem;
+}
+
+.badgeEnc {
+  font-size: 0.68rem;
+  background: rgba(184, 187, 38, 0.15);
+  color: #b8bb26;
+  border: 1px solid rgba(184, 187, 38, 0.3);
+  border-radius: 3px;
+  padding: 0.1rem 0.3rem;
+}
+
+.layerNote {
+  margin-top: 0.3rem;
+  font-size: 0.73rem;
+  color: #928374;
+  font-family: sans-serif;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* Angreifer-Sicht */
+.attackerCol {
+  background: #1d2021;
+  border: 1px solid #3c3836;
+  border-radius: 6px;
+  padding: 0.7rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.attackerTitle {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #a89984;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.attackerList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.attackerItem {
+  font-size: 0.78rem;
+  color: #ebdbb2;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  border-left: 3px solid #504945;
+  background: #282828;
+}
+
+.attackerDanger {
+  border-left-color: #fb4934;
+  color: #fb4934;
+}
+
+.attackerSafe {
+  border-left-color: #b8bb26;
+  color: #b8bb26;
+}
+
+.attackerSummary {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid;
+  border-radius: 4px;
+  background: #282828;
+  line-height: 1.3;
+}

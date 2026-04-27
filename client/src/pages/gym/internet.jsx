@@ -2,6 +2,11 @@ import DataTable from "@components/DataTable/DataTable"
 import Figure from "@components/Figure.jsx"
 import DnsResolver from "@components/gym/DnsResolver/DnsResolver"
 import TcpIpLayers from "@components/gym/TcpIpLayers/TcpIpLayers"
+import TcpHandshakeAnim from "@components/gym/TcpHandshake/TcpHandshake"
+import PacketDiagram from "@components/gym/PacketDiagram/PacketDiagram"
+import PacketAnimation from "@components/gym/PacketAnimation/PacketAnimation"
+import HttpDiagram from "@components/gym/HttpDiagram/HttpDiagram"
+import HttpPacket from "@components/gym/HttpPacket/HttpPacket"
 import LearningGoals from "@components/LearningGoals.jsx"
 import Section from "@components/Section.jsx"
 
@@ -27,6 +32,10 @@ export default function GymInternet() {
           </li>
           <li>Sie verstehen das TCP/IP-Modell mit seinen vier Schichten.</li>
           <li>
+            Sie kennen den Aufbau eines IP-Pakets mit seinen verschachtelten
+            Schichten (Ethernet, IP, TCP, HTTP).
+          </li>
+          <li>
             Sie kennen den Unterschied zwischen TCP und UDP und wissen, wann
             welches Protokoll verwendet wird.
           </li>
@@ -35,12 +44,12 @@ export default function GymInternet() {
             autoritativen Nameserver erklären.
           </li>
           <li>
-            Sie verstehen, was HTTP und HTTPS sind und was HTTPS tatsächlich
-            schützt.
+            Sie verstehen, wie HTTP funktioniert: Methoden, Statuscodes,
+            Request- und Response-Aufbau.
           </li>
           <li>
-            Sie wissen, warum alle Verbindungen ohne Verschlüsselung öffentlich
-            einsehbar sind.
+            Sie verstehen, was HTTP und HTTPS sind und was HTTPS tatsächlich
+            schützt — und was nicht.
           </li>
         </ul>
       </LearningGoals>
@@ -91,12 +100,12 @@ export default function GymInternet() {
           die Last auf verschiedene Wege verteilen (
           <strong>Load Balancing</strong>).
         </p>
-        <Figure
-          src="https://cdn.kastatic.org/ka-perseus-images/337190cba133e19ee9d8b5878453f915971a59cd.svg"
-          alt="Visualisierung von IP-Paketen"
-          caption="Daten werden in Pakete aufgeteilt und können verschiedene Wege nehmen"
-          origin="https://www.khanacademy.org/computing/computers-and-internet/xcae6f4a7ff015e7d:the-internet/xcae6f4a7ff015e7d:routing-with-redundancy/a/ip-packets"
-        />
+
+        <p>
+          Die folgende Animation zeigt, wie ein Text in Bits zerlegt, in Pakete
+          aufgeteilt und über das Netz verschickt wird:
+        </p>
+        <PacketAnimation />
       </Section>
 
       <section>
@@ -114,6 +123,15 @@ export default function GymInternet() {
           HTTP nicht verändert werden. Die Schichten arbeiten unabhängig
           voneinander.
         </p>
+
+        <h3>Aufbau eines realen IP-Pakets</h3>
+        <p>
+          In der Praxis werden die Schichten ineinandergeschachtelt — wie
+          Briefumschläge im Briefumschlag. Klicke auf &ldquo;Schichten
+          aufklappen&rdquo; und dann auf einzelne Felder, um zu sehen, was in
+          jedem Header steckt:
+        </p>
+        <PacketDiagram />
       </section>
 
       <Section>
@@ -152,6 +170,10 @@ export default function GymInternet() {
           <strong>Verwendet für:</strong> HTTP/HTTPS, E-Mail (SMTP, IMAP), SSH,
           Dateitransfer (FTP)
         </p>
+        <p>
+          Die folgende Animation zeigt den 3-Way-Handshake Schritt für Schritt:
+        </p>
+        <TcpHandshakeAnim />
 
         <h3>UDP — User Datagram Protocol</h3>
         <p>
@@ -202,10 +224,13 @@ export default function GymInternet() {
           caption="Private IP-Adressbereiche (nicht öffentlich routbar)"
           headers={["Adressbereich", "Typische Verwendung"]}
           rows={[
-            [<code>10.0.0.0/8</code>, "Grosses Firmennetzwerk"],
-            [<code>172.16.0.0/12</code>, "Mittleres Netzwerk"],
-            [<code>192.168.0.0/16</code>, "Heimnetzwerk (z.B. 192.168.1.1)"],
-            [<code>127.0.0.1</code>, "Loopback (localhost)"],
+            [<code key="a">10.0.0.0/8</code>, "Grosses Firmennetzwerk"],
+            [<code key="b">172.16.0.0/12</code>, "Mittleres Netzwerk"],
+            [
+              <code key="c">192.168.0.0/16</code>,
+              "Heimnetzwerk (z.B. 192.168.1.1)",
+            ],
+            [<code key="d">127.0.0.1</code>, "Loopback (localhost)"],
           ]}
         />
 
@@ -220,14 +245,9 @@ export default function GymInternet() {
         <p>
           Da nicht jedes Gerät eine öffentliche IPv4-Adresse bekommt, verwendet
           Ihr Router <strong>NAT</strong>: Er übersetzt die privaten IP-Adressen
-          in Ihrem Heimnetz in seine eine öffentliche IP-Adresse.
+          in Ihrem Heimnetz in seine eine öffentliche IP-Adresse. Mehr dazu im
+          Kapitel <a href="/gym/netzwerke">Netzwerkkomponenten</a>.
         </p>
-        <Figure
-          src="https://www.cloudflare.com/img/learning/network-layer/what-is-nat/nat-example.svg"
-          alt="NAT Beispiel"
-          caption="NAT: Mehrere Geräte im Heimnetz teilen sich eine öffentliche IP-Adresse"
-          origin="https://www.cloudflare.com/learning/network-layer/what-is-nat/"
-        />
       </section>
 
       <Section>
@@ -346,6 +366,75 @@ export default function GymInternet() {
       </Section>
 
       <section>
+        <h2>HTTP — Die Sprache des Webs</h2>
+        <p>
+          <strong>HTTP</strong> (HyperText Transfer Protocol) ist das Protokoll,
+          mit dem Browser und Webserver miteinander kommunizieren. Jede
+          Interaktion folgt dem gleichen Muster: Der Browser schickt eine{" "}
+          <strong>Anfrage (Request)</strong>, der Server antwortet mit einer{" "}
+          <strong>Antwort (Response)</strong>.
+        </p>
+        <p>
+          HTTP läuft über <strong>TCP</strong> auf Port <code>80</code> (HTTP)
+          bzw. Port <code>443</code> (HTTPS).
+        </p>
+
+        <h3>HTTP-Methoden</h3>
+        <p>
+          Die Methode gibt an, <em>was</em> der Client vom Server möchte:
+        </p>
+        <DataTable
+          headers={["Methode", "Bedeutung", "Beispiel"]}
+          rows={[
+            ["GET", "Ressource abrufen", "Webseite laden, Bild anzeigen"],
+            [
+              "POST",
+              "Daten senden / erstellen",
+              "Login-Formular, Tweet abschicken",
+            ],
+            ["PUT", "Ressource ersetzen", "Profilbild hochladen"],
+            ["DELETE", "Ressource löschen", "Konto löschen"],
+            [
+              "PATCH",
+              "Ressource teilweise ändern",
+              "Nur E-Mail-Adresse aktualisieren",
+            ],
+          ]}
+        />
+
+        <h3>HTTP-Statuscodes</h3>
+        <p>
+          Jede Antwort beginnt mit einem dreistelligen{" "}
+          <strong>Statuscode</strong>:
+        </p>
+        <DataTable
+          headers={["Bereich", "Bedeutung", "Häufige Codes"]}
+          rows={[
+            ["2xx", "Erfolg", "200 OK · 201 Created"],
+            ["3xx", "Weiterleitung", "301 Moved Permanently · 302 Found"],
+            [
+              "4xx",
+              "Client-Fehler",
+              "400 Bad Request · 401 Unauthorized · 404 Not Found",
+            ],
+            [
+              "5xx",
+              "Server-Fehler",
+              "500 Internal Server Error · 503 Service Unavailable",
+            ],
+          ]}
+        />
+
+        <h3>Request &amp; Response animiert</h3>
+        <p>
+          Die folgende Visualisierung zeigt, wie Request und Response zwischen
+          Browser und Server ausgetauscht werden — inklusive der wichtigsten
+          Header-Felder:
+        </p>
+        <HttpDiagram />
+      </section>
+
+      <Section>
         <h2>Das Problem: Alles ist öffentlich sichtbar</h2>
         <p>
           Standardmässig sind alle IP-Pakete <strong>unverschlüsselt</strong>.
@@ -370,34 +459,40 @@ export default function GymInternet() {
             die Verbindung ein und liest/manipuliert den Datenverkehr
           </li>
         </ul>
-      </section>
+      </Section>
 
-      <Section>
+      <section>
         <h2>HTTP vs. HTTPS</h2>
         <p>
-          <strong>HTTP</strong> (HyperText Transfer Protocol) überträgt alle
-          Daten im Klartext. <strong>HTTPS</strong> (HTTP Secure) verschlüsselt
-          die Verbindung mit <strong>TLS</strong> (Transport Layer Security).
+          <strong>HTTP</strong> überträgt alle Daten im Klartext.{" "}
+          <strong>HTTPS</strong> (HTTP Secure) verschlüsselt die Verbindung mit{" "}
+          <strong>TLS</strong> (Transport Layer Security). Die folgende
+          Visualisierung zeigt schematisch, welche Teile eines Pakets bei HTTP
+          offen sichtbar sind — und was HTTPS tatsächlich schützt:
         </p>
+        <HttpPacket />
         <DataTable
           headers={["Aspekt", "HTTP", "HTTPS"]}
           rows={[
             ["Inhalt verschlüsselt", "Nein", "Ja (TLS)"],
             ["Integrität", "Keine Garantie", "Manipulationsschutz"],
             ["Server-Authentizität", "Nein", "Ja (Zertifikat)"],
-            ["ISP sieht Domain", "Ja", "Ja (nur Domain, nicht Pfad/Inhalt)"],
+            ["ISP sieht Domain", "Ja", "Ja (via SNI — nicht via Host-Header)"],
+            ["ISP sieht Pfad & Inhalt", "Ja", "Nein — verschlüsselt"],
             ["Metadaten (IP, Zeit)", "Sichtbar", "Sichtbar"],
           ]}
         />
-        <Figure
-          src="https://www.cloudflare.com/img/learning/security/glossary/what-is-ssl/http-vs-https.svg"
-          alt="HTTP vs HTTPS"
-          caption="Vergleich: Unverschlüsselte HTTP- vs. verschlüsselte HTTPS-Verbindung"
-          origin="https://www.cloudflare.com/de-de/learning/ssl/why-is-http-not-secure/"
-        />
-      </Section>
+        <p>
+          <strong>Wichtig:</strong> HTTPS schützt den <em>Inhalt</em>, nicht die
+          Metadaten. Der ISP sieht weiterhin, welche Domains besucht werden —
+          allerdings über <strong>SNI</strong> (Server Name Indication) im
+          TLS-Handshake, nicht über den HTTP-<code>Host</code>-Header (der ist
+          verschlüsselt). Wer auch das verstecken will, braucht ein VPN oder
+          Tor.
+        </p>
+      </section>
 
-      <section>
+      <Section>
         <h2>Router und das Routing-Protokoll</h2>
         <p>
           Router entscheiden, wohin jedes Paket als nächstes gesendet wird. Sie
@@ -414,22 +509,25 @@ export default function GymInternet() {
           <strong>Traceroute</strong> zeigt Ihnen, über welche Router ein Paket
           läuft: <code>traceroute github.com</code>
         </p>
-      </section>
+      </Section>
 
-      <Section>
+      <section>
         <h2>Zusammenfassung</h2>
         <p>
           Das Internet ist ein Netzwerk von Netzwerken, das auf dem{" "}
           <strong>TCP/IP-Schichtenmodell</strong> basiert. Daten werden in{" "}
           <strong>Pakete</strong> aufgeteilt und über <strong>Router</strong>{" "}
           weitergeleitet. <strong>IP-Adressen</strong> identifizieren Geräte,{" "}
-          <strong>DNS</strong> übersetzt Domainnamen. <strong>TCP</strong>{" "}
-          garantiert zuverlässige Übertragung, <strong>UDP</strong> maximiert
-          die Geschwindigkeit. Standardmässig sind alle Verbindungen öffentlich
-          lesbar — <strong>HTTPS</strong> verschlüsselt den Inhalt, schützt aber
+          <strong>DNS</strong> übersetzt Domainnamen in IP-Adressen.{" "}
+          <strong>TCP</strong> garantiert zuverlässige Übertragung mit
+          3-Way-Handshake, <strong>UDP</strong> maximiert die Geschwindigkeit.{" "}
+          <strong>HTTP</strong> ist die Sprache des Webs — Methoden wie{" "}
+          <code>GET</code> und <code>POST</code> sowie Statuscodes wie{" "}
+          <code>200</code> und <code>404</code> steuern den Datenaustausch.{" "}
+          <strong>HTTPS</strong> verschlüsselt den Inhalt über TLS, schützt aber
           nicht vollständig vor Metadaten-Analyse.
         </p>
-      </Section>
+      </section>
     </>
   )
 }

@@ -2,6 +2,7 @@ import DataTable from "@components/DataTable/DataTable"
 import Figure from "@components/Figure.jsx"
 import FirewallZones from "@components/gym/FirewallZones/FirewallZones"
 import NatDiagram from "@components/gym/NatDiagram/NatDiagram"
+import NetworkDiagram from "@components/gym/NetworkDiagram/NetworkDiagram"
 import LearningGoals from "@components/LearningGoals.jsx"
 import Section from "@components/Section.jsx"
 
@@ -38,6 +39,17 @@ export default function GymNetzwerke() {
           <li>Sie verstehen Port-Forwarding und können es konfigurieren.</li>
         </ul>
       </LearningGoals>
+
+      <section>
+        <h2>Das Heimnetzwerk</h2>
+        <p>
+          Ein typisches Heimnetzwerk besteht aus mehreren Geräten, die über
+          einen <strong>Router</strong> miteinander und mit dem Internet
+          verbunden sind. Klicke auf ein Gerät, um mehr über seine Rolle im
+          Netzwerk zu erfahren:
+        </p>
+        <NetworkDiagram />
+      </section>
 
       <section>
         <h2>Netzwerkkomponenten</h2>
@@ -168,7 +180,9 @@ export default function GymNetzwerke() {
         <p>
           IPv4 hat nur ca. 4 Milliarden Adressen. <strong>NAT</strong> löst das
           Problem, indem viele Geräte mit privaten IPs eine einzige öffentliche
-          IP-Adresse teilen (PAT — Port Address Translation).
+          IP-Adresse teilen. Der Router merkt sich dabei in einer{" "}
+          <strong>NAT-Tabelle</strong>, welches interne Gerät welche externe
+          Port-Nummer verwendet, um Antworten korrekt zuzuordnen.
         </p>
         <NatDiagram />
         <p>

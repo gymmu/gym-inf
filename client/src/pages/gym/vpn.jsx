@@ -1,6 +1,7 @@
 import DataTable from "@components/DataTable/DataTable"
 import Figure from "@components/Figure.jsx"
 import TorOnion from "@components/gym/TorOnion/TorOnion"
+import VpnTunnel from "@components/gym/VpnTunnel/VpnTunnel"
 import LearningGoals from "@components/LearningGoals.jsx"
 import Section from "@components/Section.jsx"
 
@@ -23,6 +24,10 @@ export default function GymVPN() {
           </li>
           <li>Sie kennen den Unterschied zwischen WireGuard und OpenVPN.</li>
           <li>Sie wissen, was Split Tunneling ist und wann es sinnvoll ist.</li>
+          <li>
+            Sie verstehen, wie VPN Geoblocking umgehen kann und warum das
+            funktioniert.
+          </li>
           <li>
             Sie verstehen die Grenzen von VPN in Bezug auf Anonymität und
             Sicherheit.
@@ -67,12 +72,11 @@ export default function GymVPN() {
           </li>
         </ol>
 
-        <Figure
-          src="https://www.auvik.com/wp-content/uploads/2021/01/pasted-image-1.png"
-          alt="VPN Tunnel Visualisierung"
-          caption="Ein VPN-Tunnel: Daten werden verschlüsselt durch ein fremdes Netz geleitet"
-          origin="https://www.auvik.com/franklyit/blog/vpn-split-tunneling/"
-        />
+        <p>
+          Die folgende Visualisierung zeigt den vollständigen Hin- und Rückweg
+          eines Pakets — vergleiche, was der ISP mit und ohne VPN sieht:
+        </p>
+        <VpnTunnel />
 
         <h3>Was sieht wer?</h3>
         <DataTable
@@ -134,6 +138,47 @@ export default function GymVPN() {
         </p>
       </Section>
 
+      <Section>
+        <h2>Geoblocking — und wie VPN es umgeht</h2>
+        <p>
+          Viele Webdienste schränken den Zugang basierend auf dem Standort des
+          Nutzers ein: <strong>Geoblocking</strong>. Der Ziel-Server schaut auf
+          die Absender-IP-Adresse und prüft, aus welchem Land die Anfrage
+          stammt. Kommt sie aus einem gesperrten Land, wird der Zugriff
+          verweigert.
+        </p>
+        <p>
+          Typische Beispiele: Streaming-Dienste mit regional eingeschränkten
+          Inhalten, Nachrichtenwebseiten oder Online-Dienste, die in bestimmten
+          Ländern nicht verfügbar sind.
+        </p>
+        <p>
+          Mit einem VPN-Server im richtigen Land sieht der Ziel-Server nur die
+          IP-Adresse des VPN-Servers — und erlaubt den Zugriff. Wähle im
+          Geoblocking-Modus der Visualisierung oben, was passiert wenn du direkt
+          aus der Schweiz auf einen US-Dienst zugreifst, und was mit einem
+          US-VPN-Server passiert.
+        </p>
+        <DataTable
+          headers={["Situation", "Was passiert"]}
+          rows={[
+            [
+              "Ohne VPN, gesperrtes Land",
+              "Ziel-Server erkennt CH-IP → 403 Blocked",
+            ],
+            [
+              "Mit VPN im richtigen Land",
+              "Ziel-Server sieht US-IP des VPN-Servers → Zugriff erlaubt",
+            ],
+          ]}
+        />
+        <p>
+          <strong>Hinweis:</strong> Viele Streaming-Dienste versuchen aktiv,
+          bekannte VPN-IP-Adressen zu sperren. Es ist ein Katz-und-Maus-Spiel
+          zwischen VPN-Anbietern und Streaming-Plattformen.
+        </p>
+      </Section>
+
       <section>
         <h2>Split Tunneling — Nicht alles durch den Tunnel</h2>
         <p>
@@ -157,12 +202,6 @@ export default function GymVPN() {
               "Restlicher Datenverkehr",
             ],
           ]}
-        />
-        <Figure
-          src="https://www.auvik.com/wp-content/uploads/2021/01/split-tunneling-1.png"
-          alt="Split Tunneling Visualisierung"
-          caption="Split Tunneling: Nur ein Teil des Datenverkehrs geht durch den VPN-Tunnel"
-          origin="https://www.auvik.com/franklyit/blog/vpn-split-tunneling/"
         />
         <p>
           <strong>Sicherheitsrisiko:</strong> Mit Split Tunneling kann
@@ -278,9 +317,11 @@ export default function GymVPN() {
         <h2>Zusammenfassung</h2>
         <p>
           Ein VPN erstellt einen verschlüsselten Tunnel durch Enkapsulierung und
-          Verschlüsselung von Paketen. <strong>WireGuard</strong> ist das
-          moderne, schlanke Protokoll der Wahl; <strong>OpenVPN</strong> ist
-          erprobt und weit kompatibel. <strong>Split Tunneling</strong>{" "}
+          Verschlüsselung von Paketen — Hin- <em>und</em> Rückweg.{" "}
+          <strong>WireGuard</strong> ist das moderne, schlanke Protokoll der
+          Wahl; <strong>OpenVPN</strong> ist erprobt und weit kompatibel.{" "}
+          <strong>Geoblocking</strong> lässt sich umgehen, weil der Ziel-Server
+          nur die IP des VPN-Servers sieht. <strong>Split Tunneling</strong>{" "}
           ermöglicht selektives Routing, birgt aber Sicherheitsrisiken. Das{" "}
           <strong>Tor-Netzwerk</strong> bietet durch Mehrschicht-Verschlüsselung
           über drei Knoten deutlich höhere Anonymität auf Kosten der

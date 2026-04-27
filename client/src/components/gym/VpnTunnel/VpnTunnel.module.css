@@ -1,0 +1,128 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0.4rem 0;
+}
+
+/* Toggle */
+.toggle {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.toggleBtn {
+  background: #3c3836;
+  border: 2px solid #504945;
+  color: #a89984;
+  border-radius: 4px;
+  padding: 0.28rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.15s;
+}
+
+.toggleBtn:hover:not(:disabled) {
+  background: #504945;
+}
+
+.toggleBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.toggleActive {
+  background: #282828;
+}
+
+/* SVG */
+.svg {
+  width: 100%;
+  height: auto;
+  background: var(--color-bg-dark, #1d2021);
+  border: 1px solid #3c3836;
+  border-radius: 8px;
+}
+
+/* Steuerung */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.playBtn {
+  background: #b8bb26;
+  color: #1d2021;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.playBtn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.playBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Geo-Sub-Toggle */
+.geoSubToggle {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  padding: 0.4rem 0.6rem;
+  background: #1d2021;
+  border: 1px solid #3c3836;
+  border-radius: 6px;
+}
+
+.geoBtn {
+  background: #3c3836;
+  border: 2px solid #504945;
+  color: #a89984;
+  border-radius: 4px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.15s;
+}
+
+.geoBtn:hover:not(:disabled) {
+  background: #504945;
+}
+
+.geoBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.geoBtnActive {
+  background: #282828;
+}
+
+/* Info-Box */
+.infoBox {
+  background: #1d2021;
+  border: 1px solid;
+  border-radius: 6px;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.78rem;
+  color: #ebdbb2;
+  line-height: 1.5;
+}
