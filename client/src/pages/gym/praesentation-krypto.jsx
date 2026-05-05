@@ -5,6 +5,28 @@ import Slideshow, {
   Fragment,
 } from "@components/gym/Slideshow/Slideshow"
 import PacketAnimation from "@components/gym/PacketAnimation/PacketAnimation"
+import Caesar from "@components/Caesar"
+import CaesarIntro from "@components/gym/CaesarIntro/CaesarIntro"
+import {
+  KeyspaceCaesar,
+  KeyspaceVigenere,
+  KeyspaceBruteForce,
+  KeyspaceBars,
+  KeyspaceTimes,
+} from "@components/gym/KeyspaceViz/KeyspaceViz"
+import Vigenere from "@components/Vigenere"
+import VigenereViz from "@components/gym/VigenereViz/VigenereViz"
+import VigenereSteps from "@components/gym/VigenereSteps/VigenereSteps"
+import XorSteps from "@components/gym/XorSteps/XorSteps"
+import XorViz from "@components/gym/XorViz/XorViz"
+import SignatureDiagram from "@components/gym/SignatureDiagram/SignatureDiagram"
+import TlsHandshake from "@components/gym/TlsHandshake/TlsHandshake"
+import DhColorAnalogy from "@components/gym/DhColorAnalogy/DhColorAnalogy"
+import DhSteps from "@components/gym/DhSteps/DhSteps"
+import PlainPasswordDatabase from "@components/PlainPasswordDatabase"
+import HashedPasswordDatabase from "@components/HashedPasswordDatabase"
+import SaltedPasswordDatabase from "@components/SaltedPasswordDatabase"
+import RainbowTable from "@components/RainbowTable"
 
 export default function GymPraesentationKrypto() {
   return (
@@ -19,10 +41,8 @@ export default function GymPraesentationKrypto() {
 
       <Slideshow title="Kryptographie, Schlüsselaustausch & Passwörter">
         {/* ══════════════════════════════════════════════════════
-            BLOCK A — VERSCHLÜSSELUNG
+            TITELFOLIE
             ══════════════════════════════════════════════════════ */}
-
-        {/* 1. Titelfolie */}
         <Slide className="title-slide" transition="zoom">
           <h1>Kryptographie, Schlüsselaustausch &amp; Passwörter</h1>
           <Fragment as="p" animation="fade-up">
@@ -47,22 +67,41 @@ export default function GymPraesentationKrypto() {
             <Fragment animation="fade-up">
               <div>
                 <p>
-                  <strong>Block B / C</strong>
+                  <strong>Block B — Schlüsselaustausch</strong>
                 </p>
                 <ul>
                   <li>Diffie-Hellman-Protokoll</li>
                   <li>Diskreter Logarithmus</li>
                   <li>Man-in-the-Middle &amp; ECDHE</li>
+                  <li>Perfect Forward Secrecy</li>
+                </ul>
+              </div>
+            </Fragment>
+            <Fragment animation="fade-up">
+              <div>
+                <p>
+                  <strong>Block C — Passwörter</strong>
+                </p>
+                <ul>
                   <li>Hashing &amp; Salting</li>
-                  <li>2FA, FIDO2 &amp; Passwortmanager</li>
+                  <li>Angriffsmethoden</li>
+                  <li>2FA &amp; FIDO2</li>
+                  <li>Passwortmanager</li>
                 </ul>
               </div>
             </Fragment>
           </div>
         </Slide>
 
-        {/* 2. Caesar + Schlüsselraum — vertikal */}
+        {/* ══════════════════════════════════════════════════════
+            BLOCK A — VERSCHLÜSSELUNG
+            ══════════════════════════════════════════════════════ */}
+
+        {/* Stack: Caesar + Schlüsselraum */}
         <Stack>
+          <Slide>
+            <CaesarIntro />
+          </Slide>
           <Slide>
             <h2>Das Caesar-Verfahren</h2>
             <Fragment as="p" animation="fade-up">
@@ -70,8 +109,19 @@ export default function GymPraesentationKrypto() {
             </Fragment>
             <Fragment animation="fade-up">
               <div className="highlight-box">
-                Schlüssel 3: <strong>A → D</strong> · <strong>B → E</strong> ·
-                <strong> HALLO → KDOOR</strong>
+                <p>Schlüssel 3:</p>
+                <p>
+                  <strong>A → D</strong>
+                </p>
+                <p>
+                  <strong>B → E</strong>
+                </p>
+                <p>
+                  <strong>H → K</strong>
+                </p>
+                <p>
+                  <strong>HALLO → KDOOR</strong>
+                </p>
               </div>
             </Fragment>
             <Fragment as="p" animation="fade-up" style={{ marginTop: "0.6em" }}>
@@ -80,96 +130,206 @@ export default function GymPraesentationKrypto() {
             </Fragment>
           </Slide>
           <Slide>
-            <h2>Schlüsselraum &amp; Brute-Force</h2>
-            <Fragment as="p" animation="fade-up">
+            <h2>Caesar — interaktiv</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Verschiebe das Alphabet und beobachte die Verschlüsselung live:
+            </p>
+            <Caesar />
+          </Slide>
+          <Slide>
+            <h2>Schlüsselraum — was ist das?</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
               Der <strong>Schlüsselraum</strong> ist die Menge aller möglichen
-              Schlüssel. Bei Caesar: nur 26 Verschiebungen.
+              Schlüssel. Bei Caesar: alle 26 Verschiebungen.
+            </p>
+            <KeyspaceCaesar />
+          </Slide>
+          <Slide>
+            <h2>Schlüsselraum — Vigenère</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Bei Vigenère wächst der Schlüsselraum mit jedem Buchstaben des
+              Schlüsselworts um Faktor 26.
+            </p>
+            <KeyspaceVigenere />
+          </Slide>
+          <Slide>
+            <h2>Brute-Force</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Ein Angreifer probiert einfach alle Schlüssel durch — bei Caesar
+              dauert das Millisekunden.
+            </p>
+            <KeyspaceBruteForce />
+          </Slide>
+          <Slide>
+            <h2>Schlüsselräume im Vergleich</h2>
+            <KeyspaceBars />
+          </Slide>
+          <Slide>
+            <h2>Wie lange dauert Brute-Force?</h2>
+            <KeyspaceTimes />
+          </Slide>
+          <Slide>
+            <h2>Schutz vor Brute-Force: ein riesiger Schlüsselraum</h2>
+            <Fragment as="p" animation="fade-up">
+              Je grösser der Schlüsselraum, desto mehr Versuche braucht ein
+              Angreifer — bei{" "}
+              <strong>
+                2<sup>128</sup>
+              </strong>{" "}
+              Möglichkeiten ist selbst der schnellste Computer chancenlos.
             </Fragment>
             <Fragment animation="fade-up">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Verfahren</th>
-                    <th>Schlüsselraum</th>
-                    <th>Aufwand</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Caesar</td>
-                    <td>26</td>
-                    <td style={{ color: "#fb4934" }}>Sofort</td>
-                  </tr>
-                  <tr>
-                    <td>Vigenère (4 Zeichen)</td>
-                    <td>26⁴ ≈ 460&apos;000</td>
-                    <td>Sekunden</td>
-                  </tr>
-                  <tr>
-                    <td>AES-128</td>
-                    <td>2¹²⁸</td>
-                    <td style={{ color: "#b8bb26" }}>Praktisch unmöglich</td>
-                  </tr>
-                  <tr>
-                    <td>AES-256</td>
-                    <td>2²⁵⁶</td>
-                    <td style={{ color: "#b8bb26" }}>
-                      Auch mit Quantencomputer
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="highlight-box">
+                Ein moderner Computer schafft ~10<sup>12</sup> Versuche pro
+                Sekunde. Um 2<sup>128</sup> Schlüssel zu testen, bräuchte er
+                länger als das Universum alt ist.
+              </div>
             </Fragment>
             <Fragment animation="fade-up">
-              <div className="info-box" style={{ marginTop: "0.4em" }}>
-                Grosser Schlüsselraum allein reicht nicht — das Verfahren muss
-                auch statistisch unauffällig verschlüsseln.
+              <div className="warning-box" style={{ marginTop: "0.6em" }}>
+                <strong>Aber:</strong> Ein grosser Schlüsselraum nützt nichts,
+                wenn der Schlüssel schlecht gewählt ist. Wer <em>«password»</em>{" "}
+                oder seinen Geburtstag als Schlüssel nimmt, schrumpft den
+                effektiven Schlüsselraum auf wenige Tausend Möglichkeiten — egal
+                wie gross er theoretisch wäre.
+                <br />
+                <strong>
+                  Der Schlüssel muss zufällig und gleichmässig aus dem gesamten
+                  Raum gewählt werden.
+                </strong>
               </div>
             </Fragment>
           </Slide>
         </Stack>
 
-        {/* 3. Vigenère */}
-        <Slide>
-          <h2>Das Vigenère-Verfahren</h2>
-          <Fragment as="p" animation="fade-up">
-            Statt einer Verschiebung für alle: ein{" "}
-            <strong>Schlüsselwort</strong>— jeder Buchstabe gibt eine andere
-            Verschiebung vor (a=0, b=1, … z=25), zyklisch wiederholt.
-          </Fragment>
-          <Fragment animation="fade-up">
-            <div className="highlight-box">
-              Schlüssel <strong>KEY</strong>, Klartext <strong>HALLO</strong>:
-              <br />
-              H+K=R · A+E=E · L+Y=J · L+K=V · O+E=S → <strong>REJVS</strong>
-            </div>
-          </Fragment>
-          <Fragment animation="fade-up">
-            <p style={{ marginTop: "0.6em" }}>
-              Schlüsselraum wächst mit Schlüssellänge <em>n</em>: 26<sup>n</sup>{" "}
-              mögliche Schlüssel.
-            </p>
-          </Fragment>
-          <div className="cols" style={{ marginTop: "0.4em" }}>
-            <Fragment animation="fade-up">
-              <div className="info-box">
-                <strong>Vorteil:</strong> Viel grösserer Schlüsselraum
-              </div>
-            </Fragment>
-            <Fragment animation="fade-up">
-              <div className="warning-box">
-                <strong>Schwäche:</strong> Kasiski-Analyse bei kurzen
-                Schlüsselwörtern
-              </div>
-            </Fragment>
-          </div>
-        </Slide>
-
-        {/* 4. XOR & AES — vertikal */}
+        {/* Stack: Vigenère */}
         <Stack>
           <Slide>
-            <h2>Text → Bits → Pakete (Animation)</h2>
-            <PacketAnimation />
+            <h2>Das Vigenère-Verfahren</h2>
+            <VigenereViz />
+          </Slide>
+          <Slide>
+            <h2>Das Vigenère-Verfahren</h2>
+            <Fragment as="p" animation="fade-up">
+              Statt einer Verschiebung für alle: ein{" "}
+              <strong>Schlüsselwort</strong> — jeder Buchstabe gibt eine andere
+              Verschiebung vor (a=0, b=1, … z=25), zyklisch wiederholt.
+            </Fragment>
+            <Fragment animation="fade-up">
+              <div className="highlight-box">
+                <p>
+                  Schlüssel <strong>KEY</strong>, Klartext{" "}
+                  <strong>HALLO</strong>:
+                </p>
+                <table
+                  style={{
+                    borderCollapse: "separate",
+                    borderSpacing: "1em 0.5em",
+                    margin: "0 auto",
+                  }}>
+                  <thead>
+                    <tr>
+                      <th
+                        style={{
+                          textAlign: "center",
+                          color: "var(--color-fg)",
+                        }}>
+                        Klartext
+                      </th>
+                      <th
+                        style={{
+                          textAlign: "center",
+                          color: "var(--color-fg)",
+                        }}>
+                        Schlüssel
+                      </th>
+                      <th
+                        style={{
+                          textAlign: "center",
+                          color: "var(--color-fg)",
+                        }}>
+                        Verschiebung
+                      </th>
+                      <th
+                        style={{
+                          textAlign: "center",
+                          color: "var(--color-fg)",
+                        }}>
+                        Chiffrat
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ["H", "K", 10, "R"],
+                      ["A", "E", 4, "E"],
+                      ["L", "Y", 24, "J"],
+                      ["L", "K", 10, "V"],
+                      ["O", "E", 4, "S"],
+                    ].map(([p, k, s, c]) => (
+                      <tr key={p + k}>
+                        <td style={{ textAlign: "center" }}>
+                          <strong>{p}</strong>
+                        </td>
+                        <td style={{ textAlign: "center" }}>
+                          <strong>{k}</strong>
+                        </td>
+                        <td style={{ textAlign: "center" }}>+{s}</td>
+                        <td style={{ textAlign: "center" }}>
+                          <strong>{c}</strong>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p style={{ marginTop: "0.4em" }}>
+                  → <strong>REJVS</strong>
+                </p>
+              </div>
+            </Fragment>
+            <Fragment animation="fade-up">
+              <p style={{ marginTop: "0.6em" }}>
+                Schlüsselraum wächst mit Schlüssellänge <em>n</em>: 26
+                <sup>n</sup> mögliche Schlüssel.
+              </p>
+            </Fragment>
+            <div className="cols" style={{ marginTop: "0.4em" }}>
+              <Fragment animation="fade-up">
+                <div className="info-box">
+                  <strong>Vorteil:</strong> Viel grösserer Schlüsselraum
+                </div>
+              </Fragment>
+              <Fragment animation="fade-up">
+                <div className="warning-box">
+                  <strong>Schwäche:</strong> Kasiski-Analyse bei kurzen
+                  Schlüsselwörtern
+                </div>
+              </Fragment>
+            </div>
+          </Slide>
+          <Slide>
+            <h2>Vigenère — Schrittweise</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Gib Klartext und Schlüsselwort ein — sieh, wie jeder Buchstabe
+              einzeln verschoben wird:
+            </p>
+            <VigenereSteps />
+          </Slide>
+          <Slide>
+            <h2>Das Vigenère-Quadrat</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Gib Klartext und Schlüssel ein — die Schnittpunkte im Quadrat
+              zeigen das Chiffrat.
+            </p>
+            <Vigenere defaultPlain="HALLO" defaultKey="KEY" />
+          </Slide>
+        </Stack>
+
+        {/* Stack: Text → Bits → XOR → Übertragung → Entschlüsselung */}
+        <Stack>
+          <Slide>
+            <h2>XOR-Verschlüsselung — Animation</h2>
+            <XorViz />
           </Slide>
           <Slide>
             <h2>Vom Text zu Bits — ASCII</h2>
@@ -179,9 +339,70 @@ export default function GymPraesentationKrypto() {
             </Fragment>
             <Fragment animation="fade-up">
               <div className="highlight-box">
-                <code>A = 65 = 01000001</code>
-                <br />
-                <code>H = 72 = 01001000</code>
+                <table
+                  style={{
+                    borderCollapse: "separate",
+                    borderSpacing: "1.2em 0.6em",
+                    margin: "0 auto",
+                  }}>
+                  <thead>
+                    <tr>
+                      <th
+                        style={{ color: "var(--color-fg)", textAlign: "left" }}>
+                        Zeichen
+                      </th>
+                      <th
+                        style={{
+                          color: "var(--color-fg)",
+                          textAlign: "right",
+                        }}>
+                        Dezimal
+                      </th>
+                      <th
+                        style={{
+                          color: "var(--color-fg)",
+                          textAlign: "right",
+                        }}>
+                        Binär
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <code>A</code>
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <code>65</code>
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <code>01000001</code>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <code>H</code>
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <code>72</code>
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <code>01001000</code>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <code>!</code>
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <code>33</code>
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <code>00100001</code>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </Fragment>
             <Fragment as="p" animation="fade-up" style={{ marginTop: "0.6em" }}>
@@ -212,9 +433,17 @@ export default function GymPraesentationKrypto() {
               </div>
             </Fragment>
           </Slide>
+          <Slide>
+            <h2>XOR — interaktiv</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Gib Text und Schlüssel ein — sieh die XOR-Verschlüsselung Bit für
+              Bit:
+            </p>
+            <XorSteps />
+          </Slide>
         </Stack>
 
-        {/* 5. Symmetrisch vs. Asymmetrisch */}
+        {/* Symmetrisch vs. Asymmetrisch */}
         <Slide>
           <h2>Symmetrisch vs. Asymmetrisch</h2>
           <div className="cols">
@@ -266,7 +495,7 @@ export default function GymPraesentationKrypto() {
           </div>
         </Slide>
 
-        {/* 6. 3 Ziele + Signaturen — vertikal */}
+        {/* Stack: 3 Ziele + Signaturen */}
         <Stack>
           <Slide>
             <h2>3 Ziele der Kryptographie</h2>
@@ -326,9 +555,16 @@ export default function GymPraesentationKrypto() {
               </div>
             </Fragment>
           </Slide>
+          <Slide>
+            <h2>Digitale Signaturen — Diagramm</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Wie Alice eine Nachricht signiert und Bob sie verifiziert:
+            </p>
+            <SignatureDiagram />
+          </Slide>
         </Stack>
 
-        {/* 7. TLS-Handshake + Zertifikatskette — vertikal */}
+        {/* Stack: TLS-Handshake + Zertifikatskette */}
         <Stack>
           <Slide>
             <h2>TLS-Handshake</h2>
@@ -354,6 +590,13 @@ export default function GymPraesentationKrypto() {
                 verschlüsselt aktiv
               </Fragment>
             </ol>
+          </Slide>
+          <Slide>
+            <h2>TLS-Handshake — Diagramm</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Der vollständige TLS 1.3 Ablauf zwischen Browser und Server:
+            </p>
+            <TlsHandshake />
           </Slide>
           <Slide>
             <h2>Zertifikatskette</h2>
@@ -394,7 +637,6 @@ export default function GymPraesentationKrypto() {
             BLOCK B — SCHLÜSSELAUSTAUSCH
             ══════════════════════════════════════════════════════ */}
 
-        {/* 8. Section-Trennfolie */}
         <Slide className="section-slide" transition="zoom">
           <h2>Diffie-Hellman-Schlüsselaustausch</h2>
           <Fragment as="p" animation="fade-up" style={{ color: "#ebdbb2" }}>
@@ -402,7 +644,7 @@ export default function GymPraesentationKrypto() {
           </Fragment>
         </Slide>
 
-        {/* 9. Das Problem + Farbmischungs-Analogie — vertikal */}
+        {/* Stack: Das Problem + Farbmischungs-Analogie */}
         <Stack>
           <Slide>
             <h2>Das Schlüsselaustausch-Problem</h2>
@@ -430,93 +672,84 @@ export default function GymPraesentationKrypto() {
           </Slide>
           <Slide>
             <h2>Die Farbmischungs-Analogie</h2>
-            <p>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
               Eine Farbe mischen ist einfach — trennen ist praktisch unmöglich.
+              Klicke dich durch die Schritte:
             </p>
-            <ol>
-              <Fragment as="li" animation="fade-up">
-                Gemeinsame Farbe: <strong>Gelb</strong> (öffentlich)
-              </Fragment>
-              <Fragment as="li" animation="fade-up">
-                Alice mischt: Gelb + Blau = <strong>Türkis</strong> → sendet
-                Türkis
-              </Fragment>
-              <Fragment as="li" animation="fade-up">
-                Bob mischt: Gelb + Rot = <strong>Orange</strong> → sendet Orange
-              </Fragment>
-              <Fragment as="li" animation="fade-up">
-                Alice mischt Bobs Orange + ihr Blau
-              </Fragment>
-              <Fragment as="li" animation="fade-up">
-                Bob mischt Alices Türkis + sein Rot
-              </Fragment>
-              <Fragment as="li" animation="fade-up">
-                <strong>Beide haben Gelb + Blau + Rot</strong> — Eve sah nur
-                Gelb, Türkis, Orange
-              </Fragment>
-            </ol>
+            <DhColorAnalogy />
           </Slide>
         </Stack>
 
-        {/* 10. Mathematik: Modulare Potenzierung */}
-        <Slide>
-          <h2>Die Mathematik: Modulare Potenzierung</h2>
-          <Fragment as="p" animation="fade-up">
-            Die <strong>Modulo-Operation</strong> ist der Rest einer
-            ganzzahligen Division:
-          </Fragment>
-          <Fragment animation="fade-up">
-            <div className="highlight-box">
-              <code>17 mod 5 = 2</code> &nbsp;·&nbsp; <code>5⁶ mod 23 = 8</code>
-            </div>
-          </Fragment>
-          <Fragment animation="fade-up">
-            <table style={{ marginTop: "0.6em" }}>
-              <thead>
-                <tr>
-                  <th>Schritt</th>
-                  <th>Alice</th>
-                  <th>Bob</th>
-                  <th>Öffentlich</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td colSpan={2} style={{ textAlign: "center" }}>
-                    Einigen sich auf <strong>p</strong> (Primzahl) und{" "}
-                    <strong>g</strong> (Generator)
-                  </td>
-                  <td>p, g</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>
-                    Geheim <strong>a</strong>, sendet A = gᵃ mod p
-                  </td>
-                  <td>
-                    Geheim <strong>b</strong>, sendet B = gᵇ mod p
-                  </td>
-                  <td>A, B</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>S = Bᵃ mod p</td>
-                  <td>S = Aᵇ mod p</td>
-                  <td>—</td>
-                </tr>
-              </tbody>
-            </table>
-          </Fragment>
-          <Fragment animation="fade-up">
-            <div className="highlight-box" style={{ marginTop: "0.4em" }}>
-              <strong>Diskreter Logarithmus:</strong> Aus A und p das a zu
-              berechnen ist bei 2048-Bit-Zahlen praktisch unlösbar.
-            </div>
-          </Fragment>
-        </Slide>
+        {/* Stack: Mathematik + Interaktiver Simulator */}
+        <Stack>
+          <Slide>
+            <h2>Die Mathematik: Modulare Potenzierung</h2>
+            <Fragment as="p" animation="fade-up">
+              Die <strong>Modulo-Operation</strong> ist der Rest einer
+              ganzzahligen Division:
+            </Fragment>
+            <Fragment animation="fade-up">
+              <div className="highlight-box">
+                <code>17 mod 5 = 2</code> &nbsp;·&nbsp;{" "}
+                <code>5⁶ mod 23 = 8</code>
+              </div>
+            </Fragment>
+            <Fragment animation="fade-up">
+              <table style={{ marginTop: "0.6em" }}>
+                <thead>
+                  <tr>
+                    <th>Schritt</th>
+                    <th>Alice</th>
+                    <th>Bob</th>
+                    <th>Öffentlich</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td colSpan={2} style={{ textAlign: "center" }}>
+                      Einigen sich auf <strong>p</strong> (Primzahl) und{" "}
+                      <strong>g</strong> (Generator)
+                    </td>
+                    <td>p, g</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>
+                      Geheim <strong>a</strong>, sendet A = gᵃ mod p
+                    </td>
+                    <td>
+                      Geheim <strong>b</strong>, sendet B = gᵇ mod p
+                    </td>
+                    <td>A, B</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>S = Bᵃ mod p</td>
+                    <td>S = Aᵇ mod p</td>
+                    <td>—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </Fragment>
+            <Fragment animation="fade-up">
+              <div className="highlight-box" style={{ marginTop: "0.4em" }}>
+                <strong>Diskreter Logarithmus:</strong> Aus A und p das a zu
+                berechnen ist bei 2048-Bit-Zahlen praktisch unlösbar.
+              </div>
+            </Fragment>
+          </Slide>
+          <Slide>
+            <h2>Diffie-Hellman — interaktiv</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Wähle eigene Werte für p, g, a, b — und sieh den
+              Schlüsselaustausch in Echtzeit:
+            </p>
+            <DhSteps />
+          </Slide>
+        </Stack>
 
-        {/* 11. Man-in-the-Middle & ECDHE — vertikal */}
+        {/* Stack: Man-in-the-Middle + ECDHE */}
         <Stack>
           <Slide>
             <h2>Man-in-the-Middle — Schwäche von DH</h2>
@@ -571,7 +804,6 @@ export default function GymPraesentationKrypto() {
             BLOCK C — PASSWÖRTER
             ══════════════════════════════════════════════════════ */}
 
-        {/* 12. Section-Trennfolie */}
         <Slide className="section-slide" transition="zoom">
           <h2>Passwörter &amp; Authentifizierung</h2>
           <Fragment as="p" animation="fade-up" style={{ color: "#ebdbb2" }}>
@@ -579,10 +811,26 @@ export default function GymPraesentationKrypto() {
           </Fragment>
         </Slide>
 
-        {/* 13. Hashing + Salting — vertikal */}
+        {/* Stack: Passwort-Hashing — von Klartext zu Salted */}
         <Stack>
           <Slide>
-            <h2>Passwörter sicher speichern</h2>
+            <h2>Passwörter im Klartext — gefährlich</h2>
+            <Fragment as="p" animation="fade-up">
+              Viele frühe Datenbanken speicherten Passwörter im Klartext. Bei
+              einem Datenleck sind alle Passwörter sofort lesbar.
+            </Fragment>
+            <Fragment animation="fade-up">
+              <div className="warning-box" style={{ marginTop: "0.5em" }}>
+                Füge ein Passwort hinzu und sieh es unverschlüsselt in der
+                Datenbank:
+              </div>
+            </Fragment>
+            <Fragment animation="fade-up">
+              <PlainPasswordDatabase />
+            </Fragment>
+          </Slide>
+          <Slide>
+            <h2>Passwörter hashen</h2>
             <Fragment as="p" animation="fade-up">
               Server speichern nie das Passwort selbst — nur den{" "}
               <strong>Hash</strong>. Beim Login wird der Hash des eingegebenen
@@ -612,6 +860,9 @@ export default function GymPraesentationKrypto() {
                 </tbody>
               </table>
             </Fragment>
+            <Fragment animation="fade-up">
+              <HashedPasswordDatabase />
+            </Fragment>
           </Slide>
           <Slide>
             <h2>Salting</h2>
@@ -627,73 +878,82 @@ export default function GymPraesentationKrypto() {
                 ans Passwort angehängt, bevor gehasht wird.
               </div>
             </Fragment>
-            <Fragment as="p" animation="fade-up" style={{ marginTop: "0.5em" }}>
-              Salt liegt im Klartext neben dem Hash — kein Problem, da er
-              Rainbow Tables wertlos macht.
-            </Fragment>
             <Fragment animation="fade-up">
-              <div className="info-box">
-                <strong>bcrypt Work Factor 12:</strong> ~100 Hashes/Sekunde
-                statt Milliarden → 76 Tage Brute-Force werden 2000 Jahre.
+              <SaltedPasswordDatabase />
+            </Fragment>
+          </Slide>
+        </Stack>
+
+        {/* Stack: Angriffsmethoden + Rainbow Table Demo */}
+        <Stack>
+          <Slide>
+            <h2>Angriffsmethoden</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Methode</th>
+                  <th>Funktionsweise</th>
+                  <th>Gegenmassnahme</th>
+                </tr>
+              </thead>
+              <tbody>
+                <Fragment as="tr" animation="fade-up">
+                  <td>
+                    <strong>Brute-Force</strong>
+                  </td>
+                  <td>Alle Kombinationen</td>
+                  <td>bcrypt / Argon2</td>
+                </Fragment>
+                <Fragment as="tr" animation="fade-up">
+                  <td>
+                    <strong>Dictionary</strong>
+                  </td>
+                  <td>
+                    <code>rockyou.txt</code> testen
+                  </td>
+                  <td>Kein Wörterbuch-Passwort</td>
+                </Fragment>
+                <Fragment as="tr" animation="fade-up">
+                  <td>
+                    <strong>Rainbow Tables</strong>
+                  </td>
+                  <td>Vorgefertigte Hash-Tabellen</td>
+                  <td>Salting</td>
+                </Fragment>
+                <Fragment as="tr" animation="fade-up">
+                  <td>
+                    <strong>Credential Stuffing</strong>
+                  </td>
+                  <td>Gestohlene Daten woanders testen</td>
+                  <td>Einzigartiges PW pro Dienst</td>
+                </Fragment>
+                <Fragment as="tr" animation="fade-up">
+                  <td>
+                    <strong>Phishing</strong>
+                  </td>
+                  <td>Nutzer gibt PW selbst preis</td>
+                  <td>FIDO2 / Passkeys</td>
+                </Fragment>
+              </tbody>
+            </table>
+          </Slide>
+          <Slide>
+            <h2>Rainbow Tables — Demo</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Füge Passwörter hinzu oder generiere bekannte Passwörter — dann
+              suche nach einem Hash:
+            </p>
+            <RainbowTable />
+            <Fragment animation="fade-up">
+              <div className="warning-box" style={{ marginTop: "0.5em" }}>
+                Salting macht Rainbow Tables wertlos — jeder Salt erfordert eine
+                komplett neue Tabelle.
               </div>
             </Fragment>
           </Slide>
         </Stack>
 
-        {/* 14. Angriffsmethoden */}
-        <Slide>
-          <h2>Angriffsmethoden</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Methode</th>
-                <th>Funktionsweise</th>
-                <th>Gegenmassnahme</th>
-              </tr>
-            </thead>
-            <tbody>
-              <Fragment as="tr" animation="fade-up">
-                <td>
-                  <strong>Brute-Force</strong>
-                </td>
-                <td>Alle Kombinationen</td>
-                <td>bcrypt / Argon2</td>
-              </Fragment>
-              <Fragment as="tr" animation="fade-up">
-                <td>
-                  <strong>Dictionary</strong>
-                </td>
-                <td>
-                  <code>rockyou.txt</code> testen
-                </td>
-                <td>Kein Wörterbuch-Passwort</td>
-              </Fragment>
-              <Fragment as="tr" animation="fade-up">
-                <td>
-                  <strong>Rainbow Tables</strong>
-                </td>
-                <td>Vorgefertigte Hash-Tabellen</td>
-                <td>Salting</td>
-              </Fragment>
-              <Fragment as="tr" animation="fade-up">
-                <td>
-                  <strong>Credential Stuffing</strong>
-                </td>
-                <td>Gestohlene Daten woanders testen</td>
-                <td>Einzigartiges PW pro Dienst</td>
-              </Fragment>
-              <Fragment as="tr" animation="fade-up">
-                <td>
-                  <strong>Phishing</strong>
-                </td>
-                <td>Nutzer gibt PW selbst preis</td>
-                <td>FIDO2 / Passkeys</td>
-              </Fragment>
-            </tbody>
-          </table>
-        </Slide>
-
-        {/* 15. 2FA — vertikal */}
+        {/* Stack: 2FA + TOTP */}
         <Stack>
           <Slide>
             <h2>Zwei-Faktor-Authentifizierung</h2>
@@ -753,7 +1013,7 @@ export default function GymPraesentationKrypto() {
           </Slide>
         </Stack>
 
-        {/* 16. FIDO2 & Passwortmanager — vertikal */}
+        {/* Stack: FIDO2 + Passwortmanager */}
         <Stack>
           <Slide>
             <h2>FIDO2 / Passkeys</h2>

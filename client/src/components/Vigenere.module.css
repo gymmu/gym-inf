@@ -8,6 +8,66 @@
   border-radius: 8px;
 }
 
+/* ── Input row ───────────────────────────────────────────── */
+
+.inputRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.inputLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.inputField {
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-gray);
+  border-radius: 5px;
+  color: var(--color-fg);
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 0.3rem 0.6rem;
+  width: 8rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.inputField:focus {
+  border-color: var(--color-yellow);
+}
+
+.inputPlus {
+  font-size: 1.2rem;
+  color: var(--color-gray);
+  padding-bottom: 0.3rem;
+}
+
+.cipherDisplay {
+  background: var(--color-bg);
+  border: 1.5px solid #6c5ce7;
+  border-radius: 5px;
+  color: #b8a9e8;
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 0.3rem 0.6rem;
+  min-width: 8rem;
+}
+
 /* ── Legend ──────────────────────────────────────────────── */
 
 .legend {
@@ -171,4 +231,32 @@
   opacity: 1;
   border-color: rgba(108, 92, 231, 0.8);
   font-size: 0.82rem;
+}
+
+/* Statische Beispiel-Hervorhebung — schwächer als Hover, bleibt auch beim Hover sichtbar */
+.cellExample {
+  background-color: rgba(108, 92, 231, 0.15) !important;
+  color: #b8a9e8 !important;
+  font-weight: 700;
+  opacity: 1 !important;
+  border-color: rgba(108, 92, 231, 0.3) !important;
+}
+
+/* Wenn Hover-Zelle aktiv ist, gewinnt cellActive über cellExample */
+.cellActive.cellExample {
+  background-color: rgba(108, 92, 231, 0.45) !important;
+  color: #d3b7ff !important;
+  font-weight: 900;
+  font-size: 0.82rem;
+  border-color: rgba(108, 92, 231, 0.8) !important;
+}
+
+.colHeaderExample {
+  background-color: rgba(9, 132, 227, 0.12) !important;
+  color: #74b9d8 !important;
+}
+
+.rowHeaderExample {
+  background-color: rgba(214, 48, 49, 0.12) !important;
+  color: #e07070 !important;
 }
