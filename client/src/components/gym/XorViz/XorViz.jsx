@@ -189,14 +189,25 @@ function fade(frame, start, dur = 15) {
 }
 
 // ─── SZENE 1: Text → ASCII → Bits ────────────────────────────
+// Alle Grossbuchstaben A–Z für die ASCII-Tabelle
+const ASCII_TABLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
+const PLAIN_SET = new Set(PLAIN.split(""))
+
 function Scene1({ frame }) {
   const local = frame - SCENE_START.s1
   const titleOp = fade(local, 0, 12)
 
-  const charDelay = 20
+  // Phase 1: ASCII-Tabelle erscheint
+  const tableOp = fade(local, 15, 20)
+
+  // Phase 2: HALLO-Buchstaben erscheinen unten mit Bits
+  const charDelay = 60
   const charStagger = 22
   const asciiDelay = charDelay + 5 * charStagger + 20
   const bitsDelay = asciiDelay + 40
+
+  // Tabelle: 13 Spalten × 2 Zeilen = 26 Einträge
+  const COLS = 13
 
   return (
     <AbsoluteFill
@@ -205,16 +216,78 @@ function Scene1({ frame }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
+        paddingTop: 58,
       }}>
       <Title op={titleOp}>Schritt 1 — Text wird zu Bits (ASCII)</Title>
 
+      {/* ── ASCII-Referenztabelle ── */}
+      <div
+        style={{
+          opacity: tableOp,
+          marginTop: 20,
+          display: "grid",
+          gridTemplateColumns: `repeat(${COLS}, 1fr)`,
+          gap: "4px 6px",
+          padding: "10px 16px",
+          background: C.bgL,
+          border: `1.5px solid ${C.bgLL}`,
+          borderRadius: 10,
+        }}>
+        {ASCII_TABLE_CHARS.map((ch) => {
+          const byte = ch.charCodeAt(0)
+          const isHallo = PLAIN_SET.has(ch)
+          const borderColor = isHallo ? C.yellow : C.bgLL
+          const textColor = isHallo ? C.yellow : C.gray
+          const numColor = isHallo ? C.orange : C.bgLL
+          const bg = isHallo ? "#2a2418" : C.bg
+
+          return (
+            <div
+              key={ch}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 1,
+                background: bg,
+                border: `1.5px solid ${borderColor}`,
+                borderRadius: 5,
+                padding: "3px 4px",
+                minWidth: 0,
+              }}>
+              <span
+                style={{
+                  fontFamily: "'Courier New', monospace",
+                  fontSize: 17,
+                  fontWeight: 700,
+                  color: textColor,
+                  lineHeight: 1,
+                }}>
+                {ch}
+              </span>
+              <span
+                style={{
+                  fontFamily: "'Courier New', monospace",
+                  fontSize: 12,
+                  fontWeight: 600,
+                  color: numColor,
+                  lineHeight: 1,
+                }}>
+                {byte}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* ── HALLO-Buchstaben mit Bits ── */}
       <div
         style={{
           display: "flex",
-          gap: 16,
+          gap: 12,
           alignItems: "flex-start",
-          marginTop: 20,
+          marginTop: 18,
         }}>
         {PLAIN.split("").map((ch, i) => {
           const byte = PLAIN_BYTES[i]
@@ -229,11 +302,11 @@ function Scene1({ frame }) {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: 8,
+                gap: 6,
               }}>
               {/* Buchstabe */}
               <div style={{ opacity: charOp }}>
-                <CharBox ch={ch} color={C.yellow} size={52} fontSize={26} />
+                <CharBox ch={ch} color={C.yellow} size={46} fontSize={23} />
               </div>
 
               {/* Pfeil + ASCII-Zahl */}
@@ -243,12 +316,12 @@ function Scene1({ frame }) {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  gap: 4,
+                  gap: 3,
                 }}>
                 <div
                   style={{
                     color: C.gray,
-                    fontSize: 14,
+                    fontSize: 13,
                     fontFamily: "sans-serif",
                   }}>
                   ↓
@@ -257,8 +330,8 @@ function Scene1({ frame }) {
                   style={{
                     background: C.bgL,
                     border: `2px solid ${C.orange}`,
-                    borderRadius: 6,
-                    padding: "5px 12px",
+                    borderRadius: 5,
+                    padding: "4px 10px",
                     fontFamily: "'Courier New', monospace",
                     fontSize: 15,
                     fontWeight: 700,
@@ -275,12 +348,12 @@ function Scene1({ frame }) {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  gap: 4,
+                  gap: 3,
                 }}>
                 <div
                   style={{
                     color: C.gray,
-                    fontSize: 14,
+                    fontSize: 13,
                     fontFamily: "sans-serif",
                   }}>
                   ↓

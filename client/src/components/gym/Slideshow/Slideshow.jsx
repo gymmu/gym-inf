@@ -105,7 +105,7 @@ export default function Slideshow({ title, children }) {
     transitionSpeed: "slow",
     center: true,
     // Larger virtual canvas — less aggressive downscaling for tall slides
-    width: 960,
+    width: 1200,
     height: 900,
     margin: 0.04,
     minScale: 0.1,

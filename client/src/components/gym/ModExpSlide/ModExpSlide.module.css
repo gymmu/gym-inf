@@ -1,0 +1,97 @@
+/* -- KaTeX helpers ------------------------------------------------------- */
+.inlineMath {
+  display: inline;
+}
+.displayMath {
+  margin: 0.15rem 0;
+  text-align: center;
+}
+
+/* -- root: single centered column --------------------------------------- */
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.95rem;
+}
+
+/* -- inputs row ---------------------------------------------------------- */
+.clockRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.8rem;
+}
+
+.clockInputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.clockLabel {
+  font-size: 0.6rem;
+  opacity: 0.5;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.clockInput {
+  font-family: monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.35rem 0.65rem;
+  border: 1.5px solid #504945;
+  border-radius: 5px;
+  background: transparent;
+  color: #ebdbb2;
+  width: 5.5rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+.clockInput:focus {
+  outline: none;
+  border-color: #fabd2f;
+}
+
+.clockOp {
+  font-size: 1.1rem;
+  color: #928374;
+  padding-bottom: 0.35rem;
+}
+
+.clockAnswer {
+  font-family: monospace;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fabd2f;
+  padding-bottom: 0.1rem;
+  min-width: 2rem;
+  text-align: center;
+}
+
+/* -- formula line -------------------------------------------------------- */
+.clockFormula {
+  font-size: 1rem;
+}
+
+/* -- clock SVG ----------------------------------------------------------- */
+.clockWrap {
+  display: flex;
+  justify-content: center;
+}
+
+.clockSvg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* -- caption ------------------------------------------------------------- */
+.caption {
+  font-size: 0.82rem;
+  color: #928374;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 38rem;
+}

@@ -1,0 +1,345 @@
+/* -- color tokens -------------------------------------------------------- */
+:root {
+  --c-alice: #83a598;
+  --c-bob: #d3869b;
+  --c-shared: #b8bb26;
+  --c-eve: #fb4934;
+  --c-secret: #fe8019;
+}
+
+/* -- root ---------------------------------------------------------------- */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 1rem;
+}
+
+/* -- KaTeX wrappers ------------------------------------------------------ */
+.inlineMath {
+  display: inline;
+  font-size: 1em;
+}
+
+.displayMath {
+  /* katex display block, tighten default margins */
+  margin: 0.1rem 0;
+  text-align: left;
+  font-size: 1em;
+}
+
+/* -- inputs -------------------------------------------------------------- */
+.inputs {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  padding: 0.55rem 0.8rem;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid #3c3836;
+  border-radius: 6px;
+}
+
+.inputDivider {
+  width: 1px;
+  align-self: stretch;
+  background: #504945;
+  margin: 0 0.25rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.inputMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.varName {
+  font-family: monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-fg, #ebdbb2);
+}
+
+.varDesc {
+  font-size: 0.67rem;
+  opacity: 0.55;
+  line-height: 1.2;
+}
+
+.input {
+  font-family: monospace;
+  font-size: 0.92rem;
+  padding: 0.3rem 0.55rem;
+  border: 1.5px solid #504945;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-fg, #ebdbb2);
+  width: 5.5rem;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #83a598;
+}
+
+.inputErr {
+  border-color: #fb4934 !important;
+}
+
+/* -- stale / overlay ----------------------------------------------------- */
+.resultWrapper {
+  position: relative;
+}
+
+.stale {
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: rgba(29, 32, 33, 0.9);
+  border: 1.5px solid rgba(251, 73, 52, 0.55);
+  border-radius: 6px;
+  color: #fb4934;
+  font-size: 0.82rem;
+  text-align: center;
+  pointer-events: none;
+  backdrop-filter: blur(3px);
+}
+
+.overlayIcon {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  border: 2px solid #fb4934;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+/* -- three-column flow --------------------------------------------------- */
+.flow {
+  display: grid;
+  grid-template-columns: 1fr 180px 1fr;
+  gap: 0.7rem;
+  align-items: stretch;
+}
+
+/* -- person boxes -------------------------------------------------------- */
+.person {
+  border-radius: 7px;
+  border: 1.5px solid #504945;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.aliceBox {
+  border-color: var(--c-alice);
+}
+.bobBox {
+  border-color: var(--c-bob);
+}
+
+.personHeader {
+  padding: 0.4rem 0.8rem;
+  font-weight: 800;
+  font-size: 1rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1.5px solid #3c3836;
+  letter-spacing: 0.05em;
+}
+
+.personBody {
+  padding: 0.65rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+/* -- sections inside person box ----------------------------------------- */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.secretSection {
+  background: rgba(254, 128, 25, 0.07);
+  border-left: 2.5px solid var(--c-secret);
+  padding: 0.25rem 0.4rem;
+  border-radius: 0 3px 3px 0;
+}
+
+.sharedSection {
+  background: rgba(184, 187, 38, 0.07);
+  border-left: 2.5px solid var(--c-shared);
+  padding: 0.25rem 0.4rem;
+  border-radius: 0 3px 3px 0;
+}
+
+.sectionLabel {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.65;
+  font-weight: 600;
+}
+
+.sectionValue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding-left: 0.1rem;
+}
+
+.divider {
+  height: 1px;
+  background: #3c3836;
+  margin: 0.1rem 0;
+}
+
+/* -- channel col --------------------------------------------------------- */
+.channel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  padding: 0.5rem 0.55rem;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px dashed #504945;
+  border-radius: 7px;
+}
+
+.channelTitle {
+  text-align: center;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.45;
+}
+
+.channelDivider {
+  height: 1px;
+  background: #3c3836;
+  flex-shrink: 0;
+}
+
+/* -- send blocks --------------------------------------------------------- */
+.sendBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.sendTag {
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.sendValue {
+  font-size: 0.85em;
+  text-align: center;
+}
+
+.arrowRow {
+  width: 100%;
+}
+
+.arrowSvg {
+  width: 100%;
+  height: 16px;
+  display: block;
+}
+
+/* -- Eve box ------------------------------------------------------------- */
+.eveBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.45rem 0.5rem;
+  background: rgba(251, 73, 52, 0.06);
+  border: 1px solid rgba(251, 73, 52, 0.3);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.eveTag {
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-eve);
+}
+
+.eveValues {
+  font-size: 0.78em;
+  line-height: 1.5;
+}
+
+.eveLock {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  color: var(--c-eve);
+  font-weight: 600;
+}
+
+/* -- result banner ------------------------------------------------------- */
+.result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0.6rem 1.2rem;
+  background: rgba(184, 187, 38, 0.08);
+  border: 1.5px solid rgba(184, 187, 38, 0.4);
+  border-radius: 6px;
+  margin-top: 0.2rem;
+  flex-wrap: wrap;
+}
+
+.resultLabel {
+  font-size: 0.82rem;
+  opacity: 0.8;
+}
+
+.sharedKey {
+  font-weight: 700;
+  color: var(--c-shared);
+  font-size: 1rem;
+}
+
+.resultNote {
+  opacity: 0.5;
+  font-size: 0.73rem;
+  font-style: italic;
+}

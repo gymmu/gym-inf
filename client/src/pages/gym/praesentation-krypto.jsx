@@ -18,11 +18,18 @@ import Vigenere from "@components/Vigenere"
 import VigenereViz from "@components/gym/VigenereViz/VigenereViz"
 import VigenereSteps from "@components/gym/VigenereSteps/VigenereSteps"
 import XorSteps from "@components/gym/XorSteps/XorSteps"
+import XorSlide from "@components/gym/XorSlide/XorSlide"
 import XorViz from "@components/gym/XorViz/XorViz"
+import AesViz from "@components/gym/AesViz/AesViz"
+import AesSlide from "@components/gym/AesSlide/AesSlide"
 import SignatureDiagram from "@components/gym/SignatureDiagram/SignatureDiagram"
 import TlsHandshake from "@components/gym/TlsHandshake/TlsHandshake"
 import DhColorAnalogy from "@components/gym/DhColorAnalogy/DhColorAnalogy"
 import DhSteps from "@components/gym/DhSteps/DhSteps"
+import DhSlide from "@components/gym/DhSlide/DhSlide"
+import ModExpSlide from "@components/gym/ModExpSlide/ModExpSlide"
+import DiscreteLogSlide from "@components/gym/DiscreteLogSlide/DiscreteLogSlide"
+import CommutativeExpSlide from "@components/gym/CommutativeExpSlide/CommutativeExpSlide"
 import PlainPasswordDatabase from "@components/PlainPasswordDatabase"
 import HashedPasswordDatabase from "@components/HashedPasswordDatabase"
 import SaltedPasswordDatabase from "@components/SaltedPasswordDatabase"
@@ -338,71 +345,75 @@ export default function GymPraesentationKrypto() {
               eine Nummer (ASCII):
             </Fragment>
             <Fragment animation="fade-up">
-              <div className="highlight-box">
-                <table
-                  style={{
-                    borderCollapse: "separate",
-                    borderSpacing: "1.2em 0.6em",
-                    margin: "0 auto",
-                  }}>
-                  <thead>
-                    <tr>
-                      <th
-                        style={{ color: "var(--color-fg)", textAlign: "left" }}>
-                        Zeichen
-                      </th>
-                      <th
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(7, 1fr)",
+                  gap: "4px 5px",
+                  padding: "10px 14px",
+                  background: "var(--color-bg-light, #3c3836)",
+                  border: "1.5px solid var(--color-bg-lighter, #504945)",
+                  borderRadius: 10,
+                  marginTop: "0.5em",
+                }}>
+                {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((ch) => {
+                  const byte = ch.charCodeAt(0)
+                  const bits = byte.toString(2).padStart(8, "0")
+                  const isHallo = "HALO".includes(ch)
+                  return (
+                    <div
+                      key={ch}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 1,
+                        background: isHallo
+                          ? "#2a2418"
+                          : "var(--color-bg, #1d2021)",
+                        border: `1.5px solid ${isHallo ? "#fabd2f" : "var(--color-bg-lighter, #504945)"}`,
+                        borderRadius: 5,
+                        padding: "3px 2px",
+                      }}>
+                      <span
                         style={{
-                          color: "var(--color-fg)",
-                          textAlign: "right",
+                          fontFamily: "'Courier New', monospace",
+                          fontSize: "1.1em",
+                          fontWeight: 700,
+                          color: isHallo
+                            ? "#fabd2f"
+                            : "var(--color-gray, #928374)",
+                          lineHeight: 1,
                         }}>
-                        Dezimal
-                      </th>
-                      <th
+                        {ch}
+                      </span>
+                      <span
                         style={{
-                          color: "var(--color-fg)",
-                          textAlign: "right",
+                          fontFamily: "'Courier New', monospace",
+                          fontSize: "0.8em",
+                          fontWeight: 600,
+                          color: isHallo
+                            ? "#fe8019"
+                            : "var(--color-bg-lighter, #504945)",
+                          lineHeight: 1,
                         }}>
-                        Binär
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <code>A</code>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <code>65</code>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <code>01000001</code>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <code>H</code>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <code>72</code>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <code>01001000</code>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <code>!</code>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <code>33</code>
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <code>00100001</code>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        {byte}
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: "'Courier New', monospace",
+                          fontSize: "0.7em",
+                          fontWeight: 500,
+                          color: isHallo
+                            ? "#b8bb26"
+                            : "var(--color-bg-lighter, #504945)",
+                          lineHeight: 1,
+                        }}>
+                        {bits}
+                      </span>
+                    </div>
+                  )
+                })}
               </div>
             </Fragment>
             <Fragment as="p" animation="fade-up" style={{ marginTop: "0.6em" }}>
@@ -410,36 +421,394 @@ export default function GymPraesentationKrypto() {
               Binärdaten umgewandelt werden.
             </Fragment>
           </Slide>
+          {/* Folie 1: XOR-Tabelle — nur Resultate */}
           <Slide>
             <h2>XOR-Verknüpfung</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.8em" }}>
+              XOR (⊕) — wie Addition ohne Übertrag: gleiche Bits → 0,
+              verschiedene Bits → 1
+            </p>
+            <table
+              style={{
+                borderCollapse: "collapse",
+                fontSize: "1.15em",
+                margin: "0 auto",
+                textAlign: "center",
+                tableLayout: "fixed",
+                width: "28em",
+              }}>
+              <colgroup>
+                <col style={{ width: "8em" }} />
+                <col style={{ width: "10em" }} />
+                <col style={{ width: "10em" }} />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      padding: "0.5em 1.2em",
+                      textAlign: "center",
+                      borderBottom: "3px solid #ebdbb2",
+                      borderRight: "3px solid #ebdbb2",
+                      color: "#928374",
+                      fontFamily: "monospace",
+                    }}>
+                    A ⊕ B
+                  </th>
+                  <th
+                    style={{
+                      padding: "0.5em 1.2em",
+                      textAlign: "center",
+                      borderBottom: "3px solid #ebdbb2",
+                      color: "#83a598",
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                    }}>
+                    B = 0
+                  </th>
+                  <th
+                    style={{
+                      padding: "0.5em 1.2em",
+                      textAlign: "center",
+                      borderBottom: "3px solid #ebdbb2",
+                      color: "#83a598",
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                    }}>
+                    B = 1
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style={{ height: "3.5em" }}>
+                  <td
+                    style={{
+                      padding: "0.6em 1.2em",
+                      verticalAlign: "middle",
+                      borderRight: "3px solid #ebdbb2",
+                      color: "#83a598",
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                    }}>
+                    A = 0
+                  </td>
+                  <td
+                    style={{
+                      padding: "0.6em 1.2em",
+                      verticalAlign: "middle",
+                      fontFamily: "monospace",
+                      fontSize: "1.3em",
+                      fontWeight: 700,
+                      color: "#b8bb26",
+                    }}>
+                    0
+                  </td>
+                  <td
+                    style={{
+                      padding: "0.6em 1.2em",
+                      verticalAlign: "middle",
+                      fontFamily: "monospace",
+                      fontSize: "1.3em",
+                      fontWeight: 700,
+                      color: "#b8bb26",
+                    }}>
+                    1
+                  </td>
+                </tr>
+                <tr style={{ height: "3.5em" }}>
+                  <td
+                    style={{
+                      padding: "0.6em 1.2em",
+                      verticalAlign: "middle",
+                      borderRight: "3px solid #ebdbb2",
+                      color: "#83a598",
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                    }}>
+                    A = 1
+                  </td>
+                  <td
+                    style={{
+                      padding: "0.6em 1.2em",
+                      verticalAlign: "middle",
+                      fontFamily: "monospace",
+                      fontSize: "1.3em",
+                      fontWeight: 700,
+                      color: "#b8bb26",
+                    }}>
+                    1
+                  </td>
+                  <td
+                    style={{
+                      padding: "0.6em 1.2em",
+                      verticalAlign: "middle",
+                      fontFamily: "monospace",
+                      fontSize: "1.3em",
+                      fontWeight: 700,
+                      color: "#b8bb26",
+                    }}>
+                    0
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </Slide>
+
+          {/* Folie 2: XOR-Tabelle — mit Operation in jeder Zelle */}
+          <Slide>
+            <h2>XOR-Verknüpfung</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.8em" }}>
+              XOR (⊕) — wie Addition ohne Übertrag: gleiche Bits → 0,
+              verschiedene Bits → 1
+            </p>
+            <table
+              style={{
+                borderCollapse: "collapse",
+                fontSize: "1.15em",
+                margin: "0 auto",
+                textAlign: "center",
+                tableLayout: "fixed",
+                width: "28em",
+              }}>
+              <colgroup>
+                <col style={{ width: "8em" }} />
+                <col style={{ width: "10em" }} />
+                <col style={{ width: "10em" }} />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      padding: "0.5em 1.2em",
+                      textAlign: "center",
+                      borderBottom: "3px solid #ebdbb2",
+                      borderRight: "3px solid #ebdbb2",
+                      color: "#928374",
+                      fontFamily: "monospace",
+                    }}>
+                    A ⊕ B
+                  </th>
+                  <th
+                    style={{
+                      padding: "0.5em 1.2em",
+                      textAlign: "center",
+                      borderBottom: "3px solid #ebdbb2",
+                      color: "#83a598",
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                    }}>
+                    B = 0
+                  </th>
+                  <th
+                    style={{
+                      padding: "0.5em 1.2em",
+                      textAlign: "center",
+                      borderBottom: "3px solid #ebdbb2",
+                      color: "#83a598",
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                    }}>
+                    B = 1
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style={{ height: "3.5em" }}>
+                  <td
+                    style={{
+                      padding: "0.6em 1.2em",
+                      verticalAlign: "middle",
+                      borderRight: "3px solid #ebdbb2",
+                      color: "#83a598",
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                    }}>
+                    A = 0
+                  </td>
+                  <td
+                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}>
+                    <span
+                      style={{
+                        fontFamily: "monospace",
+                        color: "#928374",
+                        fontSize: "0.85em",
+                      }}>
+                      0 ⊕ 0 ={" "}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "monospace",
+                        fontSize: "1.2em",
+                        fontWeight: 700,
+                        color: "#b8bb26",
+                      }}>
+                      0
+                    </span>
+                  </td>
+                  <td
+                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}>
+                    <span
+                      style={{
+                        fontFamily: "monospace",
+                        color: "#928374",
+                        fontSize: "0.85em",
+                      }}>
+                      0 ⊕ 1 ={" "}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "monospace",
+                        fontSize: "1.2em",
+                        fontWeight: 700,
+                        color: "#b8bb26",
+                      }}>
+                      1
+                    </span>
+                  </td>
+                </tr>
+                <tr style={{ height: "3.5em" }}>
+                  <td
+                    style={{
+                      padding: "0.6em 1.2em",
+                      verticalAlign: "middle",
+                      borderRight: "3px solid #ebdbb2",
+                      color: "#83a598",
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                    }}>
+                    A = 1
+                  </td>
+                  <td
+                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}>
+                    <span
+                      style={{
+                        fontFamily: "monospace",
+                        color: "#928374",
+                        fontSize: "0.85em",
+                      }}>
+                      1 ⊕ 0 ={" "}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "monospace",
+                        fontSize: "1.2em",
+                        fontWeight: 700,
+                        color: "#b8bb26",
+                      }}>
+                      1
+                    </span>
+                  </td>
+                  <td
+                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}>
+                    <span
+                      style={{
+                        fontFamily: "monospace",
+                        color: "#928374",
+                        fontSize: "0.85em",
+                      }}>
+                      1 ⊕ 1 ={" "}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "monospace",
+                        fontSize: "1.2em",
+                        fontWeight: 700,
+                        color: "#b8bb26",
+                      }}>
+                      0
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </Slide>
+
+          {/* Folie 3: XOR interaktiv (folientauglich) */}
+          <Slide>
+            <h2>XOR — Text zu Bits und Verschlüsselung</h2>
+            <XorSlide defaultPlain="HALLO" defaultKey="key" />
+          </Slide>
+
+          {/* Folie 5: Von XOR zu AES */}
+          <Slide>
+            <h2>Von XOR zu AES</h2>
             <Fragment as="p" animation="fade-up">
-              XOR (⊕): 0⊕0=0 · 0⊕1=1 · 1⊕0=1 · 1⊕1=0
+              XOR allein ist unsicher — bei bekanntem Klartext lässt sich der
+              Schlüssel direkt ableiten.
             </Fragment>
             <Fragment animation="fade-up">
-              <div className="highlight-box">
-                <code>01001000 ⊕ 10110011 = 11111011</code> (verschlüsselt)
+              <div className="info-box">
+                <strong>AES</strong> kombiniert XOR mit weiteren Operationen
+                über 10–14 Runden:
               </div>
             </Fragment>
             <Fragment animation="fade-up">
-              <div className="highlight-box" style={{ marginTop: "0.4em" }}>
-                <code>11111011 ⊕ 10110011 = 01001000</code> (entschlüsselt)
-              </div>
+              <table style={{ marginTop: "0.5em" }}>
+                <tbody>
+                  <tr>
+                    <td>
+                      <strong>SubBytes</strong>
+                    </td>
+                    <td>
+                      Jedes Byte wird durch eine fixe Tabelle (S-Box) ersetzt
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>ShiftRows</strong>
+                    </td>
+                    <td>
+                      Zeilen der 4×4-Byte-Matrix werden zyklisch verschoben
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>MixColumns</strong>
+                    </td>
+                    <td>
+                      Spalten werden mit einer Matrizen-Multiplikation gemischt
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>AddRoundKey</strong>
+                    </td>
+                    <td>
+                      XOR mit dem Rundenschlüssel — hier kommt XOR zum Einsatz
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </Fragment>
             <Fragment animation="fade-up">
-              <div className="info-box" style={{ marginTop: "0.6em" }}>
-                <strong>AES</strong> baut auf XOR auf, kombiniert es aber mit
-                Substitution und Permutation über mehrere Runden.
-                Schlüssellänge: 128 oder 256 Bit.
+              <div className="highlight-box" style={{ marginTop: "0.5em" }}>
+                Schlüssellänge 128 Bit → 2<sup>128</sup> mögliche Schlüssel —
+                praktisch unknackbar
               </div>
             </Fragment>
           </Slide>
+        </Stack>
+
+        {/* Stack: AES */}
+        <Stack>
+          {/* Folie 7: AES — Visualisierung */}
           <Slide>
-            <h2>XOR — interaktiv</h2>
-            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
-              Gib Text und Schlüssel ein — sieh die XOR-Verschlüsselung Bit für
-              Bit:
+            <h2>AES — Wie funktioniert es?</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.6em" }}>
+              AES verschlüsselt in 10 Runden — jede Runde kombiniert vier
+              Operationen:
             </p>
-            <XorSteps />
+            <AesViz />
+          </Slide>
+
+          {/* Folie 8: AES — eine Runde interaktiv */}
+          <Slide>
+            <h2>AES — eine Runde Schritt für Schritt</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.6em" }}>
+              Verfolge, wie sich die 16 Bytes durch SubBytes, ShiftRows,
+              MixColumns und AddRoundKey verändern:
+            </p>
+            <AesSlide />
           </Slide>
         </Stack>
 
@@ -680,64 +1049,33 @@ export default function GymPraesentationKrypto() {
           </Slide>
         </Stack>
 
-        {/* Stack: Mathematik + Interaktiver Simulator */}
+        {/* Stack: Mathematik + Diskreter Logarithmus + Interaktiver Simulator */}
         <Stack>
           <Slide>
             <h2>Die Mathematik: Modulare Potenzierung</h2>
-            <Fragment as="p" animation="fade-up">
-              Die <strong>Modulo-Operation</strong> ist der Rest einer
-              ganzzahligen Division:
-            </Fragment>
-            <Fragment animation="fade-up">
-              <div className="highlight-box">
-                <code>17 mod 5 = 2</code> &nbsp;·&nbsp;{" "}
-                <code>5⁶ mod 23 = 8</code>
-              </div>
-            </Fragment>
-            <Fragment animation="fade-up">
-              <table style={{ marginTop: "0.6em" }}>
-                <thead>
-                  <tr>
-                    <th>Schritt</th>
-                    <th>Alice</th>
-                    <th>Bob</th>
-                    <th>Öffentlich</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td colSpan={2} style={{ textAlign: "center" }}>
-                      Einigen sich auf <strong>p</strong> (Primzahl) und{" "}
-                      <strong>g</strong> (Generator)
-                    </td>
-                    <td>p, g</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>
-                      Geheim <strong>a</strong>, sendet A = gᵃ mod p
-                    </td>
-                    <td>
-                      Geheim <strong>b</strong>, sendet B = gᵇ mod p
-                    </td>
-                    <td>A, B</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>S = Bᵃ mod p</td>
-                    <td>S = Aᵇ mod p</td>
-                    <td>—</td>
-                  </tr>
-                </tbody>
-              </table>
-            </Fragment>
-            <Fragment animation="fade-up">
-              <div className="highlight-box" style={{ marginTop: "0.4em" }}>
-                <strong>Diskreter Logarithmus:</strong> Aus A und p das a zu
-                berechnen ist bei 2048-Bit-Zahlen praktisch unlösbar.
-              </div>
-            </Fragment>
+            <p style={{ fontSize: "0.82em", marginBottom: "0.6em" }}>
+              Modulo ist der Rest einer Division — wie ein Uhrzeiger, der nach{" "}
+              <em>m</em> Schritten wieder bei 0 beginnt.
+            </p>
+            <ModExpSlide />
+          </Slide>
+          <Slide>
+            <h2>Diskreter Logarithmus — warum schwer?</h2>
+            <p style={{ fontSize: "0.82em", marginBottom: "0.6em" }}>
+              Vorwaerts (Potenz berechnen) ist trivial. Rueckwaerts (Exponent
+              finden) hat kein Muster — und wird mit grossen Zahlen praktisch
+              unmoeglich.
+            </p>
+            <DiscreteLogSlide />
+          </Slide>
+          <Slide>
+            <h2>Warum funktioniert der Schlüsselaustausch?</h2>
+            <p style={{ fontSize: "0.82em", marginBottom: "0.6em" }}>
+              Alice und Bob landen beim selben Schlüssel, weil{" "}
+              <strong>(g^a)^b = g^(ab) = (g^b)^a</strong> — die Reihenfolge der
+              Exponenten spielt keine Rolle.
+            </p>
+            <CommutativeExpSlide />
           </Slide>
           <Slide>
             <h2>Diffie-Hellman — interaktiv</h2>
@@ -745,7 +1083,7 @@ export default function GymPraesentationKrypto() {
               Wähle eigene Werte für p, g, a, b — und sieh den
               Schlüsselaustausch in Echtzeit:
             </p>
-            <DhSteps />
+            <DhSlide />
           </Slide>
         </Stack>
 
