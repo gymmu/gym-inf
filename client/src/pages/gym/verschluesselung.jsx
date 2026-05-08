@@ -1,12 +1,23 @@
 import Caesar from "@components/Caesar"
+import CaesarIntro from "@components/gym/CaesarIntro/CaesarIntro"
 import DataTable from "@components/DataTable/DataTable"
+import {
+  KeyspaceCaesar,
+  KeyspaceBruteForce,
+  KeyspaceBars,
+} from "@components/gym/KeyspaceViz/KeyspaceViz"
+import VigenereViz from "@components/gym/VigenereViz/VigenereViz"
+import VigenereSteps from "@components/gym/VigenereSteps/VigenereSteps"
+import Vigenere from "@components/Vigenere"
+import XorViz from "@components/gym/XorViz/XorViz"
+import XorSlide from "@components/gym/XorSlide/XorSlide"
+import XorSteps from "@components/gym/XorSteps/XorSteps"
+import AesViz from "@components/gym/AesViz/AesViz"
+import AesSlide from "@components/gym/AesSlide/AesSlide"
 import SignatureDiagram from "@components/gym/SignatureDiagram/SignatureDiagram"
 import TlsHandshake from "@components/gym/TlsHandshake/TlsHandshake"
-import VigenereSteps from "@components/gym/VigenereSteps/VigenereSteps"
-import XorSteps from "@components/gym/XorSteps/XorSteps"
 import LearningGoals from "@components/LearningGoals.jsx"
 import Section from "@components/Section.jsx"
-import Vigenere from "@components/Vigenere"
 
 export default function GymVerschluesselung() {
   return (
@@ -43,8 +54,8 @@ export default function GymVerschluesselung() {
             XOR-Verschlüsselung bedeutet.
           </li>
           <li>
-            Sie wissen, dass AES auf dem XOR-Prinzip aufbaut und warum es sicher
-            ist.
+            Sie wissen, wie AES auf dem XOR-Prinzip aufbaut, und kennen die vier
+            Operationen einer AES-Runde.
           </li>
           <li>
             Sie kennen den Unterschied zwischen symmetrischer und asymmetrischer
@@ -72,6 +83,12 @@ export default function GymVerschluesselung() {
           Sender und Empfänger kennen die Verschiebung — das ist der Schlüssel.
           Wer die Verschiebung nicht kennt, sieht eine sinnlose Buchstabenfolge.
         </p>
+        <CaesarIntro />
+        <h3>Interaktiv ausprobieren</h3>
+        <p>
+          Verschiebe das Alphabet und beobachte, wie sich der Klartext in
+          Geheimtext verwandelt:
+        </p>
         <Caesar />
       </section>
 
@@ -83,31 +100,19 @@ export default function GymVerschluesselung() {
           Schlüssel. Beim Caesar-Verfahren gibt es genau{" "}
           <strong>26 mögliche Verschiebungen</strong> (0 bis 25).
         </p>
+        <KeyspaceCaesar />
         <p>
           Eine <strong>Brute-Force-Attacke</strong> probiert systematisch alle
           Schlüssel durch. Bei Caesar reichen 26 Versuche — auch von Hand
           lösbar. Ein Computer schafft das in Nanosekunden.
         </p>
-        <DataTable
-          caption="Schlüsselräume im Vergleich"
-          headers={["Verfahren", "Schlüsselraum", "Brute-Force-Aufwand"]}
-          rows={[
-            ["Caesar", "26", "Sofort — auch von Hand"],
-            ["Vigenère (4-Buchstaben-Wort)", "26⁴ ≈ 460'000", "Sekunden"],
-            [
-              "Vigenère (10-Buchstaben-Wort)",
-              "26¹⁰ ≈ 1.4 × 10¹⁴",
-              "Stunden bis Tage",
-            ],
-            ["AES-128", "2¹²⁸ ≈ 3.4 × 10³⁸", "Praktisch unmöglich"],
-            ["AES-256", "2²⁵⁶ ≈ 1.2 × 10⁷⁷", "Auch mit Quantencomputer sicher"],
-          ]}
-        />
+        <KeyspaceBruteForce />
         <p>
           Der Schlüsselraum muss gross genug sein, damit ein Angreifer — selbst
           mit schnellen Computern — nicht alle Möglichkeiten durchprobieren
-          kann. Heute gilt: mindestens 2¹²⁸ mögliche Schlüssel.
+          kann. Heute gilt: mindestens 2<sup>128</sup> mögliche Schlüssel.
         </p>
+        <KeyspaceBars />
         <p>
           Neben reiner Brute-Force gibt es auch{" "}
           <strong>gezielte Angriffe</strong>: Im Deutschen kommen die Buchstaben{" "}
@@ -129,16 +134,17 @@ export default function GymVerschluesselung() {
           des Schlüsselworts gibt eine Verschiebung vor (a=0, b=1, … z=25). Das
           Schlüsselwort wird zyklisch wiederholt.
         </p>
+        <VigenereViz />
         <p>
           Der Schlüsselraum wächst: Mit einem Schlüsselwort der Länge <em>n</em>{" "}
           gibt es 26<sup>n</sup> mögliche Schlüssel.
         </p>
 
-        <h3>Widget: Mehrstufiges Caesar-Verfahren</h3>
+        <h3>Schrittweise verschlüsseln</h3>
         <p>Hier sehen Sie, wie jeder Buchstabe einzeln verschoben wird:</p>
         <VigenereSteps />
 
-        <h3>Widget: Das Vigenère-Quadrat</h3>
+        <h3>Das Vigenère-Quadrat</h3>
         <p>
           Alternativ kann man das Vigenère-Quadrat verwenden: Zeile =
           Schlüsselbuchstabe, Spalte = Klartextbuchstabe, Schnittpunkt =
@@ -163,8 +169,66 @@ export default function GymVerschluesselung() {
           <strong>XOR-Verfahren</strong> anwenden — eine der fundamentalen
           Operationen in der modernen Kryptographie und das Herzstück von AES.
         </p>
+        <XorViz />
+
+        <h3>Text zu Bits und Verschlüsselung — interaktiv</h3>
+        <p>
+          Gib Klartext und Schlüssel ein — sieh, wie jedes Zeichen Schritt für
+          Schritt in Bits umgewandelt und dann mit XOR verschlüsselt wird:
+        </p>
+        <XorSlide defaultPlain="HALLO" defaultKey="key" />
+
+        <h3>Schriftliches Nachrechnen</h3>
+        <p>
+          Hier kannst du die einzelnen XOR-Operationen auf Bit-Ebene
+          nachvollziehen:
+        </p>
         <XorSteps />
       </section>
+
+      {/* ─── AES ──────────────────────────────────────────────────── */}
+
+      <Section>
+        <h2>Von XOR zu AES</h2>
+        <p>
+          XOR allein ist unsicher — bei bekanntem Klartext lässt sich der
+          Schlüssel direkt ableiten. <strong>AES</strong> (Advanced Encryption
+          Standard) kombiniert XOR mit weiteren Operationen in 10–14 Runden:
+        </p>
+        <DataTable
+          headers={["Operation", "Beschreibung"]}
+          rows={[
+            [
+              "SubBytes",
+              "Jedes Byte wird durch eine fixe Tabelle (S-Box) ersetzt",
+            ],
+            [
+              "ShiftRows",
+              "Zeilen der 4×4-Byte-Matrix werden zyklisch verschoben",
+            ],
+            [
+              "MixColumns",
+              "Spalten werden mit einer Matrizenmultiplikation gemischt",
+            ],
+            [
+              "AddRoundKey",
+              "XOR mit dem Rundenschlüssel — hier kommt XOR zum Einsatz",
+            ],
+          ]}
+        />
+        <p>
+          Schlüssellänge 128 Bit → 2<sup>128</sup> mögliche Schlüssel —
+          praktisch unknackbar, selbst für die schnellsten Supercomputer.
+        </p>
+        <AesViz />
+
+        <h3>Eine AES-Runde — Schritt für Schritt</h3>
+        <p>
+          Verfolge, wie sich die 16 Bytes durch SubBytes, ShiftRows, MixColumns
+          und AddRoundKey verändern:
+        </p>
+        <AesSlide />
+      </Section>
 
       {/* ─── MODERNE KRYPTOGRAPHIE ──────────────────────────────── */}
 

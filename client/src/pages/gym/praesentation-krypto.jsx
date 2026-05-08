@@ -9,10 +9,8 @@ import Caesar from "@components/Caesar"
 import CaesarIntro from "@components/gym/CaesarIntro/CaesarIntro"
 import {
   KeyspaceCaesar,
-  KeyspaceVigenere,
   KeyspaceBruteForce,
   KeyspaceBars,
-  KeyspaceTimes,
 } from "@components/gym/KeyspaceViz/KeyspaceViz"
 import Vigenere from "@components/Vigenere"
 import VigenereViz from "@components/gym/VigenereViz/VigenereViz"
@@ -30,6 +28,7 @@ import DhSlide from "@components/gym/DhSlide/DhSlide"
 import ModExpSlide from "@components/gym/ModExpSlide/ModExpSlide"
 import DiscreteLogSlide from "@components/gym/DiscreteLogSlide/DiscreteLogSlide"
 import CommutativeExpSlide from "@components/gym/CommutativeExpSlide/CommutativeExpSlide"
+import KeyExchangeMotivationSlide from "@components/gym/KeyExchangeMotivationSlide/KeyExchangeMotivationSlide"
 import PlainPasswordDatabase from "@components/PlainPasswordDatabase"
 import HashedPasswordDatabase from "@components/HashedPasswordDatabase"
 import SaltedPasswordDatabase from "@components/SaltedPasswordDatabase"
@@ -53,7 +52,7 @@ export default function GymPraesentationKrypto() {
         <Slide className="title-slide" transition="zoom">
           <h1>Kryptographie, Schlüsselaustausch &amp; Passwörter</h1>
           <Fragment as="p" animation="fade-up">
-            Von Caesar bis AES, von Diffie-Hellman bis FIDO2.
+            Von Caesar bis AES, von Diffie-Hellman bis Passwoertern.
           </Fragment>
           <hr />
           <div className="cols" style={{ marginTop: "0.8em" }}>
@@ -77,10 +76,10 @@ export default function GymPraesentationKrypto() {
                   <strong>Block B — Schlüsselaustausch</strong>
                 </p>
                 <ul>
-                  <li>Diffie-Hellman-Protokoll</li>
+                  <li>Das Schlüsselaustausch-Problem</li>
+                  <li>Modulare Potenzierung</li>
                   <li>Diskreter Logarithmus</li>
-                  <li>Man-in-the-Middle &amp; ECDHE</li>
-                  <li>Perfect Forward Secrecy</li>
+                  <li>Diffie-Hellman interaktiv</li>
                 </ul>
               </div>
             </Fragment>
@@ -92,7 +91,7 @@ export default function GymPraesentationKrypto() {
                 <ul>
                   <li>Hashing &amp; Salting</li>
                   <li>Angriffsmethoden</li>
-                  <li>2FA &amp; FIDO2</li>
+                  <li>Zwei-Faktor-Authentifizierung</li>
                   <li>Passwortmanager</li>
                 </ul>
               </div>
@@ -104,108 +103,43 @@ export default function GymPraesentationKrypto() {
             BLOCK A — VERSCHLÜSSELUNG
             ══════════════════════════════════════════════════════ */}
 
-        {/* Stack: Caesar + Schlüsselraum */}
+        {/* Stack: Caesar + Schluesselraum */}
         <Stack>
           <Slide>
             <CaesarIntro />
           </Slide>
           <Slide>
-            <h2>Das Caesar-Verfahren</h2>
-            <Fragment as="p" animation="fade-up">
-              Jeder Buchstabe wird um eine feste Anzahl Stellen verschoben.
-            </Fragment>
-            <Fragment animation="fade-up">
-              <div className="highlight-box">
-                <p>Schlüssel 3:</p>
-                <p>
-                  <strong>A → D</strong>
-                </p>
-                <p>
-                  <strong>B → E</strong>
-                </p>
-                <p>
-                  <strong>H → K</strong>
-                </p>
-                <p>
-                  <strong>HALLO → KDOOR</strong>
-                </p>
-              </div>
-            </Fragment>
-            <Fragment as="p" animation="fade-up" style={{ marginTop: "0.6em" }}>
-              Sender und Empfänger kennen die Verschiebung — das ist der
-              Schlüssel.
-            </Fragment>
-          </Slide>
-          <Slide>
             <h2>Caesar — interaktiv</h2>
             <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
-              Verschiebe das Alphabet und beobachte die Verschlüsselung live:
+              Verschiebe das Alphabet und beobachte die Verschluesselung live:
             </p>
             <Caesar />
           </Slide>
           <Slide>
-            <h2>Schlüsselraum — was ist das?</h2>
+            <h2>Schluesselraum — was ist das?</h2>
             <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
-              Der <strong>Schlüsselraum</strong> ist die Menge aller möglichen
-              Schlüssel. Bei Caesar: alle 26 Verschiebungen.
+              Der <strong>Schluesselraum</strong> ist die Menge aller moeglichen
+              Schluessel. Bei Caesar: alle 26 Verschiebungen.
             </p>
             <KeyspaceCaesar />
           </Slide>
           <Slide>
-            <h2>Schlüsselraum — Vigenère</h2>
-            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
-              Bei Vigenère wächst der Schlüsselraum mit jedem Buchstaben des
-              Schlüsselworts um Faktor 26.
-            </p>
-            <KeyspaceVigenere />
-          </Slide>
-          <Slide>
             <h2>Brute-Force</h2>
             <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
-              Ein Angreifer probiert einfach alle Schlüssel durch — bei Caesar
-              dauert das Millisekunden.
+              Ein Angreifer probiert einfach alle Schluessel durch — bei Caesar
+              dauert das Millisekunden. Ein grosser Schluesselraum macht das
+              unpraktikabel.
             </p>
             <KeyspaceBruteForce />
           </Slide>
           <Slide>
-            <h2>Schlüsselräume im Vergleich</h2>
+            <h2>Schluesselraeume im Vergleich</h2>
+            <p style={{ fontSize: "0.85em", marginBottom: "0.4em" }}>
+              Je groesser der Schluesselraum, desto mehr Versuche braucht ein
+              Angreifer — bei 2<sup>128</sup> Moeglichkeiten ist selbst der
+              schnellste Computer chancenlos.
+            </p>
             <KeyspaceBars />
-          </Slide>
-          <Slide>
-            <h2>Wie lange dauert Brute-Force?</h2>
-            <KeyspaceTimes />
-          </Slide>
-          <Slide>
-            <h2>Schutz vor Brute-Force: ein riesiger Schlüsselraum</h2>
-            <Fragment as="p" animation="fade-up">
-              Je grösser der Schlüsselraum, desto mehr Versuche braucht ein
-              Angreifer — bei{" "}
-              <strong>
-                2<sup>128</sup>
-              </strong>{" "}
-              Möglichkeiten ist selbst der schnellste Computer chancenlos.
-            </Fragment>
-            <Fragment animation="fade-up">
-              <div className="highlight-box">
-                Ein moderner Computer schafft ~10<sup>12</sup> Versuche pro
-                Sekunde. Um 2<sup>128</sup> Schlüssel zu testen, bräuchte er
-                länger als das Universum alt ist.
-              </div>
-            </Fragment>
-            <Fragment animation="fade-up">
-              <div className="warning-box" style={{ marginTop: "0.6em" }}>
-                <strong>Aber:</strong> Ein grosser Schlüsselraum nützt nichts,
-                wenn der Schlüssel schlecht gewählt ist. Wer <em>«password»</em>{" "}
-                oder seinen Geburtstag als Schlüssel nimmt, schrumpft den
-                effektiven Schlüsselraum auf wenige Tausend Möglichkeiten — egal
-                wie gross er theoretisch wäre.
-                <br />
-                <strong>
-                  Der Schlüssel muss zufällig und gleichmässig aus dem gesamten
-                  Raum gewählt werden.
-                </strong>
-              </div>
-            </Fragment>
           </Slide>
         </Stack>
 
@@ -421,140 +355,7 @@ export default function GymPraesentationKrypto() {
               Binärdaten umgewandelt werden.
             </Fragment>
           </Slide>
-          {/* Folie 1: XOR-Tabelle — nur Resultate */}
-          <Slide>
-            <h2>XOR-Verknüpfung</h2>
-            <p style={{ fontSize: "0.85em", marginBottom: "0.8em" }}>
-              XOR (⊕) — wie Addition ohne Übertrag: gleiche Bits → 0,
-              verschiedene Bits → 1
-            </p>
-            <table
-              style={{
-                borderCollapse: "collapse",
-                fontSize: "1.15em",
-                margin: "0 auto",
-                textAlign: "center",
-                tableLayout: "fixed",
-                width: "28em",
-              }}>
-              <colgroup>
-                <col style={{ width: "8em" }} />
-                <col style={{ width: "10em" }} />
-                <col style={{ width: "10em" }} />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th
-                    style={{
-                      padding: "0.5em 1.2em",
-                      textAlign: "center",
-                      borderBottom: "3px solid #ebdbb2",
-                      borderRight: "3px solid #ebdbb2",
-                      color: "#928374",
-                      fontFamily: "monospace",
-                    }}>
-                    A ⊕ B
-                  </th>
-                  <th
-                    style={{
-                      padding: "0.5em 1.2em",
-                      textAlign: "center",
-                      borderBottom: "3px solid #ebdbb2",
-                      color: "#83a598",
-                      fontFamily: "monospace",
-                      fontWeight: 700,
-                    }}>
-                    B = 0
-                  </th>
-                  <th
-                    style={{
-                      padding: "0.5em 1.2em",
-                      textAlign: "center",
-                      borderBottom: "3px solid #ebdbb2",
-                      color: "#83a598",
-                      fontFamily: "monospace",
-                      fontWeight: 700,
-                    }}>
-                    B = 1
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style={{ height: "3.5em" }}>
-                  <td
-                    style={{
-                      padding: "0.6em 1.2em",
-                      verticalAlign: "middle",
-                      borderRight: "3px solid #ebdbb2",
-                      color: "#83a598",
-                      fontFamily: "monospace",
-                      fontWeight: 700,
-                    }}>
-                    A = 0
-                  </td>
-                  <td
-                    style={{
-                      padding: "0.6em 1.2em",
-                      verticalAlign: "middle",
-                      fontFamily: "monospace",
-                      fontSize: "1.3em",
-                      fontWeight: 700,
-                      color: "#b8bb26",
-                    }}>
-                    0
-                  </td>
-                  <td
-                    style={{
-                      padding: "0.6em 1.2em",
-                      verticalAlign: "middle",
-                      fontFamily: "monospace",
-                      fontSize: "1.3em",
-                      fontWeight: 700,
-                      color: "#b8bb26",
-                    }}>
-                    1
-                  </td>
-                </tr>
-                <tr style={{ height: "3.5em" }}>
-                  <td
-                    style={{
-                      padding: "0.6em 1.2em",
-                      verticalAlign: "middle",
-                      borderRight: "3px solid #ebdbb2",
-                      color: "#83a598",
-                      fontFamily: "monospace",
-                      fontWeight: 700,
-                    }}>
-                    A = 1
-                  </td>
-                  <td
-                    style={{
-                      padding: "0.6em 1.2em",
-                      verticalAlign: "middle",
-                      fontFamily: "monospace",
-                      fontSize: "1.3em",
-                      fontWeight: 700,
-                      color: "#b8bb26",
-                    }}>
-                    1
-                  </td>
-                  <td
-                    style={{
-                      padding: "0.6em 1.2em",
-                      verticalAlign: "middle",
-                      fontFamily: "monospace",
-                      fontSize: "1.3em",
-                      fontWeight: 700,
-                      color: "#b8bb26",
-                    }}>
-                    0
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </Slide>
-
-          {/* Folie 2: XOR-Tabelle — mit Operation in jeder Zelle */}
+          {/* Folie: XOR-Tabelle */}
           <Slide>
             <h2>XOR-Verknüpfung</h2>
             <p style={{ fontSize: "0.85em", marginBottom: "0.8em" }}>
@@ -1049,8 +850,17 @@ export default function GymPraesentationKrypto() {
           </Slide>
         </Stack>
 
-        {/* Stack: Mathematik + Diskreter Logarithmus + Interaktiver Simulator */}
+        {/* Stack: Warum Schluesselaustausch + Mathematik + Diskreter Log + Interaktiver Simulator */}
         <Stack>
+          <Slide>
+            <h2>Warum braucht es einen Schluesselaustausch?</h2>
+            <p style={{ fontSize: "0.82em", marginBottom: "0.6em" }}>
+              Alice und Bob wollen verschluesselt kommunizieren -- aber wie
+              kommen sie an einen gemeinsamen Schluessel, ohne ihn einfach zu
+              senden?
+            </p>
+            <KeyExchangeMotivationSlide />
+          </Slide>
           <Slide>
             <h2>Die Mathematik: Modulare Potenzierung</h2>
             <p style={{ fontSize: "0.82em", marginBottom: "0.6em" }}>
@@ -1087,56 +897,31 @@ export default function GymPraesentationKrypto() {
           </Slide>
         </Stack>
 
-        {/* Stack: Man-in-the-Middle + ECDHE */}
-        <Stack>
-          <Slide>
-            <h2>Man-in-the-Middle — Schwäche von DH</h2>
-            <Fragment as="p" animation="fade-up">
-              DH bietet keine <strong>Authentifizierung</strong>. Eve kann sich
-              einschalten:
+        {/* Man-in-the-Middle */}
+        <Slide>
+          <h2>Man-in-the-Middle — Schwaeche von DH</h2>
+          <Fragment as="p" animation="fade-up">
+            DH bietet keine <strong>Authentifizierung</strong>. Eve kann sich
+            einschalten:
+          </Fragment>
+          <ol>
+            <Fragment as="li" animation="fade-up">
+              Alice sendet A → Eve faengt ab, antwortet mit eigenem E_a
             </Fragment>
-            <ol>
-              <Fragment as="li" animation="fade-up">
-                Alice sendet A → Eve fängt ab, antwortet mit eigenem E_a
-              </Fragment>
-              <Fragment as="li" animation="fade-up">
-                Bob sendet B → Eve fängt ab, antwortet mit eigenem E_b
-              </Fragment>
-              <Fragment as="li" animation="fade-up">
-                Eve liest alles mit — Alice und Bob bemerken nichts
-              </Fragment>
-            </ol>
-            <Fragment animation="fade-up">
-              <div className="highlight-box" style={{ marginTop: "0.5em" }}>
-                <strong>Lösung:</strong> Digitale Zertifikate beweisen die
-                Identität des Servers.
-              </div>
+            <Fragment as="li" animation="fade-up">
+              Bob sendet B → Eve faengt ab, antwortet mit eigenem E_b
             </Fragment>
-          </Slide>
-          <Slide>
-            <h2>ECDHE &amp; Perfect Forward Secrecy</h2>
-            <Fragment animation="fade-up">
-              <div className="info-box">
-                <strong>ECDHE</strong> — Diffie-Hellman auf elliptischen Kurven:
-                <br />
-                256 Bit statt 3072 Bit für gleiche Sicherheit
-              </div>
+            <Fragment as="li" animation="fade-up">
+              Eve liest alles mit — Alice und Bob bemerken nichts
             </Fragment>
-            <Fragment animation="fade-up">
-              <div className="info-box" style={{ marginTop: "0.5em" }}>
-                <strong>Ephemeral (E):</strong> Für jede Verbindung wird ein
-                neues DH-Schlüsselpaar generiert und danach gelöscht.
-              </div>
-            </Fragment>
-            <Fragment animation="fade-up">
-              <div className="highlight-box" style={{ marginTop: "0.5em" }}>
-                <strong>Perfect Forward Secrecy:</strong> Auch wenn der
-                Serverschlüssel gestohlen wird — vergangene Verbindungen bleiben
-                sicher. TLS 1.3 erzwingt es.
-              </div>
-            </Fragment>
-          </Slide>
-        </Stack>
+          </ol>
+          <Fragment animation="fade-up">
+            <div className="highlight-box" style={{ marginTop: "0.5em" }}>
+              <strong>Loesung:</strong> Digitale Zertifikate beweisen die
+              Identitaet des Servers — deshalb braucht DH TLS.
+            </div>
+          </Fragment>
+        </Slide>
 
         {/* ══════════════════════════════════════════════════════
             BLOCK C — PASSWÖRTER
@@ -1145,7 +930,7 @@ export default function GymPraesentationKrypto() {
         <Slide className="section-slide" transition="zoom">
           <h2>Passwörter &amp; Authentifizierung</h2>
           <Fragment as="p" animation="fade-up" style={{ color: "#ebdbb2" }}>
-            Hashing · Salting · Angriffe · 2FA · FIDO2 · Passwortmanager
+            Hashing · Salting · Angriffe · 2FA · Passwortmanager
           </Fragment>
         </Slide>
 
@@ -1270,7 +1055,7 @@ export default function GymPraesentationKrypto() {
                     <strong>Phishing</strong>
                   </td>
                   <td>Nutzer gibt PW selbst preis</td>
-                  <td>FIDO2 / Passkeys</td>
+                  <td>Passkeys / Hardware-Token</td>
                 </Fragment>
               </tbody>
             </table>
@@ -1291,116 +1076,136 @@ export default function GymPraesentationKrypto() {
           </Slide>
         </Stack>
 
-        {/* Stack: 2FA + TOTP */}
-        <Stack>
-          <Slide>
-            <h2>Zwei-Faktor-Authentifizierung</h2>
-            <p>Zwei Faktoren aus verschiedenen Kategorien:</p>
+        {/* Folie: 2FA */}
+        <Slide>
+          <h2>Zwei-Faktor-Authentifizierung (2FA)</h2>
+          <Fragment as="p" animation="fade-up">
+            Ein Passwort allein reicht nicht — wer es kennt, kommt rein. 2FA
+            verlangt einen <strong>zweiten Beweis</strong> aus einer anderen
+            Kategorie.
+          </Fragment>
+          <div className="cols" style={{ marginTop: "0.5em" }}>
             <Fragment animation="fade-up">
               <div className="info-box">
-                <strong>Wissen:</strong> Passwort, PIN
+                <strong>Wissen</strong>
+                <br />
+                Passwort, PIN
               </div>
             </Fragment>
             <Fragment animation="fade-up">
-              <div className="info-box" style={{ marginTop: "0.4em" }}>
-                <strong>Besitz:</strong> Smartphone, Hardware-Token
+              <div className="info-box">
+                <strong>Besitz</strong>
+                <br />
+                Smartphone-App (TOTP), Hardware-Token
               </div>
             </Fragment>
             <Fragment animation="fade-up">
-              <div className="info-box" style={{ marginTop: "0.4em" }}>
-                <strong>Biometrie:</strong> Fingerabdruck, Gesichtserkennung
+              <div className="info-box">
+                <strong>Biometrie</strong>
+                <br />
+                Fingerabdruck, Gesicht
               </div>
             </Fragment>
-          </Slide>
-          <Slide>
-            <h2>TOTP — Time-based One-Time Password</h2>
+          </div>
+          <Fragment animation="fade-up">
+            <div className="highlight-box" style={{ marginTop: "0.6em" }}>
+              Selbst wenn ein Angreifer das Passwort kennt, fehlt ihm der zweite
+              Faktor — das Gerät in deiner Tasche.
+            </div>
+          </Fragment>
+          <Fragment animation="fade-up">
+            <table style={{ marginTop: "0.5em" }}>
+              <thead>
+                <tr>
+                  <th>Methode</th>
+                  <th>Sicherheit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>SMS-Code</td>
+                  <td style={{ color: "#fb4934" }}>
+                    Schwach — SIM-Swapping möglich
+                  </td>
+                </tr>
+                <tr>
+                  <td>Authenticator-App (TOTP)</td>
+                  <td style={{ color: "#fabd2f" }}>Gut — kein SMS nötig</td>
+                </tr>
+                <tr>
+                  <td>Hardware-Token / Passkey</td>
+                  <td style={{ color: "#b8bb26" }}>
+                    Sehr stark — Phishing-resistent
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </Fragment>
+        </Slide>
+
+        {/* Folie: Passwortmanager */}
+        <Slide>
+          <h2>Passwortmanager</h2>
+          <Fragment as="p" animation="fade-up">
+            Ein starkes, einzigartiges Passwort pro Dienst ist unmöglich
+            auswendig zu lernen. Ein Passwortmanager löst das Problem.
+          </Fragment>
+          <div className="cols" style={{ marginTop: "0.5em" }}>
+            <Fragment animation="fade-up">
+              <div className="info-box">
+                <strong>Wie es funktioniert</strong>
+                <br />
+                Ein <em>Master-Passwort</em> entsperrt einen verschlüsselten
+                Tresor. Alle anderen Passwörter werden darin gespeichert —
+                zufällig generiert, lang, einzigartig.
+              </div>
+            </Fragment>
             <Fragment animation="fade-up">
               <div className="highlight-box">
-                <code>TOTP = HMAC-SHA1(secret_key, floor(Unix-Zeit / 30))</code>
-                <br />→ 6-stelliger Code, 30 Sekunden gültig
-              </div>
-            </Fragment>
-            <Fragment animation="fade-up">
-              <table style={{ marginTop: "0.5em" }}>
-                <thead>
-                  <tr>
-                    <th>Methode</th>
-                    <th>Sicherheit</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>SMS-2FA</td>
-                    <td style={{ color: "#fb4934" }}>
-                      Niedrig (SS7, SIM-Swapping)
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>TOTP (App)</td>
-                    <td>Mittel (Phishing in Echtzeit möglich)</td>
-                  </tr>
-                  <tr>
-                    <td>Passkeys (FIDO2)</td>
-                    <td style={{ color: "#b8bb26" }}>
-                      Sehr hoch — phishing-resistent
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </Fragment>
-          </Slide>
-        </Stack>
-
-        {/* Stack: FIDO2 + Passwortmanager */}
-        <Stack>
-          <Slide>
-            <h2>FIDO2 / Passkeys</h2>
-            <Fragment as="p" animation="fade-up">
-              Basiert auf asymmetrischer Kryptographie:
-            </Fragment>
-            <ol>
-              <Fragment as="li" animation="fade-up">
-                <strong>Registrierung:</strong> Gerät generiert Schlüsselpaar.
-                Public Key → Server. Private Key bleibt im Secure Element.
-              </Fragment>
-              <Fragment as="li" animation="fade-up">
-                <strong>Anmeldung:</strong> Server sendet Challenge → Gerät
-                signiert mit Private Key (nach Biometrie) → Server verifiziert.
-              </Fragment>
-            </ol>
-            <Fragment animation="fade-up">
-              <div className="highlight-box" style={{ marginTop: "0.5em" }}>
-                Domain in Signatur eingebettet → gefälschte Seiten können
-                Signatur nicht verwenden → phishing-resistent
-              </div>
-            </Fragment>
-          </Slide>
-          <Slide>
-            <h2>Passwortmanager</h2>
-            <Fragment animation="fade-up">
-              <div className="info-box">
-                <code>Master-PW + Salt → Argon2 → Vault-Schlüssel</code>
+                <strong>Zero-Knowledge</strong>
                 <br />
-                <code>Vault-Daten → AES-256-GCM → verschlüsselter Blob</code>
+                Der Anbieter speichert nur den verschlüsselten Blob.
+                Entschlüsseln kann nur du — mit deinem Master-Passwort.
               </div>
             </Fragment>
-            <Fragment animation="fade-up">
-              <div className="highlight-box" style={{ marginTop: "0.5em" }}>
-                <strong>Zero-Knowledge:</strong> Nur der verschlüsselte Blob
-                liegt auf Servern. Der Vault-Schlüssel wird lokal abgeleitet.
-                Der Anbieter sieht die Passwörter niemals.
-              </div>
-            </Fragment>
-            <Fragment animation="fade-up">
-              <p style={{ marginTop: "0.5em" }}>
-                Kriterien: <strong>Open Source</strong> ·{" "}
-                <strong>Unabhängige Audits</strong> ·{" "}
-                <strong>Zero-Knowledge</strong> ·{" "}
-                <strong>2FA für den Manager selbst</strong>
-              </p>
-            </Fragment>
-          </Slide>
-        </Stack>
+          </div>
+          <Fragment animation="fade-up">
+            <table style={{ marginTop: "0.5em" }}>
+              <thead>
+                <tr>
+                  <th>Empfehlung</th>
+                  <th>Hinweis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Bitwarden</strong>
+                  </td>
+                  <td>Open Source, kostenlos, cloud-basiert</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>KeePassXC</strong>
+                  </td>
+                  <td>Lokal, kein Cloud-Konto nötig</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>1Password</strong>
+                  </td>
+                  <td>Komfortabel, kostenpflichtig</td>
+                </tr>
+              </tbody>
+            </table>
+          </Fragment>
+          <Fragment animation="fade-up">
+            <div className="warning-box" style={{ marginTop: "0.5em" }}>
+              Das Master-Passwort muss stark sein und darf nirgends sonst
+              verwendet werden — es ist der einzige Schlüssel zum Tresor.
+            </div>
+          </Fragment>
+        </Slide>
       </Slideshow>
 
       <section>
@@ -1412,10 +1217,10 @@ export default function GymPraesentationKrypto() {
           </li>
           <li>
             <Link to="/gym/schluesselaustausch">Schlüsselaustausch</Link> —
-            Diffie-Hellman, ECDHE, PFS
+            Diffie-Hellman, Diskreter Logarithmus, Man-in-the-Middle
           </li>
           <li>
-            <Link to="/gym/passwoerter">Passwörter</Link> — Hashing, 2FA, FIDO2,
+            <Link to="/gym/passwoerter">Passwörter</Link> — Hashing, 2FA,
             Passwortmanager
           </li>
         </ul>

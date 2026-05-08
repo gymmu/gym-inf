@@ -1,177 +1,87 @@
-import { useState, useEffect } from "react";
-import style from "@components/PasswordDatabase.module.css";
-
-const STORAGE_KEY = "plainPasswordDatabase";
-
-// Simple hash function for demonstration (SHA-256 would be better in production)
-async function hashPassword(password) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-  return hashHex;
-}
+import { useState } from "react"
+import style from "@components/PasswordDatabase.module.css"
+import { usePasswordDb, sha256 } from "@components/usePasswordDb"
 
 export default function HashedPasswordDatabase() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [testUsername, setTestUsername] = useState("");
-  const [testPassword, setTestPassword] = useState("");
-  const [entries, setEntries] = useState([]);
-  const [message, setMessage] = useState(null);
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [testUsername, setTestUsername] = useState("")
+  const [testPassword, setTestPassword] = useState("")
+  const [message, setMessage] = useState(null)
 
-  // Load from localStorage on mount
-  useEffect(() => {
-    const loadData = async () => {
-      if (
-        typeof window === "undefined" ||
-        typeof localStorage === "undefined"
-      ) {
-        return;
-      }
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        try {
-          const data = JSON.parse(stored);
-          // Ensure all entries have hash field
-          const updatedData = await Promise.all(
-            data.map(async (entry) => {
-              if (!entry.hash && entry.password) {
-                entry.hash = await hashPassword(entry.password);
-              }
-              return entry;
-            }),
-          );
-          setEntries(updatedData);
-        } catch (e) {
-          console.error("Failed to parse stored data", e);
-        }
-      }
-    };
-
-    loadData();
-  }, []);
-
-  // Save to localStorage whenever entries change
-  useEffect(() => {
-    if (typeof window === "undefined" || typeof localStorage === "undefined") {
-      return;
-    }
-    if (entries.length > 0 || localStorage.getItem(STORAGE_KEY)) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-    }
-  }, [entries]);
-
-  const handleReload = async () => {
-    if (typeof window === "undefined" || typeof localStorage === "undefined") {
-      return;
-    }
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const data = JSON.parse(stored);
-        // Ensure all entries have hash field
-        const updatedData = await Promise.all(
-          data.map(async (entry) => {
-            if (!entry.hash && entry.password) {
-              entry.hash = await hashPassword(entry.password);
-            }
-            return entry;
-          }),
-        );
-        setEntries(updatedData);
-        setMessage({ type: "info", text: "Datenbank wurde neu geladen" });
-        setTimeout(() => setMessage(null), 2000);
-      } catch (e) {
-        console.error("Failed to parse stored data", e);
-        setMessage({ type: "error", text: "Fehler beim Laden der Datenbank" });
-      }
-    }
-  };
+  const [entries, addEntry, clearEntries] = usePasswordDb()
 
   const handleAddEntry = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (!username || !password) {
       setMessage({
         type: "error",
         text: "Bitte Benutzername und Passwort eingeben",
-      });
-      return;
+      })
+      return
     }
-
-    const existingEntry = entries.find((entry) => entry.username === username);
-    if (existingEntry) {
-      setMessage({ type: "error", text: "Benutzername existiert bereits" });
-      return;
+    if (entries.find((entry) => entry.username === username)) {
+      setMessage({ type: "error", text: "Benutzername existiert bereits" })
+      return
     }
-
-    const hash = await hashPassword(password);
-    setEntries([...entries, { username, password, hash }]);
-    setUsername("");
-    setPassword("");
+    const entry = await addEntry({ username, password })
+    setUsername("")
+    setPassword("")
     setMessage({
       type: "success",
-      text: `Eintrag erfolgreich hinzugefügt. Hash: ${hash.substring(0, 16)}...`,
-    });
-    setTimeout(() => setMessage(null), 5000);
-  };
+      text: `Eintrag hinzugefuegt. Hash: ${entry.hash.substring(0, 16)}...`,
+    })
+    setTimeout(() => setMessage(null), 5000)
+  }
 
   const handleTest = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (!testUsername || !testPassword) {
       setMessage({
         type: "error",
-        text: "Bitte Benutzername und Passwort zum Testen eingeben",
-      });
-      return;
+        text: "Bitte Benutzername und Passwort eingeben",
+      })
+      return
     }
-
-    const entry = entries.find((e) => e.username === testUsername);
+    const entry = entries.find((e) => e.username === testUsername)
     if (!entry) {
-      setMessage({ type: "error", text: "Benutzername nicht gefunden" });
-      return;
+      setMessage({ type: "error", text: "Benutzername nicht gefunden" })
+      return
     }
-
-    const testHash = await hashPassword(testPassword);
-    const storedHash = entry.hash || (await hashPassword(entry.password));
-
-    if (storedHash === testHash) {
+    const testHash = await sha256(testPassword + entry.salt)
+    if (entry.hash === testHash) {
       setMessage({
         type: "success",
-        text: `Login erfolgreich! Hash stimmt überein: ${testHash.substring(0, 16)}...`,
-      });
+        text: `Login erfolgreich! Hash stimmt ueberein: ${testHash.substring(0, 16)}...`,
+      })
     } else {
       setMessage({
         type: "error",
-        text: `Login fehlgeschlagen! Hashes stimmen nicht überein.\nErwartet: ${storedHash.substring(0, 16)}...\nEingegeben: ${testHash.substring(0, 16)}...`,
-      });
+        text: "Login fehlgeschlagen! Hashes stimmen nicht ueberein.",
+      })
     }
-    setTimeout(() => setMessage(null), 7000);
-  };
+    setTimeout(() => setMessage(null), 7000)
+  }
 
   const handleClear = () => {
-    if (confirm("Möchten Sie wirklich die gesamte Datenbank löschen?")) {
-      setEntries([]);
-      localStorage.removeItem(STORAGE_KEY);
-      setMessage({ type: "info", text: "Datenbank wurde gelöscht" });
-      setTimeout(() => setMessage(null), 3000);
+    if (confirm("Moechten Sie wirklich die gesamte Datenbank loeschen?")) {
+      clearEntries()
+      setMessage({ type: "info", text: "Datenbank wurde geloescht" })
+      setTimeout(() => setMessage(null), 3000)
     }
-  };
+  }
 
   return (
     <div className={style.wrapper}>
       <h3>Passwort-Datenbank (mit Hashing)</h3>
       <p style={{ fontSize: "0.9rem", marginTop: 0 }}>
-        In dieser Datenbank werden die Passwörter gehasht. Die
-        Original-Passwörter sind ausgegraut und dienen nur zur Kontrolle - in
-        der Realität wären sie nicht sichtbar.
+        Die Datenbank speichert nur den Hash -- das Passwort selbst wird nicht
+        gespeichert. Die Passwort-Spalte ist durchgestrichen: sie steht nicht in
+        der echten Datenbank.
       </p>
 
       <div className={style.formGroup}>
-        <h4>Neuen Eintrag hinzufügen</h4>
+        <h4>Neuen Eintrag hinzufuegen</h4>
         <form onSubmit={handleAddEntry}>
           <div className={style.inputRow}>
             <label htmlFor="username-hash">Benutzername:</label>
@@ -180,6 +90,7 @@ export default function HashedPasswordDatabase() {
               id="username-hash"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              autoComplete="off"
             />
           </div>
           <div className={style.inputRow}>
@@ -189,10 +100,11 @@ export default function HashedPasswordDatabase() {
               id="password-hash"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="off"
             />
           </div>
           <div className={style.buttonGroup}>
-            <button type="submit">Hinzufügen</button>
+            <button type="submit">Hinzufuegen</button>
           </div>
         </form>
       </div>
@@ -207,6 +119,7 @@ export default function HashedPasswordDatabase() {
               id="testUsername-hash"
               value={testUsername}
               onChange={(e) => setTestUsername(e.target.value)}
+              autoComplete="off"
             />
           </div>
           <div className={style.inputRow}>
@@ -216,6 +129,7 @@ export default function HashedPasswordDatabase() {
               id="testPassword-hash"
               value={testPassword}
               onChange={(e) => setTestPassword(e.target.value)}
+              autoComplete="new-password"
             />
           </div>
           <div className={style.buttonGroup}>
@@ -227,22 +141,21 @@ export default function HashedPasswordDatabase() {
       {message && (
         <div
           className={`${style.message} ${style[message.type]}`}
-          style={{ whiteSpace: "pre-line" }}
-        >
+          style={{ whiteSpace: "pre-line" }}>
           {message.text}
         </div>
       )}
 
       <div>
-        <h4>Datenbank-Einträge ({entries.length})</h4>
+        <h4>Datenbank-Eintraege ({entries.length})</h4>
         {entries.length === 0 ? (
-          <p>Keine Einträge vorhanden</p>
+          <p>Keine Eintraege vorhanden</p>
         ) : (
           <table className={style.table}>
             <thead>
               <tr>
                 <th>Benutzername</th>
-                <th style={{ opacity: 0.3 }}>Passwort (nur zur Kontrolle)</th>
+                <th className={style.grayedStrike}>Passwort</th>
                 <th>Hash (SHA-256)</th>
               </tr>
             </thead>
@@ -250,15 +163,14 @@ export default function HashedPasswordDatabase() {
               {entries.map((entry, index) => (
                 <tr key={index}>
                   <td>{entry.username}</td>
-                  <td className={style.grayed}>{entry.password}</td>
+                  <td className={style.grayedStrike}>••••••••</td>
                   <td
                     style={{
                       fontFamily: "monospace",
                       fontSize: "0.8rem",
                       wordBreak: "break-all",
-                    }}
-                  >
-                    {entry.hash || "wird beim nächsten Test berechnet"}
+                    }}>
+                    {entry.hash}
                   </td>
                 </tr>
               ))}
@@ -266,12 +178,11 @@ export default function HashedPasswordDatabase() {
           </table>
         )}
         <div className={style.buttonGroup} style={{ marginTop: "1rem" }}>
-          <button onClick={handleReload}>Datenbank neu laden</button>
           <button className={style.danger} onClick={handleClear}>
-            Datenbank löschen
+            Datenbank loeschen
           </button>
         </div>
       </div>
     </div>
-  );
+  )
 }

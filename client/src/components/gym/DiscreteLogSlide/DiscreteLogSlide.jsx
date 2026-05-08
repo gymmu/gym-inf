@@ -499,18 +499,6 @@ export default function DiscreteLogSlide() {
               </div>
               <div className={s.bigNumCardNote}>NIST-Standard heute</div>
             </div>
-            <div className={s.bigNumArrow}>&rarr;</div>
-            <div className={s.bigNumCard} style={{ borderColor: "#b8bb26" }}>
-              <div className={s.bigNumCardLabel} style={{ color: "#b8bb26" }}>
-                ECDH 256 Bit
-              </div>
-              <div className={s.bigNumCardVal}>
-                ~10<sup>77</sup> moegliche x
-              </div>
-              <div className={s.bigNumCardNote}>
-                Gleiche Sicherheit, kleiner Schluessel
-              </div>
-            </div>
           </div>
         </div>
 

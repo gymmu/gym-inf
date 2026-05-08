@@ -1,0 +1,334 @@
+/* -- Two-column layout --------------------------------------------------- */
+.root {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 700px) {
+  .root {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* -- Panel --------------------------------------------------------------- */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1rem;
+  border: 1.5px solid #3c3836;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.panelTitle {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #fabd2f;
+}
+
+.panelDesc {
+  font-size: 0.78rem;
+  color: #928374;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* -- Gestohlene DB ------------------------------------------------------- */
+.stolenTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.stolenTable th {
+  text-align: left;
+  padding: 0.3rem 0.5rem;
+  border-bottom: 1.5px solid #3c3836;
+  color: #928374;
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stolenTable td {
+  padding: 0.3rem 0.5rem;
+  border-bottom: 1px solid #282828;
+  vertical-align: middle;
+}
+
+.stolenUser {
+  font-weight: 600;
+  color: #ebdbb2;
+  white-space: nowrap;
+}
+
+.stolenHash {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #83a598;
+}
+
+/* Row states */
+.rowCrackable td {
+  background: rgba(251, 73, 52, 0.06);
+}
+.rowCrackable .stolenHash {
+  color: #fb4934;
+}
+
+.rowSearched td {
+  background: rgba(250, 189, 47, 0.1);
+}
+.rowSearched .stolenHash {
+  color: #fabd2f;
+  font-weight: 700;
+}
+
+/* -- Lookup button ------------------------------------------------------- */
+.lookupBtn {
+  font-size: 0.68rem;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid #504945;
+  border-radius: 3px;
+  background: transparent;
+  color: #928374;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 0.1s,
+    color 0.1s;
+}
+.lookupBtn:hover:not(:disabled) {
+  border-color: #fabd2f;
+  color: #fabd2f;
+}
+.lookupBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* -- Crack summary ------------------------------------------------------- */
+.crackSummary {
+  font-size: 0.78rem;
+  color: #928374;
+}
+.crackCount {
+  font-weight: 700;
+  font-family: monospace;
+}
+
+/* -- Hash calculator ----------------------------------------------------- */
+.calcBox {
+  margin-top: 0.25rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #3c3836;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.calcTitle {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #504945;
+}
+
+.calcForm {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.calcInput {
+  flex: 1;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.78rem;
+  border: 1px solid #504945;
+  border-radius: 4px;
+  background: #1d2021;
+  color: #ebdbb2;
+  font-family: inherit;
+}
+.calcInput:focus {
+  outline: none;
+  border-color: #928374;
+}
+
+.calcBtn {
+  padding: 0.3rem 0.65rem;
+  font-size: 0.78rem;
+  border: 1px solid #504945;
+  border-radius: 4px;
+  background: transparent;
+  color: #928374;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.calcBtn:hover {
+  border-color: #83a598;
+  color: #83a598;
+}
+
+.calcResult {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.calcResultLabel {
+  font-size: 0.65rem;
+  color: #504945;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.calcResultHash {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #83a598;
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+/* -- Add row ------------------------------------------------------------- */
+.addRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.addForm {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.addInput {
+  flex: 1;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.78rem;
+  border: 1px solid #504945;
+  border-radius: 4px;
+  background: #1d2021;
+  color: #ebdbb2;
+  font-family: inherit;
+}
+.addInput:focus {
+  outline: none;
+  border-color: #fabd2f;
+}
+
+.addBtn {
+  padding: 0.35rem 0.65rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 1px solid #fabd2f;
+  border-radius: 4px;
+  background: transparent;
+  color: #fabd2f;
+  cursor: pointer;
+}
+.addBtn:hover {
+  background: rgba(250, 189, 47, 0.1);
+}
+
+.genBtn {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid #504945;
+  border-radius: 4px;
+  background: transparent;
+  color: #928374;
+  cursor: pointer;
+  text-align: left;
+}
+.genBtn:hover {
+  border-color: #b8bb26;
+  color: #b8bb26;
+}
+
+/* -- Search result ------------------------------------------------------- */
+.resultFound,
+.resultNotFound {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 5px;
+  font-size: 0.82rem;
+}
+.resultFound {
+  background: rgba(184, 187, 38, 0.1);
+  border: 1px solid rgba(184, 187, 38, 0.4);
+  color: #b8bb26;
+}
+.resultNotFound {
+  background: rgba(251, 73, 52, 0.08);
+  border: 1px solid rgba(251, 73, 52, 0.3);
+  color: #fb4934;
+}
+.resultIcon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* -- Rainbow-Table entries ----------------------------------------------- */
+.tableWrap {
+  max-height: 260px;
+  overflow-y: auto;
+  border: 1px solid #3c3836;
+  border-radius: 4px;
+}
+
+.rtTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+}
+
+.rtTable th {
+  position: sticky;
+  top: 0;
+  background: #282828;
+  text-align: left;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #928374;
+  font-weight: 600;
+}
+
+.rtTable td {
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid #282828;
+  vertical-align: middle;
+}
+
+.rtHash {
+  font-family: monospace;
+  font-size: 0.68rem;
+  color: #504945;
+  word-break: break-all;
+}
+
+.rtRowHit td {
+  background: rgba(184, 187, 38, 0.12);
+}
+.rtRowHit .rtHash {
+  color: #b8bb26;
+  font-weight: 700;
+}
+
+.emptyNote {
+  font-size: 0.78rem;
+  color: #504945;
+  font-style: italic;
+  margin: 0;
+}
