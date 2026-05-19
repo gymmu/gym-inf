@@ -63,6 +63,17 @@ export default function FmsIndex() {
               <NavLink to="/fms/algorithmen-aufgaben">Aufgaben</NavLink>
             </ol>
           </li>
+          <li>
+            Microsoft Word
+            <ol>
+              <NavLink to="/fms/word">Einstieg in Word</NavLink>
+              <NavLink to="/fms/word-formatvorlagen">Formatvorlagen</NavLink>
+              <NavLink to="/fms/word-inhaltsverzeichnis">Inhaltsverzeichnis</NavLink>
+              <NavLink to="/fms/word-seitenzahlen">Kopf- und Fusszeilen</NavLink>
+              <NavLink to="/fms/word-probleme">Das Problem mit Word</NavLink>
+              <NavLink to="/fms/word-latex">LaTeX mit Overleaf</NavLink>
+            </ol>
+          </li>
         </ol>
       </section>
       <section>

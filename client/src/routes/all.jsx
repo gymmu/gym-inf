@@ -138,6 +138,12 @@ const FmsAlgorithmenGlossar = lazy(
   () => import("@pages-fms/algorithmen-glossar.jsx"),
 )
 const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"))
+const FmsWord = lazy(() => import("@pages/fms/word.mdx"))
+const FmsWordFormatvorlagen = lazy(() => import("@pages/fms/word-formatvorlagen.mdx"))
+const FmsWordInhaltsverzeichnis = lazy(() => import("@pages/fms/word-inhaltsverzeichnis.mdx"))
+const FmsWordSeitenzahlen = lazy(() => import("@pages/fms/word-seitenzahlen.mdx"))
+const FmsWordProbleme = lazy(() => import("@pages/fms/word-probleme.mdx"))
+const FmsWordLatex = lazy(() => import("@pages/fms/word-latex.mdx"))
 const BoxModel = lazy(() => import("../components/BoxModel"))
 const CodePen = lazy(() => import("../components/CodePen"))
 const CodePenSVG = lazy(() => import("../components/CodePenSVG"))
@@ -301,6 +307,12 @@ export const routes = [
       },
 
       // FMS Routes 2. Klasse
+      { path: "/fms/word", element: <FmsWord /> },
+      { path: "/fms/word-formatvorlagen", element: <FmsWordFormatvorlagen /> },
+      { path: "/fms/word-inhaltsverzeichnis", element: <FmsWordInhaltsverzeichnis /> },
+      { path: "/fms/word-seitenzahlen", element: <FmsWordSeitenzahlen /> },
+      { path: "/fms/word-probleme", element: <FmsWordProbleme /> },
+      { path: "/fms/word-latex", element: <FmsWordLatex /> },
       { path: "fms/excel", element: <Excel /> },
       {
         path: "fms/excel-spielplan",

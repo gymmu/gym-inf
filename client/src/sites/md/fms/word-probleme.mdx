@@ -1,0 +1,100 @@
+import Video from "@components/Video.jsx"
+
+## Das Problem mit Word
+
+Word folgt dem Prinzip **WYSIWYG** – "What You See Is What You Get". Was auf dem
+Bildschirm zu sehen ist, entspricht direkt dem gedruckten Ergebnis. Das klingt
+intuitiv und ist es für einfache Dokumente auch. Doch bei längeren oder
+komplexeren Arbeiten zeigen sich die Grenzen dieses Ansatzes schnell.
+
+## Was ist das Problem mit WYSIWYG?
+
+Bei WYSIWYG-Programmen wie Word vermischen sich **Inhalt** und **Darstellung**
+ständig. Wer schreibt, denkt gleichzeitig über Schriftgrösse, Abstände und
+Einrückungen nach – statt über den Text selbst. Das führt zu typischen Problemen:
+
+- Eine Formatierung lässt sich nicht mehr rückgängig machen, ohne andere
+  Teile des Dokuments zu zerstören.
+- Bilder "springen" beim Einfügen neuen Textes an ungewollte Stellen.
+- Zwei Absätze sehen gleich aus, haben aber unterschiedliche Formatierungen –
+  und man sieht es erst, wenn das Dokument auf einem anderen Gerät geöffnet
+  wird.
+- Querverweise und Fussnoten müssen manuell gepflegt werden und stimmen schnell
+  nicht mehr.
+
+Das grundlegende Problem: Word speichert nicht nur was geschrieben steht,
+sondern auch wie jeder einzelne Absatz, jedes Zeichen und jeder Abstand
+aussehen soll. Dieses Durcheinander von Inhalt und Form wächst mit jedem Edit
+und wird mit der Zeit immer schwieriger zu beherrschen.
+
+## Der andere Ansatz: Inhalt und Form trennen
+
+Eine saubere Alternative ist das Prinzip **WYSIWYM** – "What You See Is What You
+**Mean**". Hier schreibt man reinen Text und beschreibt die Struktur mit
+einfachen Befehlen oder Zeichen. Das Programm übernimmt die Formatierung
+automatisch und konsequent.
+
+### Markdown
+
+Markdown ist das einfachste Beispiel dieses Prinzips und wird auch in diesem
+Kurs bei Obsidian verwendet. Ein `#` vor einer Zeile macht sie zur Überschrift,
+`**fett**` macht Text fett. Das Ergebnis ist immer konsistent – ohne dass man
+manuell formatiert.
+
+Markdown ist ideal für kurze bis mittellange Texte, Notizen und Webinhalte. Für
+wissenschaftliche Arbeiten mit Literaturverzeichnis, Formeln und präzisem Layout
+stösst es jedoch an Grenzen.
+
+Markdown kann in vielen verschiedenen Programmen geschrieben werden:
+
+**Im Browser:**
+- <a href="https://obsidian.md" target="_blank" rel="noreferrer">Obsidian</a> – kennen Sie bereits aus dem Kurs (Desktop-App mit Browser-ähnlichem Erlebnis)
+- <a href="https://dillinger.io" target="_blank" rel="noreferrer">Dillinger</a> – einfacher Online-Editor mit Live-Vorschau
+- <a href="https://stackedit.io" target="_blank" rel="noreferrer">StackEdit</a> – umfangreicherer Online-Editor mit Synchronisation zu Google Drive und Dropbox
+
+**Lokale Apps:**
+- <a href="https://www.zettlr.com" target="_blank" rel="noreferrer">Zettlr</a> – leistungsstarker Editor für längere Texte und wissenschaftliches Schreiben, mit Literaturverwaltung
+- <a href="https://panwriter.com" target="_blank" rel="noreferrer">Panwriter</a> – minimalistischer Editor mit direktem Export in viele Formate (PDF, Word, EPUB)
+
+### LaTeX
+
+LaTeX ist das Standardformat für wissenschaftliche Publikationen in Mathematik,
+Physik und vielen anderen Fachbereichen. Man schreibt reinen Text mit Befehlen,
+zum Beispiel:
+
+```latex
+\section{Einleitung}
+Dies ist ein \textbf{wichtiger} Satz mit einer Formel: $E = mc^2$.
+```
+
+LaTeX übernimmt dann das gesamte Layout automatisch – Abstände, Seitenumbrüche,
+Nummerierungen, Inhaltsverzeichnis und Literaturverzeichnis. Das Ergebnis ist
+typografisch hochwertig und auf allen Geräten identisch.
+
+Der Nachteil: LaTeX hat eine steile Lernkurve. Der Einstieg ist aufwändiger als
+bei Word. Als Editor verwenden wir <a href="https://www.overleaf.com" target="_blank" rel="noreferrer">Overleaf</a> –
+einen kostenlosen Online-Editor, der keine Installation erfordert.
+
+### Typst
+
+Typst ist eine moderne Alternative zu LaTeX, die viele der Stärken übernimmt –
+automatisches Layout, Formeln, Literaturverweise – aber mit einer deutlich
+einfacheren Syntax. Ein Beispiel:
+
+```typst
+= Einleitung
+Dies ist ein *wichtiger* Satz mit einer Formel: $E = m c^2$.
+```
+
+Typst ist direkt im Browser unter <a href="https://typst.app" target="_blank" rel="noreferrer">typst.app</a> nutzbar,
+kompiliert blitzschnell und eignet sich sehr gut für Berichte und
+Abschlussarbeiten. Das automatische Verlinken und Verwalten von Quellen
+funktioniert dabei zuverlässig und ohne manuellen Aufwand.
+
+## Warum das trotzdem relevant ist
+
+Word bleibt im Alltag weit verbreitet und ist für viele Aufgaben ausreichend.
+Aber wer längere Texte schreibt oder präzises, reproduzierbares Layout braucht,
+ist mit einem WYSIWYM-Ansatz deutlich besser bedient. Das nächste Kapitel zeigt,
+wie LaTeX mit Overleaf konkret eingesetzt wird – inklusive automatischer
+Quellenverwaltung.
