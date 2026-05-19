@@ -1,0 +1,107 @@
+import LearningGoals from "@components/LearningGoals.jsx"
+import Video from "@components/Video.jsx"
+
+## Microsoft Word
+
+Microsoft Word ist ein Textverarbeitungsprogramm und gehört zur **Microsoft
+365**-Suite. Es ist eines der am weitesten verbreiteten Programme zum Erstellen
+von Dokumenten: Berichte, Briefe, Aufsätze, Lebensläufe – all das wird typisch
+mit Word geschrieben.
+
+<LearningGoals>
+
+    - Sie wissen, wofür Microsoft Word verwendet wird.
+    - Sie kennen typische Probleme beim Arbeiten mit Word.
+    - Sie verstehen, wie ein Word-Dokument intern aufgebaut ist.
+    - Sie wissen, dass Ihre Dateien in der OneDrive des Schulaccounts gespeichert werden.
+
+</LearningGoals>
+
+## Wofür wird Word verwendet?
+
+Word wird überall dort eingesetzt, wo formatierte Texte erstellt werden sollen:
+
+- **Schule**: Aufsätze, Berichte, Zusammenfassungen
+- **Beruf**: Briefe, Protokolle, Verträge, Lebensläufe
+- **Privat**: Einladungen, Bewerbungen, Listen
+
+Das besondere an Word gegenüber einem einfachen Texteditor ist die
+**Formatierung**: Sie können Schriftarten, Grössen, Farben, Abstände, Tabellen,
+Bilder und vieles mehr einstellen. Word trennt dabei den **Inhalt** (Ihren Text)
+von der **Darstellung** (wie der Text aussieht).
+
+## Warum kann Word manchmal problematisch sein?
+
+Word klingt einfach – und für grundlegende Aufgaben ist es das auch. Doch sobald
+Dokumente grösser oder komplexer werden, können einige Stolpersteine auftauchen:
+
+**Formatierung, die sich ungewollt verändert**
+Wer kennt es nicht: Man fügt einen Absatz ein, und plötzlich verspringen alle
+Einrückungen und Abstände auf der ganzen Seite. Das passiert, weil Word viele
+Formatierungen implizit verwaltet und Änderungen an einer Stelle andere Stellen
+beeinflussen können.
+
+**Kompatibilitätsprobleme**
+Ein Dokument, das auf einem Computer perfekt aussieht, kann auf einem anderen
+verschoben oder unleserlich dargestellt werden – besonders wenn unterschiedliche
+Word-Versionen, andere Betriebssysteme oder Programme wie LibreOffice verwendet
+werden.
+
+**Unsichtbare Zeichen und versteckte Formatierung**
+Word speichert sehr viel mehr als nur den sichtbaren Text. Unsichtbare
+Leerzeichen, Zeilenumbrüche und Formatierungsinformationen können zu
+unerwartetem Verhalten führen, das schwer zu finden ist.
+
+**Versionschaos**
+Wenn mehrere Personen an einem Dokument arbeiten und Dateien per E-Mail
+austauschen, entstehen schnell viele verschiedene Versionen. Es ist dann
+schwierig zu sehen, wer was wann geändert hat.
+
+## Die Dateistruktur hinter .docx
+
+Wenn Sie eine Datei als `.docx` speichern, sieht es aus wie eine einzige Datei.
+In Wirklichkeit ist eine `.docx`-Datei ein **ZIP-Archiv**, das viele einzelne
+Dateien enthält.
+
+Sie können das selbst ausprobieren: Benennen Sie eine `.docx`-Datei in `.zip`
+um und öffnen Sie sie – Sie sehen dann einen Ordner mit folgendem Inhalt:
+
+```
+mein-dokument.docx (= ZIP-Archiv)
+├── word/
+│   ├── document.xml      ← Der eigentliche Text und die Formatierung
+│   ├── styles.xml        ← Alle definierten Formatvorlagen
+│   ├── settings.xml      ← Dokumenteinstellungen
+│   └── media/            ← Eingefügte Bilder
+├── _rels/                ← Verknüpfungen zwischen den Teilen
+└── [Content_Types].xml   ← Beschreibt den Inhalt des Archivs
+```
+
+Der Kern des Dokuments ist die Datei `word/document.xml`. Sie ist in **XML**
+geschrieben, einer Auszeichnungssprache ähnlich wie HTML. Darin ist jeder
+Absatz, jedes Wort und jede Formatierung als Text gespeichert – für Menschen
+lesbar, aber auf den ersten Blick unübersichtlich.
+
+Dieses Format heisst **Office Open XML (OOXML)** und ist ein offener Standard.
+Das bedeutet, dass grundsätzlich jedes Programm `.docx`-Dateien lesen und
+schreiben kann – was aber trotzdem zu Kompatibilitätsproblemen führen kann, weil
+nicht alle Programme den Standard gleich umsetzen.
+
+<Video url="C0bsVYWGYD0" />
+
+## Word im Browser
+
+Wir verwenden Word ausschliesslich **im Browser**. Das funktioniert auf jedem
+Gerät gleich – egal ob Windows, Mac, Chromebook oder Tablet – und vermeidet die
+meisten Kompatibilitätsprobleme.
+
+Alle Dokumente werden automatisch in der **<a href="https://sblch-my.sharepoint.com/" target="_blank" rel="noreferrer">OneDrive Ihres Schulaccounts</a>**
+gespeichert, einem Cloud-Speicher von Microsoft. Das bedeutet:
+
+- Ihre Dateien sind von **jedem Gerät** abrufbar, solange Sie eingeloggt sind.
+- Es gibt **kein manuelles Speichern** – Word im Browser speichert laufend automatisch.
+- Ihre Daten bleiben auf den **Servern der Schule** und sind nicht mit einem privaten Konto vermischt.
+- Dokumente können direkt mit Mitschülerinnen, Mitschülern und Lehrpersonen **geteilt** werden.
+
+Das folgende Video zeigt, wie Sie ein Dokument über die OneDrive im Browser
+öffnen und bearbeiten.
