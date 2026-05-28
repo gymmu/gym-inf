@@ -138,10 +138,17 @@ const FmsAlgorithmenGlossar = lazy(
   () => import("@pages-fms/algorithmen-glossar.jsx"),
 )
 const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"))
+const ReteAlgos = lazy(() => import("@pages-gym/rete-algos.jsx"))
 const FmsWord = lazy(() => import("@pages/fms/word.mdx"))
-const FmsWordFormatvorlagen = lazy(() => import("@pages/fms/word-formatvorlagen.mdx"))
-const FmsWordInhaltsverzeichnis = lazy(() => import("@pages/fms/word-inhaltsverzeichnis.mdx"))
-const FmsWordSeitenzahlen = lazy(() => import("@pages/fms/word-seitenzahlen.mdx"))
+const FmsWordFormatvorlagen = lazy(
+  () => import("@pages/fms/word-formatvorlagen.mdx"),
+)
+const FmsWordInhaltsverzeichnis = lazy(
+  () => import("@pages/fms/word-inhaltsverzeichnis.mdx"),
+)
+const FmsWordSeitenzahlen = lazy(
+  () => import("@pages/fms/word-seitenzahlen.mdx"),
+)
 const FmsWordProbleme = lazy(() => import("@pages/fms/word-probleme.mdx"))
 const FmsWordLatex = lazy(() => import("@pages/fms/word-latex.mdx"))
 const BoxModel = lazy(() => import("../components/BoxModel"))
@@ -309,7 +316,10 @@ export const routes = [
       // FMS Routes 2. Klasse
       { path: "/fms/word", element: <FmsWord /> },
       { path: "/fms/word-formatvorlagen", element: <FmsWordFormatvorlagen /> },
-      { path: "/fms/word-inhaltsverzeichnis", element: <FmsWordInhaltsverzeichnis /> },
+      {
+        path: "/fms/word-inhaltsverzeichnis",
+        element: <FmsWordInhaltsverzeichnis />,
+      },
       { path: "/fms/word-seitenzahlen", element: <FmsWordSeitenzahlen /> },
       { path: "/fms/word-probleme", element: <FmsWordProbleme /> },
       { path: "/fms/word-latex", element: <FmsWordLatex /> },
@@ -322,6 +332,9 @@ export const routes = [
       { path: "fms/html", element: <FmsHTML /> },
       { path: "fms/webdesign", element: <FmsWebdesign /> },
       { path: "fms/javascript", element: <FmsJavascript /> },
+
+      // Rete Algorithmen (nicht in Sidebar verlinkt)
+      { path: "rete-algos", element: <ReteAlgos /> },
 
       // TODO: Comment these out if no longer tested
       { path: "codepen", element: <CodePen /> },
@@ -415,7 +428,8 @@ export const getAllRoutePaths = () => {
           !child.path.includes("reset-password") &&
           !child.path.includes("verify-email") &&
           !child.path.includes("auth-demo") &&
-          !child.path.includes("protected")
+          !child.path.includes("protected") &&
+          !child.path.includes("rete-algos")
         ) {
           // Normalize paths (remove leading slash for consistency)
           const normalizedPath = child.path.startsWith("/")

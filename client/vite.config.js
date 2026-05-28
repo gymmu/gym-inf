@@ -45,6 +45,24 @@ function mockBrowserLibsForSSR() {
           }
           return generateAlias("src/mocks/remotion.jsx")
         }
+        // Mock Phaser (browser-only, requires WebGL/Canvas)
+        if (id === "phaser") {
+          return generateAlias("src/mocks/phaser.js")
+        }
+        // Mock Rete.js packages (depend on DOM APIs)
+        if (
+          id === "rete" ||
+          id === "rete-area-plugin" ||
+          id === "rete-connection-plugin" ||
+          id === "rete-react-plugin" ||
+          id === "rete-render-utils" ||
+          id === "rete-auto-arrange-plugin" ||
+          id === "elkjs" ||
+          id === "web-worker" ||
+          id === "styled-components"
+        ) {
+          return generateAlias("src/mocks/rete.js")
+        }
       }
       return null
     },
@@ -218,6 +236,16 @@ export default defineConfig({
       "@remotion/player", // Remotion Player is browser-only
       "@remotion/cli",
       "remotion",
+      "phaser", // Phaser requires browser APIs (WebGL/Canvas)
+      "rete",
+      "rete-area-plugin",
+      "rete-connection-plugin",
+      "rete-react-plugin",
+      "rete-render-utils",
+      "rete-auto-arrange-plugin",
+      "elkjs",
+      "web-worker",
+      "styled-components",
     ],
   },
   // SSG-specific options - Disabled for SPA mode
