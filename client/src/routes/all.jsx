@@ -93,6 +93,7 @@ const KaplayTeamwork = lazy(() => import("@pages-gym/kaplay-teamwork.jsx"))
 const Path = lazy(() => import("@components/Path.jsx"))
 const Excel = lazy(() => import("@pages/fms/excel.mdx"))
 const ExcelSpielplan = lazy(() => import("@pages/fms/excel-spielplan.mdx"))
+const FmsTabellen = lazy(() => import("@/pages/fms/tabellen.jsx"))
 const FmsHTML = lazy(() => import("@pages/fms/html.mdx"))
 const FmsInternet = lazy(() => import("@pages/fms/internet.mdx"))
 const FmsInternetQuiz = lazy(() => import("@pages/fms/internet-quiz.mdx"))
@@ -328,6 +329,8 @@ export const routes = [
         path: "fms/excel-spielplan",
         element: <ExcelSpielplan />,
       },
+      // Tabellen im Browser (nicht in Sidebar verlinkt)
+      { path: "fms/tabellen", element: <FmsTabellen /> },
 
       { path: "fms/html", element: <FmsHTML /> },
       { path: "fms/webdesign", element: <FmsWebdesign /> },

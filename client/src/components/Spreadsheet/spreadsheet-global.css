@@ -1,0 +1,40 @@
+/*
+ * Global overrides for jspreadsheet-ce / jsuites context menu.
+ * The context menu uses position:fixed and is appended directly to <body>,
+ * so it cannot be scoped to the Spreadsheet wrapper — these rules must be global.
+ * color-scheme: light resets the browser's forced dark-mode rendering for
+ * the menu popup.
+ */
+
+.jcontextmenu {
+  color-scheme: light;
+  background: #ffffff !important;
+  color: #333333 !important;
+  border-color: #c6c6c6 !important;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+.jcontextmenu > div {
+  color: #333333 !important;
+}
+
+.jcontextmenu > div a {
+  color: #333333 !important;
+}
+
+.jcontextmenu > div span {
+  color: #555555 !important;
+}
+
+.jcontextmenu > div:hover {
+  background: #ebebeb !important;
+}
+
+.jcontextmenu .jcontextmenu-disabled a,
+.jcontextmenu .jcontextmenu-disabled::before {
+  color: #bbbbbb !important;
+}
+
+.jcontextmenu hr {
+  border-color: #e0e0e0 !important;
+}
