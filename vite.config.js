@@ -118,6 +118,7 @@ export default defineConfig({
       "@icons": generateAlias("src/assets/icons"),
       "@img": generateAlias("src/assets/img"),
       "@quizzes": generateAlias("src/data/quizzes"),
+      "@utils": generateAlias("src/utils"),
     },
     extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".mdx"],
     dedupe: ["react", "react-dom"],
