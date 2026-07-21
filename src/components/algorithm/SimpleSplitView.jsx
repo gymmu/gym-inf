@@ -28,12 +28,12 @@ export default function SimpleSplitView({
     
     setIsClient(true)
     
-    // Use MermaidWithHighlight component which supports highlightNode prop and has zoom/pan
+    // Use MermaidDark component which supports highlightNode prop
     Promise.all([
-      import("@components/algorithm/MermaidWithHighlight"),
+      import("@components/algorithm/MermaidDark"),
       import("@remotion/player")
     ]).then(([mermaidMod, playerMod]) => {
-      // Use MermaidWithHighlight directly - it supports highlightNode, zoom, and pan
+      // Use MermaidDark directly - it supports highlightNode
       setMermaidComponent(() => mermaidMod.default)
       setPlayerComponent(() => playerMod.Player)
     }).catch(err => {

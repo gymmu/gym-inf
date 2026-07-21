@@ -137,4 +137,6 @@ docs
 .env.*.local
 
 # Client
-client/.env.local
+client/.env.local.vite-react-ssg-temp
+
+.vite-react-ssg-temp/
