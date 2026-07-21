@@ -2,11 +2,11 @@
 .codeBlockContainer {
   max-width: min(540px, calc(100vw - 42px));
   margin-inline: auto;
-  margin-block: 1.5rem;
-  border-radius: 8px;
+  margin-block: var(--space-lg);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  background-color: #1d2021; /* Gruvbox darker bg */
+  box-shadow: var(--shadow-md);
+  background-color: var(--color-bg-dark);
 }
 
 /* Header mit Language Badge und Copy Button */
@@ -14,32 +14,32 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background-color: #1d2021; /* Gruvbox darker bg */
-  border-bottom: 1px solid #3c3836; /* Gruvbox bg2 */
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-bg-dark);
+  border-bottom: var(--border-width) solid var(--color-bg-light);
 }
 
 /* Linke Seite des Headers (Language, Filename, Badges) */
 .leftHeader {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-sm);
 }
 
 /* Language Badge */
 .language {
-  font-size: 0.75rem;
+  font-size: var(--space-xs);
   font-weight: 600;
   text-transform: uppercase;
-  color: #928374; /* Gruvbox gray */
+  color: var(--color-gray);
   letter-spacing: 0.05em;
   font-family: "Courier New", Courier, monospace;
 }
 
 /* Filename (optional) */
 .filename {
-  font-size: 0.75rem;
-  color: #ebdbb2; /* Gruvbox fg */
+  font-size: var(--space-xs);
+  color: var(--color-fg);
   font-family: "Courier New", Courier, monospace;
   opacity: 0.8;
 }
@@ -49,31 +49,31 @@
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
-  color: #fe8019; /* Gruvbox orange */
+  color: var(--color-orange);
   background-color: rgba(254, 128, 25, 0.15);
-  padding: 0.15rem 0.4rem;
-  border-radius: 3px;
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius-sm);
   letter-spacing: 0.05em;
   border: 1px solid rgba(254, 128, 25, 0.3);
 }
 
 /* Copy Button */
 .copyButton {
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  background-color: #3c3836; /* Gruvbox bg2 */
-  color: #ebdbb2; /* Gruvbox fg */
-  border: 1px solid #504945; /* Gruvbox bg3 */
-  border-radius: 4px;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--space-xs);
+  background-color: var(--color-bg-light);
+  color: var(--color-fg);
+  border: var(--border-width) solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   font-family: inherit;
   font-weight: 500;
 }
 
 .copyButton:hover {
-  background-color: #504945; /* Gruvbox bg3 */
-  border-color: #665c54; /* Gruvbox bg4 */
+  background-color: var(--color-bg-lighter);
+  border-color: var(--color-bg-lighter);
 }
 
 .copyButton:active {
@@ -81,7 +81,7 @@
 }
 
 .copyButton:focus {
-  outline: 2px solid #83a598; /* Gruvbox blue */
+  outline: 2px solid var(--color-blue);
   outline-offset: 2px;
 }
 
@@ -97,35 +97,35 @@
 }
 
 .codeBlockContainer :global(pre)::-webkit-scrollbar-track {
-  background: #1d2021; /* Gruvbox darker bg */
+  background: var(--color-bg-dark);
 }
 
 .codeBlockContainer :global(pre)::-webkit-scrollbar-thumb {
-  background: #504945; /* Gruvbox bg3 */
-  border-radius: 4px;
+  background: var(--color-bg-lighter);
+  border-radius: var(--radius-full);
 }
 
 .codeBlockContainer :global(pre)::-webkit-scrollbar-thumb:hover {
-  background: #665c54; /* Gruvbox bg4 */
+  background: var(--color-gray);
 }
 
 /* Firefox Scrollbar */
 .codeBlockContainer :global(pre) {
   scrollbar-width: thin;
-  scrollbar-color: #504945 #1d2021;
+  scrollbar-color: var(--color-bg-lighter) var(--color-bg-dark);
 }
 
 /* Diff Mode - Hinzugefügte Zeilen (grün) */
 .diffLineAdded {
-  background-color: rgba(184, 187, 38, 0.25) !important; /* Gruvbox green */
+  background-color: rgba(184, 187, 38, 0.25) !important;
 }
 
 /* Diff Mode - Entfernte Zeilen (rot) */
 .diffLineRemoved {
-  background-color: rgba(251, 73, 52, 0.25) !important; /* Gruvbox red */
+  background-color: rgba(251, 73, 52, 0.25) !important;
 }
 
 /* Highlighted Lines (blau) */
 .highlightedLine {
-  background-color: rgba(131, 165, 152, 0.2) !important; /* Gruvbox blue */
+  background-color: rgba(131, 165, 152, 0.2) !important;
 }

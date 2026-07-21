@@ -18,8 +18,8 @@
   flex-direction: column;
   gap: 0.65rem;
   padding: 1rem;
-  border: 1.5px solid #3c3836;
-  border-radius: 8px;
+  border: 1.5px solid var(--color-bg-light);
+  border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.02);
 }
 
@@ -28,12 +28,12 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: #fabd2f;
+  color: var(--color-yellow);
 }
 
 .panelDesc {
   font-size: 0.78rem;
-  color: #928374;
+  color: var(--color-gray);
   line-height: 1.5;
   margin: 0;
 }
@@ -48,8 +48,8 @@
 .stolenTable th {
   text-align: left;
   padding: 0.3rem 0.5rem;
-  border-bottom: 1.5px solid #3c3836;
-  color: #928374;
+  border-bottom: 1.5px solid var(--color-bg-light);
+  color: var(--color-gray);
   font-weight: 600;
   font-size: 0.7rem;
   text-transform: uppercase;
@@ -58,20 +58,20 @@
 
 .stolenTable td {
   padding: 0.3rem 0.5rem;
-  border-bottom: 1px solid #282828;
+  border-bottom: 1px solid var(--color-bg);
   vertical-align: middle;
 }
 
 .stolenUser {
   font-weight: 600;
-  color: #ebdbb2;
+  color: var(--color-fg);
   white-space: nowrap;
 }
 
 .stolenHash {
   font-family: monospace;
   font-size: 0.72rem;
-  color: #83a598;
+  color: var(--color-blue);
 }
 
 /* Row states */
@@ -79,14 +79,14 @@
   background: rgba(251, 73, 52, 0.06);
 }
 .rowCrackable .stolenHash {
-  color: #fb4934;
+  color: var(--color-red);
 }
 
 .rowSearched td {
   background: rgba(250, 189, 47, 0.1);
 }
 .rowSearched .stolenHash {
-  color: #fabd2f;
+  color: var(--color-yellow);
   font-weight: 700;
 }
 
@@ -94,10 +94,10 @@
 .lookupBtn {
   font-size: 0.68rem;
   padding: 0.15rem 0.4rem;
-  border: 1px solid #504945;
-  border-radius: 3px;
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: var(--radius-sm);
   background: transparent;
-  color: #928374;
+  color: var(--color-gray);
   cursor: pointer;
   white-space: nowrap;
   transition:
@@ -105,8 +105,8 @@
     color 0.1s;
 }
 .lookupBtn:hover:not(:disabled) {
-  border-color: #fabd2f;
-  color: #fabd2f;
+  border-color: var(--color-yellow);
+  color: var(--color-yellow);
 }
 .lookupBtn:disabled {
   opacity: 0.3;
@@ -116,7 +116,7 @@
 /* -- Crack summary ------------------------------------------------------- */
 .crackSummary {
   font-size: 0.78rem;
-  color: #928374;
+  color: var(--color-gray);
 }
 .crackCount {
   font-weight: 700;
@@ -127,7 +127,7 @@
 .calcBox {
   margin-top: 0.25rem;
   padding: 0.65rem 0.75rem;
-  border: 1px solid #3c3836;
+  border: 1px solid var(--color-bg-light);
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.15);
   display: flex;
@@ -140,7 +140,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #504945;
+  color: var(--color-bg-lighter);
 }
 
 .calcForm {
@@ -152,30 +152,30 @@
   flex: 1;
   padding: 0.3rem 0.5rem;
   font-size: 0.78rem;
-  border: 1px solid #504945;
-  border-radius: 4px;
-  background: #1d2021;
-  color: #ebdbb2;
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-dark);
+  color: var(--color-fg);
   font-family: inherit;
 }
 .calcInput:focus {
   outline: none;
-  border-color: #928374;
+  border-color: var(--color-gray);
 }
 
 .calcBtn {
   padding: 0.3rem 0.65rem;
   font-size: 0.78rem;
-  border: 1px solid #504945;
-  border-radius: 4px;
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
   background: transparent;
-  color: #928374;
+  color: var(--color-gray);
   cursor: pointer;
   white-space: nowrap;
 }
 .calcBtn:hover {
-  border-color: #83a598;
-  color: #83a598;
+  border-color: var(--color-blue);
+  color: var(--color-blue);
 }
 
 .calcResult {
@@ -185,14 +185,14 @@
 }
 .calcResultLabel {
   font-size: 0.65rem;
-  color: #504945;
+  color: var(--color-bg-lighter);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 .calcResultHash {
   font-family: monospace;
   font-size: 0.7rem;
-  color: #83a598;
+  color: var(--color-blue);
   word-break: break-all;
   line-height: 1.4;
 }
@@ -213,25 +213,25 @@
   flex: 1;
   padding: 0.35rem 0.5rem;
   font-size: 0.78rem;
-  border: 1px solid #504945;
-  border-radius: 4px;
-  background: #1d2021;
-  color: #ebdbb2;
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-dark);
+  color: var(--color-fg);
   font-family: inherit;
 }
 .addInput:focus {
   outline: none;
-  border-color: #fabd2f;
+  border-color: var(--color-yellow);
 }
 
 .addBtn {
   padding: 0.35rem 0.65rem;
   font-size: 1rem;
   font-weight: 700;
-  border: 1px solid #fabd2f;
-  border-radius: 4px;
+  border: 1px solid var(--color-yellow);
+  border-radius: var(--radius-md);
   background: transparent;
-  color: #fabd2f;
+  color: var(--color-yellow);
   cursor: pointer;
 }
 .addBtn:hover {
@@ -241,16 +241,16 @@
 .genBtn {
   font-size: 0.75rem;
   padding: 0.35rem 0.6rem;
-  border: 1px solid #504945;
-  border-radius: 4px;
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
   background: transparent;
-  color: #928374;
+  color: var(--color-gray);
   cursor: pointer;
   text-align: left;
 }
 .genBtn:hover {
-  border-color: #b8bb26;
-  color: #b8bb26;
+  border-color: var(--color-green);
+  color: var(--color-green);
 }
 
 /* -- Search result ------------------------------------------------------- */
@@ -260,18 +260,18 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.7rem;
-  border-radius: 5px;
+  border-radius: var(--radius-md);
   font-size: 0.82rem;
 }
 .resultFound {
   background: rgba(184, 187, 38, 0.1);
   border: 1px solid rgba(184, 187, 38, 0.4);
-  color: #b8bb26;
+  color: var(--color-green);
 }
 .resultNotFound {
   background: rgba(251, 73, 52, 0.08);
   border: 1px solid rgba(251, 73, 52, 0.3);
-  color: #fb4934;
+  color: var(--color-red);
 }
 .resultIcon {
   font-size: 1rem;
@@ -282,8 +282,8 @@
 .tableWrap {
   max-height: 260px;
   overflow-y: auto;
-  border: 1px solid #3c3836;
-  border-radius: 4px;
+  border: 1px solid var(--color-bg-light);
+  border-radius: var(--radius-md);
 }
 
 .rtTable {
@@ -295,26 +295,26 @@
 .rtTable th {
   position: sticky;
   top: 0;
-  background: #282828;
+  background: var(--color-bg);
   text-align: left;
   padding: 0.3rem 0.5rem;
   font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #928374;
+  color: var(--color-gray);
   font-weight: 600;
 }
 
 .rtTable td {
   padding: 0.25rem 0.5rem;
-  border-bottom: 1px solid #282828;
+  border-bottom: 1px solid var(--color-bg);
   vertical-align: middle;
 }
 
 .rtHash {
   font-family: monospace;
   font-size: 0.68rem;
-  color: #504945;
+  color: var(--color-bg-lighter);
   word-break: break-all;
 }
 
@@ -322,13 +322,13 @@
   background: rgba(184, 187, 38, 0.12);
 }
 .rtRowHit .rtHash {
-  color: #b8bb26;
+  color: var(--color-green);
   font-weight: 700;
 }
 
 .emptyNote {
   font-size: 0.78rem;
-  color: #504945;
+  color: var(--color-bg-lighter);
   font-style: italic;
   margin: 0;
 }

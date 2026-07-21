@@ -41,22 +41,22 @@
   font-size: 1.2rem;
   font-weight: 700;
   padding: 0.35rem 0.65rem;
-  border: 1.5px solid #504945;
-  border-radius: 5px;
+  border: 1.5px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
   background: transparent;
-  color: #ebdbb2;
+  color: var(--color-fg);
   width: 5.5rem;
   box-sizing: border-box;
   text-align: center;
 }
 .clockInput:focus {
   outline: none;
-  border-color: #fabd2f;
+  border-color: var(--color-yellow);
 }
 
 .clockOp {
   font-size: 1.1rem;
-  color: #928374;
+  color: var(--color-gray);
   padding-bottom: 0.35rem;
 }
 
@@ -64,7 +64,7 @@
   font-family: monospace;
   font-size: 1.8rem;
   font-weight: 700;
-  color: #fabd2f;
+  color: var(--color-yellow);
   padding-bottom: 0.1rem;
   min-width: 2rem;
   text-align: center;
@@ -90,7 +90,7 @@
 /* -- caption ------------------------------------------------------------- */
 .caption {
   font-size: 0.82rem;
-  color: #928374;
+  color: var(--color-gray);
   text-align: center;
   line-height: 1.6;
   max-width: 38rem;

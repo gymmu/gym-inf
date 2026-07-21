@@ -5,7 +5,7 @@
   align-items: center;
   background-color: var(--color-bg);
   padding: 20px;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--color-gray);
 }
 
@@ -80,7 +80,7 @@
   color: var(--color-red);
   padding: 1em;
   border: 2px solid var(--color-red);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   background-color: rgba(251, 73, 52, 0.15);
 }
 

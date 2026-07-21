@@ -18,10 +18,10 @@
   align-items: center;
   gap: 0.45rem;
   padding: 0.35rem 0.75rem 0.35rem 0.5rem;
-  border: 1.5px solid #3c3836;
+  border: 1.5px solid var(--color-bg-light);
   border-radius: 6px;
   background: transparent;
-  color: #928374;
+  color: var(--color-gray);
   cursor: pointer;
   font-size: 0.78rem;
   font-family: monospace;
@@ -35,18 +35,18 @@
 }
 
 .stepBtn:hover {
-  border-color: #504945;
-  color: #ebdbb2;
+  border-color: var(--color-bg-lighter);
+  color: var(--color-fg);
 }
 
 .stepBtnDone {
-  border-color: #504945;
-  color: #504945;
+  border-color: var(--color-bg-lighter);
+  color: var(--color-bg-lighter);
 }
 
 .stepBtnActive {
-  border-color: #fabd2f !important;
-  color: #fabd2f !important;
+  border-color: var(--color-yellow) !important;
+  color: var(--color-yellow) !important;
   background: rgba(250, 189, 47, 0.06) !important;
 }
 
@@ -57,7 +57,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #3c3836;
+  background: var(--color-bg-light);
   font-size: 0.68rem;
   font-weight: 700;
   color: inherit;
@@ -65,8 +65,8 @@
 }
 
 .stepBtnActive .stepNum {
-  background: #fabd2f;
-  color: #1d2021;
+  background: var(--color-yellow);
+  color: var(--color-bg-dark);
 }
 
 .stepLabel {
@@ -78,7 +78,7 @@
 .diagramWrap {
   padding: 1rem;
   background: rgba(255, 255, 255, 0.02);
-  border: 1.5px solid #3c3836;
+  border: 1.5px solid var(--color-bg-light);
   border-radius: 9px;
   min-height: 230px;
   display: flex;
@@ -96,33 +96,33 @@
 .descBox {
   padding: 0.65rem 0.9rem;
   border-radius: 7px;
-  border-left: 3px solid #504945;
+  border-left: 3px solid var(--color-bg-lighter);
   font-size: 0.82rem;
   line-height: 1.55;
-  color: #ebdbb2;
+  color: var(--color-fg);
 }
 
 .descBoxNeutral {
   background: rgba(255, 255, 255, 0.02);
-  border-left-color: #928374;
+  border-left-color: var(--color-gray);
 }
 
 .descBoxDanger {
   background: rgba(251, 73, 52, 0.07);
-  border-left-color: #fb4934;
-  color: #fb4934;
+  border-left-color: var(--color-red);
+  color: var(--color-red);
 }
 
 .descBoxWarn {
   background: rgba(254, 128, 25, 0.07);
-  border-left-color: #fe8019;
-  color: #fe8019;
+  border-left-color: var(--color-orange);
+  color: var(--color-orange);
 }
 
 .descBoxSuccess {
   background: rgba(184, 187, 38, 0.07);
-  border-left-color: #b8bb26;
-  color: #b8bb26;
+  border-left-color: var(--color-green);
+  color: var(--color-green);
 }
 
 /* -- insight row --------------------------------------------------------- */
@@ -137,7 +137,7 @@
   flex-direction: column;
   gap: 0.3rem;
   padding: 0.55rem 0.7rem;
-  border: 1.5px solid #3c3836;
+  border: 1.5px solid var(--color-bg-light);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.02);
 }
@@ -151,6 +151,6 @@
 
 .insightVal {
   font-size: 0.75rem;
-  color: #928374;
+  color: var(--color-gray);
   line-height: 1.4;
 }

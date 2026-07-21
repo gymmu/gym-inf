@@ -1,0 +1,688 @@
+/* === Layout Utilities === */
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.gap-xs {
+  gap: var(--space-xs);
+}
+
+.gap-sm {
+  gap: var(--space-sm);
+}
+
+.gap-md {
+  gap: var(--space-md);
+}
+
+.gap-lg {
+  gap: var(--space-lg);
+}
+
+.gap-xl {
+  gap: var(--space-xl);
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.mx-auto {
+  margin-inline: auto;
+}
+
+.mx-sm {
+  margin-inline: var(--space-sm);
+}
+
+.mx-md {
+  margin-inline: var(--space-md);
+}
+
+.mx-lg {
+  margin-inline: var(--space-lg);
+}
+
+.mx-xl {
+  margin-inline: var(--space-xl);
+}
+
+.my-sm {
+  margin-block: var(--space-sm);
+}
+
+.my-md {
+  margin-block: var(--space-md);
+}
+
+.my-lg {
+  margin-block: var(--space-lg);
+}
+
+.my-xl {
+  margin-block: var(--space-xl);
+}
+
+/* === Display Utilities === */
+
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+/* === Spacing Utilities === */
+
+.p-xs {
+  padding: var(--space-xs);
+}
+
+.p-sm {
+  padding: var(--space-sm);
+}
+
+.p-md {
+  padding: var(--space-md);
+}
+
+.p-lg {
+  padding: var(--space-lg);
+}
+
+.p-xl {
+  padding: var(--space-xl);
+}
+
+.px-sm {
+  padding-inline: var(--space-sm);
+}
+
+.px-md {
+  padding-inline: var(--space-md);
+}
+
+.px-lg {
+  padding-inline: var(--space-lg);
+}
+
+.px-xl {
+  padding-inline: var(--space-xl);
+}
+
+.px-2xl {
+  padding-inline: var(--space-2xl);
+}
+
+.py-sm {
+  padding-block: var(--space-sm);
+}
+
+.py-md {
+  padding-block: var(--space-md);
+}
+
+.py-lg {
+  padding-block: var(--space-lg);
+}
+
+.py-xl {
+  padding-block: var(--space-xl);
+}
+
+.m-xs {
+  margin: var(--space-xs);
+}
+
+.m-sm {
+  margin: var(--space-sm);
+}
+
+.m-md {
+  margin: var(--space-md);
+}
+
+.m-lg {
+  margin: var(--space-lg);
+}
+
+.m-xl {
+  margin: var(--space-xl);
+}
+
+.mt-sm {
+  margin-top: var(--space-sm);
+}
+
+.mt-md {
+  margin-top: var(--space-md);
+}
+
+.mt-lg {
+  margin-top: var(--space-lg);
+}
+
+.mt-xl {
+  margin-top: var(--space-xl);
+}
+
+.mb-xs {
+  margin-bottom: var(--space-xs);
+}
+
+.mb-sm {
+  margin-bottom: var(--space-sm);
+}
+
+.mb-md {
+  margin-bottom: var(--space-md);
+}
+
+.mb-lg {
+  margin-bottom: var(--space-lg);
+}
+
+.mb-xl {
+  margin-bottom: var(--space-xl);
+}
+
+/* === Typography Utilities === */
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.font-mono {
+  font-family: "Courier New", Courier, monospace;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-muted {
+  color: var(--color-gray);
+}
+
+.text-yellow {
+  color: var(--color-yellow);
+}
+
+.text-red {
+  color: var(--color-red);
+}
+
+.text-green {
+  color: var(--color-green);
+}
+
+.text-blue {
+  color: var(--color-blue);
+}
+
+.text-purple {
+  color: var(--color-purple);
+}
+
+.text-orange {
+  color: var(--color-orange);
+}
+
+.text-white {
+  color: var(--color-white);
+}
+
+/* === Button Utilities === */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border: var(--border-width) solid var(--border-color-subtle);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-lighter);
+  color: var(--color-fg);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background-color: var(--color-bg-light);
+  border-color: var(--color-gray-light);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  border-color: var(--color-blue);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-purple);
+  border-color: var(--color-purple);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-fg);
+  border-color: var(--border-color-subtle);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-bg-lighter);
+}
+
+.btn-sm {
+  padding: var(--space-2xs) var(--space-xs);
+  font-size: 0.75rem;
+}
+
+.btn-lg {
+  padding: var(--space-md) var(--space-lg);
+  font-size: 1rem;
+}
+
+/* === Card / Panel Utilities === */
+
+.card {
+  padding: var(--space-lg);
+  border: var(--border-width) solid var(--border-color-subtle);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-hover {
+  transition: box-shadow var(--transition-base);
+}
+
+.card-hover:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.panel {
+  padding: var(--space-md);
+  border: var(--border-width) solid var(--border-color-subtle);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+}
+
+/* === Badge / Tag Utilities === */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-yellow {
+  color: var(--color-orange);
+  background-color: rgba(254, 128, 25, 0.15);
+  border: 1px solid rgba(254, 128, 25, 0.3);
+}
+
+.badge-blue {
+  color: var(--color-blue);
+  background-color: rgba(131, 165, 152, 0.15);
+  border: 1px solid rgba(131, 165, 152, 0.3);
+}
+
+.badge-green {
+  color: var(--color-green);
+  background-color: rgba(184, 187, 38, 0.15);
+  border: 1px solid rgba(184, 187, 38, 0.3);
+}
+
+.badge-red {
+  color: var(--color-red);
+  background-color: rgba(251, 73, 52, 0.15);
+  border: 1px solid rgba(251, 73, 52, 0.3);
+}
+
+/* === Border Utilities === */
+
+.border {
+  border: var(--border-width) solid var(--border-color-subtle);
+}
+
+.border-top {
+  border-top: var(--border-width) solid var(--border-color-subtle);
+}
+
+.border-bottom {
+  border-bottom: var(--border-width) solid var(--border-color-subtle);
+}
+
+.border-rounded {
+  border-radius: var(--radius-md);
+}
+
+/* === Background Utilities === */
+
+.bg-card {
+  background-color: var(--color-bg-light);
+}
+
+.bg-muted {
+  background-color: var(--color-bg-lighter);
+}
+
+.bg-dark {
+  background-color: var(--color-bg-dark);
+}
+
+/* === Overflow Utilities === */
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* === Position Utilities === */
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.sticky {
+  position: sticky;
+}
+
+/* === Animation Utilities === */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in var(--transition-slow) ease forwards;
+}
+
+.animate-fade-out {
+  animation: fade-out var(--transition-slow) ease forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up var(--transition-base) ease forwards;
+}
+
+.animate-slide-down {
+  animation: slide-down var(--transition-base) ease forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* === Skeleton / Loading Utilities === */
+
+.skeleton-box {
+  background: linear-gradient(
+    90deg,
+    var(--color-gray-darker) 0%,
+    var(--color-gray) 50%,
+    var(--color-gray-darker) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* === Focus Utilities === */
+
+.focus-visible-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 2px;
+  }
+}
+
+/* === Scrollbar Global === */
+
+::-webkit-scrollbar {
+  width: clamp(5px, 0.5em, 10px);
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gray-darker);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-yellow);
+  border-radius: var(--radius-full);
+}
+
+/* === Focus Ring === */
+
+*:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+/* === Selection === */
+
+::selection {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+/* === Responsive Utilities === */
+
+@media (width < 820px) {
+  .sm\:hidden {
+    display: none;
+  }
+
+  .sm\:block {
+    display: block;
+  }
+
+  .sm\:flex {
+    display: flex;
+  }
+
+  .sm\:flex-col {
+    flex-direction: column;
+  }
+
+  .sm\:p-sm {
+    padding: var(--space-sm);
+  }
+
+  .sm\:px-sm {
+    padding-inline: var(--space-sm);
+  }
+
+  .sm\:mx-auto {
+    margin-inline: auto;
+  }
+}
+
+@media (width < 450px) {
+  .xs\:hidden {
+    display: none;
+  }
+
+  .xs\:block {
+    display: block;
+  }
+
+  .xs\:text-sm {
+    font-size: 0.875rem;
+  }
+}

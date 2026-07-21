@@ -8,9 +8,9 @@
 .svg {
   width: 100%;
   height: auto;
-  background: var(--color-bg-dark, #1d2021);
-  border: 1px solid #3c3836;
-  border-radius: 8px;
+  background: var(--color-bg-dark, var(--color-bg-dark));
+  border: 1px solid var(--color-bg-light);
+  border-radius: var(--radius-lg);
 }
 
 /* Controls */
@@ -28,10 +28,10 @@
 }
 
 .scenarioBtn {
-  background: #3c3836;
-  border: 1px solid #504945;
-  color: #ebdbb2;
-  border-radius: 4px;
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-bg-lighter);
+  color: var(--color-fg);
+  border-radius: var(--radius-md);
   padding: 0.25rem 0.6rem;
   font-size: 0.8rem;
   cursor: pointer;
@@ -41,7 +41,7 @@
 }
 
 .scenarioBtn:hover:not(:disabled) {
-  background: #504945;
+  background: var(--color-bg-lighter);
 }
 
 .scenarioBtn:disabled {
@@ -50,16 +50,16 @@
 }
 
 .scenarioBtnActive {
-  border-color: #83a598;
-  color: #83a598;
+  border-color: var(--color-blue);
+  color: var(--color-blue);
   font-weight: 700;
 }
 
 .playBtn {
-  background: #fabd2f;
-  color: #1d2021;
+  background: var(--color-yellow);
+  color: var(--color-bg-dark);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   padding: 0.3rem 0.85rem;
   font-size: 0.82rem;
   font-weight: 700;
@@ -97,13 +97,13 @@
 
 .natTable th,
 .natTable td {
-  border: 1px solid #3c3836;
+  border: 1px solid var(--color-bg-light);
   padding: 0.3rem 0.7rem;
   text-align: left;
 }
 
 .natTable th {
-  background: #282828;
+  background: var(--color-bg);
   color: #a89984;
   font-weight: 600;
   font-size: 0.78rem;
@@ -111,18 +111,18 @@
 
 .natTable td code {
   font-size: 0.78rem;
-  color: #83a598;
+  color: var(--color-blue);
 }
 
 .activeRow td {
   background: rgba(254, 128, 25, 0.15);
-  border-color: #fe8019;
+  border-color: var(--color-orange);
   transition:
     background 0.3s,
     border-color 0.3s;
 }
 
 .activeRow td code {
-  color: #fe8019;
+  color: var(--color-orange);
   font-weight: 700;
 }

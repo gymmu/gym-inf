@@ -22,7 +22,7 @@
   background: var(--color-bg-lighter);
   color: var(--color-fg);
   border: 1px solid var(--color-bg-lighter);
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   padding: 0.3rem 0.8rem;
   font-size: 0.82rem;
   font-family: inherit;
@@ -89,7 +89,7 @@
 .field {
   background: rgba(0, 0, 0, 0.18);
   border: 1.5px solid;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   padding: 0.3rem 0.55rem;
   cursor: pointer;
   transition:
@@ -171,7 +171,7 @@
   background: var(--color-bg-lighter);
   color: var(--color-green);
   padding: 0.1em 0.4em;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
 }
 

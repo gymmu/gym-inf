@@ -14,15 +14,15 @@
     justify-content: flex-start;
     font-weight: 700;
     padding-block: 0rem;
-    padding-inline: 2rem;
+    padding-inline: var(--space-xl);
     border-bottom: 2px solid var(--color-fg);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-md);
     overflow-x: hidden;
 
     @container (width < 450px) {
       & {
-        padding-inline: 1rem;
-        padding-block: 0.5rem;
+        padding-inline: var(--space-md);
+        padding-block: var(--space-sm);
       }
       @container (width < 330px) {
         & {
@@ -41,7 +41,7 @@
       color: var(--color-yellow);
       flex-grow: 1; /* Damit der Text zentriert bleibt. */
       flex-shrink: 0; /* Damit alles auf einer Zeile bleibt. */
-      margin-block: 0.5rem;
+      margin-block: var(--space-sm);
 
       @container (width < 400px) {
         & {

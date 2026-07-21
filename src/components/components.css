@@ -1,7 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
 pre {
   display: inline;
 }
@@ -49,7 +45,7 @@ pre:has(code) {
   text-align: center;
   background-color: inherit;
   border: 5px solid var(--background-color);
-  padding: 0.5rem;
+  padding: var(--space-sm);
   font-size: 1.5rem;
 }
 
@@ -102,13 +98,18 @@ pre:has(code) {
 
 /* Class for small margins */
 .sm {
-  margin: 0.25rem 0;
+  margin: var(--space-xs) 0;
 }
 
 /* Diesen Hack brauchen wir, damit der Monaco-Editor in RevealJS richtig
-angezeigt wird. */
+ angezeigt wird. */
 .monaco-editor {
   height: 300px !important;
+}
+
+/* Legacy class - use .mx-auto instead */
+.center {
+  margin-inline: auto;
 }
 
 /* Dieser Hack verschiebt den Monaco-Editor an die richtige Stelle in RevealJS

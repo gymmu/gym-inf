@@ -1,10 +1,10 @@
 /* -- color tokens -------------------------------------------------------- */
 :root {
-  --c-alice: #83a598;
-  --c-bob: #d3869b;
-  --c-shared: #b8bb26;
-  --c-eve: #fb4934;
-  --c-secret: #fe8019;
+  --c-alice: var(--color-blue);
+  --c-bob: var(--color-purple);
+  --c-shared: var(--color-green);
+  --c-eve: var(--color-red);
+  --c-secret: var(--color-orange);
 }
 
 /* -- root ---------------------------------------------------------------- */
@@ -36,14 +36,14 @@
   flex-wrap: wrap;
   padding: 0.55rem 0.8rem;
   background: rgba(255, 255, 255, 0.025);
-  border: 1px solid #3c3836;
+  border: 1px solid var(--color-bg-light);
   border-radius: 6px;
 }
 
 .inputDivider {
   width: 1px;
   align-self: stretch;
-  background: #504945;
+  background: var(--color-bg-lighter);
   margin: 0 0.25rem;
 }
 
@@ -63,7 +63,7 @@
   font-family: monospace;
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--color-fg, #ebdbb2);
+  color: var(--color-fg, var(--color-fg));
 }
 
 .varDesc {
@@ -76,21 +76,21 @@
   font-family: monospace;
   font-size: 0.92rem;
   padding: 0.3rem 0.55rem;
-  border: 1.5px solid #504945;
-  border-radius: 4px;
+  border: 1.5px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
   background: transparent;
-  color: var(--color-fg, #ebdbb2);
+  color: var(--color-fg, var(--color-fg));
   width: 5.5rem;
   box-sizing: border-box;
 }
 
 .input:focus {
   outline: none;
-  border-color: #83a598;
+  border-color: var(--color-blue);
 }
 
 .inputErr {
-  border-color: #fb4934 !important;
+  border-color: var(--color-red) !important;
 }
 
 /* -- stale / overlay ----------------------------------------------------- */
@@ -116,7 +116,7 @@
   background: rgba(29, 32, 33, 0.9);
   border: 1.5px solid rgba(251, 73, 52, 0.55);
   border-radius: 6px;
-  color: #fb4934;
+  color: var(--color-red);
   font-size: 0.82rem;
   text-align: center;
   pointer-events: none;
@@ -127,7 +127,7 @@
   width: 1.6rem;
   height: 1.6rem;
   border-radius: 50%;
-  border: 2px solid #fb4934;
+  border: 2px solid var(--color-red);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -147,7 +147,7 @@
 /* -- person boxes -------------------------------------------------------- */
 .person {
   border-radius: 7px;
-  border: 1.5px solid #504945;
+  border: 1.5px solid var(--color-bg-lighter);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -166,7 +166,7 @@
   font-size: 1rem;
   text-align: center;
   background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1.5px solid #3c3836;
+  border-bottom: 1.5px solid var(--color-bg-light);
   letter-spacing: 0.05em;
 }
 
@@ -217,7 +217,7 @@
 
 .divider {
   height: 1px;
-  background: #3c3836;
+  background: var(--color-bg-light);
   margin: 0.1rem 0;
 }
 
@@ -229,7 +229,7 @@
   gap: 0.5rem;
   padding: 0.5rem 0.55rem;
   background: rgba(255, 255, 255, 0.015);
-  border: 1px dashed #504945;
+  border: 1px dashed var(--color-bg-lighter);
   border-radius: 7px;
 }
 
@@ -243,7 +243,7 @@
 
 .channelDivider {
   height: 1px;
-  background: #3c3836;
+  background: var(--color-bg-light);
   flex-shrink: 0;
 }
 
@@ -261,7 +261,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 0.15rem 0.5rem;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
   white-space: nowrap;
 }
 
@@ -289,7 +289,7 @@
   padding: 0.45rem 0.5rem;
   background: rgba(251, 73, 52, 0.06);
   border: 1px solid rgba(251, 73, 52, 0.3);
-  border-radius: 5px;
+  border-radius: var(--radius-md);
   text-align: center;
 }
 

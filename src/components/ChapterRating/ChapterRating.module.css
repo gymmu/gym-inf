@@ -1,15 +1,15 @@
 .container {
-  margin-top: 3rem;
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  border: 1px solid var(--color-gray);
-  border-radius: 8px;
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  border: var(--border-width) solid var(--color-gray);
+  border-radius: var(--radius-lg);
   text-align: center;
   background-color: hsl(from var(--color-bg) h s calc(l + 3));
 }
 
 .title {
-  margin: 0 0 1rem;
+  margin: 0 0 var(--space-md);
   font-size: 1.1rem;
   color: var(--color-fg);
   font-weight: normal;
@@ -18,20 +18,20 @@
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: var(--space-lg);
 }
 
 .ratingButton {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 1.2rem;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-2xs);
   border: 2px solid transparent;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   background: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   color: var(--color-fg);
   font-family: inherit;
   font-size: 0.85rem;
@@ -44,8 +44,8 @@
 .dot {
   width: 24px;
   height: 24px;
-  border-radius: 50%;
-  transition: transform 0.2s ease;
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-base);
 }
 
 .ratingButton:hover .dot {

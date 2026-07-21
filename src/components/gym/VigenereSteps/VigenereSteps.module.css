@@ -28,7 +28,7 @@
   font-size: 0.95rem;
   padding: 0.35rem 0.6rem;
   border: 1px solid var(--color-gray);
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   background-color: transparent;
   color: var(--color-fg);
   width: 100%;
@@ -109,7 +109,7 @@
   padding: 0.55rem 0.9rem;
   background-color: rgba(108, 92, 231, 0.08);
   border: 1px solid rgba(108, 92, 231, 0.3);
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   font-family: monospace;
   margin-bottom: 0.7rem;
 }

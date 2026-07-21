@@ -8,9 +8,9 @@
 .svg {
   width: 100%;
   height: auto;
-  background: var(--color-bg-dark, #1d2021);
-  border: 1px solid #3c3836;
-  border-radius: 8px;
+  background: var(--color-bg-dark, var(--color-bg-dark));
+  border: 1px solid var(--color-bg-light);
+  border-radius: var(--radius-lg);
 }
 
 /* Controls */
@@ -28,10 +28,10 @@
 }
 
 .scenarioBtn {
-  background: #3c3836;
-  border: 1px solid #504945;
-  color: #ebdbb2;
-  border-radius: 4px;
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-bg-lighter);
+  color: var(--color-fg);
+  border-radius: var(--radius-md);
   padding: 0.25rem 0.6rem;
   font-size: 0.8rem;
   cursor: pointer;
@@ -41,7 +41,7 @@
 }
 
 .scenarioBtn:hover:not(:disabled) {
-  background: #504945;
+  background: var(--color-bg-lighter);
 }
 
 .scenarioBtn:disabled {
@@ -50,16 +50,16 @@
 }
 
 .scenarioBtnActive {
-  border-color: #83a598;
-  color: #83a598;
+  border-color: var(--color-blue);
+  color: var(--color-blue);
   font-weight: 700;
 }
 
 .playBtn {
-  background: #83a598;
-  color: #1d2021;
+  background: var(--color-blue);
+  color: var(--color-bg-dark);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   padding: 0.3rem 0.85rem;
   font-size: 0.82rem;
   font-weight: 700;
@@ -85,8 +85,8 @@
 }
 
 .panel {
-  background: #1d2021;
-  border: 1px solid #3c3836;
+  background: var(--color-bg-dark);
+  border: 1px solid var(--color-bg-light);
   border-radius: 6px;
   padding: 0.6rem 0.75rem;
   opacity: 0;
@@ -120,14 +120,14 @@
 .headerRow {
   font-family: monospace;
   font-size: 0.78rem;
-  color: #ebdbb2;
+  color: var(--color-fg);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .headerMethod {
-  color: #83a598;
+  color: var(--color-blue);
   font-weight: 700;
 }
 
@@ -140,13 +140,13 @@
 }
 
 .headerValue {
-  color: #ebdbb2;
+  color: var(--color-fg);
 }
 
 .bodyRow {
   margin-top: 0.3rem;
   padding-top: 0.3rem;
-  border-top: 1px solid #3c3836;
+  border-top: 1px solid var(--color-bg-light);
   font-family: monospace;
   font-size: 0.78rem;
 }
@@ -157,5 +157,5 @@
 }
 
 .bodyValue {
-  color: #fe8019;
+  color: var(--color-orange);
 }

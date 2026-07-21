@@ -1,6 +1,6 @@
 /* Container für die gesamte Komponente */
 .container {
-  margin-block: 1rem;
+  margin-block: var(--space-md);
   width: min(540px, calc(100vw - 42px));
   min-width: min(540px, calc(100vw - 42px));
   margin-inline: auto;
@@ -13,19 +13,19 @@
 .codeBlockContainer {
   width: 100%;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  background-color: #1d2021; /* Gruvbox darker bg */
+  box-shadow: var(--shadow-md);
+  background-color: var(--color-bg-dark);
 }
 
 /* Erster Block (Beispiel) */
 .codeBlockContainer:first-child {
-  border-radius: 8px 8px 0 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 /* Zweiter Block (Hinweis/Lösung) */
 .codeBlockContainer:last-child {
-  border-radius: 0 0 8px 8px;
-  border-top: 2px solid #504945; /* Trennlinie zwischen den Blöcken */
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-top: 2px solid var(--color-bg-lighter);
 }
 
 /* Header mit Buttons oder Language Badge */
@@ -33,9 +33,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background-color: #1d2021; /* Gruvbox darker bg */
-  border-bottom: 1px solid #3c3836; /* Gruvbox bg2 */
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-bg-dark);
+  border-bottom: var(--border-width) solid var(--color-bg-light);
   min-height: 40px;
 }
 
@@ -43,76 +43,76 @@
 .leftHeader {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-sm);
 }
 
 /* Language Badge */
 .language {
-  font-size: 0.75rem;
+  font-size: var(--space-xs);
   font-weight: 600;
   text-transform: uppercase;
-  color: #928374; /* Gruvbox gray */
+  color: var(--color-gray);
   letter-spacing: 0.05em;
   font-family: "Courier New", Courier, monospace;
 }
 
 /* Example Badge */
 .exampleBadge {
-  font-size: 0.75rem;
+  font-size: var(--space-xs);
   font-weight: 600;
   text-transform: uppercase;
-  color: #83a598; /* Gruvbox blue */
+  color: var(--color-blue);
   background-color: rgba(131, 165, 152, 0.15);
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-md);
   letter-spacing: 0.05em;
   border: 1px solid rgba(131, 165, 152, 0.3);
 }
 
 /* Hint Badge */
 .hintBadge {
-  font-size: 0.75rem;
+  font-size: var(--space-xs);
   font-weight: 600;
   text-transform: uppercase;
-  color: #fabd2f; /* Gruvbox yellow */
+  color: var(--color-yellow);
   background-color: rgba(250, 189, 47, 0.15);
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-md);
   letter-spacing: 0.05em;
   border: 1px solid rgba(250, 189, 47, 0.3);
 }
 
 /* Solution Badge */
 .solutionBadge {
-  font-size: 0.75rem;
+  font-size: var(--space-xs);
   font-weight: 600;
   text-transform: uppercase;
-  color: #b8bb26; /* Gruvbox green */
+  color: var(--color-green);
   background-color: rgba(184, 187, 38, 0.15);
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-md);
   letter-spacing: 0.05em;
   border: 1px solid rgba(184, 187, 38, 0.3);
 }
 
 /* Hint Button */
 .hintButton {
-  padding: 0.4rem 0.9rem;
+  padding: var(--space-sm) var(--space-md);
   font-size: 0.85rem;
-  background-color: #fabd2f; /* Gruvbox yellow */
-  color: #1d2021;
+  background-color: var(--color-yellow);
+  color: var(--color-bg-dark);
   border: none;
-  border-radius: 5px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   font-weight: 600;
   font-family: inherit;
 }
 
 .hintButton:hover {
-  background-color: #d79921; /* Darker yellow */
+  background-color: #d79921;
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-sm);
 }
 
 .hintButton:active {
@@ -121,22 +121,22 @@
 
 /* Solution Button */
 .solutionButton {
-  padding: 0.4rem 0.9rem;
+  padding: var(--space-sm) var(--space-md);
   font-size: 0.85rem;
-  background-color: #b8bb26; /* Gruvbox green */
-  color: #1d2021;
+  background-color: var(--color-green);
+  color: var(--color-bg-dark);
   border: none;
-  border-radius: 5px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   font-weight: 600;
   font-family: inherit;
 }
 
 .solutionButton:hover {
-  background-color: #98971a; /* Darker green */
+  background-color: #98971a;
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-sm);
 }
 
 .solutionButton:active {
@@ -144,54 +144,54 @@
 }
 
 .solutionButton.locked {
-  background-color: #504945; /* Gruvbox bg3 */
-  color: #fb4934; /* Gruvbox red */
+  background-color: var(--color-bg-lighter);
+  color: var(--color-red);
   cursor: not-allowed;
   opacity: 0.7;
 }
 
 .solutionButton.locked:hover {
-  background-color: #504945;
+  background-color: var(--color-bg-lighter);
   transform: none;
   box-shadow: none;
 }
 
 /* Timer Display */
 .timer {
-  font-size: 0.75rem;
+  font-size: var(--space-xs);
   font-weight: 600;
-  color: #fabd2f; /* Gruvbox yellow */
+  color: var(--color-yellow);
   font-family: "Courier New", Courier, monospace;
   background-color: rgba(250, 189, 47, 0.15);
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-md);
   border: 1px solid rgba(250, 189, 47, 0.3);
 }
 
 /* Close Button */
 .closeButton {
-  padding: 0.2rem 0.5rem;
+  padding: var(--space-2xs) var(--space-sm);
   font-size: 0.9rem;
   background-color: transparent;
-  color: #fb4934; /* Gruvbox red */
-  border: 1px solid #fb4934;
-  border-radius: 4px;
+  color: var(--color-red);
+  border: var(--border-width) solid var(--color-red);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   font-weight: 600;
   font-family: inherit;
   line-height: 1;
 }
 
 .closeButton:hover {
-  background-color: #fb4934;
-  color: #1d2021;
+  background-color: var(--color-red);
+  color: var(--color-bg-dark);
 }
 
 /* Progress Bar für Lösung */
 .progressBar {
   height: 3px;
-  background-color: #3c3836; /* Gruvbox bg2 */
+  background-color: var(--color-bg-light);
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -201,9 +201,9 @@
   height: 100%;
   background: linear-gradient(
     90deg,
-    #b8bb26,
-    #fabd2f
-  ); /* Gruvbox green to yellow */
+    var(--color-green),
+    var(--color-yellow)
+  );
   transition: width 1s linear;
 }
 
@@ -224,21 +224,21 @@
 
 /* Copy Button */
 .copyButton {
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  background-color: #3c3836; /* Gruvbox bg2 */
-  color: #ebdbb2; /* Gruvbox fg */
-  border: 1px solid #504945; /* Gruvbox bg3 */
-  border-radius: 4px;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--space-xs);
+  background-color: var(--color-bg-light);
+  color: var(--color-fg);
+  border: var(--border-width) solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   font-family: inherit;
   font-weight: 500;
 }
 
 .copyButton:hover {
-  background-color: #504945; /* Gruvbox bg3 */
-  border-color: #665c54; /* Gruvbox bg4 */
+  background-color: var(--color-bg-lighter);
+  border-color: var(--color-bg-lighter);
 }
 
 .copyButton:active {
@@ -246,7 +246,7 @@
 }
 
 .copyButton:focus {
-  outline: 2px solid #83a598; /* Gruvbox blue */
+  outline: 2px solid var(--color-blue);
   outline-offset: 2px;
 }
 
@@ -256,19 +256,19 @@
 }
 
 .codeBlockContainer :global(pre)::-webkit-scrollbar-track {
-  background: #1d2021;
+  background: var(--color-bg-dark);
 }
 
 .codeBlockContainer :global(pre)::-webkit-scrollbar-thumb {
-  background: #504945;
-  border-radius: 4px;
+  background: var(--color-bg-lighter);
+  border-radius: var(--radius-full);
 }
 
 .codeBlockContainer :global(pre)::-webkit-scrollbar-thumb:hover {
-  background: #665c54;
+  background: var(--color-gray);
 }
 
 .codeBlockContainer :global(pre) {
   scrollbar-width: thin;
-  scrollbar-color: #504945 #1d2021;
+  scrollbar-color: var(--color-bg-lighter) var(--color-bg-dark);
 }
