@@ -4,17 +4,6 @@ import { createBrowserRouter, Link } from "react-router-dom"
 // Critical components: Normal import (always needed)
 import Layout from "@components/Layout"
 
-// Auth pages: Lazy loading
-const Login = lazy(() => import("@/auth/Login.jsx"))
-const Register = lazy(() => import("@/auth/Register.jsx"))
-const ForgotPassword = lazy(() => import("@/auth/ForgotPassword.jsx"))
-const ResetPassword = lazy(() => import("@/auth/ResetPassword.jsx"))
-const VerifyEmail = lazy(() => import("@/auth/VerifyEmail.jsx"))
-const ProtectedDemo = lazy(() => import("@/pages/auth/ProtectedDemo.jsx"))
-
-// Auth wrapper for protected routes
-import ProtectedRoute from "@/auth/ProtectedRoute.jsx"
-
 // All pages: Lazy loading
 const Colors = lazy(() => import("@pages/colors.mdx"))
 const GymCSS = lazy(() => import("@pages/css.mdx"))
@@ -148,11 +137,6 @@ const BoxModel = lazy(() => import("../components/BoxModel"))
 const CodePen = lazy(() => import("../components/CodePen"))
 const CodePenSVG = lazy(() => import("../components/CodePenSVG"))
 const RegexEditor = lazy(() => import("../components/RegexEditor"))
-
-// Admin pages
-const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboard.jsx"))
-const ClassManagement = lazy(() => import("@/pages/admin/ClassManagement.jsx"))
-const ClassOverview = lazy(() => import("@/pages/admin/ClassOverview.jsx"))
 
 // Route configuration as plain objects (SSG-compatible)
 export const routes = [
@@ -331,52 +315,6 @@ export const routes = [
 
       { path: "path-editor", element: <Path /> },
 
-      // Auth routes
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
-      { path: "forgot-password", element: <ForgotPassword /> },
-      { path: "reset-password/:token", element: <ResetPassword /> },
-      { path: "verify-email/:token", element: <VerifyEmail /> },
-
-      // AuthWrapper Demo (public - shows wrapped content)
-      { path: "auth-demo", element: <ProtectedDemo /> },
-
-      // Protected route example (redirects to login if not authenticated)
-      {
-        path: "protected",
-        element: (
-          <ProtectedRoute>
-            <ProtectedDemo />
-          </ProtectedRoute>
-        ),
-      },
-
-      // Admin routes (protected)
-      {
-        path: "admin",
-        element: (
-          <ProtectedRoute>
-            <AdminDashboard />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "admin/classes",
-        element: (
-          <ProtectedRoute>
-            <ClassManagement />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "admin/classes/:id",
-        element: (
-          <ProtectedRoute>
-            <ClassOverview />
-          </ProtectedRoute>
-        ),
-      },
-
       // Was passiert wenn die Route falsch ist.
       {
         path: "*", // Catch-all route for invalid paths
@@ -408,14 +346,7 @@ export const getAllRoutePaths = () => {
           !child.path.includes("codepen") &&
           !child.path.includes("regexeditor") &&
           !child.path.includes("boxmodel") &&
-          !child.path.includes("path-editor") &&
-          !child.path.includes("login") &&
-          !child.path.includes("register") &&
-          !child.path.includes("forgot-password") &&
-          !child.path.includes("reset-password") &&
-          !child.path.includes("verify-email") &&
-          !child.path.includes("auth-demo") &&
-          !child.path.includes("protected")
+          !child.path.includes("path-editor")
         ) {
           // Normalize paths (remove leading slash for consistency)
           const normalizedPath = child.path.startsWith("/")

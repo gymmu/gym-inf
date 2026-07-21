@@ -3,15 +3,14 @@
 ## Build, Lint, and Test Commands
 
 - **Build**: Do not run a build, I will run the build on my own if needed
-- **Lint**: `npm run lint`
+- **Lint**: `npx @biomejs/biome check .`
 - **Run Tests**: Do not run any tests.
 
 ## Code Style Guidelines
 
 - **Imports**: Group imports logically (external libraries, internal components,
   styles).
-- **Formatting**: Use Prettier for consistent formatting. Run `npm run lint` to
-  check.
+- **Formatting**: Use Biome for consistent formatting. Run `npx @biomejs/biome check .` to check.
 - **Types**: Use TypeScript where applicable. Ensure all components have defined
   prop types.
 - **Naming Conventions**: Use camelCase for variables and functions, PascalCase

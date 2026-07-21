@@ -2,80 +2,49 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
   useCallback,
 } from "react"
-import { useAuth } from "./AuthContext"
-import * as progressApi from "../services/progressApi"
+
+const STORAGE_KEY = "gym-inf-progress"
 
 const ProgressContext = createContext(null)
 
+function loadProgress() {
+  try {
+    const data = localStorage.getItem(STORAGE_KEY)
+    return data ? JSON.parse(data) : {}
+  } catch {
+    return {}
+  }
+}
+
+function saveProgress(progress) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
+  } catch {
+    // ignore
+  }
+}
+
 export function ProgressProvider({ children }) {
-  // Map of chapterSlug -> understandingLevel (1, 2, 3)
-  const [progress, setProgress] = useState({})
-  const [loading, setLoading] = useState(false)
-  const { isAuthenticated } = useAuth()
+  const [progress, setProgress] = useState(loadProgress)
 
-  const fetchProgress = useCallback(async () => {
-    if (!isAuthenticated) {
-      setProgress({})
-      return
-    }
+  const updateRating = useCallback((chapterSlug, level) => {
+    setProgress((prev) => {
+      const next = { ...prev, [chapterSlug]: level }
+      saveProgress(next)
+      return next
+    })
+  }, [])
 
-    setLoading(true)
-    try {
-      const data = await progressApi.getAllProgress()
-      setProgress(data.progress || {})
-    } catch {
-      // Silently fail - progress indicators just won't show
-      setProgress({})
-    } finally {
-      setLoading(false)
-    }
-  }, [isAuthenticated])
-
-  // Fetch progress when user logs in/out
-  useEffect(() => {
-    fetchProgress()
-  }, [fetchProgress])
-
-  const updateRating = useCallback(
-    async (chapterSlug, level) => {
-      if (!isAuthenticated) return
-
-      // Optimistic update
-      setProgress((prev) => ({ ...prev, [chapterSlug]: level }))
-
-      try {
-        await progressApi.updateChapterRating(chapterSlug, level)
-      } catch {
-        // Revert on failure
-        fetchProgress()
-      }
-    },
-    [isAuthenticated, fetchProgress],
-  )
-
-  const removeRating = useCallback(
-    async (chapterSlug) => {
-      if (!isAuthenticated) return
-
-      // Optimistic update
-      setProgress((prev) => {
-        const next = { ...prev }
-        delete next[chapterSlug]
-        return next
-      })
-
-      try {
-        await progressApi.removeChapterRating(chapterSlug)
-      } catch {
-        // Revert on failure
-        fetchProgress()
-      }
-    },
-    [isAuthenticated, fetchProgress],
-  )
+  const removeRating = useCallback((chapterSlug) => {
+    setProgress((prev) => {
+      const next = { ...prev }
+      delete next[chapterSlug]
+      saveProgress(next)
+      return next
+    })
+  }, [])
 
   const getRating = useCallback(
     (chapterSlug) => {
@@ -86,11 +55,10 @@ export function ProgressProvider({ children }) {
 
   const value = {
     progress,
-    loading,
+    loading: false,
     updateRating,
     removeRating,
     getRating,
-    fetchProgress,
   }
 
   return (

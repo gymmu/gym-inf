@@ -9,12 +9,10 @@ import ChapterRating from "@components/ChapterRating/ChapterRating"
 import { useNavContext, NavContext } from "@context/NavContext"
 import { useAppContext, AppProvider } from "@context/AppContext"
 import { NavProvider } from "@context/NavContext"
-import { AuthProvider } from "@context/AuthContext"
 import { ProgressProvider } from "@context/ProgressContext"
 
 import style from "@components/Layout.module.css"
 
-// Inner layout component with context hooks
 function LayoutContent() {
   const [classes, setClasses] = useState("")
   const { fullscreen, setFullscreen, menuVisible } = useAppContext()
@@ -59,16 +57,13 @@ function LayoutContent() {
   )
 }
 
-// Layout component with context providers
 export default function Layout() {
   return (
     <AppProvider>
       <NavProvider>
-        <AuthProvider>
-          <ProgressProvider>
-            <LayoutContent />
-          </ProgressProvider>
-        </AuthProvider>
+        <ProgressProvider>
+          <LayoutContent />
+        </ProgressProvider>
       </NavProvider>
     </AppProvider>
   )

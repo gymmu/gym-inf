@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom"
-import { useAuth } from "@context/AuthContext"
 import { useProgress } from "@context/ProgressContext"
 import style from "./ChapterRating.module.css"
 
@@ -24,16 +23,9 @@ const levels = [
   },
 ]
 
-// Routes where the rating should not appear
 const excludedPaths = [
-  "login",
-  "register",
-  "forgot-password",
-  "reset-password",
-  "verify-email",
   "auth-demo",
   "protected",
-  "admin",
   "codepen",
   "codepensvg",
   "regexeditor",
@@ -57,15 +49,11 @@ function getSlugFromPath(pathname) {
 }
 
 export default function ChapterRating() {
-  const { isAuthenticated } = useAuth()
   const { getRating, updateRating } = useProgress()
   const location = useLocation()
 
-  if (!isAuthenticated) return null
-
   const slug = getSlugFromPath(location.pathname)
 
-  // Don't show on empty slug (home) or excluded paths
   if (!slug || excludedPaths.some((p) => slug.startsWith(p))) return null
 
   const currentRating = getRating(slug)
