@@ -187,23 +187,7 @@ export default defineConfig({
   },
   base: process.env.VITE_BASE_PATH || "/gym-inf/",
   server: {
-    // Allow access from Docker network and host
     host: true,
-    // HMR through nginx proxy
-    hmr: {
-      clientPort: process.env.VITE_HMR_PORT
-        ? parseInt(process.env.VITE_HMR_PORT)
-        : undefined,
-    },
-    // Proxy /api to nginx when running outside Docker
-    proxy: {
-      "/api": {
-        target: "http://localhost:8080",
-        changeOrigin: true,
-      },
-    },
-    // Allow requests from nginx proxy
-    allowedHosts: ["localhost", "client"],
   },
   // SSR/SSG Configuration
   ssr: {
