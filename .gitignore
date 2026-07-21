@@ -131,21 +131,6 @@ dist
 
 docs
 
-# Docker
-postgres_data/
-
-# Server
-server/node_modules/
-server/logs/
-server/.env
-
-# Nginx generated config
-nginx/nginx.prod.active.conf
-nginx/nginx.init.conf
-
-# Database backups
-backups/
-
 # Environment files (already covered above but explicit)
 .env
 .env.local
