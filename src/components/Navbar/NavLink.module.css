@@ -2,6 +2,11 @@
   display: flex;
   align-items: center;
   gap: var(--space-xs);
+  width: 100%;
+}
+
+li .navLink {
+  display: flex;
 }
 
 a:global(.active).navLink,
@@ -24,5 +29,8 @@ a.navLink:global(.active):hover {
 .noteIcon {
   font-size: 12px;
   opacity: 0.7;
-  margin-left: auto;
+}
+
+.spacer {
+  flex: 1;
 }

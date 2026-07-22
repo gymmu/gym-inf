@@ -39,6 +39,7 @@ function NavLink({ to, elem, children }) {
       >
         <span>{children}</span>
         {rating && <ProgressDot level={parseInt(rating, 10)} />}
+        <span className={style.spacer} />
         {hasNotes && <span className={style.noteIcon}>📝</span>}
       </Link>
     </li>
