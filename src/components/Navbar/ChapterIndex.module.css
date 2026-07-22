@@ -3,12 +3,42 @@
 
   .selectSchool {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap: 0;
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-bg-light);
+    border-bottom: var(--border-width) solid var(--border-color-subtle);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
 
-    h2 {
-      cursor: pointer;
-    }
+  .selectSchool button {
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-2xs) var(--space-md);
+    margin: 0;
+    color: var(--color-gray);
+    transition: all var(--transition-fast);
+    border-radius: var(--radius-sm);
+    user-select: none;
+    background: none;
+    border: none;
+    font-family: inherit;
+  }
+
+  .selectSchool button:hover {
+    color: var(--color-fg);
+    background-color: var(--color-bg);
+  }
+
+  .selectSchool button.active-school {
+    color: var(--color-yellow);
+    background-color: var(--color-bg);
+    border-bottom: 2px solid var(--color-yellow);
   }
 }

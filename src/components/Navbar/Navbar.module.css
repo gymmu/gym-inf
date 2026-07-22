@@ -1,9 +1,30 @@
 .sidenav {
   grid-area: navbar;
-  border-right: var(--border-width) solid var(--color-fg);
+  border-right: var(--border-width) solid var(--border-color-subtle);
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
   margin: 0;
+  background-color: var(--color-bg);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-bg-lighter) var(--color-bg);
+}
+
+.sidenav::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidenav::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+.sidenav::-webkit-scrollbar-thumb {
+  background: var(--color-bg-lighter);
+  border-radius: var(--radius-full);
+}
+
+.sidenav::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray);
 }
 
 /* Muss das behalten, sonst kollabiert mein main. Weiss leider nicht weshalb. */
@@ -15,7 +36,12 @@
   h2 {
     text-align: center;
     margin: 0;
-    padding: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-gray);
   }
 
   section {
@@ -29,27 +55,52 @@
 
   a {
     font-weight: normal;
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-decoration: none;
-    color: var(--color-yellow);
-    padding: var(--space-sm) 0;
+    color: var(--color-fg);
+    padding: var(--space-2xs) var(--space-md);
+    display: block;
+    transition: all var(--transition-fast);
+    border-left: 2px solid transparent;
+    line-height: 1.4;
   }
 
-  li:hover > a {
-    text-decoration: underline;
+  a:hover {
+    background-color: var(--color-bg-light);
+    color: var(--color-yellow);
+    border-left-color: var(--color-yellow);
+  }
+
+  a.active:hover {
+    background-color: var(--color-bg-light);
+    color: var(--color-yellow);
+    border-left-color: var(--color-yellow);
   }
 
   .nav {
     list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   .nav > li {
-    font-weight: bold;
-    font-size: 1.2rem;
-    border-bottom: var(--border-width) solid var(--color-gray);
-    padding-block: var(--space-lg);
-    padding-left: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
     color: var(--color-yellow);
+    border-bottom: var(--border-width) solid var(--border-color-subtle);
+    padding-block: var(--space-sm);
+    padding-left: var(--space-md);
+    background-color: hsl(from var(--color-bg) h s calc(l + 2));
+  }
+
+  .nav > li > a {
+    font-weight: 600;
+    color: var(--color-yellow);
+    padding-left: var(--space-lg);
+  }
+
+  .nav > li > a:hover {
+    background-color: hsl(from var(--color-bg) h s calc(l + 5));
   }
 }
 
@@ -58,4 +109,10 @@ ol.nav {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+ol.nav ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }

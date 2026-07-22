@@ -17,12 +17,32 @@ function ChapterIndex() {
   return (
     <div className={style.container}>
       <div className={style.selectSchool}>
-        <h2 className={!fms ? "active-school" : ""} onClick={activateGym}>
+        <button
+          className={!fms ? "active-school" : ""}
+          onClick={activateGym}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              activateGym();
+            }
+          }}
+          type="button"
+        >
           Gym
-        </h2>
-        <h2 className={fms ? "active-school" : ""} onClick={activateFMS}>
+        </button>
+        <button
+          className={fms ? "active-school" : ""}
+          onClick={activateFMS}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              activateFMS();
+            }
+          }}
+          type="button"
+        >
           FMS
-        </h2>
+        </button>
       </div>
       {!fms ? <GymIndex /> : <FmsIndex />}
     </div>

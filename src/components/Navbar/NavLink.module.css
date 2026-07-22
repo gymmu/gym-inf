@@ -1,5 +1,22 @@
 .navLink {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-xs);
+}
+
+a:global(.active).navLink,
+a.navLink:global(.active) {
+  background-color: var(--color-bg-light);
+  color: var(--color-yellow);
+  border-left: 3px solid var(--color-yellow);
+  font-weight: 500;
+  border-bottom: none;
+}
+
+a:global(.active).navLink:hover,
+a.navLink:global(.active):hover {
+  background-color: hsl(from var(--color-bg-light) h s calc(l - 3));
+  color: var(--color-yellow);
+  border-left: 3px solid var(--color-yellow);
+  border-bottom: none;
 }

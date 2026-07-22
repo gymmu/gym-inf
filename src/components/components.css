@@ -50,7 +50,7 @@ pre:has(code) {
 }
 
 .active {
-  border-bottom: 5px solid white !important;
+  border-bottom: 5px solid white;
 }
 
 .show {
