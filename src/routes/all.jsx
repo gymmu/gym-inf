@@ -137,6 +137,7 @@ const BoxModel = lazy(() => import("../components/BoxModel"))
 const CodePen = lazy(() => import("../components/CodePen"))
 const CodePenSVG = lazy(() => import("../components/CodePenSVG"))
 const RegexEditor = lazy(() => import("../components/RegexEditor"))
+const NotesPage = lazy(() => import("../pages/notes/index"))
 
 // Route configuration as plain objects (SSG-compatible)
 export const routes = [
@@ -314,6 +315,9 @@ export const routes = [
       { path: "boxmodel", element: <BoxModel /> },
 
       { path: "path-editor", element: <Path /> },
+
+      // Notes
+      { path: "notes", element: <NotesPage /> },
 
       // Was passiert wenn die Route falsch ist.
       {

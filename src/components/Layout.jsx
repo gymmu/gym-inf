@@ -1,12 +1,14 @@
 import ChapterRating from "@components/ChapterRating/ChapterRating";
 import Footer from "@components/Footer";
-
 import Header from "@components/Header";
+import NotePanel from "@components/NotePanel";
+import QuickNoteFab from "@components/QuickNoteFab";
 import style from "@components/Layout.module.css";
 import Navbar from "@components/Navbar";
 import SkeletonScreen from "@components/SkeletonScreen";
 import { AppProvider, useAppContext } from "@context/AppContext";
 import { NavProvider } from "@context/NavContext";
+import { NoteProvider, useNotes } from "@context/NoteContext";
 import { ProgressProvider } from "@context/ProgressContext";
 import { useVisitHistory, VisitProvider } from "@context/VisitContext";
 import { Suspense, useEffect, useState } from "react";
@@ -15,6 +17,7 @@ import { Outlet } from "react-router-dom";
 function LayoutContent() {
   const [classes, setClasses] = useState("");
   const { fullscreen, setFullscreen, menuVisible } = useAppContext();
+  const { hasCurrentNote } = useNotes();
 
   useEffect(() => {
     function handleKeyDown(ev) {
@@ -52,6 +55,8 @@ function LayoutContent() {
         <ChapterRating />
       </main>
       <Footer />
+      {hasCurrentNote && <NotePanel />}
+      <QuickNoteFab />
     </div>
   );
 }
@@ -81,7 +86,9 @@ export default function Layout() {
       <NavProvider>
         <VisitProvider>
           <ProgressProvider>
-            <LayoutWithVisit />
+            <NoteProvider>
+              <LayoutWithVisit />
+            </NoteProvider>
           </ProgressProvider>
         </VisitProvider>
       </NavProvider>

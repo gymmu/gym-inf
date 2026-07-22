@@ -1,0 +1,305 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 2em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.headerActions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionBtn {
+  background: #007acc;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.actionBtn:hover {
+  background: #005a9e;
+}
+
+.actionBtn:disabled {
+  background: #3e3e3e;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  background: #2d2d2d;
+  border: 1px solid #3e3e3e;
+  border-radius: 8px;
+  color: #d4d4d4;
+  margin-bottom: 24px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+  border-color: #007acc;
+}
+
+.searchInput::placeholder {
+  color: #666;
+}
+
+.notesList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: #2d2d2d;
+  border: 1px solid #3e3e3e;
+  border-radius: 8px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.card:hover {
+  border-color: #007acc;
+  background: #323232;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.cardSlug {
+  font-family: "Fira Code", "Consolas", monospace;
+  font-size: 14px;
+  color: #4fc1ff;
+  background: #1e1e1e;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.cardDate {
+  font-size: 12px;
+  color: #888;
+}
+
+.cardPreview {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.cardPreview h1,
+.cardPreview h2,
+.cardPreview h3 {
+  color: #ddd;
+  margin: 8px 0;
+}
+
+.cardPreview p {
+  margin-bottom: 4px;
+}
+
+.cardPreview code {
+  background: #1e1e1e;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: "Fira Code", "Consolas", monospace;
+  font-size: 0.9em;
+}
+
+.cardPreview blockquote {
+  border-left: 3px solid #007acc;
+  padding-left: 8px;
+  color: #888;
+  margin: 8px 0;
+}
+
+.cardPreview ul,
+.cardPreview ol {
+  padding-left: 20px;
+  margin: 4px 0;
+}
+
+.cardPreview li {
+  margin-bottom: 2px;
+}
+
+.cardEditBtn {
+  background: none;
+  border: 1px solid #007acc;
+  color: #4fc1ff;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.2s;
+}
+
+.cardEditBtn:hover {
+  background: #007acc;
+  color: white;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+}
+
+.emptyState p {
+  margin-bottom: 8px;
+}
+
+.editorOverlay {
+  background: #1e1e1e;
+  border: 1px solid #3e3e3e;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.editorHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #2d2d2d;
+  border-bottom: 1px solid #3e3e3e;
+}
+
+.editorSlug {
+  font-family: "Fira Code", "Consolas", monospace;
+  font-size: 14px;
+  color: #4fc1ff;
+}
+
+.editorActions {
+  display: flex;
+  gap: 8px;
+}
+
+.saveBtn {
+  background: #007acc;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.saveBtn:hover {
+  background: #005a9e;
+}
+
+.cancelBtn {
+  background: none;
+  border: 1px solid #555;
+  color: #aaa;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.cancelBtn:hover {
+  background: #3e3e3e;
+  color: white;
+}
+
+.newNoteOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.newNoteForm {
+  background: #2d2d2d;
+  border: 1px solid #3e3e3e;
+  border-radius: 12px;
+  padding: 32px;
+  width: 400px;
+  max-width: 90vw;
+}
+
+.newNoteForm h3 {
+  margin: 0 0 20px 0;
+  color: #ffffff;
+  font-size: 1.3em;
+}
+
+.slugInput {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  background: #1e1e1e;
+  border: 1px solid #3e3e3e;
+  border-radius: 8px;
+  color: #d4d4d4;
+  margin-bottom: 20px;
+  outline: none;
+  font-family: "Fira Code", "Consolas", monospace;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.slugInput:focus {
+  border-color: #007acc;
+}
+
+.slugInput::placeholder {
+  color: #666;
+}
+
+.newNoteActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.createBtn {
+  background: #007acc;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.createBtn:hover {
+  background: #005a9e;
+}

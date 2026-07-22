@@ -1,5 +1,6 @@
 import { NavContext } from "@context/NavContext"
-import { useContext, useEffect } from "react"
+import { useNotes } from "@context/NoteContext"
+import { useContext, useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { registerRoute } from "@/routes.jsx"
 import ProgressDot from "./ProgressDot"
@@ -7,7 +8,14 @@ import style from "./NavLink.module.css"
 
 function NavLink({ to, elem, children }) {
   const { setVisible } = useContext(NavContext)
+  const { hasNote } = useNotes()
   const location = useLocation()
+  const [hasNotes, setHasNotes] = useState(false)
+
+  useEffect(() => {
+    const slug = to.startsWith("/") ? to.slice(1) : to
+    hasNote(slug).then((result) => setHasNotes(result))
+  }, [to, hasNote])
 
   useEffect(() => {
     registerRoute(to, elem)
@@ -31,6 +39,7 @@ function NavLink({ to, elem, children }) {
       >
         <span>{children}</span>
         {rating && <ProgressDot level={parseInt(rating, 10)} />}
+        {hasNotes && <span className={style.noteIcon}>📝</span>}
       </Link>
     </li>
   )

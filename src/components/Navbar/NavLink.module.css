@@ -20,3 +20,9 @@ a.navLink:global(.active):hover {
   border-left: 3px solid var(--color-yellow);
   border-bottom: none;
 }
+
+.noteIcon {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-left: auto;
+}

@@ -59,5 +59,16 @@
       }
     }
 
+    .noteLink {
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: #d4d4d4;
+      padding: 0 8px;
+      transition: opacity 0.2s;
+    }
+
+    .noteLink:hover {
+      opacity: 0.8;
+    }
   }
 }
