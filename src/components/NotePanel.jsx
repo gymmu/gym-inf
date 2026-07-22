@@ -41,7 +41,8 @@ export default function NotePanel({ isOpen, onClose }) {
 
     setIsSaving(true);
     saveTimeoutRef.current = setTimeout(() => {
-      updateNote(value).then(() => {
+      const slug = currentNote?.slug;
+      updateNote(slug, value).then(() => {
         setIsSaving(false);
       });
     }, 500);
@@ -58,7 +59,7 @@ export default function NotePanel({ isOpen, onClose }) {
 
   const handleDelete = () => {
     if (window.confirm("Möchtest du die Notiz wirklich löschen?")) {
-      removeNote();
+      removeNote(currentNote?.slug);
       onClose();
     }
   };

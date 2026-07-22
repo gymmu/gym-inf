@@ -46,16 +46,20 @@ export function NoteProvider({ children }) {
   }, []);
 
   const loadNote = useCallback(async (path) => {
-    const slug = path.startsWith("/") ? path.slice(1) : path;
+    const segments = path.split("/").filter(Boolean);
+    const lastSegment = segments[segments.length - 1] || "seite";
+    const slug =
+      lastSegment
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "-") || "notiz";
     const note = await getNote(slug);
     setCurrentNote(note);
     setHasCurrentNote(!!note);
   }, []);
 
   const updateNote = useCallback(
-    async (content) => {
-      const path = location.pathname;
-      const slug = path.startsWith("/") ? path.slice(1) : path;
+    async (slug, content) => {
       const note = await saveNote(slug, content);
       setCurrentNote(note);
       setHasCurrentNote(true);
@@ -64,17 +68,15 @@ export function NoteProvider({ children }) {
         return [...filtered, note].sort((a, b) => b.updatedAt - a.updatedAt);
       });
     },
-    [location.pathname],
+    [],
   );
 
-  const removeNote = useCallback(async () => {
-    const path = location.pathname;
-    const slug = path.startsWith("/") ? path.slice(1) : path;
+  const removeNote = useCallback(async (slug) => {
     await deleteNote(slug);
     setCurrentNote(null);
     setHasCurrentNote(false);
     setAllNotes((prev) => prev.filter((n) => n.slug !== slug));
-  }, [location.pathname]);
+  }, []);
 
   const exportAllNotes = useCallback(() => {
     exportNotes().then((data) => {

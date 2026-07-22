@@ -17,7 +17,7 @@ function formatDate(timestamp) {
   });
 }
 
-function NoteCard({ note, onClick, onEdit }) {
+function NoteCard({ note, onClick, onEdit, onDelete }) {
   const preview = note.content
     .replace(/[#*`_~\-\[\]]/g, "")
     .trim()
@@ -32,21 +32,32 @@ function NoteCard({ note, onClick, onEdit }) {
       <div className={style.cardPreview}>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{preview}</ReactMarkdown>
       </div>
-      <button
-        className={style.cardEditBtn}
-        onClick={(e) => {
-          e.stopPropagation();
-          onEdit(note);
-        }}
-      >
-        Bearbeiten
-      </button>
+      <div className={style.cardActions}>
+        <button
+          className={style.cardEditBtn}
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit(note);
+          }}
+        >
+          Bearbeiten
+        </button>
+        <button
+          className={style.cardDeleteBtn}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(note.slug);
+          }}
+        >
+          Löschen
+        </button>
+      </div>
     </div>
   );
 }
 
 export default function NotesPage() {
-  const { allNotes, initialized, exportAllNotes, handleImport, createNote } = useNotes();
+  const { allNotes, initialized, exportAllNotes, handleImport, createNote, removeNote } = useNotes();
   const [search, setSearch] = useState("");
   const [editingNote, setEditingNote] = useState(null);
   const [editContent, setEditContent] = useState("");
@@ -95,6 +106,13 @@ export default function NotesPage() {
     setShowNewNote(false);
     setNewNoteSlug("");
     window.location.reload();
+  };
+
+  const handleDeleteNote = async (slug) => {
+    if (window.confirm("Notiz wirklich löschen?")) {
+      await removeNote(slug);
+      window.location.reload();
+    }
   };
 
   return (
@@ -216,6 +234,7 @@ export default function NotesPage() {
                 note={note}
                 onClick={() => navigate(`/${note.slug}`)}
                 onEdit={handleEdit}
+                onDelete={handleDeleteNote}
               />
             ))
           )}

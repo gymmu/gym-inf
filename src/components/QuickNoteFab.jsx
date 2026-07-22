@@ -1,4 +1,5 @@
 import { useNotes } from "@context/NoteContext";
+import { getNote } from "@utils/notesStorage";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import style from "./QuickNoteFab.module.css";
@@ -8,38 +9,59 @@ export default function QuickNoteFab() {
   const [content, setContent] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(false);
-  const { createNote, allNotes } = useNotes();
+  const { createNote, updateNote, removeNote, allNotes } = useNotes();
   const location = useLocation();
   const popoverRef = useRef(null);
   const contentRef = useRef("");
-  const slugRef = useRef("");
-  const initializedRef = useRef(false);
+  const pageSlugRef = useRef("");
+  const [hasPageNote, setHasPageNote] = useState(false);
 
-  // Slug nur einmal beim Öffnen berechnen
+  // Page slug berechnen und prüfen ob Notiz existiert
   useEffect(() => {
-    if (!open) return;
-
-    const path = location.pathname.startsWith("/")
-      ? location.pathname.slice(1)
-      : location.pathname;
+    const path = location.pathname;
     const segments = path.split("/").filter(Boolean);
     const lastSegment = segments[segments.length - 1] || "seite";
-    const possibleSlug =
+    const slug =
       lastSegment
         .trim()
         .toLowerCase()
         .replace(/[^a-z0-9-]/g, "-") || "notiz";
 
-    let slug = possibleSlug;
-    let counter = 2;
-    while (allNotes.some((n) => n.slug === slug)) {
-      slug = `${possibleSlug}-${counter}`;
-      counter++;
-    }
-    slugRef.current = slug;
-    initializedRef.current = true;
-    // biome-ignore lint/correctness/useExhaustiveDependencies: allNotes only needed once on open
-  }, [open]);
+    pageSlugRef.current = slug;
+    setHasPageNote(allNotes.some((n) => n.slug === slug));
+  }, [location.pathname, allNotes]);
+
+  // Slug beim Öffnen setzen
+  useEffect(() => {
+    if (!open) return;
+    pageSlugRef.current =
+      location.pathname
+        .split("/")
+        .filter(Boolean)
+        [location.pathname.split("/").filter(Boolean).length - 1]?.trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "-") || "notiz";
+  }, [open, location.pathname]);
+
+  // Bestehende Notiz laden wenn vorhanden
+  useEffect(() => {
+    if (!open) return;
+    const slug =
+      location.pathname
+        .split("/")
+        .filter(Boolean)
+        [location.pathname.split("/").filter(Boolean).length - 1]?.trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "-") || "notiz";
+    pageSlugRef.current = slug;
+    getNote(slug).then((note) => {
+      if (note?.content) {
+        setContent(note.content);
+      } else {
+        setContent("");
+      }
+    });
+  }, [open, location.pathname]);
 
   // Content immer im Ref halten
   useEffect(() => {
@@ -52,7 +74,7 @@ export default function QuickNoteFab() {
 
     const timer = setTimeout(async () => {
       const currentContent = contentRef.current;
-      const slug = slugRef.current;
+      const slug = pageSlugRef.current;
 
       if (!slug) {
         setError(true);
@@ -63,7 +85,12 @@ export default function QuickNoteFab() {
       try {
         setSaving(true);
         setError(false);
-        await createNote(slug, currentContent);
+        const exists = allNotes.some((n) => n.slug === slug);
+        if (exists) {
+          await updateNote(slug, currentContent);
+        } else {
+          await createNote(slug, currentContent);
+        }
         setSaving(false);
       } catch (err) {
         console.error("Failed to save note:", err);
@@ -73,7 +100,7 @@ export default function QuickNoteFab() {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [open, content]);
+  }, [open, allNotes, createNote, updateNote]);
 
   useEffect(() => {
     if (!open) return;
@@ -101,10 +128,19 @@ export default function QuickNoteFab() {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          aria-label="Neue Notiz"
+          aria-label={hasPageNote ? "Notiz bearbeiten" : "Neue Notiz"}
         >
-          <line x1="12" y1="5" x2="12" y2="19" />
-          <line x1="5" y1="12" x2="19" y2="12" />
+          {hasPageNote ? (
+            <>
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+            </>
+          ) : (
+            <>
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </>
+          )}
         </svg>
       </button>
 
@@ -135,6 +171,22 @@ export default function QuickNoteFab() {
               >
                 Abbrechen
               </button>
+              {allNotes.some((n) => n.slug === pageSlugRef.current) && (
+                <button
+                  type="button"
+                  className={style.deleteBtn}
+                  onClick={async () => {
+                    const slug = pageSlugRef.current;
+                    if (slug && window.confirm("Notiz wirklich löschen?")) {
+                      await removeNote(slug);
+                      setOpen(false);
+                      setContent("");
+                    }
+                  }}
+                >
+                  Löschen
+                </button>
+              )}
             </div>
           </div>
         </div>

@@ -95,6 +95,22 @@
   color: var(--color-fg);
 }
 
+.deleteBtn {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  color: var(--color-red);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.deleteBtn:hover {
+  color: var(--color-fg);
+}
+
 .savingText {
   font-size: 0.85rem;
   color: var(--color-gray);

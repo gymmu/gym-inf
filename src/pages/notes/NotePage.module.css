@@ -164,6 +164,27 @@
   color: white;
 }
 
+.cardActions {
+  display: flex;
+  gap: 8px;
+}
+
+.cardDeleteBtn {
+  background: none;
+  border: 1px solid #e53e3e;
+  color: #fc8181;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.2s;
+}
+
+.cardDeleteBtn:hover {
+  background: #e53e3e;
+  color: white;
+}
+
 .emptyState {
   text-align: center;
   padding: 60px 20px;
