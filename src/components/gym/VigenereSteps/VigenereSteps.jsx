@@ -1,37 +1,37 @@
-import { useState } from "react"
-import style from "./VigenereSteps.module.css"
+import { useState } from "react";
+import style from "./VigenereSteps.module.css";
 
 function onlyLetters(str) {
   return str
     .toLowerCase()
     .split("")
     .filter((c) => c >= "a" && c <= "z")
-    .join("")
+    .join("");
 }
 
 function caesarShift(ch, shift) {
-  const code = ch.charCodeAt(0) - 97
-  return String.fromCharCode(((code + shift + 26) % 26) + 97)
+  const code = ch.charCodeAt(0) - 97;
+  return String.fromCharCode(((code + shift + 26) % 26) + 97);
 }
 
 export default function VigenereSteps() {
-  const [plaintext, setPlaintext] = useState("hallo")
-  const [keyword, setKeyword] = useState("geheim")
+  const [plaintext, setPlaintext] = useState("hallo");
+  const [keyword, setKeyword] = useState("geheim");
 
-  const plain = onlyLetters(plaintext)
-  const key = onlyLetters(keyword)
+  const plain = onlyLetters(plaintext);
+  const key = onlyLetters(keyword);
 
   const steps =
     plain.length > 0 && key.length > 0
       ? plain.split("").map((ch, i) => {
-          const keyChar = key[i % key.length]
-          const shift = keyChar.charCodeAt(0) - 97
-          const cipher = caesarShift(ch, shift)
-          return { plain: ch, keyChar, shift, cipher }
+          const keyChar = key[i % key.length];
+          const shift = keyChar.charCodeAt(0) - 97;
+          const cipher = caesarShift(ch, shift);
+          return { plain: ch, keyChar, shift, cipher };
         })
-      : []
+      : [];
 
-  const ciphertext = steps.map((s) => s.cipher).join("")
+  const ciphertext = steps.map((s) => s.cipher).join("");
 
   return (
     <div className={style.container}>
@@ -90,7 +90,8 @@ export default function VigenereSteps() {
                   {steps.map((s, i) => (
                     <td
                       key={i}
-                      className={`${style.key} ${i >= key.length ? style.keyRepeat : ""}`}>
+                      className={`${style.key} ${i >= key.length ? style.keyRepeat : ""}`}
+                    >
                       {s.keyChar}
                     </td>
                   ))}
@@ -135,5 +136,5 @@ export default function VigenereSteps() {
         </div>
       )}
     </div>
-  )
+  );
 }

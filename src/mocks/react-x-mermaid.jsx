@@ -1,5 +1,5 @@
 // Mock for react-x-mermaid during SSR
-import React from "react"
+import React from "react";
 
 // Mock RenderMermaid component for SSR
 const RenderMermaid = ({ mermaidCode, mermaidConfig, ...props }) => {
@@ -16,8 +16,8 @@ const RenderMermaid = ({ mermaidCode, mermaidConfig, ...props }) => {
       },
     },
     mermaidCode,
-  )
-}
+  );
+};
 
 // Mock default export
-export default RenderMermaid
+export default RenderMermaid;

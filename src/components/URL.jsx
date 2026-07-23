@@ -1,7 +1,7 @@
-import React from "react"
+import React from "react";
 
 const URLComponent = ({ url }) => {
-  const urlObj = new URL(url)
+  const urlObj = new URL(url);
 
   const parts = [
     {
@@ -24,7 +24,7 @@ const URLComponent = ({ url }) => {
     },
     { label: "Search", value: urlObj.search, separator: "" },
     { label: "Hash", value: urlObj.hash, separator: "" },
-  ]
+  ];
 
   const colors = [
     "red",
@@ -37,7 +37,7 @@ const URLComponent = ({ url }) => {
     "brown",
     "cyan",
     "lime",
-  ]
+  ];
   return (
     <div
       style={{
@@ -47,7 +47,8 @@ const URLComponent = ({ url }) => {
         fontSize: "1.5rem",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       {parts.map((part, index) => (
         <React.Fragment key={index}>
           <span
@@ -61,29 +62,30 @@ const URLComponent = ({ url }) => {
               minWidth: "max-content",
             }}
             onMouseEnter={(e) => {
-              e.target.style.fontWeight = "bold"
-              e.target.style.fontSize = "1.7rem"
-              const tooltip = document.createElement("div")
-              tooltip.textContent = part.label
-              tooltip.style.position = "absolute"
-              tooltip.style.backgroundColor = "black"
-              tooltip.style.color = "white"
-              tooltip.style.padding = "5px"
-              tooltip.style.borderRadius = "3px"
-              tooltip.style.top = "30px"
-              tooltip.style.left = "50%"
-              tooltip.style.transform = "translateX(-50%)"
-              tooltip.style.zIndex = "1000"
-              e.target.appendChild(tooltip)
+              e.target.style.fontWeight = "bold";
+              e.target.style.fontSize = "1.7rem";
+              const tooltip = document.createElement("div");
+              tooltip.textContent = part.label;
+              tooltip.style.position = "absolute";
+              tooltip.style.backgroundColor = "black";
+              tooltip.style.color = "white";
+              tooltip.style.padding = "5px";
+              tooltip.style.borderRadius = "3px";
+              tooltip.style.top = "30px";
+              tooltip.style.left = "50%";
+              tooltip.style.transform = "translateX(-50%)";
+              tooltip.style.zIndex = "1000";
+              e.target.appendChild(tooltip);
             }}
             onMouseLeave={(e) => {
-              e.target.style.fontWeight = "normal"
-              e.target.style.fontSize = "1.5rem"
-              const tooltip = e.target.querySelector("div")
+              e.target.style.fontWeight = "normal";
+              e.target.style.fontSize = "1.5rem";
+              const tooltip = e.target.querySelector("div");
               if (tooltip) {
-                e.target.removeChild(tooltip)
+                e.target.removeChild(tooltip);
               }
-            }}>
+            }}
+          >
             {part.value}
           </span>
           {index < parts.length - 1 && part.value && (
@@ -94,7 +96,7 @@ const URLComponent = ({ url }) => {
         </React.Fragment>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default URLComponent
+export default URLComponent;

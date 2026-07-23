@@ -1,13 +1,13 @@
-import { useCurrentFrame, AbsoluteFill } from "remotion"
-import { useMemo } from "react"
+import { useMemo } from "react";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
 
 // ==================== HELPER FUNCTIONS ====================
 
 // Generiere alle Schritte für Palindrom-Prüfung
 export function generatePalindromSteps(str) {
-  const steps = []
-  const chars = str.toLowerCase().split("")
-  const n = chars.length
+  const steps = [];
+  const chars = str.toLowerCase().split("");
+  const n = chars.length;
 
   steps.push({
     chars,
@@ -17,7 +17,7 @@ export function generatePalindromSteps(str) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     chars,
@@ -27,10 +27,10 @@ export function generatePalindromSteps(str) {
     description: `String eingeben: "${str}"`,
     mermaidNode: "Gib String ein",
     variables: { str, n },
-  })
+  });
 
-  let left = 0
-  let right = n - 1
+  let left = 0;
+  let right = n - 1;
 
   steps.push({
     chars,
@@ -40,7 +40,7 @@ export function generatePalindromSteps(str) {
     description: `Setze links auf 0`,
     mermaidNode: "Setze links auf 0",
     variables: { left: 0 },
-  })
+  });
 
   steps.push({
     chars,
@@ -50,7 +50,7 @@ export function generatePalindromSteps(str) {
     description: `Setze rechts auf ${n - 1}`,
     mermaidNode: "Setze rechts auf Länge minus 1",
     variables: { right },
-  })
+  });
 
   while (left < right) {
     // Check
@@ -62,7 +62,7 @@ export function generatePalindromSteps(str) {
       description: `Prüfe: left=${left} < right=${right}?`,
       mermaidNode: "Ist links < rechts?",
       variables: { left, right },
-    })
+    });
 
     // Compare
     steps.push({
@@ -72,8 +72,13 @@ export function generatePalindromSteps(str) {
       isPalindrom: null,
       description: `Vergleiche: '${chars[left]}' === '${chars[right]}'?`,
       mermaidNode: "Ist Zeichen links = Zeichen rechts?",
-      variables: { left, right, charLeft: chars[left], charRight: chars[right] },
-    })
+      variables: {
+        left,
+        right,
+        charLeft: chars[left],
+        charRight: chars[right],
+      },
+    });
 
     if (chars[left] !== chars[right]) {
       steps.push({
@@ -84,7 +89,7 @@ export function generatePalindromSteps(str) {
         description: `Unterschiedlich! "${str}" ist kein Palindrom`,
         mermaidNode: "Gib aus: Kein Palindrom",
         variables: {},
-      })
+      });
 
       steps.push({
         chars,
@@ -94,9 +99,9 @@ export function generatePalindromSteps(str) {
         description: "Ende",
         mermaidNode: "Ende",
         variables: {},
-      })
+      });
 
-      return steps
+      return steps;
     }
 
     // Increment left
@@ -108,9 +113,9 @@ export function generatePalindromSteps(str) {
       description: `Gleich! Erhöhe links um 1`,
       mermaidNode: "Erhöhe links um 1",
       variables: { left: left + 1, right },
-    })
+    });
 
-    left++
+    left++;
 
     // Decrement right
     steps.push({
@@ -121,9 +126,9 @@ export function generatePalindromSteps(str) {
       description: `Verringere rechts um 1`,
       mermaidNode: "Verringere rechts um 1",
       variables: { left, right: right - 1 },
-    })
+    });
 
-    right--
+    right--;
   }
 
   // Final check
@@ -135,7 +140,7 @@ export function generatePalindromSteps(str) {
     description: `Prüfe: left=${left} < right=${right}? Nein`,
     mermaidNode: "Ist links < rechts?",
     variables: { left, right },
-  })
+  });
 
   steps.push({
     chars,
@@ -145,7 +150,7 @@ export function generatePalindromSteps(str) {
     description: `"${str}" ist ein Palindrom!`,
     mermaidNode: "Gib aus: Palindrom",
     variables: {},
-  })
+  });
 
   steps.push({
     chars,
@@ -155,16 +160,16 @@ export function generatePalindromSteps(str) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // Generiere alle Schritte für Zeichenzählung
 export function generateCharCountSteps(str) {
-  const steps = []
-  const chars = str.toLowerCase().split("")
-  const counts = {}
+  const steps = [];
+  const chars = str.toLowerCase().split("");
+  const counts = {};
 
   steps.push({
     chars,
@@ -174,7 +179,7 @@ export function generateCharCountSteps(str) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     chars,
@@ -184,7 +189,7 @@ export function generateCharCountSteps(str) {
     description: `String eingeben: "${str}"`,
     mermaidNode: "Gib String ein",
     variables: { str, n: chars.length },
-  })
+  });
 
   steps.push({
     chars,
@@ -194,7 +199,7 @@ export function generateCharCountSteps(str) {
     description: "Setze i auf 0",
     mermaidNode: "Setze i auf 0",
     variables: { i: 0 },
-  })
+  });
 
   steps.push({
     chars,
@@ -204,7 +209,7 @@ export function generateCharCountSteps(str) {
     description: "Erstelle leere Zähltabelle",
     mermaidNode: "Erstelle leere Zähltabelle",
     variables: {},
-  })
+  });
 
   for (let i = 0; i < chars.length; i++) {
     // Loop check
@@ -216,9 +221,9 @@ export function generateCharCountSteps(str) {
       description: `Prüfe: i=${i} < ${chars.length}?`,
       mermaidNode: "Ist i < Länge?",
       variables: { i, n: chars.length },
-    })
+    });
 
-    const char = chars[i]
+    const char = chars[i];
 
     steps.push({
       chars,
@@ -228,7 +233,7 @@ export function generateCharCountSteps(str) {
       description: `Zeichen: '${char}'`,
       mermaidNode: "Hole Zeichen an Position i",
       variables: { i, char },
-    })
+    });
 
     // Check if char exists
     steps.push({
@@ -239,10 +244,10 @@ export function generateCharCountSteps(str) {
       description: `Prüfe: '${char}' bereits in counts?`,
       mermaidNode: "Ist Zeichen schon in Tabelle?",
       variables: { char, count: counts[char] || 0 },
-    })
+    });
 
     if (counts[char]) {
-      counts[char]++
+      counts[char]++;
       steps.push({
         chars,
         i,
@@ -251,9 +256,9 @@ export function generateCharCountSteps(str) {
         description: `Ja! Erhöhe: counts['${char}'] = ${counts[char]}`,
         mermaidNode: "Erhöhe Zähler für Zeichen um 1",
         variables: { char, count: counts[char] },
-      })
+      });
     } else {
-      counts[char] = 1
+      counts[char] = 1;
       steps.push({
         chars,
         i,
@@ -262,7 +267,7 @@ export function generateCharCountSteps(str) {
         description: `Nein! Neu: counts['${char}'] = 1`,
         mermaidNode: "Setze Zähler für Zeichen auf 1",
         variables: { char, count: 1 },
-      })
+      });
     }
 
     steps.push({
@@ -273,7 +278,7 @@ export function generateCharCountSteps(str) {
       description: `Gehe zum nächsten Zeichen`,
       mermaidNode: "Gehe zum nächsten Zeichen",
       variables: { i: i + 1 },
-    })
+    });
   }
 
   // Final check
@@ -285,7 +290,7 @@ export function generateCharCountSteps(str) {
     description: `Prüfe: i=${chars.length} < ${chars.length}? Nein`,
     mermaidNode: "Ist i < Länge?",
     variables: { i: chars.length },
-  })
+  });
 
   steps.push({
     chars,
@@ -295,7 +300,7 @@ export function generateCharCountSteps(str) {
     description: `Fertig! Häufigkeiten: ${JSON.stringify(counts)}`,
     mermaidNode: "Gib Zähltabelle aus",
     variables: counts,
-  })
+  });
 
   steps.push({
     chars,
@@ -305,9 +310,9 @@ export function generateCharCountSteps(str) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // ==================== VISUALISIERUNG ====================
@@ -320,14 +325,15 @@ function StringVisualization({ chars, leftIndex = -1, rightIndex = -1 }) {
         gap: "10px",
         justifyContent: "center",
         flexWrap: "wrap",
-      }}>
+      }}
+    >
       {chars.map((char, index) => {
-        let backgroundColor = "#3c3836"
-        let borderColor = "#504945"
+        let backgroundColor = "#3c3836";
+        let borderColor = "#504945";
 
         if (index === leftIndex || index === rightIndex) {
-          backgroundColor = "#FFC107"
-          borderColor = "#FFC107"
+          backgroundColor = "#FFC107";
+          borderColor = "#FFC107";
         }
 
         return (
@@ -346,18 +352,19 @@ function StringVisualization({ chars, leftIndex = -1, rightIndex = -1 }) {
               color: "#ebdbb2",
               fontSize: "24px",
               fontWeight: "bold",
-            }}>
+            }}
+          >
             <div style={{ fontSize: "12px", opacity: 0.7 }}>[{index}]</div>
             <div>{char}</div>
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 function CharCountTable({ counts, currentChar = null }) {
-  const entries = Object.entries(counts).sort()
+  const entries = Object.entries(counts).sort();
 
   return (
     <div
@@ -366,46 +373,43 @@ function CharCountTable({ counts, currentChar = null }) {
         gridTemplateColumns: "repeat(auto-fit, minmax(80px, 1fr))",
         gap: "10px",
         maxWidth: "600px",
-      }}>
+      }}
+    >
       {entries.map(([char, count]) => (
         <div
           key={char}
           style={{
             padding: "15px",
-            backgroundColor:
-              char === currentChar ? "#b8bb26" : "#3c3836",
+            backgroundColor: char === currentChar ? "#b8bb26" : "#3c3836",
             color: char === currentChar ? "#282828" : "#ebdbb2",
             borderRadius: "8px",
             textAlign: "center",
             border:
-              char === currentChar
-                ? "3px solid #b8bb26"
-                : "2px solid #504945",
-          }}>
+              char === currentChar ? "3px solid #b8bb26" : "2px solid #504945",
+          }}
+        >
           <div style={{ fontSize: "24px", fontWeight: "bold" }}>'{char}'</div>
-          <div style={{ fontSize: "20px", marginTop: "5px" }}>
-            × {count}
-          </div>
+          <div style={{ fontSize: "20px", marginTop: "5px" }}>× {count}</div>
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 // ==================== REMOTION COMPONENTS ====================
 
 export function PalindromAnimation({ str = "anna", fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5;
 
-  const steps = useMemo(() => generatePalindromSteps(str), [str])
+  const steps = useMemo(() => generatePalindromSteps(str), [str]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -416,40 +420,46 @@ export function PalindromAnimation({ str = "anna", fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Palindrom-Prüfung - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 30,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
-                {typeof value === "string" ? `"${value}"` : value}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 30,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {typeof value === "string" ? `"${value}"` : value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <StringVisualization
         chars={currentStep.chars}
@@ -469,7 +479,8 @@ export function PalindromAnimation({ str = "anna", fps = 30 }) {
               : currentStep.isPalindrom === true
                 ? "#b8bb26"
                 : "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
 
@@ -480,26 +491,27 @@ export function PalindromAnimation({ str = "anna", fps = 30 }) {
             fontSize: "48px",
             fontWeight: "bold",
             color: currentStep.isPalindrom ? "#b8bb26" : "#fb4934",
-          }}>
+          }}
+        >
           {currentStep.isPalindrom ? "✓ PALINDROM" : "✗ KEIN PALINDROM"}
         </div>
       )}
     </AbsoluteFill>
-  )
+  );
 }
 
 export function CharCountAnimation({ str = "hello", fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5;
 
-  const steps = useMemo(() => generateCharCountSteps(str), [str])
+  const steps = useMemo(() => generateCharCountSteps(str), [str]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -510,42 +522,48 @@ export function CharCountAnimation({ str = "hello", fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Zeichenhäufigkeit - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 30,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
-                {typeof value === "string" ? `"${value}"` : value}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 30,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {typeof value === "string" ? `"${value}"` : value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <div style={{ marginBottom: 30 }}>
         <StringVisualization
@@ -568,9 +586,10 @@ export function CharCountAnimation({ str = "hello", fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
     </AbsoluteFill>
-  )
+  );
 }

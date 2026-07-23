@@ -1,143 +1,150 @@
-import { lazy } from "react"
-import { createBrowserRouter, Link } from "react-router-dom"
-
 // Critical components: Normal import (always needed)
-import Layout from "@components/Layout"
+import Layout from "@components/Layout";
+import { lazy } from "react";
+import { createBrowserRouter, Link } from "react-router-dom";
 
 // All pages: Lazy loading
-const Colors = lazy(() => import("@pages/colors.mdx"))
-const GymCSS = lazy(() => import("@pages/css.mdx"))
-const Binary = lazy(() => import("@pages/fms/binary.mdx"))
-const Hardware = lazy(() => import("@pages/fms/hardware.mdx"))
-const Hex = lazy(() => import("@pages/fms/hex.mdx"))
-const FMSIndex = lazy(() => import("@pages/fms/index.mdx"))
-const Pictures = lazy(() => import("@pages/fms/pictures.mdx"))
-const FmsSVG = lazy(() => import("@pages/fms/svg.mdx"))
-const FmsSVGAnimation = lazy(() => import("@pages/fms/svg-animation.mdx"))
-const FmsSVGAufgaben = lazy(() => import("@pages/fms/svg-aufgaben.mdx"))
-const FmsSVGLine = lazy(() => import("@pages/fms/svg-line.mdx"))
-const FmsSVGPath = lazy(() => import("@pages/fms/svg-path.mdx"))
-const FmsSVGPath02 = lazy(() => import("@pages/fms/svg-path-2.mdx"))
-const FmsSVGTransformation = lazy(() => import("@pages/fms/svg-transform.mdx"))
-const Grammar = lazy(() => import("@pages/grammar.mdx"))
-const GymHTML = lazy(() => import("@pages/html.mdx"))
-const Index = lazy(() => import("@pages/index.mdx"))
-const Information = lazy(() => import("@pages/information.mdx"))
-const GymJS = lazy(() => import("@pages/javascript.mdx"))
-const Languages = lazy(() => import("@pages/languages.mdx"))
-const Obsidian = lazy(() => import("@pages/obsidian.mdx"))
-const ObsidianMarkdown = lazy(() => import("@pages/obsidian-md.mdx"))
-const PInstall = lazy(() => import("@pages/praktikum/installation.mdx"))
-const Regex = lazy(() => import("@pages/regex.mdx"))
-const GymInternet = lazy(() => import("@pages-gym/internet.jsx"))
-const GymInternetKarte = lazy(() => import("@pages-gym/internet-karte.jsx"))
-const GymInternetQuiz = lazy(() => import("@pages-gym/internet-quiz.jsx"))
-const GymNetzwerke = lazy(() => import("@pages-gym/netzwerke.jsx"))
-const GymNetzwerkeQuiz = lazy(() => import("@pages-gym/netzwerke-quiz.jsx"))
-const GymVPN = lazy(() => import("@pages-gym/vpn.jsx"))
-const GymVPNQuiz = lazy(() => import("@pages-gym/vpn-quiz.jsx"))
+const Colors = lazy(() => import("@pages/colors.mdx"));
+const GymCSS = lazy(() => import("@pages/css.mdx"));
+const Binary = lazy(() => import("@pages/fms/binary.mdx"));
+const Hardware = lazy(() => import("@pages-fms/hardware.jsx"));
+const Hex = lazy(() => import("@pages/fms/hex.mdx"));
+const FMSIndex = lazy(() => import("@pages/fms/index.mdx"));
+const Pictures = lazy(() => import("@pages/fms/pictures.mdx"));
+const FmsSVG = lazy(() => import("@pages/fms/svg.mdx"));
+const FmsSVGAnimation = lazy(() => import("@pages/fms/svg-animation.mdx"));
+const FmsSVGAufgaben = lazy(() => import("@pages/fms/svg-aufgaben.mdx"));
+const FmsSVGLine = lazy(() => import("@pages/fms/svg-line.mdx"));
+const FmsSVGPath = lazy(() => import("@pages/fms/svg-path.mdx"));
+const FmsSVGPath02 = lazy(() => import("@pages/fms/svg-path-2.mdx"));
+const FmsSVGTransformation = lazy(() => import("@pages/fms/svg-transform.mdx"));
+const Grammar = lazy(() => import("@pages/grammar.mdx"));
+const GymHTML = lazy(() => import("@pages/html.mdx"));
+const Index = lazy(() => import("@pages/index.mdx"));
+const Information = lazy(() => import("@pages/information.mdx"));
+const GymJS = lazy(() => import("@pages/javascript.mdx"));
+const Languages = lazy(() => import("@pages/languages.mdx"));
+const Obsidian = lazy(() => import("@pages/obsidian.mdx"));
+const ObsidianMarkdown = lazy(() => import("@pages/obsidian-md.mdx"));
+const PInstall = lazy(() => import("@pages/praktikum/installation.mdx"));
+const Regex = lazy(() => import("@pages/regex.mdx"));
+const GymInternet = lazy(() => import("@pages-gym/internet.jsx"));
+const GymInternetKarte = lazy(() => import("@pages-gym/internet-karte.jsx"));
+const GymInternetQuiz = lazy(() => import("@pages-gym/internet-quiz.jsx"));
+const GymNetzwerke = lazy(() => import("@pages-gym/netzwerke.jsx"));
+const GymNetzwerkeQuiz = lazy(() => import("@pages-gym/netzwerke-quiz.jsx"));
+const GymVPN = lazy(() => import("@pages-gym/vpn.jsx"));
+const GymVPNQuiz = lazy(() => import("@pages-gym/vpn-quiz.jsx"));
 const GymVerschluesselung = lazy(
   () => import("@pages-gym/verschluesselung.jsx"),
-)
+);
 const GymVerschluesselungQuiz = lazy(
   () => import("@pages-gym/verschluesselung-quiz.jsx"),
-)
+);
 const GymSchluesselaustausch = lazy(
   () => import("@pages-gym/schluesselaustausch.jsx"),
-)
+);
 const GymSchluesselaustauschQuiz = lazy(
   () => import("@pages-gym/schluesselaustausch-quiz.jsx"),
-)
-const GymPasswoerter = lazy(() => import("@pages-gym/passwoerter.jsx"))
-const GymPasswoerterQuiz = lazy(() => import("@pages-gym/passwoerter-quiz.jsx"))
+);
+const GymPasswoerter = lazy(() => import("@pages-gym/passwoerter.jsx"));
+const GymPasswoerterQuiz = lazy(
+  () => import("@pages-gym/passwoerter-quiz.jsx"),
+);
 const GymPraesentationNetzwerke = lazy(
   () => import("@pages-gym/praesentation-netzwerke.jsx"),
-)
+);
 const GymPraesentationKrypto = lazy(
   () => import("@pages-gym/praesentation-krypto.jsx"),
-)
-const GymJSAufgaben = lazy(() => import("@pages-gym/js-aufgaben.jsx"))
-const GymJSConditions = lazy(() => import("@pages-gym/js-bedingungen.jsx"))
-const GymJSFunctions = lazy(() => import("@pages-gym/js-functions.jsx"))
-const GymJSLists = lazy(() => import("@pages-gym/js-lists.jsx"))
-const GymJSLoops = lazy(() => import("@pages-gym/js-loops.jsx"))
+);
+const GymJSAufgaben = lazy(() => import("@pages-gym/js-aufgaben.jsx"));
+const GymJSConditions = lazy(() => import("@pages-gym/js-bedingungen.jsx"));
+const GymJSFunctions = lazy(() => import("@pages-gym/js-functions.jsx"));
+const GymJSLists = lazy(() => import("@pages-gym/js-lists.jsx"));
+const GymJSLoops = lazy(() => import("@pages-gym/js-loops.jsx"));
 const GymJSLoopsFunctions = lazy(
   () => import("@pages-gym/js-loops-functions.jsx"),
-)
-const GymJSVariables = lazy(() => import("@pages-gym/js-variables.jsx"))
-const KaplayIntro = lazy(() => import("@pages-gym/kaplay-intro.jsx"))
+);
+const GymJSVariables = lazy(() => import("@pages-gym/js-variables.jsx"));
+const KaplayIntro = lazy(() => import("@pages-gym/kaplay-intro.jsx"));
 const KaplayGameObjects = lazy(
   () => import("@pages-gym/kaplay-gameobjects.jsx"),
-)
+);
 const KaplayInteraction = lazy(
   () => import("@pages-gym/kaplay-interaction.jsx"),
-)
-const KaplayScenes = lazy(() => import("@pages-gym/kaplay-scenes.jsx"))
-const KaplayComponents = lazy(() => import("@pages-gym/kaplay-components.jsx"))
-const KaplayEvents = lazy(() => import("@pages-gym/kaplay-events.jsx"))
-const KaplayTags = lazy(() => import("@pages-gym/kaplay-tags.jsx"))
-const KaplayCollisions = lazy(() => import("@pages-gym/kaplay-collisions.jsx"))
-const KaplayCamera = lazy(() => import("@pages-gym/kaplay-camera.jsx"))
-const KaplayTeamwork = lazy(() => import("@pages-gym/kaplay-teamwork.jsx"))
-const Path = lazy(() => import("@components/Path.jsx"))
-const Excel = lazy(() => import("@pages/fms/excel.mdx"))
-const ExcelSpielplan = lazy(() => import("@pages/fms/excel-spielplan.mdx"))
-const FmsHTML = lazy(() => import("@pages/fms/html.mdx"))
-const FmsInternet = lazy(() => import("@pages/fms/internet.mdx"))
-const FmsInternetQuiz = lazy(() => import("@pages/fms/internet-quiz.mdx"))
-const FmsInternetStory = lazy(() => import("@pages/fms/internet-story.mdx"))
-const FmsJavascript = lazy(() => import("@pages/fms/javascript.mdx"))
+);
+const KaplayScenes = lazy(() => import("@pages-gym/kaplay-scenes.jsx"));
+const KaplayComponents = lazy(() => import("@pages-gym/kaplay-components.jsx"));
+const KaplayEvents = lazy(() => import("@pages-gym/kaplay-events.jsx"));
+const KaplayTags = lazy(() => import("@pages-gym/kaplay-tags.jsx"));
+const KaplayCollisions = lazy(() => import("@pages-gym/kaplay-collisions.jsx"));
+const KaplayCamera = lazy(() => import("@pages-gym/kaplay-camera.jsx"));
+const KaplayTeamwork = lazy(() => import("@pages-gym/kaplay-teamwork.jsx"));
+const Path = lazy(() => import("@components/Path.jsx"));
+const Excel = lazy(() => import("@pages/fms/excel.mdx"));
+const ExcelSpielplan = lazy(() => import("@pages/fms/excel-spielplan.mdx"));
+const FmsHTML = lazy(() => import("@pages/fms/html.mdx"));
+const FmsInternet = lazy(() => import("@pages/fms/internet.mdx"));
+const FmsInternetQuiz = lazy(() => import("@pages/fms/internet-quiz.mdx"));
+const FmsInternetStory = lazy(() => import("@pages/fms/internet-story.mdx"));
+const FmsJavascript = lazy(() => import("@pages/fms/javascript.mdx"));
 const FmsVerschluesselungQuiz = lazy(
   () => import("@pages/fms/verschluesselung-quiz.mdx"),
-)
-const FmsVPN = lazy(() => import("@pages/fms/vpn.mdx"))
-const FmsVPNQuiz = lazy(() => import("@pages/fms/vpn-quiz.mdx"))
-const FmsInternetKarte = lazy(() => import("@pages-fms/internet-karte.jsx"))
-const FmsPasswoerter = lazy(() => import("@pages-fms/passwoerter.jsx"))
+);
+const FmsVPN = lazy(() => import("@pages/fms/vpn.mdx"));
+const FmsVPNQuiz = lazy(() => import("@pages/fms/vpn-quiz.mdx"));
+const FmsInternetKarte = lazy(() => import("@pages-fms/internet-karte.jsx"));
+const FmsPasswoerter = lazy(() => import("@pages-fms/passwoerter.jsx"));
 const Schluesselaustausch = lazy(
   () => import("@pages-fms/schluesselaustausch.jsx"),
-)
+);
 const FmsVerschluesselung = lazy(
   () => import("@pages-fms/verschluesselung.jsx"),
-)
-const FmsAlgorithmen = lazy(() => import("@pages-fms/algorithmen.jsx"))
+);
+const FmsAlgorithmen = lazy(() => import("@pages-fms/algorithmen.jsx"));
 const FmsAlgorithmenLoops = lazy(
   () => import("@pages-fms/algorithmen-loops.jsx"),
-)
+);
 const FmsAlgorithmenAufgaben = lazy(
   () => import("@pages-fms/algorithmen-aufgaben.jsx"),
-)
+);
 const FmsAlgorithmenSortieren = lazy(
   () => import("@pages-fms/algorithmen-sortieren.jsx"),
-)
+);
 const FmsAlgorithmenSuchen = lazy(
   () => import("@pages-fms/algorithmen-suchen.jsx"),
-)
-const FmsMermaidTest = lazy(() => import("@pages-fms/mermaid-test.jsx"))
+);
+const FmsMermaidTest = lazy(() => import("@pages-fms/mermaid-test.jsx"));
 const FmsAlgorithmenMathematik = lazy(
   () => import("@pages-fms/algorithmen-mathematik.jsx"),
-)
+);
 const FmsAlgorithmenStrings = lazy(
   () => import("@pages-fms/algorithmen-strings.jsx"),
-)
+);
 const FmsAlgorithmenAlltag = lazy(
   () => import("@pages-fms/algorithmen-alltag.jsx"),
-)
+);
 const FmsAlgorithmenGlossar = lazy(
   () => import("@pages-fms/algorithmen-glossar.jsx"),
-)
-const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"))
-const FmsWord = lazy(() => import("@pages/fms/word.mdx"))
-const FmsWordFormatvorlagen = lazy(() => import("@pages/fms/word-formatvorlagen.mdx"))
-const FmsWordInhaltsverzeichnis = lazy(() => import("@pages/fms/word-inhaltsverzeichnis.mdx"))
-const FmsWordSeitenzahlen = lazy(() => import("@pages/fms/word-seitenzahlen.mdx"))
-const FmsWordProbleme = lazy(() => import("@pages/fms/word-probleme.mdx"))
-const FmsWordLatex = lazy(() => import("@pages/fms/word-latex.mdx"))
-const BoxModel = lazy(() => import("../components/BoxModel"))
-const CodePen = lazy(() => import("../components/CodePen"))
-const CodePenSVG = lazy(() => import("../components/CodePenSVG"))
-const RegexEditor = lazy(() => import("../components/RegexEditor"))
-const NotesPage = lazy(() => import("../pages/notes/index"))
+);
+const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"));
+const FmsWord = lazy(() => import("@pages/fms/word.mdx"));
+const FmsWordFormatvorlagen = lazy(
+  () => import("@pages/fms/word-formatvorlagen.mdx"),
+);
+const FmsWordInhaltsverzeichnis = lazy(
+  () => import("@pages/fms/word-inhaltsverzeichnis.mdx"),
+);
+const FmsWordSeitenzahlen = lazy(
+  () => import("@pages/fms/word-seitenzahlen.mdx"),
+);
+const FmsWordProbleme = lazy(() => import("@pages/fms/word-probleme.mdx"));
+const FmsWordLatex = lazy(() => import("@pages/fms/word-latex.mdx"));
+const BoxModel = lazy(() => import("../components/BoxModel"));
+const CodePen = lazy(() => import("../components/CodePen"));
+const CodePenSVG = lazy(() => import("../components/CodePenSVG"));
+const RegexEditor = lazy(() => import("../components/RegexEditor"));
+const NotesPage = lazy(() => import("../pages/notes/index"));
 
 // Route configuration as plain objects (SSG-compatible)
 export const routes = [
@@ -218,7 +225,6 @@ export const routes = [
       { path: "fms/hardware", element: <Hardware /> },
       { path: "fms/binary", element: <Binary /> },
       { path: "fms/hex", element: <Hex /> },
-      // FMS: Bilder und SVG
       { path: "pictures", element: <Pictures /> },
       { path: "/fms/svg", element: <FmsSVG /> },
       { path: "/fms/svg-line", element: <FmsSVGLine /> },
@@ -294,7 +300,10 @@ export const routes = [
       // FMS Routes 2. Klasse
       { path: "/fms/word", element: <FmsWord /> },
       { path: "/fms/word-formatvorlagen", element: <FmsWordFormatvorlagen /> },
-      { path: "/fms/word-inhaltsverzeichnis", element: <FmsWordInhaltsverzeichnis /> },
+      {
+        path: "/fms/word-inhaltsverzeichnis",
+        element: <FmsWordInhaltsverzeichnis />,
+      },
       { path: "/fms/word-seitenzahlen", element: <FmsWordSeitenzahlen /> },
       { path: "/fms/word-probleme", element: <FmsWordProbleme /> },
       { path: "/fms/word-latex", element: <FmsWordLatex /> },
@@ -334,11 +343,11 @@ export const routes = [
       },
     ],
   },
-]
+];
 
 // Extract all route paths for SSG (excluding catch-all)
 export const getAllRoutePaths = () => {
-  const paths = []
+  const paths = [];
 
   routes.forEach((route) => {
     if (route.children) {
@@ -355,20 +364,20 @@ export const getAllRoutePaths = () => {
           // Normalize paths (remove leading slash for consistency)
           const normalizedPath = child.path.startsWith("/")
             ? child.path.slice(1)
-            : child.path
-          paths.push(normalizedPath === "/" ? "/" : `/${normalizedPath}`)
+            : child.path;
+          paths.push(normalizedPath === "/" ? "/" : `/${normalizedPath}`);
         }
-      })
+      });
     }
-  })
+  });
 
-  return paths
-}
+  return paths;
+};
 
 // Create browser router (existing functionality)
 export const createRouter = () => {
-  const basename = import.meta.env.VITE_BASE_PATH || "/gym-inf/"
+  const basename = import.meta.env.VITE_BASE_PATH || "/gym-inf/";
   return createBrowserRouter(routes, {
     basename,
-  })
-}
+  });
+};

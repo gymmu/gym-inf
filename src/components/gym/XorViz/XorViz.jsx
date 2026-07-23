@@ -1,14 +1,14 @@
-import katex from "katex"
-import "katex/dist/katex.css"
-import { Player } from "@remotion/player"
-import { useRef } from "react"
+import katex from "katex";
+import "katex/dist/katex.css";
+import { Player } from "@remotion/player";
+import { useRef } from "react";
 import {
   AbsoluteFill,
   interpolate,
   spring,
   useCurrentFrame,
   useVideoConfig,
-} from "remotion"
+} from "remotion";
 
 // ─── Gruvbox ──────────────────────────────────────────────────
 const C = {
@@ -24,10 +24,10 @@ const C = {
   orange: "#fe8019",
   red: "#fb4934",
   purple: "#d3869b",
-}
+};
 
-const FPS = 30
-const PLAIN = "HALLO"
+const FPS = 30;
+const PLAIN = "HALLO";
 
 // ─── KaTeX ────────────────────────────────────────────────────
 function tex(src, opts = {}) {
@@ -35,7 +35,7 @@ function tex(src, opts = {}) {
     throwOnError: false,
     output: "html",
     ...opts,
-  })
+  });
 }
 
 function Tex({ src, color, fontSize = 16, style = {} }) {
@@ -44,33 +44,33 @@ function Tex({ src, color, fontSize = 16, style = {} }) {
       style={{ color, fontSize, lineHeight: 1, ...style }}
       dangerouslySetInnerHTML={{ __html: tex(src) }}
     />
-  )
+  );
 }
 
 // Fester Schlüssel (zufällig, aber reproduzierbar)
 // H=72, A=65, L=76, L=76, O=79
 // Schlüssel-Bytes (xor-ergibt lesbares Chiffrat damit es gut aussieht)
-const KEY_BYTES = [0b10110011, 0b01011010, 0b00110101, 0b11001100, 0b01101001]
+const KEY_BYTES = [0b10110011, 0b01011010, 0b00110101, 0b11001100, 0b01101001];
 // Falscher Schlüssel ergibt Mix aus druckbaren und nicht-druckbaren Chars
 // Ergebnis: %, [200], *, [200], ? — anschaulich für die Demo
 const WRONG_KEY_BYTES = [
   0b11011110, 0b11010011, 0b01010011, 0b01001000, 0b00011001,
-]
+];
 
 function toBin(n) {
-  return n.toString(2).padStart(8, "0")
+  return n.toString(2).padStart(8, "0");
 }
 
 function xorBytes(a, b) {
-  return a ^ b
+  return a ^ b;
 }
 
 // Vorberechnungen
-const PLAIN_BYTES = PLAIN.split("").map((c) => c.charCodeAt(0))
-const CIPHER_BYTES = PLAIN_BYTES.map((p, i) => xorBytes(p, KEY_BYTES[i]))
+const PLAIN_BYTES = PLAIN.split("").map((c) => c.charCodeAt(0));
+const CIPHER_BYTES = PLAIN_BYTES.map((p, i) => xorBytes(p, KEY_BYTES[i]));
 const WRONG_DECRYPT = CIPHER_BYTES.map((c, i) =>
   xorBytes(c, WRONG_KEY_BYTES[i]),
-)
+);
 
 // ─── Timing ───────────────────────────────────────────────────
 // +90 Frames (~3s) Pause am Ende jeder Szene für lesbare Übergänge
@@ -81,21 +81,21 @@ const S_DUR = {
   s4: 350, // Entschl. richtig  (260 Anim + 90 Pause)
   s5: 310, // Entschl. falsch   (220 Anim + 90 Pause)
   s6: 290, // Schlüsselraum     (200 Anim + 90 Pause)
-}
+};
 
 const SCENE_START = (() => {
-  const keys = Object.keys(S_DUR)
-  const acc = {}
-  let t = 0
+  const keys = Object.keys(S_DUR);
+  const acc = {};
+  let t = 0;
   for (const k of keys) {
-    acc[k] = t
-    t += S_DUR[k]
+    acc[k] = t;
+    t += S_DUR[k];
   }
-  acc.total = t
-  return acc
-})()
+  acc.total = t;
+  return acc;
+})();
 
-const TOTAL = SCENE_START.total
+const TOTAL = SCENE_START.total;
 
 // ─── Hilfkomponenten ──────────────────────────────────────────
 function Title({ children, op = 1 }) {
@@ -112,14 +112,15 @@ function Title({ children, op = 1 }) {
         fontWeight: 700,
         whiteSpace: "nowrap",
         fontFamily: "sans-serif",
-      }}>
+      }}
+    >
       {children}
     </div>
-  )
+  );
 }
 
 function BitRow({ byte, color, highlight = false, dim = false }) {
-  const bits = toBin(byte)
+  const bits = toBin(byte);
   return (
     <div style={{ display: "flex", gap: 2 }}>
       {bits.split("").map((b, j) => (
@@ -150,12 +151,13 @@ function BitRow({ byte, color, highlight = false, dim = false }) {
                   : C.bg
                 : C.gray,
             transition: "background 0.2s",
-          }}>
+          }}
+        >
           {b}
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 function CharBox({ ch, color = C.yellow, size = 48, fontSize = 24 }) {
@@ -175,39 +177,40 @@ function CharBox({ ch, color = C.yellow, size = 48, fontSize = 24 }) {
         color,
         fontFamily: "'Courier New', monospace",
         flexShrink: 0,
-      }}>
+      }}
+    >
       {ch}
     </div>
-  )
+  );
 }
 
 function fade(frame, start, dur = 15) {
   return interpolate(frame, [start, start + dur], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  })
+  });
 }
 
 // ─── SZENE 1: Text → ASCII → Bits ────────────────────────────
 // Alle Grossbuchstaben A–Z für die ASCII-Tabelle
-const ASCII_TABLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
-const PLAIN_SET = new Set(PLAIN.split(""))
+const ASCII_TABLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const PLAIN_SET = new Set(PLAIN.split(""));
 
 function Scene1({ frame }) {
-  const local = frame - SCENE_START.s1
-  const titleOp = fade(local, 0, 12)
+  const local = frame - SCENE_START.s1;
+  const titleOp = fade(local, 0, 12);
 
   // Phase 1: ASCII-Tabelle erscheint
-  const tableOp = fade(local, 15, 20)
+  const tableOp = fade(local, 15, 20);
 
   // Phase 2: HALLO-Buchstaben erscheinen unten mit Bits
-  const charDelay = 60
-  const charStagger = 22
-  const asciiDelay = charDelay + 5 * charStagger + 20
-  const bitsDelay = asciiDelay + 40
+  const charDelay = 60;
+  const charStagger = 22;
+  const asciiDelay = charDelay + 5 * charStagger + 20;
+  const bitsDelay = asciiDelay + 40;
 
   // Tabelle: 13 Spalten × 2 Zeilen = 26 Einträge
-  const COLS = 13
+  const COLS = 13;
 
   return (
     <AbsoluteFill
@@ -218,7 +221,8 @@ function Scene1({ frame }) {
         alignItems: "center",
         justifyContent: "flex-start",
         paddingTop: 58,
-      }}>
+      }}
+    >
       <Title op={titleOp}>Schritt 1 — Text wird zu Bits (ASCII)</Title>
 
       {/* ── ASCII-Referenztabelle ── */}
@@ -233,14 +237,15 @@ function Scene1({ frame }) {
           background: C.bgL,
           border: `1.5px solid ${C.bgLL}`,
           borderRadius: 10,
-        }}>
+        }}
+      >
         {ASCII_TABLE_CHARS.map((ch) => {
-          const byte = ch.charCodeAt(0)
-          const isHallo = PLAIN_SET.has(ch)
-          const borderColor = isHallo ? C.yellow : C.bgLL
-          const textColor = isHallo ? C.yellow : C.gray
-          const numColor = isHallo ? C.orange : C.bgLL
-          const bg = isHallo ? "#2a2418" : C.bg
+          const byte = ch.charCodeAt(0);
+          const isHallo = PLAIN_SET.has(ch);
+          const borderColor = isHallo ? C.yellow : C.bgLL;
+          const textColor = isHallo ? C.yellow : C.gray;
+          const numColor = isHallo ? C.orange : C.bgLL;
+          const bg = isHallo ? "#2a2418" : C.bg;
 
           return (
             <div
@@ -255,7 +260,8 @@ function Scene1({ frame }) {
                 borderRadius: 5,
                 padding: "3px 4px",
                 minWidth: 0,
-              }}>
+              }}
+            >
               <span
                 style={{
                   fontFamily: "'Courier New', monospace",
@@ -263,7 +269,8 @@ function Scene1({ frame }) {
                   fontWeight: 700,
                   color: textColor,
                   lineHeight: 1,
-                }}>
+                }}
+              >
                 {ch}
               </span>
               <span
@@ -273,11 +280,12 @@ function Scene1({ frame }) {
                   fontWeight: 600,
                   color: numColor,
                   lineHeight: 1,
-                }}>
+                }}
+              >
                 {byte}
               </span>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -288,12 +296,13 @@ function Scene1({ frame }) {
           gap: 12,
           alignItems: "flex-start",
           marginTop: 18,
-        }}>
+        }}
+      >
         {PLAIN.split("").map((ch, i) => {
-          const byte = PLAIN_BYTES[i]
-          const charOp = fade(local, charDelay + i * charStagger, 14)
-          const asciiOp = fade(local, asciiDelay + i * 8, 14)
-          const bitsOp = fade(local, bitsDelay + i * 10, 14)
+          const byte = PLAIN_BYTES[i];
+          const charOp = fade(local, charDelay + i * charStagger, 14);
+          const asciiOp = fade(local, asciiDelay + i * 8, 14);
+          const bitsOp = fade(local, bitsDelay + i * 10, 14);
 
           return (
             <div
@@ -303,7 +312,8 @@ function Scene1({ frame }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 6,
-              }}>
+              }}
+            >
               {/* Buchstabe */}
               <div style={{ opacity: charOp }}>
                 <CharBox ch={ch} color={C.yellow} size={46} fontSize={23} />
@@ -317,13 +327,15 @@ function Scene1({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 3,
-                }}>
+                }}
+              >
                 <div
                   style={{
                     color: C.gray,
                     fontSize: 13,
                     fontFamily: "sans-serif",
-                  }}>
+                  }}
+                >
                   ↓
                 </div>
                 <div
@@ -336,7 +348,8 @@ function Scene1({ frame }) {
                     fontSize: 15,
                     fontWeight: 700,
                     color: C.orange,
-                  }}>
+                  }}
+                >
                   {byte}
                 </div>
               </div>
@@ -349,41 +362,43 @@ function Scene1({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 3,
-                }}>
+                }}
+              >
                 <div
                   style={{
                     color: C.gray,
                     fontSize: 13,
                     fontFamily: "sans-serif",
-                  }}>
+                  }}
+                >
                   ↓
                 </div>
                 <BitRow byte={byte} color={C.green} highlight />
               </div>
             </div>
-          )
+          );
         })}
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SZENE 2: XOR-Verschlüsselung ────────────────────────────
 function Scene2({ frame }) {
-  const local = frame - SCENE_START.s2
-  const titleOp = fade(local, 0, 12)
+  const local = frame - SCENE_START.s2;
+  const titleOp = fade(local, 0, 12);
 
   // Reihen erscheinen nacheinander
-  const plainRowDelay = 20
-  const keyRowDelay = 60
-  const xorSymDelay = 100
-  const cipherRowDelay = 120
+  const plainRowDelay = 20;
+  const keyRowDelay = 60;
+  const xorSymDelay = 100;
+  const cipherRowDelay = 120;
   // Pro-Buchstabe-Stagger
-  const stag = 26
+  const stag = 26;
 
-  const rulesOp = fade(local, cipherRowDelay + 5 * stag + 30, 20)
-  const cipherWordDelay = cipherRowDelay + 5 * stag + 60
-  const cipherWordOp = fade(local, cipherWordDelay, 20)
+  const rulesOp = fade(local, cipherRowDelay + 5 * stag + 30, 20);
+  const cipherWordDelay = cipherRowDelay + 5 * stag + 60;
+  const cipherWordOp = fade(local, cipherWordDelay, 20);
 
   return (
     <AbsoluteFill
@@ -393,7 +408,8 @@ function Scene2({ frame }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Title op={titleOp}>Schritt 2 — XOR-Verschlüsselung</Title>
 
       {/* XOR-Wahrheitstabelle oben */}
@@ -407,7 +423,8 @@ function Scene2({ frame }) {
           display: "flex",
           gap: 8,
           alignItems: "center",
-        }}>
+        }}
+      >
         <span style={{ color: C.gray, fontFamily: "sans-serif", fontSize: 13 }}>
           XOR
         </span>
@@ -424,16 +441,17 @@ function Scene2({ frame }) {
           gap: 14,
           alignItems: "flex-start",
           marginTop: 16,
-        }}>
+        }}
+      >
         {PLAIN.split("").map((ch, i) => {
-          const plainByte = PLAIN_BYTES[i]
-          const keyByte = KEY_BYTES[i]
-          const cipherByte = CIPHER_BYTES[i]
+          const plainByte = PLAIN_BYTES[i];
+          const keyByte = KEY_BYTES[i];
+          const cipherByte = CIPHER_BYTES[i];
 
-          const plainOp = fade(local, plainRowDelay + i * stag, 14)
-          const keyOp = fade(local, keyRowDelay + i * stag, 14)
-          const xorOp = fade(local, xorSymDelay + i * stag, 12)
-          const cipherOp = fade(local, cipherRowDelay + i * stag, 14)
+          const plainOp = fade(local, plainRowDelay + i * stag, 14);
+          const keyOp = fade(local, keyRowDelay + i * stag, 14);
+          const xorOp = fade(local, xorSymDelay + i * stag, 12);
+          const cipherOp = fade(local, cipherRowDelay + i * stag, 14);
 
           return (
             <div
@@ -443,7 +461,8 @@ function Scene2({ frame }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 4,
-              }}>
+              }}
+            >
               {/* Klartext-Buchstabe + Bits */}
               <div
                 style={{
@@ -452,7 +471,8 @@ function Scene2({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 3,
-                }}>
+                }}
+              >
                 <CharBox ch={ch} color={C.yellow} size={36} fontSize={17} />
                 <BitRow byte={plainByte} color={C.yellow} />
               </div>
@@ -470,7 +490,8 @@ function Scene2({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 3,
-                }}>
+                }}
+              >
                 <div
                   style={{
                     fontFamily: "sans-serif",
@@ -478,7 +499,8 @@ function Scene2({ frame }) {
                     color: C.purple,
                     fontWeight: 700,
                     marginBottom: 1,
-                  }}>
+                  }}
+                >
                   Schlüssel
                 </div>
                 <BitRow byte={keyByte} color={C.purple} />
@@ -503,7 +525,8 @@ function Scene2({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 3,
-                }}>
+                }}
+              >
                 <BitRow byte={cipherByte} color={C.red} highlight />
                 <div
                   style={{
@@ -512,12 +535,13 @@ function Scene2({ frame }) {
                     color: C.red,
                     fontWeight: 700,
                     marginTop: 1,
-                  }}>
+                  }}
+                >
                   Chiffrat
                 </div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -534,7 +558,8 @@ function Scene2({ frame }) {
           fontSize: 13,
           color: C.fg,
           textAlign: "center",
-        }}>
+        }}
+      >
         Das Chiffrat sieht wie zufälliger{" "}
         <strong style={{ color: C.red }}>Bitrauschen</strong> aus — ohne den
         Schlüssel ist es sinnlos
@@ -549,18 +574,20 @@ function Scene2({ frame }) {
           flexDirection: "column",
           alignItems: "center",
           gap: 8,
-        }}>
+        }}
+      >
         <div
           style={{
             color: C.gray,
             fontFamily: "sans-serif",
             fontSize: 12,
-          }}>
+          }}
+        >
           Chiffrat-Bytes als Zeichen interpretiert:
         </div>
         <div style={{ display: "flex", gap: 10 }}>
           {CIPHER_BYTES.map((b, i) => {
-            const isPrint = b >= 33 && b < 127
+            const isPrint = b >= 33 && b < 127;
             return (
               <div
                 key={i}
@@ -575,7 +602,8 @@ function Scene2({ frame }) {
                   alignItems: "center",
                   justifyContent: "center",
                   gap: 2,
-                }}>
+                }}
+              >
                 <span
                   style={{
                     fontFamily: "'Courier New', monospace",
@@ -583,37 +611,38 @@ function Scene2({ frame }) {
                     fontWeight: 700,
                     color: C.red,
                     lineHeight: 1,
-                  }}>
+                  }}
+                >
                   {isPrint ? String.fromCharCode(b) : `[${b}]`}
                 </span>
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SZENE 3: Übertragung ─────────────────────────────────────
 function Scene3({ frame }) {
-  const { fps } = useVideoConfig()
-  const local = frame - SCENE_START.s3
-  const titleOp = fade(local, 0, 12)
+  const { fps } = useVideoConfig();
+  const local = frame - SCENE_START.s3;
+  const titleOp = fade(local, 0, 12);
 
   // Layout: PC links, Server rechts, Schlüsselaustausch unten
-  const W = 1280
-  const H = 720
+  const W = 1280;
+  const H = 720;
 
-  const pc = { x: 130, y: 260 }
-  const server = { x: 1150, y: 260 }
+  const pc = { x: 130, y: 260 };
+  const server = { x: 1150, y: 260 };
 
   // Phase 1: Netzwerk erscheint
-  const netOp = fade(local, 15, 20)
+  const netOp = fade(local, 15, 20);
 
   // Phase 2: Paket fliegt von links nach rechts
-  const pktStart = 50
-  const pktEnd = 150
+  const pktStart = 50;
+  const pktEnd = 150;
   const pktX = interpolate(
     local,
     [pktStart, pktEnd],
@@ -622,15 +651,15 @@ function Scene3({ frame }) {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     },
-  )
-  const pktVisible = local >= pktStart && local <= pktEnd + 20
-  const pktFade = local > pktEnd ? fade(local, pktEnd, 20) : 1
+  );
+  const pktVisible = local >= pktStart && local <= pktEnd + 20;
+  const pktFade = local > pktEnd ? fade(local, pktEnd, 20) : 1;
   const pktOp =
     local < pktStart
       ? 0
       : pktFade > 0
         ? 1 - (pktFade === 1 && local > pktEnd + 15 ? 1 : 0)
-        : 1
+        : 1;
   // eigentlich: sichtbar von pktStart bis pktEnd+10, dann fade out
   const pktOpReal = interpolate(
     local,
@@ -640,18 +669,18 @@ function Scene3({ frame }) {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     },
-  )
+  );
 
   // Phase 3: Chiffrat am Server anzeigen
-  const arriveOp = fade(local, pktEnd + 15, 18)
+  const arriveOp = fade(local, pktEnd + 15, 18);
 
   // Phase 4: Schlüssel-Austausch unten (persönlich)
-  const keyExStart = 180
-  const keyExOp = fade(local, keyExStart, 18)
+  const keyExStart = 180;
+  const keyExOp = fade(local, keyExStart, 18);
 
   // Person A (links) und Person B (rechts) tauschen Schlüssel
-  const personA = { x: 300, y: 500 }
-  const personB = { x: 980, y: 500 }
+  const personA = { x: 300, y: 500 };
+  const personB = { x: 980, y: 500 };
 
   // Schlüssel-Paket reist von A nach B mit spring
   const keyTravelOp = interpolate(
@@ -662,16 +691,16 @@ function Scene3({ frame }) {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     },
-  )
+  );
   const keyPktX = interpolate(
     local,
     [keyExStart + 30, keyExStart + 90],
     [personA.x + 40, personB.x - 40],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  )
-  const keyArriveOp = fade(local, keyExStart + 100, 18)
+  );
+  const keyArriveOp = fade(local, keyExStart + 100, 18);
 
-  const summaryOp = fade(local, keyExStart + 130, 20)
+  const summaryOp = fade(local, keyExStart + 130, 20);
 
   return (
     <AbsoluteFill style={{ background: C.bg, fontFamily: "sans-serif" }}>
@@ -684,7 +713,8 @@ function Scene3({ frame }) {
         width={W}
         height={H * 0.55}
         style={{ position: "absolute", top: 55 }}
-        overflow="visible">
+        overflow="visible"
+      >
         {/* Leitung PC → Server */}
         <line
           x1={pc.x + 50}
@@ -716,7 +746,8 @@ function Scene3({ frame }) {
             textAnchor="middle"
             fill={C.blue}
             fontSize={13}
-            fontWeight="700">
+            fontWeight="700"
+          >
             Alice
           </text>
         </g>
@@ -740,7 +771,8 @@ function Scene3({ frame }) {
             textAnchor="middle"
             fill={C.green}
             fontSize={13}
-            fontWeight="700">
+            fontWeight="700"
+          >
             Bob
           </text>
         </g>
@@ -752,7 +784,8 @@ function Scene3({ frame }) {
           textAnchor="middle"
           fill={C.gray}
           fontSize={12}
-          opacity={netOp}>
+          opacity={netOp}
+        >
           Internet (abhörbar)
         </text>
 
@@ -774,7 +807,8 @@ function Scene3({ frame }) {
               textAnchor="middle"
               fill={C.gray}
               fontSize={9}
-              fontWeight="700">
+              fontWeight="700"
+            >
               CHIFFRAT
             </text>
             <text
@@ -782,7 +816,8 @@ function Scene3({ frame }) {
               textAnchor="middle"
               fill={C.red}
               fontSize={11}
-              fontWeight="700">
+              fontWeight="700"
+            >
               🔒 ???
             </text>
           </g>
@@ -806,7 +841,8 @@ function Scene3({ frame }) {
             textAnchor="middle"
             fill={C.gray}
             fontSize={10}
-            fontWeight="700">
+            fontWeight="700"
+          >
             Empfangen:
           </text>
           <text
@@ -815,7 +851,8 @@ function Scene3({ frame }) {
             textAnchor="middle"
             fill={C.red}
             fontSize={12}
-            fontWeight="700">
+            fontWeight="700"
+          >
             🔒 Chiffrat
           </text>
           <text
@@ -823,7 +860,8 @@ function Scene3({ frame }) {
             y={server.y + 18}
             textAnchor="middle"
             fill={C.gray}
-            fontSize={9}>
+            fontSize={9}
+          >
             (ohne Schlüssel nutzlos)
           </text>
         </g>
@@ -847,7 +885,8 @@ function Scene3({ frame }) {
         width={W}
         height={H * 0.42}
         style={{ position: "absolute", top: H * 0.55 + 50 }}
-        overflow="visible">
+        overflow="visible"
+      >
         {/* Label */}
         <text
           x={W / 2}
@@ -856,7 +895,8 @@ function Scene3({ frame }) {
           fill={C.yellow}
           fontSize={14}
           fontWeight="700"
-          opacity={keyExOp}>
+          opacity={keyExOp}
+        >
           Schlüssel wird NICHT über das Netz übertragen — persönlicher Austausch
         </text>
 
@@ -871,7 +911,8 @@ function Scene3({ frame }) {
             textAnchor="middle"
             fill={C.blue}
             fontSize={12}
-            fontWeight="700">
+            fontWeight="700"
+          >
             Alice
           </text>
           {/* Schlüssel-Badge */}
@@ -891,7 +932,8 @@ function Scene3({ frame }) {
             textAnchor="middle"
             fill={C.yellow}
             fontSize={12}
-            fontWeight="700">
+            fontWeight="700"
+          >
             🔑 Schlüssel
           </text>
         </g>
@@ -907,7 +949,8 @@ function Scene3({ frame }) {
             textAnchor="middle"
             fill={C.green}
             fontSize={12}
-            fontWeight="700">
+            fontWeight="700"
+          >
             Bob
           </text>
         </g>
@@ -929,7 +972,8 @@ function Scene3({ frame }) {
           textAnchor="middle"
           fill={C.gray}
           fontSize={11}
-          opacity={keyExOp * 0.7}>
+          opacity={keyExOp * 0.7}
+        >
           persönlich / sicherer Kanal
         </text>
 
@@ -947,7 +991,8 @@ function Scene3({ frame }) {
               [0, 1, 1, 0],
               { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
             )}
-            transform={`translate(${keyPktX}, 85)`}>
+            transform={`translate(${keyPktX}, 85)`}
+          >
             <rect
               x={-30}
               y={-16}
@@ -963,7 +1008,8 @@ function Scene3({ frame }) {
               textAnchor="middle"
               fill={C.gray}
               fontSize={9}
-              fontWeight="700">
+              fontWeight="700"
+            >
               SCHLÜSSEL
             </text>
             <text
@@ -971,7 +1017,8 @@ function Scene3({ frame }) {
               textAnchor="middle"
               fill={C.yellow}
               fontSize={13}
-              fontWeight="700">
+              fontWeight="700"
+            >
               🔑
             </text>
           </g>
@@ -995,7 +1042,8 @@ function Scene3({ frame }) {
             textAnchor="middle"
             fill={C.yellow}
             fontSize={12}
-            fontWeight="700">
+            fontWeight="700"
+          >
             🔑 Schlüssel
           </text>
         </g>
@@ -1018,28 +1066,29 @@ function Scene3({ frame }) {
           color: C.fg,
           whiteSpace: "nowrap",
           textAlign: "center",
-        }}>
+        }}
+      >
         Bob hat jetzt: <strong style={{ color: C.red }}>Chiffrat</strong> (vom
         Netz) + <strong style={{ color: C.yellow }}>Schlüssel</strong>{" "}
         (persönlich) →{" "}
         <strong style={{ color: C.green }}>kann entschlüsseln</strong>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SZENE 4: Entschlüsselung mit richtigem Schlüssel ─────────
 function Scene4({ frame }) {
-  const { fps } = useVideoConfig()
-  const local = frame - SCENE_START.s4
-  const titleOp = fade(local, 0, 12)
+  const { fps } = useVideoConfig();
+  const local = frame - SCENE_START.s4;
+  const titleOp = fade(local, 0, 12);
 
-  const cipherRowDelay = 20
-  const keyRowDelay = 55
-  const xorSymDelay = 90
-  const plainRowDelay = 110
-  const stag = 22
-  const textRevealDelay = plainRowDelay + 5 * stag + 30
+  const cipherRowDelay = 20;
+  const keyRowDelay = 55;
+  const xorSymDelay = 90;
+  const plainRowDelay = 110;
+  const stag = 22;
+  const textRevealDelay = plainRowDelay + 5 * stag + 30;
 
   return (
     <AbsoluteFill
@@ -1049,7 +1098,8 @@ function Scene4({ frame }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Title op={titleOp}>
         Schritt 4 — Entschlüsselung mit dem richtigen Schlüssel
       </Title>
@@ -1065,7 +1115,8 @@ function Scene4({ frame }) {
           gap: 8,
           alignItems: "center",
           whiteSpace: "nowrap",
-        }}>
+        }}
+      >
         <span style={{ color: C.gray, fontFamily: "sans-serif", fontSize: 13 }}>
           XOR ist sein eigenes Gegenteil:
         </span>
@@ -1082,26 +1133,27 @@ function Scene4({ frame }) {
           gap: 14,
           alignItems: "flex-start",
           marginTop: 16,
-        }}>
+        }}
+      >
         {CIPHER_BYTES.map((cipherByte, i) => {
-          const keyByte = KEY_BYTES[i]
-          const plainByte = PLAIN_BYTES[i]
-          const plainChar = PLAIN[i]
+          const keyByte = KEY_BYTES[i];
+          const plainByte = PLAIN_BYTES[i];
+          const plainChar = PLAIN[i];
 
-          const cipherOp = fade(local, cipherRowDelay + i * stag, 14)
-          const keyOp = fade(local, keyRowDelay + i * stag, 14)
-          const xorOp = fade(local, xorSymDelay + i * stag, 12)
-          const plainOp = fade(local, plainRowDelay + i * stag, 14)
+          const cipherOp = fade(local, cipherRowDelay + i * stag, 14);
+          const keyOp = fade(local, keyRowDelay + i * stag, 14);
+          const xorOp = fade(local, xorSymDelay + i * stag, 12);
+          const plainOp = fade(local, plainRowDelay + i * stag, 14);
 
           const sp = spring({
             frame: local - (plainRowDelay + i * stag),
             fps,
             config: { damping: 12, stiffness: 130 },
-          })
+          });
           const scaleChar = interpolate(sp, [0, 1], [0.3, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
-          })
+          });
 
           return (
             <div
@@ -1111,7 +1163,8 @@ function Scene4({ frame }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 4,
-              }}>
+              }}
+            >
               {/* Chiffrat-Bits */}
               <div
                 style={{
@@ -1120,14 +1173,16 @@ function Scene4({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 3,
-                }}>
+                }}
+              >
                 <div
                   style={{
                     fontFamily: "sans-serif",
                     fontSize: 11,
                     color: C.red,
                     fontWeight: 700,
-                  }}>
+                  }}
+                >
                   Chiffrat
                 </div>
                 <BitRow byte={cipherByte} color={C.red} highlight />
@@ -1146,7 +1201,8 @@ function Scene4({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 3,
-                }}>
+                }}
+              >
                 <div
                   style={{
                     fontFamily: "sans-serif",
@@ -1154,7 +1210,8 @@ function Scene4({ frame }) {
                     color: C.purple,
                     fontWeight: 700,
                     marginBottom: 1,
-                  }}>
+                  }}
+                >
                   Schlüssel
                 </div>
                 <BitRow byte={keyByte} color={C.purple} />
@@ -1180,14 +1237,16 @@ function Scene4({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 4,
-                }}>
+                }}
+              >
                 <BitRow byte={plainByte} color={C.green} highlight />
                 <div
                   style={{
                     fontFamily: "sans-serif",
                     fontSize: 14,
                     color: C.gray,
-                  }}>
+                  }}
+                >
                   ↓
                 </div>
                 <CharBox
@@ -1198,7 +1257,7 @@ function Scene4({ frame }) {
                 />
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -1215,7 +1274,8 @@ function Scene4({ frame }) {
           gap: 14,
           alignItems: "center",
           justifyContent: "center",
-        }}>
+        }}
+      >
         <Tex
           src={`\\textcolor{fb4934}{\\text{Chiffrat}} \\oplus \\textcolor{fabd2f}{\\text{richtiger Schlüssel}} = \\textcolor{b8bb26}{\\texttt{HALLO}}`}
           fontSize={17}
@@ -1223,21 +1283,21 @@ function Scene4({ frame }) {
         <span style={{ fontSize: 22 }}>✓</span>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SZENE 5: Entschlüsselung mit falschem Schlüssel ─────────
 function Scene5({ frame }) {
-  const local = frame - SCENE_START.s5
-  const titleOp = fade(local, 0, 12)
+  const local = frame - SCENE_START.s5;
+  const titleOp = fade(local, 0, 12);
 
-  const cipherRowDelay = 20
-  const keyRowDelay = 50
-  const xorSymDelay = 80
-  const resultRowDelay = 100
-  const stag = 20
+  const cipherRowDelay = 20;
+  const keyRowDelay = 50;
+  const xorSymDelay = 80;
+  const resultRowDelay = 100;
+  const stag = 20;
 
-  const wrongChars = WRONG_DECRYPT.map((b) => String.fromCharCode(b))
+  const wrongChars = WRONG_DECRYPT.map((b) => String.fromCharCode(b));
 
   return (
     <AbsoluteFill
@@ -1247,7 +1307,8 @@ function Scene5({ frame }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Title op={titleOp}>Was passiert mit einem falschen Schlüssel?</Title>
 
       <div
@@ -1256,21 +1317,22 @@ function Scene5({ frame }) {
           gap: 14,
           alignItems: "flex-start",
           marginTop: 20,
-        }}>
+        }}
+      >
         {CIPHER_BYTES.map((cipherByte, i) => {
-          const wrongKeyByte = WRONG_KEY_BYTES[i]
-          const wrongByte = WRONG_DECRYPT[i]
+          const wrongKeyByte = WRONG_KEY_BYTES[i];
+          const wrongByte = WRONG_DECRYPT[i];
           // Druckbare ASCII anzeigen, nicht-druckbare als [N]
-          const isPrintable = wrongByte >= 33 && wrongByte < 127
+          const isPrintable = wrongByte >= 33 && wrongByte < 127;
           const displayChar = isPrintable
             ? String.fromCharCode(wrongByte)
-            : `[${wrongByte}]`
-          const displayFontSize = isPrintable ? 21 : 13
+            : `[${wrongByte}]`;
+          const displayFontSize = isPrintable ? 21 : 13;
 
-          const cipherOp = fade(local, cipherRowDelay + i * stag, 12)
-          const keyOp = fade(local, keyRowDelay + i * stag, 12)
-          const xorOp = fade(local, xorSymDelay + i * stag, 10)
-          const resultOp = fade(local, resultRowDelay + i * stag, 12)
+          const cipherOp = fade(local, cipherRowDelay + i * stag, 12);
+          const keyOp = fade(local, keyRowDelay + i * stag, 12);
+          const xorOp = fade(local, xorSymDelay + i * stag, 10);
+          const resultOp = fade(local, resultRowDelay + i * stag, 12);
 
           return (
             <div
@@ -1280,7 +1342,8 @@ function Scene5({ frame }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 4,
-              }}>
+              }}
+            >
               {/* Chiffrat-Bits */}
               <div
                 style={{
@@ -1289,14 +1352,16 @@ function Scene5({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 3,
-                }}>
+                }}
+              >
                 <div
                   style={{
                     fontFamily: "sans-serif",
                     fontSize: 11,
                     color: C.red,
                     fontWeight: 700,
-                  }}>
+                  }}
+                >
                   Chiffrat
                 </div>
                 <BitRow byte={cipherByte} color={C.red} highlight />
@@ -1315,14 +1380,16 @@ function Scene5({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 3,
-                }}>
+                }}
+              >
                 <div
                   style={{
                     fontFamily: "sans-serif",
                     fontSize: 11,
                     color: C.orange,
                     fontWeight: 700,
-                  }}>
+                  }}
+                >
                   ⚠ falscher Schlüssel
                 </div>
                 <BitRow byte={wrongKeyByte} color={C.orange} />
@@ -1347,14 +1414,16 @@ function Scene5({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 4,
-                }}>
+                }}
+              >
                 <BitRow byte={wrongByte} color={C.gray} />
                 <div
                   style={{
                     fontFamily: "sans-serif",
                     fontSize: 14,
                     color: C.gray,
-                  }}>
+                  }}
+                >
                   ↓
                 </div>
                 <CharBox
@@ -1365,7 +1434,7 @@ function Scene5({ frame }) {
                 />
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -1383,7 +1452,8 @@ function Scene5({ frame }) {
           alignItems: "center",
           justifyContent: "center",
           flexWrap: "wrap",
-        }}>
+        }}
+      >
         <Tex
           src={`\\textcolor{fb4934}{\\text{Chiffrat}} \\oplus \\textcolor{fe8019}{\\text{falscher Schlüssel}}`}
           fontSize={17}
@@ -1391,7 +1461,7 @@ function Scene5({ frame }) {
         <Tex src={`=`} color={C.gray} fontSize={17} />
         <span style={{ display: "flex", gap: 4, alignItems: "center" }}>
           {WRONG_DECRYPT.map((b, i) => {
-            const isPrint = b >= 33 && b < 127
+            const isPrint = b >= 33 && b < 127;
             return (
               <span
                 key={i}
@@ -1406,35 +1476,36 @@ function Scene5({ frame }) {
                     : "sans-serif",
                   fontSize: isPrint ? 18 : 12,
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 {isPrint ? String.fromCharCode(b) : `[${b}]`}
               </span>
-            )
+            );
           })}
         </span>
         <span style={{ fontSize: 22 }}>✗</span>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SZENE 6: Schlüsselraum Bits ─────────────────────────────
 function Scene6({ frame }) {
-  const { fps } = useVideoConfig()
-  const local = frame - SCENE_START.s6
-  const titleOp = fade(local, 0, 12)
+  const { fps } = useVideoConfig();
+  const local = frame - SCENE_START.s6;
+  const titleOp = fade(local, 0, 12);
 
   // 5 Buchstaben × 8 Bit = 40 Bit Schlüssel → 2^40 Möglichkeiten
-  const keyBits = PLAIN.length * 8 // 40
+  const keyBits = PLAIN.length * 8; // 40
 
   // Bit-Karten erscheinen
-  const cardDelay = 20
-  const cardStag = 18
+  const cardDelay = 20;
+  const cardStag = 18;
 
   // Rechenweg erscheint
-  const mathDelay = cardDelay + 5 * cardStag + 30
-  const resultDelay = mathDelay + 40
-  const infoDelay = resultDelay + 30
+  const mathDelay = cardDelay + 5 * cardStag + 30;
+  const resultDelay = mathDelay + 40;
+  const infoDelay = resultDelay + 30;
 
   return (
     <AbsoluteFill
@@ -1444,7 +1515,8 @@ function Scene6({ frame }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Title op={titleOp}>Schritt 6 — Wie viele Schlüssel gibt es?</Title>
 
       {/* 5 Buchstaben × 8-Bit-Karten */}
@@ -1457,7 +1529,8 @@ function Scene6({ frame }) {
           gap: 8,
           alignItems: "center",
           justifyContent: "center",
-        }}>
+        }}
+      >
         <span style={{ color: C.gray, fontFamily: "sans-serif", fontSize: 14 }}>
           Unser Schlüssel hat
         </span>
@@ -1470,16 +1543,16 @@ function Scene6({ frame }) {
 
       <div style={{ display: "flex", gap: 12, marginBottom: 24 }}>
         {PLAIN.split("").map((_, i) => {
-          const cardOp = fade(local, cardDelay + i * cardStag, 14)
+          const cardOp = fade(local, cardDelay + i * cardStag, 14);
           const sp = spring({
             frame: local - (cardDelay + i * cardStag),
             fps,
             config: { damping: 12, stiffness: 120 },
-          })
+          });
           const scale = interpolate(sp, [0, 1], [0.4, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
-          })
+          });
 
           return (
             <div
@@ -1491,7 +1564,8 @@ function Scene6({ frame }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 5,
-              }}>
+              }}
+            >
               <div
                 style={{
                   background: C.bgL,
@@ -1502,13 +1576,15 @@ function Scene6({ frame }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 4,
-                }}>
+                }}
+              >
                 <div
                   style={{
                     fontFamily: "sans-serif",
                     fontSize: 11,
                     color: C.gray,
-                  }}>
+                  }}
+                >
                   Byte {i + 1}
                 </div>
                 <div style={{ display: "flex", gap: 2 }}>
@@ -1527,7 +1603,8 @@ function Scene6({ frame }) {
                         fontSize: 9,
                         fontWeight: 700,
                         color: C.purple,
-                      }}>
+                      }}
+                    >
                       ?
                     </div>
                   ))}
@@ -1541,11 +1618,12 @@ function Scene6({ frame }) {
                   fontFamily: "sans-serif",
                   fontSize: 10,
                   color: C.gray,
-                }}>
+                }}
+              >
                 Schlüssel-Byte {i + 1}
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -1555,7 +1633,8 @@ function Scene6({ frame }) {
           opacity: fade(local, mathDelay, 18),
           textAlign: "center",
           marginBottom: 12,
-        }}>
+        }}
+      >
         <Tex
           src={`256 \\times 256 \\times 256 \\times 256 \\times 256 \\;=\\; 256^5 \\;=\\; 2^{40}`}
           color={C.fg}
@@ -1576,7 +1655,8 @@ function Scene6({ frame }) {
           gap: 10,
           alignItems: "center",
           justifyContent: "center",
-        }}>
+        }}
+      >
         <Tex
           src={`2^{40} \\approx 1{,}1 \\times 10^{12}`}
           color={C.yellow}
@@ -1601,7 +1681,8 @@ function Scene6({ frame }) {
           alignItems: "center",
           justifyContent: "center",
           flexWrap: "wrap",
-        }}>
+        }}
+      >
         <span style={{ color: C.gray, fontFamily: "sans-serif", fontSize: 13 }}>
           Bei AES-128:
         </span>
@@ -1616,12 +1697,12 @@ function Scene6({ frame }) {
         </span>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── Hauptkomposition ─────────────────────────────────────────
 function XorVizComp() {
-  const frame = useCurrentFrame()
+  const frame = useCurrentFrame();
 
   return (
     <AbsoluteFill style={{ fontFamily: "'Noto Sans', sans-serif" }}>
@@ -1640,12 +1721,12 @@ function XorVizComp() {
       )}
       {frame >= SCENE_START.s6 && <Scene6 frame={frame} />}
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── Export ───────────────────────────────────────────────────
 export default function XorViz() {
-  const playerRef = useRef(null)
+  const playerRef = useRef(null);
   return (
     <div
       style={{
@@ -1653,7 +1734,8 @@ export default function XorViz() {
         borderRadius: 8,
         overflow: "hidden",
         border: `1px solid #504945`,
-      }}>
+      }}
+    >
       <Player
         ref={playerRef}
         component={XorVizComp}
@@ -1667,10 +1749,10 @@ export default function XorViz() {
         autoPlay={false}
         acknowledgeRemotionLicense
         onEnded={() => {
-          playerRef.current?.seekTo(TOTAL - 1)
-          playerRef.current?.pause()
+          playerRef.current?.seekTo(TOTAL - 1);
+          playerRef.current?.pause();
         }}
       />
     </div>
-  )
+  );
 }

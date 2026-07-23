@@ -17,7 +17,7 @@ export default function FmsWebdesign() {
 
       <p>
         Sie finden hier den Starter-Code den Sie auf Ihrem{" "}
-        <a href="https://codepen.io" target="_blank">
+        <a href="https://codepen.io" target="_blank" rel="noopener">
           CodePen
         </a>{" "}
         brauchen, damit Sie nur dem CSS Teil im Video folgen müssen. Sie können

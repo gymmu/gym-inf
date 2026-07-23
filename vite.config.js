@@ -1,13 +1,13 @@
-import path from "node:path"
-import mdx from "@mdx-js/rollup"
-import react from "@vitejs/plugin-react"
-import { defineConfig, normalizePath } from "vite"
-import prismjsPlugin from "vite-plugin-prismjs"
-import { viteStaticCopy } from "vite-plugin-static-copy"
+import path from "node:path";
+import mdx from "@mdx-js/rollup";
+import react from "@vitejs/plugin-react";
+import { defineConfig, normalizePath } from "vite";
+import prismjsPlugin from "vite-plugin-prismjs";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 function generateAlias(absolutePath) {
   // eslint-disable-next-line no-undef
-  return path.resolve(process.cwd(), absolutePath)
+  return path.resolve(process.cwd(), absolutePath);
 }
 
 // Plugin to mock browser-only libraries during SSR
@@ -19,13 +19,13 @@ function mockBrowserLibsForSSR() {
       // Only mock during SSR build
       if (options?.ssr) {
         if (id === "react-syntax-highlighter") {
-          return generateAlias("src/mocks/react-syntax-highlighter.jsx")
+          return generateAlias("src/mocks/react-syntax-highlighter.jsx");
         }
         if (id.startsWith("react-syntax-highlighter/dist/esm/styles")) {
-          return generateAlias("src/mocks/react-syntax-highlighter-styles.js")
+          return generateAlias("src/mocks/react-syntax-highlighter-styles.js");
         }
         if (id === "react-x-mermaid") {
-          return generateAlias("src/mocks/react-x-mermaid.jsx")
+          return generateAlias("src/mocks/react-x-mermaid.jsx");
         }
         // Mock our custom Mermaid components
         if (
@@ -36,19 +36,19 @@ function mockBrowserLibsForSSR() {
           id.includes("components/algorithm/MermaidWithNodes") ||
           id.includes("components/algorithm/MermaidHighlightable")
         ) {
-          return generateAlias("src/mocks/Mermaid.jsx")
+          return generateAlias("src/mocks/Mermaid.jsx");
         }
         // Mock Remotion packages (browser-only)
         if (id === "remotion" || id.includes("@remotion")) {
           if (id.includes("@remotion/player")) {
-            return generateAlias("src/mocks/remotion-player.jsx")
+            return generateAlias("src/mocks/remotion-player.jsx");
           }
-          return generateAlias("src/mocks/remotion.jsx")
+          return generateAlias("src/mocks/remotion.jsx");
         }
       }
-      return null
+      return null;
     },
-  }
+  };
 }
 
 // https://vitejs.dev/config/
@@ -138,49 +138,49 @@ export default defineConfig({
             // React and React-DOM MUST be checked first before react-router
             // to ensure correct bundling order
             if (id.includes("react-dom")) {
-              return "react-vendor"
+              return "react-vendor";
             }
             if (
               id.includes("react") &&
               !id.includes("react-router") &&
               !id.includes("remotion")
             ) {
-              return "react-vendor"
+              return "react-vendor";
             }
             // React Router - comes after React check
             if (id.includes("react-router")) {
-              return "react-vendor"
+              return "react-vendor";
             }
             // Remotion - separate chunk
             if (id.includes("remotion") || id.includes("@remotion")) {
-              return "remotion"
+              return "remotion";
             }
             // Skip mermaid - loaded via CDN
             if (id.includes("mermaid")) {
-              return null
+              return null;
             }
             // Monaco Editor is very large (~800KB)
             if (id.includes("monaco-editor")) {
-              return "monaco"
+              return "monaco";
             }
             // Reveal.js for presentations
             if (id.includes("reveal.js")) {
-              return "reveal"
+              return "reveal";
             }
             // Matter.js for physics simulations
             if (id.includes("matter-js")) {
-              return "matter"
+              return "matter";
             }
             // All other node_modules
-            return "vendor"
+            return "vendor";
           }
 
           // Group MDX pages by category for better caching
           if (id.includes("/pages/fms/") || id.includes("/pages-fms/")) {
-            return "fms-pages"
+            return "fms-pages";
           }
           if (id.includes("/pages/gym/") || id.includes("/pages-gym/")) {
-            return "gym-pages"
+            return "gym-pages";
           }
         },
       },
@@ -211,4 +211,4 @@ export default defineConfig({
   //   formatting: "minify",
   //   mock: true,
   // },
-})
+});

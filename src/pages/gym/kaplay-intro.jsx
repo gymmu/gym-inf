@@ -1,18 +1,18 @@
 import CodeBlock from "@components/CodeBlock";
-import Video from "@components/Video"
+import Video from "@components/Video";
 
 export default function KaplayIntro() {
-
   return (
     <>
       <section>
         <h2>Einführung in Kaplay</h2>
-        <p>Kaplay ist eine Game-Engine für den Webbrowser. Das Projekt
-          ermöglicht es, einfache Spiele direkt im Webbrwoser darzustellen.
-          Kaplay verfügt über eine sehr gute Dokumentation und eine grosse
-          Sammlung von Beispielen, an denen man sich inspirieren kann. Wir
-          werden in den folgenden Kapiteln noch mehr über diese Game-Engine
-          lernen, und lernen wie man ein Spiel Projekt von Grund auf aufbaut.
+        <p>
+          Kaplay ist eine Game-Engine für den Webbrowser. Das Projekt ermöglicht
+          es, einfache Spiele direkt im Webbrwoser darzustellen. Kaplay verfügt
+          über eine sehr gute Dokumentation und eine grosse Sammlung von
+          Beispielen, an denen man sich inspirieren kann. Wir werden in den
+          folgenden Kapiteln noch mehr über diese Game-Engine lernen, und lernen
+          wie man ein Spiel Projekt von Grund auf aufbaut.
         </p>
       </section>
       <section>
@@ -25,7 +25,15 @@ export default function KaplayIntro() {
           Falls Sie also beim ersten mal etwas nicht verstanden oder gefunden
           haben, schauen Sie einfach nochmals rein.
         </p>
-        <p style={{textAlign: "center"}}><a href="https://v4000.kaplayjs.com/docs/guides/" target="_blank"  rel="noreferrer">Kaplay Docs</a></p>
+        <p style={{ textAlign: "center" }}>
+          <a
+            href="https://v4000.kaplayjs.com/docs/guides/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Kaplay Docs
+          </a>
+        </p>
       </section>
       <section>
         <h3>Sammlung von Beispielen</h3>
@@ -33,25 +41,41 @@ export default function KaplayIntro() {
           Kaplay hat neben der hervorragenden Dokumentation noch eine grosse
           Sammlung an guten Beispielen, wo alles mit sehr vielen Kommentaren
           erklärt wird. Hier ist es ebenfalls hilfreich wenn Sie sich in dem
-          Projekt besser auskennen, denn oftmals kann man Beispiele nicht
-          direkt übernehmen, sondern es müssen noch Anpassungen gemacht werden.
-          Diese gelingen aber sehr einfach, je besser man sich in dem Projekt
+          Projekt besser auskennen, denn oftmals kann man Beispiele nicht direkt
+          übernehmen, sondern es müssen noch Anpassungen gemacht werden. Diese
+          gelingen aber sehr einfach, je besser man sich in dem Projekt
           auskennt.
         </p>
-        <p style={{textAlign: "center"}}><a href="https://play.kaplayjs.com/?example=basicEventsObject" target="_blank"  rel="noreferrer">Kaplay Sammlung</a></p>
+        <p style={{ textAlign: "center" }}>
+          <a
+            href="https://play.kaplayjs.com/?example=basicEventsObject"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Kaplay Sammlung
+          </a>
+        </p>
       </section>
       <section>
         <h3>KI-Unterstützung</h3>
         <p>
-          Oftmals ist es nicht leicht die richtigen Informationen direkt auf
-          der Webseite zu finden, daher bekommen Sie hier ein wenig
-          Unterstützung von einem ChatBot. Der ChatBot ist angewiesen die
-          Dokumentation von Kaplay zu durchsuchen, und Ihnen kleine Codestücke
-          zu geben, die Sie direkt einsetzen und anpassen können. Der ChatBot
-          ist <strong>nicht</strong> dazu da um das ganze Projekt für Sie zu
-          machen, verlangen Sie also keinen grossen Code-Stücke von dem Bot.
+          Oftmals ist es nicht leicht die richtigen Informationen direkt auf der
+          Webseite zu finden, daher bekommen Sie hier ein wenig Unterstützung
+          von einem ChatBot. Der ChatBot ist angewiesen die Dokumentation von
+          Kaplay zu durchsuchen, und Ihnen kleine Codestücke zu geben, die Sie
+          direkt einsetzen und anpassen können. Der ChatBot ist{" "}
+          <strong>nicht</strong> dazu da um das ganze Projekt für Sie zu machen,
+          verlangen Sie also keinen grossen Code-Stücke von dem Bot.
         </p>
-        <p style={{textAlign: "center"}}><a href="https://app.fobizz.com/ai/chats/public_assistants/1864dbea-0869-4667-b88a-b4d0ba60f336?token=e1f2d087a4ed9ab17005be1a7cb5d13e" target="_blank"  rel="noreferrer">Kaplay Bot</a></p>
+        <p style={{ textAlign: "center" }}>
+          <a
+            href="https://app.fobizz.com/ai/chats/public_assistants/1864dbea-0869-4667-b88a-b4d0ba60f336?token=e1f2d087a4ed9ab17005be1a7cb5d13e"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Kaplay Bot
+          </a>
+        </p>
       </section>
       <section>
         <h2>Video Hilfe</h2>
@@ -59,23 +83,25 @@ export default function KaplayIntro() {
           Sie bekommen zu jedem Abschnitt auch ein kurzes Video, welches Ihnen
           die Grundlagen und den Code erklärt. Die Videos sind relativ kurz
           gehalten, damit man sie öfters anschauen kann, falls ein Teil noch
-          nicht richtig verstanden wurde. Die Videos sind mehr als Erklärung
-          und Hilfe gedacht, nicht unbedingt um direkt mitzuarbeiten.
+          nicht richtig verstanden wurde. Die Videos sind mehr als Erklärung und
+          Hilfe gedacht, nicht unbedingt um direkt mitzuarbeiten.
         </p>
-        
       </section>
       <section>
         <h2>Projekt Setup</h2>
         <p>
-          Das Projekt können Sie hier unter diesem 
-          <a href="https://classroom.github.com/a/hyWJLy2_" target="_blank" rel="noreferrer">Github Classroom</a>
+          Das Projekt können Sie hier unter diesem
+          <a
+            href="https://classroom.github.com/a/hyWJLy2_"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Github Classroom
+          </a>
           finden, und sich direkt einer Gruppe anschliessen.
         </p>
-        <p>
-          Das folgende Video erklärt Ihnen wie das Projekt aufgebaut ist.
-        </p>
-        <Video url="fECohz732gc"/>
-
+        <p>Das folgende Video erklärt Ihnen wie das Projekt aufgebaut ist.</p>
+        <Video url="fECohz732gc" />
       </section>
       <section>
         <h2>Kaplay Spiel erstellen</h2>
@@ -93,7 +119,6 @@ export default function KaplayIntro() {
             const k = kaplay({...})
           `}
         </CodeBlock>
-
       </section>
       <section>
         <h2>Video</h2>
@@ -101,8 +126,8 @@ export default function KaplayIntro() {
           In diesem Video wir Ihnen erklärt wie Sie das Kaplay-Objekt erstellen
           und zu Ihrer Webseite hinzufügen.
         </p>
-        <Video url="mKyV3Ij7NOE"/>
+        <Video url="mKyV3Ij7NOE" />
       </section>
     </>
-  )
+  );
 }

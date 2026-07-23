@@ -1,12 +1,12 @@
-import { useCurrentFrame, AbsoluteFill } from "remotion"
-import { useMemo } from "react"
+import { useMemo } from "react";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
 
 // ==================== HELPER FUNCTIONS ====================
 
 // Generiere alle Schritte für Lineare Suche
 export function generateLinearSearchSteps(array, target) {
-  const steps = []
-  const n = array.length
+  const steps = [];
+  const n = array.length;
 
   steps.push({
     array: [...array],
@@ -16,7 +16,7 @@ export function generateLinearSearchSteps(array, target) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     array: [...array],
@@ -26,7 +26,7 @@ export function generateLinearSearchSteps(array, target) {
     description: `Array und Zielwert ${target} eingeben`,
     mermaidNode: "Gib Liste und Zielwert ein",
     variables: { target, n },
-  })
+  });
 
   steps.push({
     array: [...array],
@@ -36,7 +36,7 @@ export function generateLinearSearchSteps(array, target) {
     description: "Setze i auf 0",
     mermaidNode: "Setze i auf 0",
     variables: { i: 0, target },
-  })
+  });
 
   for (let i = 0; i < array.length; i++) {
     // Loop check
@@ -48,7 +48,7 @@ export function generateLinearSearchSteps(array, target) {
       description: `Prüfe: i=${i} < ${n}?`,
       mermaidNode: "Ist i < Länge?",
       variables: { i, target, n },
-    })
+    });
 
     // Comparison
     steps.push({
@@ -59,7 +59,7 @@ export function generateLinearSearchSteps(array, target) {
       description: `Vergleiche: Array[${i}]=${array[i]} === ${target}?`,
       mermaidNode: "Ist Element an Position i = Zielwert?",
       variables: { i, target },
-    })
+    });
 
     if (array[i] === target) {
       steps.push({
@@ -70,8 +70,8 @@ export function generateLinearSearchSteps(array, target) {
         description: `Gefunden! ${target} ist an Index ${i}`,
         mermaidNode: "Gib aus: Gefunden bei Index i",
         variables: { i, target },
-      })
-      
+      });
+
       steps.push({
         array: [...array],
         currentIndex: i,
@@ -80,9 +80,9 @@ export function generateLinearSearchSteps(array, target) {
         description: "Ende - Erfolgreich gefunden",
         mermaidNode: "Ende",
         variables: {},
-      })
-      
-      return steps
+      });
+
+      return steps;
     }
 
     // Next element
@@ -94,7 +94,7 @@ export function generateLinearSearchSteps(array, target) {
       description: `Gehe zum nächsten Element`,
       mermaidNode: "Gehe zum nächsten Element",
       variables: { i: i + 1, target },
-    })
+    });
   }
 
   // Loop exit - not found
@@ -106,7 +106,7 @@ export function generateLinearSearchSteps(array, target) {
     description: `Prüfe: i=${n} < ${n}? Nein`,
     mermaidNode: "Ist i < Länge?",
     variables: { i: n, n },
-  })
+  });
 
   steps.push({
     array: [...array],
@@ -116,7 +116,7 @@ export function generateLinearSearchSteps(array, target) {
     description: `${target} wurde nicht gefunden`,
     mermaidNode: "Gib aus: Nicht gefunden",
     variables: {},
-  })
+  });
 
   steps.push({
     array: [...array],
@@ -126,16 +126,16 @@ export function generateLinearSearchSteps(array, target) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // Generiere alle Schritte für Binäre Suche
 export function generateBinarySearchSteps(array, target) {
-  const steps = []
-  const sortedArray = [...array].sort((a, b) => a - b)
-  const n = sortedArray.length
+  const steps = [];
+  const sortedArray = [...array].sort((a, b) => a - b);
+  const n = sortedArray.length;
 
   steps.push({
     array: sortedArray,
@@ -147,7 +147,7 @@ export function generateBinarySearchSteps(array, target) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     array: sortedArray,
@@ -159,10 +159,10 @@ export function generateBinarySearchSteps(array, target) {
     description: `Sortiertes Array und Zielwert ${target} eingeben`,
     mermaidNode: "Gib sortierte Liste und Zielwert ein",
     variables: { target, n },
-  })
+  });
 
-  let left = 0
-  let right = n - 1
+  let left = 0;
+  let right = n - 1;
 
   steps.push({
     array: sortedArray,
@@ -174,7 +174,7 @@ export function generateBinarySearchSteps(array, target) {
     description: `Setze links auf 0`,
     mermaidNode: "Setze links auf 0",
     variables: { left: 0, target },
-  })
+  });
 
   steps.push({
     array: sortedArray,
@@ -186,7 +186,7 @@ export function generateBinarySearchSteps(array, target) {
     description: `Setze rechts auf ${n - 1}`,
     mermaidNode: "Setze rechts auf Länge minus 1",
     variables: { right, target },
-  })
+  });
 
   while (left <= right) {
     // Loop check
@@ -200,9 +200,9 @@ export function generateBinarySearchSteps(array, target) {
       description: `Prüfe: left=${left} <= right=${right}? Ja`,
       mermaidNode: "Ist links ≤ rechts?",
       variables: { left, right, target },
-    })
+    });
 
-    const mid = Math.floor((left + right) / 2)
+    const mid = Math.floor((left + right) / 2);
 
     steps.push({
       array: sortedArray,
@@ -214,7 +214,7 @@ export function generateBinarySearchSteps(array, target) {
       description: `Berechne Mitte: mid = ⌊(${left} + ${right}) / 2⌋ = ${mid}`,
       mermaidNode: "Berechne Mitte: links plus rechts geteilt durch 2",
       variables: { left, right, mid, target },
-    })
+    });
 
     steps.push({
       array: sortedArray,
@@ -226,7 +226,7 @@ export function generateBinarySearchSteps(array, target) {
       description: `Vergleiche: Array[${mid}]=${sortedArray[mid]} === ${target}?`,
       mermaidNode: "Ist Element in Mitte = Zielwert?",
       variables: { left, right, mid, target },
-    })
+    });
 
     if (sortedArray[mid] === target) {
       steps.push({
@@ -239,8 +239,8 @@ export function generateBinarySearchSteps(array, target) {
         description: `Ja! Gefunden bei Index ${mid}`,
         mermaidNode: "Gib aus: Gefunden bei Index Mitte",
         variables: { mid, target },
-      })
-      
+      });
+
       steps.push({
         array: sortedArray,
         left,
@@ -251,11 +251,11 @@ export function generateBinarySearchSteps(array, target) {
         description: "Ende - Erfolgreich",
         mermaidNode: "Ende",
         variables: {},
-      })
-      
-      return steps
+      });
+
+      return steps;
     }
-    
+
     // Check which direction
     steps.push({
       array: sortedArray,
@@ -267,11 +267,11 @@ export function generateBinarySearchSteps(array, target) {
       description: `Prüfe: Array[${mid}]=${sortedArray[mid]} < ${target}?`,
       mermaidNode: "Ist Element in Mitte < Zielwert?",
       variables: { left, right, mid, target },
-    })
-    
+    });
+
     if (sortedArray[mid] < target) {
-      left = mid + 1
-      
+      left = mid + 1;
+
       steps.push({
         array: sortedArray,
         left,
@@ -282,10 +282,10 @@ export function generateBinarySearchSteps(array, target) {
         description: `Ja! Setze left = mid + 1 = ${left}`,
         mermaidNode: "Setze links auf Mitte plus 1",
         variables: { left, right, target },
-      })
+      });
     } else {
-      right = mid - 1
-      
+      right = mid - 1;
+
       steps.push({
         array: sortedArray,
         left,
@@ -296,7 +296,7 @@ export function generateBinarySearchSteps(array, target) {
         description: `Nein! Setze right = mid - 1 = ${right}`,
         mermaidNode: "Setze rechts auf Mitte minus 1",
         variables: { left, right, target },
-      })
+      });
     }
   }
 
@@ -311,7 +311,7 @@ export function generateBinarySearchSteps(array, target) {
     description: `Prüfe: left=${left} <= right=${right}? Nein`,
     mermaidNode: "Ist links ≤ rechts?",
     variables: { left, right },
-  })
+  });
 
   steps.push({
     array: sortedArray,
@@ -323,7 +323,7 @@ export function generateBinarySearchSteps(array, target) {
     description: `${target} wurde nicht gefunden`,
     mermaidNode: "Gib aus: Nicht gefunden",
     variables: {},
-  })
+  });
 
   steps.push({
     array: sortedArray,
@@ -335,9 +335,9 @@ export function generateBinarySearchSteps(array, target) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // ==================== ARRAY VISUALISIERUNG ====================
@@ -350,7 +350,7 @@ function SearchArrayBars({
   right = -1,
   mid = -1,
 }) {
-  const maxValue = Math.max(...array)
+  const maxValue = Math.max(...array);
 
   return (
     <div
@@ -360,31 +360,32 @@ function SearchArrayBars({
         alignItems: "flex-end",
         height: "250px",
         gap: "10px",
-      }}>
+      }}
+    >
       {array.map((value, index) => {
-        let backgroundColor = "#666" // Grau = Nicht im Suchbereich
-        let label = value.toString()
+        let backgroundColor = "#666"; // Grau = Nicht im Suchbereich
+        let label = value.toString();
 
         // Binäre Suche: Markiere Suchbereich
         if (left >= 0 && right >= 0) {
           if (index >= left && index <= right) {
-            backgroundColor = "#2196F3" // Blau = Im Suchbereich
+            backgroundColor = "#2196F3"; // Blau = Im Suchbereich
           }
           if (index === mid) {
-            backgroundColor = "#FFC107" // Gelb = Aktuelle Mitte
-            label = `${value} (M)`
+            backgroundColor = "#FFC107"; // Gelb = Aktuelle Mitte
+            label = `${value} (M)`;
           }
         }
 
         // Lineare Suche: Markiere aktuellen Index
         if (currentIndex === index && left < 0) {
-          backgroundColor = "#FFC107" // Gelb = Wird gerade geprüft
+          backgroundColor = "#FFC107"; // Gelb = Wird gerade geprüft
         }
 
         // Gefunden
         if (foundIndex === index) {
-          backgroundColor = "#4CAF50" // Grün = Gefunden!
-          label = `${value} ✓`
+          backgroundColor = "#4CAF50"; // Grün = Gefunden!
+          label = `${value} ✓`;
         }
 
         return (
@@ -406,16 +407,15 @@ function SearchArrayBars({
               borderRadius: "4px",
               boxShadow: "0 2px 4px rgba(0,0,0,0.3)",
               position: "relative",
-            }}>
-            <div style={{ fontSize: "18px", marginBottom: "5px" }}>
-              {label}
-            </div>
+            }}
+          >
+            <div style={{ fontSize: "18px", marginBottom: "5px" }}>{label}</div>
             <div style={{ fontSize: "12px", opacity: 0.8 }}>[{index}]</div>
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 // ==================== REMOTION COMPONENTS ====================
@@ -425,20 +425,20 @@ export function LinearSearchAnimation({
   target = 9,
   fps = 30,
 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5 // 1.5 Sekunden pro Schritt
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5; // 1.5 Sekunden pro Schritt
 
-  const steps = useMemo(() => generateLinearSearchSteps(array, target), [
-    array,
-    target,
-  ])
+  const steps = useMemo(
+    () => generateLinearSearchSteps(array, target),
+    [array, target],
+  );
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -449,39 +449,47 @@ export function LinearSearchAnimation({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Lineare Suche - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
       {/* Zählvariablen anzeigen */}
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 20,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 20,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <SearchArrayBars
         array={currentStep.array}
@@ -496,7 +504,8 @@ export function LinearSearchAnimation({
           fontSize: "20px",
           fontWeight: 500,
           color: currentStep.found ? "#4CAF50" : "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
 
@@ -506,12 +515,13 @@ export function LinearSearchAnimation({
             marginTop: 20,
             fontSize: "32px",
             color: "#4CAF50",
-          }}>
+          }}
+        >
           ✓ Erfolgreich!
         </div>
       )}
     </AbsoluteFill>
-  )
+  );
 }
 
 export function BinarySearchAnimation({
@@ -519,20 +529,20 @@ export function BinarySearchAnimation({
   target = 7,
   fps = 30,
 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5 // 1.5 Sekunden pro Schritt
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5; // 1.5 Sekunden pro Schritt
 
-  const steps = useMemo(() => generateBinarySearchSteps(array, target), [
-    array,
-    target,
-  ])
+  const steps = useMemo(
+    () => generateBinarySearchSteps(array, target),
+    [array, target],
+  );
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -543,39 +553,47 @@ export function BinarySearchAnimation({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Binäre Suche - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
       {/* Zählvariablen anzeigen */}
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 20,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 20,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <SearchArrayBars
         array={currentStep.array}
@@ -592,7 +610,8 @@ export function BinarySearchAnimation({
           fontSize: "20px",
           fontWeight: 500,
           color: currentStep.found ? "#4CAF50" : "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
 
@@ -602,10 +621,11 @@ export function BinarySearchAnimation({
             marginTop: 20,
             fontSize: "32px",
             color: "#4CAF50",
-          }}>
+          }}
+        >
           ✓ Erfolgreich!
         </div>
       )}
     </AbsoluteFill>
-  )
+  );
 }

@@ -1,22 +1,26 @@
-import { useNotes } from "@context/NoteContext"
-import { useAppContext } from "@context/AppContext"
-import HamburgerUrl from "@icons/hamburger.svg?url"
-import { Link } from "react-router-dom"
-import { useState, useEffect } from "react"
-import style from "./Header.module.css"
+import { useAppContext } from "@context/AppContext";
+import { useNotes } from "@context/NoteContext";
+import HamburgerUrl from "@icons/hamburger.svg?url";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import style from "./Header.module.css";
 
 function Header() {
-  const { menuVisible, setMenuVisible } = useAppContext()
-  const { initialized } = useNotes()
+  const { menuVisible, setMenuVisible } = useAppContext();
+  const { initialized } = useNotes();
 
   const toggleSide = () => {
-    setMenuVisible(!menuVisible)
-  }
+    setMenuVisible(!menuVisible);
+  };
 
   return (
     <div className={style.container}>
       <header>
-        <img src={HamburgerUrl} alt="Hamburger Menu Icon" onClick={toggleSide} />
+        <img
+          src={HamburgerUrl}
+          alt="Hamburger Menu Icon"
+          onClick={toggleSide}
+        />
         <h1>
           <Link to="/">Informatik Skript</Link>
         </h1>
@@ -25,7 +29,7 @@ function Header() {
         </Link>
       </header>
     </div>
-  )
+  );
 }
 
-export default Header
+export default Header;

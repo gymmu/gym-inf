@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from "react"
-import style from "./HttpDiagram.module.css"
+import { useEffect, useRef, useState } from "react";
+import style from "./HttpDiagram.module.css";
 
 // ─── Szenarien ────────────────────────────────────────────────
 const SCENARIOS = [
@@ -63,101 +63,101 @@ const SCENARIOS = [
     ],
     responseBody: "<h1>404 Not Found</h1>",
   },
-]
+];
 
 // Phasendauern in ms
 const DURATION = {
   request: 700, // Pfeil Browser → Server
   processing: 600, // Server "denkt nach"
   response: 700, // Pfeil Server → Browser
-}
+};
 
 function useAnimationLoop(duration, onDone) {
-  const rafRef = useRef(null)
-  const startRef = useRef(null)
-  const [progress, setProgress] = useState(0)
+  const rafRef = useRef(null);
+  const startRef = useRef(null);
+  const [progress, setProgress] = useState(0);
 
   function start() {
-    cancelAnimationFrame(rafRef.current)
-    startRef.current = null
-    setProgress(0)
+    cancelAnimationFrame(rafRef.current);
+    startRef.current = null;
+    setProgress(0);
     function tick(now) {
-      if (!startRef.current) startRef.current = now
-      const p = Math.min((now - startRef.current) / duration, 1)
-      setProgress(p)
+      if (!startRef.current) startRef.current = now;
+      const p = Math.min((now - startRef.current) / duration, 1);
+      setProgress(p);
       if (p < 1) {
-        rafRef.current = requestAnimationFrame(tick)
+        rafRef.current = requestAnimationFrame(tick);
       } else {
-        onDone()
+        onDone();
       }
     }
-    rafRef.current = requestAnimationFrame(tick)
+    rafRef.current = requestAnimationFrame(tick);
   }
 
-  useEffect(() => () => cancelAnimationFrame(rafRef.current), [])
+  useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
 
-  return { progress, start }
+  return { progress, start };
 }
 
 export default function HttpDiagram() {
-  const [scenarioIdx, setScenarioIdx] = useState(0)
+  const [scenarioIdx, setScenarioIdx] = useState(0);
   // phase: idle | request | processing | response | done
-  const [phase, setPhase] = useState("idle")
-  const timerRef = useRef(null)
+  const [phase, setPhase] = useState("idle");
+  const timerRef = useRef(null);
 
-  const scenario = SCENARIOS[scenarioIdx]
+  const scenario = SCENARIOS[scenarioIdx];
 
   // Animation für Request-Pfeil
   const reqAnim = useAnimationLoop(DURATION.request, () => {
-    setPhase("processing")
+    setPhase("processing");
     timerRef.current = setTimeout(() => {
-      setPhase("response")
-      resAnim.start()
-    }, DURATION.processing)
-  })
+      setPhase("response");
+      resAnim.start();
+    }, DURATION.processing);
+  });
 
   // Animation für Response-Pfeil
   const resAnim = useAnimationLoop(DURATION.response, () => {
-    setPhase("done")
-  })
+    setPhase("done");
+  });
 
-  useEffect(() => () => clearTimeout(timerRef.current), [])
+  useEffect(() => () => clearTimeout(timerRef.current), []);
 
   function runAnimation() {
-    if (phase !== "idle" && phase !== "done") return
-    setPhase("request")
-    reqAnim.start()
+    if (phase !== "idle" && phase !== "done") return;
+    setPhase("request");
+    reqAnim.start();
   }
 
-  const isRunning = phase !== "idle" && phase !== "done"
+  const isRunning = phase !== "idle" && phase !== "done";
 
   // SVG-Koordinaten
-  const BROWSER_X = 100
-  const SERVER_X = 620
-  const MID_Y = 90
-  const LINE_Y = MID_Y
+  const BROWSER_X = 100;
+  const SERVER_X = 620;
+  const MID_Y = 90;
+  const LINE_Y = MID_Y;
 
   // Pfeil-Positionen
   const reqX =
     BROWSER_X +
     55 +
     (SERVER_X - BROWSER_X - 110) *
-      (phase === "request" ? reqAnim.progress : phase !== "idle" ? 1 : 0)
+      (phase === "request" ? reqAnim.progress : phase !== "idle" ? 1 : 0);
   const resX =
     SERVER_X -
     55 -
     (SERVER_X - BROWSER_X - 110) *
-      (phase === "response" ? resAnim.progress : phase === "done" ? 1 : 0)
+      (phase === "response" ? resAnim.progress : phase === "done" ? 1 : 0);
 
   const showReqArrow =
     phase === "request" ||
     phase === "processing" ||
     phase === "response" ||
-    phase === "done"
-  const showResArrow = phase === "response" || phase === "done"
+    phase === "done";
+  const showResArrow = phase === "response" || phase === "done";
   const showReqLabels =
-    phase === "processing" || phase === "response" || phase === "done"
-  const showResLabels = phase === "done"
+    phase === "processing" || phase === "response" || phase === "done";
+  const showResLabels = phase === "done";
 
   return (
     <div className={style.wrapper}>
@@ -165,7 +165,8 @@ export default function HttpDiagram() {
       <svg
         viewBox="0 0 720 200"
         className={style.svg}
-        aria-label="HTTP-Diagramm">
+        aria-label="HTTP-Diagramm"
+      >
         {/* Verbindungslinie */}
         <line
           x1={BROWSER_X + 50}
@@ -193,7 +194,8 @@ export default function HttpDiagram() {
           y={LINE_Y - 16}
           textAnchor="middle"
           fontSize={22}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           🌐
         </text>
         <text
@@ -203,7 +205,8 @@ export default function HttpDiagram() {
           fill="#83a598"
           fontSize={11}
           fontWeight="700"
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           Browser
         </text>
         <text
@@ -212,7 +215,8 @@ export default function HttpDiagram() {
           textAnchor="middle"
           fill="#928374"
           fontSize={9}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           Client
         </text>
 
@@ -242,7 +246,8 @@ export default function HttpDiagram() {
           y={LINE_Y - 16}
           textAnchor="middle"
           fontSize={22}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           🖥️
         </text>
         <text
@@ -252,7 +257,8 @@ export default function HttpDiagram() {
           fill="#ebdbb2"
           fontSize={11}
           fontWeight="700"
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           Server
         </text>
         <text
@@ -261,7 +267,8 @@ export default function HttpDiagram() {
           textAnchor="middle"
           fill="#928374"
           fontSize={9}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           example.com
         </text>
 
@@ -273,7 +280,8 @@ export default function HttpDiagram() {
             textAnchor="middle"
             fill="#fabd2f"
             fontSize={9}
-            style={{ userSelect: "none" }}>
+            style={{ userSelect: "none" }}
+          >
             verarbeitet…
           </text>
         )}
@@ -288,7 +296,8 @@ export default function HttpDiagram() {
                 markerHeight="7"
                 refX="3"
                 refY="3.5"
-                orient="auto">
+                orient="auto"
+              >
                 <polygon points="0 0, 7 3.5, 0 7" fill="#83a598" />
               </marker>
             </defs>
@@ -318,7 +327,8 @@ export default function HttpDiagram() {
               fill="#83a598"
               fontSize={9}
               fontFamily="monospace"
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               {scenario.method} {scenario.path}
             </text>
           </g>
@@ -334,7 +344,8 @@ export default function HttpDiagram() {
                 markerHeight="7"
                 refX="4"
                 refY="3.5"
-                orient="auto-start-reverse">
+                orient="auto-start-reverse"
+              >
                 <polygon points="0 0, 7 3.5, 0 7" fill={scenario.statusColor} />
               </marker>
             </defs>
@@ -363,7 +374,8 @@ export default function HttpDiagram() {
               fill={scenario.statusColor}
               fontSize={9}
               fontFamily="monospace"
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               {scenario.statusCode}
             </text>
           </g>
@@ -376,7 +388,8 @@ export default function HttpDiagram() {
           textAnchor="middle"
           fill="#504945"
           fontSize={9}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           HTTP/1.1 · TCP Port 80 (HTTP) / 443 (HTTPS)
         </text>
       </svg>
@@ -389,10 +402,11 @@ export default function HttpDiagram() {
               key={s.id}
               className={`${style.scenarioBtn} ${scenarioIdx === i ? style.scenarioBtnActive : ""}`}
               onClick={() => {
-                setScenarioIdx(i)
-                setPhase("idle")
+                setScenarioIdx(i);
+                setPhase("idle");
               }}
-              disabled={isRunning}>
+              disabled={isRunning}
+            >
               {s.label}
             </button>
           ))}
@@ -400,7 +414,8 @@ export default function HttpDiagram() {
         <button
           className={style.playBtn}
           onClick={runAnimation}
-          disabled={isRunning}>
+          disabled={isRunning}
+        >
           {isRunning
             ? "Läuft…"
             : phase === "done"
@@ -413,13 +428,15 @@ export default function HttpDiagram() {
       <div className={style.panelsRow}>
         {/* Request */}
         <div
-          className={`${style.panel} ${showReqLabels ? style.panelVisible : ""}`}>
+          className={`${style.panel} ${showReqLabels ? style.panelVisible : ""}`}
+        >
           <div className={style.panelTitle}>Request (Browser → Server)</div>
           <div className={style.headerList}>
             {scenario.requestHeaders.map((h, i) => (
               <div
                 key={i}
-                className={`${style.headerRow} ${h.type === "method" ? style.headerMethod : ""}`}>
+                className={`${style.headerRow} ${h.type === "method" ? style.headerMethod : ""}`}
+              >
                 <span className={style.headerName}>{h.name}</span>
                 {h.value && (
                   <span className={style.headerValue}> {h.value}</span>
@@ -437,7 +454,8 @@ export default function HttpDiagram() {
 
         {/* Response */}
         <div
-          className={`${style.panel} ${showResLabels ? style.panelVisible : ""}`}>
+          className={`${style.panel} ${showResLabels ? style.panelVisible : ""}`}
+        >
           <div className={style.panelTitle}>Response (Server → Browser)</div>
           <div className={style.headerList}>
             {scenario.responseHeaders.map((h, i) => (
@@ -446,7 +464,8 @@ export default function HttpDiagram() {
                 className={`${style.headerRow} ${h.type === "status" ? style.headerStatus : ""}`}
                 style={
                   h.type === "status" ? { color: scenario.statusColor } : {}
-                }>
+                }
+              >
                 <span className={style.headerName}>{h.name}</span>
                 {h.value && (
                   <span className={style.headerValue}> {h.value}</span>
@@ -463,5 +482,5 @@ export default function HttpDiagram() {
         </div>
       </div>
     </div>
-  )
+  );
 }

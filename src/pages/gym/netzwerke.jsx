@@ -1,10 +1,10 @@
-import DataTable from "@components/DataTable/DataTable"
-import Figure from "@components/Figure.jsx"
-import FirewallZones from "@components/gym/FirewallZones/FirewallZones"
-import NatDiagram from "@components/gym/NatDiagram/NatDiagram"
-import NetworkDiagram from "@components/gym/NetworkDiagram/NetworkDiagram"
-import LearningGoals from "@components/LearningGoals.jsx"
-import Section from "@components/Section.jsx"
+import DataTable from "@components/DataTable/DataTable";
+import Figure from "@components/Figure.jsx";
+import FirewallZones from "@components/gym/FirewallZones/FirewallZones";
+import NatDiagram from "@components/gym/NatDiagram/NatDiagram";
+import NetworkDiagram from "@components/gym/NetworkDiagram/NetworkDiagram";
+import LearningGoals from "@components/LearningGoals.jsx";
+import Section from "@components/Section.jsx";
 
 export default function GymNetzwerke() {
   return (
@@ -324,5 +324,5 @@ export default function GymNetzwerke() {
         </p>
       </section>
     </>
-  )
+  );
 }

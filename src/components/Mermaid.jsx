@@ -1,21 +1,21 @@
-import { useEffect, useRef, useState } from "react"
-import styles from "./Mermaid.module.css"
+import { useEffect, useRef, useState } from "react";
+import styles from "./Mermaid.module.css";
 
 // Get mermaid from window (loaded via CDN in index.html)
 const getMermaid = () => {
   if (typeof window !== "undefined" && window.mermaid) {
-    return window.mermaid
+    return window.mermaid;
   }
-  return null
-}
+  return null;
+};
 
 // Initialize mermaid once
-let initialized = false
+let initialized = false;
 const initializeMermaid = () => {
-  if (initialized) return
-  const mermaid = getMermaid()
-  if (!mermaid) return
-  
+  if (initialized) return;
+  const mermaid = getMermaid();
+  if (!mermaid) return;
+
   mermaid.initialize({
     startOnLoad: false,
     theme: "base",
@@ -48,37 +48,37 @@ const initializeMermaid = () => {
       nodeSpacing: 40,
     },
     look: "handDrawn",
-  })
-  initialized = true
-}
+  });
+  initialized = true;
+};
 
 export default function Mermaid({ chart, id }) {
-  const containerRef = useRef(null)
-  const [svg, setSvg] = useState("")
-  const [error, setError] = useState(null)
+  const containerRef = useRef(null);
+  const [svg, setSvg] = useState("");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!chart) return
+    if (!chart) return;
 
     const renderChart = async () => {
       try {
-        const mermaid = getMermaid()
+        const mermaid = getMermaid();
         if (!mermaid) {
-          setError("Mermaid lädt noch...")
-          setTimeout(renderChart, 100)
-          return
+          setError("Mermaid lädt noch...");
+          setTimeout(renderChart, 100);
+          return;
         }
-        
-        initializeMermaid()
-        
-        const uniqueId =
-          id || `mermaid-${Math.random().toString(36).substr(2, 9)}`
 
-        setSvg("")
-        setError(null)
+        initializeMermaid();
+
+        const uniqueId =
+          id || `mermaid-${Math.random().toString(36).substr(2, 9)}`;
+
+        setSvg("");
+        setError(null);
 
         // Render the mermaid chart
-        const { svg: renderedSvg } = await mermaid.render(uniqueId, chart)
+        const { svg: renderedSvg } = await mermaid.render(uniqueId, chart);
 
         // Add Kalam font and extra padding via simple string injection
         const fontStyle = `<style>
@@ -93,18 +93,18 @@ export default function Mermaid({ chart, id }) {
           foreignObject { 
             overflow: visible !important; 
           }
-        </style>`
-        const styledSvg = renderedSvg.replace("<svg", fontStyle + "<svg")
+        </style>`;
+        const styledSvg = renderedSvg.replace("<svg", fontStyle + "<svg");
 
-        setSvg(styledSvg)
+        setSvg(styledSvg);
       } catch (err) {
-        console.error("Mermaid rendering error:", err)
-        setError(err.message || "Failed to render diagram")
+        console.error("Mermaid rendering error:", err);
+        setError(err.message || "Failed to render diagram");
       }
-    }
+    };
 
-    renderChart()
-  }, [chart, id])
+    renderChart();
+  }, [chart, id]);
 
   if (error) {
     return (
@@ -112,7 +112,7 @@ export default function Mermaid({ chart, id }) {
         <strong>Fehler beim Rendern des Diagramms:</strong>
         <pre>{error}</pre>
       </div>
-    )
+    );
   }
 
   return (
@@ -121,5 +121,5 @@ export default function Mermaid({ chart, id }) {
       className={styles.mermaidContainer}
       dangerouslySetInnerHTML={{ __html: svg }}
     />
-  )
+  );
 }

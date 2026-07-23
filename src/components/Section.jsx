@@ -3,5 +3,5 @@ export default function Section({ children, classes = "" }) {
     <div className={`full-width content-grid highlight ${classes}`}>
       {children}
     </div>
-  )
+  );
 }

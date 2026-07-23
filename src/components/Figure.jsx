@@ -12,7 +12,7 @@ export default function Figure({
       <figcaption>{caption}</figcaption>
       <div className={style.origin}>
         Ursprung des Bildes:{" "}
-        <a href={origin} target="_blank">
+        <a href={origin} target="_blank" rel="noopener">
           {origin}
         </a>
       </div>

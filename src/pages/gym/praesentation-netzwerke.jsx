@@ -1,18 +1,18 @@
-import { Link } from "react-router-dom"
+import DnsResolver from "@components/gym/DnsResolver/DnsResolver";
+import HttpDiagram from "@components/gym/HttpDiagram/HttpDiagram";
+import HttpPacket from "@components/gym/HttpPacket/HttpPacket";
+import NatDiagram from "@components/gym/NatDiagram/NatDiagram";
+import NetworkDiagram from "@components/gym/NetworkDiagram/NetworkDiagram";
+import PacketAnimation from "@components/gym/PacketAnimation/PacketAnimation";
+import PacketDiagram from "@components/gym/PacketDiagram/PacketDiagram";
 import Slideshow, {
+  Fragment,
   Slide,
   Stack,
-  Fragment,
-} from "@components/gym/Slideshow/Slideshow"
-import NetworkDiagram from "@components/gym/NetworkDiagram/NetworkDiagram"
-import PacketDiagram from "@components/gym/PacketDiagram/PacketDiagram"
-import PacketAnimation from "@components/gym/PacketAnimation/PacketAnimation"
-import TcpHandshakeAnim from "@components/gym/TcpHandshake/TcpHandshake"
-import DnsResolver from "@components/gym/DnsResolver/DnsResolver"
-import NatDiagram from "@components/gym/NatDiagram/NatDiagram"
-import HttpDiagram from "@components/gym/HttpDiagram/HttpDiagram"
-import HttpPacket from "@components/gym/HttpPacket/HttpPacket"
-import VpnTunnel from "@components/gym/VpnTunnel/VpnTunnel"
+} from "@components/gym/Slideshow/Slideshow";
+import TcpHandshakeAnim from "@components/gym/TcpHandshake/TcpHandshake";
+import VpnTunnel from "@components/gym/VpnTunnel/VpnTunnel";
+import { Link } from "react-router-dom";
 
 export default function GymPraesentationNetzwerke() {
   return (
@@ -202,7 +202,8 @@ export default function GymPraesentationNetzwerke() {
                   fontSize: "0.82em",
                   color: "#928374",
                   userSelect: "none",
-                }}>
+                }}
+              >
                 Notizen (zum Verstehen)
               </summary>
               <div
@@ -215,7 +216,8 @@ export default function GymPraesentationNetzwerke() {
                   border: "1px solid #3c3836",
                   borderRadius: "6px",
                   padding: "0.75em 1em",
-                }}>
+                }}
+              >
                 <p>
                   <strong>Grundidee — Schichten wie Briefumschläge:</strong> Die
                   Anwendung schreibt eine Nachricht, jede Schicht darunter packt
@@ -527,7 +529,8 @@ export default function GymPraesentationNetzwerke() {
             <Fragment animation="fade-up">
               <div
                 className="cols"
-                style={{ marginTop: "0.6em", gap: "0.6em" }}>
+                style={{ marginTop: "0.6em", gap: "0.6em" }}
+              >
                 <div className="info-box">
                   <strong>Request</strong>
                   <br />
@@ -769,5 +772,5 @@ export default function GymPraesentationNetzwerke() {
         </ul>
       </section>
     </>
-  )
+  );
 }

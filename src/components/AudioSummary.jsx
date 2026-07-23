@@ -1,5 +1,5 @@
-import React from "react"
-import AudioPlayer from "./Audio"
+import React from "react";
+import AudioPlayer from "./Audio";
 
 const containerStyle = {
   display: "flex",
@@ -9,7 +9,7 @@ const containerStyle = {
   marginTop: "2rem",
   marginBottom: "2rem",
   padding: "1rem",
-}
+};
 
 const infoBoxStyle = {
   maxWidth: "600px",
@@ -22,7 +22,7 @@ const infoBoxStyle = {
   color: "#eee",
   textAlign: "center",
   fontFamily: "Arial, sans-serif",
-}
+};
 
 export default function AudioSummary({ id, src }) {
   return (
@@ -33,5 +33,5 @@ export default function AudioSummary({ id, src }) {
         <AudioPlayer style={{ marginTop: "2rem" }} src={src} />
       </div>
     </div>
-  )
+  );
 }

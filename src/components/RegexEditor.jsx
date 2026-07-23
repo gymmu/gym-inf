@@ -1,8 +1,6 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { Editor as MEditor } from "@monaco-editor/react";
-
 import styles from "@components/CodePen.module.css";
+import { Editor as MEditor } from "@monaco-editor/react";
+import { useEffect, useState } from "react";
 
 export default function RegexEditor({
   defaultInput = "#00FF00",

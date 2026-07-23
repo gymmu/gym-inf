@@ -1,18 +1,18 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import Section from "@components/Section"
-import SolutionBlock from "@components/SolutionBlock"
-import SimpleSplitView from "@components/algorithm/SimpleSplitView"
+import SimpleSplitView from "@components/algorithm/SimpleSplitView";
 import {
-  PalindromAnimation,
   CharCountAnimation,
-  generatePalindromSteps,
   generateCharCountSteps,
-} from "@components/remotion/StringAnimation"
+  generatePalindromSteps,
+  PalindromAnimation,
+} from "@components/remotion/StringAnimation";
+import Section from "@components/Section";
+import SolutionBlock from "@components/SolutionBlock";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function FmsAlgorithmenStrings() {
-  const [palindromStr, setPalindromStr] = useState("anna")
-  const [charCountStr, setCharCountStr] = useState("hello")
+  const [palindromStr, setPalindromStr] = useState("anna");
+  const [charCountStr, setCharCountStr] = useState("hello");
 
   const palindromChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -29,7 +29,7 @@ flowchart TD
     Move2 --> Check
     IsPalindrom --> End([Ende])
     NotPalindrom --> End
-  `
+  `;
 
   const charCountChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -47,28 +47,30 @@ flowchart TD
     InitCount --> Next
     Next --> Check
     Output --> End([Ende])
-  `
+  `;
 
-  const palindromSteps = generatePalindromSteps(palindromStr)
-  const charCountSteps = generateCharCountSteps(charCountStr)
+  const palindromSteps = generatePalindromSteps(palindromStr);
+  const charCountSteps = generateCharCountSteps(charCountStr);
 
-  const palindromDescriptions = palindromSteps.map((s) => s.description)
-  const charCountDescriptions = charCountSteps.map((s) => s.description)
+  const palindromDescriptions = palindromSteps.map((s) => s.description);
+  const charCountDescriptions = charCountSteps.map((s) => s.description);
 
   return (
     <>
       <section>
         <h2>String-Algorithmen</h2>
-        
-        <div style={{ 
-          backgroundColor: "var(--color-bg-light)", 
-          padding: "15px", 
-          borderRadius: "8px",
-          marginBottom: "20px",
-          borderLeft: "4px solid var(--color-primary)"
-        }}>
-          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
-          Wenn dir Begriffe unklar sind, schaue im{" "}
+
+        <div
+          style={{
+            backgroundColor: "var(--color-bg-light)",
+            padding: "15px",
+            borderRadius: "8px",
+            marginBottom: "20px",
+            borderLeft: "4px solid var(--color-primary)",
+          }}
+        >
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine
+          vereinfachte Sprache. Wenn dir Begriffe unklar sind, schaue im{" "}
           <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
         </div>
 
@@ -90,8 +92,8 @@ flowchart TD
       <Section>
         <h2>1. Palindrom-Prüfung</h2>
         <p>
-          Ein <strong>Palindrom</strong> ist ein Wort, das vorwärts und rückwärts
-          gleich gelesen wird. Beispiele: "anna", "otto", "racecar".
+          Ein <strong>Palindrom</strong> ist ein Wort, das vorwärts und
+          rückwärts gleich gelesen wird. Beispiele: "anna", "otto", "racecar".
         </p>
 
         <h3>Die Zwei-Zeiger-Technik</h3>
@@ -114,9 +116,9 @@ flowchart TD
               type="text"
               defaultValue={palindromStr}
               onChange={(e) => {
-                const val = e.target.value.toLowerCase().replace(/[^a-z]/g, "")
+                const val = e.target.value.toLowerCase().replace(/[^a-z]/g, "");
                 if (val.length >= 2 && val.length <= 15) {
-                  setPalindromStr(val)
+                  setPalindromStr(val);
                 }
               }}
               maxLength={15}
@@ -189,9 +191,7 @@ flowchart TD
         <ol>
           <li>Erstelle ein leeres Zähl-Objekt (counts)</li>
           <li>Gehe durch jeden Buchstaben im String</li>
-          <li>
-            Wenn der Buchstabe schon existiert: Erhöhe den Zähler um 1
-          </li>
+          <li>Wenn der Buchstabe schon existiert: Erhöhe den Zähler um 1</li>
           <li>Wenn nicht: Initialisiere mit 1</li>
           <li>Am Ende hast du eine Häufigkeitstabelle</li>
         </ol>
@@ -206,9 +206,9 @@ flowchart TD
               type="text"
               defaultValue={charCountStr}
               onChange={(e) => {
-                const val = e.target.value.toLowerCase().replace(/[^a-z]/g, "")
+                const val = e.target.value.toLowerCase().replace(/[^a-z]/g, "");
                 if (val.length >= 2 && val.length <= 15) {
-                  setCharCountStr(val)
+                  setCharCountStr(val);
                 }
               }}
               maxLength={15}
@@ -251,5 +251,5 @@ flowchart TD
         </ul>
       </Section>
     </>
-  )
+  );
 }

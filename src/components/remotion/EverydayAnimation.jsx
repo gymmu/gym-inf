@@ -1,11 +1,11 @@
-import { useCurrentFrame, AbsoluteFill } from "remotion"
-import { useMemo } from "react"
+import { useMemo } from "react";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
 
 // ==================== HELPER FUNCTIONS ====================
 
 // Generiere alle Schritte für Schaltjahr-Berechnung
 export function generateSchaltjahrSteps(year) {
-  const steps = []
+  const steps = [];
 
   steps.push({
     year,
@@ -13,7 +13,7 @@ export function generateSchaltjahrSteps(year) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     year,
@@ -21,7 +21,7 @@ export function generateSchaltjahrSteps(year) {
     description: `Jahr eingeben: ${year}`,
     mermaidNode: "Gib Jahr ein",
     variables: { year },
-  })
+  });
 
   // Check 1: Teilbar durch 4?
   steps.push({
@@ -30,7 +30,7 @@ export function generateSchaltjahrSteps(year) {
     description: `Prüfe: ${year} mod 4 = ${year % 4}`,
     mermaidNode: "Ist Rest bei Division durch 4 gleich 0?",
     variables: { year, rest4: year % 4 },
-  })
+  });
 
   if (year % 4 !== 0) {
     steps.push({
@@ -39,7 +39,7 @@ export function generateSchaltjahrSteps(year) {
       description: `Nein! ${year} ist kein Schaltjahr`,
       mermaidNode: "Gib aus: Kein Schaltjahr",
       variables: {},
-    })
+    });
 
     steps.push({
       year,
@@ -47,9 +47,9 @@ export function generateSchaltjahrSteps(year) {
       description: "Ende",
       mermaidNode: "Ende",
       variables: {},
-    })
+    });
 
-    return steps
+    return steps;
   }
 
   // Check 2: Teilbar durch 100?
@@ -59,7 +59,7 @@ export function generateSchaltjahrSteps(year) {
     description: `Ja! Prüfe weiter: ${year} mod 100 = ${year % 100}`,
     mermaidNode: "Ist Rest bei Division durch 100 gleich 0?",
     variables: { year, rest100: year % 100 },
-  })
+  });
 
   if (year % 100 !== 0) {
     steps.push({
@@ -68,7 +68,7 @@ export function generateSchaltjahrSteps(year) {
       description: `Nein! ${year} ist ein Schaltjahr`,
       mermaidNode: "Gib aus: Schaltjahr",
       variables: {},
-    })
+    });
 
     steps.push({
       year,
@@ -76,9 +76,9 @@ export function generateSchaltjahrSteps(year) {
       description: "Ende",
       mermaidNode: "Ende",
       variables: {},
-    })
+    });
 
-    return steps
+    return steps;
   }
 
   // Check 3: Teilbar durch 400?
@@ -88,7 +88,7 @@ export function generateSchaltjahrSteps(year) {
     description: `Ja! Letzte Prüfung: ${year} mod 400 = ${year % 400}`,
     mermaidNode: "Ist Rest bei Division durch 400 gleich 0?",
     variables: { year, rest400: year % 400 },
-  })
+  });
 
   if (year % 400 === 0) {
     steps.push({
@@ -97,7 +97,7 @@ export function generateSchaltjahrSteps(year) {
       description: `Ja! ${year} ist ein Schaltjahr`,
       mermaidNode: "Gib aus: Schaltjahr",
       variables: {},
-    })
+    });
   } else {
     steps.push({
       year,
@@ -105,7 +105,7 @@ export function generateSchaltjahrSteps(year) {
       description: `Nein! ${year} ist kein Schaltjahr`,
       mermaidNode: "Gib aus: Kein Schaltjahr",
       variables: {},
-    })
+    });
   }
 
   steps.push({
@@ -114,16 +114,16 @@ export function generateSchaltjahrSteps(year) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // Generiere alle Schritte für Durchschnittsberechnung
 export function generateDurchschnittSteps(array) {
-  const steps = []
-  const n = array.length
-  let sum = 0
+  const steps = [];
+  const n = array.length;
+  let sum = 0;
 
   steps.push({
     array,
@@ -133,7 +133,7 @@ export function generateDurchschnittSteps(array) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     array,
@@ -143,7 +143,7 @@ export function generateDurchschnittSteps(array) {
     description: `Array eingeben: [${array.join(", ")}]`,
     mermaidNode: "Gib Liste ein",
     variables: { n },
-  })
+  });
 
   steps.push({
     array,
@@ -153,7 +153,7 @@ export function generateDurchschnittSteps(array) {
     description: "Setze i auf 0",
     mermaidNode: "Setze i auf 0",
     variables: { i: 0 },
-  })
+  });
 
   steps.push({
     array,
@@ -163,7 +163,7 @@ export function generateDurchschnittSteps(array) {
     description: "Setze Summe auf 0",
     mermaidNode: "Setze Summe auf 0",
     variables: { sum: 0 },
-  })
+  });
 
   for (let i = 0; i < n; i++) {
     // Loop check
@@ -175,10 +175,10 @@ export function generateDurchschnittSteps(array) {
       description: `Prüfe: i=${i} < ${n}?`,
       mermaidNode: "Ist i < Länge?",
       variables: { i, n, sum },
-    })
+    });
 
     // Add to sum
-    sum += array[i]
+    sum += array[i];
 
     steps.push({
       array,
@@ -188,7 +188,7 @@ export function generateDurchschnittSteps(array) {
       description: `Addiere: sum = ${sum - array[i]} + ${array[i]} = ${sum}`,
       mermaidNode: "Addiere Element an Position i zu Summe",
       variables: { i, sum },
-    })
+    });
 
     steps.push({
       array,
@@ -198,7 +198,7 @@ export function generateDurchschnittSteps(array) {
       description: `Gehe zum nächsten Element`,
       mermaidNode: "Gehe zum nächsten Element",
       variables: { i: i + 1, sum },
-    })
+    });
   }
 
   // Final loop check
@@ -210,9 +210,9 @@ export function generateDurchschnittSteps(array) {
     description: `Prüfe: i=${n} < ${n}? Nein`,
     mermaidNode: "Ist i < Länge?",
     variables: { i: n, sum },
-  })
+  });
 
-  const average = sum / n
+  const average = sum / n;
 
   steps.push({
     array,
@@ -222,7 +222,7 @@ export function generateDurchschnittSteps(array) {
     description: `Berechne: average = ${sum} / ${n} = ${average.toFixed(2)}`,
     mermaidNode: "Berechne Durchschnitt: Summe geteilt durch Länge",
     variables: { sum, n, average: average.toFixed(2) },
-  })
+  });
 
   steps.push({
     array,
@@ -232,7 +232,7 @@ export function generateDurchschnittSteps(array) {
     description: `Durchschnitt: ${average.toFixed(2)}`,
     mermaidNode: "Gib Durchschnitt aus",
     variables: { average: average.toFixed(2) },
-  })
+  });
 
   steps.push({
     array,
@@ -242,14 +242,14 @@ export function generateDurchschnittSteps(array) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // Generiere alle Schritte für Notenberechnung
 export function generateNotenSteps(punkte) {
-  const steps = []
+  const steps = [];
 
   steps.push({
     punkte,
@@ -257,7 +257,7 @@ export function generateNotenSteps(punkte) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     punkte,
@@ -265,9 +265,9 @@ export function generateNotenSteps(punkte) {
     description: `Punkte eingeben: ${punkte}`,
     mermaidNode: "Gib Punkte ein",
     variables: { punkte },
-  })
+  });
 
-  let note = null
+  let note = null;
 
   // Check >= 90
   steps.push({
@@ -276,17 +276,17 @@ export function generateNotenSteps(punkte) {
     description: `Prüfe: ${punkte} >= 90?`,
     mermaidNode: "Sind Punkte ≥ 90?",
     variables: { punkte },
-  })
+  });
 
   if (punkte >= 90) {
-    note = "Sehr gut (1)"
+    note = "Sehr gut (1)";
     steps.push({
       punkte,
       note,
       description: `Ja! Note = ${note}`,
       mermaidNode: "Setze Note auf Sehr gut",
       variables: { punkte, note },
-    })
+    });
   } else {
     // Check >= 75
     steps.push({
@@ -295,17 +295,17 @@ export function generateNotenSteps(punkte) {
       description: `Nein. Prüfe: ${punkte} >= 75?`,
       mermaidNode: "Sind Punkte ≥ 75?",
       variables: { punkte },
-    })
+    });
 
     if (punkte >= 75) {
-      note = "Gut (2)"
+      note = "Gut (2)";
       steps.push({
         punkte,
         note,
         description: `Ja! Note = ${note}`,
         mermaidNode: "Setze Note auf Gut",
         variables: { punkte, note },
-      })
+      });
     } else {
       // Check >= 60
       steps.push({
@@ -314,17 +314,17 @@ export function generateNotenSteps(punkte) {
         description: `Nein. Prüfe: ${punkte} >= 60?`,
         mermaidNode: "Sind Punkte ≥ 60?",
         variables: { punkte },
-      })
+      });
 
       if (punkte >= 60) {
-        note = "Befriedigend (3)"
+        note = "Befriedigend (3)";
         steps.push({
           punkte,
           note,
           description: `Ja! Note = ${note}`,
           mermaidNode: "Setze Note auf Befriedigend",
           variables: { punkte, note },
-        })
+        });
       } else {
         // Check >= 50
         steps.push({
@@ -333,26 +333,26 @@ export function generateNotenSteps(punkte) {
           description: `Nein. Prüfe: ${punkte} >= 50?`,
           mermaidNode: "Sind Punkte ≥ 50?",
           variables: { punkte },
-        })
+        });
 
         if (punkte >= 50) {
-          note = "Ausreichend (4)"
+          note = "Ausreichend (4)";
           steps.push({
             punkte,
             note,
             description: `Ja! Note = ${note}`,
             mermaidNode: "Setze Note auf Ausreichend",
             variables: { punkte, note },
-          })
+          });
         } else {
-          note = "Ungenügend (5)"
+          note = "Ungenügend (5)";
           steps.push({
             punkte,
             note,
             description: `Nein. Note = ${note}`,
             mermaidNode: "Setze Note auf Ungenügend",
             variables: { punkte, note },
-          })
+          });
         }
       }
     }
@@ -364,7 +364,7 @@ export function generateNotenSteps(punkte) {
     description: `Ausgabe: ${note}`,
     mermaidNode: "Gib Note aus",
     variables: { note },
-  })
+  });
 
   steps.push({
     punkte,
@@ -372,9 +372,9 @@ export function generateNotenSteps(punkte) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // ==================== VISUALISIERUNG ====================
@@ -389,34 +389,59 @@ function YearDisplay({ year, isLeap }) {
         border: `4px solid ${
           isLeap === null ? "#504945" : isLeap ? "#b8bb26" : "#fb4934"
         }`,
-      }}>
+      }}
+    >
       <div
         style={{
           fontSize: "64px",
           fontWeight: "bold",
           color: "#fabd2f",
           textAlign: "center",
-        }}>
+        }}
+      >
         {year}
       </div>
     </div>
-  )
+  );
 }
 
 function ArraySumVisualization({ array, currentIndex = -1, sum = 0 }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center" }}>
-      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
         {array.map((num, index) => (
           <div
             key={index}
             style={{
               width: "60px",
               height: "60px",
-              backgroundColor: index === currentIndex ? "#FFC107" :
-                              index < currentIndex ? "#4CAF50" : "#3c3836",
-              border: `3px solid ${index === currentIndex ? "#FFC107" : 
-                                   index < currentIndex ? "#4CAF50" : "#504945"}`,
+              backgroundColor:
+                index === currentIndex
+                  ? "#FFC107"
+                  : index < currentIndex
+                    ? "#4CAF50"
+                    : "#3c3836",
+              border: `3px solid ${
+                index === currentIndex
+                  ? "#FFC107"
+                  : index < currentIndex
+                    ? "#4CAF50"
+                    : "#504945"
+              }`,
               borderRadius: "8px",
               display: "flex",
               alignItems: "center",
@@ -424,7 +449,8 @@ function ArraySumVisualization({ array, currentIndex = -1, sum = 0 }) {
               color: "#ebdbb2",
               fontSize: "24px",
               fontWeight: "bold",
-            }}>
+            }}
+          >
             {num}
           </div>
         ))}
@@ -435,36 +461,59 @@ function ArraySumVisualization({ array, currentIndex = -1, sum = 0 }) {
           fontSize: "32px",
           color: "#b8bb26",
           fontWeight: "bold",
-        }}>
+        }}
+      >
         Summe: {sum}
       </div>
     </div>
-  )
+  );
 }
 
 function NotenDisplay({ punkte, note }) {
   const getNoteColor = (note) => {
-    if (!note) return "#504945"
-    if (note.includes("1") || note.includes("Sehr gut")) return "#b8bb26"
-    if (note.includes("2") || note.includes("Gut")) return "#8ec07c"
-    if (note.includes("3") || note.includes("Befriedigend")) return "#fabd2f"
-    if (note.includes("4") || note.includes("Ausreichend")) return "#fe8019"
-    return "#fb4934"
-  }
+    if (!note) return "#504945";
+    if (note.includes("1") || note.includes("Sehr gut")) return "#b8bb26";
+    if (note.includes("2") || note.includes("Gut")) return "#8ec07c";
+    if (note.includes("3") || note.includes("Befriedigend")) return "#fabd2f";
+    if (note.includes("4") || note.includes("Ausreichend")) return "#fe8019";
+    return "#fb4934";
+  };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "30px", alignItems: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "30px",
+        alignItems: "center",
+      }}
+    >
       <div
         style={{
           padding: "40px",
           backgroundColor: "#3c3836",
           borderRadius: "12px",
           border: `4px solid ${getNoteColor(note)}`,
-        }}>
-        <div style={{ fontSize: "24px", color: "#83a598", marginBottom: "10px", textAlign: "center" }}>
+        }}
+      >
+        <div
+          style={{
+            fontSize: "24px",
+            color: "#83a598",
+            marginBottom: "10px",
+            textAlign: "center",
+          }}
+        >
           Punkte:
         </div>
-        <div style={{ fontSize: "64px", fontWeight: "bold", color: "#fabd2f", textAlign: "center" }}>
+        <div
+          style={{
+            fontSize: "64px",
+            fontWeight: "bold",
+            color: "#fabd2f",
+            textAlign: "center",
+          }}
+        >
           {punkte}
         </div>
       </div>
@@ -479,28 +528,29 @@ function NotenDisplay({ punkte, note }) {
             fontSize: "32px",
             fontWeight: "bold",
             textAlign: "center",
-          }}>
+          }}
+        >
           {note}
         </div>
       )}
     </div>
-  )
+  );
 }
 
 // ==================== REMOTION COMPONENTS ====================
 
 export function SchaltjahrAnimation({ year = 2024, fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5;
 
-  const steps = useMemo(() => generateSchaltjahrSteps(year), [year])
+  const steps = useMemo(() => generateSchaltjahrSteps(year), [year]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -511,38 +561,46 @@ export function SchaltjahrAnimation({ year = 2024, fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Schaltjahr - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 30,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 30,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <YearDisplay year={currentStep.year} isLeap={currentStep.isLeap} />
 
@@ -553,7 +611,8 @@ export function SchaltjahrAnimation({ year = 2024, fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
 
@@ -564,26 +623,27 @@ export function SchaltjahrAnimation({ year = 2024, fps = 30 }) {
             fontSize: "48px",
             fontWeight: "bold",
             color: currentStep.isLeap ? "#b8bb26" : "#fb4934",
-          }}>
+          }}
+        >
           {currentStep.isLeap ? "✓ SCHALTJAHR" : "✗ KEIN SCHALTJAHR"}
         </div>
       )}
     </AbsoluteFill>
-  )
+  );
 }
 
 export function DurchschnittAnimation({ array = [5, 8, 3, 9, 6], fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5;
 
-  const steps = useMemo(() => generateDurchschnittSteps(array), [array])
+  const steps = useMemo(() => generateDurchschnittSteps(array), [array]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -594,38 +654,46 @@ export function DurchschnittAnimation({ array = [5, 8, 3, 9, 6], fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Durchschnitt - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 30,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 30,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <ArraySumVisualization
         array={currentStep.array}
@@ -641,11 +709,16 @@ export function DurchschnittAnimation({ array = [5, 8, 3, 9, 6], fps = 30 }) {
             backgroundColor: "#3c3836",
             borderRadius: "12px",
             border: "4px solid #b8bb26",
-          }}>
-          <div style={{ fontSize: "20px", color: "#83a598", marginBottom: "10px" }}>
+          }}
+        >
+          <div
+            style={{ fontSize: "20px", color: "#83a598", marginBottom: "10px" }}
+          >
             Durchschnitt:
           </div>
-          <div style={{ fontSize: "48px", fontWeight: "bold", color: "#b8bb26" }}>
+          <div
+            style={{ fontSize: "48px", fontWeight: "bold", color: "#b8bb26" }}
+          >
             {currentStep.average.toFixed(2)}
           </div>
         </div>
@@ -658,25 +731,26 @@ export function DurchschnittAnimation({ array = [5, 8, 3, 9, 6], fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 export function NotenAnimation({ punkte = 82, fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5;
 
-  const steps = useMemo(() => generateNotenSteps(punkte), [punkte])
+  const steps = useMemo(() => generateNotenSteps(punkte), [punkte]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -687,40 +761,46 @@ export function NotenAnimation({ punkte = 82, fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Notenberechnung - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 30,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
-                {typeof value === "string" ? `"${value}"` : value}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 30,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {typeof value === "string" ? `"${value}"` : value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <NotenDisplay punkte={currentStep.punkte} note={currentStep.note} />
 
@@ -731,9 +811,10 @@ export function NotenAnimation({ punkte = 82, fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
     </AbsoluteFill>
-  )
+  );
 }

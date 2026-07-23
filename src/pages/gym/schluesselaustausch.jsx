@@ -1,6 +1,6 @@
-import DhSteps from "@components/gym/DhSteps/DhSteps"
-import LearningGoals from "@components/LearningGoals.jsx"
-import Section from "@components/Section.jsx"
+import DhSteps from "@components/gym/DhSteps/DhSteps";
+import LearningGoals from "@components/LearningGoals.jsx";
+import Section from "@components/Section.jsx";
 
 export default function GymSchluesselaustausch() {
   return (
@@ -159,5 +159,5 @@ export default function GymSchluesselaustausch() {
         </p>
       </Section>
     </>
-  )
+  );
 }

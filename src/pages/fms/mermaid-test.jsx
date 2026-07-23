@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react"
+import { useEffect, useRef, useState } from "react";
 
 export default function MermaidTest() {
-  const [highlightTarget, setHighlightTarget] = useState(null)
-  const containerRef = useRef(null)
-  const [svgReady, setSvgReady] = useState(false)
-  const [mermaidReady, setMermaidReady] = useState(false)
+  const [highlightTarget, setHighlightTarget] = useState(null);
+  const containerRef = useRef(null);
+  const [svgReady, setSvgReady] = useState(false);
+  const [mermaidReady, setMermaidReady] = useState(false);
 
   const testChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -15,26 +15,26 @@ flowchart TD
     Check -->|Nein| Action2[Aktion B]
     Action1 --> End([Ende])
     Action2 --> End
-  `
+  `;
 
   // Wait for window.mermaid to be available
   useEffect(() => {
     if (typeof window !== "undefined" && window.mermaid) {
-      setMermaidReady(true)
+      setMermaidReady(true);
     } else {
       const checkMermaid = setInterval(() => {
         if (typeof window !== "undefined" && window.mermaid) {
-          setMermaidReady(true)
-          clearInterval(checkMermaid)
+          setMermaidReady(true);
+          clearInterval(checkMermaid);
         }
-      }, 100)
-      return () => clearInterval(checkMermaid)
+      }, 100);
+      return () => clearInterval(checkMermaid);
     }
-  }, [])
+  }, []);
 
   // Render Mermaid
   useEffect(() => {
-    if (!containerRef.current || !mermaidReady || !window.mermaid) return
+    if (!containerRef.current || !mermaidReady || !window.mermaid) return;
 
     const renderChart = async () => {
       try {
@@ -45,10 +45,10 @@ flowchart TD
           flowchart: {
             htmlLabels: true, // Use HTML labels (foreignObject)
           },
-        })
+        });
 
-        const { svg } = await window.mermaid.render("test-chart", testChart)
-        
+        const { svg } = await window.mermaid.render("test-chart", testChart);
+
         // Inject custom CSS directly into SVG
         const styleTag = `<style>
           .highlight-node {
@@ -69,131 +69,150 @@ flowchart TD
             0%, 100% { opacity: 1; }
             50% { opacity: 0.6; }
           }
-        </style>`
-        
-        const modifiedSvg = svg.replace('<svg', styleTag + '<svg')
-        containerRef.current.innerHTML = modifiedSvg
-        setSvgReady(true)
-        console.log("✅ Chart rendered")
-      } catch (err) {
-        console.error("Error:", err)
-      }
-    }
+        </style>`;
 
-    renderChart()
-  }, [mermaidReady])
+        const modifiedSvg = svg.replace("<svg", styleTag + "<svg");
+        containerRef.current.innerHTML = modifiedSvg;
+        setSvgReady(true);
+        console.log("✅ Chart rendered");
+      } catch (err) {
+        console.error("Error:", err);
+      }
+    };
+
+    renderChart();
+  }, [mermaidReady]);
 
   // Apply highlighting
   const highlightNode = (nodeName) => {
-    setHighlightTarget(nodeName)
+    setHighlightTarget(nodeName);
 
-    if (!containerRef.current) return
+    if (!containerRef.current) return;
 
-    const svg = containerRef.current.querySelector("svg")
-    if (!svg) return
+    const svg = containerRef.current.querySelector("svg");
+    if (!svg) return;
 
-    console.log("🔍 Highlighting:", nodeName)
+    console.log("🔍 Highlighting:", nodeName);
 
     // Remove all previous overlays
-    svg.querySelectorAll("[data-overlay='true']").forEach(el => el.remove())
+    svg.querySelectorAll("[data-overlay='true']").forEach((el) => el.remove());
 
     // Find ALL foreignObjects (for htmlLabels: true)
-    const allForeignObjects = svg.querySelectorAll("foreignObject")
-    console.log("Total foreignObjects:", allForeignObjects.length)
+    const allForeignObjects = svg.querySelectorAll("foreignObject");
+    console.log("Total foreignObjects:", allForeignObjects.length);
 
     allForeignObjects.forEach((fo, index) => {
-      const content = fo.textContent?.trim() || ""
-      if (content) console.log(`FO ${index}: "${content}"`)
+      const content = fo.textContent?.trim() || "";
+      if (content) console.log(`FO ${index}: "${content}"`);
 
       // Match with or without trailing punctuation
-      const contentClean = content.replace(/[?!.:,;]+$/, '').trim()
-      const nodeNameClean = nodeName.replace(/[?!.:,;]+$/, '').trim()
-      
-      if (content === nodeName || contentClean === nodeNameClean || content.startsWith(nodeName)) {
-        console.log("✅✅✅ MATCH at FO", index, `"${content}" matches "${nodeName}"`)
-        
+      const contentClean = content.replace(/[?!.:,;]+$/, "").trim();
+      const nodeNameClean = nodeName.replace(/[?!.:,;]+$/, "").trim();
+
+      if (
+        content === nodeName ||
+        contentClean === nodeNameClean ||
+        content.startsWith(nodeName)
+      ) {
+        console.log(
+          "✅✅✅ MATCH at FO",
+          index,
+          `"${content}" matches "${nodeName}"`,
+        );
+
         // Find the parent group
-        let parent = fo.parentElement
-        let attempts = 0
-        
+        let parent = fo.parentElement;
+        let attempts = 0;
+
         while (parent && parent.tagName !== "svg" && attempts < 5) {
           // Look for ALL shapes in this parent (including nested)
-          const shapes = parent.querySelectorAll("rect, ellipse, circle, polygon, path")
-          
-          console.log(`  Checking parent ${attempts}, found ${shapes.length} shapes total`)
-          
+          const shapes = parent.querySelectorAll(
+            "rect, ellipse, circle, polygon, path",
+          );
+
+          console.log(
+            `  Checking parent ${attempts}, found ${shapes.length} shapes total`,
+          );
+
           if (shapes.length > 0) {
             // Find the shape with the largest area
-            let largestShape = null
-            let largestArea = 0
-            
-            shapes.forEach(shape => {
-              const bbox = shape.getBBox()
-              const area = bbox.width * bbox.height
+            let largestShape = null;
+            let largestArea = 0;
+
+            shapes.forEach((shape) => {
+              const bbox = shape.getBBox();
+              const area = bbox.width * bbox.height;
               if (area > 0) {
-                console.log(`  Shape ${shape.tagName}: area=${area}`)
+                console.log(`  Shape ${shape.tagName}: area=${area}`);
               }
-              
+
               if (area > largestArea) {
-                largestArea = area
-                largestShape = shape
+                largestArea = area;
+                largestShape = shape;
               }
-            })
-            
+            });
+
             if (!largestShape || largestArea === 0) {
-              console.log(`  ❌ No shape with area > 0 at level ${attempts}, going up...`)
-              parent = parent.parentElement
-              attempts++
-              continue
+              console.log(
+                `  ❌ No shape with area > 0 at level ${attempts}, going up...`,
+              );
+              parent = parent.parentElement;
+              attempts++;
+              continue;
             }
-            
-            console.log(`  ✅ Using largest shape: ${largestShape.tagName} with area ${largestArea}`)
-            
+
+            console.log(
+              `  ✅ Using largest shape: ${largestShape.tagName} with area ${largestArea}`,
+            );
+
             try {
-              const bbox = largestShape.getBBox()
-              const ctm = largestShape.getCTM()
-              
+              const bbox = largestShape.getBBox();
+              const ctm = largestShape.getCTM();
+
               if (!ctm) {
-                console.log("  No CTM")
-                parent = parent.parentElement
-                attempts++
-                continue
+                console.log("  No CTM");
+                parent = parent.parentElement;
+                attempts++;
+                continue;
               }
-              
+
               // Transform bbox to absolute SVG coordinates
-              const x = bbox.x * ctm.a + bbox.y * ctm.c + ctm.e
-              const y = bbox.x * ctm.b + bbox.y * ctm.d + ctm.f
-              const width = bbox.width * Math.abs(ctm.a)
-              const height = bbox.height * Math.abs(ctm.d)
-              
-              console.log(`  Final: (${x}, ${y}), size: ${width}x${height}`)
-              
+              const x = bbox.x * ctm.a + bbox.y * ctm.c + ctm.e;
+              const y = bbox.x * ctm.b + bbox.y * ctm.d + ctm.f;
+              const width = bbox.width * Math.abs(ctm.a);
+              const height = bbox.height * Math.abs(ctm.d);
+
+              console.log(`  Final: (${x}, ${y}), size: ${width}x${height}`);
+
               // Create overlay
-              const padding = 10
-              const overlay = document.createElementNS("http://www.w3.org/2000/svg", "rect")
-              overlay.setAttribute("x", x - padding)
-              overlay.setAttribute("y", y - padding)
-              overlay.setAttribute("width", width + padding * 2)
-              overlay.setAttribute("height", height + padding * 2)
-              overlay.setAttribute("rx", 10)
-              overlay.classList.add("highlight-overlay")
-              overlay.setAttribute("data-overlay", "true")
-              
-              svg.appendChild(overlay)
-              
-              console.log(`  ✅ Created overlay`)
+              const padding = 10;
+              const overlay = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "rect",
+              );
+              overlay.setAttribute("x", x - padding);
+              overlay.setAttribute("y", y - padding);
+              overlay.setAttribute("width", width + padding * 2);
+              overlay.setAttribute("height", height + padding * 2);
+              overlay.setAttribute("rx", 10);
+              overlay.classList.add("highlight-overlay");
+              overlay.setAttribute("data-overlay", "true");
+
+              svg.appendChild(overlay);
+
+              console.log(`  ✅ Created overlay`);
             } catch (err) {
-              console.error("  ❌ Error:", err)
+              console.error("  ❌ Error:", err);
             }
-            break
+            break;
           }
-          
-          parent = parent.parentElement
-          attempts++
+
+          parent = parent.parentElement;
+          attempts++;
         }
       }
-    })
-  }
+    });
+  };
 
   return (
     <div style={{ padding: "40px" }}>
@@ -210,7 +229,8 @@ flowchart TD
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
-          }}>
+          }}
+        >
           Highlight "Start"
         </button>
         <button
@@ -223,7 +243,8 @@ flowchart TD
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
-          }}>
+          }}
+        >
           Highlight "Eingabe"
         </button>
         <button
@@ -236,7 +257,8 @@ flowchart TD
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
-          }}>
+          }}
+        >
           Highlight "Prüfung"
         </button>
         <button
@@ -249,7 +271,8 @@ flowchart TD
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
-          }}>
+          }}
+        >
           Highlight "Aktion A"
         </button>
       </div>
@@ -276,5 +299,5 @@ flowchart TD
         <p>Status: {svgReady ? "✅ SVG Ready" : "⏳ Loading..."}</p>
       </div>
     </div>
-  )
+  );
 }

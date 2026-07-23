@@ -1,4 +1,4 @@
-import style from "./TorOnion.module.css"
+import style from "./TorOnion.module.css";
 
 const NODES = [
   { label: "Absender", name: "Sie", cls: style.you },
@@ -6,7 +6,7 @@ const NODES = [
   { label: "Middle Node", name: "Knoten 2", cls: style.middle },
   { label: "Exit Node", name: "Knoten 3", cls: style.exit },
   { label: "Ziel", name: "Webseite", cls: style.dest },
-]
+];
 
 const KNOWLEDGE = [
   {
@@ -27,7 +27,7 @@ const KNOWLEDGE = [
     knows: "das Ziel (Webseite)",
     notKnows: "Ihre echte IP-Adresse",
   },
-]
+];
 
 export default function TorOnion() {
   return (
@@ -61,5 +61,5 @@ export default function TorOnion() {
         ))}
       </div>
     </div>
-  )
+  );
 }

@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react"
-
-import SVGAnimationBase from "./SVGAnimationBase"
-import { Circle } from "./SVG"
-import Slider from "@components/Slider.jsx"
-import style from "@components/Path.module.css"
+import style from "@components/Path.module.css";
+import Slider from "@components/Slider.jsx";
+import { useEffect, useState } from "react";
+import { Circle } from "./SVG";
+import SVGAnimationBase from "./SVGAnimationBase";
 
 export default function SVGAnimationCircle() {
-  const [outputString, setOutputString] = useState("<circle>")
-  const [cx, setCx] = useState(150)
-  const [cy, setCy] = useState(150)
-  const [r, setR] = useState(20)
+  const [outputString, setOutputString] = useState("<circle>");
+  const [cx, setCx] = useState(150);
+  const [cy, setCy] = useState(150);
+  const [r, setR] = useState(20);
 
-  const fill = "hotpink"
+  const fill = "hotpink";
 
   useEffect(() => {
-    setOutputString(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}">`)
-  }, [cx, cy, r])
+    setOutputString(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}">`);
+  }, [cx, cy, r]);
 
   return (
     <SVGAnimationBase
@@ -60,5 +59,5 @@ export default function SVGAnimationCircle() {
       }
       outputString={outputString}
     />
-  )
+  );
 }

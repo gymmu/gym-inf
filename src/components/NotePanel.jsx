@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { useNotes } from "@context/NoteContext";
 import { useAppContext } from "@context/AppContext";
+import { useNotes } from "@context/NoteContext";
 import { Editor as MEditor } from "@monaco-editor/react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import style from "./NotePanel.module.css";

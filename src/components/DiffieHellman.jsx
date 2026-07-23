@@ -93,8 +93,8 @@ export function DH2() {
   const B = modPow(g, b, p); // B = g^b mod p = 5^15 mod 23
 
   // Für die Anzeige: zeige auch die "rohen" Werte vor Modulo
-  const gPowA = Math.pow(g, a); // 5^6 = 15625
-  const gPowB = Math.pow(g, b); // 5^15 = 30517578125
+  const gPowA = g ** a; // 5^6 = 15625
+  const gPowB = g ** b; // 5^15 = 30517578125
 
   return (
     <div className={style.dhContainer}>
@@ -201,8 +201,8 @@ export function DH3() {
   const keyBob = modPow(A, b, p); // s = A^b mod p = 8^15 mod 23
 
   // Für die Anzeige: zeige auch die "rohen" Werte vor Modulo
-  const BPowA = Math.pow(B, a); // 19^6 = 47045881
-  const APowB = Math.pow(A, b); // 8^15 = 35184372088832
+  const BPowA = B ** a; // 19^6 = 47045881
+  const APowB = A ** b; // 8^15 = 35184372088832
 
   return (
     <div className={style.dhContainer}>

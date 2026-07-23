@@ -6,8 +6,9 @@ export default function Img({ src, alt, imgStyle = {}, containerStyle = {} }) {
         justifyContent: "center",
         alignItems: "center",
         ...containerStyle,
-      }}>
+      }}
+    >
       <img style={{ ...imgStyle }} src={src} alt={alt} />
     </div>
-  )
+  );
 }

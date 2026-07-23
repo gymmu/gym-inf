@@ -1,25 +1,25 @@
-import { useEffect, useRef } from "react"
-import Reveal from "reveal.js"
+import { useEffect, useRef } from "react";
+import Reveal from "reveal.js";
 
 export function Slide({ children }) {
-  return <section>{children}</section>
+  return <section>{children}</section>;
 }
 export function Fragment({ children }) {
-  return <p className="fragment">{children}</p>
+  return <p className="fragment">{children}</p>;
 }
 export function Basement({ children }) {
-  return <section>{children}</section>
+  return <section>{children}</section>;
 }
 
 export default function Presentation({ children }) {
-  const ref = useRef(null)
+  const ref = useRef(null);
   useEffect(() => {
     const deck = new Reveal(ref.current, {
       embedded: true,
       plugins: [],
-    })
-    deck.initialize()
-  }, [])
+    });
+    deck.initialize();
+  }, []);
   return (
     <>
       <div
@@ -27,9 +27,10 @@ export default function Presentation({ children }) {
         className="reveal"
         style={{
           height: "50vh",
-        }}>
+        }}
+      >
         <div className="slides">{children}</div>
       </div>
     </>
-  )
+  );
 }

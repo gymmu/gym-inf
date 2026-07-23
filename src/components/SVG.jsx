@@ -3,7 +3,8 @@ export function SVGComponent({ children }) {
     <svg
       style={{ backgroundColor: "white" }}
       viewBox="-25 -25 350 350"
-      width="300">
+      width="300"
+    >
       <Grid></Grid>
       <g id="xAxisLabels">
         <text x="-5" y="-5">
@@ -53,7 +54,7 @@ export function SVGComponent({ children }) {
       </g>
       {children}
     </svg>
-  )
+  );
 }
 
 export function Path({
@@ -71,7 +72,7 @@ export function Path({
       fill={fill}
       d={d}
     />
-  )
+  );
 }
 
 export function Circle({
@@ -87,7 +88,7 @@ export function Circle({
     <circle id={id} cx={cx} cy={cy} r={r} fill={fill} stroke={stroke}>
       {children}
     </circle>
-  )
+  );
 }
 
 export function Rectangle({
@@ -108,10 +109,11 @@ export function Rectangle({
       width={width}
       height={height}
       fill={fill}
-      stroke={stroke}>
+      stroke={stroke}
+    >
       {children}
     </rect>
-  )
+  );
 }
 
 export function Animation({
@@ -134,7 +136,7 @@ export function Animation({
       repeatCount={repeat}
       restart="always"
     />
-  )
+  );
 }
 
 export function AnimationTransform({
@@ -156,7 +158,7 @@ export function AnimationTransform({
       repeatCount={repeat}
       restart="always"
     />
-  )
+  );
 }
 
 export function Grid() {
@@ -167,7 +169,8 @@ export function Grid() {
           id="smallGrid"
           width="10"
           height="10"
-          patternUnits="userSpaceOnUse">
+          patternUnits="userSpaceOnUse"
+        >
           <path
             d="M 10 0 L 0 0 0 10"
             fill="none"
@@ -187,7 +190,7 @@ export function Grid() {
       </defs>
       <rect width="301" height="301" fill="url(#grid)" />
     </>
-  )
+  );
 }
 
 export function Transform({
@@ -204,10 +207,11 @@ export function Transform({
   return (
     <g
       transform-origin={`${originX} ${originY}`}
-      transform={`translate(${tx}, ${ty}) rotate(${rot}) scale(${scale}) skewX(${skewX}) skewY(${skewY})`}>
+      transform={`translate(${tx}, ${ty}) rotate(${rot}) scale(${scale}) skewX(${skewX}) skewY(${skewY})`}
+    >
       {children}
     </g>
-  )
+  );
 }
 
 export function Origin({ x, y }) {
@@ -217,5 +221,5 @@ export function Origin({ x, y }) {
       <path stroke="red" d="M -20 0 L 20 0 M 0 -20 L 0 20" />
       <circle r="15" stroke="red" fill="none" />
     </g>
-  )
+  );
 }

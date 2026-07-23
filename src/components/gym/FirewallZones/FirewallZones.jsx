@@ -1,4 +1,4 @@
-import style from "./FirewallZones.module.css"
+import style from "./FirewallZones.module.css";
 
 export default function FirewallZones() {
   return (
@@ -42,5 +42,5 @@ export default function FirewallZones() {
         </div>
       </div>
     </div>
-  )
+  );
 }

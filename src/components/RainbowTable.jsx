@@ -1,16 +1,16 @@
-import { useState, useEffect, useRef } from "react"
-import style from "@components/PasswordDatabase.module.css"
-import rt from "@components/RainbowTable.module.css"
+import style from "@components/PasswordDatabase.module.css";
+import rt from "@components/RainbowTable.module.css";
+import { useEffect, useRef, useState } from "react";
 
-const STORAGE_KEY = "rainbowTable"
+const STORAGE_KEY = "rainbowTable";
 
 async function sha256(text) {
-  const encoder = new TextEncoder()
-  const data = encoder.encode(text)
-  const buf = await crypto.subtle.digest("SHA-256", data)
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const buf = await crypto.subtle.digest("SHA-256", data);
   return Array.from(new Uint8Array(buf))
     .map((b) => b.toString(16).padStart(2, "0"))
-    .join("")
+    .join("");
 }
 
 // -- Gestohlene Datenbank --------------------------------------------------
@@ -24,7 +24,7 @@ const STOLEN_DB = [
   { user: "diana", hash: null, plain: "korrektpferd" }, // nicht knackbar
   { user: "eve", hash: null, plain: "password" }, // knackbar
   { user: "frank", hash: null, plain: "blauerhimmel" }, // nicht knackbar
-]
+];
 
 const COMMON_PASSWORDS = [
   "123456",
@@ -42,20 +42,20 @@ const COMMON_PASSWORDS = [
   "master",
   "sunshine",
   "princess",
-]
+];
 
 // -- Component -------------------------------------------------------------
 
 export default function RainbowTable() {
-  const [rtEntries, setRtEntries] = useState([]) // rainbow table
-  const [stolenDb, setStolenDb] = useState([]) // gestohlene DB mit echten hashes
-  const [addPwd, setAddPwd] = useState("")
-  const [searchHash, setSearchHash] = useState("")
-  const [searchResult, setSearchResult] = useState(null) // null | { found, entry }
-  const [calcPwd, setCalcPwd] = useState("")
-  const [calcHash, setCalcHash] = useState(null)
-  const [message, setMessage] = useState(null)
-  const initialized = useRef(false)
+  const [rtEntries, setRtEntries] = useState([]); // rainbow table
+  const [stolenDb, setStolenDb] = useState([]); // gestohlene DB mit echten hashes
+  const [addPwd, setAddPwd] = useState("");
+  const [searchHash, setSearchHash] = useState("");
+  const [searchResult, setSearchResult] = useState(null); // null | { found, entry }
+  const [calcPwd, setCalcPwd] = useState("");
+  const [calcHash, setCalcHash] = useState(null);
+  const [message, setMessage] = useState(null);
+  const initialized = useRef(false);
 
   // -- Build stolen DB hashes once ------------------------------------------
   useEffect(() => {
@@ -65,101 +65,101 @@ export default function RainbowTable() {
           ...row,
           hash: await sha256(row.plain),
         })),
-      )
-      setStolenDb(rows)
-    }
-    run()
-  }, [])
+      );
+      setStolenDb(rows);
+    };
+    run();
+  }, []);
 
   // -- Load rainbow table from localStorage ----------------------------------
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY)
+    const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
-        setRtEntries(JSON.parse(stored))
+        setRtEntries(JSON.parse(stored));
       } catch (e) {
-        console.error("RainbowTable load error", e)
+        console.error("RainbowTable load error", e);
       }
     }
-    initialized.current = true
-  }, [])
+    initialized.current = true;
+  }, []);
 
   useEffect(() => {
-    if (!initialized.current) return
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(rtEntries))
-  }, [rtEntries])
+    if (!initialized.current) return;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(rtEntries));
+  }, [rtEntries]);
 
   // -- Handlers --------------------------------------------------------------
 
   const handleAddEntry = async (e) => {
-    e.preventDefault()
-    if (!addPwd) return
-    const hash = await sha256(addPwd)
+    e.preventDefault();
+    if (!addPwd) return;
+    const hash = await sha256(addPwd);
     if (rtEntries.find((e) => e.hash === hash)) {
       setMessage({
         type: "info",
         text: `"${addPwd}" ist bereits in der Tabelle`,
-      })
-      setTimeout(() => setMessage(null), 3000)
-      setAddPwd("")
-      return
+      });
+      setTimeout(() => setMessage(null), 3000);
+      setAddPwd("");
+      return;
     }
-    setRtEntries((prev) => [...prev, { password: addPwd, hash }])
-    setAddPwd("")
-    setMessage({ type: "success", text: `"${addPwd}" hinzugefuegt` })
-    setTimeout(() => setMessage(null), 3000)
-  }
+    setRtEntries((prev) => [...prev, { password: addPwd, hash }]);
+    setAddPwd("");
+    setMessage({ type: "success", text: `"${addPwd}" hinzugefuegt` });
+    setTimeout(() => setMessage(null), 3000);
+  };
 
   const handleGenerateCommon = async () => {
-    const toAdd = []
+    const toAdd = [];
     for (const pwd of COMMON_PASSWORDS) {
-      const hash = await sha256(pwd)
+      const hash = await sha256(pwd);
       if (!rtEntries.find((e) => e.hash === hash))
-        toAdd.push({ password: pwd, hash })
+        toAdd.push({ password: pwd, hash });
     }
     if (toAdd.length === 0) {
       setMessage({
         type: "info",
         text: "Alle haeufigen Passwoerter bereits in der Tabelle",
-      })
+      });
     } else {
-      setRtEntries((prev) => [...prev, ...toAdd])
+      setRtEntries((prev) => [...prev, ...toAdd]);
       setMessage({
         type: "success",
         text: `${toAdd.length} Eintraege hinzugefuegt`,
-      })
+      });
     }
-    setTimeout(() => setMessage(null), 3000)
-  }
+    setTimeout(() => setMessage(null), 3000);
+  };
 
   const handleSearch = (hashToSearch) => {
-    const h = (hashToSearch ?? searchHash).trim()
-    if (!h) return
-    setSearchHash(h)
-    const found = rtEntries.find((e) => e.hash === h || e.hash.startsWith(h))
-    setSearchResult({ found: !!found, entry: found ?? null, searched: h })
-  }
+    const h = (hashToSearch ?? searchHash).trim();
+    if (!h) return;
+    setSearchHash(h);
+    const found = rtEntries.find((e) => e.hash === h || e.hash.startsWith(h));
+    setSearchResult({ found: !!found, entry: found ?? null, searched: h });
+  };
 
   const handleCalc = async (e) => {
-    e.preventDefault()
-    if (!calcPwd) return
-    const h = await sha256(calcPwd)
-    setCalcHash(h)
-  }
+    e.preventDefault();
+    if (!calcPwd) return;
+    const h = await sha256(calcPwd);
+    setCalcHash(h);
+  };
 
   const handleClear = () => {
     if (confirm("Rainbow-Table wirklich loeschen?")) {
-      setRtEntries([])
-      localStorage.removeItem(STORAGE_KEY)
-      setSearchResult(null)
+      setRtEntries([]);
+      localStorage.removeItem(STORAGE_KEY);
+      setSearchResult(null);
     }
-  }
+  };
 
   // -- Render ----------------------------------------------------------------
 
   const crackable = stolenDb.filter((row) =>
     rtEntries.some((e) => e.hash === row.hash),
-  ).length
+  ).length;
 
   return (
     <div className={rt.root}>
@@ -181,14 +181,15 @@ export default function RainbowTable() {
           </thead>
           <tbody>
             {stolenDb.map((row) => {
-              const inRt = rtEntries.some((e) => e.hash === row.hash)
-              const isSearched = searchResult?.searched === row.hash
+              const inRt = rtEntries.some((e) => e.hash === row.hash);
+              const isSearched = searchResult?.searched === row.hash;
               return (
                 <tr
                   key={row.user}
                   className={
                     isSearched ? rt.rowSearched : inRt ? rt.rowCrackable : ""
-                  }>
+                  }
+                >
                   <td className={rt.stolenUser}>{row.user}</td>
                   <td className={rt.stolenHash}>
                     {row.hash
@@ -200,12 +201,13 @@ export default function RainbowTable() {
                       className={rt.lookupBtn}
                       disabled={!row.hash}
                       onClick={() => handleSearch(row.hash)}
-                      title="In Rainbow-Table nachschlagen">
+                      title="In Rainbow-Table nachschlagen"
+                    >
                       nachschlagen
                     </button>
                   </td>
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
@@ -214,7 +216,8 @@ export default function RainbowTable() {
           <div className={rt.crackSummary}>
             <span
               className={rt.crackCount}
-              style={{ color: crackable > 0 ? "#fb4934" : "#b8bb26" }}>
+              style={{ color: crackable > 0 ? "#fb4934" : "#b8bb26" }}
+            >
               {crackable} / {stolenDb.length}
             </span>{" "}
             Passwoerter knackbar
@@ -282,7 +285,8 @@ export default function RainbowTable() {
         {/* Suchergebnis */}
         {searchResult && (
           <div
-            className={searchResult.found ? rt.resultFound : rt.resultNotFound}>
+            className={searchResult.found ? rt.resultFound : rt.resultNotFound}
+          >
             {searchResult.found ? (
               <>
                 <span className={rt.resultIcon}>&#10003;</span>
@@ -318,13 +322,13 @@ export default function RainbowTable() {
                 {rtEntries.map((entry, i) => {
                   const isHit =
                     searchResult?.found &&
-                    searchResult.entry.hash === entry.hash
+                    searchResult.entry.hash === entry.hash;
                   return (
                     <tr key={i} className={isHit ? rt.rtRowHit : ""}>
                       <td>{entry.password}</td>
                       <td className={rt.rtHash}>{entry.hash}</td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
@@ -338,5 +342,5 @@ export default function RainbowTable() {
         </div>
       </div>
     </div>
-  )
+  );
 }

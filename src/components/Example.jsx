@@ -1,4 +1,4 @@
-import "./components.css"
+import "./components.css";
 
 export default function Example({
   children,
@@ -11,5 +11,5 @@ export default function Example({
       <h3 id={id}>{`${title}`}</h3>
       {children}
     </div>
-  )
+  );
 }

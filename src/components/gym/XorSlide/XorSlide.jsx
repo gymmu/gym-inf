@@ -3,7 +3,7 @@
 // Schritt 2: XOR-Verschlüsselung (Spalten, schriftliche Rechnung)
 // Keine automatische Uppercase-Konvertierung
 
-import { useState, useMemo } from "react"
+import { useMemo, useState } from "react";
 
 // --- Gruvbox-Farben ---
 const C = {
@@ -20,32 +20,32 @@ const C = {
   bgL: "#3c3836",
   bgLL: "#504945",
   bg: "#1d2021",
-}
+};
 
 // --- Hilfsfunktionen ---
 function toBin8(n) {
-  return n.toString(2).padStart(8, "0")
+  return n.toString(2).padStart(8, "0");
 }
 
 function onlyPrintable(str) {
   return str
     .split("")
     .filter((c) => {
-      const code = c.charCodeAt(0)
-      return code >= 32 && code <= 126
+      const code = c.charCodeAt(0);
+      return code >= 32 && code <= 126;
     })
-    .join("")
+    .join("");
 }
 
 function computeChars(plain, key) {
-  if (!plain || !key) return []
+  if (!plain || !key) return [];
   return plain.split("").map((ch, i) => {
-    const keyChar = key[i % key.length]
-    const isRepeat = i >= key.length // dieser Schlüsselbuchstabe ist eine Wiederholung
-    const pCode = ch.charCodeAt(0)
-    const kCode = keyChar.charCodeAt(0)
-    const eCode = pCode ^ kCode
-    const printable = eCode >= 33 && eCode <= 126
+    const keyChar = key[i % key.length];
+    const isRepeat = i >= key.length; // dieser Schlüsselbuchstabe ist eine Wiederholung
+    const pCode = ch.charCodeAt(0);
+    const kCode = keyChar.charCodeAt(0);
+    const eCode = pCode ^ kCode;
+    const printable = eCode >= 33 && eCode <= 126;
     return {
       plain: ch,
       keyChar,
@@ -58,16 +58,16 @@ function computeChars(plain, key) {
       eBin: toBin8(eCode),
       printable,
       eChar: printable ? String.fromCharCode(eCode) : `[${eCode}]`,
-    }
-  })
+    };
+  });
 }
 
 // --- BinByte — 8 Bit mit Nibble-Trennung ---
 function BinByte({ value, color = C.fg, dim = false }) {
-  const hi = value.slice(0, 4)
-  const lo = value.slice(4)
-  const zeroColor = dim ? C.bgLL : C.grayDim
-  const oneColor = dim ? C.bgLL : color
+  const hi = value.slice(0, 4);
+  const lo = value.slice(4);
+  const zeroColor = dim ? C.bgLL : C.grayDim;
+  const oneColor = dim ? C.bgLL : color;
   return (
     <span
       style={{
@@ -77,14 +77,16 @@ function BinByte({ value, color = C.fg, dim = false }) {
         alignItems: "center",
         letterSpacing: "0.06em",
         whiteSpace: "nowrap",
-      }}>
+      }}
+    >
       {hi.split("").map((b, i) => (
         <span
           key={i}
           style={{
             color: b === "1" ? oneColor : zeroColor,
             fontWeight: b === "1" ? 700 : 400,
-          }}>
+          }}
+        >
           {b}
         </span>
       ))}
@@ -95,18 +97,19 @@ function BinByte({ value, color = C.fg, dim = false }) {
           style={{
             color: b === "1" ? oneColor : zeroColor,
             fontWeight: b === "1" ? 700 : 400,
-          }}>
+          }}
+        >
           {b}
         </span>
       ))}
     </span>
-  )
+  );
 }
 
 // --- CharBox — Zeichen in einem Kästchen ---
 function CharBox({ ch, color, borderColor }) {
-  const isPrintSingle = ch.length === 1
-  const border = borderColor || color
+  const isPrintSingle = ch.length === 1;
+  const border = borderColor || color;
   return (
     <div
       style={{
@@ -125,10 +128,11 @@ function CharBox({ ch, color, borderColor }) {
         flexShrink: 0,
         padding: isPrintSingle ? 0 : "0 0.2em",
         whiteSpace: "nowrap",
-      }}>
+      }}
+    >
       {ch}
     </div>
-  )
+  );
 }
 
 // --- Eingabezeile ---
@@ -140,7 +144,8 @@ function InputRow({ plain, setPlain, keytext, setKey }) {
         gap: "2em",
         alignItems: "flex-end",
         marginBottom: "0.5em",
-      }}>
+      }}
+    >
       <label style={{ display: "flex", flexDirection: "column", gap: "0.3em" }}>
         <span style={labelStyle}>Klartext</span>
         <input
@@ -180,7 +185,7 @@ function InputRow({ plain, setPlain, keytext, setKey }) {
         />
       </label>
     </div>
-  )
+  );
 }
 
 // --- Schritt 1: ASCII-Tabelle (Klartext + Schlüssel) ---
@@ -190,7 +195,7 @@ function StepAscii({ chars, keyLen }) {
       <p style={{ color: C.gray, fontStyle: "italic", fontSize: "1em" }}>
         Bitte Klartext und Schlüssel eingeben.
       </p>
-    )
+    );
   return (
     <div style={{ overflowX: "auto" }}>
       <table style={{ borderCollapse: "collapse", whiteSpace: "nowrap" }}>
@@ -201,7 +206,8 @@ function StepAscii({ chars, keyLen }) {
             {chars.map((c, i) => (
               <td
                 key={i}
-                style={{ padding: "0.3em 0.8em", textAlign: "center" }}>
+                style={{ padding: "0.3em 0.8em", textAlign: "center" }}
+              >
                 <CharBox ch={c.plain} color={C.yellow} />
               </td>
             ))}
@@ -218,7 +224,8 @@ function StepAscii({ chars, keyLen }) {
                   color: C.orange,
                   fontWeight: 700,
                   fontSize: "1.05em",
-                }}>
+                }}
+              >
                 {c.pCode}
               </td>
             ))}
@@ -228,7 +235,8 @@ function StepAscii({ chars, keyLen }) {
             {chars.map((c, i) => (
               <td
                 key={i}
-                style={{ textAlign: "center", padding: "0.35em 0.8em" }}>
+                style={{ textAlign: "center", padding: "0.35em 0.8em" }}
+              >
                 <BinByte value={c.pBin} color={C.green} />
               </td>
             ))}
@@ -249,7 +257,8 @@ function StepAscii({ chars, keyLen }) {
                   padding: "0.3em 0.8em",
                   textAlign: "center",
                   position: "relative",
-                }}>
+                }}
+              >
                 <CharBox
                   ch={c.keyChar}
                   color={c.isRepeat ? C.purpleDim : C.purple}
@@ -265,7 +274,8 @@ function StepAscii({ chars, keyLen }) {
                       fontSize: "0.6em",
                       color: C.bgLL,
                       fontFamily: "sans-serif",
-                    }}>
+                    }}
+                  >
                     ↺
                   </span>
                 )}
@@ -284,7 +294,8 @@ function StepAscii({ chars, keyLen }) {
                   color: c.isRepeat ? C.bgLL : C.orange,
                   fontWeight: 700,
                   fontSize: "1.05em",
-                }}>
+                }}
+              >
                 {c.kCode}
               </td>
             ))}
@@ -294,7 +305,8 @@ function StepAscii({ chars, keyLen }) {
             {chars.map((c, i) => (
               <td
                 key={i}
-                style={{ textAlign: "center", padding: "0.35em 0.8em" }}>
+                style={{ textAlign: "center", padding: "0.35em 0.8em" }}
+              >
                 <BinByte value={c.kBin} color={C.purple} dim={c.isRepeat} />
               </td>
             ))}
@@ -302,7 +314,7 @@ function StepAscii({ chars, keyLen }) {
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
 // --- Schritt 2: XOR-Verschlüsselung ---
@@ -312,9 +324,9 @@ function StepXor({ chars }) {
       <p style={{ color: C.gray, fontStyle: "italic", fontSize: "1em" }}>
         Bitte Klartext und Schlüssel eingeben.
       </p>
-    )
+    );
 
-  const H = { char: "2.6em", bits: "2em", sep: "1em" }
+  const H = { char: "2.6em", bits: "2em", sep: "1em" };
 
   const labels = [
     { text: "Klartext", h: H.char, color: C.yellow },
@@ -324,7 +336,7 @@ function StepXor({ chars }) {
     { text: "", h: H.sep, color: C.gray },
     { text: "Binär", h: H.bits, color: C.gray },
     { text: "Chiffrat", h: H.char, color: C.red },
-  ]
+  ];
 
   return (
     <div style={{ overflowX: "auto" }}>
@@ -334,10 +346,12 @@ function StepXor({ chars }) {
           gap: "0.8em",
           alignItems: "center",
           minWidth: "min-content",
-        }}>
+        }}
+      >
         {/* Zeilenbeschriftungen */}
         <div
-          style={{ display: "flex", flexDirection: "column", flexShrink: 0 }}>
+          style={{ display: "flex", flexDirection: "column", flexShrink: 0 }}
+        >
           {labels.map(({ text, h, color }, i) => (
             <div
               key={i}
@@ -354,7 +368,8 @@ function StepXor({ chars }) {
                 letterSpacing: "0.05em",
                 whiteSpace: "nowrap",
                 paddingRight: "0.8em",
-              }}>
+              }}
+            >
               {text}
             </div>
           ))}
@@ -372,7 +387,8 @@ function StepXor({ chars }) {
               background: "rgba(0,0,0,0.2)",
               border: `1px solid ${C.bgLL}`,
               borderRadius: 8,
-            }}>
+            }}
+          >
             {/* Klartext: Zeichen oben, Bits unten */}
             <div
               style={{
@@ -380,7 +396,8 @@ function StepXor({ chars }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-              }}>
+              }}
+            >
               <CharBox ch={c.plain} color={C.yellow} />
             </div>
             <div
@@ -389,7 +406,8 @@ function StepXor({ chars }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-              }}>
+              }}
+            >
               <BinByte value={c.pBin} color={C.yellow} />
             </div>
 
@@ -400,7 +418,8 @@ function StepXor({ chars }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-              }}>
+              }}
+            >
               <BinByte value={c.kBin} color={C.purple} dim={c.isRepeat} />
             </div>
             <div
@@ -409,7 +428,8 @@ function StepXor({ chars }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-              }}>
+              }}
+            >
               <CharBox
                 ch={c.keyChar}
                 color={c.isRepeat ? C.purpleDim : C.purple}
@@ -424,7 +444,8 @@ function StepXor({ chars }) {
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
-              }}>
+              }}
+            >
               <div
                 style={{
                   width: "100%",
@@ -442,7 +463,8 @@ function StepXor({ chars }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-              }}>
+              }}
+            >
               <BinByte value={c.eBin} color={C.red} />
             </div>
             <div
@@ -451,14 +473,15 @@ function StepXor({ chars }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-              }}>
+              }}
+            >
               <CharBox ch={c.eChar} color={C.red} />
             </div>
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 // --- Shared Styles ---
@@ -469,7 +492,7 @@ const labelStyle = {
   fontWeight: 600,
   textTransform: "uppercase",
   letterSpacing: "0.06em",
-}
+};
 
 const tdLabelStyle = {
   fontSize: "0.75em",
@@ -481,7 +504,7 @@ const tdLabelStyle = {
   letterSpacing: "0.06em",
   whiteSpace: "nowrap",
   verticalAlign: "middle",
-}
+};
 
 // --- Tab-Button ---
 function TabBtn({ active, onClick, children }) {
@@ -500,10 +523,11 @@ function TabBtn({ active, onClick, children }) {
         cursor: "pointer",
         transition: "color 0.15s, border-color 0.15s",
         opacity: active ? 1 : 0.55,
-      }}>
+      }}
+    >
       {children}
     </button>
-  )
+  );
 }
 
 // --- Hauptkomponente ---
@@ -511,14 +535,14 @@ export default function XorSlide({
   defaultPlain = "HALLO",
   defaultKey = "key",
 }) {
-  const [plain, setPlain] = useState(defaultPlain)
-  const [keytext, setKey] = useState(defaultKey)
-  const [step, setStep] = useState(1)
+  const [plain, setPlain] = useState(defaultPlain);
+  const [keytext, setKey] = useState(defaultKey);
+  const [step, setStep] = useState(1);
 
   const chars = useMemo(
     () => computeChars(plain, keytext || "k"),
     [plain, keytext],
-  )
+  );
 
   return (
     <div
@@ -531,7 +555,8 @@ export default function XorSlide({
         border: `1px solid ${C.bgLL}`,
         borderRadius: 8,
         fontSize: "1rem",
-      }}>
+      }}
+    >
       <InputRow
         plain={plain}
         setPlain={setPlain}
@@ -546,7 +571,8 @@ export default function XorSlide({
           gap: 0,
           borderBottom: `1px solid ${C.bgLL}`,
           marginBottom: "0.1em",
-        }}>
+        }}
+      >
         <TabBtn active={step === 1} onClick={() => setStep(1)}>
           Schritt 1 — Text &amp; Schlüssel → Bits
         </TabBtn>
@@ -558,5 +584,5 @@ export default function XorSlide({
       {step === 1 && <StepAscii chars={chars} keyLen={keytext.length} />}
       {step === 2 && <StepXor chars={chars} />}
     </div>
-  )
+  );
 }

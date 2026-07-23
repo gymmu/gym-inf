@@ -1,43 +1,43 @@
-import { useMemo, useState } from "react"
-import style from "./XorSteps.module.css"
+import { useMemo, useState } from "react";
+import style from "./XorSteps.module.css";
 
 // ── Helpers ───────────────────────────────────────────────
 
 function toBin8(n) {
-  return n.toString(2).padStart(8, "0")
+  return n.toString(2).padStart(8, "0");
 }
 
 function formatBin(b) {
   // "01001000" → "0100 1000"
-  return b.slice(0, 4) + "\u202F" + b.slice(4)
+  return b.slice(0, 4) + "\u202F" + b.slice(4);
 }
 
 function onlyPrintable(str) {
   return str
     .split("")
     .filter((c) => {
-      const code = c.charCodeAt(0)
-      return code >= 32 && code <= 126
+      const code = c.charCodeAt(0);
+      return code >= 32 && code <= 126;
     })
-    .join("")
+    .join("");
 }
 
 // ── Main component ────────────────────────────────────────
 
 export default function XorSteps() {
-  const [plaintext, setPlaintext] = useState("HALLO")
-  const [keytext, setKeytext] = useState("KEY")
-  const [activeTab, setActiveTab] = useState("ascii") // "ascii" | "xor"
+  const [plaintext, setPlaintext] = useState("HALLO");
+  const [keytext, setKeytext] = useState("KEY");
+  const [activeTab, setActiveTab] = useState("ascii"); // "ascii" | "xor"
 
-  const plain = onlyPrintable(plaintext).slice(0, 10)
-  const key = onlyPrintable(keytext) || "K"
+  const plain = onlyPrintable(plaintext).slice(0, 10);
+  const key = onlyPrintable(keytext) || "K";
 
   const chars = useMemo(() => {
     return plain.split("").map((ch, i) => {
-      const keyChar = key[i % key.length]
-      const pCode = ch.charCodeAt(0)
-      const kCode = keyChar.charCodeAt(0)
-      const eCode = pCode ^ kCode
+      const keyChar = key[i % key.length];
+      const pCode = ch.charCodeAt(0);
+      const kCode = keyChar.charCodeAt(0);
+      const eCode = pCode ^ kCode;
       return {
         plain: ch,
         keyChar,
@@ -48,9 +48,9 @@ export default function XorSteps() {
         kBin: toBin8(kCode),
         eBin: toBin8(eCode),
         printable: eCode >= 32 && eCode <= 126,
-      }
-    })
-  }, [plain, key])
+      };
+    });
+  }, [plain, key]);
 
   return (
     <div className={style.wrapper}>
@@ -90,12 +90,14 @@ export default function XorSteps() {
       <div className={style.tabs}>
         <button
           className={`${style.tab} ${activeTab === "ascii" ? style.tabActive : ""}`}
-          onClick={() => setActiveTab("ascii")}>
+          onClick={() => setActiveTab("ascii")}
+        >
           Schritt 1: Text → Binär
         </button>
         <button
           className={`${style.tab} ${activeTab === "xor" ? style.tabActive : ""}`}
-          onClick={() => setActiveTab("xor")}>
+          onClick={() => setActiveTab("xor")}
+        >
           Schritt 2: XOR-Verschlüsselung
         </button>
       </div>
@@ -181,7 +183,8 @@ export default function XorSteps() {
                   <div className={style.divider} />
                   <BinByte value={c.eBin} color="cipher" />
                   <div
-                    className={`${style.colCharOut} ${!c.printable ? style.nonPrint : ""}`}>
+                    className={`${style.colCharOut} ${!c.printable ? style.nonPrint : ""}`}
+                  >
                     {c.printable ? String.fromCharCode(c.eCode) : "·"}
                   </div>
                 </div>
@@ -246,7 +249,7 @@ export default function XorSteps() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 // ── Sub-component: coloured binary byte ──────────────────
@@ -259,7 +262,7 @@ function BinByte({ value, color }) {
         ? style.binKey
         : color === "cipher"
           ? style.binCipher
-          : style.binNeutral
+          : style.binNeutral;
 
   return (
     <span className={`${style.bin8} ${cls}`}>
@@ -267,5 +270,5 @@ function BinByte({ value, color }) {
       <span className={style.nibbleSep} />
       <span className={style.nibble}>{value.slice(4)}</span>
     </span>
-  )
+  );
 }

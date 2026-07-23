@@ -1,13 +1,13 @@
-import { useCurrentFrame, AbsoluteFill, interpolate } from "remotion"
-import { useMemo } from "react"
+import { useMemo } from "react";
+import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 
 // ==================== HELPER FUNCTIONS ====================
 
 // Generiere alle Schritte für Bubble Sort
 export function generateBubbleSortSteps(array) {
-  const steps = []
-  const arr = [...array]
-  const n = arr.length
+  const steps = [];
+  const arr = [...array];
+  const n = arr.length;
 
   steps.push({
     array: [...arr],
@@ -17,7 +17,7 @@ export function generateBubbleSortSteps(array) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     array: [...arr],
@@ -27,7 +27,7 @@ export function generateBubbleSortSteps(array) {
     description: "Array eingeben",
     mermaidNode: "Gib Liste ein",
     variables: { n },
-  })
+  });
 
   steps.push({
     array: [...arr],
@@ -37,7 +37,7 @@ export function generateBubbleSortSteps(array) {
     description: "Initialisiere: i = 0",
     mermaidNode: "Setze i auf 0",
     variables: { i: 0, n },
-  })
+  });
 
   for (let i = 0; i < n - 1; i++) {
     // Outer loop check
@@ -49,7 +49,7 @@ export function generateBubbleSortSteps(array) {
       description: `Prüfe: i=${i} < ${n - 1}?`,
       mermaidNode: "Ist i < Länge minus 1?",
       variables: { i, n },
-    })
+    });
 
     // Initialize inner loop
     steps.push({
@@ -60,7 +60,7 @@ export function generateBubbleSortSteps(array) {
       description: `Starte innere Schleife: j = 0`,
       mermaidNode: "Setze j auf 0",
       variables: { i, j: 0 },
-    })
+    });
 
     for (let j = 0; j < n - i - 1; j++) {
       // Inner loop check
@@ -72,7 +72,7 @@ export function generateBubbleSortSteps(array) {
         description: `Prüfe: j=${j} < ${n - i - 1}?`,
         mermaidNode: "Ist j < Länge minus i minus 1?",
         variables: { i, j },
-      })
+      });
 
       // Vergleichsschritt
       steps.push({
@@ -83,11 +83,11 @@ export function generateBubbleSortSteps(array) {
         description: `Vergleiche ${arr[j]} und ${arr[j + 1]}`,
         mermaidNode: "Ist Element an j > Element an j+1?",
         variables: { i, j },
-      })
+      });
 
       if (arr[j] > arr[j + 1]) {
         // Tausch
-        ;[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
         steps.push({
           array: [...arr],
           compare: [j, j + 1],
@@ -96,7 +96,7 @@ export function generateBubbleSortSteps(array) {
           description: `Tausche ${arr[j]} und ${arr[j + 1]}`,
           mermaidNode: "Tausche Element an j mit Element an j+1",
           variables: { i, j },
-        })
+        });
       }
 
       // Increment j
@@ -108,7 +108,7 @@ export function generateBubbleSortSteps(array) {
         description: `j erhöhen: ${j} → ${j + 1}`,
         mermaidNode: "Erhöhe j um 1",
         variables: { i, j: j + 1 },
-      })
+      });
     }
 
     // Inner loop exit check
@@ -120,7 +120,7 @@ export function generateBubbleSortSteps(array) {
       description: `Prüfe: j=${n - i - 1} < ${n - i - 1}? Nein`,
       mermaidNode: "Ist j < Länge minus i minus 1?",
       variables: { i, j: n - i - 1 },
-    })
+    });
 
     // Increment i
     steps.push({
@@ -131,7 +131,7 @@ export function generateBubbleSortSteps(array) {
       description: `i erhöhen: ${i} → ${i + 1}. Element ${arr[n - 1 - i]} sortiert`,
       mermaidNode: "Erhöhe i um 1",
       variables: { i: i + 1 },
-    })
+    });
   }
 
   // Final outer loop check
@@ -143,7 +143,7 @@ export function generateBubbleSortSteps(array) {
     description: `Prüfe: i=${n - 1} < ${n - 1}? Nein - Fertig!`,
     mermaidNode: "Ist i < Länge minus 1?",
     variables: { i: n - 1 },
-  })
+  });
 
   // Finale Ansicht
   steps.push({
@@ -154,16 +154,16 @@ export function generateBubbleSortSteps(array) {
     description: "Array vollständig sortiert!",
     mermaidNode: "Ende - Liste sortiert",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // Generiere alle Schritte für Selection Sort
 export function generateSelectionSortSteps(array) {
-  const steps = []
-  const arr = [...array]
-  const n = arr.length
+  const steps = [];
+  const arr = [...array];
+  const n = arr.length;
 
   steps.push({
     array: [...arr],
@@ -173,7 +173,7 @@ export function generateSelectionSortSteps(array) {
     description: "Array wurde eingegeben",
     mermaidNode: "Input",
     variables: { n },
-  })
+  });
 
   steps.push({
     array: [...arr],
@@ -183,7 +183,7 @@ export function generateSelectionSortSteps(array) {
     description: "Initialisiere äußere Schleife: i = 0",
     mermaidNode: "OuterInit",
     variables: { i: 0, n },
-  })
+  });
 
   for (let i = 0; i < n - 1; i++) {
     // Outer loop check
@@ -195,9 +195,9 @@ export function generateSelectionSortSteps(array) {
       description: `Prüfe: i=${i} < ${n - 1}?`,
       mermaidNode: "OuterCheck",
       variables: { i, n },
-    })
+    });
 
-    let minIndex = i
+    let minIndex = i;
 
     // Initialize minIndex
     steps.push({
@@ -208,7 +208,7 @@ export function generateSelectionSortSteps(array) {
       description: `Setze minIndex = ${i}`,
       mermaidNode: "MinInit",
       variables: { i, minIndex: i },
-    })
+    });
 
     // Initialize inner loop
     steps.push({
@@ -219,7 +219,7 @@ export function generateSelectionSortSteps(array) {
       description: `Starte innere Schleife: j = ${i + 1}`,
       mermaidNode: "InnerInit",
       variables: { i, j: i + 1, minIndex },
-    })
+    });
 
     for (let j = i + 1; j < n; j++) {
       // Inner loop check
@@ -231,7 +231,7 @@ export function generateSelectionSortSteps(array) {
         description: `Prüfe: j=${j} < ${n}?`,
         mermaidNode: "InnerCheck",
         variables: { i, j, minIndex },
-      })
+      });
 
       // Vergleichsschritt
       steps.push({
@@ -242,10 +242,10 @@ export function generateSelectionSortSteps(array) {
         description: `Vergleiche ${arr[j]} mit aktuellem Minimum ${arr[minIndex]}`,
         mermaidNode: "Compare",
         variables: { i, j, minIndex },
-      })
+      });
 
       if (arr[j] < arr[minIndex]) {
-        minIndex = j
+        minIndex = j;
         steps.push({
           array: [...arr],
           minIndex,
@@ -254,9 +254,9 @@ export function generateSelectionSortSteps(array) {
           description: `Neues Minimum gefunden: ${arr[minIndex]}`,
           mermaidNode: "UpdateMin",
           variables: { i, j, minIndex },
-        })
+        });
       }
-      
+
       // Increment j (happens always after comparison)
       steps.push({
         array: [...arr],
@@ -266,7 +266,7 @@ export function generateSelectionSortSteps(array) {
         description: `j erhöhen: ${j} → ${j + 1}`,
         mermaidNode: "InnerIncr",
         variables: { i, j: j + 1, minIndex },
-      })
+      });
     }
 
     // Final j < Länge? check (when j == n, exit loop)
@@ -278,7 +278,7 @@ export function generateSelectionSortSteps(array) {
       description: `Prüfe: j=${n} < ${n}? Nein - Innere Schleife beendet`,
       mermaidNode: "InnerCheck",
       variables: { i, j: n, minIndex },
-    })
+    });
 
     // Swap check
     steps.push({
@@ -289,11 +289,11 @@ export function generateSelectionSortSteps(array) {
       description: `Prüfe ob Tausch nötig: i=${i} != minIndex=${minIndex}?`,
       mermaidNode: "SwapCheck",
       variables: { i, minIndex },
-    })
+    });
 
     // Tausche oder nicht
     if (minIndex !== i) {
-      ;[arr[i], arr[minIndex]] = [arr[minIndex], arr[i]]
+      [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
       steps.push({
         array: [...arr],
         minIndex: i,
@@ -302,9 +302,9 @@ export function generateSelectionSortSteps(array) {
         description: `Tausche: Position ${i} ↔ Position ${minIndex}`,
         mermaidNode: "Swap",
         variables: { i, minIndex },
-      })
+      });
     }
-    
+
     // Increment i
     steps.push({
       array: [...arr],
@@ -314,7 +314,7 @@ export function generateSelectionSortSteps(array) {
       description: `i erhöhen: ${i} → ${i + 1}`,
       mermaidNode: "OuterIncr",
       variables: { i: i + 1 },
-    })
+    });
   }
 
   // Final outer loop check
@@ -326,7 +326,7 @@ export function generateSelectionSortSteps(array) {
     description: `Prüfe: i=${n - 1} < ${n - 1}? Nein - Fertig!`,
     mermaidNode: "OuterCheck",
     variables: { i: n - 1 },
-  })
+  });
 
   // Finale Ansicht
   steps.push({
@@ -337,7 +337,7 @@ export function generateSelectionSortSteps(array) {
     description: "Array wurde eingegeben",
     mermaidNode: "Gib Liste ein",
     variables: { n },
-  })
+  });
 
   steps.push({
     array: [...arr],
@@ -347,7 +347,7 @@ export function generateSelectionSortSteps(array) {
     description: "Initialisiere äußere Schleife: i = 0",
     mermaidNode: "Setze i auf 0",
     variables: { i: 0, n },
-  })
+  });
 
   for (let i = 0; i < n - 1; i++) {
     // Outer loop check
@@ -359,9 +359,9 @@ export function generateSelectionSortSteps(array) {
       description: `Prüfe: i=${i} < ${n - 1}?`,
       mermaidNode: "Ist i < Länge minus 1?",
       variables: { i, n },
-    })
+    });
 
-    let minIndex = i
+    let minIndex = i;
 
     // Initialize minIndex
     steps.push({
@@ -372,7 +372,7 @@ export function generateSelectionSortSteps(array) {
       description: `Setze minIndex = ${i}`,
       mermaidNode: "Setze Minimum-Index auf i",
       variables: { i, minIndex: i },
-    })
+    });
 
     // Initialize inner loop
     steps.push({
@@ -383,7 +383,7 @@ export function generateSelectionSortSteps(array) {
       description: `Starte innere Schleife: j = ${i + 1}`,
       mermaidNode: "Setze j auf i plus 1",
       variables: { i, j: i + 1, minIndex },
-    })
+    });
 
     for (let j = i + 1; j < n; j++) {
       // Inner loop check
@@ -395,7 +395,7 @@ export function generateSelectionSortSteps(array) {
         description: `Prüfe: j=${j} < ${n}?`,
         mermaidNode: "Ist j < Länge?",
         variables: { i, j, minIndex },
-      })
+      });
 
       // Vergleichsschritt
       steps.push({
@@ -406,10 +406,10 @@ export function generateSelectionSortSteps(array) {
         description: `Vergleiche ${arr[j]} mit aktuellem Minimum ${arr[minIndex]}`,
         mermaidNode: "Ist Element an j < Element an Minimum-Index?",
         variables: { i, j, minIndex },
-      })
+      });
 
       if (arr[j] < arr[minIndex]) {
-        minIndex = j
+        minIndex = j;
         steps.push({
           array: [...arr],
           minIndex,
@@ -418,9 +418,9 @@ export function generateSelectionSortSteps(array) {
           description: `Neues Minimum gefunden: ${arr[minIndex]}`,
           mermaidNode: "Setze Minimum-Index auf j",
           variables: { i, j, minIndex },
-        })
+        });
       }
-      
+
       // Increment j (happens always after comparison)
       steps.push({
         array: [...arr],
@@ -430,7 +430,7 @@ export function generateSelectionSortSteps(array) {
         description: `j erhöhen: ${j} → ${j + 1}`,
         mermaidNode: "Erhöhe j um 1",
         variables: { i, j: j + 1, minIndex },
-      })
+      });
     }
 
     // Final j < Länge? check (when j == n, exit loop)
@@ -442,7 +442,7 @@ export function generateSelectionSortSteps(array) {
       description: `Prüfe: j=${n} < ${n}? Nein - Innere Schleife beendet`,
       mermaidNode: "Ist j < Länge?",
       variables: { i, j: n, minIndex },
-    })
+    });
 
     // Swap check
     steps.push({
@@ -453,11 +453,11 @@ export function generateSelectionSortSteps(array) {
       description: `Prüfe ob Tausch nötig: i=${i} != minIndex=${minIndex}?`,
       mermaidNode: "Ist i ≠ Minimum-Index?",
       variables: { i, minIndex },
-    })
+    });
 
     // Tausche oder nicht
     if (minIndex !== i) {
-      ;[arr[i], arr[minIndex]] = [arr[minIndex], arr[i]]
+      [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
       steps.push({
         array: [...arr],
         minIndex: i,
@@ -466,9 +466,9 @@ export function generateSelectionSortSteps(array) {
         description: `Tausche: Position ${i} ↔ Position ${minIndex}`,
         mermaidNode: "Tausche Element an i mit Element an Minimum-Index",
         variables: { i, minIndex },
-      })
+      });
     }
-    
+
     // Increment i
     steps.push({
       array: [...arr],
@@ -478,7 +478,7 @@ export function generateSelectionSortSteps(array) {
       description: `i erhöhen: ${i} → ${i + 1}`,
       mermaidNode: "Erhöhe i um 1",
       variables: { i: i + 1 },
-    })
+    });
   }
 
   // Final outer loop check
@@ -490,7 +490,7 @@ export function generateSelectionSortSteps(array) {
     description: `Prüfe: i=${n - 1} < ${n - 1}? Nein - Fertig!`,
     mermaidNode: "Ist i < Länge minus 1?",
     variables: { i: n - 1 },
-  })
+  });
 
   // Finale Ansicht
   steps.push({
@@ -501,16 +501,16 @@ export function generateSelectionSortSteps(array) {
     description: "Array vollständig sortiert!",
     mermaidNode: "Ende - Liste sortiert",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // Generiere alle Schritte für Insertion Sort
 export function generateInsertionSortSteps(array) {
-  const steps = []
-  const arr = [...array]
-  const n = arr.length
+  const steps = [];
+  const arr = [...array];
+  const n = arr.length;
 
   steps.push({
     array: [...arr],
@@ -520,7 +520,7 @@ export function generateInsertionSortSteps(array) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     array: [...arr],
@@ -530,7 +530,7 @@ export function generateInsertionSortSteps(array) {
     description: "Array eingeben",
     mermaidNode: "Gib Liste ein",
     variables: { n },
-  })
+  });
 
   steps.push({
     array: [...arr],
@@ -540,7 +540,7 @@ export function generateInsertionSortSteps(array) {
     description: "Initialisiere: i = 1 (erstes Element als sortiert)",
     mermaidNode: "Setze i auf 1",
     variables: { i: 1, n },
-  })
+  });
 
   for (let i = 1; i < n; i++) {
     // Outer loop check
@@ -552,9 +552,9 @@ export function generateInsertionSortSteps(array) {
       description: `Prüfe: i=${i} < ${n}?`,
       mermaidNode: "Ist i < Länge?",
       variables: { i, n },
-    })
+    });
 
-    const key = arr[i]
+    const key = arr[i];
 
     steps.push({
       array: [...arr],
@@ -564,7 +564,7 @@ export function generateInsertionSortSteps(array) {
       description: `Speichere key = ${key} (Array[${i}])`,
       mermaidNode: "Merke Element an Position i als Schlüssel",
       variables: { i, key },
-    })
+    });
 
     steps.push({
       array: [...arr],
@@ -574,10 +574,10 @@ export function generateInsertionSortSteps(array) {
       description: `Setze j = ${i - 1}`,
       mermaidNode: "Setze j auf i minus 1",
       variables: { i, j: i - 1, key },
-    })
+    });
 
-    let j = i - 1
-    
+    let j = i - 1;
+
     while (j >= 0 && arr[j] > key) {
       // Inner loop check
       steps.push({
@@ -588,7 +588,7 @@ export function generateInsertionSortSteps(array) {
         description: `Prüfe: j=${j} >= 0 UND Array[${j}]=${arr[j]} > key=${key}?`,
         mermaidNode: "Ist j ≥ 0 UND Element an j > Schlüssel?",
         variables: { i, j, key },
-      })
+      });
 
       // Shift
       steps.push({
@@ -599,10 +599,10 @@ export function generateInsertionSortSteps(array) {
         description: `Verschiebe ${arr[j]} nach rechts`,
         mermaidNode: "Verschiebe Element an j nach rechts",
         variables: { i, j, key },
-      })
+      });
 
-      arr[j + 1] = arr[j]
-      
+      arr[j + 1] = arr[j];
+
       steps.push({
         array: [...arr],
         current: j,
@@ -611,13 +611,13 @@ export function generateInsertionSortSteps(array) {
         description: `j verringern: ${j} → ${j - 1}`,
         mermaidNode: "Verringere j um 1",
         variables: { i, j: j - 1, key },
-      })
-      
-      j--
+      });
+
+      j--;
     }
 
     // Final check (loop exit)
-    const exitReason = j < 0 ? "j < 0" : `Array[${j}]=${arr[j]} <= key=${key}`
+    const exitReason = j < 0 ? "j < 0" : `Array[${j}]=${arr[j]} <= key=${key}`;
     steps.push({
       array: [...arr],
       current: j + 1,
@@ -626,10 +626,10 @@ export function generateInsertionSortSteps(array) {
       description: `Prüfe: ${exitReason}? Nein - Schleife beendet`,
       mermaidNode: "Ist j ≥ 0 UND Element an j > Schlüssel?",
       variables: { i, j, key },
-    })
+    });
 
     // Insert key
-    arr[j + 1] = key
+    arr[j + 1] = key;
 
     steps.push({
       array: [...arr],
@@ -639,7 +639,7 @@ export function generateInsertionSortSteps(array) {
       description: `Füge key=${key} an Position ${j + 1} ein`,
       mermaidNode: "Setze Element an Position j+1 auf Schlüssel",
       variables: { i, j: j + 1, key },
-    })
+    });
 
     // Increment i
     steps.push({
@@ -650,7 +650,7 @@ export function generateInsertionSortSteps(array) {
       description: `i erhöhen: ${i} → ${i + 1}`,
       mermaidNode: "Erhöhe i um 1",
       variables: { i: i + 1 },
-    })
+    });
   }
 
   // Final outer loop check
@@ -662,7 +662,7 @@ export function generateInsertionSortSteps(array) {
     description: `Prüfe: i=${n} < ${n}? Nein - Fertig!`,
     mermaidNode: "Ist i < Länge?",
     variables: { i: n },
-  })
+  });
 
   // Finale Ansicht
   steps.push({
@@ -673,15 +673,15 @@ export function generateInsertionSortSteps(array) {
     description: "Array vollständig sortiert!",
     mermaidNode: "Ende - Liste sortiert",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // ==================== ARRAY VISUALISIERUNG ====================
 
 function ArrayBars({ array, highlightIndices = [], compareIndices = [] }) {
-  const maxValue = Math.max(...array)
+  const maxValue = Math.max(...array);
 
   return (
     <div
@@ -691,14 +691,15 @@ function ArrayBars({ array, highlightIndices = [], compareIndices = [] }) {
         alignItems: "flex-end",
         height: "250px",
         gap: "10px",
-      }}>
+      }}
+    >
       {array.map((value, index) => {
-        const isHighlighted = highlightIndices.includes(index)
-        const isComparing = compareIndices.includes(index)
+        const isHighlighted = highlightIndices.includes(index);
+        const isComparing = compareIndices.includes(index);
 
-        let backgroundColor = "#2196F3" // Blau = Unsortiert
-        if (isHighlighted) backgroundColor = "#4CAF50" // Grün = Sortiert
-        if (isComparing) backgroundColor = "#FFC107" // Gelb = Vergleich
+        let backgroundColor = "#2196F3"; // Blau = Unsortiert
+        if (isHighlighted) backgroundColor = "#4CAF50"; // Grün = Sortiert
+        if (isComparing) backgroundColor = "#FFC107"; // Gelb = Vergleich
 
         return (
           <div
@@ -717,29 +718,30 @@ function ArrayBars({ array, highlightIndices = [], compareIndices = [] }) {
               fontSize: "20px",
               borderRadius: "4px",
               boxShadow: "0 2px 4px rgba(0,0,0,0.3)",
-            }}>
+            }}
+          >
             {value}
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 // ==================== REMOTION COMPONENTS ====================
 
 export function BubbleSortAnimation({ array = [5, 2, 8, 1, 9], fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5 // 1.5 Sekunden pro Schritt (langsamer)
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5; // 1.5 Sekunden pro Schritt (langsamer)
 
-  const steps = useMemo(() => generateBubbleSortSteps(array), [array])
+  const steps = useMemo(() => generateBubbleSortSteps(array), [array]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -750,39 +752,47 @@ export function BubbleSortAnimation({ array = [5, 2, 8, 1, 9], fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Bubble Sort - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
       {/* Zählvariablen anzeigen */}
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 20,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 20,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <ArrayBars
         array={currentStep.array}
@@ -797,34 +807,35 @@ export function BubbleSortAnimation({ array = [5, 2, 8, 1, 9], fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 export function SelectionSortAnimation({ array = [5, 2, 8, 1, 9], fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5 // 1.5 Sekunden pro Schritt
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5; // 1.5 Sekunden pro Schritt
 
-  const steps = useMemo(() => generateSelectionSortSteps(array), [array])
+  const steps = useMemo(() => generateSelectionSortSteps(array), [array]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   // Mark minIndex and currentIndex for highlighting
-  const compareIndices = []
-  if (currentStep.minIndex >= 0) compareIndices.push(currentStep.minIndex)
+  const compareIndices = [];
+  if (currentStep.minIndex >= 0) compareIndices.push(currentStep.minIndex);
   if (
     currentStep.currentIndex >= 0 &&
     currentStep.currentIndex !== currentStep.minIndex
   ) {
-    compareIndices.push(currentStep.currentIndex)
+    compareIndices.push(currentStep.currentIndex);
   }
 
   return (
@@ -836,14 +847,16 @@ export function SelectionSortAnimation({ array = [5, 2, 8, 1, 9], fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Selection Sort - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
@@ -859,12 +872,17 @@ export function SelectionSortAnimation({ array = [5, 2, 8, 1, 9], fps = 30 }) {
             borderRadius: "8px",
             fontSize: "18px",
             color: "#ebdbb2",
-          }}>
+          }}
+        >
           {Object.entries(currentStep.variables).map(([key, value]) => (
             <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
+              <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                {key}
+              </span>
               {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
+              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                {value}
+              </span>
             </div>
           ))}
         </div>
@@ -883,25 +901,26 @@ export function SelectionSortAnimation({ array = [5, 2, 8, 1, 9], fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 export function InsertionSortAnimation({ array = [5, 2, 8, 1, 9], fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5 // 1.5 Sekunden pro Schritt
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5; // 1.5 Sekunden pro Schritt
 
-  const steps = useMemo(() => generateInsertionSortSteps(array), [array])
+  const steps = useMemo(() => generateInsertionSortSteps(array), [array]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -912,39 +931,47 @@ export function InsertionSortAnimation({ array = [5, 2, 8, 1, 9], fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Insertion Sort - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
       {/* Zählvariablen anzeigen */}
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 20,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 20,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <ArrayBars
         array={currentStep.array}
@@ -959,9 +986,10 @@ export function InsertionSortAnimation({ array = [5, 2, 8, 1, 9], fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
     </AbsoluteFill>
-  )
+  );
 }

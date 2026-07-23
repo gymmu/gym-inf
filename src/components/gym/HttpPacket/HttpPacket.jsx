@@ -1,5 +1,5 @@
-import { useState } from "react"
-import style from "./HttpPacket.module.css"
+import { useState } from "react";
+import style from "./HttpPacket.module.css";
 
 // Schichten des Pakets (von aussen nach innen)
 // Jede Schicht hat: label, sublabel, fields[], color
@@ -82,7 +82,7 @@ const LAYERS = [
     ],
     note: "Der gesamte HTTP-Inhalt — Methode, Pfad, Header, Body — ist bei HTTPS verschlüsselt.",
   },
-]
+];
 
 // Was ein Angreifer (z. B. ISP) sieht
 const ATTACKER_SEES = {
@@ -100,15 +100,15 @@ const ATTACKER_SEES = {
     "Datenmenge (ungefähr)",
     "Methode, Pfad, Cookie, Body: verschlüsselt ✓",
   ],
-}
+};
 
 export default function HttpPacket() {
-  const [mode, setMode] = useState("http") // "http" | "https"
-  const [expanded, setExpanded] = useState(null)
+  const [mode, setMode] = useState("http"); // "http" | "https"
+  const [expanded, setExpanded] = useState(null);
 
-  const isHttps = mode === "https"
+  const isHttps = mode === "https";
 
-  const visibleLayers = LAYERS.filter((l) => !l.httpsOnly || isHttps)
+  const visibleLayers = LAYERS.filter((l) => !l.httpsOnly || isHttps);
 
   return (
     <div className={style.wrapper}>
@@ -118,18 +118,20 @@ export default function HttpPacket() {
           className={`${style.toggleBtn} ${!isHttps ? style.toggleBtnActive : ""}`}
           style={!isHttps ? { borderColor: "#fb4934", color: "#fb4934" } : {}}
           onClick={() => {
-            setMode("http")
-            setExpanded(null)
-          }}>
+            setMode("http");
+            setExpanded(null);
+          }}
+        >
           HTTP
         </button>
         <button
           className={`${style.toggleBtn} ${isHttps ? style.toggleBtnActive : ""}`}
           style={isHttps ? { borderColor: "#b8bb26", color: "#b8bb26" } : {}}
           onClick={() => {
-            setMode("https")
-            setExpanded(null)
-          }}>
+            setMode("https");
+            setExpanded(null);
+          }}
+        >
           HTTPS
         </button>
       </div>
@@ -140,9 +142,9 @@ export default function HttpPacket() {
           <div className={style.packetLabel}>Datenpaket (schematisch)</div>
           <div className={style.packetStack}>
             {visibleLayers.map((layer) => {
-              const isExpanded = expanded === layer.id
-              const isHttpLayer = layer.id === "http"
-              const isTlsLayer = layer.id === "tls"
+              const isExpanded = expanded === layer.id;
+              const isHttpLayer = layer.id === "http";
+              const isTlsLayer = layer.id === "tls";
 
               return (
                 <div
@@ -152,13 +154,15 @@ export default function HttpPacket() {
                     borderColor: layer.color,
                     "--layer-color": layer.color,
                   }}
-                  onClick={() => setExpanded(isExpanded ? null : layer.id)}>
+                  onClick={() => setExpanded(isExpanded ? null : layer.id)}
+                >
                   {/* Layer-Header */}
                   <div className={style.layerHeader}>
                     <div>
                       <span
                         className={style.layerName}
-                        style={{ color: layer.textColor }}>
+                        style={{ color: layer.textColor }}
+                      >
                         {layer.label}
                       </span>
                       <span className={style.layerSub}>
@@ -171,7 +175,8 @@ export default function HttpPacket() {
                       {isHttpLayer && (
                         <span
                           className={style.lockIcon}
-                          title={isHttps ? "Verschlüsselt" : "Offen"}>
+                          title={isHttps ? "Verschlüsselt" : "Offen"}
+                        >
                           {isHttps ? "🔒" : "🔓"}
                         </span>
                       )}
@@ -186,11 +191,12 @@ export default function HttpPacket() {
                   {isExpanded && (
                     <div className={style.fields}>
                       {layer.fields.map((f, i) => {
-                        const isEnc = f.encrypted && isHttps
+                        const isEnc = f.encrypted && isHttps;
                         return (
                           <div
                             key={i}
-                            className={`${style.field} ${isEnc ? style.fieldEncrypted : style.fieldOpen}`}>
+                            className={`${style.field} ${isEnc ? style.fieldEncrypted : style.fieldOpen}`}
+                          >
                             <span className={style.fieldName}>{f.name}:</span>
                             <span className={style.fieldValue}>
                               {isEnc ? (
@@ -213,13 +219,13 @@ export default function HttpPacket() {
                               )}
                             </span>
                           </div>
-                        )
+                        );
                       })}
                       <div className={style.layerNote}>{layer.note}</div>
                     </div>
                   )}
                 </div>
-              )
+              );
             })}
           </div>
           <div className={style.packetHint}>
@@ -234,15 +240,16 @@ export default function HttpPacket() {
           </div>
           <ul className={style.attackerList}>
             {ATTACKER_SEES[mode].map((item, i) => {
-              const isLastHttp = !isHttps && i >= 2
-              const isLastHttps = isHttps && i === 4
+              const isLastHttp = !isHttps && i >= 2;
+              const isLastHttps = isHttps && i === 4;
               return (
                 <li
                   key={i}
-                  className={`${style.attackerItem} ${isLastHttp ? style.attackerDanger : ""} ${isLastHttps ? style.attackerSafe : ""}`}>
+                  className={`${style.attackerItem} ${isLastHttp ? style.attackerDanger : ""} ${isLastHttps ? style.attackerSafe : ""}`}
+                >
                   {item}
                 </li>
-              )
+              );
             })}
           </ul>
           <div
@@ -250,7 +257,8 @@ export default function HttpPacket() {
             style={{
               borderColor: isHttps ? "#b8bb26" : "#fb4934",
               color: isHttps ? "#b8bb26" : "#fb4934",
-            }}>
+            }}
+          >
             {isHttps
               ? "HTTPS: Inhalt geschützt — nur Metadaten sichtbar."
               : "HTTP: Alle Inhalte im Klartext sichtbar!"}
@@ -258,5 +266,5 @@ export default function HttpPacket() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-import DataTable from "@components/DataTable/DataTable"
-import Figure from "@components/Figure.jsx"
-import TorOnion from "@components/gym/TorOnion/TorOnion"
-import VpnTunnel from "@components/gym/VpnTunnel/VpnTunnel"
-import LearningGoals from "@components/LearningGoals.jsx"
-import Section from "@components/Section.jsx"
+import DataTable from "@components/DataTable/DataTable";
+import Figure from "@components/Figure.jsx";
+import TorOnion from "@components/gym/TorOnion/TorOnion";
+import VpnTunnel from "@components/gym/VpnTunnel/VpnTunnel";
+import LearningGoals from "@components/LearningGoals.jsx";
+import Section from "@components/Section.jsx";
 
 export default function GymVPN() {
   return (
@@ -330,5 +330,5 @@ export default function GymVPN() {
         </p>
       </section>
     </>
-  )
+  );
 }

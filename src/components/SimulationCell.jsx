@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
 import { Editor as MonacoEditor } from "@monaco-editor/react";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function SimulationCell() {
   const [objects, setObjects] = useState({

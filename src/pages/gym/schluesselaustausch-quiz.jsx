@@ -1,6 +1,6 @@
-import QuizFromJson from "@components/QuizFromJson.jsx"
-import { Link } from "react-router-dom"
-import quizData from "@quizzes/gym-schluesselaustausch-quiz.json"
+import QuizFromJson from "@components/QuizFromJson.jsx";
+import quizData from "@quizzes/gym-schluesselaustausch-quiz.json";
+import { Link } from "react-router-dom";
 
 export default function GymSchluesselaustauschQuiz() {
   return (
@@ -43,5 +43,5 @@ export default function GymSchluesselaustauschQuiz() {
         </p>
       </section>
     </>
-  )
+  );
 }

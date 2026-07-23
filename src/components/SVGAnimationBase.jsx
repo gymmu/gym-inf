@@ -1,11 +1,10 @@
-import { useEffect, useState, useRef } from "react"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism"
-
-import { SVGComponent, Animation } from "./SVG"
-import Slider from "@components/Slider"
-import Select from "@components/Select.jsx"
-import style from "@components/Path.module.css"
+import style from "@components/Path.module.css";
+import Select from "@components/Select.jsx";
+import Slider from "@components/Slider";
+import { useEffect, useRef, useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Animation, SVGComponent } from "./SVG";
 
 export default function SVGAnimationBase({
   id = "placeholder",
@@ -14,16 +13,16 @@ export default function SVGAnimationBase({
   element,
   outputString = "<circle>",
 }) {
-  const [attribute, setAttribute] = useState(attributes[0] || "none")
-  const [values, setValues] = useState("0;300;0")
-  const [dur, setDur] = useState(2)
-  const [repeatCount, setRepeatCount] = useState("indefinite")
-  const [svgDisplayCode, setSvgDisplayCode] = useState("")
+  const [attribute, setAttribute] = useState(attributes[0] || "none");
+  const [values, setValues] = useState("0;300;0");
+  const [dur, setDur] = useState(2);
+  const [repeatCount, setRepeatCount] = useState("indefinite");
+  const [svgDisplayCode, setSvgDisplayCode] = useState("");
 
-  const animateRef = useRef(null)
+  const animateRef = useRef(null);
 
   useEffect(() => {
-    const closing = outputString.match(/^<[a-z]+/)[0].substring(1)
+    const closing = outputString.match(/^<[a-z]+/)[0].substring(1);
     setSvgDisplayCode(`<svg viewBox="0 0 300 300" width="300">
   ${outputString}
     <animate attributeName="${attribute}"
@@ -32,11 +31,11 @@ export default function SVGAnimationBase({
               repeatCount="${repeatCount}"
     />
   </${closing}>
-</svg>`)
+</svg>`);
     if (animateRef) {
-      animateRef.current.beginElement()
+      animateRef.current.beginElement();
     }
-  }, [attribute, values, dur, repeatCount, outputString])
+  }, [attribute, values, dur, repeatCount, outputString]);
 
   return (
     <div className={style.gridContainer}>
@@ -106,5 +105,5 @@ export default function SVGAnimationBase({
         </SyntaxHighlighter>
       </div>
     </div>
-  )
+  );
 }

@@ -130,7 +130,11 @@
   border: 1px solid rgba(108, 92, 231, 0.3);
   border-radius: var(--radius-md);
   height: calc(
-    0.88rem * 1.4 + 2 * 0.4rem + 2px
+    0.88rem *
+    1.4 +
+    2 *
+    0.4rem +
+    2px
   ); /* font-size * line-height + padding + border */
   display: flex;
   align-items: center;

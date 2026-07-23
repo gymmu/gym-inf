@@ -1,58 +1,58 @@
-import { useState, useRef, useEffect, useCallback } from "react"
-import katex from "katex"
-import "katex/dist/katex.css"
-import s from "./DiscreteLogSlide.module.css"
+import katex from "katex";
+import { useCallback, useEffect, useRef, useState } from "react";
+import "katex/dist/katex.css";
+import s from "./DiscreteLogSlide.module.css";
 
 // -- local KaTeX helper ---------------------------------------------------
 
 function Tex({ children, display = false }) {
-  const el = useRef(null)
+  const el = useRef(null);
   useEffect(() => {
-    if (!el.current) return
+    if (!el.current) return;
     katex.render(children, el.current, {
       throwOnError: false,
       displayMode: display,
-    })
-  }, [children, display])
+    });
+  }, [children, display]);
   return display ? (
     <div ref={el} className={s.displayMath} />
   ) : (
     <span ref={el} className={s.inlineMath} />
-  )
+  );
 }
 
 // -- Math helpers ---------------------------------------------------------
 
 function modPow(base, exp, mod) {
-  if (mod === 1) return 0
-  let result = 1
-  base = base % mod
+  if (mod === 1) return 0;
+  let result = 1;
+  base = base % mod;
   while (exp > 0) {
-    if (exp % 2 === 1) result = (result * base) % mod
-    exp = Math.floor(exp / 2)
-    base = (base * base) % mod
+    if (exp % 2 === 1) result = (result * base) % mod;
+    exp = Math.floor(exp / 2);
+    base = (base * base) % mod;
   }
-  return result
+  return result;
 }
 
 function isPrime(n) {
-  if (n < 2) return false
-  for (let i = 2; i * i <= n; i++) if (n % i === 0) return false
-  return true
+  if (n < 2) return false;
+  for (let i = 2; i * i <= n; i++) if (n % i === 0) return false;
+  return true;
 }
 
 function findGenerator(p) {
-  if (!isPrime(p)) return 2
+  if (!isPrime(p)) return 2;
   for (let g = 2; g < p; g++) {
-    const seen = new Set()
-    let v = 1
+    const seen = new Set();
+    let v = 1;
     for (let k = 1; k < p; k++) {
-      v = (v * g) % p
-      seen.add(v)
+      v = (v * g) % p;
+      seen.add(v);
     }
-    if (seen.size === p - 1) return g
+    if (seen.size === p - 1) return g;
   }
-  return 2
+  return 2;
 }
 
 // -- Keyspace scale data --------------------------------------------------
@@ -78,12 +78,12 @@ const KEY_SIZES = [
     log10: 2048 * Math.log10(2),
     example: "~10^616",
   },
-]
+];
 
 // -- Bar chart constants --------------------------------------------------
 
-const CHART_H = 150
-const SMALL_PRIMES = [7, 11, 13, 17, 19, 23]
+const CHART_H = 150;
+const SMALL_PRIMES = [7, 11, 13, 17, 19, 23];
 
 // -- Bar chart component --------------------------------------------------
 
@@ -96,9 +96,9 @@ function BarChart({
   foundAtStep,
   searchDone,
 }) {
-  const barW = Math.max(20, Math.min(36, Math.floor(520 / (p - 1)) - 5))
-  const gap = 5
-  const totalW = (barW + gap) * (p - 1) + gap + 20 // +20 for y-axis margin
+  const barW = Math.max(20, Math.min(36, Math.floor(520 / (p - 1)) - 5));
+  const gap = 5;
+  const totalW = (barW + gap) * (p - 1) + gap + 20; // +20 for y-axis margin
 
   return (
     <div className={s.chartWrap}>
@@ -106,7 +106,8 @@ function BarChart({
         width={totalW}
         height={CHART_H + 46}
         className={s.chartSvg}
-        viewBox={`0 0 ${totalW} ${CHART_H + 46}`}>
+        viewBox={`0 0 ${totalW} ${CHART_H + 46}`}
+      >
         {/* y-axis */}
         <line
           x1={18}
@@ -123,7 +124,8 @@ function BarChart({
           dominantBaseline="middle"
           fill="#504945"
           fontSize="9"
-          fontFamily="monospace">
+          fontFamily="monospace"
+        >
           0
         </text>
         <text
@@ -133,25 +135,26 @@ function BarChart({
           dominantBaseline="middle"
           fill="#504945"
           fontSize="9"
-          fontFamily="monospace">
+          fontFamily="monospace"
+        >
           {p - 1}
         </text>
 
         {entries.map(({ x, y }, idx) => {
-          const barH = Math.max(2, Math.round((y / (p - 1)) * CHART_H))
-          const bx = 20 + gap + idx * (barW + gap)
-          const by = CHART_H - barH
-          const isTarget = y === targetA
-          const isSearched = searchStep !== null && idx < searchStep
-          const isFound = searchDone && idx === foundAtStep
+          const barH = Math.max(2, Math.round((y / (p - 1)) * CHART_H));
+          const bx = 20 + gap + idx * (barW + gap);
+          const by = CHART_H - barH;
+          const isTarget = y === targetA;
+          const isSearched = searchStep !== null && idx < searchStep;
+          const isFound = searchDone && idx === foundAtStep;
 
-          let fill = "#3c3836"
-          if (isFound) fill = "#b8bb26"
-          else if (isTarget && !searchDone) fill = "#fabd2f"
-          else if (isSearched) fill = "#83a598"
-          else if (isTarget) fill = "#fabd2f"
+          let fill = "#3c3836";
+          if (isFound) fill = "#b8bb26";
+          else if (isTarget && !searchDone) fill = "#fabd2f";
+          else if (isSearched) fill = "#83a598";
+          else if (isTarget) fill = "#fabd2f";
 
-          const opacity = isSearched || isTarget || isFound ? 1 : 0.4
+          const opacity = isSearched || isTarget || isFound ? 1 : 0.4;
 
           return (
             <g key={x}>
@@ -173,7 +176,8 @@ function BarChart({
                   fill={isFound ? "#b8bb26" : "#fabd2f"}
                   fontSize="10"
                   fontFamily="monospace"
-                  fontWeight="700">
+                  fontWeight="700"
+                >
                   {y}
                 </text>
               )}
@@ -185,11 +189,12 @@ function BarChart({
                 fill={isFound ? "#b8bb26" : isSearched ? "#83a598" : "#504945"}
                 fontSize="10"
                 fontFamily="monospace"
-                fontWeight={isFound ? 700 : 400}>
+                fontWeight={isFound ? 700 : 400}
+              >
                 {x}
               </text>
             </g>
-          )
+          );
         })}
 
         {/* axis labels */}
@@ -199,7 +204,8 @@ function BarChart({
           textAnchor="middle"
           fill="#504945"
           fontSize="9"
-          fontFamily="monospace">
+          fontFamily="monospace"
+        >
           Exponent x (geheim)
         </text>
         <text
@@ -210,26 +216,27 @@ function BarChart({
           fill="#504945"
           fontSize="9"
           fontFamily="monospace"
-          transform={`rotate(-90, 8, ${CHART_H / 2})`}>
+          transform={`rotate(-90, 8, ${CHART_H / 2})`}
+        >
           Ergebnis
         </text>
       </svg>
     </div>
-  )
+  );
 }
 
 // -- Keyspace comparison bar chart ----------------------------------------
 
 function KeyspaceBar() {
-  const maxLog = KEY_SIZES[KEY_SIZES.length - 1].log10
-  const barH = 26
-  const gap = 10
+  const maxLog = KEY_SIZES[KEY_SIZES.length - 1].log10;
+  const barH = 26;
+  const gap = 10;
 
   return (
     <div className={s.ksWrap}>
       {KEY_SIZES.map((ks, i) => {
-        const frac = ks.log10 / maxLog
-        const isSmall = i === 0
+        const frac = ks.log10 / maxLog;
+        const isSmall = i === 0;
         return (
           <div key={ks.label} className={s.ksRow}>
             <span className={s.ksLabel}>{ks.label}</span>
@@ -251,69 +258,69 @@ function KeyspaceBar() {
             </div>
             <span className={s.ksExample}>{ks.example}</span>
           </div>
-        )
+        );
       })}
       <div className={s.ksNote}>
         Balkenlaenge = log(Schluesselraum) — 2048 Bit ist buchstaeblich
         undarstellbar gross im Vergleich zu p=23
       </div>
     </div>
-  )
+  );
 }
 
 // -- Main component -------------------------------------------------------
 
-const DEFAULT_P_IDX = 5 // p = 23
+const DEFAULT_P_IDX = 5; // p = 23
 
 export default function DiscreteLogSlide() {
-  const [pIdx, setPIdx] = useState(DEFAULT_P_IDX)
-  const p = SMALL_PRIMES[pIdx]
-  const g = findGenerator(p)
+  const [pIdx, setPIdx] = useState(DEFAULT_P_IDX);
+  const p = SMALL_PRIMES[pIdx];
+  const g = findGenerator(p);
 
-  const entries = []
+  const entries = [];
   for (let x = 1; x < p; x++) {
-    entries.push({ x, y: modPow(g, x, p) })
+    entries.push({ x, y: modPow(g, x, p) });
   }
 
-  const [targetA, setTargetA] = useState(entries[2]?.y ?? 1)
-  const [searchStep, setSearchStep] = useState(null)
-  const timerRef = useRef(null)
+  const [targetA, setTargetA] = useState(entries[2]?.y ?? 1);
+  const [searchStep, setSearchStep] = useState(null);
+  const timerRef = useRef(null);
 
   const foundAtStep =
     searchStep !== null
       ? entries.slice(0, searchStep).findIndex((e) => e.y === targetA)
-      : -1
-  const searchDone = foundAtStep >= 0
+      : -1;
+  const searchDone = foundAtStep >= 0;
 
   const runSearch = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current)
-    setSearchStep(0)
-    let step = 0
+    if (timerRef.current) clearInterval(timerRef.current);
+    setSearchStep(0);
+    let step = 0;
     timerRef.current = setInterval(() => {
-      step++
-      setSearchStep(step)
+      step++;
+      setSearchStep(step);
       if (entries[step - 1]?.y === targetA || step >= entries.length) {
-        clearInterval(timerRef.current)
-        timerRef.current = null
+        clearInterval(timerRef.current);
+        timerRef.current = null;
       }
-    }, 280)
-  }, [entries, targetA])
+    }, 280);
+  }, [entries, targetA]);
 
   useEffect(
     () => () => {
-      if (timerRef.current) clearInterval(timerRef.current)
+      if (timerRef.current) clearInterval(timerRef.current);
     },
     [],
-  )
+  );
 
   useEffect(() => {
-    if (timerRef.current) clearInterval(timerRef.current)
-    setSearchStep(null)
-    const newEntries = []
+    if (timerRef.current) clearInterval(timerRef.current);
+    setSearchStep(null);
+    const newEntries = [];
     for (let x = 1; x < p; x++)
-      newEntries.push({ x, y: modPow(findGenerator(p), x, p) })
-    setTargetA(newEntries[2]?.y ?? 1)
-  }, [p]) // eslint-disable-line react-hooks/exhaustive-deps
+      newEntries.push({ x, y: modPow(findGenerator(p), x, p) });
+    setTargetA(newEntries[2]?.y ?? 1);
+  }, [p]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={s.root}>
@@ -331,7 +338,8 @@ export default function DiscreteLogSlide() {
                 <button
                   key={pr}
                   className={`${s.pBtn} ${i === pIdx ? s.pBtnActive : ""}`}
-                  onClick={() => setPIdx(i)}>
+                  onClick={() => setPIdx(i)}
+                >
                   p={pr}
                 </button>
               ))}
@@ -386,9 +394,10 @@ export default function DiscreteLogSlide() {
               className={s.eveSelect}
               value={targetA}
               onChange={(e) => {
-                setTargetA(Number(e.target.value))
-                setSearchStep(null)
-              }}>
+                setTargetA(Number(e.target.value));
+                setSearchStep(null);
+              }}
+            >
               {entries.map(({ x, y }) => (
                 <option key={x} value={y}>
                   A = {y}
@@ -400,7 +409,8 @@ export default function DiscreteLogSlide() {
           <button
             className={s.eveBtn}
             onClick={runSearch}
-            disabled={searchStep !== null && !searchDone}>
+            disabled={searchStep !== null && !searchDone}
+          >
             {searchStep === null
               ? "Brute-Force starten"
               : searchDone
@@ -418,12 +428,13 @@ export default function DiscreteLogSlide() {
               entries
                 .slice(0, Math.min(searchStep, entries.length))
                 .map((e, i) => {
-                  const isTried = true
-                  const isHit = e.y === targetA
+                  const isTried = true;
+                  const isHit = e.y === targetA;
                   return (
                     <div
                       key={e.x}
-                      className={`${s.eveLogLine} ${isHit ? s.eveLogHit : s.eveLogMiss}`}>
+                      className={`${s.eveLogLine} ${isHit ? s.eveLogHit : s.eveLogMiss}`}
+                    >
                       <Tex>{`${g}^{${e.x}} \\bmod ${p} = ${e.y}`}</Tex>
                       <span>
                         {isHit ? " = A" : " \\ne A"}
@@ -435,7 +446,7 @@ export default function DiscreteLogSlide() {
                         <span className={s.eveLogCross}>&#10007;</span>
                       )}
                     </div>
-                  )
+                  );
                 })}
           </div>
 
@@ -508,5 +519,5 @@ export default function DiscreteLogSlide() {
         </div>
       </div>
     </div>
-  )
+  );
 }

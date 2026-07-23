@@ -3,7 +3,7 @@
 // State-Eingabe -> SubBytes -> ShiftRows -> MixColumns -> AddRoundKey
 // Gruvbox-Farbschema, folientauglich
 
-import { useState, useMemo } from "react"
+import { useMemo, useState } from "react";
 
 // --- Gruvbox ---
 const C = {
@@ -21,11 +21,11 @@ const C = {
   orange: "#fe8019",
   red: "#fb4934",
   purple: "#d3869b",
-}
+};
 
 // --- Zeilenfarben fuer ShiftRows (Zeile 0-3) und Word-Farben fuer Schluessel ---
-const ROW_COLORS = [C.fg, C.blue, C.green, C.orange]
-const WORD_COLORS = [C.blue, C.green, C.orange, C.purple]
+const ROW_COLORS = [C.fg, C.blue, C.green, C.orange];
+const WORD_COLORS = [C.blue, C.green, C.orange, C.purple];
 
 // --- AES S-Box ---
 const SBOX = [
@@ -49,82 +49,82 @@ const SBOX = [
   0xc1, 0x1d, 0x9e, 0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e,
   0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf, 0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42,
   0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16,
-]
+];
 
 // --- AES-Operationen ---
 function subBytes(state) {
-  return state.map((b) => SBOX[b])
+  return state.map((b) => SBOX[b]);
 }
 
 function shiftRows(state) {
-  const s = [...state]
+  const s = [...state];
   // Zeile 1: 1 links (Indizes 1,5,9,13)
-  const r1 = [s[1], s[5], s[9], s[13]]
-  ;[s[1], s[5], s[9], s[13]] = [r1[1], r1[2], r1[3], r1[0]]
+  const r1 = [s[1], s[5], s[9], s[13]];
+  [s[1], s[5], s[9], s[13]] = [r1[1], r1[2], r1[3], r1[0]];
   // Zeile 2: 2 links (Indizes 2,6,10,14)
-  const r2 = [s[2], s[6], s[10], s[14]]
-  ;[s[2], s[6], s[10], s[14]] = [r2[2], r2[3], r2[0], r2[1]]
+  const r2 = [s[2], s[6], s[10], s[14]];
+  [s[2], s[6], s[10], s[14]] = [r2[2], r2[3], r2[0], r2[1]];
   // Zeile 3: 3 links (Indizes 3,7,11,15)
-  const r3 = [s[3], s[7], s[11], s[15]]
-  ;[s[3], s[7], s[11], s[15]] = [r3[3], r3[0], r3[1], r3[2]]
-  return s
+  const r3 = [s[3], s[7], s[11], s[15]];
+  [s[3], s[7], s[11], s[15]] = [r3[3], r3[0], r3[1], r3[2]];
+  return s;
 }
 
 function gmul(a, b) {
-  let p = 0
+  let p = 0;
   for (let i = 0; i < 8; i++) {
-    if (b & 1) p ^= a
-    const hiBit = a & 0x80
-    a = (a << 1) & 0xff
-    if (hiBit) a ^= 0x1b
-    b >>= 1
+    if (b & 1) p ^= a;
+    const hiBit = a & 0x80;
+    a = (a << 1) & 0xff;
+    if (hiBit) a ^= 0x1b;
+    b >>= 1;
   }
-  return p
+  return p;
 }
 
 function mixColumns(state) {
-  const s = [...state]
+  const s = [...state];
   const MIX = [
     [2, 3, 1, 1],
     [1, 2, 3, 1],
     [1, 1, 2, 3],
     [3, 1, 1, 2],
-  ]
+  ];
   for (let col = 0; col < 4; col++) {
-    const c = [s[col * 4], s[col * 4 + 1], s[col * 4 + 2], s[col * 4 + 3]]
+    const c = [s[col * 4], s[col * 4 + 1], s[col * 4 + 2], s[col * 4 + 3]];
     for (let row = 0; row < 4; row++) {
-      s[col * 4 + row] = MIX[row].reduce((acc, m, j) => acc ^ gmul(m, c[j]), 0)
+      s[col * 4 + row] = MIX[row].reduce((acc, m, j) => acc ^ gmul(m, c[j]), 0);
     }
   }
-  return s
+  return s;
 }
 
 function addRoundKey(state, key) {
-  return state.map((b, i) => b ^ key[i])
+  return state.map((b, i) => b ^ key[i]);
 }
 
 // --- Hilfsfunktionen ---
 function toHex(n) {
-  return n.toString(16).padStart(2, "0").toUpperCase()
+  return n.toString(16).padStart(2, "0").toUpperCase();
 }
 
 function parseHexInput(str) {
   // Parst einen Hex-String in ein Array von 16 Bytes
-  const clean = str.replace(/\s+/g, "").replace(/[^0-9a-fA-F]/g, "")
-  const bytes = []
+  const clean = str.replace(/\s+/g, "").replace(/[^0-9a-fA-F]/g, "");
+  const bytes = [];
   for (let i = 0; i < 32; i += 2) {
-    bytes.push(parseInt(clean.slice(i, i + 2) || "00", 16))
+    bytes.push(parseInt(clean.slice(i, i + 2) || "00", 16));
   }
-  return bytes.slice(0, 16)
+  return bytes.slice(0, 16);
 }
 
 function formatHexGrid(bytes) {
-  return bytes.map(toHex).join(" ")
+  return bytes.map(toHex).join(" ");
 }
 
 // Default-Werte: "HALLO WELT!!!!!!" als Hex
-const DEFAULT_PLAIN = "48 41 4C 4C 4F 20 57 45 4C 54 21 21 21 21 21 21"
-const DEFAULT_KEY = "2B 7E 15 16 28 AE D2 A6 AB F7 15 88 09 CF 4F 3C"
+const DEFAULT_PLAIN = "48 41 4C 4C 4F 20 57 45 4C 54 21 21 21 21 21 21";
+const DEFAULT_KEY = "2B 7E 15 16 28 AE D2 A6 AB F7 15 88 09 CF 4F 3C";
 
 // --- StateMatrix-Komponente ---
 function StateMatrix({
@@ -135,8 +135,8 @@ function StateMatrix({
   prevBytes = null,
   compact = false,
 }) {
-  const size = compact ? 42 : 50
-  const fs = compact ? 11 : 13
+  const size = compact ? 42 : 50;
+  const fs = compact ? 11 : 13;
   return (
     <div
       style={{
@@ -144,7 +144,8 @@ function StateMatrix({
         flexDirection: "column",
         alignItems: "center",
         gap: compact ? 3 : 5,
-      }}>
+      }}
+    >
       {label && (
         <div
           style={{
@@ -154,7 +155,8 @@ function StateMatrix({
             fontWeight: 700,
             textAlign: "center",
             maxWidth: size * 4 + 3 * 3,
-          }}>
+          }}
+        >
           {label}
         </div>
       )}
@@ -163,13 +165,14 @@ function StateMatrix({
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
           gap: compact ? 2 : 3,
-        }}>
+        }}
+      >
         {bytes.map((b, i) => {
           const changed = changedIndices
             ? changedIndices.has(i)
             : prevBytes
               ? prevBytes[i] !== b
-              : false
+              : false;
           return (
             <div
               key={i}
@@ -188,23 +191,24 @@ function StateMatrix({
                 color: changed ? C.green : color,
                 boxShadow: changed ? `0 0 6px ${C.green}44` : "none",
                 transition: "all 0.2s",
-              }}>
+              }}
+            >
               {toHex(b)}
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
 
 // --- ShiftRows-Visualisierung ---
 function ShiftRowsViz({ before, after }) {
-  const rowColors = ROW_COLORS
+  const rowColors = ROW_COLORS;
 
   function getRow(bytes, row) {
     // AES: State[row][col] = bytes[col*4 + row]
-    return [bytes[row], bytes[row + 4], bytes[row + 8], bytes[row + 12]]
+    return [bytes[row], bytes[row + 4], bytes[row + 8], bytes[row + 12]];
   }
 
   const SHIFT_LABELS = [
@@ -212,7 +216,7 @@ function ShiftRowsViz({ before, after }) {
     "1 Stelle links",
     "2 Stellen links",
     "3 Stellen links",
-  ]
+  ];
 
   return (
     <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
@@ -225,13 +229,15 @@ function ShiftRowsViz({ before, after }) {
             fontWeight: 700,
             marginBottom: 2,
             textAlign: "center",
-          }}>
+          }}
+        >
           Vorher
         </div>
         {[0, 1, 2, 3].map((row) => (
           <div
             key={row}
-            style={{ display: "flex", gap: 3, alignItems: "center" }}>
+            style={{ display: "flex", gap: 3, alignItems: "center" }}
+          >
             {getRow(before, row).map((b, j) => (
               <div
                 key={j}
@@ -248,7 +254,8 @@ function ShiftRowsViz({ before, after }) {
                   fontSize: 11,
                   fontWeight: 700,
                   color: rowColors[row],
-                }}>
+                }}
+              >
                 {toHex(b)}
               </div>
             ))}
@@ -263,7 +270,8 @@ function ShiftRowsViz({ before, after }) {
           flexDirection: "column",
           gap: 4,
           paddingTop: 22,
-        }}>
+        }}
+      >
         {[0, 1, 2, 3].map((row) => (
           <div
             key={row}
@@ -272,7 +280,8 @@ function ShiftRowsViz({ before, after }) {
               display: "flex",
               alignItems: "center",
               gap: 4,
-            }}>
+            }}
+          >
             <div style={{ fontSize: 14, color: rowColors[row] }}>
               {row === 0 ? "→" : "↺"}
             </div>
@@ -282,7 +291,8 @@ function ShiftRowsViz({ before, after }) {
                 color: rowColors[row],
                 fontWeight: 600,
                 whiteSpace: "nowrap",
-              }}>
+              }}
+            >
               {SHIFT_LABELS[row]}
             </div>
           </div>
@@ -298,16 +308,18 @@ function ShiftRowsViz({ before, after }) {
             fontWeight: 700,
             marginBottom: 2,
             textAlign: "center",
-          }}>
+          }}
+        >
           Nachher
         </div>
         {[0, 1, 2, 3].map((row) => (
           <div
             key={row}
-            style={{ display: "flex", gap: 3, alignItems: "center" }}>
+            style={{ display: "flex", gap: 3, alignItems: "center" }}
+          >
             {getRow(after, row).map((b, j) => {
-              const beforeVal = getRow(before, row)[j]
-              const changed = beforeVal !== b
+              const beforeVal = getRow(before, row)[j];
+              const changed = beforeVal !== b;
               return (
                 <div
                   key={j}
@@ -325,32 +337,33 @@ function ShiftRowsViz({ before, after }) {
                     fontWeight: 700,
                     color: rowColors[row],
                     boxShadow: changed ? `0 0 4px ${rowColors[row]}55` : "none",
-                  }}>
+                  }}
+                >
                   {toHex(b)}
                 </div>
-              )
+              );
             })}
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 // --- Spaltenfarben fuer MixColumns ---
-const COL_COLORS = [C.blue, C.green, C.orange, C.purple]
+const COL_COLORS = [C.blue, C.green, C.orange, C.purple];
 
 const MIX_MATRIX = [
   [2, 3, 1, 1],
   [1, 2, 3, 1],
   [1, 1, 2, 3],
   [3, 1, 1, 2],
-]
+];
 
 // 4x4-State-Grid mit pro-Spalte-Farben, klickbare Spalten
 function ColMatrix({ bytes, label, activeCol, onColClick, dimmed = false }) {
-  const cellW = 40
-  const cellH = 32
+  const cellW = 40;
+  const cellH = 32;
   // AES layout: bytes[col*4 + row]
   return (
     <div
@@ -359,7 +372,8 @@ function ColMatrix({ bytes, label, activeCol, onColClick, dimmed = false }) {
         flexDirection: "column",
         alignItems: "center",
         gap: 4,
-      }}>
+      }}
+    >
       {label && (
         <div
           style={{
@@ -367,15 +381,16 @@ function ColMatrix({ bytes, label, activeCol, onColClick, dimmed = false }) {
             color: C.gray,
             fontWeight: 700,
             fontFamily: "sans-serif",
-          }}>
+          }}
+        >
           {label}
         </div>
       )}
       {/* Spalten-Header */}
       <div style={{ display: "flex", gap: 2 }}>
         {[0, 1, 2, 3].map((col) => {
-          const color = COL_COLORS[col]
-          const isActive = activeCol === col
+          const color = COL_COLORS[col];
+          const isActive = activeCol === col;
           return (
             <button
               key={col}
@@ -393,17 +408,18 @@ function ColMatrix({ bytes, label, activeCol, onColClick, dimmed = false }) {
                 color: isActive ? color : C.bgLL,
                 outline: "none",
                 transition: "all 0.12s",
-              }}>
+              }}
+            >
               Sp.{col}
             </button>
-          )
+          );
         })}
       </div>
       {/* Gitter (4 Zeilen x 4 Spalten) */}
       <div style={{ display: "flex", gap: 2 }}>
         {[0, 1, 2, 3].map((col) => {
-          const color = COL_COLORS[col]
-          const isActive = activeCol === col
+          const color = COL_COLORS[col];
+          const isActive = activeCol === col;
           return (
             <div
               key={col}
@@ -418,9 +434,10 @@ function ColMatrix({ bytes, label, activeCol, onColClick, dimmed = false }) {
                 background: isActive ? `${color}14` : "transparent",
                 border: `1.5px solid ${isActive ? color : "transparent"}`,
                 transition: "all 0.12s",
-              }}>
+              }}
+            >
               {[0, 1, 2, 3].map((row) => {
-                const b = bytes[col * 4 + row]
+                const b = bytes[col * 4 + row];
                 return (
                   <div
                     key={row}
@@ -437,24 +454,25 @@ function ColMatrix({ bytes, label, activeCol, onColClick, dimmed = false }) {
                       fontSize: 12,
                       fontWeight: isActive ? 700 : 500,
                       color: isActive ? color : dimmed ? C.bgLL : `${color}bb`,
-                    }}>
+                    }}
+                  >
                     {toHex(b)}
                   </div>
-                )
+                );
               })}
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
 
 // --- MixColumns-Visualisierung ---
 // Oben: Buttons + beide Matrizen mit MixMatrix dazwischen (horizontal, kompakt)
 // Unten: Rechnung fuer aktive Spalte (wenn ausgewaehlt)
 function MixColsViz({ before, after, activeCol, onColClick }) {
-  const cellH = 32
+  const cellH = 32;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -475,7 +493,8 @@ function MixColsViz({ before, after, activeCol, onColClick }) {
             flexDirection: "column",
             alignItems: "center",
             gap: 4,
-          }}>
+          }}
+        >
           <div style={{ fontSize: 9, color: C.gray, fontWeight: 700 }}>
             MixMatrix
           </div>
@@ -498,7 +517,8 @@ function MixColsViz({ before, after, activeCol, onColClick }) {
                     fontSize: 11,
                     fontWeight: 700,
                     color: v > 1 ? C.purple : C.gray,
-                  }}>
+                  }}
+                >
                   {v}
                 </div>
               ))}
@@ -522,9 +542,9 @@ function MixColsViz({ before, after, activeCol, onColClick }) {
       {/* Rechnung fuer aktive Spalte */}
       {activeCol !== null &&
         (() => {
-          const color = COL_COLORS[activeCol]
-          const colIn = [0, 1, 2, 3].map((r) => before[activeCol * 4 + r])
-          const colOut = [0, 1, 2, 3].map((r) => after[activeCol * 4 + r])
+          const color = COL_COLORS[activeCol];
+          const colIn = [0, 1, 2, 3].map((r) => before[activeCol * 4 + r]);
+          const colOut = [0, 1, 2, 3].map((r) => after[activeCol * 4 + r]);
           return (
             <div
               style={{
@@ -535,7 +555,8 @@ function MixColsViz({ before, after, activeCol, onColClick }) {
                 display: "flex",
                 flexDirection: "column",
                 gap: 3,
-              }}>
+              }}
+            >
               <div
                 style={{
                   fontSize: 9,
@@ -543,7 +564,8 @@ function MixColsViz({ before, after, activeCol, onColClick }) {
                   fontWeight: 700,
                   fontFamily: "sans-serif",
                   marginBottom: 2,
-                }}>
+                }}
+              >
                 Spalte {activeCol} — Rechnung (jede Zeile ergibt ein
                 Ausgabe-Byte)
               </div>
@@ -556,7 +578,8 @@ function MixColsViz({ before, after, activeCol, onColClick }) {
                     alignItems: "center",
                     fontFamily: "'Courier New', monospace",
                     fontSize: 10,
-                  }}>
+                  }}
+                >
                   <span style={{ color, fontWeight: 700, minWidth: 22 }}>
                     {toHex(out)}
                   </span>
@@ -564,7 +587,8 @@ function MixColsViz({ before, after, activeCol, onColClick }) {
                   {MIX_MATRIX[ri].map((m, j) => (
                     <span
                       key={j}
-                      style={{ display: "flex", gap: 2, alignItems: "center" }}>
+                      style={{ display: "flex", gap: 2, alignItems: "center" }}
+                    >
                       {j > 0 && (
                         <span style={{ color: C.bgLL, margin: "0 2px" }}>
                           ⊕
@@ -577,25 +601,25 @@ function MixColsViz({ before, after, activeCol, onColClick }) {
                 </div>
               ))}
             </div>
-          )
+          );
         })()}
     </div>
-  )
+  );
 }
 
 // --- S-Box-Tabelle: 8 Zeilen x 16 Spalten (Haelfte der S-Box) ---
 // Zeigt die S-Box als Nachschlagetabelle mit markierter Zeile+Spalte
 function SBoxTable({ highlightByte }) {
-  const NIBBLES = "0123456789ABCDEF".split("")
+  const NIBBLES = "0123456789ABCDEF".split("");
   // Zeige 8 Zeilen (0x0? bis 0x7?), damit die Tabelle nicht zu gross wird
-  const SHOW_ROWS = 8
+  const SHOW_ROWS = 8;
 
-  const hRow = highlightByte !== null ? (highlightByte >> 4) & 0xf : null
-  const hCol = highlightByte !== null ? highlightByte & 0xf : null
+  const hRow = highlightByte !== null ? (highlightByte >> 4) & 0xf : null;
+  const hCol = highlightByte !== null ? highlightByte & 0xf : null;
 
-  const cellW = 28
-  const cellH = 20
-  const headerW = 22
+  const cellW = 28;
+  const cellH = 20;
+  const headerW = 22;
 
   return (
     <div style={{ overflowX: "auto" }}>
@@ -606,7 +630,8 @@ function SBoxTable({ highlightByte }) {
           color: C.gray,
           fontWeight: 700,
           marginBottom: 4,
-        }}>
+        }}
+      >
         AES S-Box (erste 8 Zeilen) — Zeile = oberes Nibble, Spalte = unteres
         Nibble
       </div>
@@ -615,7 +640,8 @@ function SBoxTable({ highlightByte }) {
           borderCollapse: "collapse",
           fontFamily: "'Courier New', monospace",
           fontSize: 11,
-        }}>
+        }}
+      >
         <thead>
           <tr>
             {/* leere Ecke */}
@@ -639,7 +665,8 @@ function SBoxTable({ highlightByte }) {
                   fontWeight: 700,
                   textAlign: "center",
                   fontSize: 10,
-                }}>
+                }}
+              >
                 {n}
               </th>
             ))}
@@ -659,13 +686,14 @@ function SBoxTable({ highlightByte }) {
                   fontWeight: 700,
                   textAlign: "center",
                   fontSize: 10,
-                }}>
+                }}
+              >
                 {NIBBLES[ri]}
               </th>
               {NIBBLES.map((_, ci) => {
-                const byteIdx = ri * 16 + ci
-                const val = SBOX[byteIdx]
-                const isHighlight = hRow === ri && hCol === ci
+                const byteIdx = ri * 16 + ci;
+                const val = SBOX[byteIdx];
+                const isHighlight = hRow === ri && hCol === ci;
                 return (
                   <td
                     key={ci}
@@ -678,10 +706,11 @@ function SBoxTable({ highlightByte }) {
                       fontWeight: isHighlight ? 700 : 400,
                       textAlign: "center",
                       boxShadow: isHighlight ? `0 0 6px ${C.green}66` : "none",
-                    }}>
+                    }}
+                  >
                     {toHex(val)}
                   </td>
-                )
+                );
               })}
             </tr>
           ))}
@@ -696,7 +725,8 @@ function SBoxTable({ highlightByte }) {
                 fontSize: 9,
                 textAlign: "center",
                 padding: "2px 0",
-              }}>
+              }}
+            >
               {hRow !== null && hRow >= SHOW_ROWS
                 ? `Zeile ${NIBBLES[hRow]} liegt ausserhalb der Vorschau (vollstaendige S-Box: 16x16)`
                 : "... Zeilen 8-F (nicht angezeigt)"}
@@ -705,15 +735,15 @@ function SBoxTable({ highlightByte }) {
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
 // --- SubBytes-Detail: S-Box-Lookup fuer ein Byte ---
 function SBoxDetail({ byte }) {
-  const out = SBOX[byte]
-  const row = (byte >> 4) & 0xf
-  const col = byte & 0xf
-  const nibbleChars = "0123456789ABCDEF"
+  const out = SBOX[byte];
+  const row = (byte >> 4) & 0xf;
+  const col = byte & 0xf;
+  const nibbleChars = "0123456789ABCDEF";
   return (
     <div
       style={{
@@ -725,7 +755,8 @@ function SBoxDetail({ byte }) {
         borderRadius: 6,
         padding: "6px 14px",
         flexWrap: "wrap",
-      }}>
+      }}
+    >
       <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
         <div
           style={{
@@ -733,7 +764,8 @@ function SBoxDetail({ byte }) {
             fontSize: 16,
             fontWeight: 700,
             color: C.blue,
-          }}>
+          }}
+        >
           {toHex(byte)}
         </div>
         <div style={{ fontSize: 11, color: C.gray }}>
@@ -756,23 +788,24 @@ function SBoxDetail({ byte }) {
             fontSize: 16,
             fontWeight: 700,
             color: C.green,
-          }}>
+          }}
+        >
           {toHex(out)}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // --- XOR-Byte-Detail fuer AddRoundKey ---
 function XorByteDetail({ stateB, keyB }) {
-  const out = stateB ^ keyB
+  const out = stateB ^ keyB;
   function toBin8(n) {
-    return n.toString(2).padStart(8, "0")
+    return n.toString(2).padStart(8, "0");
   }
-  const sBin = toBin8(stateB)
-  const kBin = toBin8(keyB)
-  const oBin = toBin8(out)
+  const sBin = toBin8(stateB);
+  const kBin = toBin8(keyB);
+  const oBin = toBin8(out);
 
   return (
     <div
@@ -786,7 +819,8 @@ function XorByteDetail({ stateB, keyB }) {
         padding: "8px 12px",
         fontFamily: "'Courier New', monospace",
         fontSize: 12,
-      }}>
+      }}
+    >
       <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
         <span style={{ color: C.gray, width: 24, textAlign: "right" }}>S:</span>
         <span style={{ color: C.blue, letterSpacing: "0.1em" }}>{sBin}</span>
@@ -804,14 +838,14 @@ function XorByteDetail({ stateB, keyB }) {
         <span style={{ color: C.green, fontWeight: 700 }}>{toHex(out)}</span>
       </div>
     </div>
-  )
+  );
 }
 
 // --- Schritt-Button ---
 function StepBtn({ active, done, onClick, label, color, number }) {
-  const borderCol = done ? C.bgLL : active ? color : C.bgLL
-  const bgCol = done ? C.bg : active ? `${color}18` : C.bg
-  const textCol = done ? C.gray : active ? color : C.bgLL
+  const borderCol = done ? C.bgLL : active ? color : C.bgLL;
+  const bgCol = done ? C.bg : active ? `${color}18` : C.bg;
+  const textCol = done ? C.gray : active ? color : C.bgLL;
   return (
     <button
       onClick={onClick}
@@ -827,7 +861,8 @@ function StepBtn({ active, done, onClick, label, color, number }) {
         gap: 2,
         transition: "all 0.15s",
         outline: "none",
-      }}>
+      }}
+    >
       <div
         style={{
           width: 22,
@@ -840,7 +875,8 @@ function StepBtn({ active, done, onClick, label, color, number }) {
           fontSize: 11,
           fontWeight: 700,
           color: done ? C.bg : active ? C.bg : C.bg,
-        }}>
+        }}
+      >
         {done ? "✓" : number}
       </div>
       <div
@@ -850,23 +886,24 @@ function StepBtn({ active, done, onClick, label, color, number }) {
           fontWeight: 700,
           color: textCol,
           whiteSpace: "nowrap",
-        }}>
+        }}
+      >
         {label}
       </div>
     </button>
-  )
+  );
 }
 
 // --- Hex als lesbarer Text (druckbare ASCII-Zeichen, sonst Punkt) ---
 function hexToReadable(bytes) {
   return bytes
     .map((b) => (b >= 32 && b <= 126 ? String.fromCharCode(b) : "."))
-    .join("")
+    .join("");
 }
 
 // --- Hex-Eingabefeld: Label + ASCII rechtsbündig oben, Input darunter ---
 function HexInput({ label, value, onChange, color, bytes }) {
-  const readable = bytes ? hexToReadable(bytes) : ""
+  const readable = bytes ? hexToReadable(bytes) : "";
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.2em" }}>
       {/* Labelzeile: Label links, ASCII rechts */}
@@ -876,7 +913,8 @@ function HexInput({ label, value, onChange, color, bytes }) {
           justifyContent: "space-between",
           alignItems: "baseline",
           gap: "0.5em",
-        }}>
+        }}
+      >
         <span
           style={{
             fontSize: "0.72em",
@@ -886,7 +924,8 @@ function HexInput({ label, value, onChange, color, bytes }) {
             textTransform: "uppercase",
             letterSpacing: "0.06em",
             whiteSpace: "nowrap",
-          }}>
+          }}
+        >
           {label}
         </span>
         {readable && (
@@ -900,7 +939,8 @@ function HexInput({ label, value, onChange, color, bytes }) {
               whiteSpace: "nowrap",
               opacity: 0.9,
               textAlign: "right",
-            }}>
+            }}
+          >
             {readable}
           </span>
         )}
@@ -924,7 +964,7 @@ function HexInput({ label, value, onChange, color, bytes }) {
         placeholder="16 Bytes als Hex, z.B. 48 41 4C 4C ..."
       />
     </div>
-  )
+  );
 }
 
 // Gibt die Farbe fuer Byte i im State zurueck, abhaengig vom Modus
@@ -933,10 +973,10 @@ function HexInput({ label, value, onChange, color, bytes }) {
 // mode "col"  -> Spaltenfarbe (MixColumns): Byte i liegt in Spalte floor(i/4)
 // mode "flat" -> einheitliche Farbe
 function byteColor(i, mode, flatColor) {
-  if (mode === "row") return ROW_COLORS[i % 4]
-  if (mode === "word") return WORD_COLORS[Math.floor(i / 4)]
-  if (mode === "col") return COL_COLORS[Math.floor(i / 4)]
-  return flatColor
+  if (mode === "row") return ROW_COLORS[i % 4];
+  if (mode === "word") return WORD_COLORS[Math.floor(i / 4)];
+  if (mode === "col") return COL_COLORS[Math.floor(i / 4)];
+  return flatColor;
 }
 
 // --- ByteStrip: eine Reihe von 16 Hex-Kaestchen ---
@@ -957,12 +997,13 @@ function ByteStrip({
           fontWeight: 600,
           textTransform: "uppercase",
           letterSpacing: "0.04em",
-        }}>
+        }}
+      >
         {label}
       </div>
       <div style={{ display: "flex", gap: 2, flexWrap: "nowrap" }}>
         {bytes.map((b, i) => {
-          const col = dim ? C.bgLL : byteColor(i, colorMode, flatColor)
+          const col = dim ? C.bgLL : byteColor(i, colorMode, flatColor);
           return (
             <div
               key={i}
@@ -976,28 +1017,29 @@ function ByteStrip({
                 borderRadius: 3,
                 padding: "1px 4px",
                 whiteSpace: "nowrap",
-              }}>
+              }}
+            >
               {toHex(b)}
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
 
 // --- States-Uebersicht: kompakte Zeilen rechts neben den Inputs ---
 // Pro Zeile: Label + eine Box mit allen 16 Bytes als Hex-String.
 // Aktiver Schritt = farbiger Rahmen, alle immer sichtbar.
 function StatesOverview({ step, states }) {
-  const { key16, afterSub, afterShift, afterMix, afterArk } = states
+  const { key16, afterSub, afterShift, afterMix, afterArk } = states;
 
   const rows = [
     { label: "SubBytes", bytes: afterSub, color: C.green, activeSteps: [1] },
     { label: "ShiftRows", bytes: afterShift, color: C.blue, activeSteps: [2] },
     { label: "MixColumns", bytes: afterMix, color: C.orange, activeSteps: [3] },
     { label: "Ergebnis", bytes: afterArk, color: C.red, activeSteps: [4, 5] },
-  ]
+  ];
 
   return (
     <div
@@ -1006,13 +1048,15 @@ function StatesOverview({ step, states }) {
         flexDirection: "column",
         gap: 4,
         justifyContent: "center",
-      }}>
+      }}
+    >
       {rows.map(({ label, bytes, color, activeSteps }, ri) => {
-        const isActive = activeSteps.includes(step)
+        const isActive = activeSteps.includes(step);
         return (
           <div
             key={ri}
-            style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            style={{ display: "flex", alignItems: "center", gap: 6 }}
+          >
             {/* Label */}
             <div
               style={{
@@ -1025,7 +1069,8 @@ function StatesOverview({ step, states }) {
                 textTransform: "uppercase",
                 letterSpacing: "0.03em",
                 transition: "color 0.15s",
-              }}>
+              }}
+            >
               {label}
             </div>
             {/* Eine Box mit allen 16 Bytes */}
@@ -1042,14 +1087,15 @@ function StatesOverview({ step, states }) {
                 letterSpacing: "0.05em",
                 whiteSpace: "nowrap",
                 transition: "all 0.15s",
-              }}>
+              }}
+            >
               {bytes.map(toHex).join(" ")}
             </div>
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 // --- Schritt-Inhalt-Komponente ---
@@ -1062,7 +1108,7 @@ function StepContent({
   selectedCol,
   setSelectedCol,
 }) {
-  const { input, afterSub, afterShift, afterMix, afterArk } = states
+  const { input, afterSub, afterShift, afterMix, afterArk } = states;
 
   if (step === 0) {
     // Eingabe
@@ -1073,7 +1119,8 @@ function StepContent({
           gap: 32,
           alignItems: "flex-start",
           flexWrap: "wrap",
-        }}>
+        }}
+      >
         <StateMatrix
           bytes={input}
           label="State (16 Bytes = 4x4-Matrix)"
@@ -1085,14 +1132,16 @@ function StepContent({
             flexDirection: "column",
             gap: 10,
             maxWidth: 340,
-          }}>
+          }}
+        >
           <div
             style={{
               background: C.bgL,
               border: `1px solid ${C.bgLL}`,
               borderRadius: 8,
               padding: "12px 16px",
-            }}>
+            }}
+          >
             <div
               style={{
                 fontSize: "0.85em",
@@ -1100,7 +1149,8 @@ function StepContent({
                 color: C.gray,
                 fontWeight: 700,
                 marginBottom: 6,
-              }}>
+              }}
+            >
               Wie der AES-State aufgebaut ist:
             </div>
             <div
@@ -1109,7 +1159,8 @@ function StepContent({
                 fontSize: "0.8em",
                 color: C.fg,
                 lineHeight: 1.7,
-              }}>
+              }}
+            >
               <div>
                 16 Bytes werden in eine{" "}
                 <strong style={{ color: C.blue }}>4x4-Matrix</strong>{" "}
@@ -1137,13 +1188,14 @@ function StepContent({
               fontSize: "0.8em",
               color: C.gray,
               fontFamily: "sans-serif",
-            }}>
+            }}
+          >
             Klicke auf <strong style={{ color: C.yellow }}>SubBytes</strong>, um
             den ersten Schritt zu sehen.
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   if (step === 1) {
@@ -1157,7 +1209,8 @@ function StepContent({
             gap: 16,
             alignItems: "center",
             flexWrap: "wrap",
-          }}>
+          }}
+        >
           <StateMatrix bytes={input} label="Vorher" color={C.blue} compact />
           <div
             style={{
@@ -1165,14 +1218,16 @@ function StepContent({
               flexDirection: "column",
               alignItems: "center",
               gap: 2,
-            }}>
+            }}
+          >
             <div
               style={{
                 fontSize: "0.68em",
                 color: C.green,
                 fontWeight: 700,
                 fontFamily: "sans-serif",
-              }}>
+              }}
+            >
               SubBytes
             </div>
             <div style={{ fontSize: 22, color: C.green }}>→</div>
@@ -1192,14 +1247,16 @@ function StepContent({
               flexDirection: "column",
               gap: 6,
               marginLeft: 8,
-            }}>
+            }}
+          >
             <div
               style={{
                 fontFamily: "sans-serif",
                 fontSize: "0.72em",
                 fontWeight: 700,
                 color: C.gray,
-              }}>
+              }}
+            >
               Byte anklicken → S-Box-Lookup:
             </div>
             <div
@@ -1207,7 +1264,8 @@ function StepContent({
                 display: "grid",
                 gridTemplateColumns: "repeat(8, 1fr)",
                 gap: 2,
-              }}>
+              }}
+            >
               {input.map((b, i) => (
                 <button
                   key={i}
@@ -1225,7 +1283,8 @@ function StepContent({
                     color: selectedByte === i ? C.green : C.blue,
                     outline: "none",
                     transition: "all 0.1s",
-                  }}>
+                  }}
+                >
                   {toHex(b)}
                 </button>
               ))}
@@ -1239,7 +1298,8 @@ function StepContent({
                   fontSize: "0.72em",
                   color: C.bgLL,
                   fontStyle: "italic",
-                }}>
+                }}
+              >
                 Kein Byte ausgewaehlt
               </div>
             )}
@@ -1251,7 +1311,7 @@ function StepContent({
           highlightByte={selectedByte !== null ? input[selectedByte] : null}
         />
       </div>
-    )
+    );
   }
 
   if (step === 2) {
@@ -1263,7 +1323,8 @@ function StepContent({
           gap: 24,
           alignItems: "flex-start",
           flexWrap: "wrap",
-        }}>
+        }}
+      >
         <ShiftRowsViz before={afterSub} after={afterShift} />
         <div
           style={{
@@ -1271,14 +1332,16 @@ function StepContent({
             flexDirection: "column",
             gap: 8,
             maxWidth: 280,
-          }}>
+          }}
+        >
           <div
             style={{
               background: C.bgL,
               border: `1px solid ${C.bgLL}`,
               borderRadius: 8,
               padding: "10px 14px",
-            }}>
+            }}
+          >
             <div
               style={{
                 fontFamily: "sans-serif",
@@ -1286,7 +1349,8 @@ function StepContent({
                 fontWeight: 700,
                 color: C.gray,
                 marginBottom: 6,
-              }}>
+              }}
+            >
               Warum ShiftRows?
             </div>
             <div
@@ -1295,7 +1359,8 @@ function StepContent({
                 fontSize: "0.75em",
                 color: C.fg,
                 lineHeight: 1.7,
-              }}>
+              }}
+            >
               Bytes aus verschiedenen{" "}
               <strong style={{ color: C.blue }}>Spalten</strong> kommen
               zusammen.
@@ -1315,13 +1380,14 @@ function StepContent({
               fontSize: "0.75em",
               color: C.gray,
               fontFamily: "sans-serif",
-            }}>
+            }}
+          >
             Zeile 0 bleibt unveraendert. Zeile 1 wird um 1, Zeile 2 um 2, Zeile
             3 um 3 Stellen nach links rotiert.
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   if (step === 3) {
@@ -1334,7 +1400,8 @@ function StepContent({
             fontFamily: "sans-serif",
             fontSize: "0.72em",
             color: C.gray,
-          }}>
+          }}
+        >
           Spalte anklicken fuer Details — jede Spalte wird unabhaengig gemischt.
         </div>
 
@@ -1348,15 +1415,15 @@ function StepContent({
           />
         </div>
       </div>
-    )
+    );
   }
 
   if (step === 4) {
     // AddRoundKey -- kompaktes Layout:
     // Oben: drei Matrizen nebeneinander (State ⊕ Key → Ergebnis)
     // Unten: XOR-Detail fuer angeklicktes Byte (horizontal)
-    const cellW = 40
-    const cellH = 32
+    const cellW = 40;
+    const cellH = 32;
 
     function ArkMatrix({ bytes, label, colorFn, onClick, activeIdx }) {
       return (
@@ -1366,26 +1433,29 @@ function StepContent({
             flexDirection: "column",
             alignItems: "center",
             gap: 4,
-          }}>
+          }}
+        >
           <div
             style={{
               fontSize: 10,
               color: C.gray,
               fontWeight: 700,
               fontFamily: "sans-serif",
-            }}>
+            }}
+          >
             {label}
           </div>
           <div style={{ display: "flex", gap: 2 }}>
             {[0, 1, 2, 3].map((col) => (
               <div
                 key={col}
-                style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                style={{ display: "flex", flexDirection: "column", gap: 2 }}
+              >
                 {[0, 1, 2, 3].map((row) => {
-                  const i = col * 4 + row
-                  const b = bytes[i]
-                  const color = colorFn(i)
-                  const isActive = activeIdx === i
+                  const i = col * 4 + row;
+                  const b = bytes[i];
+                  const color = colorFn(i);
+                  const isActive = activeIdx === i;
                   return (
                     <div
                       key={row}
@@ -1406,16 +1476,17 @@ function StepContent({
                         cursor: onClick ? "pointer" : "default",
                         transition: "all 0.1s",
                         boxShadow: isActive ? `0 0 5px ${color}55` : "none",
-                      }}>
+                      }}
+                    >
                       {toHex(b)}
                     </div>
-                  )
+                  );
                 })}
               </div>
             ))}
           </div>
         </div>
-      )
+      );
     }
 
     // Ergebnis-Matrix: geaenderte Bytes gruen, unveraenderte grau
@@ -1427,27 +1498,30 @@ function StepContent({
             flexDirection: "column",
             alignItems: "center",
             gap: 4,
-          }}>
+          }}
+        >
           <div
             style={{
               fontSize: 10,
               color: C.gray,
               fontWeight: 700,
               fontFamily: "sans-serif",
-            }}>
+            }}
+          >
             {label}
           </div>
           <div style={{ display: "flex", gap: 2 }}>
             {[0, 1, 2, 3].map((col) => (
               <div
                 key={col}
-                style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                style={{ display: "flex", flexDirection: "column", gap: 2 }}
+              >
                 {[0, 1, 2, 3].map((row) => {
-                  const i = col * 4 + row
-                  const b = bytes[i]
-                  const changed = prevBytes[i] !== b
-                  const isActive = activeIdx === i
-                  const color = changed ? C.green : C.gray
+                  const i = col * 4 + row;
+                  const b = bytes[i];
+                  const changed = prevBytes[i] !== b;
+                  const isActive = activeIdx === i;
+                  const color = changed ? C.green : C.gray;
                   return (
                     <div
                       key={row}
@@ -1467,26 +1541,27 @@ function StepContent({
                         color: isActive ? color : `${color}cc`,
                         cursor: "pointer",
                         transition: "all 0.1s",
-                      }}>
+                      }}
+                    >
                       {toHex(b)}
                     </div>
-                  )
+                  );
                 })}
               </div>
             ))}
           </div>
         </div>
-      )
+      );
     }
 
     function toBin8(n) {
-      return n.toString(2).padStart(8, "0")
+      return n.toString(2).padStart(8, "0");
     }
 
-    const sel = selectedByte
-    const stateB = sel !== null ? afterMix[sel] : null
-    const keyB = sel !== null ? key16[sel] : null
-    const outB = sel !== null ? afterArk[sel] : null
+    const sel = selectedByte;
+    const stateB = sel !== null ? afterMix[sel] : null;
+    const keyB = sel !== null ? key16[sel] : null;
+    const outB = sel !== null ? afterArk[sel] : null;
 
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -1506,14 +1581,16 @@ function StepContent({
               alignItems: "center",
               gap: 2,
               marginTop: 16,
-            }}>
+            }}
+          >
             <div
               style={{
                 fontSize: 20,
                 color: C.yellow,
                 fontFamily: "'Courier New', monospace",
                 fontWeight: 700,
-              }}>
+              }}
+            >
               ⊕
             </div>
           </div>
@@ -1530,14 +1607,16 @@ function StepContent({
               alignItems: "center",
               gap: 2,
               marginTop: 16,
-            }}>
+            }}
+          >
             <div
               style={{
                 fontSize: 9,
                 color: C.green,
                 fontWeight: 700,
                 fontFamily: "sans-serif",
-              }}>
+              }}
+            >
               AddRoundKey
             </div>
             <div style={{ fontSize: 18, color: C.green }}>→</div>
@@ -1565,7 +1644,8 @@ function StepContent({
                 flexDirection: "column",
                 gap: 4,
                 alignSelf: "center",
-              }}>
+              }}
+            >
               <div
                 style={{
                   fontSize: 9,
@@ -1573,7 +1653,8 @@ function StepContent({
                   fontWeight: 700,
                   fontFamily: "sans-serif",
                   marginBottom: 2,
-                }}>
+                }}
+              >
                 Byte {sel} — XOR
               </div>
               <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
@@ -1591,7 +1672,8 @@ function StepContent({
                   {toBin8(keyB)}
                 </span>
                 <span
-                  style={{ color: C.yellow, fontWeight: 700, minWidth: 22 }}>
+                  style={{ color: C.yellow, fontWeight: 700, minWidth: 22 }}
+                >
                   {toHex(keyB)}
                 </span>
               </div>
@@ -1615,12 +1697,13 @@ function StepContent({
             fontFamily: "sans-serif",
             fontSize: "0.72em",
             color: C.gray,
-          }}>
+          }}
+        >
           Byte anklicken fuer XOR-Detail. Schluessel-Bytes in Word-Farben (4
           Bytes pro Word).
         </div>
       </div>
-    )
+    );
   }
 
   if (step === 5) {
@@ -1661,10 +1744,10 @@ function StepContent({
         stepColor: C.yellow,
         colorFn: () => C.red,
       },
-    ]
+    ];
 
-    const cellW = 34
-    const cellH = 26
+    const cellW = 34;
+    const cellH = 26;
 
     return (
       <div
@@ -1673,11 +1756,13 @@ function StepContent({
           alignItems: "flex-start",
           gap: 4,
           overflowX: "auto",
-        }}>
+        }}
+      >
         {stages.map(({ label, bytes, prev, stepColor, colorFn }, si) => (
           <div
             key={si}
-            style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            style={{ display: "flex", alignItems: "center", gap: 4 }}
+          >
             {/* Pfeil + Schritt-Label zwischen den Matrizen */}
             {si > 0 && (
               <div
@@ -1687,7 +1772,8 @@ function StepContent({
                   alignItems: "center",
                   gap: 2,
                   flexShrink: 0,
-                }}>
+                }}
+              >
                 <div
                   style={{
                     fontSize: 9,
@@ -1695,7 +1781,8 @@ function StepContent({
                     fontWeight: 700,
                     fontFamily: "sans-serif",
                     whiteSpace: "nowrap",
-                  }}>
+                  }}
+                >
                   {stages[si].label === "Ergebnis"
                     ? "AddRoundKey"
                     : stages[si].label}
@@ -1711,14 +1798,16 @@ function StepContent({
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 3,
-              }}>
+              }}
+            >
               <div
                 style={{
                   fontFamily: "sans-serif",
                   fontSize: 9,
                   color: C.gray,
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 {label}
               </div>
               <div style={{ display: "flex", gap: 2 }}>
@@ -1729,12 +1818,13 @@ function StepContent({
                       display: "flex",
                       flexDirection: "column",
                       gap: 2,
-                    }}>
+                    }}
+                  >
                     {[0, 1, 2, 3].map((row) => {
-                      const i = col * 4 + row
-                      const b = bytes[i]
-                      const changed = prev && prev[i] !== b
-                      const col_ = colorFn(i)
+                      const i = col * 4 + row;
+                      const b = bytes[i];
+                      const changed = prev && prev[i] !== b;
+                      const col_ = colorFn(i);
                       return (
                         <div
                           key={row}
@@ -1751,10 +1841,11 @@ function StepContent({
                             fontSize: 10,
                             fontWeight: changed ? 700 : 400,
                             color: changed ? col_ : `${col_}88`,
-                          }}>
+                          }}
+                        >
                           {toHex(b)}
                         </div>
-                      )
+                      );
                     })}
                   </div>
                 ))}
@@ -1767,17 +1858,18 @@ function StepContent({
                   color: si === stages.length - 1 ? C.red : C.bgLL,
                   letterSpacing: "0.04em",
                   fontWeight: si === stages.length - 1 ? 700 : 400,
-                }}>
+                }}
+              >
                 {hexToReadable(bytes)}
               </div>
             </div>
           </div>
         ))}
       </div>
-    )
+    );
   }
 
-  return null
+  return null;
 }
 
 // --- STEP-DEFINITIONEN ---
@@ -1788,7 +1880,7 @@ const STEPS = [
   { label: "MixColumns", color: C.orange, num: "3" },
   { label: "AddRoundKey", color: C.yellow, num: "4" },
   { label: "Zusammenfassung", color: C.red, num: "✓" },
-]
+];
 
 const STEP_DESCRIPTIONS = [
   "Der 128-Bit-Klartext wird als 4x4-Byte-Matrix dargestellt.",
@@ -1797,33 +1889,33 @@ const STEP_DESCRIPTIONS = [
   "Jede der vier Spalten wird mit einer fixen Matrix im Galois-Feld gemischt (Diffusion).",
   "Die Matrix wird mit dem Rundenschluessel per XOR verknuepft (Schluessel einbringen).",
   "Eine vollstaendige Runde: SubBytes → ShiftRows → MixColumns → AddRoundKey.",
-]
+];
 
 // --- Hauptkomponente ---
 export default function AesSlide({
   defaultPlain = DEFAULT_PLAIN,
   defaultKey = DEFAULT_KEY,
 }) {
-  const [plainHex, setPlainHex] = useState(defaultPlain)
-  const [keyHex, setKeyHex] = useState(defaultKey)
-  const [step, setStep] = useState(0)
-  const [selectedByte, setSelectedByte] = useState(null)
-  const [selectedCol, setSelectedCol] = useState(null)
+  const [plainHex, setPlainHex] = useState(defaultPlain);
+  const [keyHex, setKeyHex] = useState(defaultKey);
+  const [step, setStep] = useState(0);
+  const [selectedByte, setSelectedByte] = useState(null);
+  const [selectedCol, setSelectedCol] = useState(null);
 
   const states = useMemo(() => {
-    const input = parseHexInput(plainHex)
-    const key16 = parseHexInput(keyHex)
-    const afterSub = subBytes(input)
-    const afterShift = shiftRows(afterSub)
-    const afterMix = mixColumns(afterShift)
-    const afterArk = addRoundKey(afterMix, key16)
-    return { input, key16, afterSub, afterShift, afterMix, afterArk }
-  }, [plainHex, keyHex])
+    const input = parseHexInput(plainHex);
+    const key16 = parseHexInput(keyHex);
+    const afterSub = subBytes(input);
+    const afterShift = shiftRows(afterSub);
+    const afterMix = mixColumns(afterShift);
+    const afterArk = addRoundKey(afterMix, key16);
+    return { input, key16, afterSub, afterShift, afterMix, afterArk };
+  }, [plainHex, keyHex]);
 
   function handleStepClick(i) {
-    setStep(i)
-    setSelectedByte(null)
-    setSelectedCol(null)
+    setStep(i);
+    setSelectedByte(null);
+    setSelectedCol(null);
   }
 
   return (
@@ -1837,14 +1929,16 @@ export default function AesSlide({
         border: `1px solid ${C.bgLL}`,
         borderRadius: 8,
         fontSize: "1rem",
-      }}>
+      }}
+    >
       {/* Header: Inputs links + States-Uebersicht rechts */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "flex-start",
-        }}>
+        }}
+      >
         {/* Eingabefelder gestapelt */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.6em" }}>
           <HexInput
@@ -1874,7 +1968,8 @@ export default function AesSlide({
           flexWrap: "wrap",
           paddingBottom: "0.5em",
           borderBottom: `1px solid ${C.bgLL}`,
-        }}>
+        }}
+      >
         {STEPS.map(({ label, color, num }, i) => (
           <StepBtn
             key={i}
@@ -1896,7 +1991,8 @@ export default function AesSlide({
           color: C.gray,
           minHeight: "1.4em",
           marginTop: "-0.3em",
-        }}>
+        }}
+      >
         <strong style={{ color: STEPS[step].color }}>
           {STEPS[step].label}:
         </strong>{" "}
@@ -1923,7 +2019,8 @@ export default function AesSlide({
           gap: "0.6em",
           paddingTop: "0.4em",
           borderTop: `1px solid ${C.bgLL}`,
-        }}>
+        }}
+      >
         <button
           onClick={() => handleStepClick(Math.max(0, step - 1))}
           disabled={step === 0}
@@ -1938,7 +2035,8 @@ export default function AesSlide({
             fontWeight: 600,
             cursor: step === 0 ? "default" : "pointer",
             outline: "none",
-          }}>
+          }}
+        >
           ← Zurueck
         </button>
         <button
@@ -1955,10 +2053,11 @@ export default function AesSlide({
             fontWeight: 600,
             cursor: step === STEPS.length - 1 ? "default" : "pointer",
             outline: "none",
-          }}>
+          }}
+        >
           Weiter →
         </button>
       </div>
     </div>
-  )
+  );
 }

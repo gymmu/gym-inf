@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { Editor as MEditor } from "@monaco-editor/react";
 import styles from "@components/JSTerminal.module.css";
+import { Editor as MEditor } from "@monaco-editor/react";
+import { useEffect, useRef, useState } from "react";
 
 export default function JSTerminal(props) {
   const {

@@ -1,6 +1,6 @@
-import QuizFromJson from "@components/QuizFromJson.jsx"
-import { Link } from "react-router-dom"
-import quizData from "@quizzes/gym-passwoerter-quiz.json"
+import QuizFromJson from "@components/QuizFromJson.jsx";
+import quizData from "@quizzes/gym-passwoerter-quiz.json";
+import { Link } from "react-router-dom";
 
 export default function GymPasswoerterQuiz() {
   return (
@@ -36,5 +36,5 @@ export default function GymPasswoerterQuiz() {
         </p>
       </section>
     </>
-  )
+  );
 }

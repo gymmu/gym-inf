@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function AudioPlayer({ src }) {
   return (
@@ -10,5 +10,3 @@ export default function AudioPlayer({ src }) {
     </div>
   );
 }
-
-

@@ -1,38 +1,38 @@
-import { Link } from "react-router-dom"
+import Caesar from "@components/Caesar";
+import AesSlide from "@components/gym/AesSlide/AesSlide";
+import AesViz from "@components/gym/AesViz/AesViz";
+import CaesarIntro from "@components/gym/CaesarIntro/CaesarIntro";
+import CommutativeExpSlide from "@components/gym/CommutativeExpSlide/CommutativeExpSlide";
+import DhColorAnalogy from "@components/gym/DhColorAnalogy/DhColorAnalogy";
+import DhSlide from "@components/gym/DhSlide/DhSlide";
+import DhSteps from "@components/gym/DhSteps/DhSteps";
+import DiscreteLogSlide from "@components/gym/DiscreteLogSlide/DiscreteLogSlide";
+import KeyExchangeMotivationSlide from "@components/gym/KeyExchangeMotivationSlide/KeyExchangeMotivationSlide";
+import {
+  KeyspaceBars,
+  KeyspaceBruteForce,
+  KeyspaceCaesar,
+} from "@components/gym/KeyspaceViz/KeyspaceViz";
+import ModExpSlide from "@components/gym/ModExpSlide/ModExpSlide";
+import PacketAnimation from "@components/gym/PacketAnimation/PacketAnimation";
+import SignatureDiagram from "@components/gym/SignatureDiagram/SignatureDiagram";
 import Slideshow, {
+  Fragment,
   Slide,
   Stack,
-  Fragment,
-} from "@components/gym/Slideshow/Slideshow"
-import PacketAnimation from "@components/gym/PacketAnimation/PacketAnimation"
-import Caesar from "@components/Caesar"
-import CaesarIntro from "@components/gym/CaesarIntro/CaesarIntro"
-import {
-  KeyspaceCaesar,
-  KeyspaceBruteForce,
-  KeyspaceBars,
-} from "@components/gym/KeyspaceViz/KeyspaceViz"
-import Vigenere from "@components/Vigenere"
-import VigenereViz from "@components/gym/VigenereViz/VigenereViz"
-import VigenereSteps from "@components/gym/VigenereSteps/VigenereSteps"
-import XorSteps from "@components/gym/XorSteps/XorSteps"
-import XorSlide from "@components/gym/XorSlide/XorSlide"
-import XorViz from "@components/gym/XorViz/XorViz"
-import AesViz from "@components/gym/AesViz/AesViz"
-import AesSlide from "@components/gym/AesSlide/AesSlide"
-import SignatureDiagram from "@components/gym/SignatureDiagram/SignatureDiagram"
-import TlsHandshake from "@components/gym/TlsHandshake/TlsHandshake"
-import DhColorAnalogy from "@components/gym/DhColorAnalogy/DhColorAnalogy"
-import DhSteps from "@components/gym/DhSteps/DhSteps"
-import DhSlide from "@components/gym/DhSlide/DhSlide"
-import ModExpSlide from "@components/gym/ModExpSlide/ModExpSlide"
-import DiscreteLogSlide from "@components/gym/DiscreteLogSlide/DiscreteLogSlide"
-import CommutativeExpSlide from "@components/gym/CommutativeExpSlide/CommutativeExpSlide"
-import KeyExchangeMotivationSlide from "@components/gym/KeyExchangeMotivationSlide/KeyExchangeMotivationSlide"
-import PlainPasswordDatabase from "@components/PlainPasswordDatabase"
-import HashedPasswordDatabase from "@components/HashedPasswordDatabase"
-import SaltedPasswordDatabase from "@components/SaltedPasswordDatabase"
-import RainbowTable from "@components/RainbowTable"
+} from "@components/gym/Slideshow/Slideshow";
+import TlsHandshake from "@components/gym/TlsHandshake/TlsHandshake";
+import VigenereSteps from "@components/gym/VigenereSteps/VigenereSteps";
+import VigenereViz from "@components/gym/VigenereViz/VigenereViz";
+import XorSlide from "@components/gym/XorSlide/XorSlide";
+import XorSteps from "@components/gym/XorSteps/XorSteps";
+import XorViz from "@components/gym/XorViz/XorViz";
+import HashedPasswordDatabase from "@components/HashedPasswordDatabase";
+import PlainPasswordDatabase from "@components/PlainPasswordDatabase";
+import RainbowTable from "@components/RainbowTable";
+import SaltedPasswordDatabase from "@components/SaltedPasswordDatabase";
+import Vigenere from "@components/Vigenere";
+import { Link } from "react-router-dom";
 
 export default function GymPraesentationKrypto() {
   return (
@@ -167,35 +167,40 @@ export default function GymPraesentationKrypto() {
                     borderCollapse: "separate",
                     borderSpacing: "1em 0.5em",
                     margin: "0 auto",
-                  }}>
+                  }}
+                >
                   <thead>
                     <tr>
                       <th
                         style={{
                           textAlign: "center",
                           color: "var(--color-fg)",
-                        }}>
+                        }}
+                      >
                         Klartext
                       </th>
                       <th
                         style={{
                           textAlign: "center",
                           color: "var(--color-fg)",
-                        }}>
+                        }}
+                      >
                         Schlüssel
                       </th>
                       <th
                         style={{
                           textAlign: "center",
                           color: "var(--color-fg)",
-                        }}>
+                        }}
+                      >
                         Verschiebung
                       </th>
                       <th
                         style={{
                           textAlign: "center",
                           color: "var(--color-fg)",
-                        }}>
+                        }}
+                      >
                         Chiffrat
                       </th>
                     </tr>
@@ -289,11 +294,12 @@ export default function GymPraesentationKrypto() {
                   border: "1.5px solid var(--color-bg-lighter, #504945)",
                   borderRadius: 10,
                   marginTop: "0.5em",
-                }}>
+                }}
+              >
                 {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((ch) => {
-                  const byte = ch.charCodeAt(0)
-                  const bits = byte.toString(2).padStart(8, "0")
-                  const isHallo = "HALO".includes(ch)
+                  const byte = ch.charCodeAt(0);
+                  const bits = byte.toString(2).padStart(8, "0");
+                  const isHallo = "HALO".includes(ch);
                   return (
                     <div
                       key={ch}
@@ -308,7 +314,8 @@ export default function GymPraesentationKrypto() {
                         border: `1.5px solid ${isHallo ? "#fabd2f" : "var(--color-bg-lighter, #504945)"}`,
                         borderRadius: 5,
                         padding: "3px 2px",
-                      }}>
+                      }}
+                    >
                       <span
                         style={{
                           fontFamily: "'Courier New', monospace",
@@ -318,7 +325,8 @@ export default function GymPraesentationKrypto() {
                             ? "#fabd2f"
                             : "var(--color-gray, #928374)",
                           lineHeight: 1,
-                        }}>
+                        }}
+                      >
                         {ch}
                       </span>
                       <span
@@ -330,7 +338,8 @@ export default function GymPraesentationKrypto() {
                             ? "#fe8019"
                             : "var(--color-bg-lighter, #504945)",
                           lineHeight: 1,
-                        }}>
+                        }}
+                      >
                         {byte}
                       </span>
                       <span
@@ -342,11 +351,12 @@ export default function GymPraesentationKrypto() {
                             ? "#b8bb26"
                             : "var(--color-bg-lighter, #504945)",
                           lineHeight: 1,
-                        }}>
+                        }}
+                      >
                         {bits}
                       </span>
                     </div>
-                  )
+                  );
                 })}
               </div>
             </Fragment>
@@ -370,7 +380,8 @@ export default function GymPraesentationKrypto() {
                 textAlign: "center",
                 tableLayout: "fixed",
                 width: "28em",
-              }}>
+              }}
+            >
               <colgroup>
                 <col style={{ width: "8em" }} />
                 <col style={{ width: "10em" }} />
@@ -386,7 +397,8 @@ export default function GymPraesentationKrypto() {
                       borderRight: "3px solid #ebdbb2",
                       color: "#928374",
                       fontFamily: "monospace",
-                    }}>
+                    }}
+                  >
                     A ⊕ B
                   </th>
                   <th
@@ -397,7 +409,8 @@ export default function GymPraesentationKrypto() {
                       color: "#83a598",
                       fontFamily: "monospace",
                       fontWeight: 700,
-                    }}>
+                    }}
+                  >
                     B = 0
                   </th>
                   <th
@@ -408,7 +421,8 @@ export default function GymPraesentationKrypto() {
                       color: "#83a598",
                       fontFamily: "monospace",
                       fontWeight: 700,
-                    }}>
+                    }}
+                  >
                     B = 1
                   </th>
                 </tr>
@@ -423,17 +437,20 @@ export default function GymPraesentationKrypto() {
                       color: "#83a598",
                       fontFamily: "monospace",
                       fontWeight: 700,
-                    }}>
+                    }}
+                  >
                     A = 0
                   </td>
                   <td
-                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}>
+                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}
+                  >
                     <span
                       style={{
                         fontFamily: "monospace",
                         color: "#928374",
                         fontSize: "0.85em",
-                      }}>
+                      }}
+                    >
                       0 ⊕ 0 ={" "}
                     </span>
                     <span
@@ -442,18 +459,21 @@ export default function GymPraesentationKrypto() {
                         fontSize: "1.2em",
                         fontWeight: 700,
                         color: "#b8bb26",
-                      }}>
+                      }}
+                    >
                       0
                     </span>
                   </td>
                   <td
-                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}>
+                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}
+                  >
                     <span
                       style={{
                         fontFamily: "monospace",
                         color: "#928374",
                         fontSize: "0.85em",
-                      }}>
+                      }}
+                    >
                       0 ⊕ 1 ={" "}
                     </span>
                     <span
@@ -462,7 +482,8 @@ export default function GymPraesentationKrypto() {
                         fontSize: "1.2em",
                         fontWeight: 700,
                         color: "#b8bb26",
-                      }}>
+                      }}
+                    >
                       1
                     </span>
                   </td>
@@ -476,17 +497,20 @@ export default function GymPraesentationKrypto() {
                       color: "#83a598",
                       fontFamily: "monospace",
                       fontWeight: 700,
-                    }}>
+                    }}
+                  >
                     A = 1
                   </td>
                   <td
-                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}>
+                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}
+                  >
                     <span
                       style={{
                         fontFamily: "monospace",
                         color: "#928374",
                         fontSize: "0.85em",
-                      }}>
+                      }}
+                    >
                       1 ⊕ 0 ={" "}
                     </span>
                     <span
@@ -495,18 +519,21 @@ export default function GymPraesentationKrypto() {
                         fontSize: "1.2em",
                         fontWeight: 700,
                         color: "#b8bb26",
-                      }}>
+                      }}
+                    >
                       1
                     </span>
                   </td>
                   <td
-                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}>
+                    style={{ padding: "0.6em 1.2em", verticalAlign: "middle" }}
+                  >
                     <span
                       style={{
                         fontFamily: "monospace",
                         color: "#928374",
                         fontSize: "0.85em",
-                      }}>
+                      }}
+                    >
                       1 ⊕ 1 ={" "}
                     </span>
                     <span
@@ -515,7 +542,8 @@ export default function GymPraesentationKrypto() {
                         fontSize: "1.2em",
                         fontWeight: 700,
                         color: "#b8bb26",
-                      }}>
+                      }}
+                    >
                       0
                     </span>
                   </td>
@@ -711,9 +739,7 @@ export default function GymPraesentationKrypto() {
                 <div className="info-box">
                   <strong>Verifizieren:</strong>
                   <br />
-                  Empfänger entschlüsselt den Hash mit dem <em>
-                    Public Key
-                  </em>{" "}
+                  Empfänger entschlüsselt den Hash mit dem <em>Public Key</em>{" "}
                   und vergleicht
                 </div>
               </Fragment>
@@ -1226,5 +1252,5 @@ export default function GymPraesentationKrypto() {
         </ul>
       </section>
     </>
-  )
+  );
 }

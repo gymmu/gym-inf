@@ -1,18 +1,18 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import Section from "@components/Section"
-import SimpleSplitView from "@components/algorithm/SimpleSplitView"
+import SimpleSplitView from "@components/algorithm/SimpleSplitView";
 import {
-  Summe1Bis10Animation,
   CountdownAnimation,
-  MaxListeAnimation,
-  generateSumme1Bis10Steps,
   generateCountdownSteps,
   generateMaxListeSteps,
-} from "@components/remotion/LoopAnimation"
+  generateSumme1Bis10Steps,
+  MaxListeAnimation,
+  Summe1Bis10Animation,
+} from "@components/remotion/LoopAnimation";
+import Section from "@components/Section";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function FmsAlgorithmenLoops() {
-  const [maxArray, setMaxArray] = useState([7, 3, 9, 2, 8])
+  const [maxArray, setMaxArray] = useState([7, 3, 9, 2, 8]);
   // Beispiel 1: Summe von 1 bis 10
   const summe1bis10 = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -25,7 +25,7 @@ flowchart TD
     Increment --> Check
     Check -->|Nein| Output[Gib Summe aus]
     Output --> End([Ende])
-  `
+  `;
 
   // Beispiel 2: Countdown
   const countdown = `
@@ -38,7 +38,7 @@ flowchart TD
     Decrement --> Check
     Check -->|Nein| Output2[Gib 'Start!' aus]
     Output2 --> End([Ende])
-  `
+  `;
 
   // Beispiel 3: Maximum aus einer Liste
   const maxListe = `
@@ -54,31 +54,33 @@ flowchart TD
     Update --> CheckEnd
     CheckEnd -->|Nein| Output[Gib Maximum aus]
     Output --> End([Ende])
-  `
-  
+  `;
+
   // Berechne Steps
-  const summe1Bis10Steps = generateSumme1Bis10Steps()
-  const countdownSteps = generateCountdownSteps()
-  const maxListeSteps = generateMaxListeSteps(maxArray)
-  
-  const summe1Bis10Descriptions = summe1Bis10Steps.map((s) => s.description)
-  const countdownDescriptions = countdownSteps.map((s) => s.description)
-  const maxListeDescriptions = maxListeSteps.map((s) => s.description)
+  const summe1Bis10Steps = generateSumme1Bis10Steps();
+  const countdownSteps = generateCountdownSteps();
+  const maxListeSteps = generateMaxListeSteps(maxArray);
+
+  const summe1Bis10Descriptions = summe1Bis10Steps.map((s) => s.description);
+  const countdownDescriptions = countdownSteps.map((s) => s.description);
+  const maxListeDescriptions = maxListeSteps.map((s) => s.description);
 
   return (
     <>
       <section>
         <h2>Algorithmen mit Schleifen</h2>
-        
-        <div style={{ 
-          backgroundColor: "var(--color-bg-light)", 
-          padding: "15px", 
-          borderRadius: "8px",
-          marginBottom: "20px",
-          borderLeft: "4px solid var(--color-primary)"
-        }}>
-          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
-          Wenn dir Begriffe unklar sind, schaue im{" "}
+
+        <div
+          style={{
+            backgroundColor: "var(--color-bg-light)",
+            padding: "15px",
+            borderRadius: "8px",
+            marginBottom: "20px",
+            borderLeft: "4px solid var(--color-primary)",
+          }}
+        >
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine
+          vereinfachte Sprache. Wenn dir Begriffe unklar sind, schaue im{" "}
           <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
         </div>
 
@@ -103,7 +105,7 @@ flowchart TD
           Der Algorithmus verwendet eine Schleife, um nacheinander alle Zahlen
           zu addieren:
         </p>
-        
+
         <SimpleSplitView
           component={Summe1Bis10Animation}
           inputProps={{ fps: 30 }}
@@ -114,7 +116,7 @@ flowchart TD
           getNodeId={(step) => summe1Bis10Steps[step]?.mermaidNode}
           fps={30}
         />
-        
+
         <h4>Wie funktioniert dieser Algorithmus?</h4>
         <ol>
           <li>
@@ -148,18 +150,18 @@ flowchart TD
           Schleifen können auch rückwärts zählen. Hier ist ein Countdown von 10
           bis 0:
         </p>
-        
-        <SimpleSplitView 
-          component={CountdownAnimation} 
-          inputProps={{ fps: 30 }} 
-          flowchart={countdown} 
-          flowchartId="countdown" 
-          totalSteps={countdownSteps.length} 
-          stepDescriptions={countdownDescriptions} 
-          getNodeId={(step) => countdownSteps[step]?.mermaidNode} 
-          fps={30} 
+
+        <SimpleSplitView
+          component={CountdownAnimation}
+          inputProps={{ fps: 30 }}
+          flowchart={countdown}
+          flowchartId="countdown"
+          totalSteps={countdownSteps.length}
+          stepDescriptions={countdownDescriptions}
+          getNodeId={(step) => countdownSteps[step]?.mermaidNode}
+          fps={30}
         />
-        
+
         <h4>Ablauf des Countdowns:</h4>
         <ol>
           <li>
@@ -202,7 +204,7 @@ flowchart TD
           Dieser Algorithmus findet die grösste Zahl in einer Liste beliebiger
           Länge:
         </p>
-        
+
         <div style={{ marginBottom: "20px" }}>
           <label style={{ display: "block" }}>
             <strong>Eigene Liste (Zahlen mit Komma):</strong>
@@ -214,11 +216,11 @@ flowchart TD
                 const newArray = e.target.value
                   .split(",")
                   .map((n) => parseInt(n.trim()))
-                  .filter((n) => !isNaN(n) && n > 0 && n <= 20)
+                  .filter((n) => !isNaN(n) && n > 0 && n <= 20);
                 if (newArray.length >= 3 && newArray.length <= 10) {
-                  setMaxArray(newArray)
+                  setMaxArray(newArray);
                 } else {
-                  alert("Bitte 3-10 Zahlen zwischen 1 und 20 eingeben!")
+                  alert("Bitte 3-10 Zahlen zwischen 1 und 20 eingeben!");
                 }
               }}
               style={{
@@ -234,18 +236,18 @@ flowchart TD
             />
           </label>
         </div>
-        
-        <SimpleSplitView 
-          component={MaxListeAnimation} 
-          inputProps={{ array: maxArray, fps: 30 }} 
-          flowchart={maxListe} 
-          flowchartId="max-liste" 
-          totalSteps={maxListeSteps.length} 
-          stepDescriptions={maxListeDescriptions} 
-          getNodeId={(step) => maxListeSteps[step]?.mermaidNode} 
-          fps={30} 
+
+        <SimpleSplitView
+          component={MaxListeAnimation}
+          inputProps={{ array: maxArray, fps: 30 }}
+          flowchart={maxListe}
+          flowchartId="max-liste"
+          totalSteps={maxListeSteps.length}
+          stepDescriptions={maxListeDescriptions}
+          getNodeId={(step) => maxListeSteps[step]?.mermaidNode}
+          fps={30}
         />
-        
+
         <h4>So funktioniert der Algorithmus:</h4>
         <ol>
           <li>
@@ -271,7 +273,8 @@ flowchart TD
             marginBottom: "1.5rem",
             width: "100%",
             borderCollapse: "collapse",
-          }}>
+          }}
+        >
           <thead>
             <tr>
               <th
@@ -279,7 +282,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 Schritt
               </th>
               <th
@@ -287,7 +291,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 Aktuelles Element
               </th>
               <th
@@ -295,7 +300,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 Noch Elemente?
               </th>
               <th
@@ -303,7 +309,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 Vergleich
               </th>
               <th
@@ -311,7 +318,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 max
               </th>
             </tr>
@@ -432,5 +440,5 @@ flowchart TD
         </ul>
       </Section>
     </>
-  )
+  );
 }

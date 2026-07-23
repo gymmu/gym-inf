@@ -1,15 +1,13 @@
 import CodeBlock from "@components/CodeBlock";
-import Video from "@components/Video" 
-
+import Video from "@components/Video";
 
 export default function KaplayInteractions() {
-
   return (
     <>
       <section>
         <h2>Interaktionen mit den Spielobjekten</h2>
         <p>
-          Wie im letzten Kapitel bereits angesprochen, ist ein Spiel erst 
+          Wie im letzten Kapitel bereits angesprochen, ist ein Spiel erst
           spannend wenn es auch vom Benutzer manipuliert werden kann. Dazu
           werden meist das drücken von Tasten oder das klicken der Maus
           verwendet. In Kaplay geht das ganz einfach.
@@ -40,5 +38,5 @@ export default function KaplayInteractions() {
         <Video url="J5nRtP1MAss" />
       </section>
     </>
-  )
+  );
 }

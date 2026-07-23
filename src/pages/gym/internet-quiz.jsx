@@ -1,6 +1,6 @@
-import QuizFromJson from "@components/QuizFromJson.jsx"
-import { Link } from "react-router-dom"
-import quizData from "@quizzes/gym-internet-quiz.json"
+import QuizFromJson from "@components/QuizFromJson.jsx";
+import quizData from "@quizzes/gym-internet-quiz.json";
+import { Link } from "react-router-dom";
 
 export default function GymInternetQuiz() {
   return (
@@ -42,5 +42,5 @@ export default function GymInternetQuiz() {
         </p>
       </section>
     </>
-  )
+  );
 }

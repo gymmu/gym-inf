@@ -1,71 +1,71 @@
-import { useState } from "react"
-import style from "@components/PasswordDatabase.module.css"
-import { usePasswordDb } from "@components/usePasswordDb"
+import style from "@components/PasswordDatabase.module.css";
+import { usePasswordDb } from "@components/usePasswordDb";
+import { useState } from "react";
 
 export default function PlainPasswordDatabase() {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [testUsername, setTestUsername] = useState("")
-  const [testPassword, setTestPassword] = useState("")
-  const [message, setMessage] = useState(null)
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [testUsername, setTestUsername] = useState("");
+  const [testPassword, setTestPassword] = useState("");
+  const [message, setMessage] = useState(null);
 
-  const [entries, addEntry, clearEntries] = usePasswordDb()
+  const [entries, addEntry, clearEntries] = usePasswordDb();
 
   const handleAddEntry = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!username || !password) {
       setMessage({
         type: "error",
         text: "Bitte Benutzername und Passwort eingeben",
-      })
-      return
+      });
+      return;
     }
     if (entries.find((entry) => entry.username === username)) {
-      setMessage({ type: "error", text: "Benutzername existiert bereits" })
-      return
+      setMessage({ type: "error", text: "Benutzername existiert bereits" });
+      return;
     }
-    await addEntry({ username, password })
-    setUsername("")
-    setPassword("")
-    setMessage({ type: "success", text: "Eintrag erfolgreich hinzugefuegt" })
-    setTimeout(() => setMessage(null), 3000)
-  }
+    await addEntry({ username, password });
+    setUsername("");
+    setPassword("");
+    setMessage({ type: "success", text: "Eintrag erfolgreich hinzugefuegt" });
+    setTimeout(() => setMessage(null), 3000);
+  };
 
   const handleTest = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!testUsername || !testPassword) {
       setMessage({
         type: "error",
         text: "Bitte Benutzername und Passwort eingeben",
-      })
-      return
+      });
+      return;
     }
-    const entry = entries.find((e) => e.username === testUsername)
+    const entry = entries.find((e) => e.username === testUsername);
     if (!entry) {
-      setMessage({ type: "error", text: "Benutzername nicht gefunden" })
-      return
+      setMessage({ type: "error", text: "Benutzername nicht gefunden" });
+      return;
     }
     if (entry.password === testPassword) {
       setMessage({
         type: "success",
         text: "Login erfolgreich! Passwort ist korrekt.",
-      })
+      });
     } else {
       setMessage({
         type: "error",
         text: "Login fehlgeschlagen! Passwort ist falsch.",
-      })
+      });
     }
-    setTimeout(() => setMessage(null), 5000)
-  }
+    setTimeout(() => setMessage(null), 5000);
+  };
 
   const handleClear = () => {
     if (confirm("Moechten Sie wirklich die gesamte Datenbank loeschen?")) {
-      clearEntries()
-      setMessage({ type: "info", text: "Datenbank wurde geloescht" })
-      setTimeout(() => setMessage(null), 3000)
+      clearEntries();
+      setMessage({ type: "info", text: "Datenbank wurde geloescht" });
+      setTimeout(() => setMessage(null), 3000);
     }
-  }
+  };
 
   return (
     <div className={style.wrapper}>
@@ -164,5 +164,5 @@ export default function PlainPasswordDatabase() {
         </div>
       </div>
     </div>
-  )
+  );
 }

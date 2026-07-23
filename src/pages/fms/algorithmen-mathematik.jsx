@@ -1,29 +1,29 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import Section from "@components/Section"
-import SolutionBlock from "@components/SolutionBlock"
-import SimpleSplitView from "@components/algorithm/SimpleSplitView"
+import SimpleSplitView from "@components/algorithm/SimpleSplitView";
 import {
-  GGTAnimation,
-  PrimzahlAnimation,
-  FibonacciAnimation,
   FakultaetAnimation,
-  PotenzAnimation,
-  generateGGTSteps,
-  generatePrimzahlSteps,
-  generateFibonacciSteps,
+  FibonacciAnimation,
+  GGTAnimation,
   generateFakultaetSteps,
+  generateFibonacciSteps,
+  generateGGTSteps,
   generatePotenzSteps,
-} from "@components/remotion/MathAnimation"
+  generatePrimzahlSteps,
+  PotenzAnimation,
+  PrimzahlAnimation,
+} from "@components/remotion/MathAnimation";
+import Section from "@components/Section";
+import SolutionBlock from "@components/SolutionBlock";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function FmsAlgorithmenMathematik() {
-  const [ggtA, setGgtA] = useState(48)
-  const [ggtB, setGgtB] = useState(18)
-  const [primzahl, setPrimzahl] = useState(17)
-  const [fibCount, setFibCount] = useState(8)
-  const [fakultaetN, setFakultaetN] = useState(5)
-  const [potenzBase, setPotenzBase] = useState(2)
-  const [potenzExp, setPotenzExp] = useState(5)
+  const [ggtA, setGgtA] = useState(48);
+  const [ggtB, setGgtB] = useState(18);
+  const [primzahl, setPrimzahl] = useState(17);
+  const [fibCount, setFibCount] = useState(8);
+  const [fakultaetN, setFakultaetN] = useState(5);
+  const [potenzBase, setPotenzBase] = useState(2);
+  const [potenzExp, setPotenzExp] = useState(5);
 
   // Flussdiagramme
   const ggtChart = `
@@ -37,7 +37,7 @@ flowchart TD
     Update1 --> Update2[Setze b auf den Wert von Rest]
     Update2 --> Check
     Output --> End([Ende])
-  `
+  `;
 
   const primzahlChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -55,7 +55,7 @@ flowchart TD
     IsPrime --> End([Ende])
     NotPrime1 --> End
     NotPrime2 --> End
-  `
+  `;
 
   const fakultaetChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -72,7 +72,7 @@ flowchart TD
     Incr --> Check
     Output1 --> End([Ende])
     Output2 --> End
-  `
+  `;
 
   const potenzChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -86,7 +86,7 @@ flowchart TD
     Multiply --> Incr[Erhöhe i um 1]
     Incr --> Check
     Output --> End([Ende])
-  `
+  `;
 
   const fibonacciChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -101,45 +101,48 @@ flowchart TD
     Calc --> Incr[Erhöhe i um 1]
     Incr --> Check
     Output --> End([Ende])
-  `
+  `;
 
   // Berechne Schritte
-  const ggtSteps = generateGGTSteps(ggtA, ggtB)
-  const primzahlSteps = generatePrimzahlSteps(primzahl)
-  const fakultaetSteps = generateFakultaetSteps(fakultaetN)
-  const potenzSteps = generatePotenzSteps(potenzBase, potenzExp)
-  const fibonacciSteps = generateFibonacciSteps(fibCount)
+  const ggtSteps = generateGGTSteps(ggtA, ggtB);
+  const primzahlSteps = generatePrimzahlSteps(primzahl);
+  const fakultaetSteps = generateFakultaetSteps(fakultaetN);
+  const potenzSteps = generatePotenzSteps(potenzBase, potenzExp);
+  const fibonacciSteps = generateFibonacciSteps(fibCount);
 
-  const ggtDescriptions = ggtSteps.map((s) => s.description)
-  const primzahlDescriptions = primzahlSteps.map((s) => s.description)
-  const fakultaetDescriptions = fakultaetSteps.map((s) => s.description)
-  const potenzDescriptions = potenzSteps.map((s) => s.description)
-  const fibonacciDescriptions = fibonacciSteps.map((s) => s.description)
+  const ggtDescriptions = ggtSteps.map((s) => s.description);
+  const primzahlDescriptions = primzahlSteps.map((s) => s.description);
+  const fakultaetDescriptions = fakultaetSteps.map((s) => s.description);
+  const potenzDescriptions = potenzSteps.map((s) => s.description);
+  const fibonacciDescriptions = fibonacciSteps.map((s) => s.description);
 
   return (
     <>
       <section>
         <h2>Mathematische Algorithmen</h2>
-        
-        <div style={{ 
-          backgroundColor: "var(--color-bg-light)", 
-          padding: "15px", 
-          borderRadius: "8px",
-          marginBottom: "20px",
-          borderLeft: "4px solid var(--color-primary)"
-        }}>
-          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
-          Wenn dir Begriffe unklar sind, schaue im{" "}
+
+        <div
+          style={{
+            backgroundColor: "var(--color-bg-light)",
+            padding: "15px",
+            borderRadius: "8px",
+            marginBottom: "20px",
+            borderLeft: "4px solid var(--color-primary)",
+          }}
+        >
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine
+          vereinfachte Sprache. Wenn dir Begriffe unklar sind, schaue im{" "}
           <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
         </div>
-        
+
         <p>
           Viele mathematische Probleme lassen sich mit einfachen Algorithmen
           lösen. Wir schauen uns fünf klassische Beispiele an:
         </p>
         <ol>
           <li>
-            <strong>GGT (Größter gemeinsamer Teiler)</strong> - Euklid-Algorithmus
+            <strong>GGT (Größter gemeinsamer Teiler)</strong> -
+            Euklid-Algorithmus
           </li>
           <li>
             <strong>Primzahltest</strong> - Ist eine Zahl prim?
@@ -183,8 +186,8 @@ flowchart TD
               type="number"
               defaultValue={ggtA}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
-                if (!isNaN(val) && val > 0 && val <= 100) setGgtA(val)
+                const val = parseInt(e.target.value);
+                if (!isNaN(val) && val > 0 && val <= 100) setGgtA(val);
               }}
               min="1"
               max="100"
@@ -206,8 +209,8 @@ flowchart TD
               type="number"
               defaultValue={ggtB}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
-                if (!isNaN(val) && val > 0 && val <= 100) setGgtB(val)
+                const val = parseInt(e.target.value);
+                if (!isNaN(val) && val > 0 && val <= 100) setGgtB(val);
               }}
               min="1"
               max="100"
@@ -270,8 +273,8 @@ flowchart TD
               type="number"
               defaultValue={primzahl}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
-                if (!isNaN(val) && val >= 2 && val <= 100) setPrimzahl(val)
+                const val = parseInt(e.target.value);
+                if (!isNaN(val) && val >= 2 && val <= 100) setPrimzahl(val);
               }}
               min="2"
               max="100"
@@ -306,8 +309,8 @@ flowchart TD
       <Section>
         <h2>3. Fakultät (n!)</h2>
         <p>
-          Die <strong>Fakultät</strong> einer Zahl n (geschrieben als n!) ist das
-          Produkt aller positiven ganzen Zahlen von 1 bis n.
+          Die <strong>Fakultät</strong> einer Zahl n (geschrieben als n!) ist
+          das Produkt aller positiven ganzen Zahlen von 1 bis n.
         </p>
 
         <h3>Beispiele:</h3>
@@ -327,8 +330,8 @@ flowchart TD
               type="number"
               defaultValue={fakultaetN}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
-                if (!isNaN(val) && val >= 0 && val <= 10) setFakultaetN(val)
+                const val = parseInt(e.target.value);
+                if (!isNaN(val) && val >= 0 && val <= 10) setFakultaetN(val);
               }}
               min="0"
               max="10"
@@ -384,8 +387,8 @@ flowchart TD
               type="number"
               defaultValue={potenzBase}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
-                if (!isNaN(val) && val >= 1 && val <= 10) setPotenzBase(val)
+                const val = parseInt(e.target.value);
+                if (!isNaN(val) && val >= 1 && val <= 10) setPotenzBase(val);
               }}
               min="1"
               max="10"
@@ -407,8 +410,8 @@ flowchart TD
               type="number"
               defaultValue={potenzExp}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
-                if (!isNaN(val) && val >= 0 && val <= 10) setPotenzExp(val)
+                const val = parseInt(e.target.value);
+                if (!isNaN(val) && val >= 0 && val <= 10) setPotenzExp(val);
               }}
               min="0"
               max="10"
@@ -462,8 +465,8 @@ flowchart TD
               type="number"
               defaultValue={fibCount}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
-                if (!isNaN(val) && val >= 2 && val <= 15) setFibCount(val)
+                const val = parseInt(e.target.value);
+                if (!isNaN(val) && val >= 2 && val <= 15) setFibCount(val);
               }}
               min="2"
               max="15"
@@ -492,5 +495,5 @@ flowchart TD
         />
       </Section>
     </>
-  )
+  );
 }

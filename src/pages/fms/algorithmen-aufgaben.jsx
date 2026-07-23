@@ -1,6 +1,6 @@
-import Mermaid from "@components/Mermaid"
-import Section from "@components/Section"
-import SolutionBlock from "@components/SolutionBlock.jsx"
+import Mermaid from "@components/Mermaid";
+import Section from "@components/Section";
+import SolutionBlock from "@components/SolutionBlock.jsx";
 
 export default function FmsAlgorithmenAufgaben() {
   // Aufgabe 1: Einfacher Zähler
@@ -11,7 +11,7 @@ flowchart TD
     Init --> Add[zaehler = zaehler + 5]
     Add --> Output[Ausgabe: zaehler]
     Output --> End([Ende])
-  `
+  `;
 
   // Aufgabe 3: Gerade oder ungerade
   const geradeUngerade = `
@@ -23,7 +23,7 @@ flowchart TD
     Check -->|Nein| Ungerade[Ausgabe: Ungerade]
     Gerade --> End([Ende])
     Ungerade --> End
-  `
+  `;
 
   // Aufgabe 5: Temperaturprüfung
   const temperatur = `
@@ -41,7 +41,7 @@ flowchart TD
     Cool --> End
     Warm --> End
     Hot --> End
-  `
+  `;
 
   // Aufgabe 7: Summe von zwei Zahlen
   const summe = `
@@ -52,7 +52,7 @@ flowchart TD
     Input2 --> Calc[summe = a + b]
     Calc --> Output[Ausgabe: summe]
     Output --> End([Ende])
-  `
+  `;
 
   // Aufgabe 6: Rabatt-Berechnung
   const rabatt = `
@@ -65,7 +65,7 @@ flowchart TD
     Discount --> Output[Ausgabe: preis]
     NoDiscount --> Output
     Output --> End([Ende])
-  `
+  `;
 
   // Aufgabe 8: Produkt von zwei Zahlen
   const produkt = `
@@ -76,7 +76,7 @@ flowchart TD
     Input2 --> Calc[produkt = a * b]
     Calc --> Output[Ausgabe: produkt]
     Output --> End([Ende])
-  `
+  `;
 
   // Aufgabe 9: Schaltjahr-Prüfung (vereinfacht)
   const schaltjahr = `
@@ -88,7 +88,7 @@ flowchart TD
     Check -->|Nein| Normal[Ausgabe: Normales Jahr]
     Leap --> End([Ende])
     Normal --> End
-  `
+  `;
 
   // Aufgabe 10: Passwort-Check
   const passwort = `
@@ -100,7 +100,7 @@ flowchart TD
     Check -->|Nein| Deny[Ausgabe: Zugang verweigert]
     Grant --> End([Ende])
     Deny --> End
-  `
+  `;
 
   // Aufgabe 12: Countdown von 5 bis 0
   const countdownLoop = `
@@ -112,7 +112,7 @@ flowchart TD
     Output --> Decrement[zaehler = zaehler - 1]
     Decrement --> Check
     Check -->|Nein| End([Ende])
-  `
+  `;
 
   // Aufgabe 14: Summe von 1 bis n
   const summeN = `
@@ -127,7 +127,7 @@ flowchart TD
     Increment --> Check
     Check -->|Nein| Output[Ausgabe: summe]
     Output --> End([Ende])
-  `
+  `;
 
   // Aufgabe 16: Gerade Zahlen zählen in einer Liste
   const geradeZaehlen = `
@@ -143,7 +143,7 @@ flowchart TD
     Count --> Check
     Check -->|Nein| Output[Ausgabe: anzahl]
     Output --> End([Ende])
-  `
+  `;
 
   // Aufgabe 18: Minimum aus einer Liste
   const minListe = `
@@ -159,7 +159,7 @@ flowchart TD
     Update --> Check
     Check -->|Nein| Output[Ausgabe: min]
     Output --> End([Ende])
-  `
+  `;
 
   // Aufgabe 13: Zahlen 1 bis 5
   const zahlen1bis5 = `
@@ -171,7 +171,7 @@ flowchart TD
     Output --> Increment[zahl = zahl + 1]
     Increment --> Check
     Check -->|Nein| End([Ende])
-  `
+  `;
 
   // Aufgabe 17: Ungerade Zahlen 1 bis 9
   const ungerade1bis9 = `
@@ -183,7 +183,7 @@ flowchart TD
     Output --> Add[zahl = zahl + 2]
     Add --> Check
     Check -->|Nein| End([Ende])
-  `
+  `;
 
   // Aufgabe 20: Alle Zahlen durch 3 teilbar
   const teilbarDrei = `
@@ -195,7 +195,7 @@ flowchart TD
     Output --> Add[zahl = zahl + 3]
     Add --> Check
     Check -->|Nein| End([Ende])
-  `
+  `;
 
   return (
     <>
@@ -214,7 +214,8 @@ flowchart TD
         <Mermaid chart={zaehler} id="aufgabe-1" />
         <SolutionBlock
           taskId="algo-aufgabe-1"
-          hint="Führe jeden Schritt des Flussdiagramms nacheinander aus und schreibe dir die Werte der Variablen auf.">
+          hint="Führe jeden Schritt des Flussdiagramms nacheinander aus und schreibe dir die Werte der Variablen auf."
+        >
           <ol>
             <li>Start</li>
             <li>zaehler = 0</li>
@@ -235,7 +236,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-2"
-          hint="Beschreibe jeden Schritt mit eigenen Worten: Was wird gemacht und warum?">
+          hint="Beschreibe jeden Schritt mit eigenen Worten: Was wird gemacht und warum?"
+        >
           <p>
             Der Algorithmus initialisiert eine Variable "zaehler" mit dem Wert
             0, addiert dann 5 zu dieser Variable und gibt das Ergebnis aus. Das
@@ -253,7 +255,8 @@ flowchart TD
         <Mermaid chart={geradeUngerade} id="aufgabe-3" />
         <SolutionBlock
           taskId="algo-aufgabe-3"
-          hint="Prüfe bei jeder Entscheidung, ob die Bedingung wahr oder falsch ist. Der Modulo-Operator (%) gibt den Rest einer Division zurück.">
+          hint="Prüfe bei jeder Entscheidung, ob die Bedingung wahr oder falsch ist. Der Modulo-Operator (%) gibt den Rest einer Division zurück."
+        >
           <h4>Durchlauf 1: Eingabe = 8</h4>
           <ol>
             <li>Start</li>
@@ -281,7 +284,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-4"
-          hint="Überlege: Was bedeutet % (Modulo)? Was passiert wenn man eine Zahl durch 2 teilt?">
+          hint="Überlege: Was bedeutet % (Modulo)? Was passiert wenn man eine Zahl durch 2 teilt?"
+        >
           <p>
             Der Algorithmus prüft, ob eine eingegebene Zahl gerade oder ungerade
             ist. Der Modulo-Operator (%) berechnet den Rest einer Division. Wenn
@@ -301,7 +305,8 @@ flowchart TD
         <Mermaid chart={temperatur} id="aufgabe-5" />
         <SolutionBlock
           taskId="algo-aufgabe-5"
-          hint="Folge dem Diagramm Schritt für Schritt. Bei jeder Entscheidung wähle den richtigen Pfad (Ja oder Nein) basierend auf dem Wert.">
+          hint="Folge dem Diagramm Schritt für Schritt. Bei jeder Entscheidung wähle den richtigen Pfad (Ja oder Nein) basierend auf dem Wert."
+        >
           <h4>Durchlauf 1: Temperatur = -5</h4>
           <ol>
             <li>Start</li>
@@ -341,7 +346,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-6"
-          hint="Du brauchst: Start, Eingabe (Betrag), eine Entscheidung (Betrag > 100?), zwei Berechnungen (mit/ohne Rabatt), Ausgabe, Ende.">
+          hint="Du brauchst: Start, Eingabe (Betrag), eine Entscheidung (Betrag > 100?), zwei Berechnungen (mit/ohne Rabatt), Ausgabe, Ende."
+        >
           <p>Ein mögliches Flussdiagramm könnte so aussehen:</p>
           <Mermaid chart={rabatt} id="loesung-6" />
           <p>
@@ -362,7 +368,8 @@ flowchart TD
         <Mermaid chart={summe} id="aufgabe-7" />
         <SolutionBlock
           taskId="algo-aufgabe-7"
-          hint="Gehe jeden Schritt durch und berechne die Summe mit den gegebenen Werten für a und b.">
+          hint="Gehe jeden Schritt durch und berechne die Summe mit den gegebenen Werten für a und b."
+        >
           <ol>
             <li>Start</li>
             <li>a eingeben: 15</li>
@@ -383,7 +390,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-8"
-          hint="Ersetze das + durch * und ändere den Variablennamen von 'summe' zu 'produkt'.">
+          hint="Ersetze das + durch * und ändere den Variablennamen von 'summe' zu 'produkt'."
+        >
           <p>Folgende Änderungen sind nötig:</p>
           <ol>
             <li>
@@ -419,7 +427,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-9"
-          hint="Prüfe, ob das Jahr durch 4 teilbar ist (Rest = 0). Das kannst du mit dem Modulo-Operator % prüfen.">
+          hint="Prüfe, ob das Jahr durch 4 teilbar ist (Rest = 0). Das kannst du mit dem Modulo-Operator % prüfen."
+        >
           <h4>Durchlauf 1: Jahr = 2024</h4>
           <ol>
             <li>Start</li>
@@ -448,7 +457,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-10"
-          hint="Benötigt: Start, Eingabe (Passwort), eine Entscheidung (Passwort = 'geheim123'?), zwei Ausgaben (Zugang gewährt/verweigert), Ende.">
+          hint="Benötigt: Start, Eingabe (Passwort), eine Entscheidung (Passwort = 'geheim123'?), zwei Ausgaben (Zugang gewährt/verweigert), Ende."
+        >
           <p>Ein mögliches Flussdiagramm:</p>
           <Mermaid chart={passwort} id="loesung-10" />
           <p>
@@ -476,7 +486,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-11"
-          hint="Überlege: Was passiert, wenn ein Pfeil auf einen bereits besuchten Knoten zurückzeigt?">
+          hint="Überlege: Was passiert, wenn ein Pfeil auf einen bereits besuchten Knoten zurückzeigt?"
+        >
           <p>
             Eine Schleife ist eine Wiederholung von Schritten in einem
             Algorithmus. Sie entsteht, wenn ein Pfeil auf einen Knoten
@@ -495,13 +506,15 @@ flowchart TD
         <Mermaid chart={countdownLoop} id="aufgabe-12" />
         <SolutionBlock
           taskId="algo-aufgabe-12"
-          hint="Beginne mit zaehler = 5 und folge der Schleife. Was passiert bei jedem Durchlauf?">
+          hint="Beginne mit zaehler = 5 und folge der Schleife. Was passiert bei jedem Durchlauf?"
+        >
           <table
             style={{
               marginBottom: "1.5rem",
               width: "100%",
               borderCollapse: "collapse",
-            }}>
+            }}
+          >
             <thead>
               <tr>
                 <th
@@ -509,7 +522,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   Schritt
                 </th>
                 <th
@@ -517,7 +531,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   Aktion / Bedingung
                 </th>
                 <th
@@ -525,7 +540,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   zaehler
                 </th>
               </tr>
@@ -673,7 +689,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-13"
-          hint="Du brauchst eine Zählvariable, die bei 1 startet und bei jedem Durchlauf um 1 erhöht wird. Die Schleife läuft, solange die Variable <= 5 ist.">
+          hint="Du brauchst eine Zählvariable, die bei 1 startet und bei jedem Durchlauf um 1 erhöht wird. Die Schleife läuft, solange die Variable <= 5 ist."
+        >
           <p>Ein mögliches Flussdiagramm:</p>
           <Mermaid chart={zahlen1bis5} id="loesung-13" />
           <p>
@@ -692,14 +709,16 @@ flowchart TD
         <Mermaid chart={summeN} id="aufgabe-14" />
         <SolutionBlock
           taskId="algo-aufgabe-14"
-          hint="Schreibe bei jedem Schritt die Werte von summe und zahl auf.">
+          hint="Schreibe bei jedem Schritt die Werte von summe und zahl auf."
+        >
           <h4>Durchlauf mit n = 4:</h4>
           <table
             style={{
               marginBottom: "1.5rem",
               width: "100%",
               borderCollapse: "collapse",
-            }}>
+            }}
+          >
             <thead>
               <tr>
                 <th
@@ -707,7 +726,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   Schritt
                 </th>
                 <th
@@ -715,7 +735,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   Aktion / Bedingung
                 </th>
                 <th
@@ -723,7 +744,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   zahl
                 </th>
                 <th
@@ -731,7 +753,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   summe
                 </th>
               </tr>
@@ -888,7 +911,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-15"
-          hint="Der Algorithmus addiert Zahlen. Welche Zahlen genau?">
+          hint="Der Algorithmus addiert Zahlen. Welche Zahlen genau?"
+        >
           <p>
             Der Algorithmus berechnet die Summe aller Zahlen von 1 bis zu einer
             eingegebenen Zahl n. Er verwendet eine Schleife, die bei 1 beginnt
@@ -908,7 +932,8 @@ flowchart TD
         <Mermaid chart={geradeZaehlen} id="aufgabe-16" />
         <SolutionBlock
           taskId="algo-aufgabe-16"
-          hint="Eine Zahl ist gerade, wenn sie durch 2 teilbar ist (Rest = 0). Zähle, wie viele gerade Zahlen in der Liste sind.">
+          hint="Eine Zahl ist gerade, wenn sie durch 2 teilbar ist (Rest = 0). Zähle, wie viele gerade Zahlen in der Liste sind."
+        >
           <h4>Durchlauf mit [4, 7, 10, 13, 16]:</h4>
           <ol>
             <li>Start, Liste eingeben: [4, 7, 10, 13, 16]</li>
@@ -941,7 +966,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-17"
-          hint="Du kannst entweder in 2er-Schritten zählen (1, 3, 5, ...) oder jede Zahl prüfen, ob sie ungerade ist.">
+          hint="Du kannst entweder in 2er-Schritten zählen (1, 3, 5, ...) oder jede Zahl prüfen, ob sie ungerade ist."
+        >
           <p>Möglichkeit 1: In 2er-Schritten zählen</p>
           <Mermaid chart={ungerade1bis9} id="loesung-17" />
           <p>
@@ -963,14 +989,16 @@ flowchart TD
         <Mermaid chart={minListe} id="aufgabe-18" />
         <SolutionBlock
           taskId="algo-aufgabe-18"
-          hint="Ähnlich wie beim Maximum-Finden, aber diesmal suchen wir die kleinste Zahl.">
+          hint="Ähnlich wie beim Maximum-Finden, aber diesmal suchen wir die kleinste Zahl."
+        >
           <h4>Durchlauf mit [15, 8, 23, 4, 19]:</h4>
           <table
             style={{
               marginBottom: "1.5rem",
               width: "100%",
               borderCollapse: "collapse",
-            }}>
+            }}
+          >
             <thead>
               <tr>
                 <th
@@ -978,7 +1006,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   Schritt
                 </th>
                 <th
@@ -986,7 +1015,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   Element
                 </th>
                 <th
@@ -994,7 +1024,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   Vergleich
                 </th>
                 <th
@@ -1002,7 +1033,8 @@ flowchart TD
                     border: "1px solid #ddd",
                     padding: "8px",
                     textAlign: "left",
-                  }}>
+                  }}
+                >
                   min
                 </th>
               </tr>
@@ -1064,7 +1096,8 @@ flowchart TD
         </p>
         <SolutionBlock
           taskId="algo-aufgabe-19"
-          hint="Der einzige Unterschied liegt in der Bedingung. Was ist der Unterschied zwischen geraden und ungeraden Zahlen beim Modulo?">
+          hint="Der einzige Unterschied liegt in der Bedingung. Was ist der Unterschied zwischen geraden und ungeraden Zahlen beim Modulo?"
+        >
           <p>
             Man muss nur die Bedingung ändern. Statt{" "}
             <code>Element % 2 = 0?</code> (gerade) verwendet man{" "}
@@ -1090,7 +1123,8 @@ flowchart TD
         <Mermaid chart={teilbarDrei} id="aufgabe-20" />
         <SolutionBlock
           taskId="algo-aufgabe-20"
-          hint="Beginne mit 3 und addiere bei jedem Durchlauf 3 dazu. Die Schleife läuft, solange die Zahl <= 30 ist.">
+          hint="Beginne mit 3 und addiere bei jedem Durchlauf 3 dazu. Die Schleife läuft, solange die Zahl <= 30 ist."
+        >
           <p>Der Algorithmus gibt alle Vielfachen von 3 bis 30 aus:</p>
           <ol>
             <li>zahl = 3, Ausgabe: 3, zahl wird zu 6</li>
@@ -1140,5 +1174,5 @@ flowchart TD
         </ul>
       </section>
     </>
-  )
+  );
 }

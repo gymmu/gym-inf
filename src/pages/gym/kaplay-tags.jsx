@@ -1,18 +1,16 @@
 import CodeBlock from "@components/CodeBlock";
-import Video from "@components/Video" 
-
+import Video from "@components/Video";
 
 export default function KaplayTags() {
-
   return (
     <>
       <section>
         <h2>Kaplay Tags</h2>
         <p>
-          Kaplay verwendet ein <pre>Tags</pre> System um die verschiedenen 
+          Kaplay verwendet ein <pre>Tags</pre> System um die verschiedenen
           Spielobjekte einer Klasse zuzuweisen. Das ist sehr praktisch, denn so
-          kann alles was freundlich ist, eine eigene Klasse haben, und alles
-          was feindlich ist eine andere. So können Kollisionen unterschiedlich
+          kann alles was freundlich ist, eine eigene Klasse haben, und alles was
+          feindlich ist eine andere. So können Kollisionen unterschiedlich
           behandelt werden.
         </p>
         <CodeBlock lang="javascript">
@@ -33,11 +31,9 @@ export default function KaplayTags() {
       </section>
       <section>
         <h2>Video</h2>
-        <p>
-          Das Video erweitert das letzte um Tags.
-        </p>
+        <p>Das Video erweitert das letzte um Tags.</p>
         <Video url="ypahTzOiuhc" />
       </section>
     </>
-  )
+  );
 }

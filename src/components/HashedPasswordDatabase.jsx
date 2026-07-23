@@ -1,75 +1,75 @@
-import { useState } from "react"
-import style from "@components/PasswordDatabase.module.css"
-import { usePasswordDb, sha256 } from "@components/usePasswordDb"
+import style from "@components/PasswordDatabase.module.css";
+import { sha256, usePasswordDb } from "@components/usePasswordDb";
+import { useState } from "react";
 
 export default function HashedPasswordDatabase() {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [testUsername, setTestUsername] = useState("")
-  const [testPassword, setTestPassword] = useState("")
-  const [message, setMessage] = useState(null)
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [testUsername, setTestUsername] = useState("");
+  const [testPassword, setTestPassword] = useState("");
+  const [message, setMessage] = useState(null);
 
-  const [entries, addEntry, clearEntries] = usePasswordDb()
+  const [entries, addEntry, clearEntries] = usePasswordDb();
 
   const handleAddEntry = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!username || !password) {
       setMessage({
         type: "error",
         text: "Bitte Benutzername und Passwort eingeben",
-      })
-      return
+      });
+      return;
     }
     if (entries.find((entry) => entry.username === username)) {
-      setMessage({ type: "error", text: "Benutzername existiert bereits" })
-      return
+      setMessage({ type: "error", text: "Benutzername existiert bereits" });
+      return;
     }
-    const entry = await addEntry({ username, password })
-    setUsername("")
-    setPassword("")
+    const entry = await addEntry({ username, password });
+    setUsername("");
+    setPassword("");
     setMessage({
       type: "success",
       text: `Eintrag hinzugefuegt. Hash: ${entry.hash.substring(0, 16)}...`,
-    })
-    setTimeout(() => setMessage(null), 5000)
-  }
+    });
+    setTimeout(() => setMessage(null), 5000);
+  };
 
   const handleTest = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!testUsername || !testPassword) {
       setMessage({
         type: "error",
         text: "Bitte Benutzername und Passwort eingeben",
-      })
-      return
+      });
+      return;
     }
-    const entry = entries.find((e) => e.username === testUsername)
+    const entry = entries.find((e) => e.username === testUsername);
     if (!entry) {
-      setMessage({ type: "error", text: "Benutzername nicht gefunden" })
-      return
+      setMessage({ type: "error", text: "Benutzername nicht gefunden" });
+      return;
     }
-    const testHash = await sha256(testPassword + entry.salt)
+    const testHash = await sha256(testPassword + entry.salt);
     if (entry.hash === testHash) {
       setMessage({
         type: "success",
         text: `Login erfolgreich! Hash stimmt ueberein: ${testHash.substring(0, 16)}...`,
-      })
+      });
     } else {
       setMessage({
         type: "error",
         text: "Login fehlgeschlagen! Hashes stimmen nicht ueberein.",
-      })
+      });
     }
-    setTimeout(() => setMessage(null), 7000)
-  }
+    setTimeout(() => setMessage(null), 7000);
+  };
 
   const handleClear = () => {
     if (confirm("Moechten Sie wirklich die gesamte Datenbank loeschen?")) {
-      clearEntries()
-      setMessage({ type: "info", text: "Datenbank wurde geloescht" })
-      setTimeout(() => setMessage(null), 3000)
+      clearEntries();
+      setMessage({ type: "info", text: "Datenbank wurde geloescht" });
+      setTimeout(() => setMessage(null), 3000);
     }
-  }
+  };
 
   return (
     <div className={style.wrapper}>
@@ -141,7 +141,8 @@ export default function HashedPasswordDatabase() {
       {message && (
         <div
           className={`${style.message} ${style[message.type]}`}
-          style={{ whiteSpace: "pre-line" }}>
+          style={{ whiteSpace: "pre-line" }}
+        >
           {message.text}
         </div>
       )}
@@ -169,7 +170,8 @@ export default function HashedPasswordDatabase() {
                       fontFamily: "monospace",
                       fontSize: "0.8rem",
                       wordBreak: "break-all",
-                    }}>
+                    }}
+                  >
                     {entry.hash}
                   </td>
                 </tr>
@@ -184,5 +186,5 @@ export default function HashedPasswordDatabase() {
         </div>
       </div>
     </div>
-  )
+  );
 }

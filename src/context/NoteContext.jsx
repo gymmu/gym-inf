@@ -1,4 +1,14 @@
 import {
+  deleteNote,
+  downloadNotes,
+  exportNotes,
+  getAllNotes,
+  getNote,
+  importNotes,
+  saveNote,
+  createNote as storageCreateNote,
+} from "@utils/notesStorage";
+import {
   createContext,
   useCallback,
   useContext,
@@ -7,16 +17,6 @@ import {
   useState,
 } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  saveNote,
-  getNote,
-  deleteNote,
-  getAllNotes,
-  createNote as storageCreateNote,
-  exportNotes,
-  downloadNotes,
-  importNotes,
-} from "@utils/notesStorage";
 
 const NoteContext = createContext(null);
 
@@ -58,18 +58,15 @@ export function NoteProvider({ children }) {
     setHasCurrentNote(!!note);
   }, []);
 
-  const updateNote = useCallback(
-    async (slug, content) => {
-      const note = await saveNote(slug, content);
-      setCurrentNote(note);
-      setHasCurrentNote(true);
-      setAllNotes((prev) => {
-        const filtered = prev.filter((n) => n.slug !== slug);
-        return [...filtered, note].sort((a, b) => b.updatedAt - a.updatedAt);
-      });
-    },
-    [],
-  );
+  const updateNote = useCallback(async (slug, content) => {
+    const note = await saveNote(slug, content);
+    setCurrentNote(note);
+    setHasCurrentNote(true);
+    setAllNotes((prev) => {
+      const filtered = prev.filter((n) => n.slug !== slug);
+      return [...filtered, note].sort((a, b) => b.updatedAt - a.updatedAt);
+    });
+  }, []);
 
   const removeNote = useCallback(async (slug) => {
     await deleteNote(slug);
@@ -95,25 +92,19 @@ export function NoteProvider({ children }) {
     return merged;
   }, []);
 
-  const hasNote = useCallback(
-    async (slug) => {
-      const note = await getNote(slug);
-      return !!note;
-    },
-    [],
-  );
+  const hasNote = useCallback(async (slug) => {
+    const note = await getNote(slug);
+    return !!note;
+  }, []);
 
-  const createNote = useCallback(
-    async (slug, content) => {
-      const note = await storageCreateNote(slug, content || "");
-      setAllNotes((prev) => {
-        const filtered = prev.filter((n) => n.slug !== slug);
-        return [...filtered, note].sort((a, b) => b.updatedAt - a.updatedAt);
-      });
-      return note;
-    },
-    [],
-  );
+  const createNote = useCallback(async (slug, content) => {
+    const note = await storageCreateNote(slug, content || "");
+    setAllNotes((prev) => {
+      const filtered = prev.filter((n) => n.slug !== slug);
+      return [...filtered, note].sort((a, b) => b.updatedAt - a.updatedAt);
+    });
+    return note;
+  }, []);
 
   const value = {
     currentNote,
@@ -128,9 +119,7 @@ export function NoteProvider({ children }) {
     hasNote,
   };
 
-  return (
-    <NoteContext.Provider value={value}>{children}</NoteContext.Provider>
-  );
+  return <NoteContext.Provider value={value}>{children}</NoteContext.Provider>;
 }
 
 export function useNotes() {

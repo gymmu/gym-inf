@@ -35,4 +35,6 @@
   background-color: yellow;
   color: black;
 }
-.editorWrapper { height: 300px; }
+.editorWrapper {
+  height: 300px;
+}

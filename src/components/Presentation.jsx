@@ -1,31 +1,30 @@
-import style from "@components/Presentation.module.css"
-import { useEffect } from "react"
-import { useAppContext } from "../context/AppContext"
-import { useRef } from "react"
+import style from "@components/Presentation.module.css";
+import { useEffect, useRef } from "react";
+import { useAppContext } from "../context/AppContext";
 
 export function Presentation({ children }) {
-  const { fullscreen, setFullscreen } = useAppContext()
-  const presentationRef = useRef(null)
+  const { fullscreen, setFullscreen } = useAppContext();
+  const presentationRef = useRef(null);
 
   useEffect(() => {
     function handleKeyDown(ev) {
-      const { key } = ev
+      const { key } = ev;
       if (key === "f") {
-        setFullscreen(true)
+        setFullscreen(true);
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown)
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [setFullscreen])
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [setFullscreen]);
 
   function scroll(value) {
-    console.log("scrollByValue:", value)
-    console.log(presentationRef.current.scrollLeft)
+    console.log("scrollByValue:", value);
+    console.log(presentationRef.current.scrollLeft);
     if (presentationRef) {
-      presentationRef.current.scrollLeft += value
+      presentationRef.current.scrollLeft += value;
     }
   }
 
@@ -33,32 +32,35 @@ export function Presentation({ children }) {
     <>
       <button
         className={`${style.scrollButton} ${style.leftButton}`}
-        onClick={(ev) => scroll(-500)}>
+        onClick={(ev) => scroll(-500)}
+      >
         &larr;
       </button>
       <button
         className={`${style.scrollButton} ${style.rightButton}`}
-        onClick={(ev) => scroll(500)}>
+        onClick={(ev) => scroll(500)}
+      >
         &rarr;
       </button>
       <div
         ref={presentationRef}
         id={style.presentation}
-        className={fullscreen ? style.fullScreen : ""}>
+        className={fullscreen ? style.fullScreen : ""}
+      >
         {children}
       </div>
     </>
-  )
+  );
 }
 
 export function Slide({ children }) {
-  return <div className={style.slide}>{children}</div>
+  return <div className={style.slide}>{children}</div>;
 }
 
 export function Narrow({ children }) {
-  return <div className={style.narrow}>{children}</div>
+  return <div className={style.narrow}>{children}</div>;
 }
 
 export function SlideContent({ children }) {
-  return <div className={style.slideContent}>{children}</div>
+  return <div className={style.slideContent}>{children}</div>;
 }

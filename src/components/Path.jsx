@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism"
+import Editor from "@components/Editor.jsx";
+import style from "@components/Path.module.css";
+import { useEffect, useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Slider from "./Slider";
 
-import Editor from "@components/Editor.jsx"
-import Slider from "./Slider"
-import style from "@components/Path.module.css"
-
-export default function Path({defaultPath = "M 100 100\nL 200 200\nL 200 100\nZ"}) {
-    const [path, setPath] = useState(defaultPath)
-    const [strokeColor, setStrokeColor] = useState("black")
-    const [strokeWidth, setStrokeWidth] = useState(3)
-    const [fill, setFill] = useState("none")
-  const [srcDoc, setSrcDoc] = useState("")
-    const [codeString, setCodeString] = useState("")
-    const script = `
+export default function Path({
+  defaultPath = "M 100 100\nL 200 200\nL 200 100\nZ",
+}) {
+  const [path, setPath] = useState(defaultPath);
+  const [strokeColor, setStrokeColor] = useState("black");
+  const [strokeWidth, setStrokeWidth] = useState(3);
+  const [fill, setFill] = useState("none");
+  const [srcDoc, setSrcDoc] = useState("");
+  const [codeString, setCodeString] = useState("");
+  const script = `
 function getPathPoints(pathElement) {
     const pathData = pathElement.getAttribute('d');
     const commands = pathData.match(/[a-zA-Z][^a-zA-Z]*/g);
@@ -111,7 +112,7 @@ vertices.forEach((vertex, index) => {
     circleGroup.appendChild(circle);
     circleGroup.appendChild(text);
 })
-`
+`;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -155,16 +156,19 @@ vertices.forEach((vertex, index) => {
           <style>body { margin: 0; padding: 0; overflow: hidden;}</style>
           <script>${script}</script>
         </html>
-      `)
-    const formatPath = path.split("\n").map((line, index) => {
-        if (index === 0) {
-            return line
-        } else {
-            return `\t\t   ${line}`
-                }
-            }).join("\n")
+      `);
+      const formatPath = path
+        .split("\n")
+        .map((line, index) => {
+          if (index === 0) {
+            return line;
+          } else {
+            return `\t\t   ${line}`;
+          }
+        })
+        .join("\n");
 
-    setCodeString(`<svg viewBox="0 0 300 300" width="300">
+      setCodeString(`<svg viewBox="0 0 300 300" width="300">
     <path stroke="${strokeColor}"
         stroke-width="${strokeWidth}" 
         fill="${fill}"
@@ -172,164 +176,193 @@ vertices.forEach((vertex, index) => {
            ${formatPath}
           "
     />
-</svg>`)
-    }, 500)
+</svg>`);
+    }, 500);
     return () => {
-      clearTimeout(timeout)
-    }
-  }, [path, fill, strokeColor, strokeWidth])
+      clearTimeout(timeout);
+    };
+  }, [path, fill, strokeColor, strokeWidth]);
 
-    function appendToPath(str) {
-        setPath((oldPath) => {
-            if (oldPath.match(/[zZ]$/)) {
-                // Append before Z
-                const pathWithoutClosing = oldPath.split(/\n[zZ]/)[0]
-                return `${pathWithoutClosing}\n${str}\nZ`
-            } else {
-                return `${oldPath}\n${str}`
-            }
-        })
-    }
+  function appendToPath(str) {
+    setPath((oldPath) => {
+      if (oldPath.match(/[zZ]$/)) {
+        // Append before Z
+        const pathWithoutClosing = oldPath.split(/\n[zZ]/)[0];
+        return `${pathWithoutClosing}\n${str}\nZ`;
+      } else {
+        return `${oldPath}\n${str}`;
+      }
+    });
+  }
 
-    function rand() {
-        return Math.floor(Math.random() * 300)
-    }
+  function rand() {
+    return Math.floor(Math.random() * 300);
+  }
 
-    function addLineAbsolute() {
-        appendToPath(`L ${rand()} ${rand()}`)
-    }
+  function addLineAbsolute() {
+    appendToPath(`L ${rand()} ${rand()}`);
+  }
 
-    function addMoveAbsolute() {
-        appendToPath(`M ${rand()} ${rand()}`)
-    }
+  function addMoveAbsolute() {
+    appendToPath(`M ${rand()} ${rand()}`);
+  }
 
-    function addVerticalAbsolute() {
-        appendToPath(`V ${rand()}`)
-    }
+  function addVerticalAbsolute() {
+    appendToPath(`V ${rand()}`);
+  }
 
-    function addHorizontalAbsolute() {
-        appendToPath(`H ${rand()}`)
-    }
+  function addHorizontalAbsolute() {
+    appendToPath(`H ${rand()}`);
+  }
 
-    function addQuadraticAbsolute() {
-        appendToPath(`Q ${rand()} ${rand()} ${rand()} ${rand()}`)
-    }
+  function addQuadraticAbsolute() {
+    appendToPath(`Q ${rand()} ${rand()} ${rand()} ${rand()}`);
+  }
 
-    function addQuadraticContinuationAbsolute() {
-        appendToPath(`T ${rand()} ${rand()}`)
-    }
+  function addQuadraticContinuationAbsolute() {
+    appendToPath(`T ${rand()} ${rand()}`);
+  }
 
-    function addLineRelative() {
-        appendToPath(`l ${rand()} ${rand()}`)
-    }
+  function addLineRelative() {
+    appendToPath(`l ${rand()} ${rand()}`);
+  }
 
-    function addMoveRelative() {
-        appendToPath(`m ${rand()} ${rand()}`)
-    }
+  function addMoveRelative() {
+    appendToPath(`m ${rand()} ${rand()}`);
+  }
 
-    function addVerticalRelative() {
-        appendToPath(`v ${rand()}`)
-    }
+  function addVerticalRelative() {
+    appendToPath(`v ${rand()}`);
+  }
 
-    function addHorizontalRelative() {
-        appendToPath(`h ${rand()}`)
-    }
+  function addHorizontalRelative() {
+    appendToPath(`h ${rand()}`);
+  }
 
-    function addQuadraticRelative() {
-        appendToPath(`q ${rand()} ${rand()} ${rand()} ${rand()}`)
-    }
+  function addQuadraticRelative() {
+    appendToPath(`q ${rand()} ${rand()} ${rand()} ${rand()}`);
+  }
 
-    function addQuadraticContinuationRelative() {
-        appendToPath(`t ${rand()} ${rand()}`)
-    }
+  function addQuadraticContinuationRelative() {
+    appendToPath(`t ${rand()} ${rand()}`);
+  }
 
-    function resetPath() {
-        setPath("M 100 100\nL 200 200\nL 200 100\nZ")
-    }
+  function resetPath() {
+    setPath("M 100 100\nL 200 200\nL 200 100\nZ");
+  }
 
-    return (
-        <div className={style.gridContainer} >
-            <div className={style.gridBox}>
-                <h2>Kontrollelemente</h2>
-                <div className={style.controlls}>
-                    <div className={style.formGroup}>
-                <label htmlFor="fillField">Füllfarbe</label>
-                <select
-                    id="fillField"
-                    value={fill}
-                    onChange={(e) => setFill(e.target.value)}
-                >
-                    <option>none</option>
-                    <option>red</option>
-                    <option>green</option>
-                    <option>blue</option>
-                </select>
-                </div>
-                    <div className={style.formGroup}>
-                <label htmlFor="strokeColorField">Strichfarbe</label>
-                <select
-                    id="strokeColorField"
-                    value={strokeColor}
-                    onChange={(e) => setStrokeColor(e.target.value)}
-                >
-                    <option>red</option>
-                    <option>green</option>
-                    <option>blue</option>
-                </select>
-                </div>
-                    <div className={style.formGroup}>
-                <Slider
-                    sliderText="Stroke width: "
-                    value={strokeWidth}
-                    setValue={setStrokeWidth}
-                    minVal={0}
-                    maxVal={10}
-                />
-                </div>
-                <div className={style.formGroup}>
-                    <label>Absolute Koordinaten:</label>
-                    <button onClick={addLineAbsolute}>Linie (absolut) hinzufügen</button>
-                    <button onClick={addMoveAbsolute}>Bewegen (absolut) hinzufügen</button>
-                    <button onClick={addHorizontalAbsolute}>Horizontale Linie (absolut) hinzufügen</button>
-                    <button onClick={addVerticalAbsolute}>Vertikale Linie (absolut) hinzufügen</button>
-                    <button onClick={addQuadraticAbsolute}>Quadratische Kurve (absolut) hinzufügen</button>
-                    <button onClick={addQuadraticContinuationAbsolute}>Fortsetzung quadratische Kurve (absolut) hinzufügen</button>
-                </div>
-                <div className={style.formGroup}>
-                    <label>Relative Koordinaten:</label>
-                        <button onClick={addLineRelative}>Linie (relativ) hinzufügen</button>
-                        <button onClick={addMoveRelative}>Bewegen (relativ) hinzufügen</button>
-                        <button onClick={addHorizontalRelative}>Horizontale Linie (relativ) hinzufügen</button>
-                        <button onClick={addVerticalRelative}>Vertikale Linie (relativ) hinzufügen</button>
-                    <button onClick={addQuadraticRelative}>Quadratische Kurve (relativ) hinzufügen</button>
-                    <button onClick={addQuadraticContinuationRelative}>Fortsetzung quadratische Kurve (relativ) hinzufügen</button>
-                </div>
-                <div className={style.formGroup}>
-                    <button onClick={resetPath}>Pfad zurücksetzen</button>
-                    <button onClick={() => setPath("")}>Pfad löschen</button>
-                </div>
-                </div>
-            </div>
-            <div className={style.gridBox}>
-                <h2>Resultat</h2>
-                <iframe
-                    srcDoc={srcDoc}
-                    title="output"
-                    sandbox="allow-scripts"
-                    frameBorder="0"
-                    height="300px"
-                    width="300px"
-                />
-            </div>
-            <div className={style.gridBox}>
-                <Editor title="Pfad" language="text" value={path} handleChange={setPath} />
-            </div>
-            <div className={style.gridBox}>
-                <h2>SVG Code</h2>
-                <SyntaxHighlighter language="css" style={dark}>
-                    {codeString}
-                </SyntaxHighlighter>
-            </div>
+  return (
+    <div className={style.gridContainer}>
+      <div className={style.gridBox}>
+        <h2>Kontrollelemente</h2>
+        <div className={style.controlls}>
+          <div className={style.formGroup}>
+            <label htmlFor="fillField">Füllfarbe</label>
+            <select
+              id="fillField"
+              value={fill}
+              onChange={(e) => setFill(e.target.value)}
+            >
+              <option>none</option>
+              <option>red</option>
+              <option>green</option>
+              <option>blue</option>
+            </select>
+          </div>
+          <div className={style.formGroup}>
+            <label htmlFor="strokeColorField">Strichfarbe</label>
+            <select
+              id="strokeColorField"
+              value={strokeColor}
+              onChange={(e) => setStrokeColor(e.target.value)}
+            >
+              <option>red</option>
+              <option>green</option>
+              <option>blue</option>
+            </select>
+          </div>
+          <div className={style.formGroup}>
+            <Slider
+              sliderText="Stroke width: "
+              value={strokeWidth}
+              setValue={setStrokeWidth}
+              minVal={0}
+              maxVal={10}
+            />
+          </div>
+          <div className={style.formGroup}>
+            <label>Absolute Koordinaten:</label>
+            <button onClick={addLineAbsolute}>
+              Linie (absolut) hinzufügen
+            </button>
+            <button onClick={addMoveAbsolute}>
+              Bewegen (absolut) hinzufügen
+            </button>
+            <button onClick={addHorizontalAbsolute}>
+              Horizontale Linie (absolut) hinzufügen
+            </button>
+            <button onClick={addVerticalAbsolute}>
+              Vertikale Linie (absolut) hinzufügen
+            </button>
+            <button onClick={addQuadraticAbsolute}>
+              Quadratische Kurve (absolut) hinzufügen
+            </button>
+            <button onClick={addQuadraticContinuationAbsolute}>
+              Fortsetzung quadratische Kurve (absolut) hinzufügen
+            </button>
+          </div>
+          <div className={style.formGroup}>
+            <label>Relative Koordinaten:</label>
+            <button onClick={addLineRelative}>
+              Linie (relativ) hinzufügen
+            </button>
+            <button onClick={addMoveRelative}>
+              Bewegen (relativ) hinzufügen
+            </button>
+            <button onClick={addHorizontalRelative}>
+              Horizontale Linie (relativ) hinzufügen
+            </button>
+            <button onClick={addVerticalRelative}>
+              Vertikale Linie (relativ) hinzufügen
+            </button>
+            <button onClick={addQuadraticRelative}>
+              Quadratische Kurve (relativ) hinzufügen
+            </button>
+            <button onClick={addQuadraticContinuationRelative}>
+              Fortsetzung quadratische Kurve (relativ) hinzufügen
+            </button>
+          </div>
+          <div className={style.formGroup}>
+            <button onClick={resetPath}>Pfad zurücksetzen</button>
+            <button onClick={() => setPath("")}>Pfad löschen</button>
+          </div>
         </div>
-    )
+      </div>
+      <div className={style.gridBox}>
+        <h2>Resultat</h2>
+        <iframe
+          srcDoc={srcDoc}
+          title="output"
+          sandbox="allow-scripts"
+          frameBorder="0"
+          height="300px"
+          width="300px"
+        />
+      </div>
+      <div className={style.gridBox}>
+        <Editor
+          title="Pfad"
+          language="text"
+          value={path}
+          handleChange={setPath}
+        />
+      </div>
+      <div className={style.gridBox}>
+        <h2>SVG Code</h2>
+        <SyntaxHighlighter language="css" style={dark}>
+          {codeString}
+        </SyntaxHighlighter>
+      </div>
+    </div>
+  );
 }

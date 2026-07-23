@@ -1,6 +1,6 @@
-import QuizFromJson from "@components/QuizFromJson.jsx"
-import { Link } from "react-router-dom"
-import quizData from "@quizzes/gym-vpn-quiz.json"
+import QuizFromJson from "@components/QuizFromJson.jsx";
+import quizData from "@quizzes/gym-vpn-quiz.json";
+import { Link } from "react-router-dom";
 
 export default function GymVPNQuiz() {
   return (
@@ -37,5 +37,5 @@ export default function GymVPNQuiz() {
         </p>
       </section>
     </>
-  )
+  );
 }

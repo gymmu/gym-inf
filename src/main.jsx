@@ -1,12 +1,12 @@
-import { ViteReactSSG } from "vite-react-ssg"
-import { routes } from "./routes/all.jsx"
-import "./index.css"
-import "./components/utilities.css"
-import "./components/components.css"
+import { ViteReactSSG } from "vite-react-ssg";
+import { routes } from "./routes/all.jsx";
+import "./index.css";
+import "./components/utilities.css";
+import "./components/components.css";
 
-const basename = import.meta.env.VITE_BASE_PATH || "/gym-inf/"
+const basename = import.meta.env.VITE_BASE_PATH || "/gym-inf/";
 
 export const createRoot = ViteReactSSG({
   routes,
   basename,
-})
+});

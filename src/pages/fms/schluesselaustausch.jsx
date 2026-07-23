@@ -1,7 +1,7 @@
-import LearningGoals from "@components/LearningGoals.jsx";
-import Section from "@components/Section.jsx";
 import { DH1, DH2, DH3 } from "@components/DiffieHellman.jsx";
+import LearningGoals from "@components/LearningGoals.jsx";
 import ModuloClock from "@components/ModuloClock.jsx";
+import Section from "@components/Section.jsx";
 
 export default function Schluesselaustausch() {
   return (

@@ -1,4 +1,4 @@
-import style from "./DataTable.module.css"
+import style from "./DataTable.module.css";
 
 /**
  * Wiederverwendbare Tabellen-Komponente.
@@ -33,5 +33,5 @@ export default function DataTable({ headers, rows, caption }) {
         </tbody>
       </table>
     </div>
-  )
+  );
 }

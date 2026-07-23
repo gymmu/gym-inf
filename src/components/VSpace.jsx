@@ -1,3 +1,3 @@
 export default function VSpace({ space }) {
-  return <div style={{ marginTop: space }}></div>
+  return <div style={{ marginTop: space }}></div>;
 }

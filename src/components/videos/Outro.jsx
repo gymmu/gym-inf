@@ -1,5 +1,5 @@
-import MatterScene from "../MatterScene"
-import { Video } from "../Remotion"
+import MatterScene from "../MatterScene";
+import { Video } from "../Remotion";
 
 export default function Outro() {
   return (
@@ -24,5 +24,5 @@ bbbbbbbbbbbbb
         }}
       />
     </Video>
-  )
+  );
 }

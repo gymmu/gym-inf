@@ -1,29 +1,29 @@
-import { useEffect, useRef, useState } from "react"
-import styles from "./MermaidDark.module.css"
+import { useEffect, useRef, useState } from "react";
+import styles from "./MermaidDark.module.css";
 
 export default function MermaidDark({ chart, id, highlightNode = null }) {
-  const containerRef = useRef(null)
-  const [svg, setSvg] = useState("")
-  const [error, setError] = useState(null)
-  const [mermaidReady, setMermaidReady] = useState(false)
+  const containerRef = useRef(null);
+  const [svg, setSvg] = useState("");
+  const [error, setError] = useState(null);
+  const [mermaidReady, setMermaidReady] = useState(false);
 
   // Wait for window.mermaid
   useEffect(() => {
     if (typeof window !== "undefined" && window.mermaid) {
-      setMermaidReady(true)
+      setMermaidReady(true);
     } else {
       const checkMermaid = setInterval(() => {
         if (typeof window !== "undefined" && window.mermaid) {
-          setMermaidReady(true)
-          clearInterval(checkMermaid)
+          setMermaidReady(true);
+          clearInterval(checkMermaid);
         }
-      }, 100)
-      return () => clearInterval(checkMermaid)
+      }, 100);
+      return () => clearInterval(checkMermaid);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if (!chart || !mermaidReady || !window.mermaid) return
+    if (!chart || !mermaidReady || !window.mermaid) return;
 
     const renderChart = async () => {
       try {
@@ -58,18 +58,18 @@ export default function MermaidDark({ chart, id, highlightNode = null }) {
             nodeSpacing: 40,
           },
           look: "handDrawn",
-        })
+        });
 
         const uniqueId =
-          id || `mermaid-dark-${Math.random().toString(36).substr(2, 9)}`
+          id || `mermaid-dark-${Math.random().toString(36).substr(2, 9)}`;
 
-        setSvg("")
-        setError(null)
+        setSvg("");
+        setError(null);
 
         const { svg: renderedSvg } = await window.mermaid.render(
           uniqueId,
           chart,
-        )
+        );
 
         // Add Kalam font and extra padding via simple string injection
         const fontStyle = `<style>
@@ -85,35 +85,35 @@ export default function MermaidDark({ chart, id, highlightNode = null }) {
           foreignObject { 
             overflow: visible !important; 
           }
-        </style>`
-        const styledSvg = renderedSvg.replace("<svg", fontStyle + "<svg")
+        </style>`;
+        const styledSvg = renderedSvg.replace("<svg", fontStyle + "<svg");
 
-        setSvg(styledSvg)
+        setSvg(styledSvg);
       } catch (err) {
-        console.error("Mermaid rendering error:", err)
-        setError(err.message || "Failed to render diagram")
+        console.error("Mermaid rendering error:", err);
+        setError(err.message || "Failed to render diagram");
       }
-    }
+    };
 
-    renderChart()
-  }, [chart, id, mermaidReady])
+    renderChart();
+  }, [chart, id, mermaidReady]);
 
   // Apply highlighting when highlightNode changes
   useEffect(() => {
-    if (!containerRef.current || !highlightNode) return
+    if (!containerRef.current || !highlightNode) return;
 
     // Remove all previous highlights
     const allHighlighted = containerRef.current.querySelectorAll(
       `.${styles.highlight}`,
-    )
-    allHighlighted.forEach((el) => el.classList.remove(styles.highlight))
+    );
+    allHighlighted.forEach((el) => el.classList.remove(styles.highlight));
 
     // Add highlight to the specified node
-    const node = containerRef.current.querySelector(`#${highlightNode}`)
+    const node = containerRef.current.querySelector(`#${highlightNode}`);
     if (node) {
-      node.classList.add(styles.highlight)
+      node.classList.add(styles.highlight);
     }
-  }, [highlightNode, svg])
+  }, [highlightNode, svg]);
 
   if (error) {
     return (
@@ -121,7 +121,7 @@ export default function MermaidDark({ chart, id, highlightNode = null }) {
         <strong>Fehler beim Rendern des Diagramms:</strong>
         <pre>{error}</pre>
       </div>
-    )
+    );
   }
 
   return (
@@ -130,5 +130,5 @@ export default function MermaidDark({ chart, id, highlightNode = null }) {
       className={styles.mermaidContainer}
       dangerouslySetInnerHTML={{ __html: svg }}
     />
-  )
+  );
 }

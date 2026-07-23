@@ -1,8 +1,8 @@
-import { Editor as MEditor } from "@monaco-editor/react"
-import styles from "@components/CodePen.module.css"
+import styles from "@components/CodePen.module.css";
+import { Editor as MEditor } from "@monaco-editor/react";
 
 export default function Editor(props) {
-  const { title, language, value, handleChange } = props
+  const { title, language, value, handleChange } = props;
   return (
     <div className={styles.editorWrapper}>
       <h2>{title}</h2>
@@ -19,5 +19,5 @@ export default function Editor(props) {
         }}
       />
     </div>
-  )
+  );
 }

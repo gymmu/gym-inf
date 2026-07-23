@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react"
-import style from "./SimpleSplitView.module.css"
+import { useEffect, useRef, useState } from "react";
+import style from "./SimpleSplitView.module.css";
 
 export default function SimpleSplitView({
   component, // Remotion-Komponente
@@ -13,118 +13,120 @@ export default function SimpleSplitView({
   width = 800,
   height = 400,
 }) {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [currentFrame, setCurrentFrame] = useState(0)
-  const [isClient, setIsClient] = useState(typeof window !== "undefined")
-  const [MermaidComponent, setMermaidComponent] = useState(null)
-  const [PlayerComponent, setPlayerComponent] = useState(null)
-  const playerRef = useRef(null)
-  const framesPerStep = fps * 1.5 // 1.5 Sekunden pro Schritt
-  const durationInFrames = totalSteps * framesPerStep
+  const [currentStep, setCurrentStep] = useState(0);
+  const [currentFrame, setCurrentFrame] = useState(0);
+  const [isClient, setIsClient] = useState(typeof window !== "undefined");
+  const [MermaidComponent, setMermaidComponent] = useState(null);
+  const [PlayerComponent, setPlayerComponent] = useState(null);
+  const playerRef = useRef(null);
+  const framesPerStep = fps * 1.5; // 1.5 Sekunden pro Schritt
+  const durationInFrames = totalSteps * framesPerStep;
 
   // Load components only in browser
   useEffect(() => {
-    if (typeof window === "undefined") return
-    
-    setIsClient(true)
-    
+    if (typeof window === "undefined") return;
+
+    setIsClient(true);
+
     // Use MermaidDark component which supports highlightNode prop
     Promise.all([
       import("@components/algorithm/MermaidDark"),
-      import("@remotion/player")
-    ]).then(([mermaidMod, playerMod]) => {
-      // Use MermaidDark directly - it supports highlightNode
-      setMermaidComponent(() => mermaidMod.default)
-      setPlayerComponent(() => playerMod.Player)
-    }).catch(err => {
-      console.error("Failed to load components:", err)
-    })
-  }, [])
+      import("@remotion/player"),
+    ])
+      .then(([mermaidMod, playerMod]) => {
+        // Use MermaidDark directly - it supports highlightNode
+        setMermaidComponent(() => mermaidMod.default);
+        setPlayerComponent(() => playerMod.Player);
+      })
+      .catch((err) => {
+        console.error("Failed to load components:", err);
+      });
+  }, []);
 
   // Listen to frame updates - use both frameupdate and timeupdate for reliability
   useEffect(() => {
     if (!PlayerComponent) {
-      return
+      return;
     }
 
-    let cleanupFn = null
+    let cleanupFn = null;
 
     // Small delay to ensure player is mounted
     const timeoutId = setTimeout(() => {
-      const { current } = playerRef
+      const { current } = playerRef;
       if (!current) {
-        return
+        return;
       }
 
       const onFrameUpdate = (event) => {
-        const frame = event.detail.frame
-        setCurrentFrame(frame)
-        const step = Math.floor(frame / framesPerStep)
-        setCurrentStep(step)
-      }
+        const frame = event.detail.frame;
+        setCurrentFrame(frame);
+        const step = Math.floor(frame / framesPerStep);
+        setCurrentStep(step);
+      };
 
       // Use both events for better compatibility
-      current.addEventListener("frameupdate", onFrameUpdate)
-      current.addEventListener("timeupdate", onFrameUpdate)
-      
+      current.addEventListener("frameupdate", onFrameUpdate);
+      current.addEventListener("timeupdate", onFrameUpdate);
+
       // Store cleanup function
       cleanupFn = () => {
-        current.removeEventListener("frameupdate", onFrameUpdate)
-        current.removeEventListener("timeupdate", onFrameUpdate)
-      }
-    }, 100)
-    
+        current.removeEventListener("frameupdate", onFrameUpdate);
+        current.removeEventListener("timeupdate", onFrameUpdate);
+      };
+    }, 100);
+
     return () => {
-      clearTimeout(timeoutId)
+      clearTimeout(timeoutId);
       if (cleanupFn) {
-        cleanupFn()
+        cleanupFn();
       }
-    }
-  }, [framesPerStep, PlayerComponent])
+    };
+  }, [framesPerStep, PlayerComponent]);
 
   const currentDescription =
-    stepDescriptions[currentStep] || "Algorithmus läuft..."
-  
-  const currentNodeId = getNodeId ? getNodeId(currentStep) : null
+    stepDescriptions[currentStep] || "Algorithmus läuft...";
+
+  const currentNodeId = getNodeId ? getNodeId(currentStep) : null;
 
   // Manual step controls
   const goToStep = (step) => {
-    const newStep = Math.max(0, Math.min(step, totalSteps - 1))
-    setCurrentStep(newStep)
-    const targetFrame = newStep * framesPerStep
+    const newStep = Math.max(0, Math.min(step, totalSteps - 1));
+    setCurrentStep(newStep);
+    const targetFrame = newStep * framesPerStep;
     if (playerRef.current) {
-      playerRef.current.seekTo(targetFrame)
+      playerRef.current.seekTo(targetFrame);
     }
-  }
+  };
 
-  const nextStep = () => goToStep(currentStep + 1)
-  const prevStep = () => goToStep(currentStep - 1)
-  const reset = () => goToStep(0)
-  
-  const [isPlaying, setIsPlaying] = useState(false)
-  
+  const nextStep = () => goToStep(currentStep + 1);
+  const prevStep = () => goToStep(currentStep - 1);
+  const reset = () => goToStep(0);
+
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const togglePlayPause = () => {
     if (playerRef.current) {
-      playerRef.current.toggle()
+      playerRef.current.toggle();
     }
-  }
-  
+  };
+
   // Listen to play/pause events
   useEffect(() => {
-    const { current } = playerRef
-    if (!current) return
-    
-    const onPlay = () => setIsPlaying(true)
-    const onPause = () => setIsPlaying(false)
-    
-    current.addEventListener("play", onPlay)
-    current.addEventListener("pause", onPause)
-    
+    const { current } = playerRef;
+    if (!current) return;
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+
+    current.addEventListener("play", onPlay);
+    current.addEventListener("pause", onPause);
+
     return () => {
-      current.removeEventListener("play", onPlay)
-      current.removeEventListener("pause", onPause)
-    }
-  }, [PlayerComponent])
+      current.removeEventListener("play", onPlay);
+      current.removeEventListener("pause", onPause);
+    };
+  }, [PlayerComponent]);
 
   // Show loading state until client-side components are loaded
   if (!isClient || !MermaidComponent || !PlayerComponent) {
@@ -134,7 +136,13 @@ export default function SimpleSplitView({
           <div className={style.flowchartSide}>
             <h3 className={style.sideTitle}>Flussdiagramm</h3>
             <div className={style.flowchartContainer}>
-              <div style={{ padding: "40px", textAlign: "center", color: "var(--color-gray)" }}>
+              <div
+                style={{
+                  padding: "40px",
+                  textAlign: "center",
+                  color: "var(--color-gray)",
+                }}
+              >
                 Lade Diagramm...
               </div>
             </div>
@@ -142,7 +150,13 @@ export default function SimpleSplitView({
           <div className={style.animationSide}>
             <h3 className={style.sideTitle}>Visualisierung</h3>
             <div className={style.playerContainer}>
-              <div style={{ padding: "40px", textAlign: "center", color: "var(--color-gray)" }}>
+              <div
+                style={{
+                  padding: "40px",
+                  textAlign: "center",
+                  color: "var(--color-gray)",
+                }}
+              >
                 Lade Animation...
               </div>
             </div>
@@ -151,11 +165,9 @@ export default function SimpleSplitView({
             </div>
           </div>
         </div>
-        <div className={style.stepInfo}>
-          Schritt 1 von {totalSteps}
-        </div>
+        <div className={style.stepInfo}>Schritt 1 von {totalSteps}</div>
       </div>
-    )
+    );
   }
 
   return (
@@ -165,8 +177,8 @@ export default function SimpleSplitView({
         <div className={style.flowchartSide}>
           <h3 className={style.sideTitle}>Flussdiagramm</h3>
           <div className={style.flowchartContainer}>
-            <MermaidComponent 
-              chart={flowchart} 
+            <MermaidComponent
+              chart={flowchart}
               id={flowchartId}
               highlightNode={currentNodeId}
             />
@@ -181,7 +193,7 @@ export default function SimpleSplitView({
             <div className={style.stepInfo}>
               Schritt {currentStep + 1} von {totalSteps}
             </div>
-            
+
             <PlayerComponent
               ref={playerRef}
               component={component}
@@ -196,7 +208,7 @@ export default function SimpleSplitView({
               playbackRate={1.0}
               showVolumeControls={false}
             />
-            
+
             {/* Schritt-Beschreibung direkt unter dem Player */}
             <div className={style.stepDescription}>
               <strong>Aktueller Schritt:</strong> {currentDescription}
@@ -207,37 +219,46 @@ export default function SimpleSplitView({
 
       {/* Stepper-Controls */}
       <div className={style.stepControls}>
-        <button 
-          onClick={reset} 
+        <button
+          onClick={reset}
           disabled={currentStep === 0}
-          className={style.controlButton}>
+          className={style.controlButton}
+        >
           ⏮ Zurücksetzen
         </button>
-        <button 
-          onClick={prevStep} 
+        <button
+          onClick={prevStep}
           disabled={currentStep === 0}
-          className={style.controlButton}>
+          className={style.controlButton}
+        >
           ◀ Zurück
         </button>
-        <button 
+        <button
           onClick={togglePlayPause}
           className={style.controlButton}
-          style={{ backgroundColor: isPlaying ? "var(--color-red)" : "var(--color-green)" }}>
+          style={{
+            backgroundColor: isPlaying
+              ? "var(--color-red)"
+              : "var(--color-green)",
+          }}
+        >
           {isPlaying ? "⏸ Pause" : "▶ Play"}
         </button>
-        <button 
-          onClick={nextStep} 
+        <button
+          onClick={nextStep}
           disabled={currentStep === totalSteps - 1}
-          className={style.controlButton}>
+          className={style.controlButton}
+        >
           Weiter ▶
         </button>
-        <button 
-          onClick={() => goToStep(totalSteps - 1)} 
+        <button
+          onClick={() => goToStep(totalSteps - 1)}
           disabled={currentStep === totalSteps - 1}
-          className={style.controlButton}>
+          className={style.controlButton}
+        >
           Zum Ende ⏭
         </button>
       </div>
     </div>
-  )
+  );
 }

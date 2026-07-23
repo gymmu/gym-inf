@@ -1,8 +1,8 @@
 // Mock for Remotion core during SSR
-import React from "react"
+import React from "react";
 
 // Mock useCurrentFrame hook
-export const useCurrentFrame = () => 0
+export const useCurrentFrame = () => 0;
 
 // Mock AbsoluteFill component
 export const AbsoluteFill = ({ children, style }) => {
@@ -16,13 +16,13 @@ export const AbsoluteFill = ({ children, style }) => {
       },
     },
     children,
-  )
-}
+  );
+};
 
 // Mock interpolate function
 export const interpolate = (input, inputRange, outputRange) => {
-  return outputRange[0]
-}
+  return outputRange[0];
+};
 
 // Mock other common Remotion exports
 export const useVideoConfig = () => ({
@@ -30,12 +30,12 @@ export const useVideoConfig = () => ({
   height: 1080,
   fps: 30,
   durationInFrames: 100,
-})
+});
 
-export const Sequence = ({ children }) => children
+export const Sequence = ({ children }) => children;
 
 // Mock spring animation — returns end value immediately during SSR
-export const spring = () => 1
+export const spring = () => 1;
 
 export default {
   useCurrentFrame,
@@ -44,4 +44,4 @@ export default {
   useVideoConfig,
   Sequence,
   spring,
-}
+};

@@ -1,9 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
-  return (
-    <footer>Informatik Gymnasium Muttenz</footer>
-  );
+  return <footer>Informatik Gymnasium Muttenz</footer>;
 };
 
-export default Footer
+export default Footer;

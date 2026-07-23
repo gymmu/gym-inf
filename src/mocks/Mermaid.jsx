@@ -1,5 +1,5 @@
 // Mock for Mermaid component during SSR
-import React from "react"
+import React from "react";
 
 // Mock Mermaid component for SSR
 const Mermaid = ({ chart, id, ...props }) => {
@@ -16,7 +16,7 @@ const Mermaid = ({ chart, id, ...props }) => {
       },
     },
     chart,
-  )
-}
+  );
+};
 
-export default Mermaid
+export default Mermaid;

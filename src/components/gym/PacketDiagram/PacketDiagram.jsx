@@ -1,5 +1,5 @@
-import { useState } from "react"
-import style from "./PacketDiagram.module.css"
+import { useState } from "react";
+import style from "./PacketDiagram.module.css";
 
 const LAYERS = [
   {
@@ -148,17 +148,17 @@ const LAYERS = [
     },
     desc: "Die unterste Schicht — überträgt Daten im lokalen Netz (LAN). Wird an jedem Router neu erstellt.",
   },
-]
+];
 
 export default function PacketDiagram() {
-  const [activeLayer, setActiveLayer] = useState("ip")
-  const [activeField, setActiveField] = useState(null)
-  const [exploded, setExploded] = useState(false)
+  const [activeLayer, setActiveLayer] = useState("ip");
+  const [activeField, setActiveField] = useState(null);
+  const [exploded, setExploded] = useState(false);
 
-  const layer = LAYERS.find((l) => l.id === activeLayer)
+  const layer = LAYERS.find((l) => l.id === activeLayer);
   const field = activeField
     ? layer?.fields.find((f) => f.name === activeField)
-    : null
+    : null;
 
   return (
     <div className={style.wrapper}>
@@ -169,7 +169,8 @@ export default function PacketDiagram() {
         </span>
         <button
           className={`${style.toggleBtn} ${exploded ? style.active : ""}`}
-          onClick={() => setExploded((e) => !e)}>
+          onClick={() => setExploded((e) => !e)}
+        >
           {exploded ? "▲ Schichten zuklappen" : "▼ Schichten aufklappen"}
         </button>
       </div>
@@ -177,8 +178,8 @@ export default function PacketDiagram() {
       {/* ── Packet stack ─────────────────────────────────────── */}
       <div className={`${style.stack} ${exploded ? style.exploded : ""}`}>
         {LAYERS.map((l, i) => {
-          const isActive = l.id === activeLayer
-          const offset = exploded ? 0 : i * 4
+          const isActive = l.id === activeLayer;
+          const offset = exploded ? 0 : i * 4;
 
           return (
             <div
@@ -191,12 +192,13 @@ export default function PacketDiagram() {
                 zIndex: LAYERS.length - i,
               }}
               onClick={() => {
-                setActiveLayer(l.id)
-                setActiveField(null)
+                setActiveLayer(l.id);
+                setActiveField(null);
               }}
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && setActiveLayer(l.id)}>
+              onKeyDown={(e) => e.key === "Enter" && setActiveLayer(l.id)}
+            >
               <span className={style.layerLabel}>{l.label}</span>
               {exploded && (
                 <div className={style.fields}>
@@ -206,16 +208,17 @@ export default function PacketDiagram() {
                       className={`${style.field} ${activeField === f.name && isActive ? style.activeField : ""}`}
                       style={{ borderColor: l.color }}
                       onClick={(e) => {
-                        e.stopPropagation()
-                        setActiveLayer(l.id)
-                        setActiveField(activeField === f.name ? null : f.name)
+                        e.stopPropagation();
+                        setActiveLayer(l.id);
+                        setActiveField(activeField === f.name ? null : f.name);
                       }}
                       role="button"
                       tabIndex={0}
                       onKeyDown={(e) =>
                         e.key === "Enter" &&
                         (setActiveLayer(l.id), setActiveField(f.name))
-                      }>
+                      }
+                    >
                       <span className={style.fieldName}>{f.name}</span>
                       {f.size && (
                         <span className={style.fieldSize}>{f.size}</span>
@@ -234,16 +237,17 @@ export default function PacketDiagram() {
                         background: "rgba(0,0,0,0.15)",
                       }}
                       onClick={(e) => {
-                        e.stopPropagation()
-                        setActiveLayer(l.id)
-                        setActiveField(l.trailer.name)
+                        e.stopPropagation();
+                        setActiveLayer(l.id);
+                        setActiveField(l.trailer.name);
                       }}
                       role="button"
                       tabIndex={0}
                       onKeyDown={(e) =>
                         e.key === "Enter" &&
                         (setActiveLayer(l.id), setActiveField(l.trailer.name))
-                      }>
+                      }
+                    >
                       <span className={style.fieldName}>{l.trailer.name}</span>
                       <span className={style.fieldSize}>{l.trailer.size}</span>
                     </div>
@@ -251,7 +255,7 @@ export default function PacketDiagram() {
                 </div>
               )}
             </div>
-          )
+          );
         })}
       </div>
 
@@ -285,5 +289,5 @@ export default function PacketDiagram() {
         ) : null}
       </div>
     </div>
-  )
+  );
 }

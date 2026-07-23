@@ -1,13 +1,13 @@
-import { useState, useEffect, useRef } from "react"
-import style from "./NatDiagram.module.css"
+import { useEffect, useRef, useState } from "react";
+import style from "./NatDiagram.module.css";
 
 // Positionen (viewBox 720 × 320)
 // Links: 3 Geräte im Heimnetz
 // Mitte: Router
 // Rechts: Internet-Server
 
-const ROUTER_X = 360
-const ROUTER_Y = 160
+const ROUTER_X = 360;
+const ROUTER_Y = 160;
 
 const DEVICES = [
   { id: "pc", label: "PC", icon: "💻", ip: "192.168.1.10", x: 80, y: 80 },
@@ -27,7 +27,7 @@ const DEVICES = [
     x: 80,
     y: 240,
   },
-]
+];
 
 const SERVER = {
   id: "server",
@@ -36,18 +36,18 @@ const SERVER = {
   ip: "142.250.74.14",
   x: 640,
   y: 160,
-}
+};
 
 // Welches Gerät schickt gerade ein Paket?
 const SCENARIOS = [
   { deviceId: "pc", srcPort: 54321, dstPort: 443, proto: "HTTPS" },
   { deviceId: "phone", srcPort: 61234, dstPort: 443, proto: "HTTPS" },
   { deviceId: "tv", srcPort: 49152, dstPort: 53, proto: "DNS" },
-]
+];
 
 // Mapping: Gerät → externer Port
-const EXT_PORT = { pc: 40001, phone: 40002, tv: 40003 }
-const PUBLIC_IP = "62.0.0.1"
+const EXT_PORT = { pc: 40001, phone: 40002, tv: 40003 };
+const PUBLIC_IP = "62.0.0.1";
 
 // Phasendauern in ms
 const DURATION = {
@@ -56,112 +56,112 @@ const DURATION = {
   translated: 1400, // neue Adresse anzeigen — lang genug zum Lesen
   toServer: 700,
   returning: 700,
-}
+};
 
 function lerp(a, b, t) {
-  return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t }
+  return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
 }
 
 export default function NatDiagram() {
-  const [scenarioIdx, setScenarioIdx] = useState(0)
+  const [scenarioIdx, setScenarioIdx] = useState(0);
   // Phasen: idle | toRouter | translating | translated | toServer | returning | done
-  const [phase, setPhase] = useState("idle")
-  const [t, setT] = useState(0)
-  const rafRef = useRef(null)
-  const timerRef = useRef(null)
-  const startRef = useRef(null)
+  const [phase, setPhase] = useState("idle");
+  const [t, setT] = useState(0);
+  const rafRef = useRef(null);
+  const timerRef = useRef(null);
+  const startRef = useRef(null);
 
-  const scenario = SCENARIOS[scenarioIdx]
-  const device = DEVICES.find((d) => d.id === scenario.deviceId)
+  const scenario = SCENARIOS[scenarioIdx];
+  const device = DEVICES.find((d) => d.id === scenario.deviceId);
 
   function animatePhase(phaseName, onDone) {
-    cancelAnimationFrame(rafRef.current)
-    clearTimeout(timerRef.current)
-    const duration = DURATION[phaseName]
-    setPhase(phaseName)
-    setT(0)
-    startRef.current = null
+    cancelAnimationFrame(rafRef.current);
+    clearTimeout(timerRef.current);
+    const duration = DURATION[phaseName];
+    setPhase(phaseName);
+    setT(0);
+    startRef.current = null;
     function tick(now) {
-      if (!startRef.current) startRef.current = now
-      const elapsed = now - startRef.current
-      const progress = Math.min(elapsed / duration, 1)
-      setT(progress)
+      if (!startRef.current) startRef.current = now;
+      const elapsed = now - startRef.current;
+      const progress = Math.min(elapsed / duration, 1);
+      setT(progress);
       if (progress < 1) {
-        rafRef.current = requestAnimationFrame(tick)
+        rafRef.current = requestAnimationFrame(tick);
       } else {
-        onDone()
+        onDone();
       }
     }
-    rafRef.current = requestAnimationFrame(tick)
+    rafRef.current = requestAnimationFrame(tick);
   }
 
   function pausePhase(phaseName, onDone) {
-    cancelAnimationFrame(rafRef.current)
-    clearTimeout(timerRef.current)
-    setPhase(phaseName)
-    setT(1)
-    timerRef.current = setTimeout(onDone, DURATION[phaseName])
+    cancelAnimationFrame(rafRef.current);
+    clearTimeout(timerRef.current);
+    setPhase(phaseName);
+    setT(1);
+    timerRef.current = setTimeout(onDone, DURATION[phaseName]);
   }
 
   function runAnimation() {
-    if (phase !== "idle" && phase !== "done") return
+    if (phase !== "idle" && phase !== "done") return;
     animatePhase("toRouter", () => {
       pausePhase("translating", () => {
         pausePhase("translated", () => {
           animatePhase("toServer", () => {
             animatePhase("returning", () => {
-              setPhase("done")
-            })
-          })
-        })
-      })
-    })
+              setPhase("done");
+            });
+          });
+        });
+      });
+    });
   }
 
   useEffect(() => {
     return () => {
-      cancelAnimationFrame(rafRef.current)
-      clearTimeout(timerRef.current)
-    }
-  }, [])
+      cancelAnimationFrame(rafRef.current);
+      clearTimeout(timerRef.current);
+    };
+  }, []);
 
   // Paketposition berechnen
-  const routerPos = { x: ROUTER_X, y: ROUTER_Y }
-  const devicePos = { x: device.x, y: device.y }
-  const serverPos = { x: SERVER.x, y: SERVER.y }
+  const routerPos = { x: ROUTER_X, y: ROUTER_Y };
+  const devicePos = { x: device.x, y: device.y };
+  const serverPos = { x: SERVER.x, y: SERVER.y };
 
-  let packetPos = null
-  let packetLabel = ""
-  let packetColor = "#83a598"
-  let showPacket = false
+  let packetPos = null;
+  let packetLabel = "";
+  let packetColor = "#83a598";
+  let showPacket = false;
 
   if (phase === "toRouter") {
-    packetPos = lerp(devicePos, routerPos, t)
-    packetLabel = `${device.ip}:${scenario.srcPort}`
-    packetColor = "#83a598"
-    showPacket = true
+    packetPos = lerp(devicePos, routerPos, t);
+    packetLabel = `${device.ip}:${scenario.srcPort}`;
+    packetColor = "#83a598";
+    showPacket = true;
   } else if (phase === "translating") {
-    packetPos = routerPos
-    packetLabel = "wird übersetzt…"
-    packetColor = "#fabd2f"
-    showPacket = true
+    packetPos = routerPos;
+    packetLabel = "wird übersetzt…";
+    packetColor = "#fabd2f";
+    showPacket = true;
   } else if (phase === "translated") {
-    packetPos = routerPos
-    packetLabel = `${PUBLIC_IP}:${EXT_PORT[device.id]}`
-    packetColor = "#fe8019"
-    showPacket = true
+    packetPos = routerPos;
+    packetLabel = `${PUBLIC_IP}:${EXT_PORT[device.id]}`;
+    packetColor = "#fe8019";
+    showPacket = true;
   } else if (phase === "toServer") {
-    packetPos = lerp(routerPos, serverPos, t)
-    packetLabel = `${PUBLIC_IP}:${EXT_PORT[device.id]}`
-    packetColor = "#fe8019"
-    showPacket = true
+    packetPos = lerp(routerPos, serverPos, t);
+    packetLabel = `${PUBLIC_IP}:${EXT_PORT[device.id]}`;
+    packetColor = "#fe8019";
+    showPacket = true;
   } else if (phase === "returning") {
-    packetPos = lerp(serverPos, devicePos, t)
-    packetLabel = `→ ${device.ip}`
-    packetColor = "#b8bb26"
-    showPacket = true
+    packetPos = lerp(serverPos, devicePos, t);
+    packetLabel = `→ ${device.ip}`;
+    packetColor = "#b8bb26";
+    showPacket = true;
   } else if (phase === "done") {
-    showPacket = false
+    showPacket = false;
   }
 
   // Tabellenzeile hervorheben ab "translated" (neue IP sichtbar)
@@ -169,16 +169,17 @@ export default function NatDiagram() {
     phase === "translated" ||
     phase === "toServer" ||
     phase === "returning" ||
-    phase === "done"
+    phase === "done";
 
-  const isRunning = phase !== "idle" && phase !== "done"
+  const isRunning = phase !== "idle" && phase !== "done";
 
   return (
     <div className={style.wrapper}>
       <svg
         viewBox="0 0 720 320"
         className={style.svg}
-        aria-label="NAT-Diagramm">
+        aria-label="NAT-Diagramm"
+      >
         {/* Verbindungslinien Geräte → Router */}
         {DEVICES.map((d) => (
           <line
@@ -238,7 +239,8 @@ export default function NatDiagram() {
               textAnchor="middle"
               fill="#83a598"
               fontSize={10}
-              fontFamily="monospace">
+              fontFamily="monospace"
+            >
               {d.ip}
             </text>
           </g>
@@ -246,7 +248,7 @@ export default function NatDiagram() {
 
         {/* Geräte-Knoten */}
         {DEVICES.map((d) => {
-          const active = d.id === scenario.deviceId && phase !== "idle"
+          const active = d.id === scenario.deviceId && phase !== "idle";
           return (
             <g key={d.id}>
               <circle
@@ -262,7 +264,8 @@ export default function NatDiagram() {
                 y={d.y + 6}
                 textAnchor="middle"
                 fontSize={15}
-                style={{ pointerEvents: "none", userSelect: "none" }}>
+                style={{ pointerEvents: "none", userSelect: "none" }}
+              >
                 {d.icon}
               </text>
               <text
@@ -271,11 +274,12 @@ export default function NatDiagram() {
                 textAnchor="middle"
                 fill={active ? "#ebdbb2" : "#928374"}
                 fontSize={10}
-                style={{ pointerEvents: "none", userSelect: "none" }}>
+                style={{ pointerEvents: "none", userSelect: "none" }}
+              >
                 {d.label}
               </text>
             </g>
-          )
+          );
         })}
 
         {/* Router */}
@@ -295,7 +299,8 @@ export default function NatDiagram() {
           textAnchor="middle"
           fill="#fabd2f"
           fontSize={18}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           🔀
         </text>
         <text
@@ -305,7 +310,8 @@ export default function NatDiagram() {
           fill="#fabd2f"
           fontSize={11}
           fontWeight="700"
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           Router
         </text>
         <text
@@ -315,7 +321,8 @@ export default function NatDiagram() {
           fill="#928374"
           fontSize={9}
           fontFamily="monospace"
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           intern: 192.168.1.1
         </text>
         <text
@@ -325,7 +332,8 @@ export default function NatDiagram() {
           fill="#fe8019"
           fontSize={9}
           fontFamily="monospace"
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           extern: {PUBLIC_IP}
         </text>
         <text
@@ -334,7 +342,8 @@ export default function NatDiagram() {
           textAnchor="middle"
           fill="#fabd2f"
           fontSize={8}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           NAT
         </text>
 
@@ -352,7 +361,8 @@ export default function NatDiagram() {
           y={SERVER.y + 6}
           textAnchor="middle"
           fontSize={15}
-          style={{ pointerEvents: "none", userSelect: "none" }}>
+          style={{ pointerEvents: "none", userSelect: "none" }}
+        >
           {SERVER.icon}
         </text>
         <text
@@ -361,7 +371,8 @@ export default function NatDiagram() {
           textAnchor="middle"
           fill="#928374"
           fontSize={10}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {SERVER.label}
         </text>
         <rect
@@ -380,7 +391,8 @@ export default function NatDiagram() {
           fill="#fb4934"
           fontSize={10}
           fontFamily="monospace"
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {SERVER.ip}
         </text>
 
@@ -401,7 +413,8 @@ export default function NatDiagram() {
               fill="#1d2021"
               fontSize={11}
               fontWeight="700"
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               📦
             </text>
             {/* Label über dem Paket */}
@@ -421,7 +434,8 @@ export default function NatDiagram() {
               fill={packetColor}
               fontSize={9}
               fontFamily="monospace"
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               {packetLabel}
             </text>
           </g>
@@ -436,10 +450,11 @@ export default function NatDiagram() {
               key={d.id}
               className={`${style.scenarioBtn} ${scenarioIdx === i ? style.scenarioBtnActive : ""}`}
               onClick={() => {
-                setScenarioIdx(i)
-                setPhase("idle")
+                setScenarioIdx(i);
+                setPhase("idle");
               }}
-              disabled={isRunning}>
+              disabled={isRunning}
+            >
               {d.icon} {d.label}
             </button>
           ))}
@@ -447,7 +462,8 @@ export default function NatDiagram() {
         <button
           className={style.playBtn}
           onClick={runAnimation}
-          disabled={isRunning}>
+          disabled={isRunning}
+        >
           {isRunning
             ? "Läuft…"
             : phase === "done"
@@ -472,7 +488,8 @@ export default function NatDiagram() {
                 key={d.id}
                 className={
                   scenarioIdx === i && tableHighlight ? style.activeRow : ""
-                }>
+                }
+              >
                 <td>
                   <code>
                     {d.ip}:{SCENARIOS[i].srcPort}
@@ -489,5 +506,5 @@ export default function NatDiagram() {
         </table>
       </div>
     </div>
-  )
+  );
 }

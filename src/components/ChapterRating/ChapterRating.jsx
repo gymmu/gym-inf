@@ -1,6 +1,6 @@
-import { useLocation } from "react-router-dom"
-import { useProgress } from "@context/ProgressContext"
-import style from "./ChapterRating.module.css"
+import { useProgress } from "@context/ProgressContext";
+import { useLocation } from "react-router-dom";
+import style from "./ChapterRating.module.css";
 
 const levels = [
   {
@@ -21,7 +21,7 @@ const levels = [
     colorClass: "green",
     dotClass: "dotGreen",
   },
-]
+];
 
 const excludedPaths = [
   "auth-demo",
@@ -31,32 +31,32 @@ const excludedPaths = [
   "regexeditor",
   "boxmodel",
   "path-editor",
-]
+];
 
 function getSlugFromPath(pathname) {
-  const basePath = import.meta.env.VITE_BASE_PATH || "/gym-inf/"
-  let slug = pathname
+  const basePath = import.meta.env.VITE_BASE_PATH || "/gym-inf/";
+  let slug = pathname;
   if (slug.startsWith(basePath)) {
-    slug = slug.slice(basePath.length)
+    slug = slug.slice(basePath.length);
   }
   if (slug.startsWith("/")) {
-    slug = slug.slice(1)
+    slug = slug.slice(1);
   }
   if (slug.endsWith("/")) {
-    slug = slug.slice(0, -1)
+    slug = slug.slice(0, -1);
   }
-  return slug
+  return slug;
 }
 
 export default function ChapterRating() {
-  const { getRating, updateRating } = useProgress()
-  const location = useLocation()
+  const { getRating, updateRating } = useProgress();
+  const location = useLocation();
 
-  const slug = getSlugFromPath(location.pathname)
+  const slug = getSlugFromPath(location.pathname);
 
-  if (!slug || excludedPaths.some((p) => slug.startsWith(p))) return null
+  if (!slug || excludedPaths.some((p) => slug.startsWith(p))) return null;
 
-  const currentRating = getRating(slug)
+  const currentRating = getRating(slug);
 
   return (
     <div className={style.container}>
@@ -67,12 +67,13 @@ export default function ChapterRating() {
             key={level}
             className={`${style.ratingButton} ${currentRating === level ? `${style.active} ${style[colorClass]}` : ""}`}
             onClick={() => updateRating(slug, level)}
-            title={label}>
+            title={label}
+          >
             <span className={`${style.dot} ${style[dotClass]}`} />
             <span>{label}</span>
           </button>
         ))}
       </div>
     </div>
-  )
+  );
 }

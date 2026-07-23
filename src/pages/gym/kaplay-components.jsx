@@ -1,15 +1,13 @@
 import CodeBlock from "@components/CodeBlock";
-import Video from "@components/Video" 
-
+import Video from "@components/Video";
 
 export default function KaplayComponents() {
-
   return (
     <>
       <section>
         <h2>Kaplay Komponenten</h2>
         <p>
-          In Kaplay wird fast alles über Komponenten gelöst. Komponenten 
+          In Kaplay wird fast alles über Komponenten gelöst. Komponenten
           definieren das Aussehen und Verhalten von Spielobjekten. In dem
           Kapitel lernen Sie auch wie man eigene Komponenten erstellt und diese
           dann zum Spiel hinzufügen kann.
@@ -35,11 +33,11 @@ export default function KaplayComponents() {
       <section>
         <h2>Video</h2>
         <p>
-          Dieses Video erklärt Ihnen wie Sie eigene Komponenten erstellen und
-          im Spiel verwenden können.
+          Dieses Video erklärt Ihnen wie Sie eigene Komponenten erstellen und im
+          Spiel verwenden können.
         </p>
         <Video url="QbVVgs-ncjw" />
       </section>
     </>
-  )
+  );
 }

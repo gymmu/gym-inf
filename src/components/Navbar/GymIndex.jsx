@@ -1,5 +1,5 @@
-import style from "./Navbar.module.css"
-import NavLink from "./NavLink"
+import style from "./Navbar.module.css";
+import NavLink from "./NavLink";
 
 export default function GymIndex() {
   return (
@@ -106,5 +106,5 @@ export default function GymIndex() {
         </ol>
       </section>
     </div>
-  )
+  );
 }

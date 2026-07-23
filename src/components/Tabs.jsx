@@ -1,42 +1,43 @@
-import { useState, useContext, createContext, useEffect } from "react"
+import { createContext, useContext, useEffect, useState } from "react";
 
 export function TabsButton({ label, tabIndex, isActive }) {
-  const { activeIndex, setActiveIndex } = useTabContext()
+  const { activeIndex, setActiveIndex } = useTabContext();
 
   useEffect(() => {
     if (activeIndex == null && isActive) {
-      setActiveIndex(tabIndex)
+      setActiveIndex(tabIndex);
     }
-  }, [activeIndex])
+  }, [activeIndex]);
 
   return (
     <li>
       <button
         className={activeIndex == tabIndex ? "active" : ""}
-        onClick={() => setActiveIndex(tabIndex)}>
+        onClick={() => setActiveIndex(tabIndex)}
+      >
         {label}
       </button>
     </li>
-  )
+  );
 }
 
 export function Tab({ tabIndex, children }) {
-  const { activeIndex } = useTabContext()
+  const { activeIndex } = useTabContext();
   return (
     <div className={activeIndex == tabIndex ? "show" : "hide"}>{children}</div>
-  )
+  );
 }
 
-const TabContext = createContext(null)
+const TabContext = createContext(null);
 
 export function useTabContext() {
-  return useContext(TabContext)
+  return useContext(TabContext);
 }
 export function TabContainer({ children }) {
-  const [activeIndex, setActiveIndex] = useState()
+  const [activeIndex, setActiveIndex] = useState();
   return (
     <TabContext.Provider value={{ activeIndex, setActiveIndex }}>
       <div className="tab-container">{children}</div>
     </TabContext.Provider>
-  )
+  );
 }

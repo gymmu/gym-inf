@@ -1,19 +1,17 @@
-import { useEffect } from "react"
-import { useState } from "react"
-import { Editor as MEditor } from "@monaco-editor/react"
-
-import styles from "@components/CodePen.module.css"
+import styles from "@components/CodePen.module.css";
+import { Editor as MEditor } from "@monaco-editor/react";
+import { useEffect, useState } from "react";
 
 export default function CodePen() {
   const [html, setHtml] = useState(`<header>
   <h1>Hello World!</h1>
-</header>`)
+</header>`);
   const [css, setCss] = useState(`body {
   color: white;
 }
-`)
-  const [js, setJs] = useState("document.body.style.backgroundColor = 'green'")
-  const [srcDoc, setSrcDoc] = useState("")
+`);
+  const [js, setJs] = useState("document.body.style.backgroundColor = 'green'");
+  const [srcDoc, setSrcDoc] = useState("");
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -23,12 +21,12 @@ export default function CodePen() {
           <style>${css}</style>
           <script>${js}</script>
         </html>
-      `)
-    }, 1000)
+      `);
+    }, 1000);
     return () => {
-      clearTimeout(timeout)
-    }
-  }, [html, css, js])
+      clearTimeout(timeout);
+    };
+  }, [html, css, js]);
 
   return (
     <div className={styles.codePenWrapper}>
@@ -58,11 +56,11 @@ export default function CodePen() {
         />
       </div>
     </div>
-  )
+  );
 }
 
 function Editor(props) {
-  const { title, language, value, handleChange } = props
+  const { title, language, value, handleChange } = props;
   return (
     <div className={styles.editorWrapper}>
       <h2>{title}</h2>
@@ -74,5 +72,5 @@ function Editor(props) {
         height="300px"
       />
     </div>
-  )
+  );
 }

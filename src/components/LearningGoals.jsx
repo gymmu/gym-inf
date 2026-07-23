@@ -4,5 +4,5 @@ export default function LearningGoals({ children }) {
       <h2 id="goals">Lernziele</h2>
       {children}
     </div>
-  )
+  );
 }

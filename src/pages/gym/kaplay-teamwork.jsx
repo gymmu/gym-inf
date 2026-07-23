@@ -1,5 +1,5 @@
-import CodeBlock from "@components/CodeBlock"
-import Video from "@components/Video" 
+import CodeBlock from "@components/CodeBlock";
+import Video from "@components/Video";
 
 export default function KaplayTeamwork() {
   return (
@@ -63,7 +63,7 @@ export default function KaplayTeamwork() {
       <section>
         <h2>Video zu Git Branches</h2>
         <p>
-          Das Video zeigt Ihnen wie Sie in VSCode mit einer grafischen 
+          Das Video zeigt Ihnen wie Sie in VSCode mit einer grafischen
           Oberfläche mit Git arbeiten können, und erklärt Ihnen auch nochmals
           alle wichtigen Konzepte.
         </p>
@@ -110,5 +110,5 @@ export default function KaplayTeamwork() {
         <Video url="tVWaWF6xW4U" />
       </section>
     </>
-  )
+  );
 }

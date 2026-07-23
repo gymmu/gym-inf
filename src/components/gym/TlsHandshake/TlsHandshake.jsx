@@ -1,4 +1,4 @@
-import style from "./TlsHandshake.module.css"
+import style from "./TlsHandshake.module.css";
 
 const PHASES = [
   {
@@ -52,7 +52,7 @@ const PHASES = [
     arrow: "←",
     right: { label: "Finished (Bestätigung)", text: "" },
   },
-]
+];
 
 export default function TlsHandshake() {
   return (
@@ -104,5 +104,5 @@ export default function TlsHandshake() {
         Ab Phase 5: Alle Daten mit AES-256-GCM verschlüsselt — HTTPS aktiv
       </div>
     </div>
-  )
+  );
 }

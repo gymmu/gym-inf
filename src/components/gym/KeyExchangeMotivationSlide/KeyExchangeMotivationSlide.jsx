@@ -1,5 +1,5 @@
-import { useState } from "react"
-import s from "./KeyExchangeMotivationSlide.module.css"
+import { useState } from "react";
+import s from "./KeyExchangeMotivationSlide.module.css";
 
 // -- Scenario data ---------------------------------------------------------
 
@@ -29,38 +29,38 @@ const STEPS = [
     eveGetsKey: false,
     dh: true,
   },
-]
+];
 
 // -- SVG diagram -----------------------------------------------------------
 
 function ChannelDiagram({ step }) {
-  const eveGetsKey = step?.eveGetsKey ?? false
-  const isDh = step?.dh ?? false
-  const isImpractical = step?.impractical ?? false
+  const eveGetsKey = step?.eveGetsKey ?? false;
+  const isDh = step?.dh ?? false;
+  const isImpractical = step?.impractical ?? false;
 
   // Colors
-  const aliceCol = "#83a598"
-  const bobCol = "#b8bb26"
-  const eveCol = "#fb4934"
-  const keyCol = "#fabd2f"
-  const dhPubCol = "#d3869b"
+  const aliceCol = "#83a598";
+  const bobCol = "#b8bb26";
+  const eveCol = "#fb4934";
+  const keyCol = "#fabd2f";
+  const dhPubCol = "#d3869b";
 
-  const W = 700
-  const H = 310
+  const W = 700;
+  const H = 310;
 
   // Positions
-  const aliceX = 90
-  const bobX = 610
-  const eveX = 350
+  const aliceX = 90;
+  const bobX = 610;
+  const eveX = 350;
   // lineY=110: Kreis Mitte. Oben (y<80): Labels/Pakete. Unten (y>140): Name+KBox. Eve: y=250+
-  const lineY = 110
-  const personR = 28
+  const lineY = 110;
+  const personR = 28;
   // derived
-  const circleBottom = lineY + personR // 138
-  const nameY = circleBottom + 16 // 154  -- "Alice"/"Bob" label
-  const kBoxY = circleBottom + 34 // 172  -- K-Box top
-  const kBoxH = 24
-  const eveY = kBoxY + kBoxH + 40 // 236  -- Eve circle center
+  const circleBottom = lineY + personR; // 138
+  const nameY = circleBottom + 16; // 154  -- "Alice"/"Bob" label
+  const kBoxY = circleBottom + 34; // 172  -- K-Box top
+  const kBoxH = 24;
+  const eveY = kBoxY + kBoxH + 40; // 236  -- Eve circle center
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" className={s.diagramSvg}>
@@ -80,7 +80,8 @@ function ChannelDiagram({ step }) {
         textAnchor="middle"
         fill="#504945"
         fontSize="11"
-        fontFamily="monospace">
+        fontFamily="monospace"
+      >
         unsicherer Kanal (Internet)
       </text>
 
@@ -114,7 +115,8 @@ function ChannelDiagram({ step }) {
         fill={aliceCol}
         fontSize="13"
         fontFamily="monospace"
-        fontWeight="700">
+        fontWeight="700"
+      >
         A
       </text>
       <text
@@ -123,7 +125,8 @@ function ChannelDiagram({ step }) {
         textAnchor="middle"
         fill={aliceCol}
         fontSize="11"
-        fontFamily="monospace">
+        fontFamily="monospace"
+      >
         Alice
       </text>
 
@@ -143,7 +146,8 @@ function ChannelDiagram({ step }) {
         fill={bobCol}
         fontSize="13"
         fontFamily="monospace"
-        fontWeight="700">
+        fontWeight="700"
+      >
         B
       </text>
       <text
@@ -152,7 +156,8 @@ function ChannelDiagram({ step }) {
         textAnchor="middle"
         fill={bobCol}
         fontSize="11"
-        fontFamily="monospace">
+        fontFamily="monospace"
+      >
         Bob
       </text>
 
@@ -174,7 +179,8 @@ function ChannelDiagram({ step }) {
             fill={eveCol}
             fontSize="13"
             fontFamily="monospace"
-            fontWeight="700">
+            fontWeight="700"
+          >
             E
           </text>
           <text
@@ -183,7 +189,8 @@ function ChannelDiagram({ step }) {
             textAnchor="middle"
             fill={eveCol}
             fontSize="11"
-            fontFamily="monospace">
+            fontFamily="monospace"
+          >
             Eve
           </text>
         </>
@@ -199,7 +206,8 @@ function ChannelDiagram({ step }) {
               markerHeight="8"
               refX="6"
               refY="3"
-              orient="auto">
+              orient="auto"
+            >
               <path d="M0,0 L0,6 L8,3 z" fill={keyCol} />
             </marker>
             <marker
@@ -208,7 +216,8 @@ function ChannelDiagram({ step }) {
               markerHeight="8"
               refX="6"
               refY="3"
-              orient="auto">
+              orient="auto"
+            >
               <path d="M0,0 L0,6 L8,3 z" fill={eveCol} />
             </marker>
           </defs>
@@ -231,7 +240,8 @@ function ChannelDiagram({ step }) {
             fill={keyCol}
             fontSize="12"
             fontFamily="monospace"
-            fontWeight="700">
+            fontWeight="700"
+          >
             K
           </text>
 
@@ -276,7 +286,8 @@ function ChannelDiagram({ step }) {
             fill={eveCol}
             fontSize="11"
             fontFamily="monospace"
-            fontWeight="700">
+            fontWeight="700"
+          >
             liest K!
           </text>
         </>
@@ -292,7 +303,8 @@ function ChannelDiagram({ step }) {
             textAnchor="middle"
             fill="#928374"
             fontSize="10"
-            fontFamily="monospace">
+            fontFamily="monospace"
+          >
             physisches Treffen
           </text>
 
@@ -314,7 +326,8 @@ function ChannelDiagram({ step }) {
             fill={bobCol}
             fontSize="12"
             fontFamily="monospace"
-            fontWeight="700">
+            fontWeight="700"
+          >
             K
           </text>
 
@@ -326,7 +339,8 @@ function ChannelDiagram({ step }) {
             fill="#504945"
             fontSize="20"
             fontFamily="monospace"
-            opacity="0.5">
+            opacity="0.5"
+          >
             ?
           </text>
 
@@ -348,7 +362,8 @@ function ChannelDiagram({ step }) {
             dominantBaseline="middle"
             fill="#fe8019"
             fontSize="10"
-            fontFamily="monospace">
+            fontFamily="monospace"
+          >
             Milliarden Verbindungen / Tag
           </text>
         </>
@@ -364,7 +379,8 @@ function ChannelDiagram({ step }) {
               markerHeight="8"
               refX="6"
               refY="3"
-              orient="auto">
+              orient="auto"
+            >
               <path d="M0,0 L0,6 L8,3 z" fill={dhPubCol} />
             </marker>
             <marker
@@ -373,7 +389,8 @@ function ChannelDiagram({ step }) {
               markerHeight="8"
               refX="6"
               refY="3"
-              orient="auto">
+              orient="auto"
+            >
               <path d="M0,0 L0,6 L8,3 z" fill={dhPubCol} />
             </marker>
           </defs>
@@ -398,7 +415,8 @@ function ChannelDiagram({ step }) {
             fill={dhPubCol}
             fontSize="11"
             fontFamily="monospace"
-            fontWeight="700">
+            fontWeight="700"
+          >
             g^a mod p
           </text>
           {/* arrow on wire from alice toward bob */}
@@ -430,7 +448,8 @@ function ChannelDiagram({ step }) {
             fill={dhPubCol}
             fontSize="11"
             fontFamily="monospace"
-            fontWeight="700">
+            fontWeight="700"
+          >
             g^b mod p
           </text>
 
@@ -452,7 +471,8 @@ function ChannelDiagram({ step }) {
             dominantBaseline="middle"
             fill={aliceCol}
             fontSize="10"
-            fontFamily="monospace">
+            fontFamily="monospace"
+          >
             K = g^(ab) mod p
           </text>
 
@@ -473,7 +493,8 @@ function ChannelDiagram({ step }) {
             dominantBaseline="middle"
             fill={bobCol}
             fontSize="10"
-            fontFamily="monospace">
+            fontFamily="monospace"
+          >
             K = g^(ab) mod p
           </text>
 
@@ -486,7 +507,8 @@ function ChannelDiagram({ step }) {
             fill="#b8bb26"
             fontSize="10"
             fontFamily="monospace"
-            fontWeight="700">
+            fontWeight="700"
+          >
             gleicher K!
           </text>
 
@@ -508,7 +530,8 @@ function ChannelDiagram({ step }) {
             dominantBaseline="middle"
             fill={eveCol}
             fontSize="10"
-            fontFamily="monospace">
+            fontFamily="monospace"
+          >
             sieht g^a, g^b -- kann K nicht berechnen
           </text>
         </>
@@ -525,7 +548,8 @@ function ChannelDiagram({ step }) {
             fill="#504945"
             fontSize="24"
             fontFamily="monospace"
-            fontWeight="700">
+            fontWeight="700"
+          >
             ?
           </text>
 
@@ -547,7 +571,8 @@ function ChannelDiagram({ step }) {
             dominantBaseline="middle"
             fill="#928374"
             fontSize="10"
-            fontFamily="monospace">
+            fontFamily="monospace"
+          >
             kein K
           </text>
 
@@ -568,20 +593,21 @@ function ChannelDiagram({ step }) {
             dominantBaseline="middle"
             fill="#928374"
             fontSize="10"
-            fontFamily="monospace">
+            fontFamily="monospace"
+          >
             kein K
           </text>
         </>
       )}
     </svg>
-  )
+  );
 }
 
 // -- Main component -------------------------------------------------------
 
 export default function KeyExchangeMotivationSlide() {
-  const [stepIdx, setStepIdx] = useState(0)
-  const step = STEPS[stepIdx]
+  const [stepIdx, setStepIdx] = useState(0);
+  const step = STEPS[stepIdx];
 
   return (
     <div className={s.root}>
@@ -591,7 +617,8 @@ export default function KeyExchangeMotivationSlide() {
           <button
             key={st.id}
             className={`${s.stepBtn} ${i === stepIdx ? s.stepBtnActive : ""} ${i < stepIdx ? s.stepBtnDone : ""}`}
-            onClick={() => setStepIdx(i)}>
+            onClick={() => setStepIdx(i)}
+          >
             <span className={s.stepNum}>{i + 1}</span>
             <span className={s.stepLabel}>{st.label}</span>
           </button>
@@ -605,7 +632,8 @@ export default function KeyExchangeMotivationSlide() {
 
       {/* -- Description -- */}
       <div
-        className={`${s.descBox} ${step.eveGetsKey ? s.descBoxDanger : step.dh ? s.descBoxSuccess : step.impractical ? s.descBoxWarn : s.descBoxNeutral}`}>
+        className={`${s.descBox} ${step.eveGetsKey ? s.descBoxDanger : step.dh ? s.descBoxSuccess : step.impractical ? s.descBoxWarn : s.descBoxNeutral}`}
+      >
         {step.desc}
       </div>
 
@@ -637,5 +665,5 @@ export default function KeyExchangeMotivationSlide() {
         </div>
       </div>
     </div>
-  )
+  );
 }

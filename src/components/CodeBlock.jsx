@@ -1,6 +1,6 @@
+import { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { gruvboxDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { useState } from "react";
 import styles from "./CodeBlock.module.css";
 
 /**

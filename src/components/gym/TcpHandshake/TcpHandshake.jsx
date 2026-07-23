@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react"
-import style from "./TcpHandshake.module.css"
+import { useEffect, useState } from "react";
+import style from "./TcpHandshake.module.css";
 
 const STEPS = [
   {
@@ -93,12 +93,13 @@ const STEPS = [
     clientState: "FIN_WAIT",
     serverState: "CLOSE_WAIT",
   },
-]
+];
 
 function Arrow({ toServer, color, flag, seq, visible, animating }) {
   return (
     <div
-      className={`${style.arrowRow} ${visible ? style.visible : ""} ${animating ? style.animating : ""}`}>
+      className={`${style.arrowRow} ${visible ? style.visible : ""} ${animating ? style.animating : ""}`}
+    >
       {toServer ? (
         <>
           <div className={style.arrowSpacer} />
@@ -128,7 +129,8 @@ function Arrow({ toServer, color, flag, seq, visible, animating }) {
             <div className={style.arrowLine} style={{ background: color }} />
             <div
               className={style.arrowPacketRev}
-              style={{ borderColor: color }}>
+              style={{ borderColor: color }}
+            >
               <span className={style.flagLabel} style={{ color }}>
                 {flag}
               </span>
@@ -139,45 +141,45 @@ function Arrow({ toServer, color, flag, seq, visible, animating }) {
         </>
       )}
     </div>
-  )
+  );
 }
 
 export default function TcpHandshakeAnim() {
-  const [current, setCurrent] = useState(-1)
-  const [animating, setAnimating] = useState(false)
-  const [auto, setAuto] = useState(false)
+  const [current, setCurrent] = useState(-1);
+  const [animating, setAnimating] = useState(false);
+  const [auto, setAuto] = useState(false);
 
-  const step = STEPS[current] ?? null
+  const step = STEPS[current] ?? null;
 
   function advance() {
-    if (animating) return
+    if (animating) return;
     if (current < STEPS.length - 1) {
-      setAnimating(true)
-      setTimeout(() => setAnimating(false), 700)
-      setCurrent((c) => c + 1)
+      setAnimating(true);
+      setTimeout(() => setAnimating(false), 700);
+      setCurrent((c) => c + 1);
     }
   }
 
   function reset() {
-    setAuto(false)
-    setCurrent(-1)
+    setAuto(false);
+    setCurrent(-1);
   }
 
   useEffect(() => {
-    if (!auto) return
+    if (!auto) return;
     if (current >= STEPS.length - 1) {
-      setAuto(false)
-      return
+      setAuto(false);
+      return;
     }
-    const t = setTimeout(advance, 1200)
-    return () => clearTimeout(t)
-  }, [auto, current])
+    const t = setTimeout(advance, 1200);
+    return () => clearTimeout(t);
+  }, [auto, current]);
 
-  const clientState = step?.clientState ?? "CLOSED"
-  const serverState = step?.serverState ?? "LISTEN"
+  const clientState = step?.clientState ?? "CLOSED";
+  const serverState = step?.serverState ?? "LISTEN";
 
   // Group steps by phase
-  const phases = ["Verbindungsaufbau", "Datentransfer", "Verbindungsabbau"]
+  const phases = ["Verbindungsaufbau", "Datentransfer", "Verbindungsabbau"];
 
   return (
     <div className={style.wrapper}>
@@ -190,7 +192,8 @@ export default function TcpHandshakeAnim() {
             <strong style={{ color: "#83a598" }}>Client</strong>
             <span
               className={style.stateTag}
-              style={{ background: "#3c3836", color: "#fabd2f" }}>
+              style={{ background: "#3c3836", color: "#fabd2f" }}
+            >
               {clientState}
             </span>
           </div>
@@ -200,7 +203,8 @@ export default function TcpHandshakeAnim() {
             <strong style={{ color: "#fe8019" }}>Server</strong>
             <span
               className={style.stateTag}
-              style={{ background: "#3c3836", color: "#fabd2f" }}>
+              style={{ background: "#3c3836", color: "#fabd2f" }}
+            >
               {serverState}
             </span>
           </div>
@@ -250,21 +254,24 @@ export default function TcpHandshakeAnim() {
         <button
           className={style.btn}
           onClick={advance}
-          disabled={current >= STEPS.length - 1 || animating}>
+          disabled={current >= STEPS.length - 1 || animating}
+        >
           Nächster Schritt →
         </button>
         <button
           className={`${style.btn} ${style.btnSecondary}`}
           onClick={() => {
-            setAuto(true)
-            if (current === -1) setCurrent(-1)
+            setAuto(true);
+            if (current === -1) setCurrent(-1);
           }}
-          disabled={auto || current >= STEPS.length - 1}>
+          disabled={auto || current >= STEPS.length - 1}
+        >
           ▶ Auto
         </button>
         <button
           className={`${style.btn} ${style.btnSecondary}`}
-          onClick={reset}>
+          onClick={reset}
+        >
           ↺ Zurücksetzen
         </button>
         <span className={style.stepCounter}>
@@ -275,18 +282,19 @@ export default function TcpHandshakeAnim() {
       {/* ── Phase legend ─────────────────────────────────────── */}
       <div className={style.legend}>
         {phases.map((ph) => {
-          const phSteps = STEPS.filter((s) => s.phase === ph)
-          const done = phSteps.every((s) => current >= s.id)
-          const active = phSteps.some((s) => current === s.id)
+          const phSteps = STEPS.filter((s) => s.phase === ph);
+          const done = phSteps.every((s) => current >= s.id);
+          const active = phSteps.some((s) => current === s.id);
           return (
             <div
               key={ph}
-              className={`${style.legendItem} ${done ? style.legendDone : ""} ${active ? style.legendActive : ""}`}>
+              className={`${style.legendItem} ${done ? style.legendDone : ""} ${active ? style.legendActive : ""}`}
+            >
               {ph}
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }

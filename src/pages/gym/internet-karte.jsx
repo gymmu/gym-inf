@@ -1,5 +1,5 @@
-import ImageMagnifier from "@components/ImageMagnifier.jsx"
-import Section from "@components/Section.jsx"
+import ImageMagnifier from "@components/ImageMagnifier.jsx";
+import Section from "@components/Section.jsx";
 
 export default function GymInternetKarte() {
   return (
@@ -23,7 +23,8 @@ export default function GymInternetKarte() {
             margin: "2rem 0",
             backgroundColor: "white",
             padding: "1rem",
-          }}>
+          }}
+        >
           <ImageMagnifier
             src="/gym-inf/svg/map-of-the-internet.svg"
             alt="Karte des Internets"
@@ -179,5 +180,5 @@ export default function GymInternetKarte() {
         </p>
       </Section>
     </>
-  )
+  );
 }

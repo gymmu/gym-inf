@@ -1,10 +1,10 @@
 import ChapterRating from "@components/ChapterRating/ChapterRating";
 import Footer from "@components/Footer";
 import Header from "@components/Header";
-import NotePanel from "@components/NotePanel";
-import QuickNoteFab from "@components/QuickNoteFab";
 import style from "@components/Layout.module.css";
 import Navbar from "@components/Navbar";
+import NotePanel from "@components/NotePanel";
+import QuickNoteFab from "@components/QuickNoteFab";
 import SkeletonScreen from "@components/SkeletonScreen";
 import { AppProvider, useAppContext } from "@context/AppContext";
 import { NavProvider } from "@context/NavContext";

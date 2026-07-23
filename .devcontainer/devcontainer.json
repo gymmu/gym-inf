@@ -10,10 +10,7 @@
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "biomejs.biome"
       },
-      "extensions": [
-        "mhutchie.git-graph",
-        "biomejs.biome"
-      ]
+      "extensions": ["mhutchie.git-graph", "biomejs.biome"]
     }
   },
   "postCreateCommand": "npm install",

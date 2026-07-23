@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react"
-import Editor from "@components/Editor.jsx"
-
-import styles from "@components/CodePen.module.css"
+import styles from "@components/CodePen.module.css";
+import Editor from "@components/Editor.jsx";
+import { useEffect, useState } from "react";
 
 export default function CodePenSVG({
   initialCode = `<svg viewBox="0 0 500 500" width="300">
@@ -9,12 +8,12 @@ export default function CodePenSVG({
 </svg>`,
   withCSS = false,
 }) {
-  const [svg, setSvg] = useState(initialCode)
+  const [svg, setSvg] = useState(initialCode);
   const [css, setCss] = useState(`svg {
   background: white;
 }
-`)
-  const [srcDoc, setSrcDoc] = useState("")
+`);
+  const [srcDoc, setSrcDoc] = useState("");
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -24,12 +23,12 @@ export default function CodePenSVG({
           <style>${css}</style>
           <style>body { margin: 0; padding: 0; overflow: hidden;}</style>
         </html>
-      `)
-    }, 1000)
+      `);
+    }, 1000);
     return () => {
-      clearTimeout(timeout)
-    }
-  }, [svg, css])
+      clearTimeout(timeout);
+    };
+  }, [svg, css]);
 
   return (
     <div className={styles.codePenWrapper}>
@@ -56,5 +55,5 @@ export default function CodePenSVG({
         />
       </div>
     </div>
-  )
+  );
 }

@@ -1,25 +1,25 @@
-import style from "@components/Vigenere.module.css"
-import { useState, useMemo } from "react"
+import style from "@components/Vigenere.module.css";
+import { useMemo, useState } from "react";
 
 function toIndex(ch) {
-  return ch.toLowerCase().charCodeAt(0) - 97
+  return ch.toLowerCase().charCodeAt(0) - 97;
 }
 
 function sanitize(str) {
-  return str.toUpperCase().replace(/[^A-Z]/g, "")
+  return str.toUpperCase().replace(/[^A-Z]/g, "");
 }
 
 export default function Vigenere({
   defaultPlain = "HALLO",
   defaultKey = "KEY",
 }) {
-  const [plain, setPlain] = useState(defaultPlain)
-  const [key, setKey] = useState(defaultKey)
-  const [hovRow, setHovRow] = useState(null)
-  const [hovCol, setHovCol] = useState(null)
+  const [plain, setPlain] = useState(defaultPlain);
+  const [key, setKey] = useState(defaultKey);
+  const [hovRow, setHovRow] = useState(null);
+  const [hovCol, setHovCol] = useState(null);
 
-  const plainClean = sanitize(plain)
-  const keyClean = sanitize(key) || "A"
+  const plainClean = sanitize(plain);
+  const keyClean = sanitize(key) || "A";
 
   // Berechne Beispiel-Paare aus Klartext + Schlüssel
   const example = useMemo(
@@ -29,7 +29,7 @@ export default function Vigenere({
         row: toIndex(keyClean[i % keyClean.length]),
       })),
     [plainClean, keyClean],
-  )
+  );
 
   // Chiffrat
   const cipher = useMemo(
@@ -39,18 +39,18 @@ export default function Vigenere({
         .join("")
         .toUpperCase(),
     [example],
-  )
+  );
 
-  const exampleSet = new Set(example.map(({ row, col }) => `${row},${col}`))
-  const exampleRows = new Set(example.map(({ row }) => row))
-  const exampleCols = new Set(example.map(({ col }) => col))
+  const exampleSet = new Set(example.map(({ row, col }) => `${row},${col}`));
+  const exampleRows = new Set(example.map(({ row }) => row));
+  const exampleCols = new Set(example.map(({ col }) => col));
 
-  const activeRow = hovRow
-  const activeCol = hovCol
+  const activeRow = hovRow;
+  const activeCol = hovCol;
   const activeCell =
     activeRow !== null && activeCol !== null
       ? (activeRow + activeCol) % 26
-      : null
+      : null;
 
   return (
     <div className={style.vigenereContainer}>
@@ -134,9 +134,10 @@ export default function Vigenere({
         <table
           className={style.square}
           onMouseLeave={() => {
-            setHovRow(null)
-            setHovCol(null)
-          }}>
+            setHovRow(null);
+            setHovCol(null);
+          }}
+        >
           <thead>
             <tr>
               <th className={style.cornerCell} />
@@ -144,7 +145,8 @@ export default function Vigenere({
                 <th
                   key={ci}
                   className={`${style.colHeader} ${ci === activeCol ? style.colHeaderActive : ""} ${exampleCols.has(ci) ? style.colHeaderExample : ""}`}
-                  onMouseEnter={() => setHovCol(ci)}>
+                  onMouseEnter={() => setHovCol(ci)}
+                >
                   {String.fromCharCode(97 + ci)}
                 </th>
               ))}
@@ -155,26 +157,28 @@ export default function Vigenere({
               <tr key={ri}>
                 <td
                   className={`${style.rowHeader} ${ri === activeRow ? style.rowHeaderActive : ""} ${exampleRows.has(ri) ? style.rowHeaderExample : ""}`}
-                  onMouseEnter={() => setHovRow(ri)}>
+                  onMouseEnter={() => setHovRow(ri)}
+                >
                   {String.fromCharCode(97 + ri)}
                 </td>
                 {Array.from(Array(26)).map((_, ci) => {
-                  const letter = String.fromCharCode(97 + ((ri + ci) % 26))
-                  const isActive = ri === activeRow && ci === activeCol
-                  const inRow = ri === activeRow && ci !== activeCol
-                  const inCol = ci === activeCol && ri !== activeRow
-                  const isExample = exampleSet.has(`${ri},${ci}`)
+                  const letter = String.fromCharCode(97 + ((ri + ci) % 26));
+                  const isActive = ri === activeRow && ci === activeCol;
+                  const inRow = ri === activeRow && ci !== activeCol;
+                  const inCol = ci === activeCol && ri !== activeRow;
+                  const isExample = exampleSet.has(`${ri},${ci}`);
                   return (
                     <td
                       key={ci}
                       className={`${style.cell} ${isActive ? style.cellActive : ""} ${inRow ? style.cellInRow : ""} ${inCol ? style.cellInCol : ""} ${isExample ? style.cellExample : ""}`}
                       onMouseEnter={() => {
-                        setHovRow(ri)
-                        setHovCol(ci)
-                      }}>
+                        setHovRow(ri);
+                        setHovCol(ci);
+                      }}
+                    >
                       {letter}
                     </td>
-                  )
+                  );
                 })}
               </tr>
             ))}
@@ -182,5 +186,5 @@ export default function Vigenere({
         </table>
       </div>
     </div>
-  )
+  );
 }

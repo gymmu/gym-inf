@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import { useNotes } from "@context/NoteContext";
-import { Link, useNavigate } from "react-router-dom";
 import { Editor as MEditor } from "@monaco-editor/react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { Link, useNavigate } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import style from "./NotePage.module.css";
 
@@ -19,7 +19,7 @@ function formatDate(timestamp) {
 
 function NoteCard({ note, onClick, onEdit, onDelete }) {
   const preview = note.content
-    .replace(/[#*`_~\-\[\]]/g, "")
+    .replace(/[#*`_~\-[\]]/g, "")
     .trim()
     .slice(0, 100);
 
@@ -57,7 +57,14 @@ function NoteCard({ note, onClick, onEdit, onDelete }) {
 }
 
 export default function NotesPage() {
-  const { allNotes, initialized, exportAllNotes, handleImport, createNote, removeNote } = useNotes();
+  const {
+    allNotes,
+    initialized,
+    exportAllNotes,
+    handleImport,
+    createNote,
+    removeNote,
+  } = useNotes();
   const [search, setSearch] = useState("");
   const [editingNote, setEditingNote] = useState(null);
   const [editContent, setEditContent] = useState("");
@@ -101,7 +108,10 @@ export default function NotesPage() {
 
   const handleNewNote = async () => {
     if (!newNoteSlug.trim()) return;
-    const slug = newNoteSlug.trim().toLowerCase().replace(/[^a-z0-9-]/g, "-");
+    const slug = newNoteSlug
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, "-");
     await createNote(slug);
     setShowNewNote(false);
     setNewNoteSlug("");
@@ -120,7 +130,10 @@ export default function NotesPage() {
       <div className={style.header}>
         <h1>Notizen</h1>
         <div className={style.headerActions}>
-          <button className={style.actionBtn} onClick={() => setShowNewNote(true)}>
+          <button
+            className={style.actionBtn}
+            onClick={() => setShowNewNote(true)}
+          >
             Neue Notiz
           </button>
           <button className={style.actionBtn} onClick={handleImportClick}>
@@ -223,9 +236,7 @@ export default function NotesPage() {
           {filteredNotes.length === 0 ? (
             <div className={style.emptyState}>
               <p>Noch keine Notizen.</p>
-              <p>
-                Besuche eine Seite und schreibe deine erste Notiz!
-              </p>
+              <p>Besuche eine Seite und schreibe deine erste Notiz!</p>
             </div>
           ) : (
             filteredNotes.map((note) => (

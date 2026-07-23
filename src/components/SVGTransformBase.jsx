@@ -1,25 +1,24 @@
-import { useEffect, useState } from "react"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism"
-
-import { SVGComponent, Transform, Origin } from "./SVG"
-import Slider from "./Slider"
-import style from "@components/Path.module.css"
+import style from "@components/Path.module.css";
+import { useEffect, useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Slider from "./Slider";
+import { Origin, SVGComponent, Transform } from "./SVG";
 
 export default function SVGTransformBase({
   elementControlls,
   element,
   outputString = "",
 }) {
-  const [svgDisplayCode, setSvgDisplayCode] = useState("")
-  const [originX, setOriginX] = useState(0)
-  const [originY, setOriginY] = useState(0)
-  const [dx, setDx] = useState(0)
-  const [dy, setDy] = useState(0)
-  const [rotation, setRotation] = useState(0)
-  const [scale, setScale] = useState(1)
-  const [skewX, setSkewX] = useState(0)
-  const [skewY, setSkewY] = useState(0)
+  const [svgDisplayCode, setSvgDisplayCode] = useState("");
+  const [originX, setOriginX] = useState(0);
+  const [originY, setOriginY] = useState(0);
+  const [dx, setDx] = useState(0);
+  const [dy, setDy] = useState(0);
+  const [rotation, setRotation] = useState(0);
+  const [scale, setScale] = useState(1);
+  const [skewX, setSkewX] = useState(0);
+  const [skewY, setSkewY] = useState(0);
 
   //const elementControlls = React.Children.toArray(children).find(child => child.type === ElementControlls)
 
@@ -29,8 +28,8 @@ export default function SVGTransformBase({
      transform="translate(${dx}, ${dy}) rotate(${rotation}) scale(${scale}) skewX(${skewX}) skewY(${skewY})">
       ${outputString}
   </g>
-</svg>`)
-  }, [dx, dy, rotation, scale, originX, originY, skewX, skewY, outputString])
+</svg>`);
+  }, [dx, dy, rotation, scale, originX, originY, skewX, skewY, outputString]);
 
   return (
     <div className={style.gridContainer}>
@@ -125,7 +124,8 @@ export default function SVGTransformBase({
             rot={rotation}
             scale={scale}
             skewX={skewX}
-            skewY={skewY}>
+            skewY={skewY}
+          >
             {element}
           </Transform>
           <Origin x={originX} y={originY} />
@@ -138,5 +138,5 @@ export default function SVGTransformBase({
         </SyntaxHighlighter>
       </div>
     </div>
-  )
+  );
 }

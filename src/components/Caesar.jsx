@@ -1,22 +1,22 @@
-import style from "@components/Caesar.module.css"
-import { useEffect, useState } from "react"
+import style from "@components/Caesar.module.css";
+import { useEffect, useState } from "react";
 
 export default function Caesar({ initMsg = "hallo", initShift = 3 }) {
-  const [msg, setMsg] = useState(initMsg)
-  const [shift, setShift] = useState(initShift)
-  const [cipher, setCipher] = useState("")
-  const [hovered, setHovered] = useState(null)
+  const [msg, setMsg] = useState(initMsg);
+  const [shift, setShift] = useState(initShift);
+  const [cipher, setCipher] = useState("");
+  const [hovered, setHovered] = useState(null);
 
   useEffect(() => {
     const cipherArray = Array.from(msg).map((char) => {
-      const ascii = char.toLowerCase().charCodeAt(0)
-      const shifted = ((ascii - 97 + shift + 26 * 100) % 26) + 97
-      return String.fromCharCode(shifted)
-    })
-    setCipher(cipherArray.join(""))
-  }, [msg, shift])
+      const ascii = char.toLowerCase().charCodeAt(0);
+      const shifted = ((ascii - 97 + shift + 26 * 100) % 26) + 97;
+      return String.fromCharCode(shifted);
+    });
+    setCipher(cipherArray.join(""));
+  }, [msg, shift]);
 
-  const normalizedShift = ((shift % 26) + 26) % 26
+  const normalizedShift = ((shift % 26) + 26) % 26;
 
   return (
     <div className={style.caesarWrapper}>
@@ -33,8 +33,8 @@ export default function Caesar({ initMsg = "hallo", initShift = 3 }) {
                   .toLowerCase()
                   .split("")
                   .filter((c) => {
-                    const ascii = c.charCodeAt(0)
-                    return 97 <= ascii && ascii <= 122
+                    const ascii = c.charCodeAt(0);
+                    return 97 <= ascii && ascii <= 122;
                   })
                   .join(""),
               )
@@ -48,13 +48,15 @@ export default function Caesar({ initMsg = "hallo", initShift = 3 }) {
           <div className={style.shiftCtrl}>
             <button
               onClick={() => setShift((old) => old - 1)}
-              aria-label="Verschiebung verringern">
+              aria-label="Verschiebung verringern"
+            >
               −
             </button>
             <span className={style.shiftValue}>{normalizedShift}</span>
             <button
               onClick={() => setShift((old) => old + 1)}
-              aria-label="Verschiebung erhöhen">
+              aria-label="Verschiebung erhöhen"
+            >
               +
             </button>
           </div>
@@ -65,17 +67,18 @@ export default function Caesar({ initMsg = "hallo", initShift = 3 }) {
         <span className={style.stripLabel}>Klartextalphabet</span>
         <div className={`${style.alphabet} ${style.alphabetPlain}`}>
           {Array.from(Array(26).keys()).map((_, index) => {
-            const ch = String.fromCharCode(97 + index)
-            const isHov = hovered === index
+            const ch = String.fromCharCode(97 + index);
+            const isHov = hovered === index;
             return (
               <span
                 key={index}
                 className={isHov ? style.highlighted : ""}
                 onMouseEnter={() => setHovered(index)}
-                onMouseLeave={() => setHovered(null)}>
+                onMouseLeave={() => setHovered(null)}
+              >
                 {ch}
               </span>
-            )
+            );
           })}
         </div>
 
@@ -83,17 +86,18 @@ export default function Caesar({ initMsg = "hallo", initShift = 3 }) {
 
         <div className={`${style.alphabet} ${style.alphabetCipher}`}>
           {Array.from(Array(26).keys()).map((_, index) => {
-            const shifted = (index + normalizedShift) % 26
-            const isHov = hovered === index
+            const shifted = (index + normalizedShift) % 26;
+            const isHov = hovered === index;
             return (
               <span
                 key={index}
                 className={isHov ? style.highlighted : ""}
                 onMouseEnter={() => setHovered(index)}
-                onMouseLeave={() => setHovered(null)}>
+                onMouseLeave={() => setHovered(null)}
+              >
                 {String.fromCharCode(97 + shifted)}
               </span>
-            )
+            );
           })}
         </div>
         <span className={style.stripLabel}>Geheimtextalphabet</span>
@@ -104,5 +108,5 @@ export default function Caesar({ initMsg = "hallo", initShift = 3 }) {
         <span className={style.message}>{cipher || "—"}</span>
       </div>
     </div>
-  )
+  );
 }

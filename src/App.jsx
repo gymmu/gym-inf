@@ -1,16 +1,15 @@
-import { RouterProvider } from "react-router-dom"
-
+import { RouterProvider } from "react-router-dom";
+import { AppProvider } from "./context/AppContext.jsx";
+import { NavProvider } from "./context/NavContext.jsx";
 // Import routes from external file
-import { createRouter } from "./routes/all.jsx"
-import { AppProvider } from "./context/AppContext.jsx"
-import { NavProvider } from "./context/NavContext.jsx"
+import { createRouter } from "./routes/all.jsx";
 
 export default function App() {
-  const router = createRouter()
+  const router = createRouter();
 
   // This should never trigger, since the router is not set as a State.
   if (!router) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -19,5 +18,5 @@ export default function App() {
         <RouterProvider router={router} />
       </NavProvider>
     </AppProvider>
-  )
+  );
 }

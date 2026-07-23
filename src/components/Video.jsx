@@ -1,5 +1,5 @@
-import "./components.css"
-export default function Video({url}) {
+import "./components.css";
+export default function Video({ url }) {
   return (
     <center>
       <iframe
@@ -12,5 +12,5 @@ export default function Video({url}) {
         allowFullScreen
       ></iframe>
     </center>
-  )
+  );
 }

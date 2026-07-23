@@ -1,5 +1,5 @@
-import { useState } from "react"
-import style from "./NetworkDiagram.module.css"
+import { useState } from "react";
+import style from "./NetworkDiagram.module.css";
 
 // Layout (viewBox 0 0 760 560), Radius R=28, Label bei y+44
 //
@@ -12,7 +12,7 @@ import style from "./NetworkDiagram.module.css"
 //  Ebene 4 (y=390):  Smartphone  Switch  Smart TV      cx=100 / 380 / 660
 //  Ebene 5 (y=510):  PC  Laptop  NAS  Drucker          cx=230 / 340 / 450 / 560
 
-const R = 28 // Kreisradius
+const R = 28; // Kreisradius
 
 const DEVICES = {
   internet: {
@@ -105,7 +105,7 @@ const DEVICES = {
     color: "#8ec07c",
     desc: "Netzwerkdrucker im LAN. Sicherheitsempfehlung: in eigenem VLAN isolieren.",
   },
-}
+};
 
 // labelDx/labelDy: Versatz des Label-Texts vom Linienmittelpunkt
 const LINKS = [
@@ -158,15 +158,15 @@ const LINKS = [
   { from: "switch", to: "pc2", label: "", dashed: false, color: "#8ec07c" },
   { from: "switch", to: "nas", label: "", dashed: false, color: "#8ec07c" },
   { from: "switch", to: "printer", label: "", dashed: false, color: "#8ec07c" },
-]
+];
 
 function midpoint(a, b) {
-  return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }
+  return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
 }
 
 export default function NetworkDiagram() {
-  const [active, setActive] = useState("router")
-  const dev = DEVICES[active]
+  const [active, setActive] = useState("router");
+  const dev = DEVICES[active];
 
   return (
     <div className={style.wrapper}>
@@ -174,12 +174,13 @@ export default function NetworkDiagram() {
         viewBox="0 0 760 570"
         className={style.svg}
         role="img"
-        aria-label="Heimnetzwerk-Diagramm">
+        aria-label="Heimnetzwerk-Diagramm"
+      >
         {/* ── Links ─────────────────────────────────────────── */}
         {LINKS.map((lnk, i) => {
-          const a = DEVICES[lnk.from]
-          const b = DEVICES[lnk.to]
-          const mid = midpoint(a, b)
+          const a = DEVICES[lnk.from];
+          const b = DEVICES[lnk.to];
+          const mid = midpoint(a, b);
           return (
             <g key={i}>
               <line
@@ -194,10 +195,10 @@ export default function NetworkDiagram() {
               />
               {lnk.label &&
                 (() => {
-                  const tx = mid.x + (lnk.labelDx ?? 6)
-                  const ty = mid.y + (lnk.labelDy ?? -5)
-                  const charW = 6.5
-                  const w = lnk.label.length * charW
+                  const tx = mid.x + (lnk.labelDx ?? 6);
+                  const ty = mid.y + (lnk.labelDy ?? -5);
+                  const charW = 6.5;
+                  const w = lnk.label.length * charW;
                   return (
                     <g style={{ pointerEvents: "none", userSelect: "none" }}>
                       <rect
@@ -214,14 +215,15 @@ export default function NetworkDiagram() {
                         y={ty}
                         fill={lnk.color}
                         fontSize={10}
-                        fontFamily="monospace">
+                        fontFamily="monospace"
+                      >
                         {lnk.label}
                       </text>
                     </g>
-                  )
+                  );
                 })()}
             </g>
-          )
+          );
         })}
 
         {/* ── NAT / DHCP label rechts neben dem Router ──────── */}
@@ -254,7 +256,7 @@ export default function NetworkDiagram() {
 
         {/* ── Devices ───────────────────────────────────────── */}
         {Object.values(DEVICES).map((d) => {
-          const isActive = d.id === active
+          const isActive = d.id === active;
           return (
             <g
               key={d.id}
@@ -263,7 +265,8 @@ export default function NetworkDiagram() {
               role="button"
               tabIndex={0}
               onKeyDown={(e) => e.key === "Enter" && setActive(d.id)}
-              aria-label={d.label}>
+              aria-label={d.label}
+            >
               <circle
                 cx={d.x}
                 cy={d.y}
@@ -278,7 +281,8 @@ export default function NetworkDiagram() {
                 y={d.y + 6}
                 textAnchor="middle"
                 fontSize={16}
-                style={{ pointerEvents: "none", userSelect: "none" }}>
+                style={{ pointerEvents: "none", userSelect: "none" }}
+              >
                 {d.icon}
               </text>
               <text
@@ -288,11 +292,12 @@ export default function NetworkDiagram() {
                 fill={isActive ? d.color : "#928374"}
                 fontSize={11}
                 fontWeight={isActive ? "700" : "400"}
-                style={{ pointerEvents: "none", userSelect: "none" }}>
+                style={{ pointerEvents: "none", userSelect: "none" }}
+              >
                 {d.label}
               </text>
             </g>
-          )
+          );
         })}
       </svg>
 
@@ -307,5 +312,5 @@ export default function NetworkDiagram() {
         </div>
       </div>
     </div>
-  )
+  );
 }

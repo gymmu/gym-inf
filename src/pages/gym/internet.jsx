@@ -1,14 +1,14 @@
-import DataTable from "@components/DataTable/DataTable"
-import Figure from "@components/Figure.jsx"
-import DnsResolver from "@components/gym/DnsResolver/DnsResolver"
-import TcpIpLayers from "@components/gym/TcpIpLayers/TcpIpLayers"
-import TcpHandshakeAnim from "@components/gym/TcpHandshake/TcpHandshake"
-import PacketDiagram from "@components/gym/PacketDiagram/PacketDiagram"
-import PacketAnimation from "@components/gym/PacketAnimation/PacketAnimation"
-import HttpDiagram from "@components/gym/HttpDiagram/HttpDiagram"
-import HttpPacket from "@components/gym/HttpPacket/HttpPacket"
-import LearningGoals from "@components/LearningGoals.jsx"
-import Section from "@components/Section.jsx"
+import DataTable from "@components/DataTable/DataTable";
+import Figure from "@components/Figure.jsx";
+import DnsResolver from "@components/gym/DnsResolver/DnsResolver";
+import HttpDiagram from "@components/gym/HttpDiagram/HttpDiagram";
+import HttpPacket from "@components/gym/HttpPacket/HttpPacket";
+import PacketAnimation from "@components/gym/PacketAnimation/PacketAnimation";
+import PacketDiagram from "@components/gym/PacketDiagram/PacketDiagram";
+import TcpHandshakeAnim from "@components/gym/TcpHandshake/TcpHandshake";
+import TcpIpLayers from "@components/gym/TcpIpLayers/TcpIpLayers";
+import LearningGoals from "@components/LearningGoals.jsx";
+import Section from "@components/Section.jsx";
 
 export default function GymInternet() {
   return (
@@ -529,5 +529,5 @@ export default function GymInternet() {
         </p>
       </section>
     </>
-  )
+  );
 }

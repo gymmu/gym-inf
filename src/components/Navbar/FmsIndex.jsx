@@ -1,5 +1,5 @@
-import style from "./Navbar.module.css"
-import NavLink from "./NavLink"
+import style from "./Navbar.module.css";
+import NavLink from "./NavLink";
 
 export default function FmsIndex() {
   return (
@@ -59,7 +59,9 @@ export default function FmsIndex() {
               <NavLink to="/fms/algorithmen-mathematik">Mathematik</NavLink>
               <NavLink to="/fms/algorithmen-strings">Strings</NavLink>
               <NavLink to="/fms/algorithmen-suchen">Suchalgorithmen</NavLink>
-              <NavLink to="/fms/algorithmen-sortieren">Sortieralgorithmen</NavLink>
+              <NavLink to="/fms/algorithmen-sortieren">
+                Sortieralgorithmen
+              </NavLink>
               <NavLink to="/fms/algorithmen-aufgaben">Aufgaben</NavLink>
             </ol>
           </li>
@@ -68,8 +70,12 @@ export default function FmsIndex() {
             <ol>
               <NavLink to="/fms/word">Einstieg in Word</NavLink>
               <NavLink to="/fms/word-formatvorlagen">Formatvorlagen</NavLink>
-              <NavLink to="/fms/word-inhaltsverzeichnis">Inhaltsverzeichnis</NavLink>
-              <NavLink to="/fms/word-seitenzahlen">Kopf- und Fusszeilen</NavLink>
+              <NavLink to="/fms/word-inhaltsverzeichnis">
+                Inhaltsverzeichnis
+              </NavLink>
+              <NavLink to="/fms/word-seitenzahlen">
+                Kopf- und Fusszeilen
+              </NavLink>
               <NavLink to="/fms/word-probleme">Das Problem mit Word</NavLink>
               <NavLink to="/fms/word-latex">LaTeX mit Overleaf</NavLink>
             </ol>
@@ -99,5 +105,5 @@ export default function FmsIndex() {
         </ol>
       </section>
     </div>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import Mermaid from "@components/Mermaid"
-import Section from "@components/Section"
+import Mermaid from "@components/Mermaid";
+import Section from "@components/Section";
 
 export default function FmsAlgorithmen() {
   // Einfaches Beispiel: Zahlenprüfung
@@ -15,7 +15,7 @@ flowchart TD
     Positive --> End([Ende])
     Zero --> End
     Negative --> End
-  `
+  `;
 
   // Komplexeres Beispiel: Maximum von drei Zahlen finden
   const maximumFinder = `
@@ -31,7 +31,7 @@ flowchart TD
     CheckC -->|Nein| Output[Ausgabe: max]
     SetC --> Output
     Output --> End([Ende])
-  `
+  `;
 
   return (
     <>
@@ -118,7 +118,8 @@ flowchart TD
             marginBottom: "1.5rem",
             width: "100%",
             borderCollapse: "collapse",
-          }}>
+          }}
+        >
           <thead>
             <tr>
               <th
@@ -126,7 +127,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 Schritt
               </th>
               <th
@@ -134,7 +136,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 Aktion / Bedingung
               </th>
               <th
@@ -142,7 +145,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 a
               </th>
               <th
@@ -150,7 +154,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 b
               </th>
               <th
@@ -158,7 +163,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 c
               </th>
               <th
@@ -166,7 +172,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 max
               </th>
             </tr>
@@ -258,7 +265,8 @@ flowchart TD
             marginBottom: "1.5rem",
             width: "100%",
             borderCollapse: "collapse",
-          }}>
+          }}
+        >
           <thead>
             <tr>
               <th
@@ -266,7 +274,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 Schritt
               </th>
               <th
@@ -274,7 +283,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 Aktion / Bedingung
               </th>
               <th
@@ -282,7 +292,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 a
               </th>
               <th
@@ -290,7 +301,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 b
               </th>
               <th
@@ -298,7 +310,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 c
               </th>
               <th
@@ -306,7 +319,8 @@ flowchart TD
                   border: "1px solid #ddd",
                   padding: "8px",
                   textAlign: "left",
-                }}>
+                }}
+              >
                 max
               </th>
             </tr>
@@ -384,5 +398,5 @@ flowchart TD
         </table>
       </section>
     </>
-  )
+  );
 }

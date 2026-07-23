@@ -1,4 +1,4 @@
-import style from "./TcpIpLayers.module.css"
+import style from "./TcpIpLayers.module.css";
 
 const LAYERS = [
   {
@@ -25,14 +25,14 @@ const LAYERS = [
     task: "Physische Übertragung im lokalen Netz",
     protocols: ["Ethernet", "WLAN"],
   },
-]
+];
 
 const ENCAP_LINES = [
   { label: "Anwendungsschicht", content: "[HTTP-Header | HTTP-Daten]" },
   { label: "Transportschicht", content: "[TCP-Header | HTTP-Header | Daten]" },
   { label: "Internetschicht", content: "[IP-Header | TCP-Header | … ]" },
   { label: "Netzzugangsschicht", content: "[Ethernet-Header | IP-Header | …]" },
-]
+];
 
 export default function TcpIpLayers() {
   return (
@@ -65,5 +65,5 @@ export default function TcpIpLayers() {
         ))}
       </div>
     </div>
-  )
+  );
 }

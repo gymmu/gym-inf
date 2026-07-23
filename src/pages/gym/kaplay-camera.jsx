@@ -1,6 +1,5 @@
-import CodeBlock from "@components/CodeBlock"
-import Video from "@components/Video" 
-
+import CodeBlock from "@components/CodeBlock";
+import Video from "@components/Video";
 
 export default function KaplayCamera() {
   return (
@@ -58,5 +57,5 @@ export default function KaplayCamera() {
         <Video url="lQbuCrrBNk8" />
       </section>
     </>
-  )
+  );
 }

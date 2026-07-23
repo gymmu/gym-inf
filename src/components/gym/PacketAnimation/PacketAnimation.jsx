@@ -1,11 +1,11 @@
-import { Player } from "@remotion/player"
+import { Player } from "@remotion/player";
 import {
   AbsoluteFill,
   interpolate,
   spring,
   useCurrentFrame,
   useVideoConfig,
-} from "remotion"
+} from "remotion";
 
 // ─── Colours (Gruvbox) ────────────────────────────────────────
 const C = {
@@ -21,34 +21,34 @@ const C = {
   orange: "#fe8019",
   red: "#fb4934",
   purple: "#d3869b",
-}
+};
 
 // ─── Nachrichten ──────────────────────────────────────────────
-const MSG_SHORT = "HALLO"
-const MSG_LONG = "HALLO NETZ"
+const MSG_SHORT = "HALLO";
+const MSG_LONG = "HALLO NETZ";
 
-const FPS = 30
+const FPS = 30;
 
 function toBin(ch) {
-  return ch.charCodeAt(0).toString(2).padStart(8, "0")
+  return ch.charCodeAt(0).toString(2).padStart(8, "0");
 }
 
 // ─── Pakete aus langer Nachricht ─────────────────────────────
-const LONG_CHARS = MSG_LONG.split("")
+const LONG_CHARS = MSG_LONG.split("");
 const PACKET_GROUPS = [
   LONG_CHARS.slice(0, 4), // "HALL"  → Paket 1
   LONG_CHARS.slice(4, 7), // "O N"   → Paket 2
   LONG_CHARS.slice(7, 10), // "ETZ"   → Paket 3
-]
+];
 
 // ─── TCP-Demo: Ankunftsreihenfolge absichtlich falsch ─────────
 // Pakete werden gesendet als 1,2,3 aber kommen an als 3,1,2
-const SEND_ORDER = [0, 1, 2] // Sendeindizes (Paket 1,2,3)
-const ARRIVE_ORDER = [2, 0, 1] // Ankunftsreihenfolge (Paket 3 kommt zuerst an)
+const SEND_ORDER = [0, 1, 2]; // Sendeindizes (Paket 1,2,3)
+const ARRIVE_ORDER = [2, 0, 1]; // Ankunftsreihenfolge (Paket 3 kommt zuerst an)
 
 // ─── Router für Szene 4 ───────────────────────────────────────
-const ROUTER_COLORS = [C.orange, C.purple, C.aqua]
-const ROUTER_LABELS = ["Router A", "Router B", "Router C"]
+const ROUTER_COLORS = [C.orange, C.purple, C.aqua];
+const ROUTER_LABELS = ["Router A", "Router B", "Router C"];
 
 // ─── Timing (frames) ─────────────────────────────────────────
 const T = {
@@ -80,7 +80,7 @@ const T = {
   decodeStart: 1060,
   textReveal: 1160,
   totalFrames: 1320,
-}
+};
 
 // ─── Wiederverwendbare Bit-Zellen-Komponente (HTML) ───────────
 function BitCells({ bits, color }) {
@@ -101,17 +101,18 @@ function BitCells({ bits, color }) {
             fontSize: 9,
             fontWeight: 700,
             color: b === "1" ? C.bg : C.gray,
-          }}>
+          }}
+        >
           {b}
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 // ─── Zeichenbox (Brief/Leerzeichen-aware) ────────────────────
 function CharBox({ ch, size = 40, fontSize = 20, borderColor }) {
-  const isSpace = ch === " "
+  const isSpace = ch === " ";
   return (
     <div
       style={{
@@ -128,15 +129,16 @@ function CharBox({ ch, size = 40, fontSize = 20, borderColor }) {
         fontSize: isSpace ? 9 : fontSize,
         fontWeight: 700,
         color: isSpace ? C.gray : C.yellow,
-      }}>
+      }}
+    >
       {isSpace ? "space" : ch}
     </div>
-  )
+  );
 }
 
 // ─── SCENE 1: HALLO → ASCII (unverändert) ────────────────────
 function SceneTextToAscii({ frame }) {
-  const chars = MSG_SHORT.split("")
+  const chars = MSG_SHORT.split("");
 
   return (
     <AbsoluteFill
@@ -144,7 +146,8 @@ function SceneTextToAscii({ frame }) {
         background: C.bg,
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <div
         style={{
           position: "absolute",
@@ -158,24 +161,25 @@ function SceneTextToAscii({ frame }) {
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
           ),
-        }}>
+        }}
+      >
         Schritt 1: Text → ASCII-Nummern
       </div>
 
       <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
         {chars.map((ch, i) => {
-          const delay = T.textAppear + i * 8
+          const delay = T.textAppear + i * 8;
           const charOp = interpolate(frame, [delay, delay + 10], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
-          })
+          });
           const asciiProg = interpolate(
             frame,
             [T.asciiStart + i * 10, T.asciiStart + i * 10 + 20],
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-          )
-          const ascii = ch.charCodeAt(0)
+          );
+          const ascii = ch.charCodeAt(0);
 
           return (
             <div
@@ -186,7 +190,8 @@ function SceneTextToAscii({ frame }) {
                 alignItems: "center",
                 gap: 8,
                 opacity: charOp,
-              }}>
+              }}
+            >
               <div
                 style={{
                   width: 64,
@@ -200,7 +205,8 @@ function SceneTextToAscii({ frame }) {
                   fontSize: 32,
                   fontWeight: 700,
                   color: C.yellow,
-                }}>
+                }}
+              >
                 {ch}
               </div>
               <div style={{ color: C.gray, fontSize: 18, opacity: asciiProg }}>
@@ -220,20 +226,21 @@ function SceneTextToAscii({ frame }) {
                   fontWeight: 700,
                   color: C.orange,
                   opacity: asciiProg,
-                }}>
+                }}
+              >
                 {ascii}
               </div>
             </div>
-          )
+          );
         })}
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SCENE 2: Lange Nachricht → Bits ─────────────────────────
 function SceneLongMessageBytes({ frame }) {
-  const chars = LONG_CHARS
+  const chars = LONG_CHARS;
 
   return (
     <AbsoluteFill
@@ -242,7 +249,8 @@ function SceneLongMessageBytes({ frame }) {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-      }}>
+      }}
+    >
       <div
         style={{
           position: "absolute",
@@ -259,7 +267,8 @@ function SceneLongMessageBytes({ frame }) {
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
           ),
-        }}>
+        }}
+      >
         Schritt 2: Längere Nachricht → Bits
       </div>
 
@@ -278,7 +287,8 @@ function SceneLongMessageBytes({ frame }) {
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
           ),
-        }}>
+        }}
+      >
         Jedes Zeichen wird in 8 Bits umgewandelt
       </div>
 
@@ -290,14 +300,15 @@ function SceneLongMessageBytes({ frame }) {
           justifyContent: "center",
           maxWidth: 860,
           marginTop: 20,
-        }}>
+        }}
+      >
         {chars.map((ch, i) => {
-          const delay = T.bytesReveal + i * 10
+          const delay = T.bytesReveal + i * 10;
           const op = interpolate(frame, [delay, delay + 14], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
-          })
-          const bits = toBin(ch)
+          });
+          const bits = toBin(ch);
 
           return (
             <div
@@ -308,17 +319,18 @@ function SceneLongMessageBytes({ frame }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 4,
-              }}>
+              }}
+            >
               <CharBox ch={ch} size={46} fontSize={22} />
               <div style={{ display: "flex", gap: 2, marginTop: 2 }}>
                 {bits.split("").map((b, j) => {
-                  const bitDelay = delay + j * 3
+                  const bitDelay = delay + j * 3;
                   const bitOp = interpolate(
                     frame,
                     [bitDelay, bitDelay + 6],
                     [0, 1],
                     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-                  )
+                  );
                   return (
                     <div
                       key={j}
@@ -335,14 +347,15 @@ function SceneLongMessageBytes({ frame }) {
                         fontWeight: 700,
                         color: b === "1" ? C.bg : C.gray,
                         opacity: bitOp,
-                      }}>
+                      }}
+                    >
                       {b}
                     </div>
-                  )
+                  );
                 })}
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -368,17 +381,18 @@ function SceneLongMessageBytes({ frame }) {
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
           ),
-        }}>
+        }}
+      >
         {MSG_LONG.length} Zeichen = {MSG_LONG.length * 8} Bits → werden in{" "}
         <strong style={{ color: C.orange }}>3 Pakete</strong> aufgeteilt
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SCENE 3: Bits in Pakete verpacken ───────────────────────
 function SceneBitsToPackets({ frame, fps }) {
-  const packetColors = ROUTER_COLORS
+  const packetColors = ROUTER_COLORS;
 
   return (
     <AbsoluteFill
@@ -386,7 +400,8 @@ function SceneBitsToPackets({ frame, fps }) {
         background: C.bg,
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <div
         style={{
           position: "absolute",
@@ -403,24 +418,25 @@ function SceneBitsToPackets({ frame, fps }) {
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
           ),
-        }}>
+        }}
+      >
         Schritt 3: Bits werden in Pakete verpackt
       </div>
 
       <div style={{ display: "flex", gap: 22, marginTop: 20 }}>
         {PACKET_GROUPS.map((group, i) => {
-          const delay = T.packetsSpring + i * 22
+          const delay = T.packetsSpring + i * 22;
           const sp = spring({
             frame: frame - delay,
             fps,
             config: { damping: 14, stiffness: 100 },
-          })
-          const scale = interpolate(sp, [0, 1], [0.5, 1])
+          });
+          const scale = interpolate(sp, [0, 1], [0.5, 1]);
           const op = interpolate(frame, [delay, delay + 12], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
-          })
-          const color = packetColors[i]
+          });
+          const color = packetColors[i];
 
           return (
             <div
@@ -432,7 +448,8 @@ function SceneBitsToPackets({ frame, fps }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 8,
-              }}>
+              }}
+            >
               {/* Paket-Box */}
               <div
                 style={{
@@ -441,7 +458,8 @@ function SceneBitsToPackets({ frame, fps }) {
                   borderRadius: 10,
                   padding: "8px 10px",
                   width: 220,
-                }}>
+                }}
+              >
                 {/* Header */}
                 <div
                   style={{
@@ -452,16 +470,19 @@ function SceneBitsToPackets({ frame, fps }) {
                     fontSize: 11,
                     fontWeight: 700,
                     marginBottom: 6,
-                  }}>
+                  }}
+                >
                   Paket #{i + 1} | Seq: {i + 1} | Src: PC | Dst: SRV
                 </div>
                 {/* Zeichen mit Bits */}
                 <div
-                  style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                  style={{ display: "flex", flexDirection: "column", gap: 5 }}
+                >
                   {group.map((ch, j) => (
                     <div
                       key={j}
-                      style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      style={{ display: "flex", alignItems: "center", gap: 6 }}
+                    >
                       <CharBox
                         ch={ch}
                         size={28}
@@ -479,11 +500,12 @@ function SceneBitsToPackets({ frame, fps }) {
                   color: ROUTER_COLORS[i],
                   fontSize: 12,
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 → via {ROUTER_LABELS[i]}
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -502,29 +524,30 @@ function SceneBitsToPackets({ frame, fps }) {
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
           ),
-        }}>
+        }}
+      >
         Jedes Paket trägt eine{" "}
         <strong style={{ color: C.fg }}>Sequenznummer</strong> — TCP stellt
         damit die richtige Reihenfolge sicher
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SCENE 4: Routen + TCP Reordering ────────────────────────
 function ScenePacketTravel({ frame }) {
   const W = 900,
-    H = 500
-  const SVG_TOP = 55
+    H = 500;
+  const SVG_TOP = 55;
 
-  const pc = { x: 55, y: 210 }
-  const server = { x: 580, y: 210 }
+  const pc = { x: 55, y: 210 };
+  const server = { x: 580, y: 210 };
 
   const routers = [
     { x: 320, y: 90, label: "Router A", color: C.orange },
     { x: 320, y: 210, label: "Router B", color: C.purple },
     { x: 320, y: 330, label: "Router C", color: C.aqua },
-  ]
+  ];
 
   // Pakete werden gesendet in Reihenfolge 1,2,3
   // aber kommen an in Reihenfolge 3,1,2 (ARRIVE_ORDER = [2,0,1])
@@ -534,12 +557,12 @@ function ScenePacketTravel({ frame }) {
     T.packetsLeave,
     T.packetsLeave + 18,
     T.packetsLeave + 36,
-  ]
+  ];
   const ARRIVE_FRAMES = [
     T.packetsLeave + 120,
     T.packetsLeave + 90,
     T.packetsLeave + 150,
-  ]
+  ];
   // → Paket 1 kommt bei +120, Paket 2 bei +150, Paket 3 bei +90 → Reihenfolge: 3,1,2
 
   const lineOp = interpolate(
@@ -547,37 +570,37 @@ function ScenePacketTravel({ frame }) {
     [T.scene4Start, T.scene4Start + 20],
     [0, 1],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  )
+  );
 
   const packetDefs = PACKET_GROUPS.map((group, i) => {
-    const router = routers[i]
-    const leaveFrame = DEPART_FRAMES[i]
-    const midFrame = leaveFrame + (ARRIVE_FRAMES[i] - leaveFrame) / 2
-    const endFrame = ARRIVE_FRAMES[i]
+    const router = routers[i];
+    const leaveFrame = DEPART_FRAMES[i];
+    const midFrame = leaveFrame + (ARRIVE_FRAMES[i] - leaveFrame) / 2;
+    const endFrame = ARRIVE_FRAMES[i];
 
     const p1 = interpolate(frame, [leaveFrame, midFrame], [0, 1], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-    })
+    });
     const p2 = interpolate(frame, [midFrame, endFrame], [0, 1], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-    })
+    });
 
-    let x, y
+    let x, y;
     if (p2 > 0) {
-      x = interpolate(p2, [0, 1], [router.x, server.x])
-      y = interpolate(p2, [0, 1], [router.y, server.y])
+      x = interpolate(p2, [0, 1], [router.x, server.x]);
+      y = interpolate(p2, [0, 1], [router.y, server.y]);
     } else {
-      x = interpolate(p1, [0, 1], [pc.x, router.x])
-      y = interpolate(p1, [0, 1], [pc.y, router.y])
+      x = interpolate(p1, [0, 1], [pc.x, router.x]);
+      y = interpolate(p1, [0, 1], [pc.y, router.y]);
     }
 
     const fadeOut = interpolate(frame, [endFrame + 5, endFrame + 25], [1, 0], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-    })
-    const visible = frame >= leaveFrame && frame <= endFrame + 25
+    });
+    const visible = frame >= leaveFrame && frame <= endFrame + 25;
 
     return {
       x,
@@ -588,24 +611,24 @@ function ScenePacketTravel({ frame }) {
       i,
       endFrame,
       group,
-    }
-  })
+    };
+  });
 
   // Reihenfolge der angekommenen Pakete (für Empfangs-Slots)
   // Slot-Positionen am Server (3 Slots untereinander)
-  const SLOT_Y = [130, 215, 300]
+  const SLOT_Y = [130, 215, 300];
   // Welches Paket (Index) liegt in welchem Slot?
   // Pakete kommen an: zuerst Paket 3 (i=2) → Slot 0, dann Paket 1 (i=0) → Slot 1, dann Paket 2 (i=1) → Slot 2
-  const ARRIVAL_SEQUENCE = [2, 0, 1] // in dieser Reihenfolge kommen sie an
-  const slotForPacket = [1, 2, 0] // Paket 0 → Slot 1, Paket 1 → Slot 2, Paket 2 → Slot 0
+  const ARRIVAL_SEQUENCE = [2, 0, 1]; // in dieser Reihenfolge kommen sie an
+  const slotForPacket = [1, 2, 0]; // Paket 0 → Slot 1, Paket 1 → Slot 2, Paket 2 → Slot 0
 
-  const lastArrival = Math.max(...ARRIVE_FRAMES)
+  const lastArrival = Math.max(...ARRIVE_FRAMES);
   const reorderOp = interpolate(
     frame,
     [T.reorderShow, T.reorderShow + 20],
     [0, 1],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  )
+  );
 
   return (
     <AbsoluteFill style={{ background: C.bg }}>
@@ -625,7 +648,8 @@ function ScenePacketTravel({ frame }) {
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
           ),
-        }}>
+        }}
+      >
         Schritt 4: Pakete reisen — verschiedene Wege, falsche Reihenfolge
       </div>
 
@@ -633,7 +657,8 @@ function ScenePacketTravel({ frame }) {
         width={W}
         height={H - 30}
         style={{ position: "absolute", top: SVG_TOP }}
-        overflow="visible">
+        overflow="visible"
+      >
         {/* Leitungen */}
         {routers.map((r, i) => (
           <g key={i} opacity={lineOp}>
@@ -679,7 +704,8 @@ function ScenePacketTravel({ frame }) {
             textAnchor="middle"
             fill={C.blue}
             fontSize={13}
-            fontWeight="700">
+            fontWeight="700"
+          >
             PC
           </text>
         </g>
@@ -704,7 +730,8 @@ function ScenePacketTravel({ frame }) {
               textAnchor="middle"
               fill={r.color}
               fontSize={11}
-              fontWeight="700">
+              fontWeight="700"
+            >
               {r.label}
             </text>
           </g>
@@ -729,19 +756,21 @@ function ScenePacketTravel({ frame }) {
             textAnchor="middle"
             fill={C.green}
             fontSize={13}
-            fontWeight="700">
+            fontWeight="700"
+          >
             Server
           </text>
         </g>
 
         {/* Bewegende Pakete */}
         {packetDefs.map((pkt) => {
-          if (!pkt.visible) return null
+          if (!pkt.visible) return null;
           return (
             <g
               key={pkt.i}
               transform={`translate(${pkt.x}, ${pkt.y})`}
-              opacity={pkt.fadeOut}>
+              opacity={pkt.fadeOut}
+            >
               <rect
                 x={-24}
                 y={-15}
@@ -757,7 +786,8 @@ function ScenePacketTravel({ frame }) {
                 textAnchor="middle"
                 fill={C.gray}
                 fontSize={8}
-                fontWeight="700">
+                fontWeight="700"
+              >
                 PKT {pkt.i + 1}
               </text>
               <text
@@ -765,26 +795,27 @@ function ScenePacketTravel({ frame }) {
                 textAnchor="middle"
                 fill={pkt.color}
                 fontSize={10}
-                fontWeight="700">
+                fontWeight="700"
+              >
                 Seq:{pkt.i + 1}
               </text>
             </g>
-          )
+          );
         })}
 
         {/* Empfangs-Slots am Server: zeigen Pakete in Ankunftsreihenfolge */}
         {ARRIVAL_SEQUENCE.map((pktIdx, slotPos) => {
-          const arriveFrame = ARRIVE_FRAMES[pktIdx]
+          const arriveFrame = ARRIVE_FRAMES[pktIdx];
           const slotOp = interpolate(
             frame,
             [arriveFrame + 25, arriveFrame + 40],
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-          )
-          if (slotOp <= 0) return null
-          const color = ROUTER_COLORS[pktIdx]
-          const slotX = server.x + 50
-          const slotY = SLOT_Y[slotPos] - 10
+          );
+          if (slotOp <= 0) return null;
+          const color = ROUTER_COLORS[pktIdx];
+          const slotX = server.x + 50;
+          const slotY = SLOT_Y[slotPos] - 10;
 
           return (
             <g key={pktIdx} opacity={slotOp}>
@@ -804,7 +835,8 @@ function ScenePacketTravel({ frame }) {
                 textAnchor="middle"
                 fill={C.gray}
                 fontSize={8}
-                fontWeight="700">
+                fontWeight="700"
+              >
                 angekommen
               </text>
               <text
@@ -813,11 +845,12 @@ function ScenePacketTravel({ frame }) {
                 textAnchor="middle"
                 fill={color}
                 fontSize={10}
-                fontWeight="700">
+                fontWeight="700"
+              >
                 PKT {pktIdx + 1} (Seq:{pktIdx + 1})
               </text>
             </g>
-          )
+          );
         })}
 
         {/* Reorder-Pfeil + Label */}
@@ -841,7 +874,8 @@ function ScenePacketTravel({ frame }) {
               textAnchor="middle"
               fill={C.yellow}
               fontSize={11}
-              fontWeight="700">
+              fontWeight="700"
+            >
               TCP sortiert →
             </text>
             {/* Sortierte Reihenfolge */}
@@ -863,7 +897,8 @@ function ScenePacketTravel({ frame }) {
                   textAnchor="middle"
                   fill={C.gray}
                   fontSize={8}
-                  fontWeight="700">
+                  fontWeight="700"
+                >
                   richtige Pos.
                 </text>
                 <text
@@ -872,7 +907,8 @@ function ScenePacketTravel({ frame }) {
                   textAnchor="middle"
                   fill={ROUTER_COLORS[idx]}
                   fontSize={10}
-                  fontWeight="700">
+                  fontWeight="700"
+                >
                   PKT {idx + 1} (Seq:{idx + 1})
                 </text>
                 {/* Pfeil von unsortiert → sortiert */}
@@ -895,7 +931,8 @@ function ScenePacketTravel({ frame }) {
                 markerHeight="6"
                 refX="3"
                 refY="3"
-                orient="auto">
+                orient="auto"
+              >
                 <path d="M0,0 L0,6 L6,3 z" fill={C.fg} />
               </marker>
             </defs>
@@ -913,11 +950,13 @@ function ScenePacketTravel({ frame }) {
           flexDirection: "column",
           gap: 5,
           opacity: lineOp,
-        }}>
+        }}
+      >
         {routers.map((r, i) => (
           <div
             key={i}
-            style={{ display: "flex", alignItems: "center", gap: 5 }}>
+            style={{ display: "flex", alignItems: "center", gap: 5 }}
+          >
             <div
               style={{
                 width: 14,
@@ -947,7 +986,8 @@ function ScenePacketTravel({ frame }) {
           textAlign: "center",
           whiteSpace: "nowrap",
           opacity: reorderOp,
-        }}>
+        }}
+      >
         <span style={{ color: C.gray, fontSize: 13 }}>
           TCP: Sequenznummern garantieren die{" "}
           <strong style={{ color: C.yellow }}>richtige Reihenfolge</strong> —
@@ -955,12 +995,12 @@ function ScenePacketTravel({ frame }) {
         </span>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SCENE 5: Empfänger — Bits → Zeichen → Text ──────────────
 function SceneReceiver({ frame, fps }) {
-  const chars = LONG_CHARS
+  const chars = LONG_CHARS;
 
   // Phase A (bitsAppear): alle Bit-Blöcke erscheinen nacheinander
   // Phase B (decodeStart): jeder Block wird zu einem Zeichen
@@ -971,14 +1011,14 @@ function SceneReceiver({ frame, fps }) {
     [T.scene5Start, T.scene5Start + 15],
     [0, 1],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  )
+  );
 
   const finalTextOp = interpolate(
     frame,
     [T.textReveal, T.textReveal + 25],
     [0, 1],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  )
+  );
 
   return (
     <AbsoluteFill
@@ -987,7 +1027,8 @@ function SceneReceiver({ frame, fps }) {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-      }}>
+      }}
+    >
       <div
         style={{
           position: "absolute",
@@ -999,7 +1040,8 @@ function SceneReceiver({ frame, fps }) {
           fontWeight: 700,
           whiteSpace: "nowrap",
           opacity: titleOp,
-        }}>
+        }}
+      >
         Schritt 5: Empfänger — Bits → Zeichen → Nachricht
       </div>
 
@@ -1018,7 +1060,8 @@ function SceneReceiver({ frame, fps }) {
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
           ),
-        }}>
+        }}
+      >
         Der Server empfängt die Bits und dekodiert sie zurück
       </div>
 
@@ -1031,24 +1074,25 @@ function SceneReceiver({ frame, fps }) {
           justifyContent: "center",
           maxWidth: 860,
           marginTop: 20,
-        }}>
+        }}
+      >
         {chars.map((ch, i) => {
-          const bits = toBin(ch)
-          const blockDelay = T.bitsAppear + i * 12
+          const bits = toBin(ch);
+          const blockDelay = T.bitsAppear + i * 12;
           const blockOp = interpolate(
             frame,
             [blockDelay, blockDelay + 14],
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-          )
+          );
 
-          const decodeDelay = T.decodeStart + i * 10
+          const decodeDelay = T.decodeStart + i * 10;
           const decodeOp = interpolate(
             frame,
             [decodeDelay, decodeDelay + 14],
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-          )
+          );
 
           // Während finalTextOp > 0.5: ganzer Block verschwindet
           const blockFade = interpolate(
@@ -1056,7 +1100,7 @@ function SceneReceiver({ frame, fps }) {
             [T.textReveal - 10, T.textReveal + 5],
             [1, 0],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-          )
+          );
 
           return (
             <div
@@ -1067,7 +1111,8 @@ function SceneReceiver({ frame, fps }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 4,
-              }}>
+              }}
+            >
               {/* Bits */}
               <div style={{ display: "flex", gap: 2 }}>
                 {bits.split("").map((b, j) => (
@@ -1085,7 +1130,8 @@ function SceneReceiver({ frame, fps }) {
                       fontSize: 9,
                       fontWeight: 700,
                       color: b === "1" ? C.bg : C.gray,
-                    }}>
+                    }}
+                  >
                     {b}
                   </div>
                 ))}
@@ -1098,7 +1144,8 @@ function SceneReceiver({ frame, fps }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 3,
-                }}>
+                }}
+              >
                 <div style={{ color: C.gray, fontSize: 14 }}>↓</div>
                 <CharBox
                   ch={ch}
@@ -1108,7 +1155,7 @@ function SceneReceiver({ frame, fps }) {
                 />
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -1126,7 +1173,8 @@ function SceneReceiver({ frame, fps }) {
           padding: "16px 40px",
           textAlign: "center",
           whiteSpace: "nowrap",
-        }}>
+        }}
+      >
         <div style={{ color: C.gray, fontSize: 13, marginBottom: 6 }}>
           Bits dekodiert — Nachricht:
         </div>
@@ -1136,14 +1184,15 @@ function SceneReceiver({ frame, fps }) {
             gap: 10,
             justifyContent: "center",
             marginBottom: 10,
-          }}>
+          }}
+        >
           {MSG_LONG.split("").map((ch, i) => {
             const sp = spring({
               frame: frame - (T.textReveal + i * 6),
               fps,
               config: { damping: 12, stiffness: 140 },
-            })
-            const scale = interpolate(sp, [0, 1], [0.3, 1])
+            });
+            const scale = interpolate(sp, [0, 1], [0.3, 1]);
             return (
               <div key={i} style={{ transform: `scale(${scale})` }}>
                 <CharBox
@@ -1153,7 +1202,7 @@ function SceneReceiver({ frame, fps }) {
                   borderColor={C.green}
                 />
               </div>
-            )
+            );
           })}
         </div>
         <div
@@ -1162,24 +1211,25 @@ function SceneReceiver({ frame, fps }) {
             fontSize: 26,
             fontWeight: 700,
             letterSpacing: 4,
-          }}>
+          }}
+        >
           {MSG_LONG}
         </div>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── Main Composition ─────────────────────────────────────────
 function PacketComposition() {
-  const frame = useCurrentFrame()
-  const { fps } = useVideoConfig()
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
 
-  const showScene1 = frame < T.scene2Start
-  const showScene2 = frame >= T.scene2Start && frame < T.scene3Start
-  const showScene3 = frame >= T.scene3Start && frame < T.scene4Start
-  const showScene4 = frame >= T.scene4Start && frame < T.scene5Start
-  const showScene5 = frame >= T.scene5Start
+  const showScene1 = frame < T.scene2Start;
+  const showScene2 = frame >= T.scene2Start && frame < T.scene3Start;
+  const showScene3 = frame >= T.scene3Start && frame < T.scene4Start;
+  const showScene4 = frame >= T.scene4Start && frame < T.scene5Start;
+  const showScene5 = frame >= T.scene5Start;
 
   return (
     <AbsoluteFill style={{ fontFamily: "'Noto Sans', sans-serif" }}>
@@ -1189,7 +1239,7 @@ function PacketComposition() {
       {showScene4 && <ScenePacketTravel frame={frame} fps={fps} />}
       {showScene5 && <SceneReceiver frame={frame} fps={fps} />}
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── Exported React component with Player ────────────────────
@@ -1201,7 +1251,8 @@ export default function PacketAnimation() {
         borderRadius: 8,
         overflow: "hidden",
         border: `1px solid #504945`,
-      }}>
+      }}
+    >
       <Player
         component={PacketComposition}
         durationInFrames={T.totalFrames}
@@ -1215,5 +1266,5 @@ export default function PacketAnimation() {
         acknowledgeRemotionLicense
       />
     </div>
-  )
+  );
 }

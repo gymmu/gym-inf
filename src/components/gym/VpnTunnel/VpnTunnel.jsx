@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react"
-import style from "./VpnTunnel.module.css"
+import { useEffect, useRef, useState } from "react";
+import style from "./VpnTunnel.module.css";
 
 // ─── Layout (viewBox 760 × 310) ──────────────────────────────
 // CLIENT (CH) ── ISP ── [VPN-Server (US)] ── ZIEL-SERVER (US)
@@ -15,16 +15,16 @@ const CLIENT = {
   label: "Dein Gerät",
   sub: "🇨🇭 Schweiz",
   icon: "💻",
-}
-const ISP = { x: 265, y: 82, label: "ISP", sub: "", icon: "👁️" }
-const VPN = { x: 450, y: 155, label: "VPN-Server", sub: "🇺🇸 USA", icon: "🛡️" }
+};
+const ISP = { x: 265, y: 82, label: "ISP", sub: "", icon: "👁️" };
+const VPN = { x: 450, y: 155, label: "VPN-Server", sub: "🇺🇸 USA", icon: "🛡️" };
 const TARGET = {
   x: 660,
   y: 155,
   label: "Ziel-Server",
   sub: "🇺🇸 USA",
   icon: "🌐",
-}
+};
 
 // Phasendauern ms
 const DUR = {
@@ -44,57 +44,57 @@ const DUR = {
   retBlockedToIsp: 600,
   atIspBlocked: 800,
   retBlockedToClient: 600,
-}
+};
 
 function lerp(a, b, t) {
-  return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t }
+  return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
 }
 
 export default function VpnTunnel() {
-  const [mode, setMode] = useState("vpn") // "plain" | "vpn" | "geo"
-  const [phase, setPhase] = useState("idle")
-  const [t, setT] = useState(0)
-  const rafRef = useRef(null)
-  const timerRef = useRef(null)
-  const startRef = useRef(null)
+  const [mode, setMode] = useState("vpn"); // "plain" | "vpn" | "geo"
+  const [phase, setPhase] = useState("idle");
+  const [t, setT] = useState(0);
+  const rafRef = useRef(null);
+  const timerRef = useRef(null);
+  const startRef = useRef(null);
 
   useEffect(
     () => () => {
-      cancelAnimationFrame(rafRef.current)
-      clearTimeout(timerRef.current)
+      cancelAnimationFrame(rafRef.current);
+      clearTimeout(timerRef.current);
     },
     [],
-  )
+  );
 
   function animatePhase(name, dur, onDone) {
-    cancelAnimationFrame(rafRef.current)
-    clearTimeout(timerRef.current)
-    setPhase(name)
-    setT(0)
-    startRef.current = null
+    cancelAnimationFrame(rafRef.current);
+    clearTimeout(timerRef.current);
+    setPhase(name);
+    setT(0);
+    startRef.current = null;
     function tick(now) {
-      if (!startRef.current) startRef.current = now
-      const p = Math.min((now - startRef.current) / dur, 1)
-      setT(p)
+      if (!startRef.current) startRef.current = now;
+      const p = Math.min((now - startRef.current) / dur, 1);
+      setT(p);
       if (p < 1) {
-        rafRef.current = requestAnimationFrame(tick)
+        rafRef.current = requestAnimationFrame(tick);
       } else {
-        onDone()
+        onDone();
       }
     }
-    rafRef.current = requestAnimationFrame(tick)
+    rafRef.current = requestAnimationFrame(tick);
   }
 
   function pausePhase(name, dur, onDone) {
-    cancelAnimationFrame(rafRef.current)
-    clearTimeout(timerRef.current)
-    setPhase(name)
-    setT(1)
-    timerRef.current = setTimeout(onDone, dur)
+    cancelAnimationFrame(rafRef.current);
+    clearTimeout(timerRef.current);
+    setPhase(name);
+    setT(1);
+    timerRef.current = setTimeout(onDone, dur);
   }
 
   function run() {
-    if (phase !== "idle" && phase !== "done") return
+    if (phase !== "idle" && phase !== "done") return;
 
     if (mode === "plain") {
       animatePhase("toIsp", DUR.toIsp, () =>
@@ -111,7 +111,7 @@ export default function VpnTunnel() {
             ),
           ),
         ),
-      )
+      );
     } else if (mode === "vpn") {
       animatePhase("toIsp", DUR.toIsp, () =>
         pausePhase("atIsp", DUR.atIsp, () =>
@@ -135,7 +135,7 @@ export default function VpnTunnel() {
             ),
           ),
         ),
-      )
+      );
     } else {
       // geo-Modus: zwei Szenarien je nach geoVpn
       if (!geoVpnActive) {
@@ -156,7 +156,7 @@ export default function VpnTunnel() {
               ),
             ),
           ),
-        )
+        );
       } else {
         // Mit VPN (US): wie normaler VPN-Flow, Ziel nimmt an
         animatePhase("toIsp", DUR.toIsp, () =>
@@ -181,187 +181,187 @@ export default function VpnTunnel() {
               ),
             ),
           ),
-        )
+        );
       }
     }
   }
 
   // Geo-Sub-Toggle (nur im geo-Modus sichtbar)
-  const [geoVpnActive, setGeoVpnActive] = useState(false)
+  const [geoVpnActive, setGeoVpnActive] = useState(false);
 
-  const isRunning = phase !== "idle" && phase !== "done"
-  const isVpn = mode === "vpn" || (mode === "geo" && geoVpnActive)
-  const isGeo = mode === "geo"
+  const isRunning = phase !== "idle" && phase !== "done";
+  const isVpn = mode === "vpn" || (mode === "geo" && geoVpnActive);
+  const isGeo = mode === "geo";
   const isBlocked =
     phase === "blocked" ||
     phase === "retBlockedToIsp" ||
     phase === "atIspBlocked" ||
-    phase === "retBlockedToClient"
+    phase === "retBlockedToClient";
 
   // ─── Paketposition ────────────────────────────────────────
-  let packetPos = null
-  let showPacket = false
+  let packetPos = null;
+  let showPacket = false;
 
   if (phase === "toIsp") {
-    packetPos = lerp(CLIENT, ISP, t)
-    showPacket = true
+    packetPos = lerp(CLIENT, ISP, t);
+    showPacket = true;
   } else if (phase === "atIsp") {
-    packetPos = ISP
-    showPacket = true
+    packetPos = ISP;
+    showPacket = true;
   } else if (phase === "toVpn") {
-    packetPos = lerp(ISP, VPN, t)
-    showPacket = true
+    packetPos = lerp(ISP, VPN, t);
+    showPacket = true;
   } else if (phase === "atVpn") {
-    packetPos = VPN
-    showPacket = true
+    packetPos = VPN;
+    showPacket = true;
   } else if (phase === "toTarget") {
-    packetPos = lerp(isVpn ? VPN : ISP, TARGET, t)
-    showPacket = true
+    packetPos = lerp(isVpn ? VPN : ISP, TARGET, t);
+    showPacket = true;
   } else if (phase === "atTarget") {
-    packetPos = TARGET
-    showPacket = true
+    packetPos = TARGET;
+    showPacket = true;
   } else if (phase === "blocked") {
-    packetPos = TARGET
-    showPacket = true
+    packetPos = TARGET;
+    showPacket = true;
   } else if (phase === "retToVpn") {
-    packetPos = lerp(TARGET, VPN, t)
-    showPacket = true
+    packetPos = lerp(TARGET, VPN, t);
+    showPacket = true;
   } else if (phase === "atVpnRet") {
-    packetPos = VPN
-    showPacket = true
+    packetPos = VPN;
+    showPacket = true;
   } else if (phase === "retToIsp") {
-    packetPos = lerp(isVpn ? VPN : TARGET, ISP, t)
-    showPacket = true
+    packetPos = lerp(isVpn ? VPN : TARGET, ISP, t);
+    showPacket = true;
   } else if (phase === "atIspRet") {
-    packetPos = ISP
-    showPacket = true
+    packetPos = ISP;
+    showPacket = true;
   } else if (phase === "retToClient") {
-    packetPos = lerp(ISP, CLIENT, t)
-    showPacket = true
+    packetPos = lerp(ISP, CLIENT, t);
+    showPacket = true;
   }
   // Geo-Rückwurf
   else if (phase === "retBlockedToIsp") {
-    packetPos = lerp(TARGET, ISP, t)
-    showPacket = true
+    packetPos = lerp(TARGET, ISP, t);
+    showPacket = true;
   } else if (phase === "atIspBlocked") {
-    packetPos = ISP
-    showPacket = true
+    packetPos = ISP;
+    showPacket = true;
   } else if (phase === "retBlockedToClient") {
-    packetPos = lerp(ISP, CLIENT, t)
-    showPacket = true
+    packetPos = lerp(ISP, CLIENT, t);
+    showPacket = true;
   }
 
   // ─── Paket-Darstellung ───────────────────────────────────
-  let packetColor = "#83a598"
-  let packetLabel = ""
-  let packetInner = "📦"
+  let packetColor = "#83a598";
+  let packetLabel = "";
+  let packetInner = "📦";
 
   if (mode === "plain") {
-    packetColor = "#fb4934"
-    packetInner = "📦"
+    packetColor = "#fb4934";
+    packetInner = "📦";
     const isReturn = [
       "atTarget",
       "retToIsp",
       "atIspRet",
       "retToClient",
-    ].includes(phase)
-    packetLabel = isReturn ? "200 OK — Klartext" : "GET /video — Klartext"
+    ].includes(phase);
+    packetLabel = isReturn ? "200 OK — Klartext" : "GET /video — Klartext";
   } else if (mode === "vpn") {
     if (["toIsp", "atIsp", "toVpn"].includes(phase)) {
-      packetColor = "#b8bb26"
-      packetLabel = "███ verschlüsselt ███"
-      packetInner = "🔒"
+      packetColor = "#b8bb26";
+      packetLabel = "███ verschlüsselt ███";
+      packetInner = "🔒";
     } else if (phase === "atVpn") {
-      packetColor = "#fabd2f"
-      packetLabel = "wird entpackt…"
-      packetInner = "📦"
+      packetColor = "#fabd2f";
+      packetLabel = "wird entpackt…";
+      packetInner = "📦";
     } else if (["toTarget", "atTarget"].includes(phase)) {
-      packetColor = "#83a598"
-      packetLabel = "GET /video (entpackt)"
-      packetInner = "📦"
+      packetColor = "#83a598";
+      packetLabel = "GET /video (entpackt)";
+      packetInner = "📦";
     } else if (phase === "retToVpn") {
-      packetColor = "#83a598"
-      packetLabel = "200 OK (entpackt)"
-      packetInner = "📦"
+      packetColor = "#83a598";
+      packetLabel = "200 OK (entpackt)";
+      packetInner = "📦";
     } else if (phase === "atVpnRet") {
-      packetColor = "#fabd2f"
-      packetLabel = "wird eingepackt…"
-      packetInner = "🔒"
+      packetColor = "#fabd2f";
+      packetLabel = "wird eingepackt…";
+      packetInner = "🔒";
     } else if (["retToIsp", "atIspRet", "retToClient"].includes(phase)) {
-      packetColor = "#b8bb26"
-      packetLabel = "███ verschlüsselt ███"
-      packetInner = "🔒"
+      packetColor = "#b8bb26";
+      packetLabel = "███ verschlüsselt ███";
+      packetInner = "🔒";
     }
   } else {
     // geo
     if (!geoVpnActive) {
-      packetColor = "#fb4934"
-      packetInner = "📦"
+      packetColor = "#fb4934";
+      packetInner = "📦";
       if (phase === "blocked") {
-        packetColor = "#fb4934"
-        packetLabel = "403 Blocked 🚫"
-        packetInner = "🚫"
+        packetColor = "#fb4934";
+        packetLabel = "403 Blocked 🚫";
+        packetInner = "🚫";
       } else if (
         ["retBlockedToIsp", "atIspBlocked", "retBlockedToClient"].includes(
           phase,
         )
       ) {
-        packetLabel = "403 Blocked — zurück"
+        packetLabel = "403 Blocked — zurück";
       } else {
-        packetLabel = "GET /video — 🇨🇭"
+        packetLabel = "GET /video — 🇨🇭";
       }
     } else {
       // geo + VPN — identisch zu vpn-Modus, aber Request-Label zeigt 🇺🇸
       if (["toIsp", "atIsp", "toVpn"].includes(phase)) {
-        packetColor = "#b8bb26"
-        packetLabel = "███ verschlüsselt ███"
-        packetInner = "🔒"
+        packetColor = "#b8bb26";
+        packetLabel = "███ verschlüsselt ███";
+        packetInner = "🔒";
       } else if (phase === "atVpn") {
-        packetColor = "#fabd2f"
-        packetLabel = "wird entpackt…"
-        packetInner = "📦"
+        packetColor = "#fabd2f";
+        packetLabel = "wird entpackt…";
+        packetInner = "📦";
       } else if (["toTarget", "atTarget"].includes(phase)) {
-        packetColor = "#83a598"
-        packetLabel = "GET /video — 🇺🇸 IP"
-        packetInner = "📦"
+        packetColor = "#83a598";
+        packetLabel = "GET /video — 🇺🇸 IP";
+        packetInner = "📦";
       } else if (phase === "retToVpn") {
-        packetColor = "#83a598"
-        packetLabel = "200 OK (entpackt)"
-        packetInner = "📦"
+        packetColor = "#83a598";
+        packetLabel = "200 OK (entpackt)";
+        packetInner = "📦";
       } else if (phase === "atVpnRet") {
-        packetColor = "#fabd2f"
-        packetLabel = "wird eingepackt…"
-        packetInner = "🔒"
+        packetColor = "#fabd2f";
+        packetLabel = "wird eingepackt…";
+        packetInner = "🔒";
       } else if (["retToIsp", "atIspRet", "retToClient"].includes(phase)) {
-        packetColor = "#b8bb26"
-        packetLabel = "███ verschlüsselt ███"
-        packetInner = "🔒"
+        packetColor = "#b8bb26";
+        packetLabel = "███ verschlüsselt ███";
+        packetInner = "🔒";
       }
     }
   }
 
   // ─── Knotenreaktionen ────────────────────────────────────
   const ispActive =
-    phase === "atIsp" || phase === "atIspRet" || phase === "atIspBlocked"
+    phase === "atIsp" || phase === "atIspRet" || phase === "atIspBlocked";
   const ispSeesPlain =
-    (mode === "plain" || (mode === "geo" && !geoVpnActive)) && ispActive
-  const ispBlind = isVpn && ispActive
+    (mode === "plain" || (mode === "geo" && !geoVpnActive)) && ispActive;
+  const ispBlind = isVpn && ispActive;
 
-  const vpnAtHin = phase === "atVpn"
-  const vpnAtRet = phase === "atVpnRet"
+  const vpnAtHin = phase === "atVpn";
+  const vpnAtRet = phase === "atVpnRet";
 
-  const targetActive = phase === "atTarget"
-  const targetBlocked = phase === "blocked"
+  const targetActive = phase === "atTarget";
+  const targetBlocked = phase === "blocked";
 
   // Info-Text unten im SVG
-  let legendText = ""
+  let legendText = "";
   if (mode === "plain")
-    legendText = "ISP sieht: Verbindung + vollständigen Inhalt im Klartext"
+    legendText = "ISP sieht: Verbindung + vollständigen Inhalt im Klartext";
   else if (mode === "vpn")
-    legendText = "ISP sieht: Verbindung zu VPN-Server — Inhalt verschlüsselt"
+    legendText = "ISP sieht: Verbindung zu VPN-Server — Inhalt verschlüsselt";
   else if (mode === "geo" && !geoVpnActive)
-    legendText = "Ziel-Server erkennt CH-IP → Zugriff verweigert"
-  else legendText = "Ziel-Server sieht US-IP des VPN-Servers → Zugriff erlaubt"
+    legendText = "Ziel-Server erkennt CH-IP → Zugriff verweigert";
+  else legendText = "Ziel-Server sieht US-IP des VPN-Servers → Zugriff erlaubt";
 
   return (
     <div className={style.wrapper}>
@@ -373,10 +373,11 @@ export default function VpnTunnel() {
             mode === "plain" ? { borderColor: "#fb4934", color: "#fb4934" } : {}
           }
           onClick={() => {
-            setMode("plain")
-            setPhase("idle")
+            setMode("plain");
+            setPhase("idle");
           }}
-          disabled={isRunning}>
+          disabled={isRunning}
+        >
           Ohne VPN
         </button>
         <button
@@ -385,10 +386,11 @@ export default function VpnTunnel() {
             mode === "vpn" ? { borderColor: "#b8bb26", color: "#b8bb26" } : {}
           }
           onClick={() => {
-            setMode("vpn")
-            setPhase("idle")
+            setMode("vpn");
+            setPhase("idle");
           }}
-          disabled={isRunning}>
+          disabled={isRunning}
+        >
           Mit VPN
         </button>
         <button
@@ -397,10 +399,11 @@ export default function VpnTunnel() {
             mode === "geo" ? { borderColor: "#fe8019", color: "#fe8019" } : {}
           }
           onClick={() => {
-            setMode("geo")
-            setPhase("idle")
+            setMode("geo");
+            setPhase("idle");
           }}
-          disabled={isRunning}>
+          disabled={isRunning}
+        >
           Geoblocking
         </button>
       </div>
@@ -414,10 +417,11 @@ export default function VpnTunnel() {
               !geoVpnActive ? { borderColor: "#fb4934", color: "#fb4934" } : {}
             }
             onClick={() => {
-              setGeoVpnActive(false)
-              setPhase("idle")
+              setGeoVpnActive(false);
+              setPhase("idle");
             }}
-            disabled={isRunning}>
+            disabled={isRunning}
+          >
             Ohne VPN — direkt aus 🇨🇭
           </button>
           <button
@@ -426,10 +430,11 @@ export default function VpnTunnel() {
               geoVpnActive ? { borderColor: "#b8bb26", color: "#b8bb26" } : {}
             }
             onClick={() => {
-              setGeoVpnActive(true)
-              setPhase("idle")
+              setGeoVpnActive(true);
+              setPhase("idle");
             }}
-            disabled={isRunning}>
+            disabled={isRunning}
+          >
             Mit VPN — über 🇺🇸 Server
           </button>
         </div>
@@ -438,7 +443,8 @@ export default function VpnTunnel() {
       <svg
         viewBox="0 0 760 310"
         className={style.svg}
-        aria-label="VPN-Tunnel-Diagramm">
+        aria-label="VPN-Tunnel-Diagramm"
+      >
         {/* ── Tunnel-Box ── */}
         {isVpn && (
           <>
@@ -459,7 +465,8 @@ export default function VpnTunnel() {
               textAnchor="middle"
               fill="#b8bb26"
               fontSize={9}
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               verschlüsselter Tunnel
             </text>
           </>
@@ -483,7 +490,8 @@ export default function VpnTunnel() {
               textAnchor="middle"
               fill="#928374"
               fontSize={8}
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               🇨🇭 CH
             </text>
             <text
@@ -492,7 +500,8 @@ export default function VpnTunnel() {
               textAnchor="middle"
               fill="#928374"
               fontSize={8}
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               🇺🇸 US
             </text>
           </>
@@ -562,7 +571,8 @@ export default function VpnTunnel() {
               fill="#1d2021"
               fontSize={10}
               fontWeight="700"
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               {mode === "geo" ? "sieht CH-IP" : "Liest mit! ⚠️"}
             </text>
           </g>
@@ -584,7 +594,8 @@ export default function VpnTunnel() {
               fill="#b8bb26"
               fontSize={10}
               fontWeight="700"
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               Sieht nur ███
             </text>
           </g>
@@ -606,7 +617,8 @@ export default function VpnTunnel() {
           y={CLIENT.y - 18}
           textAnchor="middle"
           fontSize={18}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {CLIENT.icon}
         </text>
         <text
@@ -616,7 +628,8 @@ export default function VpnTunnel() {
           fill="#83a598"
           fontSize={10}
           fontWeight="700"
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {CLIENT.label}
         </text>
         <text
@@ -625,7 +638,8 @@ export default function VpnTunnel() {
           textAnchor="middle"
           fill="#928374"
           fontSize={8}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           192.168.1.10
         </text>
         <text
@@ -634,7 +648,8 @@ export default function VpnTunnel() {
           textAnchor="middle"
           fill="#928374"
           fontSize={9}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {CLIENT.sub}
         </text>
 
@@ -654,7 +669,8 @@ export default function VpnTunnel() {
           y={ISP.y - 4}
           textAnchor="middle"
           fontSize={18}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {ISP.icon}
         </text>
         <text
@@ -664,7 +680,8 @@ export default function VpnTunnel() {
           fill="#a89984"
           fontSize={10}
           fontWeight="700"
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {ISP.label}
         </text>
 
@@ -686,7 +703,8 @@ export default function VpnTunnel() {
               y={VPN.y - 18}
               textAnchor="middle"
               fontSize={18}
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               {VPN.icon}
             </text>
             <text
@@ -696,7 +714,8 @@ export default function VpnTunnel() {
               fill="#b8bb26"
               fontSize={10}
               fontWeight="700"
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               {VPN.label}
             </text>
             <text
@@ -705,7 +724,8 @@ export default function VpnTunnel() {
               textAnchor="middle"
               fill="#928374"
               fontSize={8}
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               185.220.0.5
             </text>
             <text
@@ -714,7 +734,8 @@ export default function VpnTunnel() {
               textAnchor="middle"
               fill="#928374"
               fontSize={9}
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               {VPN.sub}
             </text>
           </g>
@@ -738,7 +759,8 @@ export default function VpnTunnel() {
           y={TARGET.y - 18}
           textAnchor="middle"
           fontSize={18}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {TARGET.icon}
         </text>
         <text
@@ -748,7 +770,8 @@ export default function VpnTunnel() {
           fill="#ebdbb2"
           fontSize={10}
           fontWeight="700"
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {TARGET.label}
         </text>
         <text
@@ -757,7 +780,8 @@ export default function VpnTunnel() {
           textAnchor="middle"
           fill="#928374"
           fontSize={8}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {isGeo ? "nur für 🇺🇸" : "example.com"}
         </text>
         <text
@@ -766,7 +790,8 @@ export default function VpnTunnel() {
           textAnchor="middle"
           fill="#928374"
           fontSize={9}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {TARGET.sub}
         </text>
 
@@ -789,7 +814,8 @@ export default function VpnTunnel() {
               fill="#1d2021"
               fontSize={11}
               fontWeight="700"
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               🚫 Zugriff verweigert
             </text>
           </g>
@@ -820,7 +846,8 @@ export default function VpnTunnel() {
               textAnchor="middle"
               fill="#928374"
               fontSize={8}
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               sieht Absender-IP:
             </text>
             <text
@@ -831,7 +858,8 @@ export default function VpnTunnel() {
               fontSize={9}
               fontFamily="monospace"
               fontWeight="700"
-              style={{ userSelect: "none" }}>
+              style={{ userSelect: "none" }}
+            >
               {isVpn ? "185.220.0.5 🇺🇸" : "84.75.12.3 🇨🇭"}
             </text>
           </g>
@@ -852,7 +880,8 @@ export default function VpnTunnel() {
               y={packetPos.y + 6}
               textAnchor="middle"
               fontSize={14}
-              style={{ userSelect: "none", pointerEvents: "none" }}>
+              style={{ userSelect: "none", pointerEvents: "none" }}
+            >
               {packetInner}
             </text>
             <rect
@@ -871,7 +900,8 @@ export default function VpnTunnel() {
               fill={packetColor}
               fontSize={9}
               fontFamily="monospace"
-              style={{ userSelect: "none", pointerEvents: "none" }}>
+              style={{ userSelect: "none", pointerEvents: "none" }}
+            >
               {packetLabel}
             </text>
           </g>
@@ -884,7 +914,8 @@ export default function VpnTunnel() {
           textAnchor="middle"
           fill="#504945"
           fontSize={9}
-          style={{ userSelect: "none" }}>
+          style={{ userSelect: "none" }}
+        >
           {legendText}
         </text>
       </svg>
@@ -906,7 +937,8 @@ export default function VpnTunnel() {
         style={{
           borderColor:
             mode === "geo" ? "#fe8019" : isVpn ? "#b8bb26" : "#fb4934",
-        }}>
+        }}
+      >
         {mode === "plain" && (
           <>
             <strong style={{ color: "#fb4934" }}>Ohne VPN:</strong> Das Paket
@@ -941,5 +973,5 @@ export default function VpnTunnel() {
         )}
       </div>
     </div>
-  )
+  );
 }

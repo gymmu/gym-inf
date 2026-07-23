@@ -1,38 +1,38 @@
-import { useState, useRef, useEffect } from "react"
-import katex from "katex"
-import "katex/dist/katex.css"
-import s from "./CommutativeExpSlide.module.css"
+import katex from "katex";
+import { useEffect, useRef, useState } from "react";
+import "katex/dist/katex.css";
+import s from "./CommutativeExpSlide.module.css";
 
 // -- KaTeX helper ---------------------------------------------------------
 
 function Tex({ children, display = false }) {
-  const el = useRef(null)
+  const el = useRef(null);
   useEffect(() => {
-    if (!el.current) return
+    if (!el.current) return;
     katex.render(children, el.current, {
       throwOnError: false,
       displayMode: display,
-    })
-  }, [children, display])
+    });
+  }, [children, display]);
   return display ? (
     <div ref={el} className={s.displayMath} />
   ) : (
     <span ref={el} className={s.inlineMath} />
-  )
+  );
 }
 
 // -- Math -----------------------------------------------------------------
 
 function modPow(base, exp, mod) {
-  if (mod === 1) return 0
-  let result = 1
-  base = base % mod
+  if (mod === 1) return 0;
+  let result = 1;
+  base = base % mod;
   while (exp > 0) {
-    if (exp % 2 === 1) result = (result * base) % mod
-    exp = Math.floor(exp / 2)
-    base = (base * base) % mod
+    if (exp % 2 === 1) result = (result * base) % mod;
+    exp = Math.floor(exp / 2);
+    base = (base * base) % mod;
   }
-  return result
+  return result;
 }
 
 // -- Multiplication chain visualisation -----------------------------------
@@ -45,28 +45,28 @@ function ModChain({ g, p, a, b }) {
   // Route A: (g^a)^b  -- accumulate without intermediate mod, then mod p
   // Route B: A^b mod p -- start with A = g^a mod p, then multiply by A mod p each step
 
-  const A = modPow(g, a, p) // g^a mod p  (what Alice sends)
-  const gPowA_exact = BigInt(g) ** BigInt(a) // g^a exact (small enough for display)
+  const A = modPow(g, a, p); // g^a mod p  (what Alice sends)
+  const gPowA_exact = BigInt(g) ** BigInt(a); // g^a exact (small enough for display)
 
   // Build step-by-step for route B: multiply by A, take mod p each step
-  const stepsB = []
-  let acc = 1
+  const stepsB = [];
+  let acc = 1;
   for (let i = 1; i <= b; i++) {
-    const before = acc
-    const product = acc * A
-    acc = product % p
-    stepsB.push({ step: i, before, factor: A, product, after: acc })
+    const before = acc;
+    const product = acc * A;
+    acc = product % p;
+    stepsB.push({ step: i, before, factor: A, product, after: acc });
   }
 
   // The final result
-  const K = modPow(A, b, p)
+  const K = modPow(A, b, p);
 
   // Also show that g^(a*b) mod p = K
-  const K2 = modPow(g, a * b, p)
+  const K2 = modPow(g, a * b, p);
 
-  const maxShow = 5 // cap display to 5 steps for space
-  const shown = stepsB.slice(0, maxShow)
-  const clipped = stepsB.length > maxShow
+  const maxShow = 5; // cap display to 5 steps for space
+  const shown = stepsB.slice(0, maxShow);
+  const clipped = stepsB.length > maxShow;
 
   return (
     <div className={s.chainWrap}>
@@ -77,7 +77,8 @@ function ModChain({ g, p, a, b }) {
         </div>
         <div className={s.propFormula}>
           <Tex
-            display>{`(x \\cdot y) \\bmod p \\;=\\; ((x \\bmod p) \\cdot y) \\bmod p`}</Tex>
+            display
+          >{`(x \\cdot y) \\bmod p \\;=\\; ((x \\bmod p) \\cdot y) \\bmod p`}</Tex>
         </div>
         <div className={s.propExplain}>
           Das Zwischenresultat mod p zu nehmen veraendert das Endergebnis nicht
@@ -91,7 +92,8 @@ function ModChain({ g, p, a, b }) {
         <div className={s.route}>
           <div
             className={s.routeHeader}
-            style={{ borderColor: "#83a598", color: "#83a598" }}>
+            style={{ borderColor: "#83a598", color: "#83a598" }}
+          >
             <span className={s.routeTag}>Ohne Trick</span>
             <span className={s.routeFormula}>
               <Tex>{`(g^a)^b \\bmod p`}</Tex>
@@ -104,7 +106,8 @@ function ModChain({ g, p, a, b }) {
             </div>
             <div className={s.routeCalc}>
               <Tex
-                display>{`g^{a \\cdot b} \\bmod p = ${g}^{${a * b}} \\bmod ${p} = ${K2}`}</Tex>
+                display
+              >{`g^{a \\cdot b} \\bmod p = ${g}^{${a * b}} \\bmod ${p} = ${K2}`}</Tex>
             </div>
             <div className={s.routeNote}>
               Funktioniert — aber g^a kann riesig werden. Nicht praktisch.
@@ -123,7 +126,8 @@ function ModChain({ g, p, a, b }) {
         <div className={s.route}>
           <div
             className={s.routeHeader}
-            style={{ borderColor: "#d3869b", color: "#d3869b" }}>
+            style={{ borderColor: "#d3869b", color: "#d3869b" }}
+          >
             <span className={s.routeTag}>Mit Zwischenmod (DH)</span>
             <span className={s.routeFormula}>
               <Tex>{`(g^a \\bmod p)^b \\bmod p`}</Tex>
@@ -151,7 +155,8 @@ function ModChain({ g, p, a, b }) {
                 <div
                   key={step}
                   className={s.chainTableRow}
-                  style={{ color: step === b ? "#b8bb26" : "#ebdbb2" }}>
+                  style={{ color: step === b ? "#b8bb26" : "#ebdbb2" }}
+                >
                   <span>&times; {factor}</span>
                   <span>
                     ({before} &times; {factor}) mod {p} = {product} mod {p}
@@ -191,16 +196,16 @@ function ModChain({ g, p, a, b }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // -- Full protocol overview (compact) ------------------------------------
 
 function ProtocolSteps({ g, p, a, b }) {
-  const A = modPow(g, a, p)
-  const B = modPow(g, b, p)
-  const KA = modPow(B, a, p)
-  const KB = modPow(A, b, p)
+  const A = modPow(g, a, p);
+  const B = modPow(g, b, p);
+  const KA = modPow(B, a, p);
+  const KB = modPow(A, b, p);
 
   return (
     <div className={s.protocol}>
@@ -261,15 +266,15 @@ function ProtocolSteps({ g, p, a, b }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // -- Input helpers --------------------------------------------------------
 
 function useNum(def) {
-  const [raw, setRaw] = useState(String(def))
-  const n = parseInt(raw, 10)
-  return { raw, setRaw, value: isNaN(n) ? NaN : n }
+  const [raw, setRaw] = useState(String(def));
+  const n = parseInt(raw, 10);
+  return { raw, setRaw, value: isNaN(n) ? NaN : n };
 }
 
 // -- Presets --------------------------------------------------------------
@@ -278,25 +283,25 @@ const PRESETS = [
   { p: 7, g: 3 },
   { p: 11, g: 2 },
   { p: 23, g: 5 },
-]
+];
 
 // -- Main -----------------------------------------------------------------
 
 export default function CommutativeExpSlide() {
-  const [presetIdx, setPresetIdx] = useState(2)
-  const preset = PRESETS[presetIdx]
+  const [presetIdx, setPresetIdx] = useState(2);
+  const preset = PRESETS[presetIdx];
 
-  const aField = useNum(4)
-  const bField = useNum(3)
+  const aField = useNum(4);
+  const bField = useNum(3);
 
   const a = Math.max(
     1,
     Math.min(isNaN(aField.value) ? 4 : aField.value, preset.p - 2),
-  )
+  );
   const b = Math.max(
     1,
     Math.min(isNaN(bField.value) ? 3 : bField.value, preset.p - 2),
-  )
+  );
 
   return (
     <div className={s.root}>
@@ -309,7 +314,8 @@ export default function CommutativeExpSlide() {
               <button
                 key={pr.p}
                 className={`${s.presetBtn} ${i === presetIdx ? s.presetBtnActive : ""}`}
-                onClick={() => setPresetIdx(i)}>
+                onClick={() => setPresetIdx(i)}
+              >
                 p={pr.p}, g={pr.g}
               </button>
             ))}
@@ -351,5 +357,5 @@ export default function CommutativeExpSlide() {
       {/* -- full protocol recap -- */}
       <ProtocolSteps g={preset.g} p={preset.p} a={a} b={b} />
     </div>
-  )
+  );
 }

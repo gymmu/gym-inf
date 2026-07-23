@@ -1,20 +1,20 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import Section from "@components/Section"
-import SolutionBlock from "@components/SolutionBlock"
-import SimpleSplitView from "@components/algorithm/SimpleSplitView"
+import SimpleSplitView from "@components/algorithm/SimpleSplitView";
 import {
-  LinearSearchAnimation,
   BinarySearchAnimation,
-  generateLinearSearchSteps,
   generateBinarySearchSteps,
-} from "@components/remotion/SearchAnimation"
+  generateLinearSearchSteps,
+  LinearSearchAnimation,
+} from "@components/remotion/SearchAnimation";
+import Section from "@components/Section";
+import SolutionBlock from "@components/SolutionBlock";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function FmsAlgorithmenSuchen() {
-  const [linearArray, setLinearArray] = useState([5, 2, 8, 1, 9, 4, 7])
-  const [linearTarget, setLinearTarget] = useState(9)
-  const [binaryArray, setBinaryArray] = useState([1, 3, 5, 7, 9, 11, 13, 15])
-  const [binaryTarget, setBinaryTarget] = useState(11)
+  const [linearArray, setLinearArray] = useState([5, 2, 8, 1, 9, 4, 7]);
+  const [linearTarget, setLinearTarget] = useState(9);
+  const [binaryArray, setBinaryArray] = useState([1, 3, 5, 7, 9, 11, 13, 15]);
+  const [binaryTarget, setBinaryTarget] = useState(11);
 
   // Flussdiagramme
   const linearSearchChart = `
@@ -30,7 +30,7 @@ flowchart TD
     Found --> End
     Compare -->|Nein| Next[Gehe zum nächsten Element]
     Next --> Check
-  `
+  `;
 
   const binarySearchChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -50,33 +50,35 @@ flowchart TD
     LessOrGreater -->|Nein| MoveRight[Setze rechts auf Mitte minus 1]
     MoveLeft --> Check
     MoveRight --> Check
-  `
+  `;
 
   // Berechne Schritte
-  const linearSteps = generateLinearSearchSteps(linearArray, linearTarget)
-  const binarySteps = generateBinarySearchSteps(binaryArray, binaryTarget)
+  const linearSteps = generateLinearSearchSteps(linearArray, linearTarget);
+  const binarySteps = generateBinarySearchSteps(binaryArray, binaryTarget);
 
   // Extrahiere Beschreibungen
-  const linearDescriptions = linearSteps.map((s) => s.description)
-  const binaryDescriptions = binarySteps.map((s) => s.description)
+  const linearDescriptions = linearSteps.map((s) => s.description);
+  const binaryDescriptions = binarySteps.map((s) => s.description);
 
   return (
     <>
       <section>
         <h2>Suchalgorithmen</h2>
-        
-        <div style={{ 
-          backgroundColor: "var(--color-bg-light)", 
-          padding: "15px", 
-          borderRadius: "8px",
-          marginBottom: "20px",
-          borderLeft: "4px solid var(--color-primary)"
-        }}>
-          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
-          Wenn dir Begriffe unklar sind, schaue im{" "}
+
+        <div
+          style={{
+            backgroundColor: "var(--color-bg-light)",
+            padding: "15px",
+            borderRadius: "8px",
+            marginBottom: "20px",
+            borderLeft: "4px solid var(--color-primary)",
+          }}
+        >
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine
+          vereinfachte Sprache. Wenn dir Begriffe unklar sind, schaue im{" "}
           <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
         </div>
-        
+
         <p>
           Suchen ist eine der häufigsten Operationen in der Informatik. Egal ob
           Sie nach einem Namen in einer Liste, einer Datei auf Ihrem Computer
@@ -123,11 +125,11 @@ flowchart TD
                 const newArray = e.target.value
                   .split(",")
                   .map((n) => parseInt(n.trim()))
-                  .filter((n) => !isNaN(n) && n > 0 && n <= 20)
+                  .filter((n) => !isNaN(n) && n > 0 && n <= 20);
                 if (newArray.length >= 3 && newArray.length <= 10) {
-                  setLinearArray(newArray)
+                  setLinearArray(newArray);
                 } else {
-                  alert("Bitte 3-10 Zahlen zwischen 1 und 20 eingeben!")
+                  alert("Bitte 3-10 Zahlen zwischen 1 und 20 eingeben!");
                 }
               }}
               style={{
@@ -149,9 +151,9 @@ flowchart TD
               type="number"
               defaultValue={linearTarget}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
+                const val = parseInt(e.target.value);
                 if (!isNaN(val) && val > 0 && val <= 20) {
-                  setLinearTarget(val)
+                  setLinearTarget(val);
                 }
               }}
               min="1"
@@ -189,8 +191,8 @@ flowchart TD
             <strong>Average Case:</strong> O(n/2) - Element ist in der Mitte
           </li>
           <li>
-            <strong>Worst Case:</strong> O(n) - Element ist das letzte oder nicht
-            vorhanden
+            <strong>Worst Case:</strong> O(n) - Element ist das letzte oder
+            nicht vorhanden
           </li>
           <li>
             <strong>Vorteil:</strong> Funktioniert mit unsortierten Arrays
@@ -215,9 +217,13 @@ flowchart TD
             <li>Vergleich: 3 === 6? Nein</li>
             <li>Vergleich: 7 === 6? Nein</li>
             <li>Vergleich: 2 === 6? Nein</li>
-            <li>Vergleich: 6 === 6? <strong>Ja! Gefunden bei Index 3</strong></li>
+            <li>
+              Vergleich: 6 === 6? <strong>Ja! Gefunden bei Index 3</strong>
+            </li>
           </ol>
-          <p><strong>Antwort: 4 Vergleiche</strong></p>
+          <p>
+            <strong>Antwort: 4 Vergleiche</strong>
+          </p>
         </SolutionBlock>
       </Section>
 
@@ -259,11 +265,11 @@ flowchart TD
                 const newArray = e.target.value
                   .split(",")
                   .map((n) => parseInt(n.trim()))
-                  .filter((n) => !isNaN(n) && n > 0 && n <= 20)
+                  .filter((n) => !isNaN(n) && n > 0 && n <= 20);
                 if (newArray.length >= 3 && newArray.length <= 10) {
-                  setBinaryArray(newArray.sort((a, b) => a - b))
+                  setBinaryArray(newArray.sort((a, b) => a - b));
                 } else {
-                  alert("Bitte 3-10 Zahlen zwischen 1 und 20 eingeben!")
+                  alert("Bitte 3-10 Zahlen zwischen 1 und 20 eingeben!");
                 }
               }}
               style={{
@@ -285,9 +291,9 @@ flowchart TD
               type="number"
               defaultValue={binaryTarget}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
+                const val = parseInt(e.target.value);
                 if (!isNaN(val) && val > 0 && val <= 20) {
-                  setBinaryTarget(val)
+                  setBinaryTarget(val);
                 }
               }}
               min="1"
@@ -353,8 +359,8 @@ flowchart TD
             </li>
           </ol>
           <p>
-            <strong>Antwort: Nur 1 Vergleich nötig!</strong> (Best Case - Element
-            war zufällig in der Mitte)
+            <strong>Antwort: Nur 1 Vergleich nötig!</strong> (Best Case -
+            Element war zufällig in der Mitte)
           </p>
         </SolutionBlock>
       </Section>
@@ -367,63 +373,126 @@ flowchart TD
             width: "100%",
             borderCollapse: "collapse",
             marginTop: "20px",
-          }}>
+          }}
+        >
           <thead>
             <tr>
-              <th style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <th
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 Kriterium
               </th>
-              <th style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <th
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 Lineare Suche
               </th>
-              <th style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <th
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 Binäre Suche
               </th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <td
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 Voraussetzung
               </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <td
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 Keine (auch unsortiert)
               </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <td
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 Array muss sortiert sein
               </td>
             </tr>
             <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <td
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 Komplexität
               </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <td
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 O(n) - Linear
               </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <td
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 O(log n) - Logarithmisch
               </td>
             </tr>
             <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <td
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 Bei 1.000 Elementen
               </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <td
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 ~500 Vergleiche (Durchschnitt)
               </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "12px" }}>
+              <td
+                style={{
+                  border: "1px solid var(--color-gray)",
+                  padding: "12px",
+                }}
+              >
                 ~10 Vergleiche (Maximum!)
               </td>
             </tr>
           </tbody>
         </table>
 
-        <h3 style={{ marginTop: "30px" }}>Warum ist Binäre Suche so schnell?</h3>
+        <h3 style={{ marginTop: "30px" }}>
+          Warum ist Binäre Suche so schnell?
+        </h3>
         <p>
           Bei jedem Schritt <strong>halbiert</strong> die binäre Suche den
           Suchbereich!
         </p>
       </Section>
     </>
-  )
+  );
 }

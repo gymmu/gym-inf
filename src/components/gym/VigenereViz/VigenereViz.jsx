@@ -1,12 +1,12 @@
-import { Player } from "@remotion/player"
-import { useRef } from "react"
+import { Player } from "@remotion/player";
+import { useRef } from "react";
 import {
   AbsoluteFill,
   interpolate,
   spring,
   useCurrentFrame,
   useVideoConfig,
-} from "remotion"
+} from "remotion";
 
 // ─── Gruvbox ──────────────────────────────────────────────────
 const C = {
@@ -22,19 +22,19 @@ const C = {
   orange: "#fe8019",
   red: "#fb4934",
   purple: "#d3869b",
-}
+};
 
-const FPS = 30
+const FPS = 30;
 
 // ─── Hilfsfunktionen ──────────────────────────────────────────
 function enc(ch, shift) {
-  return String.fromCharCode(((ch.charCodeAt(0) - 65 + shift + 26) % 26) + 65)
+  return String.fromCharCode(((ch.charCodeAt(0) - 65 + shift + 26) % 26) + 65);
 }
 function encWord(word, shifts) {
   return word
     .split("")
     .map((c, i) => enc(c, shifts[i % shifts.length]))
-    .join("")
+    .join("");
 }
 
 // ─── Shared Komponenten ───────────────────────────────────────
@@ -66,10 +66,11 @@ function Box({
         backfaceVisibility: "hidden",
         boxShadow: glow ? `0 0 14px ${color}66` : "none",
         flexShrink: 0,
-      }}>
+      }}
+    >
       {ch}
     </div>
-  )
+  );
 }
 
 function Label({ children, color = C.gray, size = 12 }) {
@@ -81,10 +82,11 @@ function Label({ children, color = C.gray, size = 12 }) {
         color,
         textAlign: "center",
         marginTop: 3,
-      }}>
+      }}
+    >
       {children}
     </div>
-  )
+  );
 }
 
 function Title({ children, op = 1 }) {
@@ -98,14 +100,15 @@ function Title({ children, op = 1 }) {
         marginBottom: 28,
         fontFamily: "sans-serif",
         textAlign: "center",
-      }}>
+      }}
+    >
       {children}
     </div>
-  )
+  );
 }
 
 // X-Flip durch `shift` Schritte — immer maximal FLIP_MAX_DUR Frames
-const FLIP_MAX_DUR = 30 // feste maximale Dauer egal wie gross shift ist
+const FLIP_MAX_DUR = 30; // feste maximale Dauer egal wie gross shift ist
 
 function FlipBox({
   plain,
@@ -115,10 +118,10 @@ function FlipBox({
   size = 62,
   fontSize = 30,
 }) {
-  const local = frame - startFrame
+  const local = frame - startFrame;
   if (local < 0)
-    return <Box ch={plain} color={C.yellow} size={size} fontSize={fontSize} />
-  const dur = shift === 0 ? 1 : FLIP_MAX_DUR
+    return <Box ch={plain} color={C.yellow} size={size} fontSize={fontSize} />;
+  const dur = shift === 0 ? 1 : FLIP_MAX_DUR;
   if (local >= dur)
     return (
       <Box
@@ -128,19 +131,19 @@ function FlipBox({
         fontSize={fontSize}
         glow
       />
-    )
-  const framesPerStep = dur / Math.max(shift, 1)
-  const stepFloat = local / framesPerStep
-  const stepIdx = Math.min(Math.floor(stepFloat), shift - 1)
-  const stepProg = stepFloat - Math.floor(stepFloat)
+    );
+  const framesPerStep = dur / Math.max(shift, 1);
+  const stepFloat = local / framesPerStep;
+  const stepIdx = Math.min(Math.floor(stepFloat), shift - 1);
+  const stepProg = stepFloat - Math.floor(stepFloat);
   const curCh = String.fromCharCode(
     ((plain.charCodeAt(0) - 65 + stepIdx) % 26) + 65,
-  )
+  );
   const nxtCh = String.fromCharCode(
     ((plain.charCodeAt(0) - 65 + Math.min(stepIdx + 1, shift)) % 26) + 65,
-  )
-  const showNext = stepProg >= 0.5
-  const displayCh = showNext ? nxtCh : curCh
+  );
+  const showNext = stepProg >= 0.5;
+  const displayCh = showNext ? nxtCh : curCh;
   const rotateX = showNext
     ? interpolate(stepProg, [0.5, 1], [-90, 0], {
         extrapolateLeft: "clamp",
@@ -149,7 +152,7 @@ function FlipBox({
     : interpolate(stepProg, [0, 0.5], [0, 90], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
-      })
+      });
   return (
     <div style={{ perspective: "300px" }}>
       <Box
@@ -160,12 +163,12 @@ function FlipBox({
         fontSize={fontSize}
       />
     </div>
-  )
+  );
 }
 
 // ─── TIMING ───────────────────────────────────────────────────
 // Jede Szene: Animationsende + grosszügige Pause damit alles lesbar bleibt
-const HOLD = 60 // Frames Pause nach dem letzten Element jeder Szene
+const HOLD = 60; // Frames Pause nach dem letzten Element jeder Szene
 const S_DUR = {
   s1: 200, // Caesar +3 gleichmässig
   s2: 215, // Verschiedene Verschiebungen
@@ -173,36 +176,36 @@ const S_DUR = {
   s4: 410, // Alphabet + Buchstaben ablesen
   s5: 245, // DCBAZ als Schlüssel
   s6: 245, // KEY als Schlüssel
-}
+};
 
 const SCENE_START = (() => {
-  const keys = Object.keys(S_DUR)
-  const acc = {}
-  let t = 0
+  const keys = Object.keys(S_DUR);
+  const acc = {};
+  let t = 0;
   for (const k of keys) {
-    acc[k] = t
-    t += S_DUR[k]
+    acc[k] = t;
+    t += S_DUR[k];
   }
-  acc.total = t
-  return acc
-})()
+  acc.total = t;
+  return acc;
+})();
 
-const TOTAL = SCENE_START.total
+const TOTAL = SCENE_START.total;
 
 // ─── SZENE 1: Caesar +3 für alle ─────────────────────────────
 function Scene1({ frame }) {
-  const { fps } = useVideoConfig()
-  const local = frame - SCENE_START.s1
-  const PLAIN = "HALLO"
-  const SHIFTS = [3, 3, 3, 3, 3]
-  const CIPHER = encWord(PLAIN, SHIFTS)
+  const { fps } = useVideoConfig();
+  const local = frame - SCENE_START.s1;
+  const PLAIN = "HALLO";
+  const SHIFTS = [3, 3, 3, 3, 3];
+  const CIPHER = encWord(PLAIN, SHIFTS);
 
   const titleOp = interpolate(local, [0, 12], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  })
-  const flipStart = 30
-  const flipOffset = 20
+  });
+  const flipStart = 30;
+  const flipOffset = 20;
 
   return (
     <AbsoluteFill
@@ -212,7 +215,8 @@ function Scene1({ frame }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Title op={titleOp}>
         Schritt 1 — eine Verschiebung für alle Buchstaben
       </Title>
@@ -225,7 +229,8 @@ function Scene1({ frame }) {
           fontFamily: "sans-serif",
           fontSize: 17,
           color: C.gray,
-        }}>
+        }}
+      >
         Verschiebung:{" "}
         <span style={{ color: C.orange, fontWeight: 700, fontSize: 22 }}>
           +3
@@ -235,11 +240,11 @@ function Scene1({ frame }) {
 
       <div style={{ display: "flex", gap: 20 }}>
         {PLAIN.split("").map((ch, i) => {
-          const fStart = flipStart + i * flipOffset
+          const fStart = flipStart + i * flipOffset;
           const plainOp = interpolate(local, [i * 8, i * 8 + 10], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
-          })
+          });
           return (
             <div
               key={i}
@@ -249,7 +254,8 @@ function Scene1({ frame }) {
                 alignItems: "center",
                 gap: 6,
                 opacity: plainOp,
-              }}>
+              }}
+            >
               <Box ch={ch} color={C.yellow} />
               <div
                 style={{
@@ -257,7 +263,8 @@ function Scene1({ frame }) {
                   fontFamily: "sans-serif",
                   fontSize: 13,
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 +3
               </div>
               <FlipBox
@@ -267,7 +274,7 @@ function Scene1({ frame }) {
                 frame={frame}
               />
             </div>
-          )
+          );
         })}
       </div>
 
@@ -290,30 +297,31 @@ function Scene1({ frame }) {
           display: "flex",
           gap: 12,
           alignItems: "center",
-        }}>
+        }}
+      >
         <span style={{ color: C.yellow }}>{PLAIN}</span>
         <span style={{ color: C.gray }}>→</span>
         <span style={{ color: C.green }}>{CIPHER}</span>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SZENE 2: Verschiedene Verschiebungen ─────────────────────
 function Scene2({ frame }) {
-  const { fps } = useVideoConfig()
-  const local = frame - SCENE_START.s2
-  const PLAIN = "HALLO"
-  const SHIFTS = [3, 2, 1, 0, 25]
-  const CIPHER = encWord(PLAIN, SHIFTS)
-  const SHIFT_COLORS = [C.blue, C.orange, C.purple, C.aqua, C.red]
+  const { fps } = useVideoConfig();
+  const local = frame - SCENE_START.s2;
+  const PLAIN = "HALLO";
+  const SHIFTS = [3, 2, 1, 0, 25];
+  const CIPHER = encWord(PLAIN, SHIFTS);
+  const SHIFT_COLORS = [C.blue, C.orange, C.purple, C.aqua, C.red];
 
   const titleOp = interpolate(local, [0, 12], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  })
-  const flipStart = 35
-  const flipOffset = 22
+  });
+  const flipStart = 35;
+  const flipOffset = 22;
 
   return (
     <AbsoluteFill
@@ -323,7 +331,8 @@ function Scene2({ frame }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Title op={titleOp}>
         Schritt 2 — verschiedene Verschiebungen pro Buchstabe
       </Title>
@@ -335,19 +344,20 @@ function Scene2({ frame }) {
           fontFamily: "sans-serif",
           fontSize: 16,
           color: C.gray,
-        }}>
+        }}
+      >
         Jeder Buchstabe bekommt eine{" "}
         <strong style={{ color: C.fg }}>eigene</strong> Verschiebung
       </div>
 
       <div style={{ display: "flex", gap: 20 }}>
         {PLAIN.split("").map((ch, i) => {
-          const fStart = flipStart + i * flipOffset
+          const fStart = flipStart + i * flipOffset;
           const plainOp = interpolate(local, [i * 8, i * 8 + 10], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
-          })
-          const col = SHIFT_COLORS[i]
+          });
+          const col = SHIFT_COLORS[i];
           return (
             <div
               key={i}
@@ -357,7 +367,8 @@ function Scene2({ frame }) {
                 alignItems: "center",
                 gap: 6,
                 opacity: plainOp,
-              }}>
+              }}
+            >
               <Box ch={ch} color={C.yellow} />
               <div
                 style={{
@@ -365,7 +376,8 @@ function Scene2({ frame }) {
                   fontFamily: "sans-serif",
                   fontSize: 13,
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 +{SHIFTS[i]}
               </div>
               <FlipBox
@@ -375,7 +387,7 @@ function Scene2({ frame }) {
                 frame={frame}
               />
             </div>
-          )
+          );
         })}
       </div>
 
@@ -390,7 +402,8 @@ function Scene2({ frame }) {
           display: "flex",
           gap: 20,
           alignItems: "center",
-        }}>
+        }}
+      >
         {SHIFTS.map((s, i) => (
           <div
             key={i}
@@ -407,7 +420,8 @@ function Scene2({ frame }) {
               fontSize: 18,
               fontWeight: 700,
               color: SHIFT_COLORS[i],
-            }}>
+            }}
+          >
             {s}
           </div>
         ))}
@@ -422,7 +436,8 @@ function Scene2({ frame }) {
           fontFamily: "sans-serif",
           fontSize: 13,
           marginTop: 6,
-        }}>
+        }}
+      >
         Verschiebungsfolge
       </div>
 
@@ -445,38 +460,39 @@ function Scene2({ frame }) {
           display: "flex",
           gap: 12,
           alignItems: "center",
-        }}>
+        }}
+      >
         <span style={{ color: C.yellow }}>{PLAIN}</span>
         <span style={{ color: C.gray }}>→</span>
         <span style={{ color: C.green }}>{CIPHER}</span>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SZENE 3: Zahlen als Schlüssel, Problem 25 ────────────────
 function Scene3({ frame }) {
-  const local = frame - SCENE_START.s3
-  const SHIFTS = [3, 2, 1, 0, 25]
-  const SHIFT_COLORS = [C.blue, C.orange, C.purple, C.aqua, C.red]
+  const local = frame - SCENE_START.s3;
+  const SHIFTS = [3, 2, 1, 0, 25];
+  const SHIFT_COLORS = [C.blue, C.orange, C.purple, C.aqua, C.red];
 
   const titleOp = interpolate(local, [0, 12], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  })
+  });
   const numsOp = interpolate(local, [10, 25], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  })
+  });
   // 25 wird hervorgehoben
   const highlightOp = interpolate(local, [40, 55], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  })
+  });
   const problemOp = interpolate(local, [55, 70], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  })
+  });
 
   return (
     <AbsoluteFill
@@ -486,7 +502,8 @@ function Scene3({ frame }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Title op={titleOp}>Die Verschiebungsfolge ist der Schlüssel</Title>
 
       {/* Zahlen */}
@@ -496,15 +513,16 @@ function Scene3({ frame }) {
           display: "flex",
           gap: 20,
           alignItems: "center",
-        }}>
+        }}
+      >
         {SHIFTS.map((s, i) => {
-          const isProb = s === 25
+          const isProb = s === 25;
           const scale = isProb
             ? interpolate(local, [40, 55], [1, 1.3], {
                 extrapolateLeft: "clamp",
                 extrapolateRight: "clamp",
               })
-            : 1
+            : 1;
           return (
             <div
               key={i}
@@ -531,10 +549,11 @@ function Scene3({ frame }) {
                 color: isProb && local > 45 ? C.red : SHIFT_COLORS[i],
                 boxShadow:
                   isProb && local > 45 ? `0 0 14px ${C.red}55` : "none",
-              }}>
+              }}
+            >
               {s}
             </div>
-          )
+          );
         })}
       </div>
 
@@ -552,7 +571,8 @@ function Scene3({ frame }) {
           color: C.fg,
           textAlign: "center",
           maxWidth: 600,
-        }}>
+        }}
+      >
         <span style={{ color: C.red, fontWeight: 700 }}>Problem:</span> Die Zahl{" "}
         <span style={{ color: C.red, fontWeight: 700 }}>25</span> ist
         zweistellig — wie viele Stellen hat eine Zahl im Schlüssel? Das macht
@@ -570,37 +590,38 @@ function Scene3({ frame }) {
           fontFamily: "sans-serif",
           fontSize: 16,
           color: C.gray,
-        }}>
+        }}
+      >
         Lösung: Statt Zahlen →{" "}
         <span style={{ color: C.yellow, fontWeight: 700 }}>Buchstaben</span>{" "}
         verwenden
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SZENE 4: Alphabet + Positionen ablesen ───────────────────
 function Scene4({ frame }) {
-  const { fps } = useVideoConfig()
-  const local = frame - SCENE_START.s4
-  const SHIFTS = [3, 2, 1, 0, 25]
-  const SHIFT_COLORS = [C.blue, C.orange, C.purple, C.aqua, C.red]
-  const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  const KEY_LETTERS = SHIFTS.map((s) => ALPHABET[s]) // D, C, B, A, Z
+  const { fps } = useVideoConfig();
+  const local = frame - SCENE_START.s4;
+  const SHIFTS = [3, 2, 1, 0, 25];
+  const SHIFT_COLORS = [C.blue, C.orange, C.purple, C.aqua, C.red];
+  const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const KEY_LETTERS = SHIFTS.map((s) => ALPHABET[s]); // D, C, B, A, Z
 
   const titleOp = interpolate(local, [0, 12], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  })
+  });
   // Alphabet erscheint
-  const alphaStart = 15
-  const alphaStag = 5
+  const alphaStart = 15;
+  const alphaStag = 5;
   // Markierungen erscheinen
-  const markStart = alphaStart + 26 * alphaStag + 10
-  const markStag = 14
+  const markStart = alphaStart + 26 * alphaStag + 10;
+  const markStag = 14;
   // Buchstaben werden abgelesen
-  const readStart = markStart + SHIFTS.length * markStag + 20
-  const readStag = 16
+  const readStart = markStart + SHIFTS.length * markStag + 20;
+  const readStag = 16;
 
   return (
     <AbsoluteFill
@@ -610,7 +631,8 @@ function Scene4({ frame }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Title op={titleOp}>Buchstabe statt Zahl: Position im Alphabet</Title>
 
       {/* Alphabet-Streifen */}
@@ -620,10 +642,11 @@ function Scene4({ frame }) {
           gap: 4,
           flexWrap: "nowrap",
           marginBottom: 16,
-        }}>
+        }}
+      >
         {ALPHABET.split("").map((letter, idx) => {
-          const markedAt = SHIFTS.indexOf(idx)
-          const isMarked = markedAt >= 0
+          const markedAt = SHIFTS.indexOf(idx);
+          const isMarked = markedAt >= 0;
           const markOp = isMarked
             ? interpolate(
                 local,
@@ -634,14 +657,14 @@ function Scene4({ frame }) {
                 [0, 1],
                 { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
               )
-            : 0
+            : 0;
           const alphaOp = interpolate(
             local,
             [alphaStart + idx * alphaStag, alphaStart + idx * alphaStag + 8],
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-          )
-          const col = isMarked ? SHIFT_COLORS[markedAt] : C.gray
+          );
+          const col = isMarked ? SHIFT_COLORS[markedAt] : C.gray;
 
           return (
             <div
@@ -651,7 +674,8 @@ function Scene4({ frame }) {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-              }}>
+              }}
+            >
               <div
                 style={{
                   width: 36,
@@ -665,14 +689,16 @@ function Scene4({ frame }) {
                   justifyContent: "center",
                   boxShadow:
                     isMarked && markOp > 0.5 ? `0 0 10px ${col}55` : "none",
-                }}>
+                }}
+              >
                 <div
                   style={{
                     fontSize: 14,
                     fontWeight: 700,
                     color: isMarked && markOp > 0.3 ? col : C.gray,
                     fontFamily: "'Courier New', monospace",
-                  }}>
+                  }}
+                >
                   {letter}
                 </div>
                 <div
@@ -680,7 +706,8 @@ function Scene4({ frame }) {
                     fontSize: 9,
                     color: C.gray,
                     fontFamily: "sans-serif",
-                  }}>
+                  }}
+                >
                   {idx}
                 </div>
               </div>
@@ -693,12 +720,13 @@ function Scene4({ frame }) {
                     fontSize: 14,
                     lineHeight: 1,
                     marginTop: 2,
-                  }}>
+                  }}
+                >
                   ↓
                 </div>
               )}
             </div>
-          )
+          );
         })}
       </div>
 
@@ -709,23 +737,24 @@ function Scene4({ frame }) {
           gap: 20,
           alignItems: "flex-start",
           marginTop: 8,
-        }}>
+        }}
+      >
         {SHIFTS.map((s, i) => {
           const readOp = interpolate(
             local,
             [readStart + i * readStag, readStart + i * readStag + 14],
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-          )
+          );
           const sp = spring({
             frame: local - (readStart + i * readStag),
             fps,
             config: { damping: 13, stiffness: 120 },
-          })
+          });
           const scale = interpolate(sp, [0, 1], [0.5, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
-          })
+          });
           return (
             <div
               key={i}
@@ -736,14 +765,16 @@ function Scene4({ frame }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 4,
-              }}>
+              }}
+            >
               <div
                 style={{
                   fontFamily: "'Courier New', monospace",
                   fontSize: 18,
                   fontWeight: 700,
                   color: SHIFT_COLORS[i],
-                }}>
+                }}
+              >
                 {s}
               </div>
               <div
@@ -751,7 +782,8 @@ function Scene4({ frame }) {
                   color: SHIFT_COLORS[i],
                   fontSize: 13,
                   fontFamily: "sans-serif",
-                }}>
+                }}
+              >
                 ↓
               </div>
               <Box
@@ -762,7 +794,7 @@ function Scene4({ frame }) {
                 glow
               />
             </div>
-          )
+          );
         })}
       </div>
 
@@ -779,7 +811,8 @@ function Scene4({ frame }) {
           fontFamily: "sans-serif",
           fontSize: 17,
           color: C.gray,
-        }}>
+        }}
+      >
         Schlüsselwort:{" "}
         {KEY_LETTERS.map((l, i) => (
           <span
@@ -789,7 +822,8 @@ function Scene4({ frame }) {
               fontFamily: "'Courier New', monospace",
               fontWeight: 700,
               fontSize: 22,
-            }}>
+            }}
+          >
             {l}
           </span>
         ))}{" "}
@@ -799,26 +833,26 @@ function Scene4({ frame }) {
         </span>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SZENE 5: DCBAZ als Schlüssel ────────────────────────────
 function Scene5({ frame }) {
-  const { fps } = useVideoConfig()
-  const local = frame - SCENE_START.s5
-  const PLAIN = "HALLO"
-  const KEY_WORD = "DCBAZ"
-  const SHIFTS = KEY_WORD.split("").map((k) => k.charCodeAt(0) - 65)
-  const KEY_COLORS = [C.blue, C.orange, C.purple, C.aqua, C.red]
-  const CIPHER = encWord(PLAIN, SHIFTS)
+  const { fps } = useVideoConfig();
+  const local = frame - SCENE_START.s5;
+  const PLAIN = "HALLO";
+  const KEY_WORD = "DCBAZ";
+  const SHIFTS = KEY_WORD.split("").map((k) => k.charCodeAt(0) - 65);
+  const KEY_COLORS = [C.blue, C.orange, C.purple, C.aqua, C.red];
+  const CIPHER = encWord(PLAIN, SHIFTS);
 
   const titleOp = interpolate(local, [0, 12], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  })
-  const colsIn = 20
-  const flipStart = 55
-  const flipOffset = 22
+  });
+  const colsIn = 20;
+  const flipStart = 55;
+  const flipOffset = 22;
 
   return (
     <AbsoluteFill
@@ -828,19 +862,20 @@ function Scene5({ frame }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Title op={titleOp}>Schlüsselwort «DCBAZ» — das Vigenère-Verfahren</Title>
 
       <div style={{ display: "flex", gap: 20 }}>
         {PLAIN.split("").map((ch, i) => {
-          const col = KEY_COLORS[i]
+          const col = KEY_COLORS[i];
           const colOp = interpolate(
             local,
             [colsIn + i * 8, colsIn + i * 8 + 12],
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-          )
-          const fStart = flipStart + i * flipOffset
+          );
+          const fStart = flipStart + i * flipOffset;
           return (
             <div
               key={i}
@@ -850,7 +885,8 @@ function Scene5({ frame }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 5,
-              }}>
+              }}
+            >
               <Box ch={ch} color={C.yellow} />
               <div
                 style={{
@@ -858,7 +894,8 @@ function Scene5({ frame }) {
                   fontFamily: "sans-serif",
                   fontSize: 12,
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 {KEY_WORD[i]} = +{SHIFTS[i]}
               </div>
               <FlipBox
@@ -868,7 +905,7 @@ function Scene5({ frame }) {
                 frame={frame}
               />
             </div>
-          )
+          );
         })}
       </div>
 
@@ -890,7 +927,8 @@ function Scene5({ frame }) {
           display: "flex",
           gap: 12,
           alignItems: "center",
-        }}>
+        }}
+      >
         <span style={{ color: C.yellow }}>{PLAIN}</span>
         <span style={{ color: C.gray }}>+</span>
         <span style={{ fontWeight: 700 }}>
@@ -904,28 +942,28 @@ function Scene5({ frame }) {
         <span style={{ color: C.green }}>{CIPHER}</span>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── SZENE 6: KEY als Schlüssel ───────────────────────────────
 function Scene6({ frame }) {
-  const { fps } = useVideoConfig()
-  const local = frame - SCENE_START.s6
-  const PLAIN = "HALLO"
-  const KEY_WORD = "KEY"
+  const { fps } = useVideoConfig();
+  const local = frame - SCENE_START.s6;
+  const PLAIN = "HALLO";
+  const KEY_WORD = "KEY";
   const SHIFTS = PLAIN.split("").map(
     (_, i) => KEY_WORD[i % KEY_WORD.length].charCodeAt(0) - 65,
-  )
-  const KEY_COLORS = [C.blue, C.orange, C.purple, C.blue, C.orange]
-  const CIPHER = encWord(PLAIN, SHIFTS)
+  );
+  const KEY_COLORS = [C.blue, C.orange, C.purple, C.blue, C.orange];
+  const CIPHER = encWord(PLAIN, SHIFTS);
 
   const titleOp = interpolate(local, [0, 12], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  })
-  const colsIn = 20
-  const flipStart = 55
-  const flipOffset = 22
+  });
+  const colsIn = 20;
+  const flipStart = 55;
+  const flipOffset = 22;
 
   return (
     <AbsoluteFill
@@ -935,7 +973,8 @@ function Scene6({ frame }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Title op={titleOp}>Schlüsselwort «KEY» — zyklisch wiederholt</Title>
 
       {/* Zyklus-Anzeige */}
@@ -952,7 +991,8 @@ function Scene6({ frame }) {
           display: "flex",
           gap: 8,
           alignItems: "center",
-        }}>
+        }}
+      >
         {PLAIN.split("").map((_, i) => (
           <div
             key={i}
@@ -969,7 +1009,8 @@ function Scene6({ frame }) {
               fontWeight: 700,
               color: KEY_COLORS[i],
               fontFamily: "'Courier New', monospace",
-            }}>
+            }}
+          >
             {KEY_WORD[i % KEY_WORD.length]}
           </div>
         ))}
@@ -980,15 +1021,15 @@ function Scene6({ frame }) {
 
       <div style={{ display: "flex", gap: 20 }}>
         {PLAIN.split("").map((ch, i) => {
-          const col = KEY_COLORS[i]
-          const keyLetter = KEY_WORD[i % KEY_WORD.length]
+          const col = KEY_COLORS[i];
+          const keyLetter = KEY_WORD[i % KEY_WORD.length];
           const colOp = interpolate(
             local,
             [colsIn + i * 8, colsIn + i * 8 + 12],
             [0, 1],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-          )
-          const fStart = flipStart + i * flipOffset
+          );
+          const fStart = flipStart + i * flipOffset;
           return (
             <div
               key={i}
@@ -998,7 +1039,8 @@ function Scene6({ frame }) {
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 5,
-              }}>
+              }}
+            >
               <Box ch={ch} color={C.yellow} />
               <div
                 style={{
@@ -1006,7 +1048,8 @@ function Scene6({ frame }) {
                   fontFamily: "sans-serif",
                   fontSize: 12,
                   fontWeight: 700,
-                }}>
+                }}
+              >
                 {keyLetter} = +{SHIFTS[i]}
               </div>
               <FlipBox
@@ -1016,7 +1059,7 @@ function Scene6({ frame }) {
                 frame={frame}
               />
             </div>
-          )
+          );
         })}
       </div>
 
@@ -1038,7 +1081,8 @@ function Scene6({ frame }) {
           display: "flex",
           gap: 12,
           alignItems: "center",
-        }}>
+        }}
+      >
         <span style={{ color: C.yellow }}>{PLAIN}</span>
         <span style={{ color: C.gray }}>+</span>
         <span>
@@ -1052,13 +1096,13 @@ function Scene6({ frame }) {
         <span style={{ color: C.green }}>{CIPHER}</span>
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── Hauptkomposition ─────────────────────────────────────────
 function VigenereVizComp() {
-  const frame = useCurrentFrame()
-  const { fps } = useVideoConfig()
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
 
   return (
     <AbsoluteFill>
@@ -1077,12 +1121,12 @@ function VigenereVizComp() {
       )}
       {frame >= SCENE_START.s6 && <Scene6 frame={frame} />}
     </AbsoluteFill>
-  )
+  );
 }
 
 // ─── Export ───────────────────────────────────────────────────
 export default function VigenereViz() {
-  const playerRef = useRef(null)
+  const playerRef = useRef(null);
   return (
     <div
       style={{
@@ -1090,7 +1134,8 @@ export default function VigenereViz() {
         borderRadius: 8,
         overflow: "hidden",
         border: `1px solid #504945`,
-      }}>
+      }}
+    >
       <Player
         ref={playerRef}
         component={VigenereVizComp}
@@ -1104,10 +1149,10 @@ export default function VigenereViz() {
         autoPlay={false}
         acknowledgeRemotionLicense
         onEnded={() => {
-          playerRef.current?.seekTo(TOTAL - 1)
-          playerRef.current?.pause()
+          playerRef.current?.seekTo(TOTAL - 1);
+          playerRef.current?.pause();
         }}
       />
     </div>
-  )
+  );
 }

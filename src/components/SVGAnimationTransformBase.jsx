@@ -1,11 +1,10 @@
-import { useEffect, useState, useRef } from "react"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism"
-
-import { SVGComponent, AnimationTransform, Origin } from "./SVG"
-import Slider from "@components/Slider"
-import Select from "@components/Select.jsx"
-import style from "@components/Path.module.css"
+import style from "@components/Path.module.css";
+import Select from "@components/Select.jsx";
+import Slider from "@components/Slider";
+import { useEffect, useRef, useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { AnimationTransform, Origin, SVGComponent } from "./SVG";
 
 export default function SVGAnimationTransformBase({
   id = "placeholder",
@@ -14,15 +13,15 @@ export default function SVGAnimationTransformBase({
   element,
   outputString = "<circle>",
 }) {
-  const [attribute, setAttribute] = useState(attributes[0] || "none")
-  const [originX, setOriginX] = useState(0)
-  const [originY, setOriginY] = useState(0)
-  const [values, setValues] = useState("0;30;0")
-  const [dur, setDur] = useState(2)
-  const [repeatCount, setRepeatCount] = useState("indefinite")
-  const [svgDisplayCode, setSvgDisplayCode] = useState("")
+  const [attribute, setAttribute] = useState(attributes[0] || "none");
+  const [originX, setOriginX] = useState(0);
+  const [originY, setOriginY] = useState(0);
+  const [values, setValues] = useState("0;30;0");
+  const [dur, setDur] = useState(2);
+  const [repeatCount, setRepeatCount] = useState("indefinite");
+  const [svgDisplayCode, setSvgDisplayCode] = useState("");
 
-  const animateRef = useRef(null)
+  const animateRef = useRef(null);
 
   useEffect(() => {
     setSvgDisplayCode(`<svg viewBox="0 0 300 300" width="300">
@@ -35,11 +34,11 @@ export default function SVGAnimationTransformBase({
               repeatCount="${repeatCount}"
     />
   </g>
-</svg>`)
+</svg>`);
     if (animateRef) {
-      animateRef.current.beginElement()
+      animateRef.current.beginElement();
     }
-  }, [attribute, values, dur, repeatCount, outputString, originX, originY])
+  }, [attribute, values, dur, repeatCount, outputString, originX, originY]);
 
   return (
     <div className={style.gridContainer}>
@@ -128,5 +127,5 @@ export default function SVGAnimationTransformBase({
         </SyntaxHighlighter>
       </div>
     </div>
-  )
+  );
 }

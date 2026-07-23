@@ -1,6 +1,6 @@
-import DataTable from "@components/DataTable/DataTable"
-import LearningGoals from "@components/LearningGoals.jsx"
-import Section from "@components/Section.jsx"
+import DataTable from "@components/DataTable/DataTable";
+import LearningGoals from "@components/LearningGoals.jsx";
+import Section from "@components/Section.jsx";
 
 export default function GymPasswoerter() {
   return (
@@ -351,5 +351,5 @@ export default function GymPasswoerter() {
         </p>
       </Section>
     </>
-  )
+  );
 }

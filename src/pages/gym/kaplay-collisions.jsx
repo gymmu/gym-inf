@@ -1,6 +1,5 @@
-import CodeBlock from "@components/CodeBlock"
-import Video from "@components/Video" 
-
+import CodeBlock from "@components/CodeBlock";
+import Video from "@components/Video";
 
 export default function KaplayCollisions() {
   return (
@@ -53,5 +52,5 @@ export default function KaplayCollisions() {
         <Video url="HBApXkM8aBY" />
       </section>
     </>
-  )
+  );
 }

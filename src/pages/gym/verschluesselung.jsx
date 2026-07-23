@@ -1,23 +1,23 @@
-import Caesar from "@components/Caesar"
-import CaesarIntro from "@components/gym/CaesarIntro/CaesarIntro"
-import DataTable from "@components/DataTable/DataTable"
+import Caesar from "@components/Caesar";
+import DataTable from "@components/DataTable/DataTable";
+import AesSlide from "@components/gym/AesSlide/AesSlide";
+import AesViz from "@components/gym/AesViz/AesViz";
+import CaesarIntro from "@components/gym/CaesarIntro/CaesarIntro";
 import {
-  KeyspaceCaesar,
-  KeyspaceBruteForce,
   KeyspaceBars,
-} from "@components/gym/KeyspaceViz/KeyspaceViz"
-import VigenereViz from "@components/gym/VigenereViz/VigenereViz"
-import VigenereSteps from "@components/gym/VigenereSteps/VigenereSteps"
-import Vigenere from "@components/Vigenere"
-import XorViz from "@components/gym/XorViz/XorViz"
-import XorSlide from "@components/gym/XorSlide/XorSlide"
-import XorSteps from "@components/gym/XorSteps/XorSteps"
-import AesViz from "@components/gym/AesViz/AesViz"
-import AesSlide from "@components/gym/AesSlide/AesSlide"
-import SignatureDiagram from "@components/gym/SignatureDiagram/SignatureDiagram"
-import TlsHandshake from "@components/gym/TlsHandshake/TlsHandshake"
-import LearningGoals from "@components/LearningGoals.jsx"
-import Section from "@components/Section.jsx"
+  KeyspaceBruteForce,
+  KeyspaceCaesar,
+} from "@components/gym/KeyspaceViz/KeyspaceViz";
+import SignatureDiagram from "@components/gym/SignatureDiagram/SignatureDiagram";
+import TlsHandshake from "@components/gym/TlsHandshake/TlsHandshake";
+import VigenereSteps from "@components/gym/VigenereSteps/VigenereSteps";
+import VigenereViz from "@components/gym/VigenereViz/VigenereViz";
+import XorSlide from "@components/gym/XorSlide/XorSlide";
+import XorSteps from "@components/gym/XorSteps/XorSteps";
+import XorViz from "@components/gym/XorViz/XorViz";
+import LearningGoals from "@components/LearningGoals.jsx";
+import Section from "@components/Section.jsx";
+import Vigenere from "@components/Vigenere";
 
 export default function GymVerschluesselung() {
   return (
@@ -342,5 +342,5 @@ export default function GymVerschluesselung() {
         </p>
       </Section>
     </>
-  )
+  );
 }

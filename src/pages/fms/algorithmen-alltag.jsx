@@ -1,21 +1,21 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import Section from "@components/Section"
-import SolutionBlock from "@components/SolutionBlock"
-import SimpleSplitView from "@components/algorithm/SimpleSplitView"
+import SimpleSplitView from "@components/algorithm/SimpleSplitView";
 import {
   DurchschnittAnimation,
-  NotenAnimation,
-  SchaltjahrAnimation,
   generateDurchschnittSteps,
   generateNotenSteps,
   generateSchaltjahrSteps,
-} from "@components/remotion/EverydayAnimation"
+  NotenAnimation,
+  SchaltjahrAnimation,
+} from "@components/remotion/EverydayAnimation";
+import Section from "@components/Section";
+import SolutionBlock from "@components/SolutionBlock";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function FmsAlgorithmenAlltag() {
-  const [zahlen, setZahlen] = useState([5, 8, 3, 9, 6])
-  const [punkte, setPunkte] = useState(82)
-  const [jahr, setJahr] = useState(2024)
+  const [zahlen, setZahlen] = useState([5, 8, 3, 9, 6]);
+  const [punkte, setPunkte] = useState(82);
+  const [jahr, setJahr] = useState(2024);
 
   const durchschnittChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -30,7 +30,7 @@ flowchart TD
     Next --> Check
     Calc --> Output[Gib Durchschnitt aus]
     Output --> End([Ende])
-  `
+  `;
 
   const notenChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -51,7 +51,7 @@ flowchart TD
     Note4 --> Output
     Note5 --> Output
     Output --> End([Ende])
-  `
+  `;
 
   const schaltjahrChart = `
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'18px'}}}%%
@@ -68,40 +68,44 @@ flowchart TD
     IsLeap1 --> End
     IsLeap2 --> End
     NotLeap2 --> End
-  `
+  `;
 
-  const durchschnittSteps = generateDurchschnittSteps(zahlen)
-  const notenSteps = generateNotenSteps(punkte)
-  const schaltjahrSteps = generateSchaltjahrSteps(jahr)
+  const durchschnittSteps = generateDurchschnittSteps(zahlen);
+  const notenSteps = generateNotenSteps(punkte);
+  const schaltjahrSteps = generateSchaltjahrSteps(jahr);
 
-  const durchschnittDescriptions = durchschnittSteps.map((s) => s.description)
-  const notenDescriptions = notenSteps.map((s) => s.description)
-  const schaltjahrDescriptions = schaltjahrSteps.map((s) => s.description)
+  const durchschnittDescriptions = durchschnittSteps.map((s) => s.description);
+  const notenDescriptions = notenSteps.map((s) => s.description);
+  const schaltjahrDescriptions = schaltjahrSteps.map((s) => s.description);
 
   return (
     <>
       <section>
         <h2>Algorithmen im Alltag</h2>
-        
-        <div style={{ 
-          backgroundColor: "var(--color-bg-light)", 
-          padding: "15px", 
-          borderRadius: "8px",
-          marginBottom: "20px",
-          borderLeft: "4px solid var(--color-primary)"
-        }}>
-          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine vereinfachte Sprache. 
-          Wenn dir Begriffe unklar sind, schaue im{" "}
+
+        <div
+          style={{
+            backgroundColor: "var(--color-bg-light)",
+            padding: "15px",
+            borderRadius: "8px",
+            marginBottom: "20px",
+            borderLeft: "4px solid var(--color-primary)",
+          }}
+        >
+          <strong>💡 Hinweis:</strong> Die Flowcharts verwenden eine
+          vereinfachte Sprache. Wenn dir Begriffe unklar sind, schaue im{" "}
           <Link to="/fms/algorithmen-glossar">Flowchart-Glossar</Link> nach.
         </div>
 
         <p>
           Algorithmen begegnen uns täglich, oft ohne dass wir es merken. Hier
-          sind drei praktische Beispiele, sortiert vom einfachsten zum komplexesten:
+          sind drei praktische Beispiele, sortiert vom einfachsten zum
+          komplexesten:
         </p>
         <ol>
           <li>
-            <strong>Durchschnitt berechnen</strong> - Einfache Schleife mit Summe
+            <strong>Durchschnitt berechnen</strong> - Einfache Schleife mit
+            Summe
           </li>
           <li>
             <strong>Notenberechnung</strong> - If-else Ketten
@@ -138,11 +142,11 @@ flowchart TD
                 const newArray = e.target.value
                   .split(",")
                   .map((n) => parseInt(n.trim()))
-                  .filter((n) => !isNaN(n) && n >= 0 && n <= 100)
+                  .filter((n) => !isNaN(n) && n >= 0 && n <= 100);
                 if (newArray.length >= 3 && newArray.length <= 10) {
-                  setZahlen(newArray)
+                  setZahlen(newArray);
                 } else {
-                  alert("Bitte 3-10 Zahlen zwischen 0 und 100 eingeben!")
+                  alert("Bitte 3-10 Zahlen zwischen 0 und 100 eingeben!");
                 }
               }}
               style={{
@@ -187,9 +191,7 @@ flowchart TD
 
       <Section classes="exercise">
         <h3>Übung 1: Durchschnitt</h3>
-        <p>
-          Berechnen Sie den Durchschnitt der Zahlen: 10, 15, 8, 12, 20
-        </p>
+        <p>Berechnen Sie den Durchschnitt der Zahlen: 10, 15, 8, 12, 20</p>
         <SolutionBlock taskId="durchschnitt-exercise-1">
           <p>
             <strong>Lösung:</strong>
@@ -231,9 +233,9 @@ flowchart TD
               type="number"
               defaultValue={punkte}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
+                const val = parseInt(e.target.value);
                 if (!isNaN(val) && val >= 0 && val <= 100) {
-                  setPunkte(val)
+                  setPunkte(val);
                 }
               }}
               min="0"
@@ -250,7 +252,8 @@ flowchart TD
             />
           </label>
           <p style={{ fontSize: "14px", opacity: 0.8, marginTop: "10px" }}>
-            Probieren Sie: 95 (Sehr gut), 80 (Gut), 65 (Befriedigend), 55 (Ausreichend), 40 (Ungenügend)
+            Probieren Sie: 95 (Sehr gut), 80 (Gut), 65 (Befriedigend), 55
+            (Ausreichend), 40 (Ungenügend)
           </p>
         </div>
 
@@ -296,7 +299,8 @@ flowchart TD
         <h2>3. Schaltjahr berechnen</h2>
         <p>
           Ein <strong>Schaltjahr</strong> hat 366 Tage statt 365 (29. Februar).
-          Die Regeln sind kompliziert und zeigen <strong>verschachtelte Bedingungen</strong>:
+          Die Regeln sind kompliziert und zeigen{" "}
+          <strong>verschachtelte Bedingungen</strong>:
         </p>
 
         <h3>Schaltjahr-Regeln:</h3>
@@ -342,9 +346,9 @@ flowchart TD
               type="number"
               defaultValue={jahr}
               onChange={(e) => {
-                const val = parseInt(e.target.value)
+                const val = parseInt(e.target.value);
                 if (!isNaN(val) && val >= 1000 && val <= 3000) {
-                  setJahr(val)
+                  setJahr(val);
                 }
               }}
               min="1000"
@@ -406,5 +410,5 @@ flowchart TD
         </SolutionBlock>
       </Section>
     </>
-  )
+  );
 }

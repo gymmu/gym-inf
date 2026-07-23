@@ -1,8 +1,8 @@
 export default function AnimateHamburger() {
-  const repeatCount = "indefinite"
-  const time = "4s"
-  const keytimes = "0;0.15;1"
-  const stroke = "#cccccc"
+  const repeatCount = "indefinite";
+  const time = "4s";
+  const keytimes = "0;0.15;1";
+  const stroke = "#cccccc";
 
   return (
     <svg viewBox="0 0 300 300" width="300">
@@ -22,7 +22,8 @@ export default function AnimateHamburger() {
           keyTimes={keytimes}
           dur={time}
           repeatCount={repeatCount}
-          fill="freeze"></animateTransform>
+          fill="freeze"
+        ></animateTransform>
         <animateTransform
           attributeName="transform"
           type="scale"
@@ -31,7 +32,8 @@ export default function AnimateHamburger() {
           keyTimes={keytimes}
           dur={time}
           repeatCount={repeatCount}
-          fill="freeze"></animateTransform>
+          fill="freeze"
+        ></animateTransform>
       </g>
       <g transform-origin="0 0">
         <path
@@ -49,7 +51,8 @@ export default function AnimateHamburger() {
           keyTimes={keytimes}
           dur={time}
           repeatCount={repeatCount}
-          fill="freeze"></animateTransform>
+          fill="freeze"
+        ></animateTransform>
       </g>
       <g transform-origin="100 200">
         <path
@@ -67,7 +70,8 @@ export default function AnimateHamburger() {
           keyTimes={keytimes}
           dur={time}
           repeatCount={repeatCount}
-          fill="freeze"></animateTransform>
+          fill="freeze"
+        ></animateTransform>
         <animateTransform
           attributeName="transform"
           type="scale"
@@ -76,8 +80,9 @@ export default function AnimateHamburger() {
           keyTimes={keytimes}
           dur={time}
           repeatCount={repeatCount}
-          fill="freeze"></animateTransform>
+          fill="freeze"
+        ></animateTransform>
       </g>
     </svg>
-  )
+  );
 }

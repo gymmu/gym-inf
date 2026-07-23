@@ -1,4 +1,4 @@
-import style from "./SignatureDiagram.module.css"
+import style from "./SignatureDiagram.module.css";
 
 export default function SignatureDiagram() {
   return (
@@ -69,5 +69,5 @@ export default function SignatureDiagram() {
         Hash → Signatur wird ungültig.
       </div>
     </div>
-  )
+  );
 }

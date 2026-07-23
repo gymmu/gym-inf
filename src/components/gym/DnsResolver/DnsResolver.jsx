@@ -1,5 +1,5 @@
-import { useState } from "react"
-import style from "./DnsResolver.module.css"
+import { useState } from "react";
+import style from "./DnsResolver.module.css";
 
 // ─── Schritte ────────────────────────────────────────────────
 const DNS_STEPS = [
@@ -73,7 +73,7 @@ const DNS_STEPS = [
     answer: "github.com = 140.82.121.4",
     answerColor: "#b8bb26",
   },
-]
+];
 
 // ─── Knoten (ViewBox 620 × 280) ──────────────────────────────
 // Layout: Client-Bereich links (Browser, OS), Resolver Mitte,
@@ -91,7 +91,7 @@ const NODES = {
   root: { x: 470, y: 45, label: "Root-NS", icon: "🌍", color: "#d3869b" },
   tld: { x: 540, y: 140, label: "TLD-NS (.com)", icon: "🗂️", color: "#8ec07c" },
   auth: { x: 470, y: 235, label: "Auth-NS", icon: "🏢", color: "#b8bb26" },
-}
+};
 
 // ─── Kanten ───────────────────────────────────────────────────
 const EDGES = [
@@ -102,30 +102,30 @@ const EDGES = [
   ["resolver", "auth"],
   // Resolver→browser ist Schritt 6 (Rückweg); als gestrichelte Linie immer sichtbar
   ["resolver", "browser"],
-]
+];
 
-const NODE_R = 26
+const NODE_R = 26;
 
 // Berechnet einen Punkt auf dem Kreisrand zwischen zwei Knoten
 function edgeEndpoints(fromId, toId) {
-  const a = NODES[fromId]
-  const b = NODES[toId]
-  const dx = b.x - a.x
-  const dy = b.y - a.y
-  const dist = Math.sqrt(dx * dx + dy * dy)
-  if (dist === 0) return { x1: a.x, y1: a.y, x2: b.x, y2: b.y }
-  const ux = dx / dist
-  const uy = dy / dist
+  const a = NODES[fromId];
+  const b = NODES[toId];
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  if (dist === 0) return { x1: a.x, y1: a.y, x2: b.x, y2: b.y };
+  const ux = dx / dist;
+  const uy = dy / dist;
   return {
     x1: a.x + ux * NODE_R,
     y1: a.y + uy * NODE_R,
     x2: b.x - ux * NODE_R,
     y2: b.y - uy * NODE_R,
-  }
+  };
 }
 
 function EdgeLine({ from, to, active }) {
-  const { x1, y1, x2, y2 } = edgeEndpoints(from, to)
+  const { x1, y1, x2, y2 } = edgeEndpoints(from, to);
   return (
     <line
       x1={x1}
@@ -137,11 +137,11 @@ function EdgeLine({ from, to, active }) {
       strokeDasharray={active ? "none" : "5,4"}
       opacity={active ? 1 : 0.45}
     />
-  )
+  );
 }
 
 function NodeCircle({ id, active, done }) {
-  const n = NODES[id]
+  const n = NODES[id];
   return (
     <g>
       <circle
@@ -162,58 +162,60 @@ function NodeCircle({ id, active, done }) {
         textAnchor="middle"
         fill={active ? n.color : done ? n.color : "#928374"}
         fontSize={10}
-        fontWeight={active ? "700" : "400"}>
+        fontWeight={active ? "700" : "400"}
+      >
         {n.label}
       </text>
     </g>
-  )
+  );
 }
 
 // Pfeilspitze am Ende der aktiven Kante
 function ArrowHead({ from, to, color }) {
-  const { x1, y1, x2, y2 } = edgeEndpoints(from, to)
-  const dx = x2 - x1
-  const dy = y2 - y1
-  const dist = Math.sqrt(dx * dx + dy * dy)
-  if (dist === 0) return null
-  const ux = dx / dist
-  const uy = dy / dist
-  const size = 7
+  const { x1, y1, x2, y2 } = edgeEndpoints(from, to);
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  if (dist === 0) return null;
+  const ux = dx / dist;
+  const uy = dy / dist;
+  const size = 7;
   // Spitze bei (x2,y2), Basis 2*size zurück
-  const bx = x2 - ux * size * 2
-  const by = y2 - uy * size * 2
-  const nx = -uy
-  const ny = ux
-  const p1 = `${x2},${y2}`
-  const p2 = `${bx + nx * size},${by + ny * size}`
-  const p3 = `${bx - nx * size},${by - ny * size}`
-  return <polygon points={`${p1} ${p2} ${p3}`} fill={color} opacity={0.9} />
+  const bx = x2 - ux * size * 2;
+  const by = y2 - uy * size * 2;
+  const nx = -uy;
+  const ny = ux;
+  const p1 = `${x2},${y2}`;
+  const p2 = `${bx + nx * size},${by + ny * size}`;
+  const p3 = `${bx - nx * size},${by - ny * size}`;
+  return <polygon points={`${p1} ${p2} ${p3}`} fill={color} opacity={0.9} />;
 }
 
 export default function DnsResolver() {
-  const [current, setCurrent] = useState(-1)
+  const [current, setCurrent] = useState(-1);
 
-  const step = DNS_STEPS[current] ?? null
-  const isLast = current >= DNS_STEPS.length - 1
-  const activeNodes = new Set(step ? [step.from, step.to] : [])
+  const step = DNS_STEPS[current] ?? null;
+  const isLast = current >= DNS_STEPS.length - 1;
+  const activeNodes = new Set(step ? [step.from, step.to] : []);
   const doneNodes = new Set(
     DNS_STEPS.slice(0, current).flatMap((s) => [s.from, s.to]),
-  )
-  const activeEdge = step && step.from !== step.to ? [step.from, step.to] : null
+  );
+  const activeEdge =
+    step && step.from !== step.to ? [step.from, step.to] : null;
 
   function isEdgeActive(a, b) {
-    if (!activeEdge) return false
+    if (!activeEdge) return false;
     return (
       (activeEdge[0] === a && activeEdge[1] === b) ||
       (activeEdge[0] === b && activeEdge[1] === a)
-    )
+    );
   }
 
   function advance() {
-    if (!isLast) setCurrent((c) => c + 1)
+    if (!isLast) setCurrent((c) => c + 1);
   }
   function reset() {
-    setCurrent(-1)
+    setCurrent(-1);
   }
 
   return (
@@ -223,7 +225,8 @@ export default function DnsResolver() {
         <svg
           viewBox="0 0 620 295"
           width="100%"
-          style={{ display: "block", margin: "0 auto" }}>
+          style={{ display: "block", margin: "0 auto" }}
+        >
           {/* Kanten — immer sichtbar, aktive hervorgehoben */}
           {EDGES.map(([a, b], i) => (
             <EdgeLine key={i} from={a} to={b} active={isEdgeActive(a, b)} />
@@ -264,7 +267,8 @@ export default function DnsResolver() {
             <span className={style.msgQuery}>&ldquo;{step.query}&rdquo;</span>
             <span
               className={style.msgReply}
-              style={{ color: step.answerColor }}>
+              style={{ color: step.answerColor }}
+            >
               ↩ {step.answer}
             </span>
           </>
@@ -274,7 +278,8 @@ export default function DnsResolver() {
             <span className={style.msgQuery}>{step.query}</span>
             <span
               className={style.msgReply}
-              style={{ color: step.answerColor }}>
+              style={{ color: step.answerColor }}
+            >
               ↩ {step.answer}
             </span>
           </>
@@ -321,7 +326,8 @@ export default function DnsResolver() {
         <button
           className={`${style.btn} ${style.btnSecondary}`}
           onClick={reset}
-          disabled={current < 0}>
+          disabled={current < 0}
+        >
           ↺ Zurücksetzen
         </button>
         {current >= 0 && (
@@ -338,5 +344,5 @@ export default function DnsResolver() {
         </div>
       )}
     </div>
-  )
+  );
 }

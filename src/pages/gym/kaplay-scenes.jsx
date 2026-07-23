@@ -1,15 +1,13 @@
 import CodeBlock from "@components/CodeBlock";
-import Video from "@components/Video" 
-
+import Video from "@components/Video";
 
 export default function KaplayScenes() {
-
   return (
     <>
       <section>
         <h2>Verschiedene Levels in Kaplay</h2>
         <p>
-          In einem Spiel haben Sie oft unterschiedliche Levels. Würde man das 
+          In einem Spiel haben Sie oft unterschiedliche Levels. Würde man das
           alles in eine Datei schreiben, wird das sehr unübersichtlich, und man
           könnte unterschiedliche Welten nicht gut voneinander trennen. In
           Kaplay wird das ganze mit <pre>Szenen</pre> geregelt.
@@ -60,12 +58,12 @@ export default function KaplayScenes() {
         <Video url="4ALgXCSkJkc" />
         <p>
           In diesem Video wird eine Vereinfachung der Syntax gezeigt. Sollten
-          Sie anschauen, denn im Projekt werden beide Arten des Codes
-          verwendet. Und der Beispiel-Code auf der Webseite hier, verwendet die
-          einfachere Syntax vom zweiten Video.
+          Sie anschauen, denn im Projekt werden beide Arten des Codes verwendet.
+          Und der Beispiel-Code auf der Webseite hier, verwendet die einfachere
+          Syntax vom zweiten Video.
         </p>
         <Video url="NCFFn_A4Gd0" />
       </section>
     </>
-  )
+  );
 }

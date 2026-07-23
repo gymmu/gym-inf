@@ -1,13 +1,13 @@
-import { useCurrentFrame, AbsoluteFill } from "remotion"
-import { useMemo } from "react"
+import { useMemo } from "react";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
 
 // ==================== HELPER FUNCTIONS ====================
 
 // Generiere alle Schritte für GGT (Euklid)
 export function generateGGTSteps(a, b) {
-  const steps = []
-  let num1 = a
-  let num2 = b
+  const steps = [];
+  let num1 = a;
+  let num2 = b;
 
   steps.push({
     a: num1,
@@ -16,7 +16,7 @@ export function generateGGTSteps(a, b) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     a: num1,
@@ -25,7 +25,7 @@ export function generateGGTSteps(a, b) {
     description: `Zwei Zahlen eingeben: a=${num1}, b=${num2}`,
     mermaidNode: "Gib zwei Zahlen ein: a und b",
     variables: { a: num1, b: num2 },
-  })
+  });
 
   while (num2 !== 0) {
     // Check b = 0?
@@ -36,9 +36,9 @@ export function generateGGTSteps(a, b) {
       description: `Prüfe: b=${num2} = 0?`,
       mermaidNode: "Ist b = 0?",
       variables: { a: num1, b: num2 },
-    })
+    });
 
-    const rest = num1 % num2
+    const rest = num1 % num2;
 
     steps.push({
       a: num1,
@@ -47,7 +47,7 @@ export function generateGGTSteps(a, b) {
       description: `Berechne: rest = ${num1} mod ${num2} = ${rest}`,
       mermaidNode: "Berechne Rest von a geteilt durch b",
       variables: { a: num1, b: num2, rest },
-    })
+    });
 
     steps.push({
       a: num2,
@@ -56,10 +56,10 @@ export function generateGGTSteps(a, b) {
       description: `Setze a = b = ${num2}`,
       mermaidNode: "Setze a auf den Wert von b",
       variables: { a: num2, b: num2, rest },
-    })
+    });
 
-    num1 = num2
-    num2 = rest
+    num1 = num2;
+    num2 = rest;
 
     steps.push({
       a: num1,
@@ -68,7 +68,7 @@ export function generateGGTSteps(a, b) {
       description: `Setze b = rest = ${num2}`,
       mermaidNode: "Setze b auf den Wert von Rest",
       variables: { a: num1, b: num2 },
-    })
+    });
   }
 
   // Final check
@@ -79,7 +79,7 @@ export function generateGGTSteps(a, b) {
     description: `Prüfe: b=${num2} = 0? Ja!`,
     mermaidNode: "Ist b = 0?",
     variables: { a: num1, b: num2 },
-  })
+  });
 
   steps.push({
     a: num1,
@@ -88,7 +88,7 @@ export function generateGGTSteps(a, b) {
     description: `GGT gefunden: ${num1}`,
     mermaidNode: "Gib aus: a ist GGT",
     variables: { ggt: num1 },
-  })
+  });
 
   steps.push({
     a: num1,
@@ -97,14 +97,14 @@ export function generateGGTSteps(a, b) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // Generiere alle Schritte für Primzahltest
 export function generatePrimzahlSteps(n) {
-  const steps = []
+  const steps = [];
 
   steps.push({
     n,
@@ -113,7 +113,7 @@ export function generatePrimzahlSteps(n) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     n,
@@ -122,7 +122,7 @@ export function generatePrimzahlSteps(n) {
     description: `Zahl eingeben: ${n}`,
     mermaidNode: "Gib Zahl ein",
     variables: { n },
-  })
+  });
 
   // Check n <= 1
   steps.push({
@@ -132,7 +132,7 @@ export function generatePrimzahlSteps(n) {
     description: `Prüfe: ${n} <= 1?`,
     mermaidNode: "Ist n ≤ 1?",
     variables: { n },
-  })
+  });
 
   if (n <= 1) {
     steps.push({
@@ -142,7 +142,7 @@ export function generatePrimzahlSteps(n) {
       description: `${n} ist nicht prim (zu klein)`,
       mermaidNode: "Gib aus: Nicht prim",
       variables: { n },
-    })
+    });
 
     steps.push({
       n,
@@ -151,9 +151,9 @@ export function generatePrimzahlSteps(n) {
       description: "Ende",
       mermaidNode: "Ende",
       variables: {},
-    })
+    });
 
-    return steps
+    return steps;
   }
 
   // Initialize i = 2
@@ -164,9 +164,9 @@ export function generatePrimzahlSteps(n) {
     description: "Starte Teilersuche: i = 2",
     mermaidNode: "Setze i auf 2",
     variables: { n, i: 2 },
-  })
+  });
 
-  const sqrtN = Math.floor(Math.sqrt(n))
+  const sqrtN = Math.floor(Math.sqrt(n));
 
   for (let i = 2; i <= sqrtN; i++) {
     // Check i <= sqrt(n)
@@ -177,7 +177,7 @@ export function generatePrimzahlSteps(n) {
       description: `Prüfe: i=${i} <= √${n}≈${sqrtN}?`,
       mermaidNode: "Ist i ≤ √n?",
       variables: { n, i, sqrtN },
-    })
+    });
 
     // Check divisibility
     steps.push({
@@ -187,7 +187,7 @@ export function generatePrimzahlSteps(n) {
       description: `Prüfe: ${n} mod ${i} = ${n % i}`,
       mermaidNode: "Ist Rest von n geteilt durch i gleich 0?",
       variables: { n, i, rest: n % i },
-    })
+    });
 
     if (n % i === 0) {
       steps.push({
@@ -197,7 +197,7 @@ export function generatePrimzahlSteps(n) {
         description: `${n} ist durch ${i} teilbar → Nicht prim!`,
         mermaidNode: "Gib aus: Nicht prim",
         variables: { n, i },
-      })
+      });
 
       steps.push({
         n,
@@ -206,9 +206,9 @@ export function generatePrimzahlSteps(n) {
         description: "Ende",
         mermaidNode: "Ende",
         variables: {},
-      })
+      });
 
-      return steps
+      return steps;
     }
 
     // Increment i
@@ -219,7 +219,7 @@ export function generatePrimzahlSteps(n) {
       description: `i erhöhen: ${i} → ${i + 1}`,
       mermaidNode: "Erhöhe i um 1",
       variables: { n, i: i + 1 },
-    })
+    });
   }
 
   // Final check
@@ -230,7 +230,7 @@ export function generatePrimzahlSteps(n) {
     description: `Prüfe: i=${sqrtN + 1} <= √${n}≈${sqrtN}? Nein`,
     mermaidNode: "Ist i ≤ √n?",
     variables: { n, i: sqrtN + 1 },
-  })
+  });
 
   steps.push({
     n,
@@ -239,7 +239,7 @@ export function generatePrimzahlSteps(n) {
     description: `${n} ist prim!`,
     mermaidNode: "Gib aus: Prim",
     variables: { n },
-  })
+  });
 
   steps.push({
     n,
@@ -248,15 +248,15 @@ export function generatePrimzahlSteps(n) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // Generiere alle Schritte für Fibonacci
 export function generateFibonacciSteps(count) {
-  const steps = []
-  const sequence = []
+  const steps = [];
+  const sequence = [];
 
   steps.push({
     sequence: [],
@@ -265,7 +265,7 @@ export function generateFibonacciSteps(count) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     sequence: [],
@@ -274,7 +274,7 @@ export function generateFibonacciSteps(count) {
     description: `Anzahl eingeben: ${count} Fibonacci-Zahlen`,
     mermaidNode: "Gib Anzahl ein",
     variables: { count },
-  })
+  });
 
   // Initialize
   steps.push({
@@ -284,9 +284,9 @@ export function generateFibonacciSteps(count) {
     description: "Erste Zahl: F(0) = 0",
     mermaidNode: "Setze F(0) auf 0",
     variables: { i: 0 },
-  })
+  });
 
-  sequence.push(0)
+  sequence.push(0);
 
   if (count > 1) {
     steps.push({
@@ -296,9 +296,9 @@ export function generateFibonacciSteps(count) {
       description: "Zweite Zahl: F(1) = 1",
       mermaidNode: "Setze F(1) auf 1",
       variables: { i: 1 },
-    })
+    });
 
-    sequence.push(1)
+    sequence.push(1);
 
     steps.push({
       sequence: [0, 1],
@@ -307,7 +307,7 @@ export function generateFibonacciSteps(count) {
       description: "Starte Schleife: i = 2",
       mermaidNode: "Setze i auf 2",
       variables: { i: 2, count },
-    })
+    });
 
     for (let i = 2; i < count; i++) {
       // Loop check
@@ -318,9 +318,9 @@ export function generateFibonacciSteps(count) {
         description: `Prüfe: i=${i} < ${count}?`,
         mermaidNode: "Ist i < Anzahl?",
         variables: { i, count },
-      })
+      });
 
-      const next = sequence[i - 1] + sequence[i - 2]
+      const next = sequence[i - 1] + sequence[i - 2];
 
       steps.push({
         sequence: [...sequence],
@@ -328,10 +328,15 @@ export function generateFibonacciSteps(count) {
         current: next,
         description: `Berechne: F(${i}) = F(${i - 1}) + F(${i - 2}) = ${sequence[i - 1]} + ${sequence[i - 2]} = ${next}`,
         mermaidNode: "Berechne F(i) = F(i-1) + F(i-2)",
-        variables: { i, prev1: sequence[i - 1], prev2: sequence[i - 2], current: next },
-      })
+        variables: {
+          i,
+          prev1: sequence[i - 1],
+          prev2: sequence[i - 2],
+          current: next,
+        },
+      });
 
-      sequence.push(next)
+      sequence.push(next);
 
       steps.push({
         sequence: [...sequence],
@@ -340,7 +345,7 @@ export function generateFibonacciSteps(count) {
         description: `i erhöhen: ${i} → ${i + 1}`,
         mermaidNode: "Erhöhe i um 1",
         variables: { i: i + 1 },
-      })
+      });
     }
 
     // Final loop check
@@ -351,7 +356,7 @@ export function generateFibonacciSteps(count) {
       description: `Prüfe: i=${count} < ${count}? Nein`,
       mermaidNode: "Ist i < Anzahl?",
       variables: { i: count, count },
-    })
+    });
   }
 
   steps.push({
@@ -361,7 +366,7 @@ export function generateFibonacciSteps(count) {
     description: `Fertig! Fibonacci-Folge: [${sequence.join(", ")}]`,
     mermaidNode: "Gib Folge aus",
     variables: {},
-  })
+  });
 
   steps.push({
     sequence: [...sequence],
@@ -370,15 +375,15 @@ export function generateFibonacciSteps(count) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // Generiere alle Schritte für Fakultät
 export function generateFakultaetSteps(n) {
-  const steps = []
-  let result = 1
+  const steps = [];
+  let result = 1;
 
   steps.push({
     n,
@@ -387,7 +392,7 @@ export function generateFakultaetSteps(n) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     n,
@@ -396,7 +401,7 @@ export function generateFakultaetSteps(n) {
     description: `Zahl eingeben: ${n}`,
     mermaidNode: "Gib Zahl n ein",
     variables: { n },
-  })
+  });
 
   // Check n <= 1
   steps.push({
@@ -406,7 +411,7 @@ export function generateFakultaetSteps(n) {
     description: `Prüfe: ${n} <= 1?`,
     mermaidNode: "Ist n ≤ 1?",
     variables: { n },
-  })
+  });
 
   if (n <= 1) {
     steps.push({
@@ -416,7 +421,7 @@ export function generateFakultaetSteps(n) {
       description: `Ja! ${n}! = 1`,
       mermaidNode: "Gib aus: 1",
       variables: { result: 1 },
-    })
+    });
 
     steps.push({
       n,
@@ -425,9 +430,9 @@ export function generateFakultaetSteps(n) {
       description: "Ende",
       mermaidNode: "Ende",
       variables: {},
-    })
+    });
 
-    return steps
+    return steps;
   }
 
   // Initialize
@@ -438,7 +443,7 @@ export function generateFakultaetSteps(n) {
     description: "Setze i auf 1",
     mermaidNode: "Setze i auf 1",
     variables: { i: 1 },
-  })
+  });
 
   steps.push({
     n,
@@ -447,7 +452,7 @@ export function generateFakultaetSteps(n) {
     description: "Setze Ergebnis auf 1",
     mermaidNode: "Setze Ergebnis auf 1",
     variables: { result: 1 },
-  })
+  });
 
   for (let i = 1; i <= n; i++) {
     // Loop check
@@ -458,9 +463,9 @@ export function generateFakultaetSteps(n) {
       description: `Prüfe: i=${i} <= ${n}?`,
       mermaidNode: "Ist i ≤ n?",
       variables: { i, n, result },
-    })
+    });
 
-    result *= i
+    result *= i;
 
     steps.push({
       n,
@@ -469,7 +474,7 @@ export function generateFakultaetSteps(n) {
       description: `Multipliziere: result = ${result / i} × ${i} = ${result}`,
       mermaidNode: "Multipliziere Ergebnis mit i",
       variables: { i, result },
-    })
+    });
 
     steps.push({
       n,
@@ -478,7 +483,7 @@ export function generateFakultaetSteps(n) {
       description: `i erhöhen: ${i} → ${i + 1}`,
       mermaidNode: "Erhöhe i um 1",
       variables: { i: i + 1, result },
-    })
+    });
   }
 
   // Final check
@@ -489,7 +494,7 @@ export function generateFakultaetSteps(n) {
     description: `Prüfe: i=${n + 1} <= ${n}? Nein`,
     mermaidNode: "Ist i ≤ n?",
     variables: { i: n + 1, n },
-  })
+  });
 
   steps.push({
     n,
@@ -498,7 +503,7 @@ export function generateFakultaetSteps(n) {
     description: `${n}! = ${result}`,
     mermaidNode: "Gib Ergebnis aus",
     variables: { result },
-  })
+  });
 
   steps.push({
     n,
@@ -507,15 +512,15 @@ export function generateFakultaetSteps(n) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // Generiere alle Schritte für Potenz
 export function generatePotenzSteps(base, exponent) {
-  const steps = []
-  let result = 1
+  const steps = [];
+  let result = 1;
 
   steps.push({
     base,
@@ -525,7 +530,7 @@ export function generatePotenzSteps(base, exponent) {
     description: "Start",
     mermaidNode: "Start",
     variables: {},
-  })
+  });
 
   steps.push({
     base,
@@ -535,7 +540,7 @@ export function generatePotenzSteps(base, exponent) {
     description: `Basis und Exponent eingeben: ${base}^${exponent}`,
     mermaidNode: "Gib Basis und Exponent ein",
     variables: { base, exponent },
-  })
+  });
 
   steps.push({
     base,
@@ -545,7 +550,7 @@ export function generatePotenzSteps(base, exponent) {
     description: "Setze i auf 0",
     mermaidNode: "Setze i auf 0",
     variables: { i: 0 },
-  })
+  });
 
   steps.push({
     base,
@@ -555,7 +560,7 @@ export function generatePotenzSteps(base, exponent) {
     description: "Setze Ergebnis auf 1",
     mermaidNode: "Setze Ergebnis auf 1",
     variables: { result: 1 },
-  })
+  });
 
   for (let i = 0; i < exponent; i++) {
     // Loop check
@@ -567,9 +572,9 @@ export function generatePotenzSteps(base, exponent) {
       description: `Prüfe: i=${i} < ${exponent}?`,
       mermaidNode: "Ist i < Exponent?",
       variables: { i, exponent, result },
-    })
+    });
 
-    result *= base
+    result *= base;
 
     steps.push({
       base,
@@ -579,7 +584,7 @@ export function generatePotenzSteps(base, exponent) {
       description: `Multipliziere: result = ${result / base} × ${base} = ${result}`,
       mermaidNode: "Multipliziere Ergebnis mit Basis",
       variables: { base, i, result },
-    })
+    });
 
     steps.push({
       base,
@@ -589,7 +594,7 @@ export function generatePotenzSteps(base, exponent) {
       description: `i erhöhen: ${i} → ${i + 1}`,
       mermaidNode: "Erhöhe i um 1",
       variables: { i: i + 1, result },
-    })
+    });
   }
 
   // Final check
@@ -601,7 +606,7 @@ export function generatePotenzSteps(base, exponent) {
     description: `Prüfe: i=${exponent} < ${exponent}? Nein`,
     mermaidNode: "Ist i < Exponent?",
     variables: { i: exponent, exponent },
-  })
+  });
 
   steps.push({
     base,
@@ -611,7 +616,7 @@ export function generatePotenzSteps(base, exponent) {
     description: `${base}^${exponent} = ${result}`,
     mermaidNode: "Gib Ergebnis aus",
     variables: { result },
-  })
+  });
 
   steps.push({
     base,
@@ -621,9 +626,9 @@ export function generatePotenzSteps(base, exponent) {
     description: "Ende",
     mermaidNode: "Ende",
     variables: {},
-  })
+  });
 
-  return steps
+  return steps;
 }
 
 // ==================== VISUALISIERUNG KOMPONENTEN ====================
@@ -641,13 +646,14 @@ function NumberDisplay({ label, value, color = "#ebdbb2" }) {
         border: "2px solid " + color,
         minWidth: "150px",
         textAlign: "center",
-      }}>
+      }}
+    >
       <div style={{ fontSize: "18px", opacity: 0.8, marginBottom: "10px" }}>
         {label}
       </div>
       <div>{value ?? "?"}</div>
     </div>
-  )
+  );
 }
 
 function FibonacciSequence({ sequence, highlightIndex = -1 }) {
@@ -659,7 +665,8 @@ function FibonacciSequence({ sequence, highlightIndex = -1 }) {
         flexWrap: "wrap",
         justifyContent: "center",
         maxWidth: "700px",
-      }}>
+      }}
+    >
       {sequence.map((num, index) => (
         <div
           key={index}
@@ -670,32 +677,36 @@ function FibonacciSequence({ sequence, highlightIndex = -1 }) {
             borderRadius: "8px",
             fontSize: "24px",
             fontWeight: "bold",
-            border: index === highlightIndex ? "3px solid #b8bb26" : "2px solid #504945",
+            border:
+              index === highlightIndex
+                ? "3px solid #b8bb26"
+                : "2px solid #504945",
             minWidth: "60px",
             textAlign: "center",
-          }}>
+          }}
+        >
           <div style={{ fontSize: "12px", opacity: 0.7 }}>F({index})</div>
           <div>{num}</div>
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 // ==================== REMOTION COMPONENTS ====================
 
 export function GGTAnimation({ a = 48, b = 18, fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5;
 
-  const steps = useMemo(() => generateGGTSteps(a, b), [a, b])
+  const steps = useMemo(() => generateGGTSteps(a, b), [a, b]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -706,39 +717,47 @@ export function GGTAnimation({ a = 48, b = 18, fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         GGT (Euklid) - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
       {/* Zählvariablen */}
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 30,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 30,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <div
         style={{
@@ -746,11 +765,16 @@ export function GGTAnimation({ a = 48, b = 18, fps = 30 }) {
           gap: "30px",
           alignItems: "center",
           marginBottom: 40,
-        }}>
+        }}
+      >
         <NumberDisplay label="a" value={currentStep.a} color="#83a598" />
         <NumberDisplay label="b" value={currentStep.b} color="#d3869b" />
         {currentStep.rest !== null && (
-          <NumberDisplay label="rest" value={currentStep.rest} color="#fabd2f" />
+          <NumberDisplay
+            label="rest"
+            value={currentStep.rest}
+            color="#fabd2f"
+          />
         )}
       </div>
 
@@ -760,25 +784,26 @@ export function GGTAnimation({ a = 48, b = 18, fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 export function PrimzahlAnimation({ n = 17, fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5;
 
-  const steps = useMemo(() => generatePrimzahlSteps(n), [n])
+  const steps = useMemo(() => generatePrimzahlSteps(n), [n]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -789,44 +814,63 @@ export function PrimzahlAnimation({ n = 17, fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Primzahltest - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
       {/* Variablen */}
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 30,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 30,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
-      <div style={{ display: "flex", gap: "30px", alignItems: "center", marginBottom: 40 }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "30px",
+          alignItems: "center",
+          marginBottom: 40,
+        }}
+      >
         <NumberDisplay label="n" value={currentStep.n} color="#83a598" />
         {currentStep.i !== null && (
-          <NumberDisplay label="i (Teiler?)" value={currentStep.i} color="#fabd2f" />
+          <NumberDisplay
+            label="i (Teiler?)"
+            value={currentStep.i}
+            color="#fabd2f"
+          />
         )}
       </div>
 
@@ -835,9 +879,14 @@ export function PrimzahlAnimation({ n = 17, fps = 30 }) {
           textAlign: "center",
           fontSize: "20px",
           fontWeight: 500,
-          color: currentStep.isPrime === false ? "#fb4934" : 
-                 currentStep.isPrime === true ? "#b8bb26" : "#ebdbb2",
-        }}>
+          color:
+            currentStep.isPrime === false
+              ? "#fb4934"
+              : currentStep.isPrime === true
+                ? "#b8bb26"
+                : "#ebdbb2",
+        }}
+      >
         {currentStep.description}
       </div>
 
@@ -848,26 +897,27 @@ export function PrimzahlAnimation({ n = 17, fps = 30 }) {
             fontSize: "48px",
             fontWeight: "bold",
             color: currentStep.isPrime ? "#b8bb26" : "#fb4934",
-          }}>
+          }}
+        >
           {currentStep.isPrime ? "✓ PRIM" : "✗ NICHT PRIM"}
         </div>
       )}
     </AbsoluteFill>
-  )
+  );
 }
 
 export function FibonacciAnimation({ count = 8, fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5;
 
-  const steps = useMemo(() => generateFibonacciSteps(count), [count])
+  const steps = useMemo(() => generateFibonacciSteps(count), [count]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -878,39 +928,47 @@ export function FibonacciAnimation({ count = 8, fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Fibonacci - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
       {/* Variablen */}
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 30,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 30,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <FibonacciSequence
         sequence={currentStep.sequence}
@@ -924,25 +982,26 @@ export function FibonacciAnimation({ count = 8, fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 export function FakultaetAnimation({ n = 5, fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5;
 
-  const steps = useMemo(() => generateFakultaetSteps(n), [n])
+  const steps = useMemo(() => generateFakultaetSteps(n), [n]);
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -953,38 +1012,46 @@ export function FakultaetAnimation({ n = 5, fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Fakultät - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 30,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 30,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
         <NumberDisplay label="n" value={currentStep.n} color="#83a598" />
@@ -992,7 +1059,11 @@ export function FakultaetAnimation({ n = 5, fps = 30 }) {
           <NumberDisplay label="i" value={currentStep.i} color="#fabd2f" />
         )}
         {currentStep.result !== null && (
-          <NumberDisplay label="result" value={currentStep.result} color="#b8bb26" />
+          <NumberDisplay
+            label="result"
+            value={currentStep.result}
+            color="#b8bb26"
+          />
         )}
       </div>
 
@@ -1003,25 +1074,29 @@ export function FakultaetAnimation({ n = 5, fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
     </AbsoluteFill>
-  )
+  );
 }
 
 export function PotenzAnimation({ base = 2, exponent = 5, fps = 30 }) {
-  const frame = useCurrentFrame()
-  const framesPerStep = fps * 1.5
+  const frame = useCurrentFrame();
+  const framesPerStep = fps * 1.5;
 
-  const steps = useMemo(() => generatePotenzSteps(base, exponent), [base, exponent])
+  const steps = useMemo(
+    () => generatePotenzSteps(base, exponent),
+    [base, exponent],
+  );
 
   const currentStepIndex = Math.min(
     Math.floor(frame / framesPerStep),
     steps.length - 1,
-  )
+  );
 
-  const currentStep = steps[currentStepIndex]
+  const currentStep = steps[currentStepIndex];
 
   return (
     <AbsoluteFill
@@ -1032,47 +1107,63 @@ export function PotenzAnimation({ base = 2, exponent = 5, fps = 30 }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-      }}>
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
           marginBottom: 20,
           color: "#fabd2f",
           fontSize: "28px",
-        }}>
+        }}
+      >
         Potenz - Schritt {currentStepIndex + 1} / {steps.length}
       </h2>
 
-      {currentStep.variables && Object.keys(currentStep.variables).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: 30,
-            padding: "10px 20px",
-            backgroundColor: "#3c3836",
-            borderRadius: "8px",
-            fontSize: "18px",
-            color: "#ebdbb2",
-          }}>
-          {Object.entries(currentStep.variables).map(([key, value]) => (
-            <div key={key}>
-              <span style={{ color: "#83a598", fontWeight: "bold" }}>{key}</span>
-              {" = "}
-              <span style={{ color: "#b8bb26", fontWeight: "bold" }}>{value}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      {currentStep.variables &&
+        Object.keys(currentStep.variables).length > 0 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: 30,
+              padding: "10px 20px",
+              backgroundColor: "#3c3836",
+              borderRadius: "8px",
+              fontSize: "18px",
+              color: "#ebdbb2",
+            }}
+          >
+            {Object.entries(currentStep.variables).map(([key, value]) => (
+              <div key={key}>
+                <span style={{ color: "#83a598", fontWeight: "bold" }}>
+                  {key}
+                </span>
+                {" = "}
+                <span style={{ color: "#b8bb26", fontWeight: "bold" }}>
+                  {value}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
       <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
         <NumberDisplay label="base" value={currentStep.base} color="#83a598" />
         <div style={{ fontSize: "48px", color: "#ebdbb2" }}>^</div>
-        <NumberDisplay label="exponent" value={currentStep.exponent} color="#d3869b" />
+        <NumberDisplay
+          label="exponent"
+          value={currentStep.exponent}
+          color="#d3869b"
+        />
         {currentStep.result !== null && (
           <>
             <div style={{ fontSize: "48px", color: "#ebdbb2" }}>=</div>
-            <NumberDisplay label="result" value={currentStep.result} color="#b8bb26" />
+            <NumberDisplay
+              label="result"
+              value={currentStep.result}
+              color="#b8bb26"
+            />
           </>
         )}
       </div>
@@ -1084,10 +1175,10 @@ export function PotenzAnimation({ base = 2, exponent = 5, fps = 30 }) {
           fontSize: "20px",
           fontWeight: 500,
           color: "#ebdbb2",
-        }}>
+        }}
+      >
         {currentStep.description}
       </div>
     </AbsoluteFill>
-  )
+  );
 }
-

@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react"
-
-import { Path } from "./SVG"
-import SVGTransformBase from "./SVGTransformBase"
-import style from "@components/Path.module.css"
+import style from "@components/Path.module.css";
+import { useEffect, useState } from "react";
+import { Path } from "./SVG";
+import SVGTransformBase from "./SVGTransformBase";
 
 export default function SVGTransformPath() {
-  const [outputString, setOutputString] = useState("")
-  const [path, setPath] = useState("M 100 100 L 200 200 v -100 Z")
+  const [outputString, setOutputString] = useState("");
+  const [path, setPath] = useState("M 100 100 L 200 200 v -100 Z");
 
-  const fill = "pink"
+  const fill = "pink";
 
   useEffect(() => {
-    setOutputString(`<path fill="${fill}" d="${path}" />`)
-  }, [path])
+    setOutputString(`<path fill="${fill}" d="${path}" />`);
+  }, [path]);
 
   return (
     <SVGTransformBase
@@ -33,5 +32,5 @@ export default function SVGTransformPath() {
       element={<Path stroke="black" d={path} fill={fill} />}
       outputString={outputString}
     />
-  )
+  );
 }
