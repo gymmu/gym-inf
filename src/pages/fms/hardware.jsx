@@ -1,5 +1,5 @@
 import ConverterVisualizer from "@components/ConverterVisualizer";
-import MemoryVisualizer from "@components/MemoryVisualizer";
+import MemoryStackVisualizer from "@components/MemoryStackVisualizer";
 import VonNeumannDiagram from "@components/VonNeumannDiagram";
 
 export default function FmsHardware() {
@@ -69,7 +69,7 @@ export default function FmsHardware() {
           speichert alle Daten — den Text, den du gerade liest, die Bilder, die
           Musik, ja sogar die Programme selbst!
         </p>
-        <MemoryVisualizer />
+        <MemoryStackVisualizer />
       </section>
 
       <section
@@ -80,6 +80,105 @@ export default function FmsHardware() {
           borderRadius: "var(--radius-2xl)",
         }}
       >
+        <h2>Wie ist 'Hallo Welt!' im Speicher gespeichert?</h2>
+        <p>
+          Der Text <strong>Hallo Welt!</strong> besteht aus 11 Zeichen. Jedes
+          Zeichen wird im Speicher als ein Byte (8 Bits) abgelegt.
+        </p>
+        <ul>
+          <li>
+            Ein Byte besteht aus exactly 8 bits, die jeweils den Zustand 0 oder 1
+            haben können
+          </li>
+          <li>
+            Durch die Kombination dieser 8 bits kann jedes Zeichen eine Zahl von
+            0 bis 255 darstellen — das ist der ASCII-Wert
+          </li>
+          <li>
+            Der Computer speichert also nicht "H", "a", etc. direkt, sondern nur
+            die Binärzahlen, die diesen Zeichen entsprechen
+          </li>
+        </ul>
+
+        <h3>ASCII-Werte und binäre Darstellung</h3>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr>
+              <th style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>Zeichen</th>
+              <th style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>ASCII-Wert</th>
+              <th style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>Binär (8-bit)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>H</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>72</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01001000</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>a</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>97</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01100001</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>l</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>108</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01101100</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>l</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>108</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01101100</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>o</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>111</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01101111</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}> </td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>32</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>00100000</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>W</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>87</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01010111</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>e</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>101</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01100101</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>l</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>108</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01101100</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>t</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>116</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01110100</td>
+            </tr>
+            <tr>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>!</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>33</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>00100001</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Nach dem Text "Hallo Welt!" folgen im Speicher freie Zellen (hier als
+          Punkte dargestellt), die noch keine Daten enthalten. Der Speicher setzt
+          sich in beide Richtungen unendlich fort — nach oben hin mit immer
+          höheren Adressen und nach unten hin mit immer niedrigeren Adressen.
+        </p>
+
+        <MemoryStackVisualizer />
+      </section>
+
+      <section>
         <h2>Von der Realwelt zu den Bits</h2>
         <p>
           Um Daten auf dem Computer zu speichern, müssen wir sie von unserer
@@ -225,3 +324,4 @@ export default function FmsHardware() {
     </>
   );
 }
+
