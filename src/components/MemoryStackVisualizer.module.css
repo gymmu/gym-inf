@@ -21,20 +21,24 @@
   line-height: 1.6;
 }
 
-.memoryGridSection {
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
+.memorySection {
+  margin: var(--space-xl) 0;
+}
+
+.sectionIntro {
+  color: var(--color-gray-light);
+  line-height: 1.6;
 }
 
 .memoryWindow {
   display: flex;
   flex-direction: column;
+  width: fit-content;
 }
 
 .cell {
   display: grid;
-  grid-template-columns: 8ch 20ch 8ch;
+  grid-template-columns: 8ch 183px 8ch;
   align-items: center;
   padding: 0.5rem;
   background-color: var(--color-bg-lighter);
@@ -84,7 +88,7 @@
   color: var(--color-gray-light);
 }
 
-.evenRow {
+.memorySection .cell:nth-child(2n) {
   background-color: rgba(255, 255, 255, 0.03);
 }
 
@@ -122,8 +126,9 @@
     font-size: 0.8rem;
   }
 
-  .cell, .keyRow {
-    grid-template-columns: 5ch 17ch 1.5ch;
+  .cell,
+  .keyRow {
+    grid-template-columns: 5ch 170px 1.5ch;
   }
 
   .bitCell {

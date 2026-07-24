@@ -40,21 +40,9 @@ export default function MemoryStackVisualizer() {
 
   // Memory above (showing it continues upward)
   const upperMemory = [
-    { address: baseAddress - 4, bits: "11111111", char: "." },
     { address: baseAddress - 3, bits: "10101010", char: "." },
     { address: baseAddress - 2, bits: "01010101", char: "." },
     { address: baseAddress - 1, bits: "11001100", char: "." },
-  ];
-
-  // Combine all memory for display (top-down order: higher addresses at top)
-  const displayedMemory = [
-    ...upperMemory,
-    ...textMemory.map((item, idx) => ({
-      address: baseAddress + idx,
-      bits: item.bits,
-      char: item.char,
-    })),
-    ...freeMemory,
   ];
 
   const getBitClass = (bit) => {
@@ -82,8 +70,8 @@ export default function MemoryStackVisualizer() {
       <section className={styles.beforeSection}>
         <h2 className={styles.sectionTitle}>Speicherstack (Top-Down)</h2>
         <p className={styles.sectionIntro}>
-          Dieser Visualizer zeigt den Speicherinhalt im RAM. Jede Zeile stellt
-          eine Speicherzelle mit einer Adresse dar.
+          Dieser Visualizer zeigt den Speicherinhalt im RAM. Der Stack ist in drei
+          Bereiche unterteilt: Before (oben), Text (mitte) und After (unten).
         </p>
       </section>
 
@@ -96,40 +84,64 @@ export default function MemoryStackVisualizer() {
         </div>
       </section>
 
-      {/* TEXT SECTION: Interaktives Grid */}
-      <section className={styles.memoryGridSection}>
-        <div className={styles.memoryWindow}>
-          {displayedMemory.map((cell, index) => {
-            const isText = index >= 4 && index <= 14;
-            const isEvenRow = index % 2 === 0;
+       {/* BEFORE SECTION: Speicher oberhalb des Textes */}
+       <section className={styles.memorySection}>
+         <div className={styles.memoryWindow}>
+           {upperMemory.map((cell) => (
+             <div key={cell.address} className={`${styles.cell}`}>
+               <span className={styles.address}>
+                 0x{cell.address.toString(16).padStart(4, "0")}
+               </span>
+               {formatBitsForDisplay(cell.bits, cell.address)}
+               <span className={styles.charDisplay}>{cell.char}</span>
+             </div>
+           ))}
+         </div>
 
-            return (
-              <div
-                key={cell.address}
-                className={`${styles.cell} ${isEvenRow ? styles.evenRow : ""}`}
-              >
-                <span className={styles.address}>
-                  0x{cell.address.toString(16).padStart(4, "0")}
-                </span>
+       {/* TEXT SECTION: Der eigentliche Textinhalt */}
+         <div className={styles.memoryWindow}>
+           {textMemory.map((item, idx) => {
+             const address = baseAddress + idx;
 
-                {formatBitsForDisplay(cell.bits, cell.address)}
+             return (
+               <div
+                 key={address}
+                 className={`${styles.cell}`}
+               >
+                 <span className={styles.address}>
+                   0x{address.toString(16).padStart(4, "0")}
+                 </span>
+                 {formatBitsForDisplay(item.bits, address)}
+                 <span
+                   className={`${styles.charDisplay} ${
+                     item.char !== " " ? styles.visibleChar : ""
+                   }`}
+                 >
+                   {item.char !== " " ? item.char : "\u00A0"}
+                 </span>
+               </div>
+             );
+           })}
+         </div>
 
-                <span
-                  className={`${styles.charDisplay} ${
-                    isText && cell.char !== "." ? styles.visibleChar : ""
-                  }`}
-                >
-                  {isText && cell.char !== " "
-                    ? cell.char
-                    : cell.char === " "
-                      ? "\u00A0"
-                      :                   "."}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+       {/* AFTER SECTION: Freier Speicher nach dem Text */}
+         <div className={styles.memoryWindow}>
+           {freeMemory.map((cell, idx) => {
+             return (
+               <div
+                 key={cell.address}
+                 className={`${styles.cell}`}
+               >
+                 <span className={styles.address}>
+                   0x{cell.address.toString(16).padStart(4, "0")}
+                 </span>
+                 {formatBitsForDisplay(cell.bits, cell.address)}
+                 <span className={styles.charDisplay}>{cell.char}</span>
+               </div>
+             );
+           })}
+         </div>
+       </section>
     </div>
   );
 }
