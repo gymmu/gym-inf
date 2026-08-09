@@ -2,6 +2,61 @@
   margin: var(--space-xl) 0;
 }
 
+.controlsSection {
+  background-color: rgba(100, 100, 100, 0.05);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  border-left: 4px solid var(--color-purple);
+  margin-bottom: var(--space-lg);
+}
+
+.controlsRow {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.textInput {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.5rem 0.75rem;
+  font-family: monospace;
+  font-size: 1rem;
+  background-color: var(--color-bg-darker);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-fg);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.textInput:focus {
+  border-color: var(--color-purple);
+}
+
+.textInput::placeholder {
+  color: var(--color-gray-light);
+  opacity: 0.5;
+}
+
+.resetButton {
+  padding: 0.5rem 1rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+  background-color: var(--color-red-dark);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.resetButton:hover {
+  background-color: var(--color-red);
+}
+
 .beforeSection {
   background-color: rgba(100, 100, 100, 0.05);
   padding: var(--space-lg);

@@ -175,7 +175,7 @@ export default function FmsHardware() {
           höheren Adressen und nach unten hin mit immer niedrigeren Adressen.
         </p>
 
-        <MemoryStackVisualizer />
+        <MemoryStackVisualizer mode="interactive" />
       </section>
 
       <section>
