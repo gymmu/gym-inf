@@ -112,103 +112,107 @@ export default function MemoryStackVisualizer({
   };
 
   return (
-    <div className={styles.container}>
-      {/* Interactive Controls */}
-      {isInteractive && (
-        <section className={styles.controlsSection}>
-          <div className={styles.controlsRow}>
-            <input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              onKeyDown={handleInputKeyDown}
-              placeholder="Text eingeben..."
-              className={styles.textInput}
-            />
+    <div className={`${styles.wrapper} ${styles.centered}`}>
+      <div className={styles.inner}>
+        {/* Header */}
+        <h2 className={styles.header}>Speicherstack</h2>
+
+        {/* Main content: memory + controls */}
+        <div className={styles.mainContent}>
+          {/* Memory display */}
+          <section className={styles.memorySection}>
+            {/* Legend */}
+            <div className={styles.legendSection}>
+              <div className={styles.keyRow}>
+                <span>Adresse</span>
+                <span>Byte (8-bits)</span>
+                <span>Zeichen</span>
+              </div>
+            </div>
+
+            {/* BEFORE SECTION: Speicher oberhalb des Textes */}
+            <div className={styles.memoryWindow}>
+              {upperMemory.map((cell) => (
+                <div key={cell.address} className={`${styles.cell} ${getRowClass(cell.address)}`}>
+                  <span className={styles.address}>
+                    0x{cell.address.toString(16).padStart(4, "0")}
+                  </span>
+                  {formatBitsForDisplay(cell.bits, cell.address)}
+                  <span className={styles.charDisplay}>{cell.char}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* TEXT SECTION: Der eigentliche Textinhalt */}
+            <div className={styles.memoryWindow}>
+              {usedMemory.map((item, idx) => {
+                const address = baseAddress + idx;
+
+                return (
+                  <div
+                    key={address}
+                    className={`${styles.cell} ${getRowClass(address)}`}
+                  >
+                    <span className={styles.address}>
+                      0x{address.toString(16).padStart(4, "0")}
+                    </span>
+                    {formatBitsForDisplay(item.bits, address)}
+                    <span
+                      className={`${styles.charDisplay} ${
+                        item.char !== " " ? styles.visibleChar : ""
+                      }`}
+                    >
+                      {item.char !== " " ? item.char : "\u00A0"}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* AFTER SECTION: Freier Speicher nach dem Text */}
+            <div className={styles.memoryWindow}>
+              {freeMemory.map((cell, idx) => {
+                const address = baseAddress + usedMemory.length + idx;
+                return (
+                  <div
+                    key={address}
+                    className={`${styles.cell} ${getRowClass(address)}`}
+                  >
+                    <span className={styles.address}>
+                      0x{address.toString(16).padStart(4, "0")}
+                    </span>
+                    {formatBitsForDisplay(cell.bits, address)}
+                    <span className={styles.charDisplay}>{cell.char}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Toolbar (right side) */}
+          {isInteractive && (
+            <div className={styles.toolbar}>
             <button onClick={resetMemory} className={styles.resetButton}>
               Reset Memory
             </button>
-          </div>
-        </section>
-      )}
-
-      {/* BEFORE SECTION: Einführung */}
-      <section className={styles.beforeSection}>
-        <h2 className={styles.sectionTitle}>Speicherstack (Top-Down)</h2>
-        <p className={styles.sectionIntro}>
-          Dieser Visualizer zeigt den Speicherinhalt im RAM. Der Stack ist in drei
-          Bereiche unterteilt: Before (oben), Text (mitte) und After (unten).
-        </p>
-      </section>
-
-      {/* Legend */}
-      <section className={styles.legendSection}>
-        <div className={styles.keyRow}>
-          <span>Adresse</span>
-          <span>Byte (8-bits)</span>
-          <span>Zeichen</span>
+            <div className={styles.inputGroup}>
+              <label className={styles.inputLabel}>Text</label>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                onKeyDown={handleInputKeyDown}
+                placeholder="Text eingeben..."
+                className={styles.textInput}
+              />
+              <span className={styles.tooltip}>
+                Passen Sie den Text hier an, um den Speicherinhalt zu ändern.
+              </span>
+            </div>
+            </div>
+          )}
         </div>
-      </section>
-
-       {/* BEFORE SECTION: Speicher oberhalb des Textes */}
-       <section className={styles.memorySection}>
-         <div className={styles.memoryWindow}>
-           {upperMemory.map((cell) => (
-             <div key={cell.address} className={`${styles.cell} ${getRowClass(cell.address)}`}>
-               <span className={styles.address}>
-                 0x{cell.address.toString(16).padStart(4, "0")}
-               </span>
-               {formatBitsForDisplay(cell.bits, cell.address)}
-               <span className={styles.charDisplay}>{cell.char}</span>
-             </div>
-           ))}
-         </div>
-
-       {/* TEXT SECTION: Der eigentliche Textinhalt */}
-         <div className={styles.memoryWindow}>
-           {usedMemory.map((item, idx) => {
-             const address = baseAddress + idx;
-
-             return (
-               <div
-                 key={address}
-                 className={`${styles.cell} ${getRowClass(address)}`}
-               >
-                 <span className={styles.address}>
-                   0x{address.toString(16).padStart(4, "0")}
-                 </span>
-                 {formatBitsForDisplay(item.bits, address)}
-                 <span
-                   className={`${styles.charDisplay} ${
-                     item.char !== " " ? styles.visibleChar : ""
-                   }`}
-                 >
-                   {item.char !== " " ? item.char : "\u00A0"}
-                 </span>
-               </div>
-             );
-           })}
-         </div>
-
-       {/* AFTER SECTION: Freier Speicher nach dem Text */}
-         <div className={styles.memoryWindow}>
-           {freeMemory.map((cell, idx) => {
-             const address = baseAddress + usedMemory.length + idx;
-             return (
-               <div
-                 key={address}
-                 className={`${styles.cell} ${getRowClass(address)}`}
-               >
-                 <span className={styles.address}>
-                   0x{address.toString(16).padStart(4, "0")}
-                 </span>
-                 {formatBitsForDisplay(cell.bits, address)}
-                 <span className={styles.charDisplay}>{cell.char}</span>
-               </div>
-             );
-           })}
-         </div>
-       </section>
+      </div>
     </div>
   );
 }
