@@ -23,6 +23,22 @@
 
 .memorySection {
   margin: var(--space-xl) 0;
+
+  .cell {
+    background-color: var(--color-bg-lighter);
+  }
+
+  .cell.evenRow {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .cell {
+    display: grid;
+    grid-template-columns: 8ch 183px 8ch;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: var(--color-bg-lighter);
+  }
 }
 
 .sectionIntro {
@@ -34,14 +50,7 @@
   display: flex;
   flex-direction: column;
   width: fit-content;
-}
 
-.cell {
-  display: grid;
-  grid-template-columns: 8ch 183px 8ch;
-  align-items: center;
-  padding: 0.5rem;
-  background-color: var(--color-bg-lighter);
 }
 
 .address {
@@ -88,9 +97,7 @@
   color: var(--color-gray-light);
 }
 
-.memorySection .cell:nth-child(2n) {
-  background-color: rgba(255, 255, 255, 0.03);
-}
+
 
 .visibleChar {
   color: var(--color-aqua);

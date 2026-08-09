@@ -49,6 +49,11 @@ export default function MemoryStackVisualizer() {
     return bit === "1" ? styles.one : styles.zero;
   };
 
+  const getRowClass = (address) => {
+    const offset = address - baseAddress;
+    return offset % 2 === 0 ? styles.evenRow : styles.oddRow;
+  };
+
    const formatBitsForDisplay = (bits, address) => {
      return (
        <span key={address} className={styles.byteGroup}>
@@ -88,7 +93,7 @@ export default function MemoryStackVisualizer() {
        <section className={styles.memorySection}>
          <div className={styles.memoryWindow}>
            {upperMemory.map((cell) => (
-             <div key={cell.address} className={`${styles.cell}`}>
+             <div key={cell.address} className={`${styles.cell} ${getRowClass(cell.address)}`}>
                <span className={styles.address}>
                  0x{cell.address.toString(16).padStart(4, "0")}
                </span>
@@ -106,7 +111,7 @@ export default function MemoryStackVisualizer() {
              return (
                <div
                  key={address}
-                 className={`${styles.cell}`}
+                 className={`${styles.cell} ${getRowClass(address)}`}
                >
                  <span className={styles.address}>
                    0x{address.toString(16).padStart(4, "0")}
@@ -130,7 +135,7 @@ export default function MemoryStackVisualizer() {
              return (
                <div
                  key={cell.address}
-                 className={`${styles.cell}`}
+                 className={`${styles.cell} ${getRowClass(cell.address)}`}
                >
                  <span className={styles.address}>
                    0x{cell.address.toString(16).padStart(4, "0")}
