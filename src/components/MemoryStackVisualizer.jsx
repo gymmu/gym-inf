@@ -15,8 +15,8 @@ export default function MemoryStackVisualizer({
       ascii: char.charCodeAt(0),
       bits: char.charCodeAt(0).toString(2).padStart(8, "0"),
     }));
-    // Add free cells (minimum 4)
-    const freeCells = Math.max(4, 12 - memory.length);
+    // Add free cells (only if text is very short)
+    const freeCells = Math.max(0, 8 - memory.length);
     for (let i = 0; i < freeCells; i++) {
       memory.push({ address: null, bits: "00000000", char: "." });
     }
@@ -130,8 +130,8 @@ export default function MemoryStackVisualizer({
               </div>
             </div>
 
-            {/* BEFORE SECTION: Speicher oberhalb des Textes */}
-            <div className={styles.memoryWindow}>
+            {/* BEFORE SECTION: Speicher oberhalb des Textes (grau) */}
+            <div className={`${styles.memoryWindow} ${styles.upperSection}`}>
               {upperMemory.map((cell) => (
                 <div key={cell.address} className={`${styles.cell} ${getRowClass(cell.address)}`}>
                   <span className={styles.address}>
@@ -143,11 +143,10 @@ export default function MemoryStackVisualizer({
               ))}
             </div>
 
-            {/* TEXT SECTION: Der eigentliche Textinhalt */}
-            <div className={styles.memoryWindow}>
+            {/* ACTIVE + FREE SECTION: Der eigentliche Speicherblock (hervorgehoben) */}
+            <div className={`${styles.memoryWindow} ${styles.activeSection}`}>
               {usedMemory.map((item, idx) => {
                 const address = baseAddress + idx;
-
                 return (
                   <div
                     key={address}
@@ -167,17 +166,12 @@ export default function MemoryStackVisualizer({
                   </div>
                 );
               })}
-            </div>
-
-            {/* AFTER SECTION: Freier Speicher nach dem Text */}
-            <div className={styles.memoryWindow}>
               {freeMemory.map((cell, idx) => {
                 const address = baseAddress + usedMemory.length + idx;
                 return (
                   <div
                     key={address}
-                    className={`${styles.cell} ${getRowClass(address)}`}
-                  >
+                    className={`${styles.cell} ${getRowClass(address)} ${styles.freeCell}`}>
                     <span className={styles.address}>
                       0x{address.toString(16).padStart(4, "0")}
                     </span>
@@ -187,30 +181,112 @@ export default function MemoryStackVisualizer({
                 );
               })}
             </div>
+
+            {/* AFTER SECTION: Speicher nach dem Text (grau) */}
+            <div className={`${styles.memoryWindow} ${styles.afterSection}`}>
+              {[0, 1, 2].map((offset) => {
+                const address = baseAddress + usedMemory.length + freeMemory.length + offset;
+                return (
+                  <div
+                    key={address}
+                    className={`${styles.cell} ${getRowClass(address)}`}
+                  >
+                    <span className={styles.address}>
+                      0x{address.toString(16).padStart(4, "0")}
+                    </span>
+                    <span className={styles.byteGroup}>
+                      {"10110110".split("").map((bit, idx) => (
+                        <span
+                          key={`${address}-${idx}`}
+                          className={`${styles.bitCell} ${bit === "1" ? styles.one : styles.zero}`}
+                        >
+                          {bit}
+                        </span>
+                      ))}
+                    </span>
+                    <span className={styles.charDisplay}>"</span>
+                  </div>
+                );
+              })}
+            </div>
           </section>
 
           {/* Toolbar (right side) */}
-          {isInteractive && (
-            <div className={styles.toolbar}>
-            <button onClick={resetMemory} className={styles.resetButton}>
-              Reset Memory
-            </button>
-            <div className={styles.inputGroup}>
-              <label className={styles.inputLabel}>Text</label>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyDown={handleInputKeyDown}
-                placeholder="Text eingeben..."
-                className={styles.textInput}
-              />
-              <span className={styles.tooltip}>
-                Passen Sie den Text hier an, um den Speicherinhalt zu ändern.
-              </span>
+          <div className={styles.toolbar}>
+            {/* Legend (always visible) */}
+            <div className={styles.legend}>
+              <h3 className={styles.legendTitle}>Legende</h3>
+              <div className={styles.legendCards}>
+                <div className={styles.legendCard}>
+                  <div className={styles.legendCardIcon}>📍</div>
+                  <div className={styles.legendCardContent}>
+                    <strong>Adresse</strong>
+                    <p>Jede Zeile repräsentiert eine Speicherzelle mit einer eindeutigen hexadezimalen Adresse. Die Adresse beginnt bei 0x1000 und erhöht sich pro Zelle um 1. Sie zeigt an, an welcher Position im Speicher die Daten gespeichert sind.</p>
+                  </div>
+                </div>
+                <div className={styles.legendCard}>
+                  <div className={styles.legendCardIcon}>🔢</div>
+                  <div className={styles.legendCardContent}>
+                    <strong>Byte</strong>
+                    <p>Ein Byte besteht aus 8 Bits, die jeweils den Wert 0 oder 1 haben. Zusammen ergeben sie den Dezimalwert des ASCII-Codes. Grüne Bits (1) und rote Bits (0) visualisieren die binäre Darstellung des Zeichens im Speicher.</p>
+                  </div>
+                </div>
+                <div className={styles.legendCard}>
+                  <div className={styles.legendCardIcon}>🔤</div>
+                  <div className={styles.legendCardContent}>
+                    <strong>Zeichen</strong>
+                    <p>Zeigt das lesbare Zeichen, das im Speicher gespeichert ist. Eingetippte Zeichen werden als ASCII-Code abgelegt. Leerer Speicher wird mit einem Punkt (.) dargestellt. Leerzeichen sind unsichtbar, werden aber im Speicher als '.' angezeigt.</p>
+                  </div>
+                </div>
+
+                {/* Memory Section Descriptions */}
+                <div className={styles.legendCard}>
+                  <div className={styles.legendCardIcon} style={{opacity: 0.5}}>⬛</div>
+                  <div className={styles.legendCardContent}>
+                    <strong>Vor dem Speicher</strong>
+                    <p>Grauer Bereich oberhalb des zugewiesenen Speichers. Enthält Speicherinhalte, die vor dem Speicherblock liegen. Dieser Bereich ist ausgegraut und zeigt an, dass er nicht zum zugewiesenen Speicher gehört.</p>
+                  </div>
+                </div>
+                <div className={styles.legendCard}>
+                  <div className={styles.legendCardIcon} style={{color: 'var(--color-blue)'}}>🟦</div>
+                  <div className={styles.legendCardContent}>
+                    <strong>Zugewiesener Speicher</strong>
+                    <p>Blau umrandeter Bereich mit dem eigentlichen Speicherblock. Enthält belegte Zellen (normaler Hintergrund) und freien Speicher (leichter Hintergrund). Hier wird der eingegebene Text gespeichert. Am Ende wird die letzte Adresse angezeigt.</p>
+                  </div>
+                </div>
+                <div className={styles.legendCard}>
+                  <div className={styles.legendCardIcon} style={{opacity: 0.5}}>⬜</div>
+                  <div className={styles.legendCardContent}>
+                    <strong>Nach dem Speicher</strong>
+                    <p>Grauer Bereich unterhalb des zugewiesenen Speichers. Enthält zufällige Speicherinhalte nach dem Speicherblock. Dieser Bereich ist ebenfalls ausgegraut und zeigt an, dass er nicht zum zugewiesenen Speicher gehört.</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            </div>
-          )}
+
+            {/* Interactive elements (only in interactive mode) */}
+            {isInteractive && (
+              <>
+                <button onClick={resetMemory} className={styles.resetButton}>
+                  Reset Memory
+                </button>
+                <div className={styles.inputGroup}>
+                  <label className={styles.inputLabel}>Text</label>
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleInputKeyDown}
+                    placeholder="Text eingeben..."
+                    className={styles.textInput}
+                  />
+                  <span className={styles.tooltip}>
+                    Passen Sie den Text hier an, um den Speicherinhalt zu ändern.
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

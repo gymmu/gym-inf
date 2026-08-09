@@ -1,6 +1,6 @@
 .wrapper {
   margin: var(--space-xl) auto;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--border-color);
   border-radius: var(--radius-lg);
   background-color: var(--color-bg-darker);
   overflow: hidden;
@@ -31,8 +31,38 @@
   min-width: 0;
 }
 
+/* Section backgrounds */
+.upperSection {
+  background-color: rgba(146, 131, 116, 0.03);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xs);
+  margin-bottom: 0;
+  opacity: 0.5;
+}
+
+.activeSection {
+  background-color: rgba(131, 165, 152, 0.08);
+  border: 2px solid var(--color-blue);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xs);
+}
+
+.freeCell {
+  background-color: rgba(131, 165, 152, 0.03);
+}
+
+.afterSection {
+  background-color: rgba(146, 131, 116, 0.03);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xs);
+  margin-top: 0;
+  opacity: 0.5;
+}
+
 .legendSection {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--border-color);
   padding: 0.5rem 0.5rem 0.25rem 0.5rem;
 }
 
@@ -171,7 +201,7 @@
   font-family: monospace;
   font-size: 0.85rem;
   background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   color: var(--color-fg);
   outline: none;
@@ -192,11 +222,67 @@
   font-size: 0.7rem;
   color: var(--color-gray-light);
   background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   line-height: 1.4;
   opacity: 1;
   pointer-events: none;
+}
+
+/* Legend (always visible, inside toolbar) */
+.legend {
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-color);
+}
+
+.legendTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-fg);
+  margin: 0 0 var(--space-sm) 0;
+  letter-spacing: 0.02em;
+}
+
+.legendCards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.legendCard {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--color-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.legendCardIcon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  width: 1.5rem;
+  text-align: center;
+}
+
+.legendCardContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.legendCardContent strong {
+  font-size: 0.8rem;
+  color: var(--color-fg);
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
+.legendCardContent p {
+  font-size: 0.7rem;
+  color: var(--color-gray-light);
+  margin: 0;
+  line-height: 1.3;
 }
 
 /* Responsive */
@@ -221,6 +307,10 @@
   .inputGroup {
     flex: 1;
     min-width: 150px;
+  }
+
+  .legend {
+    margin-top: var(--space-lg);
   }
 }
 
