@@ -5,6 +5,14 @@ export default function GymIndex() {
   return (
     <div className={style.navList}>
       <section>
+        <h2>BYOD</h2>
+        <ol className={style.nav}>
+          <li>
+            <NavLink to="byod">Grundinstallation</NavLink>
+          </li>
+        </ol>
+      </section>
+      <section>
         <h2>Theorie</h2>
         <ol className={style.nav}>
           <li>

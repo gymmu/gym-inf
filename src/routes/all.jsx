@@ -128,6 +128,7 @@ const FmsAlgorithmenGlossar = lazy(
   () => import("@pages-fms/algorithmen-glossar.jsx"),
 );
 const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"));
+const GymByod = lazy(() => import("@pages-gym/byod.jsx"));
 const FmsWord = lazy(() => import("@pages/fms/word.mdx"));
 const FmsWordFormatvorlagen = lazy(
   () => import("@pages/fms/word-formatvorlagen.mdx"),
@@ -219,6 +220,9 @@ export const routes = [
       },
       { path: "gym/passwoerter", element: <GymPasswoerter /> },
       { path: "gym/passwoerter-quiz", element: <GymPasswoerterQuiz /> },
+
+      // BYOD
+      { path: "byod", element: <GymByod /> },
 
       // FMS Routes 1. Klasse
       { path: "fms-theorie", element: <FMSIndex /> },

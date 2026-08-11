@@ -5,6 +5,14 @@ export default function FmsIndex() {
   return (
     <div className={style.navList}>
       <section>
+        <h2>BYOD</h2>
+        <ol className={style.nav}>
+          <li>
+            <NavLink to="byod">Grundinstallation</NavLink>
+          </li>
+        </ol>
+      </section>
+      <section>
         <h2>1. Klasse</h2>
         <ol className={style.nav}>
           <li>
