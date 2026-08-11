@@ -62,7 +62,14 @@ export default function FmsHardware() {
         </ul>
       </section>
 
-      <section>
+      <section
+        className="important"
+        style={{
+          padding: "2rem",
+          marginBottom: "var(--space-xl)",
+          borderRadius: "var(--radius-2xl)",
+        }}
+      >
         <h2>Der Speicher: Wo alles gespeichert wird</h2>
         <p>
           Der <strong>Speicher</strong> ist das Herzstück jedes Computers. Er
@@ -80,105 +87,194 @@ export default function FmsHardware() {
           borderRadius: "var(--radius-2xl)",
         }}
       >
-        <h2>Wie ist 'Hallo Welt!' im Speicher gespeichert?</h2>
+        <h2>Wie wird Text im Computer gespeichert?</h2>
         <p>
-          Der Text <strong>Hallo Welt!</strong> besteht aus 11 Zeichen. Jedes
-          Zeichen wird im Speicher als ein Byte (8 Bits) abgelegt.
+          Bevor wir uns mit der Von-Neumann-Architektur auseinandersetzen, müssen
+          wir verstehen was der <strong>Speicher</strong> eigentlich macht. Denn
+          der Speicher ist der Ort an dem alles passiert — hier werden Daten
+          gespeichert, verarbeitet und wieder ausgelesen.
         </p>
-        <ul>
-          <li>
-            Ein Byte besteht aus exactly 8 bits, die jeweils den Zustand 0 oder 1
-            haben können
-          </li>
-          <li>
-            Durch die Kombination dieser 8 bits kann jedes Zeichen eine Zahl von
-            0 bis 255 darstellen — das ist der ASCII-Wert
-          </li>
-          <li>
-            Der Computer speichert also nicht "H", "a", etc. direkt, sondern nur
-            die Binärzahlen, die diesen Zeichen entsprechen
-          </li>
-        </ul>
 
-        <h3>ASCII-Werte und binäre Darstellung</h3>
+        <h3>Alles beginnt mit Bits</h3>
+        <p>
+          Der wichtigste Punkt den Sie verstehen müssen ist dieser: <strong>Der
+          Computer muss zuerst absolut alles in Bits umwandeln.</strong> Egal ob
+          Text, Bilder, Musik oder Programme — alles wird zu einer Sequenz von
+          <span style={{ color: "var(--color-red)", fontWeight: "bold" }}> 0 </span>
+          und
+          <span style={{ color: "var(--color-green)", fontWeight: "bold" }}> 1 </span>
+          .
+        </p>
+        <p>
+          Stellen Sie sich vor Sie möchten den Text <strong>abc</strong> auf dem
+          Computer speichern. Für Sie als Benutzer ist das ganz einfach: Sie tippen
+          die Buchstaben auf die Tastatur, und der Text erscheint auf dem
+          Bildschirm. Aber was passiert im Inneren des Computers?
+        </p>
+        <p>
+          Der Computer kann keinen Text speichern. Der Computer kennt überhaupt
+          keine Buchstaben, keine Wörter und keine Sätze. Der Computer kennt nur
+          <strong>Bits</strong>. Das sind winzige elektronische Zellen die
+          entweder den Wert <span style={{ color: "var(--color-red)" }}> 0 </span>
+          oder
+          <span style={{ color: "var(--color-green)" }}> 1 </span>
+          haben können.
+        </p>
+
+        <h3>Vom Buchstaben zur Bit-Sequenz</h3>
+        <p>
+          Wenn Sie den Buchstaben <strong>a</strong> auf der Tastatur tippen, dann
+          muss der Computer diesen Buchstaben zuerst in eine Sequenz von Bits
+          umwandeln. Stellen Sie sich vor, der Computer hat eine Vereinbarung
+          getroffen: Immer wenn er die folgende Sequenz von Bits sieht, interpretiert
+          er diese als den Buchstaben <strong>a</strong>:
+        </p>
+        <div
+          style={{
+            backgroundColor: "var(--color-rgb-61-61-61)",
+            padding: "1.5rem",
+            borderRadius: "var(--radius-xl)",
+            fontFamily: "monospace",
+            fontSize: "1.2rem",
+            textAlign: "center",
+            letterSpacing: "0.3em",
+          }}
+        >
+          0110 0001
+        </div>
+        <p>
+          Das gleiche passiert mit den Buchstaben <strong>b</strong> und
+          <strong>c</strong>:
+        </p>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr",
+            gap: "var(--space-md)",
+            textAlign: "center",
+          }}
+        >
+          <div>
+            <div style={{ marginBottom: "0.5rem", fontWeight: "bold" }}>a</div>
+            <div style={{ fontFamily: "monospace", fontSize: "1.1rem" }}>0110 0001</div>
+          </div>
+          <div>
+            <div style={{ marginBottom: "0.5rem", fontWeight: "bold" }}>b</div>
+            <div style={{ fontFamily: "monospace", fontSize: "1.1rem" }}>0110 0010</div>
+          </div>
+          <div>
+            <div style={{ marginBottom: "0.5rem", fontWeight: "bold" }}>c</div>
+            <div style={{ fontFamily: "monospace", fontSize: "1.1rem" }}>0110 0011</div>
+          </div>
+        </div>
+
+        <h3>Der Speicherblock als Textfabrik</h3>
+        <p>
+          Und jetzt wird es interessant: Wenn Sie <strong>abc</strong> tippen, dann
+          speichert der Computer einfach alle diese Bit-Sequenzen hintereinander im
+          <strong>Speicher</strong> ab:
+        </p>
+        <div
+          style={{
+            backgroundColor: "var(--color-rgb-61-61-61)",
+            padding: "1.5rem",
+            borderRadius: "var(--radius-xl)",
+            fontFamily: "monospace",
+            fontSize: "1.1rem",
+            textAlign: "center",
+            letterSpacing: "0.2em",
+            overflowX: "auto",
+          }}
+        >
+          0110 0001 0110 0010 0110 0011
+        </div>
+        <p>
+          Und so entsteht ein Text auf dem Computer! Nichts weiter als eine lange
+          Reihe von <span style={{ color: "var(--color-red)" }}> 0 </span>-en und
+          <span style={{ color: "var(--color-green)" }}> 1 </span>-en, die der
+          Computer als Buchstaben interpretiert.
+        </p>
+
+        <h3>Bits im Speicherblock zusammengesetzt</h3>
+        <p>
+          Stellen Sie sich den <strong>Speicherblock</strong> als eine lange Reihe
+          von Zellen vor, jede Zelle speichert ein <strong>Byte</strong> (8 Bits).
+          Wenn wir einen Text speichern, dann werden die Bits für jeden Buchstaben
+          einfach hintereinander in diese Zellen geschrieben:
+        </p>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr>
-              <th style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>Zeichen</th>
-              <th style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>ASCII-Wert</th>
-              <th style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>Binär (8-bit)</th>
+              <th style={{ border: "1px solid var(--color-gray)", padding: "8px", backgroundColor: "var(--color-rgb-61-61-61)" }}>Speicherzelle</th>
+              <th style={{ border: "1px solid var(--color-gray)", padding: "8px", backgroundColor: "var(--color-rgb-61-61-61)" }}>Bits</th>
+              <th style={{ border: "1px solid var(--color-gray)", padding: "8px", backgroundColor: "var(--color-rgb-61-61-61)" }}>Interpretation</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>H</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>72</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01001000</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", textAlign: "center" }}>1</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace", textAlign: "center" }}>0110 0001</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", textAlign: "center" }}><strong>a</strong></td>
             </tr>
             <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>a</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>97</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01100001</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", textAlign: "center" }}>2</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace", textAlign: "center" }}>0110 0010</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", textAlign: "center" }}><strong>b</strong></td>
             </tr>
             <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>l</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>108</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01101100</td>
-            </tr>
-            <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>l</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>108</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01101100</td>
-            </tr>
-            <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>o</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>111</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01101111</td>
-            </tr>
-            <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}> </td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>32</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>00100000</td>
-            </tr>
-            <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>W</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>87</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01010111</td>
-            </tr>
-            <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>e</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>101</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01100101</td>
-            </tr>
-            <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>l</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>108</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01101100</td>
-            </tr>
-            <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>t</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>116</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>01110100</td>
-            </tr>
-            <tr>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>!</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px" }}>33</td>
-              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace" }}>00100001</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", textAlign: "center" }}>3</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", fontFamily: "monospace", textAlign: "center" }}>0110 0011</td>
+              <td style={{ border: "1px solid var(--color-gray)", padding: "8px", textAlign: "center" }}><strong>c</strong></td>
             </tr>
           </tbody>
         </table>
-
         <p>
-          Nach dem Text "Hallo Welt!" folgen im Speicher freie Zellen (hier als
-          Punkte dargestellt), die noch keine Daten enthalten. Der Speicher setzt
-          sich in beide Richtungen unendlich fort — nach oben hin mit immer
-          höheren Adressen und nach unten hin mit immer niedrigeren Adressen.
+          Jeder Buchstabe bekommt seine eigene Speicherzelle. Zusammen ergeben
+          diese Zellen den vollständigen Text. Der Computer muss sich nur merken
+          wo jeder Buchstabe beginnt und wo er aufhört.
+        </p>
+
+        <div
+          style={{
+            backgroundColor: "var(--color-rgb-61-61-61)",
+            padding: "1.5rem",
+            borderRadius: "var(--radius-xl)",
+            borderLeft: "4px solid var(--color-purple)",
+          }}
+        >
+          <strong>Der entscheidende Punkt:</strong> Der Speicherblock ist wie eine
+          <strong>Textfabrik</strong>. Er nimmt einzelne Buchstaben, wandelt sie in
+          Bits um, und speichert diese Bits hintereinander. Wenn wir den Text wieder
+          auslesen, macht der Computer genau das Gegenteil: Er liest die Bits aus
+          und wandelt sie wieder in Buchstaben um.
+        </div>
+
+        <h3>Was die Lernenden verstehen sollen</h3>
+        <p>
+          Der wichtigste Punkt den Sie sich merken sollten ist dieser:
+          <strong> Der Computer muss zuerst absolut alles in Bits umwandeln.</strong>
+          Egal ob Text, Bilder, Musik oder Programme — alles wird zu einer Sequenz
+          von <span style={{ color: "var(--color-red)" }}> 0 </span>-en und
+          <span style={{ color: "var(--color-green)" }}> 1 </span>-en.
+        </p>
+        <p>
+          Das bedeutet nicht dass der Computer die Bits tatsächlich umwandelt. Der
+          Computer arbeitet nur mit den Bits die ihm zur Verfügung gestellt werden.
+          Die Umwandlung von Buchstaben in Bits geschieht durch die Vereinbarung
+          die wir treffen.
         </p>
 
         <MemoryStackVisualizer mode="interactive" />
       </section>
 
-      <section>
+      <section
+        className="highlight"
+        style={{
+          padding: "2rem",
+          marginBottom: "var(--space-xl)",
+          borderRadius: "var(--radius-2xl)",
+        }}
+      >
         <h2>Von der Realwelt zu den Bits</h2>
         <p>
           Um Daten auf dem Computer zu speichern, müssen wir sie von unserer
@@ -192,6 +288,11 @@ export default function FmsHardware() {
           </span>{" "}
           übersetzen. Dieser Prozess ist der Schlüssel zum Verständnis, wie
           Computer arbeiten.
+        </p>
+        <p>
+          Denken Sie daran: Der Computer kennt keine Buchstaben, keine Bilder und
+          keine Musik. Der Computer kennt nur Bits. Alles was wir auf dem Computer
+          speichern, muss zuerst in eine Sequenz von Bits umgewandelt werden.
         </p>
         <ConverterVisualizer />
       </section>
@@ -324,4 +425,3 @@ export default function FmsHardware() {
     </>
   );
 }
-
