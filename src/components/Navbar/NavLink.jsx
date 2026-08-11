@@ -26,7 +26,14 @@ function NavLink({ to, elem, children }) {
   };
 
   const slug = to.startsWith("/") ? to.slice(1) : to;
-  const rating = localStorage.getItem(`gym-inf-progress-${slug}`);
+  let rating = null;
+  if (typeof localStorage !== "undefined") {
+    try {
+      rating = localStorage.getItem(`gym-inf-progress-${slug}`);
+    } catch {
+      rating = null;
+    }
+  }
 
   const isActive = location.pathname === to || location.pathname === `/${slug}`;
 
