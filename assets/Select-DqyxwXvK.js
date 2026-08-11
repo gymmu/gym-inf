@@ -1,0 +1,1 @@
+import{j as r}from"./react-vendor-7TcISLYx.js";function c({options:t,value:e,onChange:o}){return r.jsx("select",{value:e,onChange:o,children:t.map(n=>r.jsx("option",{children:n},crypto.randomUUID()))})}export{c as S};
