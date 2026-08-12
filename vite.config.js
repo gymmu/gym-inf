@@ -113,6 +113,7 @@ export default defineConfig({
       "@pages": generateAlias("src/sites/md"),
       "@pages-gym": generateAlias("src/pages/gym"),
       "@pages-fms": generateAlias("src/pages/fms"),
+      "@pages-ef": generateAlias("src/pages/ef"),
       "@components": generateAlias("src/components"),
       "@context": generateAlias("src/context"),
       "@icons": generateAlias("src/assets/icons"),
@@ -181,6 +182,9 @@ export default defineConfig({
           }
           if (id.includes("/pages/gym/") || id.includes("/pages-gym/")) {
             return "gym-pages";
+          }
+          if (id.includes("/pages/ef/") || id.includes("/pages-ef/")) {
+            return "ef-pages";
           }
         },
       },

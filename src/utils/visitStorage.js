@@ -4,7 +4,7 @@ const DB_VERSION = 1;
 
 const LS_LAST_VISIT_KEY = "gym-inf-last-visit";
 const LS_VISIT_HISTORY_KEY = "gym-inf-visit-history";
-const LS_FMS_KEY = "gym-inf-fms";
+const LS_SECTION_KEY = "gym-inf-section";
 
 function openDB() {
   return new Promise((resolve, reject) => {
@@ -183,6 +183,43 @@ export async function clearFms() {
   safeRemoveItem(LS_FMS_KEY);
   try {
     await dbDelete("fms");
+  } catch {
+    // ignore
+  }
+}
+
+// Section (gym/fms/ef) storage
+export async function saveSection(section) {
+  const success = safeSetItem(LS_SECTION_KEY, section);
+  if (!success) {
+    try {
+      await dbSet("section", section);
+    } catch {
+      // ignore
+    }
+  }
+}
+
+export async function loadSection() {
+  let data = safeGetItem(LS_SECTION_KEY);
+  if (data !== null) {
+    return data;
+  }
+  try {
+    data = await dbGet("section");
+    if (data !== null) {
+      return data;
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
+export async function clearSection() {
+  safeRemoveItem(LS_SECTION_KEY);
+  try {
+    await dbDelete("section");
   } catch {
     // ignore
   }

@@ -141,6 +141,21 @@ const FmsWordSeitenzahlen = lazy(
 );
 const FmsWordProbleme = lazy(() => import("@pages/fms/word-probleme.mdx"));
 const FmsWordLatex = lazy(() => import("@pages/fms/word-latex.mdx"));
+
+// EF - Programmieren mit JavaScript
+const EFEinstieg = lazy(() => import("@pages-ef/js-einstieg.jsx"));
+const EFGrundlagen = lazy(() => import("@pages-ef/js-grundlagen.jsx"));
+const EFVariablen = lazy(() => import("@pages-ef/js-variablen.jsx"));
+const EFBedingungen = lazy(() => import("@pages-ef/js-bedingungen.jsx"));
+const EFListen = lazy(() => import("@pages-ef/js-listen.jsx"));
+const EFSchleifen = lazy(() => import("@pages-ef/js-schleifen.jsx"));
+const EFFunktionen = lazy(() => import("@pages-ef/js-funktionen.jsx"));
+const EFObjekte = lazy(() => import("@pages-ef/js-objekte.jsx"));
+const EFFunktionales = lazy(
+  () => import("@pages-ef/js-funktionales-programmieren.jsx"),
+);
+const EFKlassen = lazy(() => import("@pages-ef/js-klassen.jsx"));
+
 const BoxModel = lazy(() => import("../components/BoxModel"));
 const CodePen = lazy(() => import("../components/CodePen"));
 const CodePenSVG = lazy(() => import("../components/CodePenSVG"));
@@ -320,6 +335,21 @@ export const routes = [
       { path: "fms/html", element: <FmsHTML /> },
       { path: "fms/webdesign", element: <FmsWebdesign /> },
       { path: "fms/javascript", element: <FmsJavascript /> },
+
+      // EF - Programmieren mit JavaScript
+      { path: "ef/js-einstieg", element: <EFEinstieg /> },
+      { path: "ef/js-grundlagen", element: <EFGrundlagen /> },
+      { path: "ef/js-variablen", element: <EFVariablen /> },
+      { path: "ef/js-bedingungen", element: <EFBedingungen /> },
+      { path: "ef/js-listen", element: <EFListen /> },
+      { path: "ef/js-schleifen", element: <EFSchleifen /> },
+      { path: "ef/js-funktionen", element: <EFFunktionen /> },
+      { path: "ef/js-objekte", element: <EFObjekte /> },
+      {
+        path: "ef/js-funktionales-programmieren",
+        element: <EFFunktionales />,
+      },
+      { path: "ef/js-klassen", element: <EFKlassen /> },
 
       // TODO: Comment these out if no longer tested
       { path: "codepen", element: <CodePen /> },

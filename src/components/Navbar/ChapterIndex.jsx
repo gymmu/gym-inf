@@ -1,24 +1,28 @@
 import { NavContext } from "@context/NavContext";
 import { useContext } from "react";
 import style from "./ChapterIndex.module.css";
+import EfIndex from "./EfIndex";
 import FmsIndex from "./FmsIndex";
 import GymIndex from "./GymIndex";
 
 function ChapterIndex() {
-  const { fms, setFms } = useContext(NavContext);
+  const { section, setSection } = useContext(NavContext);
 
   const activateGym = () => {
-    setFms(false);
+    setSection("gym");
   };
   const activateFMS = () => {
-    setFms(true);
+    setSection("fms");
+  };
+  const activateEF = () => {
+    setSection("ef");
   };
 
   return (
     <div className={style.container}>
       <div className={style.selectSchool}>
         <button
-          className={!fms ? "active-school" : ""}
+          className={section === "gym" ? "active-school" : ""}
           onClick={activateGym}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
@@ -31,7 +35,7 @@ function ChapterIndex() {
           Gym
         </button>
         <button
-          className={fms ? "active-school" : ""}
+          className={section === "fms" ? "active-school" : ""}
           onClick={activateFMS}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
@@ -43,8 +47,23 @@ function ChapterIndex() {
         >
           FMS
         </button>
+        <button
+          className={section === "ef" ? "active-school" : ""}
+          onClick={activateEF}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              activateEF();
+            }
+          }}
+          type="button"
+        >
+          EF
+        </button>
       </div>
-      {!fms ? <GymIndex /> : <FmsIndex />}
+      {section === "gym" && <GymIndex />}
+      {section === "fms" && <FmsIndex />}
+      {section === "ef" && <EfIndex />}
     </div>
   );
 }

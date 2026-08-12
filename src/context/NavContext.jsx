@@ -1,4 +1,4 @@
-import { loadFms, saveFms } from "@utils/visitStorage";
+import { loadFms, loadSection, saveFms, saveSection } from "@utils/visitStorage";
 import { createContext, useEffect, useState } from "react";
 
 const NavContext = createContext({});
@@ -9,22 +9,24 @@ function useNavContext() {
 
 function NavProvider({ children }) {
   const [visible, setVisible] = useState(false);
-  const [fms, setFms] = useState(false);
+  const [section, setSection] = useState("gym");
 
   useEffect(() => {
-    loadFms().then((saved) => {
+    loadSection().then((saved) => {
       if (saved !== null) {
-        setFms(saved);
+        setSection(saved);
       }
     });
   }, []);
 
   useEffect(() => {
-    saveFms(fms);
-  }, [fms]);
+    saveSection(section);
+  }, [section]);
 
   return (
-    <NavContext.Provider value={{ visible, setVisible, fms, setFms }}>
+    <NavContext.Provider
+      value={{ visible, setVisible, section, setSection }}
+    >
       {children}
     </NavContext.Provider>
   );
