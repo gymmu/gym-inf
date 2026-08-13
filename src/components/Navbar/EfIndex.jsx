@@ -8,6 +8,9 @@ export default function EfIndex() {
         <h2>Programmieren mit JavaScript</h2>
         <ol className={style.nav}>
           <li>
+            <NavLink to="ef/editor">Editor</NavLink>
+          </li>
+          <li>
             Einstieg
             <ol>
               <NavLink to="ef/js-einstieg">Willkommen</NavLink>

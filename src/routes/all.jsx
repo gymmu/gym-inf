@@ -143,6 +143,7 @@ const FmsWordProbleme = lazy(() => import("@pages/fms/word-probleme.mdx"));
 const FmsWordLatex = lazy(() => import("@pages/fms/word-latex.mdx"));
 
 // EF - Programmieren mit JavaScript
+const EFEditor = lazy(() => import("@pages-ef/js-editor.jsx"));
 const EFEinstieg = lazy(() => import("@pages-ef/js-einstieg.jsx"));
 const EFGrundlagen = lazy(() => import("@pages-ef/js-grundlagen.jsx"));
 const EFVariablen = lazy(() => import("@pages-ef/js-variablen.jsx"));
@@ -164,6 +165,9 @@ const NotesPage = lazy(() => import("../pages/notes/index"));
 
 // Route configuration as plain objects (SSG-compatible)
 export const routes = [
+  // Standalone routes (no Layout wrapper)
+  { path: "ef/editor", element: <EFEditor /> },
+
   {
     path: "/",
     element: <Layout />,

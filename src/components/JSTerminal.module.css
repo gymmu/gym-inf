@@ -14,6 +14,18 @@
   height: 600px;
 }
 
+/* Fullscreen mode - when wrapper is inside .js-terminal-fullscreen */
+.js-terminal-fullscreen .jsTerminalWrapper {
+  width: 100%;
+  height: 100vh;
+  max-width: none;
+  min-width: 100%;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  grid-column: auto;
+}
+
 /* Main content area - Editor + Terminal (left side) */
 .mainContent {
   flex: 1;
@@ -196,6 +208,31 @@
   color: var(--color-fg);
 }
 
+/* Explorer Section Title */
+.explorerSectionTitle {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-gray);
+  letter-spacing: 0.05em;
+  padding: var(--space-sm) var(--space-sm) var(--space-2xs) var(--space-sm);
+  margin-top: var(--space-md);
+  font-family: "Courier New", Courier, monospace;
+  user-select: none;
+}
+
+.explorerSectionTitle:first-child {
+  margin-top: 0;
+}
+
+/* Explorer File Group (file item + action button) */
+.explorerFileGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-2xs);
+}
+
 /* Explorer Item */
 .explorerItem {
   display: flex;
@@ -205,7 +242,8 @@
   cursor: pointer;
   border-radius: var(--radius-md);
   transition: background-color var(--transition-base);
-  margin-bottom: var(--space-xs);
+  flex: 1;
+  min-width: 0;
 }
 
 .explorerItem:hover {
@@ -299,6 +337,60 @@
   background-color: var(--color-bg-light);
   border-color: var(--color-gray);
   color: var(--color-fg);
+}
+
+/* Reset File Button (in Explorer) */
+.resetFileButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--color-gray);
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+  opacity: 0;
+}
+
+.explorerFileGroup:hover .resetFileButton {
+  opacity: 1;
+}
+
+.resetFileButton:hover {
+  background-color: var(--color-bg-lighter);
+  color: var(--color-green);
+}
+
+/* Delete File Button (in Explorer) */
+.deleteFileButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--color-gray);
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+  opacity: 0;
+}
+
+.explorerFileGroup:hover .deleteFileButton {
+  opacity: 1;
+}
+
+.deleteFileButton:hover {
+  background-color: var(--color-bg-lighter);
+  color: var(--color-red);
 }
 
 .language {
