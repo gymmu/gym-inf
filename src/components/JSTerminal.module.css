@@ -1,6 +1,7 @@
-/* Main wrapper for the entire component */
+/* Main wrapper for the entire component - VSCode-like layout */
 .jsTerminalWrapper {
-  max-width: min(1200px, calc(100vw - 42px));
+  max-width: 100%;
+  width: min(1400px, 100%);
   margin-inline: auto;
   margin-block: var(--space-lg);
   border-radius: var(--radius-lg);
@@ -8,19 +9,119 @@
   box-shadow: var(--shadow-md);
   background-color: var(--color-bg-dark);
   grid-column: full-width;
-}
-
-/* Main content area with editor and explorer */
-.mainContent {
   display: flex;
   flex-direction: row;
+  height: 600px;
+}
+
+/* Main content area - Editor + Terminal (left side) */
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
 /* Editor Section */
 .editorSection {
   flex: 1;
-  border-bottom: var(--border-width) solid var(--color-bg-light);
-  min-width: 0; /* Allow flex shrinking */
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Examples Bar - horizontal bar for examples */
+.examplesBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-2xs) var(--space-md);
+  background-color: var(--color-bg-dark);
+  border-bottom: 1px solid var(--color-bg-lighter);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-bg-lighter) var(--color-bg-dark);
+}
+
+.examplesBar::-webkit-scrollbar {
+  height: 4px;
+}
+
+.examplesBar::-webkit-scrollbar-track {
+  background: var(--color-bg-dark);
+}
+
+.examplesBar::-webkit-scrollbar-thumb {
+  background: var(--color-bg-lighter);
+  border-radius: var(--radius-sm);
+}
+
+.examplesTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-gray);
+  letter-spacing: 0.05em;
+  font-family: "Courier New", Courier, monospace;
+  flex-shrink: 0;
+}
+
+.exampleItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-sm);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
+  background-color: transparent;
+  border: 1px solid transparent;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.75rem;
+  color: var(--color-fg);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.exampleItem:hover {
+  background-color: var(--color-bg-lighter);
+  border-color: var(--color-bg-light);
+  color: var(--color-fg);
+  opacity: 1;
+}
+
+.activeExample {
+  background-color: var(--color-bg-lighter);
+  border-color: var(--color-green);
+  color: var(--color-green);
+  opacity: 1;
+}
+
+.activeExample:hover {
+  background-color: var(--color-bg-lighter);
+  color: var(--color-green);
+}
+
+.exampleName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.editorActions {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+/* Editor container - wraps the Monaco editor */
+.editorContainer {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
 }
 
 /* Tab Bar */
@@ -95,50 +196,7 @@
   color: var(--color-fg);
 }
 
-/* Explorer Section */
-.explorerSection {
-  width: 200px;
-  background-color: var(--color-bg);
-  border-left: var(--border-width) solid var(--color-bg-light);
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-}
-
-.explorerHeader {
-  padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-bg-dark);
-  border-bottom: var(--border-width) solid var(--color-bg-light);
-}
-
-.explorerTitle {
-  font-size: var(--space-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--color-gray);
-  letter-spacing: 0.05em;
-  font-family: "Courier New", Courier, monospace;
-}
-
-.explorerContent {
-  flex: 1;
-  overflow-y: auto;
-  padding: var(--space-sm);
-}
-
-.explorerContent::-webkit-scrollbar {
-  width: 6px;
-}
-
-.explorerContent::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
-
-.explorerContent::-webkit-scrollbar-thumb {
-  background: var(--color-bg-lighter);
-  border-radius: var(--radius-sm);
-}
-
+/* Explorer Item */
 .explorerItem {
   display: flex;
   align-items: center;
@@ -180,6 +238,36 @@
   padding: var(--space-sm) var(--space-md);
   background-color: var(--color-bg-dark);
   border-bottom: var(--border-width) solid var(--color-bg-light);
+  gap: var(--space-sm);
+}
+
+/* Run Button */
+.runButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-sm);
+  background-color: var(--color-green);
+  color: var(--color-bg-dark);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.runButton:hover {
+  background-color: #b8bb26;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.runButton:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .filename {
@@ -187,6 +275,30 @@
   color: var(--color-fg);
   font-family: "Courier New", Courier, monospace;
   font-weight: 500;
+}
+
+/* Reset Button */
+.resetButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-sm);
+  background-color: var(--color-bg-lighter);
+  color: var(--color-fg);
+  border: 1px solid var(--color-bg-light);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.resetButton:hover {
+  background-color: var(--color-bg-light);
+  border-color: var(--color-gray);
+  color: var(--color-fg);
 }
 
 .language {
@@ -198,12 +310,15 @@
   font-family: "Courier New", Courier, monospace;
 }
 
-/* Terminal Section */
+/* Terminal Section - at bottom of editor area */
 .terminalSection {
+  height: 200px;
+  min-height: 150px;
   background-color: var(--color-bg-dark);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border-top: var(--border-width) solid var(--color-bg-light);
 }
 
 .terminalHeader {
@@ -213,6 +328,7 @@
   padding: var(--space-sm) var(--space-md);
   background-color: var(--color-bg);
   border-bottom: var(--border-width) solid var(--color-bg-light);
+  gap: var(--space-sm);
 }
 
 .terminalTitle {
@@ -374,21 +490,169 @@
   opacity: 0.9;
 }
 
+/* ============================================
+   Activity Panel & Activity Bar (VSCode-style)
+   ============================================ */
+
+/* Activity Panel - File Browser on the right */
+.activityPanel {
+  width: 250px;
+  min-width: 200px;
+  max-width: 350px;
+  background-color: var(--color-bg-dark);
+  border-left: var(--border-width) solid var(--color-bg-light);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.activityPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-bg-dark);
+  border-bottom: var(--border-width) solid var(--color-bg-light);
+}
+
+.activityPanelTitle {
+  font-size: var(--space-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-gray);
+  letter-spacing: 0.05em;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.activityPanelClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--color-gray);
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: var(--space-2xs);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
+  line-height: 1;
+}
+
+.activityPanelClose:hover {
+  background-color: var(--color-bg-lighter);
+  color: var(--color-fg);
+}
+
+.activityPanelContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm);
+}
+
+.activityPanelContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.activityPanelContent::-webkit-scrollbar-track {
+  background: var(--color-bg-dark);
+}
+
+.activityPanelContent::-webkit-scrollbar-thumb {
+  background: var(--color-bg-lighter);
+  border-radius: var(--radius-sm);
+}
+
+/* Activity Bar - vertical bar on the far right */
+.activityBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 48px;
+  min-width: 48px;
+  background-color: var(--color-bg-dark);
+  border-left: var(--border-width) solid var(--color-bg-light);
+  padding: var(--space-sm) 0;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+/* Activity Button in the Activity Bar */
+.activityButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all var(--transition-base);
+  color: var(--color-gray);
+  padding: 0;
+}
+
+.activityButton:hover {
+  background-color: var(--color-bg-lighter);
+  color: var(--color-fg);
+}
+
+.activityButtonActive {
+  background-color: var(--color-bg-lighter);
+  color: var(--color-fg);
+  border-right: 2px solid var(--color-green);
+}
+
+.activityButtonActive:hover {
+  background-color: var(--color-bg-lighter);
+  color: var(--color-fg);
+}
+
 /* Responsive adjustments */
+@media (max-width: 1024px) {
+  .activityPanel {
+    width: 200px;
+    min-width: 150px;
+  }
+}
+
 @media (max-width: 768px) {
   .jsTerminalWrapper {
     max-width: calc(100vw - 24px);
+    height: auto;
+    min-height: 500px;
   }
 
   .mainContent {
     flex-direction: column;
   }
 
-  .explorerSection {
+  .editorSection {
+    min-height: 300px;
+  }
+
+  .terminalSection {
+    height: 150px;
+    min-height: 120px;
+  }
+
+  .activityPanel {
     width: 100%;
-    max-height: 150px;
+    max-height: 200px;
     border-left: none;
     border-top: var(--border-width) solid var(--color-bg-light);
+  }
+
+  .activityBar {
+    width: 100%;
+    flex-direction: row;
+    border-left: none;
+    border-top: var(--border-width) solid var(--color-bg-light);
+    padding: var(--space-xs) var(--space-sm);
+    justify-content: center;
   }
 
   .terminalHint {
@@ -406,5 +670,13 @@
 
   .tab {
     padding: var(--space-2xs) var(--space-sm);
+  }
+
+  .exampleName {
+    max-width: 100px;
+  }
+
+  .editorActions {
+    flex-direction: row;
   }
 }

@@ -2,13 +2,14 @@ import styles from "@components/JSTerminal.module.css";
 import { Editor as MEditor } from "@monaco-editor/react";
 import { useEffect, useRef, useState } from "react";
 
+const GLOBAL_EXAMPLES_KEY = "jsterminal_global_examples";
+
 export default function JSTerminal(props) {
   const {
     filename,
     initialCode,
     children,
     height = "300px",
-    terminalHeight = "250px",
   } = props;
 
   // Determine code source: children has priority over initialCode
@@ -19,6 +20,9 @@ export default function JSTerminal(props) {
 
   // Create a unique storage key based on the initial filename
   const storageKey = `jsterminal_${filename}`;
+
+  // File browser panel state (VSCode-style sidebar on right)
+  const [fileBrowserOpen, setFileBrowserOpen] = useState(true);
 
   // Initialize state from localStorage or use defaults
   const getInitialState = () => {
@@ -45,7 +49,7 @@ export default function JSTerminal(props) {
           commandHistory: parsed.commandHistory || [],
         };
       }
-    } catch (error) {
+    } catch {
       // Silently fail during SSR
     }
     return {
@@ -75,6 +79,18 @@ export default function JSTerminal(props) {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [tabCompletionIndex, setTabCompletionIndex] = useState(-1);
   const [tabCompletions, setTabCompletions] = useState([]);
+  const [globalExamples, setGlobalExamples] = useState(() => {
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return [];
+    }
+    try {
+      const saved = localStorage.getItem(GLOBAL_EXAMPLES_KEY);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [selectedExample, setSelectedExample] = useState(null);
   const iframeRef = useRef(null);
   const terminalEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -91,6 +107,8 @@ export default function JSTerminal(props) {
       [activeFile]: { ...prev[activeFile], content: newCode },
     }));
   };
+
+
 
   // Save state to localStorage whenever files, openFiles, activeFile, or commandHistory changes
   useEffect(() => {
@@ -111,6 +129,39 @@ export default function JSTerminal(props) {
       console.error("Error saving to localStorage:", error);
     }
   }, [files, openFiles, activeFile, commandHistory, storageKey]);
+
+  // Register this terminal's code in global examples
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+      return;
+    }
+
+    const example = {
+      id: filename,
+      name: filename,
+      code: sourceCode,
+    };
+
+    try {
+      const saved = localStorage.getItem(GLOBAL_EXAMPLES_KEY);
+      const examples = saved ? JSON.parse(saved) : [];
+
+      // Check if this example already exists
+      const existingIndex = examples.findIndex((e) => e.id === filename);
+
+      const updatedExamples = existingIndex >= 0
+        ? examples.map((e, i) => (i === existingIndex ? example : e))
+        : [...examples, example];
+
+      localStorage.setItem(
+        GLOBAL_EXAMPLES_KEY,
+        JSON.stringify(updatedExamples),
+      );
+      setGlobalExamples(updatedExamples);
+    } catch (error) {
+      console.error("Error saving global example:", error);
+    }
+  }, [filename, sourceCode]);
 
   // Auto-scroll to bottom when terminal history updates
   useEffect(() => {
@@ -189,7 +240,7 @@ export default function JSTerminal(props) {
     if (typeof value === "object") {
       try {
         return JSON.stringify(value, null, 2);
-      } catch (e) {
+      } catch {
         return String(value);
       }
     }
@@ -207,13 +258,37 @@ export default function JSTerminal(props) {
         return JSON.stringify(data, null, 2);
       }
       return JSON.stringify(data, null, 2);
-    } catch (e) {
+    } catch {
       return String(data);
     }
   };
 
   const formatDir = (args) => {
     return formatArgs(args);
+  };
+
+  // Load selected example code into editor
+  const loadExample = (example) => {
+    setFiles((prev) => ({
+      ...prev,
+      [activeFile]: {
+        name: activeFile,
+        content: example.code,
+      },
+    }));
+    setSelectedExample(example);
+  };
+
+  // Reset to default code
+  const resetToDefault = () => {
+    setFiles((prev) => ({
+      ...prev,
+      [activeFile]: {
+        name: activeFile,
+        content: sourceCode,
+      },
+    }));
+    setSelectedExample(null);
   };
 
   const handleCommand = (e) => {
@@ -272,6 +347,24 @@ export default function JSTerminal(props) {
         });
         break;
     }
+  };
+
+  // Run button: executes "node <filename>" automatically
+  const handleRun = () => {
+    // Add the command to history
+    const runCmd = `node ${activeFile}`;
+    addToHistory({ type: "command", content: runCmd });
+
+    // Add to command history
+    if (
+      commandHistory.length === 0 ||
+      commandHistory[commandHistory.length - 1] !== runCmd
+    ) {
+      setCommandHistory((prev) => [...prev, runCmd]);
+    }
+
+    // Execute with the active file
+    executeNodeCommand([activeFile]);
   };
 
   const handleKeyDown = (e) => {
@@ -636,9 +729,10 @@ export default function JSTerminal(props) {
   };
 
   return (
-    <div className={`${styles.jsTerminalWrapper} full-width`}>
+    <div className={styles.jsTerminalWrapper}>
+      {/* Main content area - Editor + Terminal (left side) */}
       <div className={styles.mainContent}>
-        {/* Code Editor */}
+        {/* Code Editor Section */}
         <div className={styles.editorSection}>
           {/* Tab Bar */}
           {openFiles.length > 1 && (
@@ -664,87 +758,99 @@ export default function JSTerminal(props) {
             </div>
           )}
 
+          {/* Examples bar */}
+          {globalExamples.length > 0 && (
+            <div className={styles.examplesBar}>
+              <span className={styles.examplesTitle}>📚 Beispiele</span>
+              {globalExamples.map((example) => (
+                <div
+                  key={example.id}
+                  className={`${styles.exampleItem} ${selectedExample?.id === example.id ? styles.activeExample : ""}`}
+                  onClick={() => loadExample(example)}
+                  title={example.name}
+                >
+                  <span className={styles.fileIcon}>📄</span>
+                  <span className={styles.exampleName}>{example.name}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className={styles.editorHeader}>
             <span className={styles.filename}>{activeFile}</span>
             <span className={styles.language}>JavaScript</span>
-          </div>
-          <MEditor
-            key={activeFile}
-            defaultLanguage="javascript"
-            value={code}
-            theme="vs-dark"
-            onChange={setCode}
-            height={height}
-            options={{
-              minimap: { enabled: false },
-              fontSize: 14,
-              lineNumbers: "on",
-              scrollBeyondLastLine: false,
-              automaticLayout: true,
-            }}
-          />
-        </div>
-
-        {/* File Explorer */}
-        {Object.keys(files).length > 1 && (
-          <div className={styles.explorerSection}>
-            <div className={styles.explorerHeader}>
-              <span className={styles.explorerTitle}>Files</span>
-            </div>
-            <div className={styles.explorerContent}>
-              {Object.keys(files)
-                .sort()
-                .map((fileName) => (
-                  <div
-                    key={fileName}
-                    className={`${styles.explorerItem} ${activeFile === fileName ? styles.activeExplorerItem : ""}`}
-                    onClick={() => openFile(fileName)}
-                    title={fileName}
-                  >
-                    <span className={styles.fileIcon}>📄</span>
-                    <span className={styles.explorerFileName}>{fileName}</span>
-                  </div>
-                ))}
+            <div className={styles.editorActions}>
+              {selectedExample && (
+                <button
+                  type="button"
+                  className={styles.resetButton}
+                  onClick={resetToDefault}
+                  title="Zurück zum Standard-Code"
+                >
+                  ↺ Reset
+                </button>
+              )}
+              <button
+                type="button"
+                className={styles.runButton}
+                onClick={handleRun}
+                title="Programm ausführen (node <filename>)"
+              >
+                ▶ Ausführen
+              </button>
             </div>
           </div>
-        )}
-      </div>
-
-      {/* Terminal */}
-      <div
-        className={styles.terminalSection}
-        style={{ height: terminalHeight }}
-      >
-        <div className={styles.terminalHeader}>
-          <span className={styles.terminalTitle}>Terminal</span>
-          <span className={styles.terminalHint}>
-            Use ↑/↓ for history, Tab for completion
-          </span>
-        </div>
-        <div
-          className={styles.terminalContent}
-          ref={terminalContentRef}
-          onClick={handleTerminalClick}
-        >
-          {terminalHistory.map((entry, index) => (
-            <TerminalEntry key={index} entry={entry} />
-          ))}
-
-          {/* Inline command input (like VSCode) */}
-          <form onSubmit={handleCommand} className={styles.terminalInputLine}>
-            <span className={styles.prompt}>$</span>
-            <input
-              ref={inputRef}
-              type="text"
-              className={styles.terminalInput}
-              value={commandInput}
-              onChange={(e) => setCommandInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              autoComplete="off"
-              spellCheck="false"
+          <div className={styles.editorContainer}>
+            <MEditor
+              key={activeFile}
+              defaultLanguage="javascript"
+              value={code}
+              theme="vs-dark"
+              onChange={setCode}
+              height={height}
+              options={{
+                minimap: { enabled: false },
+                fontSize: 14,
+                lineNumbers: "on",
+                scrollBeyondLastLine: false,
+                automaticLayout: true,
+              }}
             />
-          </form>
-          <div ref={terminalEndRef} />
+          </div>
+        </div>
+
+        {/* Terminal Section - at bottom of editor area */}
+        <div className={styles.terminalSection}>
+          <div className={styles.terminalHeader}>
+            <span className={styles.terminalTitle}>Terminal</span>
+            <span className={styles.terminalHint}>Klicke "▶ Ausführen" im Editor oder tippe{" "}
+              <code>node &lt;datei&gt;</code> hier</span>
+          </div>
+          <div
+            className={styles.terminalContent}
+            ref={terminalContentRef}
+            onClick={handleTerminalClick}
+          >
+            {terminalHistory.map((entry, index) => (
+              <TerminalEntry key={index} entry={entry} />
+            ))}
+
+            {/* Inline command input (like VSCode) */}
+            <form onSubmit={handleCommand} className={styles.terminalInputLine}>
+              <span className={styles.prompt}>$</span>
+              <input
+                ref={inputRef}
+                type="text"
+                className={styles.terminalInput}
+                value={commandInput}
+                onChange={(e) => setCommandInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                autoComplete="off"
+                spellCheck="false"
+              />
+            </form>
+            <div ref={terminalEndRef} />
+          </div>
         </div>
       </div>
 
@@ -755,6 +861,53 @@ export default function JSTerminal(props) {
         style={{ display: "none" }}
         title="code-executor"
       />
+
+      {/* Activity Panel - File Browser on the right side */}
+      {fileBrowserOpen && (
+        <div className={styles.activityPanel}>
+          <div className={styles.activityPanelHeader}>
+            <span className={styles.activityPanelTitle}>Explorer</span>
+            <button
+              type="button"
+              className={styles.activityPanelClose}
+              onClick={() => setFileBrowserOpen(false)}
+              title="Schließen"
+            >
+              ✕
+            </button>
+          </div>
+          <div className={styles.activityPanelContent}>
+            {Object.keys(files)
+              .sort()
+              .map((fileName) => (
+                <div
+                  key={fileName}
+                  className={`${styles.explorerItem} ${activeFile === fileName ? styles.activeExplorerItem : ""}`}
+                  onClick={() => openFile(fileName)}
+                  title={fileName}
+                >
+                  <span className={styles.fileIcon}>📄</span>
+                  <span className={styles.explorerFileName}>{fileName}</span>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
+
+      {/* Activity Bar - VSCode-style vertical bar on the right */}
+      <div className={styles.activityBar}>
+        <button
+          type="button"
+          className={`${styles.activityButton} ${fileBrowserOpen ? styles.activityButtonActive : ""}`}
+          onClick={() => setFileBrowserOpen(!fileBrowserOpen)}
+          title={fileBrowserOpen ? "File-Browser ausblenden" : "File-Browser einblenden"}
+        >
+          {fileBrowserOpen ? "📁" : "📂"}
+        </button>
+        {/* Placeholder für zukünftige Activity Buttons */}
+        {/* <button type="button" className={styles.activityButton} title="Suche">🔍</button> */}
+        {/* <button type="button" className={styles.activityButton} title="Git">🌿</button> */}
+      </div>
     </div>
   );
 }
