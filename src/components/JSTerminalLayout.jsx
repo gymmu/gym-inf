@@ -111,6 +111,7 @@ export default function JSTerminalLayout({
     }
   });
   const [selectedExample, setSelectedExample] = useState(null);
+  const [showHelp, setShowHelp] = useState(false);
 
   // Track user-created files (files not in globalExamples)
   const [userFiles, setUserFiles] = useState(() => {
@@ -124,6 +125,62 @@ export default function JSTerminalLayout({
       return {};
     }
   });
+
+  // Create a new empty file
+  const createNewFile = () => {
+    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+    const counter = Object.keys(userFiles).length + 1;
+    const newFilename = `datei_${timestamp}_${counter}.js`;
+
+    setFiles((prev) => ({
+      ...prev,
+      [newFilename]: {
+        name: newFilename,
+        content: "// Deine JavaScript-Datei\nconsole.log('Hello World!')",
+      },
+    }));
+
+    setUserFiles((prev) => ({
+      ...prev,
+      [newFilename]: {
+        name: newFilename,
+        content: "// Deine JavaScript-Datei\nconsole.log('Hello World!')",
+      },
+    }));
+
+    // Open the new file
+    if (controlledActiveFileSetter) {
+      controlledActiveFileSetter(newFilename);
+    } else {
+      setActiveFile(newFilename);
+    }
+    if (!openFiles.includes(newFilename)) {
+      setOpenFiles((prev) => [...prev, newFilename]);
+    }
+
+    addToHistory({ type: "log", content: `📄 Neue Datei '${newFilename}' erstellt` });
+  };
+
+  // Help text for the terminal
+  const helpText = `
+📖 Terminal-Hilfe
+
+Verfügbare Befehle:
+  node <datei.js>    — Datei ausführen
+  ls                 — Alle Dateien auflisten
+  touch <datei.js>   — Neue Datei erstellen
+  rm <datei.js>      — Datei löschen
+  clear              — Terminal leeren
+  reset              — Speicher zurücksetzen
+
+💡 Tipp: Klicke "▶ Ausführen" im Editor,
+   um die aktuelle Datei auszuführen.
+   Oder tippe "node <datei.js>" hier.
+
+⌨️ Tab-Vervollständigung: Nutze die Tab-Taste
+   für Befehle und Dateinamen.
+   Pfeiltasten ↑↓ für Befehlshistorie.`.trim();
+
   const iframeRef = useRef(null);
   const terminalEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -843,23 +900,7 @@ export default function JSTerminalLayout({
             </div>
           )}
 
-          {/* Examples bar */}
-          {globalExamples.length > 0 && (
-            <div className={styles.examplesBar}>
-              <span className={styles.examplesTitle}>📚 Beispiele</span>
-              {globalExamples.map((example) => (
-                <div
-                  key={example.id}
-                  className={`${styles.exampleItem} ${selectedExample?.id === example.id ? styles.activeExample : ""}`}
-                  onClick={() => loadExample(example)}
-                  title={example.name}
-                >
-                  <span className={styles.fileIcon}>📄</span>
-                  <span className={styles.exampleName}>{example.name}</span>
-                </div>
-              ))}
-            </div>
-          )}
+
 
           <div className={styles.editorHeader}>
             <span className={styles.filename}>{currentActiveFile}</span>
@@ -908,9 +949,39 @@ export default function JSTerminalLayout({
         <div className={styles.terminalSection}>
           <div className={styles.terminalHeader}>
             <span className={styles.terminalTitle}>Terminal</span>
-            <span className={styles.terminalHint}>Klicke "▶ Ausführen" im Editor oder tippe{" "}
-              <code>node &lt;datei&gt;</code> hier</span>
+            <div className={styles.terminalActions}>
+              <button
+                type="button"
+                className={styles.terminalActionBtn}
+                onClick={() => setShowHelp(!showHelp)}
+                title="Terminal-Hilfe anzeigen"
+              >
+                ?
+              </button>
+              <button
+                type="button"
+                className={styles.terminalActionBtn}
+                onClick={() => setTerminalHistory([])}
+                title="Terminal leeren"
+              >
+                clear
+              </button>
+            </div>
           </div>
+          {showHelp && (
+            <div className={styles.helpOverlay} onClick={() => setShowHelp(false)}>
+              <div className={styles.helpPanel} onClick={(e) => e.stopPropagation()}>
+                <div className={styles.helpContent}>{helpText}</div>
+                <button
+                  type="button"
+                  className={styles.helpCloseBtn}
+                  onClick={() => setShowHelp(false)}
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          )}
           <div
             className={styles.terminalContent}
             ref={terminalContentRef}
@@ -962,6 +1033,16 @@ export default function JSTerminalLayout({
             </button>
           </div>
           <div className={styles.activityPanelContent}>
+            {/* New File Button */}
+            <button
+              type="button"
+              className={styles.newFileButton}
+              onClick={createNewFile}
+              title="Neue Datei erstellen"
+            >
+              + Neue Datei
+            </button>
+
             {/* Section: Beispiele */}
             {globalExamples.length > 0 && (
               <>

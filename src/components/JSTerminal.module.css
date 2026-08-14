@@ -423,6 +423,40 @@
   gap: var(--space-sm);
 }
 
+/* Terminal action buttons */
+.terminalActions {
+  display: flex;
+  gap: var(--space-2xs);
+  align-items: center;
+}
+
+.terminalActionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xs) var(--space-sm);
+  background-color: var(--color-bg-lighter);
+  color: var(--color-gray);
+  border: 1px solid var(--color-bg-light);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.terminalActionBtn:hover {
+  background-color: var(--color-bg-light);
+  color: var(--color-fg);
+  border-color: var(--color-gray);
+}
+
+.terminalActionBtn:active {
+  transform: scale(0.95);
+}
+
 .terminalTitle {
   font-size: var(--space-xs);
   font-weight: 600;
@@ -643,6 +677,37 @@
   padding: var(--space-sm);
 }
 
+/* New File Button */
+.newFileButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-sm);
+  background-color: var(--color-green);
+  color: var(--color-bg-dark);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  font-family: "Courier New", Courier, monospace;
+  margin-bottom: var(--space-sm);
+}
+
+.newFileButton:hover {
+  background-color: #b8bb26;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.newFileButton:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
 .activityPanelContent::-webkit-scrollbar {
   width: 6px;
 }
@@ -699,6 +764,94 @@
 }
 
 .activityButtonActive:hover {
+  background-color: var(--color-bg-lighter);
+  color: var(--color-fg);
+}
+
+/* ============================================
+   Help Modal/Overlay
+   ============================================ */
+
+.helpOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.helpPanel {
+  background-color: var(--color-bg-dark);
+  border: 1px solid var(--color-bg-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.2s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.helpContent {
+  margin: 0;
+  padding: var(--space-md);
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--color-fg);
+  white-space: pre-wrap;
+  word-break: break-word;
+  letter-spacing: 0.03em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.helpCloseBtn {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 1px solid var(--color-bg-light);
+  border-radius: var(--radius-sm);
+  color: var(--color-gray);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.helpCloseBtn:hover {
   background-color: var(--color-bg-lighter);
   color: var(--color-fg);
 }
