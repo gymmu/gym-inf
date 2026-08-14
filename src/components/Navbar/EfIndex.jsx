@@ -72,76 +72,27 @@ export default function EfIndex() {
       <WeekSection
         weekNumber="2"
         title="Grundlagen der Programmierung"
-        items={[
-          {
-            type: "information",
-            to: "ef/js-funktionen",
-            label: "Information: Funktionen",
-          },
-        ]}
+        items={[]}
       />
       <WeekSection
         weekNumber="3"
-        title="Funktionales Programmieren"
-        items={[
-          {
-            type: "theorie",
-            to: "ef/js-objekte",
-            label: "Theorie: Objekte",
-          },
-          {
-            type: "information",
-            to: "ef/js-funktionales-programmieren",
-            label: "Information: Funktionales Programmieren",
-          },
-          {
-            type: "aufgaben",
-            to: "ef/js-klassen",
-            label: "Aufgaben: Klassen und Vererbung",
-          },
-        ]}
+        title="Algorithmen"
+        items={[]}
       />
       <WeekSection
         weekNumber="4"
-        title="Objektorientiertes Programmieren"
-        items={[
-          {
-            type: "theorie",
-            to: "ef/js-objekte",
-            label: "Theorie: Objekte und Klassen",
-          },
-          {
-            type: "information",
-            to: "ef/js-klassen",
-            label: "Information: Vererbung",
-          },
-          {
-            type: "arbeitsauftrag",
-            to: "ef/js-aufgaben",
-            label: "Arbeitsauftrag: OOP-Projekte",
-          },
-        ]}
+        title="Funktionales Programmieren"
+        items={[]}
       />
       <WeekSection
         weekNumber="5"
+        title="Objektorientiertes Programmieren"
+        items={[]}
+      />
+      <WeekSection
+        weekNumber="6"
         title="Leistungsüberprüfung"
-        items={[
-          {
-            type: "theorie",
-            to: "ef/js-wiederholung",
-            label: "Theorie: Wiederholung aller Kapitel",
-          },
-          {
-            type: "information",
-            to: "ef/js-vorbereitung",
-            label: "Information: Prüfungsvorbereitung",
-          },
-          {
-            type: "aufgaben",
-            to: "ef/js-pruefung",
-            label: "Aufgaben: Leistungsüberprüfung",
-          },
-        ]}
+        items={[]}
       />
     </div>
   );
