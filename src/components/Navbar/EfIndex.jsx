@@ -14,8 +14,13 @@ export default function EfIndex() {
             Einstieg
             <ol>
               <NavLink to="ef/js-einstieg">Willkommen</NavLink>
-              <NavLink to="ef/js-grundlagen">Grundlagen</NavLink>
+              <NavLink to="ef/js-grundlagen">
+                Arbeitsauftrag: Grundinstallation
+              </NavLink>
             </ol>
+          </li>
+          <li>
+            <NavLink to="ef/aufgaben">Aufgaben</NavLink>
           </li>
           <li>
             <NavLink to="ef/js-variablen">Variablen</NavLink>
