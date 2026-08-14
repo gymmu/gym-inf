@@ -116,3 +116,75 @@ ol.nav ol {
   margin: 0;
   padding: 0;
 }
+
+/* Week section styling */
+.weekSection {
+  padding: 0;
+}
+
+.weekTitle {
+  text-align: left;
+  margin: 0;
+  padding: var(--space-xs) var(--space-md);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-yellow);
+  background-color: hsl(from var(--color-yellow) h s calc(l - 30) / 0.15);
+  border-bottom: 2px solid var(--color-yellow);
+  letter-spacing: 0.05em;
+}
+
+.weekTopic {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-fg);
+  border-bottom: var(--border-width) solid var(--border-color-subtle);
+  padding-block: var(--space-sm);
+  padding-left: var(--space-lg);
+  background-color: hsl(from var(--color-bg) h s calc(l + 2));
+}
+
+/* Color-coded categories */
+.theorie {
+  border-left: 3px solid hsl(220 70% 55%);
+  background-color: hsl(from hsl(220 70% 55%) h s calc(l + 45) / 0.08);
+}
+
+.theorie > a:hover {
+  background-color: hsl(from hsl(220 70% 55%) h s calc(l + 40) / 0.15);
+  color: hsl(220 70% 45%);
+  border-left-color: hsl(220 70% 45%);
+}
+
+.information {
+  border-left: 3px solid hsl(170 60% 45%);
+  background-color: hsl(from hsl(170 60% 45%) h s calc(l + 45) / 0.08);
+}
+
+.information > a:hover {
+  background-color: hsl(from hsl(170 60% 45%) h s calc(l + 40) / 0.15);
+  color: hsl(170 60% 35%);
+  border-left-color: hsl(170 60% 35%);
+}
+
+.arbeitsauftrag {
+  border-left: 3px solid hsl(35 90% 55%);
+  background-color: hsl(from hsl(35 90% 55%) h s calc(l + 40) / 0.08);
+}
+
+.arbeitsauftrag > a:hover {
+  background-color: hsl(from hsl(35 90% 55%) h s calc(l + 35) / 0.15);
+  color: hsl(35 90% 40%);
+  border-left-color: hsl(35 90% 40%);
+}
+
+.aufgaben {
+  border-left: 3px solid hsl(280 60% 55%);
+  background-color: hsl(from hsl(280 60% 55%) h s calc(l + 45) / 0.08);
+}
+
+.aufgaben > a:hover {
+  background-color: hsl(from hsl(280 60% 55%) h s calc(l + 40) / 0.15);
+  color: hsl(280 60% 45%);
+  border-left-color: hsl(280 60% 45%);
+}

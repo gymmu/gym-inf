@@ -1018,8 +1018,8 @@ Verfügbare Befehle:
         title="code-executor"
       />
 
-      {/* Activity Panel - File Browser on the right side */}
-      {fileBrowserOpen && (
+      {/* Activity Panel - File Browser on the right side (only in fullscreen) */}
+      {isFullscreen && fileBrowserOpen && (
         <div className={styles.activityPanel}>
           <div className={styles.activityPanelHeader}>
             <span className={styles.activityPanelTitle}>Explorer</span>
@@ -1116,17 +1116,19 @@ Verfügbare Befehle:
         </div>
       )}
 
-      {/* Activity Bar - VSCode-style vertical bar on the right */}
-      <div className={styles.activityBar}>
-        <button
-          type="button"
-          className={`${styles.activityButton} ${fileBrowserOpen ? styles.activityButtonActive : ""}`}
-          onClick={() => setFileBrowserOpen(!fileBrowserOpen)}
-          title={fileBrowserOpen ? "File-Browser ausblenden" : "File-Browser einblenden"}
-        >
-          {fileBrowserOpen ? "📁" : "📂"}
-        </button>
-      </div>
+      {/* Activity Bar - VSCode-style vertical bar on the right (only in fullscreen) */}
+      {isFullscreen && (
+        <div className={styles.activityBar}>
+          <button
+            type="button"
+            className={`${styles.activityButton} ${fileBrowserOpen ? styles.activityButtonActive : ""}`}
+            onClick={() => setFileBrowserOpen(!fileBrowserOpen)}
+            title={fileBrowserOpen ? "File-Browser ausblenden" : "File-Browser einblenden"}
+          >
+            {fileBrowserOpen ? "📁" : "📂"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
