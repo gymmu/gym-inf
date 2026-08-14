@@ -7,22 +7,20 @@ export default function GymIndex() {
       <section>
         <h2>BYOD</h2>
         <ol className={style.nav}>
-          <li>
-            <NavLink to="byod">Grundinstallation</NavLink>
-          </li>
+          <NavLink to="byod">Grundinstallation</NavLink>
         </ol>
       </section>
       <section>
         <h2>Theorie</h2>
         <ol className={style.nav}>
-          <li>
+          <span>
             Obsidian
             <ol>
               <NavLink to="obsidian">Obsidian</NavLink>
               <NavLink to="obsidian-md">Markdown in Obsidian</NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Einführung
             <ol>
               <NavLink to="fms/hardware">Computer Hardware</NavLink>
@@ -31,8 +29,8 @@ export default function GymIndex() {
               <NavLink to="information">Daten und Informationen</NavLink>
               <NavLink to="colors">Farben</NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Sprachen
             <ol>
               <NavLink to="sprachen">Sprachen</NavLink>
@@ -42,8 +40,8 @@ export default function GymIndex() {
               <NavLink to="css">CSS</NavLink>
               <NavLink to="javascript">Javascript</NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Programmieren
             <ol>
               <NavLink to="js-variables">Variablen</NavLink>
@@ -56,8 +54,8 @@ export default function GymIndex() {
               </NavLink>
               <NavLink to="js-aufgaben">Aufgaben</NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Spielprojekt mit Kaplay
             <ol>
               <NavLink to="kaplay-intro">Einführung</NavLink>
@@ -71,8 +69,8 @@ export default function GymIndex() {
               <NavLink to="kaplay-camera">Kamera zentrieren</NavLink>
               <NavLink to="kaplay-teamwork">Arbeiten im Team</NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Internet und Sicherheit
             <ol>
               <NavLink to="gym/praesentation-netzwerke">
@@ -99,18 +97,16 @@ export default function GymIndex() {
               <NavLink to="gym/passwoerter">Passwörter</NavLink>
               <NavLink to="gym/passwoerter-quiz">Quiz: Passwörter</NavLink>
             </ol>
-          </li>
+          </span>
         </ol>
       </section>
 
       <section>
         <h2>Praktikum</h2>
         <ol className={style.nav}>
-          <li>
-            <ol>
-              <NavLink to="praktikum/install">Installation</NavLink>
-            </ol>
-          </li>
+          <ol>
+            <NavLink to="praktikum/install">Installation</NavLink>
+          </ol>
         </ol>
       </section>
     </div>

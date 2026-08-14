@@ -38,7 +38,7 @@ function NavLink({ to, elem, children }) {
   const isActive = location.pathname === to || location.pathname === `/${slug}`;
 
   return (
-    <li>
+    <div>
       <Link
         onClick={hide}
         to={to}
@@ -49,7 +49,7 @@ function NavLink({ to, elem, children }) {
         <span className={style.spacer} />
         {hasNotes && <span className={style.noteIcon}>📝</span>}
       </Link>
-    </li>
+    </div>
   );
 }
 

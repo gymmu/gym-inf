@@ -8,9 +8,7 @@ function WeekSection({ weekNumber, title, items }) {
       <ol className={style.nav}>
         <li className={style.weekTopic}>{title}</li>
         {items.map((item) => (
-          <li key={item.to} className={item.type}>
-            <NavLink to={item.to}>{item.label}</NavLink>
-          </li>
+          <NavLink key={item.to} to={item.to}>{item.label}</NavLink>
         ))}
       </ol>
     </section>

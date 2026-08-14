@@ -83,7 +83,7 @@
     padding: 0;
   }
 
-  .nav > li {
+  .nav > div {
     font-weight: 600;
     font-size: 0.85rem;
     color: var(--color-yellow);
@@ -93,7 +93,7 @@
     background-color: hsl(from var(--color-bg) h s calc(l + 2));
   }
 
-  .nav > li > a {
+  .nav > div > a {
     font-weight: 600;
     color: var(--color-yellow);
     padding-left: var(--space-lg);

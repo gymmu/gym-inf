@@ -7,22 +7,20 @@ export default function FmsIndex() {
       <section>
         <h2>BYOD</h2>
         <ol className={style.nav}>
-          <li>
-            <NavLink to="byod">Grundinstallation</NavLink>
-          </li>
+          <NavLink to="byod">Grundinstallation</NavLink>
         </ol>
       </section>
       <section>
         <h2>1. Klasse</h2>
         <ol className={style.nav}>
-          <li>
+          <span>
             Obsidian
             <ol>
               <NavLink to="obsidian">Einführung</NavLink>
               <NavLink to="obsidian-md">Markdown in Obsidian</NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Einführung
             <ol>
               <NavLink to="fms/hardware">Computer Hardware</NavLink>
@@ -31,8 +29,8 @@ export default function FmsIndex() {
               <NavLink to="information">Daten und Informationen</NavLink>
               <NavLink to="colors">Farben</NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Bilder
             <ol>
               <NavLink to="pictures">Bilder</NavLink>
@@ -44,8 +42,8 @@ export default function FmsIndex() {
               <NavLink to="fms/svg-transformation">Transformationen</NavLink>
               <NavLink to="fms/svg-animation">Animationen</NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Internet und Sicherheit
             <ol>
               <NavLink to="fms/internet">Internet</NavLink>
@@ -57,8 +55,8 @@ export default function FmsIndex() {
               <NavLink to="fms/schluesselaustausch">Schlüsselaustausch</NavLink>
               <NavLink to="fms/passwoerter">Passwörter</NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Algorithmen
             <ol>
               <NavLink to="/fms/algorithmen">Was sind Algorithmen?</NavLink>
@@ -72,8 +70,8 @@ export default function FmsIndex() {
               </NavLink>
               <NavLink to="/fms/algorithmen-aufgaben">Aufgaben</NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Microsoft Word
             <ol>
               <NavLink to="/fms/word">Einstieg in Word</NavLink>
@@ -87,13 +85,13 @@ export default function FmsIndex() {
               <NavLink to="/fms/word-probleme">Das Problem mit Word</NavLink>
               <NavLink to="/fms/word-latex">LaTeX mit Overleaf</NavLink>
             </ol>
-          </li>
+          </span>
         </ol>
       </section>
       <section>
         <h2>2. Klasse</h2>
         <ol className={style.nav}>
-          <li>
+          <span>
             Tabellenkalkulation
             <ol>
               <NavLink to="fms/excel">Einstieg in Excel</NavLink>
@@ -101,15 +99,15 @@ export default function FmsIndex() {
                 Zusammenarbeit in Excel
               </NavLink>
             </ol>
-          </li>
-          <li>
+          </span>
+          <span>
             Webdesign
             <ol>
               <NavLink to="fms/html">Einstieg in HTML</NavLink>
               <NavLink to="fms/webdesign">Webdesign mit HTML</NavLink>
               <NavLink to="fms/javascript">Interaktive Webseiten</NavLink>
             </ol>
-          </li>
+          </span>
         </ol>
       </section>
     </div>

@@ -36,7 +36,6 @@ function LayoutContent() {
   }, [setFullscreen]);
 
   useEffect(() => {
-    console.log(menuVisible);
     setClasses(
       [fullscreen ? style.fullScreen : "", menuVisible ? style.show : ""].join(
         " ",
