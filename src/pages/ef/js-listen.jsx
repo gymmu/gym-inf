@@ -1,4 +1,4 @@
-import CodeBlock from "@components/CodeBlock";
+import JSTerminal from "@components/JSTerminal";
 import Section from "@components/Section";
 
 export default function JSListen() {
@@ -14,9 +14,8 @@ export default function JSListen() {
       </Section>
       <Section>
         <h2>Arrays erstellen</h2>
-        <CodeBlock lang="javascript">
-          {`
-// Ein Array mit Fruchtnamen
+        <JSTerminal filename="arrays-erstellen.js">
+          {`// Ein Array mit Fruchtnamen
 const fruechte = ["Apfel", "Banane", "Kirsche"];
 
 // Zugriff auf Elemente (Index beginnt bei 0!)
@@ -24,15 +23,13 @@ console.log(fruechte[0]); // "Apfel"
 console.log(fruechte[1]); // "Banane"
 
 // Länge des Arrays
-console.log(fruechte.length); // 3
-`}
-        </CodeBlock>
+console.log(fruechte.length); // 3`}
+        </JSTerminal>
       </Section>
       <Section>
         <h2>Arrays verändern</h2>
-        <CodeBlock lang="javascript">
-          {`
-const zahlen = [1, 2, 3];
+        <JSTerminal filename="arrays-aendern.js">
+          {`const zahlen = [1, 2, 3];
 
 // Element hinzufügen
 zahlen.push(4);        // [1, 2, 3, 4]
@@ -43,9 +40,8 @@ zahlen.pop();          // [0, 1, 2, 3]
 zahlen.shift();        // [1, 2, 3]
 
 // Element ändern
-zahlen[0] = 10;       // [10, 2, 3]
-`}
-        </CodeBlock>
+zahlen[0] = 10;       // [10, 2, 3]`}
+        </JSTerminal>
       </Section>
       <Section>
         <h2>Wichtige Array-Methoden</h2>

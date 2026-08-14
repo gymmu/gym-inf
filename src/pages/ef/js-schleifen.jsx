@@ -1,4 +1,4 @@
-import CodeBlock from "@components/CodeBlock";
+import JSTerminal from "@components/JSTerminal";
 import Section from "@components/Section";
 
 export default function JSSchleifen() {
@@ -14,14 +14,12 @@ export default function JSSchleifen() {
       </Section>
       <Section>
         <h2>for-Schleife</h2>
-        <CodeBlock lang="javascript">
-          {`
-// Zählt von 0 bis 4
+        <JSTerminal filename="for-schleife.js">
+          {`// Zählt von 0 bis 4
 for (let i = 0; i < 5; i++) {
   console.log("Zahl: " + i);
-}
-`}
-        </CodeBlock>
+}`}
+        </JSTerminal>
         <p>
           Eine for-Schleife hat drei Teile:
         </p>
@@ -33,27 +31,23 @@ for (let i = 0; i < 5; i++) {
       </Section>
       <Section>
         <h2>while-Schleife</h2>
-        <CodeBlock lang="javascript">
-          {`
-let count = 0;
+        <JSTerminal filename="while-schleife.js">
+          {`let count = 0;
 while (count < 5) {
   console.log("Noch " + (5 - count) + " mal.");
   count++;
-}
-`}
-        </CodeBlock>
+}`}
+        </JSTerminal>
       </Section>
       <Section>
         <h2>for...of-Schleife</h2>
-        <CodeBlock lang="javascript">
-          {`
-const farben = ["rot", "grün", "blau"];
+        <JSTerminal filename="for-of.js">
+          {`const farben = ["rot", "grün", "blau"];
 
 for (const farbe of farben) {
   console.log(farbe);
-}
-`}
-        </CodeBlock>
+}`}
+        </JSTerminal>
       </Section>
       <Section>
         <h2>break und continue</h2>

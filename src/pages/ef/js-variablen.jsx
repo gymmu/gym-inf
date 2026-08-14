@@ -1,4 +1,4 @@
-import CodeBlock from "@components/CodeBlock";
+import JSTerminal from "@components/JSTerminal";
 import Section from "@components/Section";
 
 export default function JSVariablen() {
@@ -17,9 +17,8 @@ export default function JSVariablen() {
           In JavaScript kannst du Variablen mit <code>let</code>,{" "}
           <code>const</code> oder <code>var</code> deklarieren:
         </p>
-        <CodeBlock lang="javascript">
-          {`
-// let: kann später geändert werden
+        <JSTerminal filename="variablen.js">
+          {`// let: kann später geändert werden
 let alter = 15;
 alter = 16; // geht
 
@@ -28,9 +27,8 @@ const name = "Anna";
 // name = "Max"; // Fehler!
 
 // var: veraltete Methode, besser let oder const verwenden
-var alt = 14;
-`}
-        </CodeBlock>
+var alt = 14;`}
+        </JSTerminal>
       </Section>
       <Section>
         <h2>Datentypen</h2>

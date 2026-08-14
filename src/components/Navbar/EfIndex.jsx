@@ -39,42 +39,25 @@ export default function EfIndex() {
             to: "ef/js-grundlagen",
             label: "Arbeitsauftrag: Grundinstallation",
           },
-        ]}
-      />
-      <WeekSection
-        weekNumber="2"
-        title="Grundlagen der Programmierung"
-        items={[
           {
             type: "theorie",
             to: "ef/js-variablen",
             label: "Theorie: Variablen",
           },
           {
-            type: "information",
+            type: "theorie",
             to: "ef/js-bedingungen",
-            label: "Information: Bedingungen",
+            label: "Theorie: Bedingungen",
           },
           {
-            type: "arbeitsauftrag",
+            type: "theorie",
             to: "ef/js-listen",
-            label: "Arbeitsauftrag: Listen",
+            label: "Theorie: Listen",
           },
-        ]}
-      />
-      <WeekSection
-        weekNumber="3"
-        title="Algorithmen"
-        items={[
           {
             type: "theorie",
             to: "ef/js-schleifen",
             label: "Theorie: Schleifen",
-          },
-          {
-            type: "information",
-            to: "ef/js-funktionen",
-            label: "Information: Funktionen",
           },
           {
             type: "aufgaben",
@@ -84,7 +67,18 @@ export default function EfIndex() {
         ]}
       />
       <WeekSection
-        weekNumber="4"
+        weekNumber="2"
+        title="Grundlagen der Programmierung"
+        items={[
+          {
+            type: "information",
+            to: "ef/js-funktionen",
+            label: "Information: Funktionen",
+          },
+        ]}
+      />
+      <WeekSection
+        weekNumber="3"
         title="Funktionales Programmieren"
         items={[
           {
@@ -105,7 +99,7 @@ export default function EfIndex() {
         ]}
       />
       <WeekSection
-        weekNumber="5"
+        weekNumber="4"
         title="Objektorientiertes Programmieren"
         items={[
           {
@@ -126,7 +120,7 @@ export default function EfIndex() {
         ]}
       />
       <WeekSection
-        weekNumber="6"
+        weekNumber="5"
         title="Leistungsüberprüfung"
         items={[
           {

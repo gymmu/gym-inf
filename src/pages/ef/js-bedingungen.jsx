@@ -1,4 +1,4 @@
-import CodeBlock from "@components/CodeBlock";
+import JSTerminal from "@components/JSTerminal";
 import Section from "@components/Section";
 
 export default function JSBedingungen() {
@@ -13,9 +13,8 @@ export default function JSBedingungen() {
       </Section>
       <Section>
         <h2>if, else if, else</h2>
-        <CodeBlock lang="javascript">
-          {`
-let temp = 25;
+        <JSTerminal filename="bedingungen.js">
+          {`let temp = 25;
 
 if (temp > 30) {
   console.log("Es ist sehr warm!");
@@ -23,9 +22,8 @@ if (temp > 30) {
   console.log("Es ist angenehm warm.");
 } else {
   console.log("Es ist kühl.");
-}
-`}
-        </CodeBlock>
+}`}
+        </JSTerminal>
       </Section>
       <Section>
         <h2>Vergleichsoperatoren</h2>
