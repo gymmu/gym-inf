@@ -10,11 +10,13 @@ import JSTerminalLayout from "@components/JSTerminalLayout";
  * @param {string} props.filename - Initial filename
  * @param {string} [props.initialCode] - Fallback code
  * @param {ReactNode} [props.defaultCode] - Default code (priority over initialCode)
+ * @param {ReactNode} [props.children] - Code as children (priority over defaultCode)
  */
 export default function JSTerminal({
   filename,
   initialCode,
   defaultCode,
+  children,
   height = "300px",
 }) {
   // Calculate Monaco height: wrapper (600px) – terminal (200px) – headers/padding (~80px)
@@ -23,7 +25,7 @@ export default function JSTerminal({
     <JSTerminalLayout
       filename={filename}
       initialCode={initialCode}
-      defaultCode={defaultCode}
+      defaultCode={children || defaultCode}
       monacoHeight={height}
       wrapperHeight="600px"
     />

@@ -60,10 +60,15 @@ export default function JSTerminalLayout({
       const saved = localStorage.getItem(storageKey);
       if (saved) {
         const parsed = JSON.parse(saved);
+        // Check if the initial file exists in saved state
+        const hasInitialFile =
+          parsed.files &&
+          Object.keys(parsed.files).length > 0 &&
+          parsed.files[filename];
         return {
-          files: parsed.files || {
-            [filename]: { name: filename, content: sourceCode },
-          },
+          files: hasInitialFile
+            ? parsed.files
+            : { [filename]: { name: filename, content: sourceCode } },
           openFiles: parsed.openFiles || [filename],
           activeFile: parsed.activeFile || filename,
           commandHistory: parsed.commandHistory || [],
@@ -111,6 +116,7 @@ export default function JSTerminalLayout({
     }
   });
   const [selectedExample, setSelectedExample] = useState(null);
+  const [selectedExampleFile, setSelectedExampleFile] = useState(null);
   const [showHelp, setShowHelp] = useState(false);
 
   // Track user-created files (files not in globalExamples)
@@ -372,19 +378,24 @@ Verfügbare Befehle:
       },
     }));
     setSelectedExample(example);
+    setSelectedExampleFile(controlledActiveFile || activeFile);
   };
 
   // Reset to default code
   const resetToDefault = () => {
-    const currentFile = controlledActiveFile || activeFile;
+    const fileToReset = selectedExampleFile || (controlledActiveFile || activeFile);
+    const defaultCode = selectedExample
+      ? selectedExample.code
+      : sourceCode;
     setFiles((prev) => ({
       ...prev,
-      [currentFile]: {
-        name: currentFile,
-        content: sourceCode,
+      [fileToReset]: {
+        name: fileToReset,
+        content: defaultCode,
       },
     }));
     setSelectedExample(null);
+    setSelectedExampleFile(null);
   };
 
   // Reset a specific example file
@@ -406,6 +417,7 @@ Verfügbare Befehle:
       setOpenFiles((prev) => [...prev, fileName]);
     }
     setSelectedExample(null);
+    setSelectedExampleFile(null);
   };
 
   // Delete a user file
@@ -1055,7 +1067,7 @@ Verfügbare Befehle:
                       >
                         <div
                           className={`${styles.explorerItem} ${currentActiveFile === example.id ? styles.activeExplorerItem : ""}`}
-                          onClick={() => openFile(example.id)}
+                          onClick={() => loadExample(example, example.id)}
                           title={example.name}
                         >
                           <span className={styles.fileIcon}>📄</span>
@@ -1193,9 +1205,15 @@ function TerminalEntry({ entry }) {
  * Extrahiert Text aus children (kann String oder React Element sein)
  */
 function extractText(children) {
+  if (children == null) return "";
   if (typeof children === "string") return children;
-  if (Array.isArray(children)) return children.join("");
-  return String(children);
+  if (typeof children === "number") return String(children);
+  if (Array.isArray(children)) return children.map(extractText).join("");
+  // Handle React elements - extract props.children
+  if (typeof children === "object" && children !== null && children.props) {
+    return extractText(children.props.children);
+  }
+  return "";
 }
 
 /**

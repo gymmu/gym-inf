@@ -31,13 +31,13 @@ export default function EfIndex() {
           },
           {
             type: "information",
-            to: "ef/js-grundlagen",
-            label: "Information: Was ist JavaScript?",
+            to: "ef/js-uebersicht",
+            label: "Information: JavaScript-Übersicht",
           },
           {
             type: "arbeitsauftrag",
-            to: "ef/js-editor",
-            label: "Arbeitsauftrag: Editor einrichten",
+            to: "ef/js-grundlagen",
+            label: "Arbeitsauftrag: Grundinstallation",
           },
         ]}
       />

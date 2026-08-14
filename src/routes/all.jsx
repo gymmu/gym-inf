@@ -145,6 +145,7 @@ const FmsWordLatex = lazy(() => import("@pages/fms/word-latex.mdx"));
 // EF - Programmieren mit JavaScript
 const EFEditor = lazy(() => import("@pages-ef/js-editor.jsx"));
 const EFEinstieg = lazy(() => import("@pages-ef/js-einstieg.jsx"));
+const EFUebersicht = lazy(() => import("@pages-ef/js-uebersicht.jsx"));
 const EFGrundinstallation = lazy(() => import("@pages-ef/js-grundlagen.jsx"));
 const EFAufgaben = lazy(() => import("@pages-ef/aufgaben.jsx"));
 const EFVariablen = lazy(() => import("@pages-ef/js-variablen.jsx"));
@@ -343,6 +344,7 @@ export const routes = [
 
       // EF - Programmieren mit JavaScript
       { path: "ef/js-einstieg", element: <EFEinstieg /> },
+      { path: "ef/js-uebersicht", element: <EFUebersicht /> },
       { path: "ef/js-grundlagen", element: <EFGrundinstallation /> },
       { path: "ef/aufgaben", element: <EFAufgaben /> },
       { path: "ef/js-variablen", element: <EFVariablen /> },
