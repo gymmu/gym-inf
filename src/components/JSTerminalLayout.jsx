@@ -172,16 +172,25 @@ export default function JSTerminalLayout({
 📖 Terminal-Hilfe
 
 Verfügbare Befehle:
-  node <datei.js>    — Datei ausführen
-  ls                 — Alle Dateien auflisten
-  touch <datei.js>   — Neue Datei erstellen
-  rm <datei.js>      — Datei löschen
-  clear              — Terminal leeren
-  reset              — Speicher zurücksetzen
+  node <datei.js>           — Datei ausführen
+  node <datei.js> <arg>...  — Datei mit Kommandozeilenargumenten
+  ls                        — Alle Dateien auflisten
+  touch <datei.js>          — Neue Datei erstellen
+  rm <datei.js>             — Datei löschen
+  clear                     — Terminal leeren
+  reset                     — Speicher zurücksetzen
+
+💡 Kommandozeilenargumente:
+   process.argv[0] → 'node'
+   process.argv[1] → Dateipfad
+   process.argv[2] → Erstes Argument
+   process.argv[3] → Zweites Argument
+
+   Beispiel: node script.js hallo welt
+   → process.argv = ['node', 'script.js', 'hallo', 'welt']
 
 💡 Tipp: Klicke "▶ Ausführen" im Editor,
    um die aktuelle Datei auszuführen.
-   Oder tippe "node <datei.js>" hier.
 
 ⌨️ Tab-Vervollständigung: Nutze die Tab-Taste
    für Befehle und Dateinamen.

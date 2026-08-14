@@ -246,12 +246,29 @@ git commit -m "Arbeitsauftrag 01 bearbeitet"`}
         </div>
 
         <div className="aufgabe">
-          <h4>Aufgabe 20: Zahlenraten</h4>
+          <h4>Aufgabe 20: Palindrom-Prüfer</h4>
           <p>
-            Definieren Sie eine Variable mit einer zufälligen Zahl zwischen 1 und 10
-            (verwenden Sie <code>Math.floor(Math.random() * 10) + 1</code>). Prüfen Sie mit
-            einer <code>while</code>-Schleife, ob die geratene Zahl korrekt ist.
-            Geben Sie Hinweise ("zu hoch" / "zu tief"), bis die Zahl richtig ist.
+            Erstellen Sie ein Skript, das prüft, ob ein über <code>process.argv</code>
+            (Index 2) übergebenes Wort ein Palindrom ist.
+            Ein Palindrom liest sich vorwärts und rückwärts gleich (z.B. "anna", "otto", "abba").
+          </p>
+          <p>
+            <strong>Aufgaben:</strong>
+          </p>
+          <ul>
+            <li>Lesen Sie das Wort aus <code>process.argv[2]</code> aus</li>
+            <li>Erzeugen Sie die umgekehrte Version des Wortes (z.B. mit <code>split('')</code>, <code>reverse()</code>, <code>join('')</code>)</li>
+            <li>Vergleichen Sie beide Versionen</li>
+            <li>Geben Sie <code>"&lt;Wort&gt; ist ein Palindrom"</code> oder <code>"&lt;Wort&gt; ist kein Palindrom"</code> aus</li>
+          </ul>
+          <p>
+            <strong>Testen Sie im Terminal:</strong>
+          </p>
+          <p>
+            <code>node palindrom.js Anna</code> → <code>Anna ist ein Palindrom</code>
+          </p>
+          <p>
+            <code>node palindrom.js Hallo</code> → <code>Hallo ist kein Palindrom</code>
           </p>
         </div>
       </Section>

@@ -152,6 +152,7 @@ const EFVariablen = lazy(() => import("@pages-ef/js-variablen.jsx"));
 const EFBedingungen = lazy(() => import("@pages-ef/js-bedingungen.jsx"));
 const EFListen = lazy(() => import("@pages-ef/js-listen.jsx"));
 const EFSchleifen = lazy(() => import("@pages-ef/js-schleifen.jsx"));
+const EFUserInput = lazy(() => import("@pages-ef/js-user-input.jsx"));
 const EFFunktionen = lazy(() => import("@pages-ef/js-funktionen.jsx"));
 const EFObjekte = lazy(() => import("@pages-ef/js-objekte.jsx"));
 const EFFunktionales = lazy(
@@ -351,6 +352,7 @@ export const routes = [
       { path: "ef/js-bedingungen", element: <EFBedingungen /> },
       { path: "ef/js-listen", element: <EFListen /> },
       { path: "ef/js-schleifen", element: <EFSchleifen /> },
+      { path: "ef/js-user-input", element: <EFUserInput /> },
       { path: "ef/js-funktionen", element: <EFFunktionen /> },
       { path: "ef/js-objekte", element: <EFObjekte /> },
       {

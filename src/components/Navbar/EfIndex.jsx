@@ -60,6 +60,11 @@ export default function EfIndex() {
             label: "Theorie: Schleifen",
           },
           {
+            type: "tipp",
+            to: "ef/js-user-input",
+            label: "Tipp: User Input",
+          },
+          {
             type: "aufgaben",
             to: "ef/aufgaben",
             label: "Aufgaben: Übungsaufgaben",
