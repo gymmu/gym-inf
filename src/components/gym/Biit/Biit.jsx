@@ -30,6 +30,7 @@ export default function Biit({ value = "neutral", className = "" }) {
   const [blink, setBlink] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [hoverX, setHoverX] = useState(0.5); // 0 = links, 1 = rechts
+  const [sleepy, setSleepy] = useState(0); // 0 = wach, 1 = schläfrig (animiert)
   const biitRef = useRef(null);
   const timeoutRef = useRef(null);
 
@@ -51,6 +52,60 @@ export default function Biit({ value = "neutral", className = "" }) {
       }
     };
   }, [scheduleNextBlink]);
+
+  // Mausposition prüfen: Ist die Maus auf der Seite?
+  const pointerInDocumentRef = useRef(true);
+
+  useEffect(() => {
+    let rafId = null;
+
+    const tick = () => {
+      if (pointerInDocumentRef.current) {
+        setSleepy((prev) => Math.max(prev - 0.03, 0));
+      } else {
+        setSleepy((prev) => Math.min(prev + 0.03, 1));
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const handlePointerLeave = () => {
+      pointerInDocumentRef.current = false;
+    };
+
+    const handleDocumentMouseMove = () => {
+      // Maus bewegt sich wieder über das Dokument
+      pointerInDocumentRef.current = true;
+      setSleepy(0);
+    };
+
+    const handleFocus = () => {
+      pointerInDocumentRef.current = true;
+      setSleepy(0);
+    };
+
+    const handleBlur = () => {
+      pointerInDocumentRef.current = false;
+    };
+
+    document.addEventListener("pointerleave", handlePointerLeave);
+    document.addEventListener("mousemove", handleDocumentMouseMove);
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("blur", handleBlur);
+
+    if (!rafId) {
+      rafId = requestAnimationFrame(tick);
+    }
+
+    return () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      document.removeEventListener("pointerleave", handlePointerLeave);
+      document.removeEventListener("mousemove", handleDocumentMouseMove);
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("blur", handleBlur);
+    };
+  }, []);
 
   // Bestimme den Farbverlauf basierend auf dem Zustand
   const getGradientStops = () => {
@@ -88,22 +143,84 @@ export default function Biit({ value = "neutral", className = "" }) {
 
   const gradientStops = getGradientStops();
 
-  // Berechne die Pupillen-Position basierend auf globaler Mausposition
-  const getPupilOffset = (eyeCenterX, eyeCenterY) => {
-    const dx = globalMouseX - eyeCenterX;
-    const dy = globalMouseY - eyeCenterY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    const maxOffset = 3;
-    const offset = Math.min(distance / 50, maxOffset);
-    const angle = Math.atan2(dy, dx);
-    return {
-      x: Math.cos(angle) * offset,
-      y: Math.sin(angle) * offset,
+  // Pupillen-Elemente für live-Tracking
+  const pupilRefs = useRef({ left: null, right: null });
+  const svgRef = useRef(null);
+  const sleepyRef = useRef(0);
+  useEffect(() => {
+    sleepyRef.current = sleepy;
+  }, [sleepy]);
+
+  // Live-Maus-Tracking mit requestAnimationFrame
+  useEffect(() => {
+    let ticking = false;
+
+    const updatePupils = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          const leftEl = pupilRefs.current.left;
+          const rightEl = pupilRefs.current.right;
+
+          if (leftEl && rightEl && svgRef.current) {
+            const rect = svgRef.current.getBoundingClientRect();
+            const scaleX = rect.width / 200;
+            const scaleY = rect.height / 160;
+
+            const leftEyePageX = rect.left + 75 * scaleX;
+            const leftEyePageY = rect.top + 65 * scaleY;
+            const rightEyePageX = rect.left + 105 * scaleX;
+            const rightEyePageY = rect.top + 65 * scaleY;
+
+            const leftDx = globalMouseX - leftEyePageX;
+            const leftDy = globalMouseY - leftEyePageY;
+            const leftDist = Math.sqrt(leftDx * leftDx + leftDy * leftDy);
+            const leftMaxOffset = 5;
+            const leftOffset = Math.min(leftDist / 40, leftMaxOffset);
+            const leftAngle = Math.atan2(leftDy, leftDx);
+
+            const rightDx = globalMouseX - rightEyePageX;
+            const rightDy = globalMouseY - rightEyePageY;
+            const rightDist = Math.sqrt(rightDx * rightDx + rightDy * rightDy);
+            const rightMaxOffset = 5;
+            const rightOffset = Math.min(rightDist / 40, rightMaxOffset);
+            const rightAngle = Math.atan2(rightDy, rightDx);
+
+            // Wenn schläfrig, werden die Pupillen leicht nach unten und zentriert
+            const sleepyFactor = sleepyRef.current;
+            const leftX = Math.cos(leftAngle) * leftOffset * (1 - sleepyFactor);
+            const leftY =
+              Math.sin(leftAngle) * leftOffset * (1 - sleepyFactor) +
+              sleepyFactor * 2;
+            const rightX =
+              Math.cos(rightAngle) * rightOffset * (1 - sleepyFactor);
+            const rightY =
+              Math.sin(rightAngle) * rightOffset * (1 - sleepyFactor) +
+              sleepyFactor * 2;
+
+            leftEl.setAttribute("transform", `translate(${leftX}, ${leftY})`);
+            rightEl.setAttribute(
+              "transform",
+              `translate(${rightX}, ${rightY})`,
+            );
+          }
+          ticking = false;
+        });
+      }
     };
+
+    const interval = setInterval(updatePupils, 16); // ~60fps
+    return () => clearInterval(interval);
+  }, []);
+
+  // Berechne die schlaffe Augen-Höhe basierend auf sleepy-State
+  const getSleepyEyeHeight = () => {
+    // sleepy 0 = volle Höhe (14), sleepy 1 = zu 70% geschlossen (4)
+    return 14 - sleepy * 10;
   };
 
-  const leftPupilOffset = getPupilOffset(75, 65);
-  const rightPupilOffset = getPupilOffset(105, 65);
+  const leftEyeHeight = getSleepyEyeHeight();
+  const rightEyeHeight = getSleepyEyeHeight();
 
   return (
     <div
@@ -123,6 +240,9 @@ export default function Biit({ value = "neutral", className = "" }) {
       }}
     >
       <svg
+        ref={(el) => {
+          svgRef.current = el;
+        }}
         viewBox="0 0 200 160"
         className={style.svg}
         role="img"
@@ -204,7 +324,7 @@ export default function Biit({ value = "neutral", className = "" }) {
               cx="0"
               cy="0"
               rx="14"
-              ry={blink ? 1 : 14}
+              ry={blink ? 1 : leftEyeHeight}
               fill="white"
               stroke="#282828"
               strokeWidth="2"
@@ -213,10 +333,8 @@ export default function Biit({ value = "neutral", className = "" }) {
             {/* Pupille */}
             {!blink && (
               <g
-                style={{
-                  transition: "transform 0.1s ease-out",
-                  transform: `translate(${leftPupilOffset.x}px, ${leftPupilOffset.y}px)`,
-                }}
+                ref={(el) => (pupilRefs.current.left = el)}
+                style={{ transformOrigin: "0 0" }}
               >
                 <circle cx="2" cy="0" r="7" fill="#282828" />
                 <circle cx="4" cy="-2" r="2.5" fill="white" />
@@ -231,7 +349,7 @@ export default function Biit({ value = "neutral", className = "" }) {
               cx="0"
               cy="0"
               rx="14"
-              ry={blink ? 1 : 14}
+              ry={blink ? 1 : rightEyeHeight}
               fill="white"
               stroke="#282828"
               strokeWidth="2"
@@ -240,10 +358,8 @@ export default function Biit({ value = "neutral", className = "" }) {
             {/* Pupille */}
             {!blink && (
               <g
-                style={{
-                  transition: "transform 0.1s ease-out",
-                  transform: `translate(${rightPupilOffset.x}px, ${rightPupilOffset.y}px)`,
-                }}
+                ref={(el) => (pupilRefs.current.right = el)}
+                style={{ transformOrigin: "0 0" }}
               >
                 <circle cx="2" cy="0" r="7" fill="#282828" />
                 <circle cx="4" cy="-2" r="2.5" fill="white" />
