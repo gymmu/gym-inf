@@ -1,0 +1,158 @@
+.biit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  transition: transform 0.3s ease;
+}
+
+.svg {
+  width: 220px;
+  height: 180px;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+/* Hintergrund-Rechteck Animation */
+.bgRect {
+  transition: all 0.6s ease;
+}
+
+/* Ziffern */
+.digit {
+  transition: fill 0.6s ease;
+  cursor: default;
+}
+
+/* Augen-Container */
+.eyes {
+  overflow: visible;
+}
+
+/* Augen-Weiss */
+.eyeWhite {
+  transition: ry 0.1s ease;
+}
+
+/* Pupille */
+.pupil {
+  transition: transform 0.1s ease-out;
+}
+
+/* Status-Punkt */
+.statusDot {
+  transition: fill 0.6s ease;
+}
+
+/* Label */
+.label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #282828;
+  font-family: "Courier New", monospace;
+  letter-spacing: 2px;
+}
+
+.state {
+  font-size: 12px;
+  color: #665c55;
+  font-family: "Courier New", monospace;
+  opacity: 0.7;
+}
+
+/* ============ Animationen ============ */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes blink {
+  0%,
+  45%,
+  55%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.05);
+  }
+}
+
+/* Biit schwebt leicht */
+.biit {
+  animation: none;
+}
+
+/* Status-Punkt pulsiert */
+.statusDot {
+  animation: pulse 2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* ============ Zustands-Animationen ============ */
+
+/* Neutral: sanftes Pulsieren des Oranges */
+.biit[data-state="neutral"] .bgRect {
+  animation: none;
+}
+
+/* Zustand 0: Roter Schimmer */
+.biit[data-state="0"] {
+  filter: drop-shadow(0 0 20px rgba(251, 73, 52, 0.3));
+}
+
+/* Zustand 1: Grüner Schimmer */
+.biit[data-state="1"] {
+  filter: drop-shadow(0 0 20px rgba(184, 187, 38, 0.3));
+}
+
+.biit[data-state="0"] .statusDot {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.biit[data-state="1"] .statusDot {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ============ Responsive ============ */
+
+@media (max-width: 480px) {
+  .svg {
+    width: 180px;
+    height: 150px;
+  }
+
+  .name {
+    font-size: 16px;
+  }
+
+  .state {
+    font-size: 11px;
+  }
+}

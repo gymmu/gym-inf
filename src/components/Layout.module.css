@@ -48,3 +48,32 @@ main {
     grid-template-areas: "header" "main" "footer";
   }
 }
+
+/* ============ Biit Overlay ============ */
+
+.biitOverlay {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.biitOverlay:hover {
+  opacity: 1;
+}
+
+/* Verstecke Biit auf kleinen Screens */
+@media (max-width: 1024px) {
+  .biitOverlay {
+    display: none;
+  }
+}
+
+/* Verstecke Biit im Fullscreen-Modus */
+#app.fullScreen .biitOverlay {
+  display: none;
+}
