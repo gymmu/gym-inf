@@ -26,9 +26,7 @@ export default function JSSchleifen() {
           verwendet, wenn du genau weisst, wie oft der Code ausgeführt werden
           soll.
         </p>
-        <p>
-          Eine for-Schleife hat drei Teile in der Klammer:
-        </p>
+        <p>Eine for-Schleife hat drei Teile in der Klammer:</p>
         <ul>
           <li>
             <strong>Initialisierung</strong>: Eine Variable wird erstellt und
@@ -167,8 +165,8 @@ for (const buchstabe of text) {
         <h2>break und continue</h2>
         <p>
           <code>break</code> beendet die Schleife komplett, während{" "}
-          <code>continue</code> den aktuellen Durchlauf überspringt und mit
-          dem nächsten weitermacht:
+          <code>continue</code> den aktuellen Durchlauf überspringt und mit dem
+          nächsten weitermacht:
         </p>
         <JSTerminal filename="break-continue.js">
           {`// break: Schleife sofort beenden

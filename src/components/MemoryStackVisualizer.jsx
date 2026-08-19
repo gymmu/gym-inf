@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
 import styles from "@components/MemoryStackVisualizer.module.css";
+import { useCallback, useState } from "react";
 
 export default function MemoryStackVisualizer({
   mode = "static",
@@ -29,8 +29,12 @@ export default function MemoryStackVisualizer({
   const baseAddress = 0x1000;
 
   // Split memory into used and free cells
-  const usedMemory = memory.filter((cell) => cell.char !== "." || cell.ascii !== undefined);
-  const freeMemory = memory.filter((cell) => cell.char === "." && cell.ascii === undefined);
+  const usedMemory = memory.filter(
+    (cell) => cell.char !== "." || cell.ascii !== undefined,
+  );
+  const freeMemory = memory.filter(
+    (cell) => cell.char === "." && cell.ascii === undefined,
+  );
 
   // Memory above (showing it continues upward)
   const upperMemory = [
@@ -60,8 +64,12 @@ export default function MemoryStackVisualizer({
     }));
 
     setMemory((prev) => {
-      const currentUsed = prev.filter((cell) => cell.char !== "." || cell.ascii !== undefined);
-      const currentFree = prev.filter((cell) => cell.char === "." && cell.ascii === undefined);
+      const currentUsed = prev.filter(
+        (cell) => cell.char !== "." || cell.ascii !== undefined,
+      );
+      const currentFree = prev.filter(
+        (cell) => cell.char === "." && cell.ascii === undefined,
+      );
 
       // Check if we need to expand (double the free cells)
       const neededFree = Math.max(4, Math.max(8, usedCells.length));
@@ -133,7 +141,10 @@ export default function MemoryStackVisualizer({
             {/* BEFORE SECTION: Speicher oberhalb des Textes (grau) */}
             <div className={`${styles.memoryWindow} ${styles.upperSection}`}>
               {upperMemory.map((cell) => (
-                <div key={cell.address} className={`${styles.cell} ${getRowClass(cell.address)}`}>
+                <div
+                  key={cell.address}
+                  className={`${styles.cell} ${getRowClass(cell.address)}`}
+                >
                   <span className={styles.address}>
                     0x{cell.address.toString(16).padStart(4, "0")}
                   </span>
@@ -171,7 +182,8 @@ export default function MemoryStackVisualizer({
                 return (
                   <div
                     key={address}
-                    className={`${styles.cell} ${getRowClass(address)} ${styles.freeCell}`}>
+                    className={`${styles.cell} ${getRowClass(address)} ${styles.freeCell}`}
+                  >
                     <span className={styles.address}>
                       0x{address.toString(16).padStart(4, "0")}
                     </span>
@@ -185,7 +197,8 @@ export default function MemoryStackVisualizer({
             {/* AFTER SECTION: Speicher nach dem Text (grau) */}
             <div className={`${styles.memoryWindow} ${styles.afterSection}`}>
               {[0, 1, 2].map((offset) => {
-                const address = baseAddress + usedMemory.length + freeMemory.length + offset;
+                const address =
+                  baseAddress + usedMemory.length + freeMemory.length + offset;
                 return (
                   <div
                     key={address}
@@ -221,44 +234,92 @@ export default function MemoryStackVisualizer({
                   <div className={styles.legendCardIcon}>📍</div>
                   <div className={styles.legendCardContent}>
                     <strong>Adresse</strong>
-                    <p>Jede Zeile repräsentiert eine Speicherzelle mit einer eindeutigen hexadezimalen Adresse. Die Adresse beginnt bei 0x1000 und erhöht sich pro Zelle um 1. Sie zeigt an, an welcher Position im Speicher die Daten gespeichert sind.</p>
+                    <p>
+                      Jede Zeile repräsentiert eine Speicherzelle mit einer
+                      eindeutigen hexadezimalen Adresse. Die Adresse beginnt bei
+                      0x1000 und erhöht sich pro Zelle um 1. Sie zeigt an, an
+                      welcher Position im Speicher die Daten gespeichert sind.
+                    </p>
                   </div>
                 </div>
                 <div className={styles.legendCard}>
                   <div className={styles.legendCardIcon}>🔢</div>
                   <div className={styles.legendCardContent}>
                     <strong>Byte</strong>
-                    <p>Ein Byte besteht aus 8 Bits, die jeweils den Wert 0 oder 1 haben. Zusammen ergeben sie den Dezimalwert des ASCII-Codes. Grüne Bits (1) und rote Bits (0) visualisieren die binäre Darstellung des Zeichens im Speicher.</p>
+                    <p>
+                      Ein Byte besteht aus 8 Bits, die jeweils den Wert 0 oder 1
+                      haben. Zusammen ergeben sie den Dezimalwert des
+                      ASCII-Codes. Grüne Bits (1) und rote Bits (0)
+                      visualisieren die binäre Darstellung des Zeichens im
+                      Speicher.
+                    </p>
                   </div>
                 </div>
                 <div className={styles.legendCard}>
                   <div className={styles.legendCardIcon}>🔤</div>
                   <div className={styles.legendCardContent}>
                     <strong>Zeichen</strong>
-                    <p>Zeigt das lesbare Zeichen, das im Speicher gespeichert ist. Eingetippte Zeichen werden als ASCII-Code abgelegt. Leerer Speicher wird mit einem Punkt (.) dargestellt. Leerzeichen sind unsichtbar, werden aber im Speicher als '.' angezeigt.</p>
+                    <p>
+                      Zeigt das lesbare Zeichen, das im Speicher gespeichert
+                      ist. Eingetippte Zeichen werden als ASCII-Code abgelegt.
+                      Leerer Speicher wird mit einem Punkt (.) dargestellt.
+                      Leerzeichen sind unsichtbar, werden aber im Speicher als
+                      '.' angezeigt.
+                    </p>
                   </div>
                 </div>
 
                 {/* Memory Section Descriptions */}
                 <div className={styles.legendCard}>
-                  <div className={styles.legendCardIcon} style={{opacity: 0.5}}>⬛</div>
+                  <div
+                    className={styles.legendCardIcon}
+                    style={{ opacity: 0.5 }}
+                  >
+                    ⬛
+                  </div>
                   <div className={styles.legendCardContent}>
                     <strong>Vor dem Speicher</strong>
-                    <p>Grauer Bereich oberhalb des zugewiesenen Speichers. Enthält Speicherinhalte, die vor dem Speicherblock liegen. Dieser Bereich ist ausgegraut und zeigt an, dass er nicht zum zugewiesenen Speicher gehört.</p>
+                    <p>
+                      Grauer Bereich oberhalb des zugewiesenen Speichers.
+                      Enthält Speicherinhalte, die vor dem Speicherblock liegen.
+                      Dieser Bereich ist ausgegraut und zeigt an, dass er nicht
+                      zum zugewiesenen Speicher gehört.
+                    </p>
                   </div>
                 </div>
                 <div className={styles.legendCard}>
-                  <div className={styles.legendCardIcon} style={{color: 'var(--color-blue)'}}>🟦</div>
+                  <div
+                    className={styles.legendCardIcon}
+                    style={{ color: "var(--color-blue)" }}
+                  >
+                    🟦
+                  </div>
                   <div className={styles.legendCardContent}>
                     <strong>Zugewiesener Speicher</strong>
-                    <p>Blau umrandeter Bereich mit dem eigentlichen Speicherblock. Enthält belegte Zellen (normaler Hintergrund) und freien Speicher (leichter Hintergrund). Hier wird der eingegebene Text gespeichert. Am Ende wird die letzte Adresse angezeigt.</p>
+                    <p>
+                      Blau umrandeter Bereich mit dem eigentlichen
+                      Speicherblock. Enthält belegte Zellen (normaler
+                      Hintergrund) und freien Speicher (leichter Hintergrund).
+                      Hier wird der eingegebene Text gespeichert. Am Ende wird
+                      die letzte Adresse angezeigt.
+                    </p>
                   </div>
                 </div>
                 <div className={styles.legendCard}>
-                  <div className={styles.legendCardIcon} style={{opacity: 0.5}}>⬜</div>
+                  <div
+                    className={styles.legendCardIcon}
+                    style={{ opacity: 0.5 }}
+                  >
+                    ⬜
+                  </div>
                   <div className={styles.legendCardContent}>
                     <strong>Nach dem Speicher</strong>
-                    <p>Grauer Bereich unterhalb des zugewiesenen Speichers. Enthält zufällige Speicherinhalte nach dem Speicherblock. Dieser Bereich ist ebenfalls ausgegraut und zeigt an, dass er nicht zum zugewiesenen Speicher gehört.</p>
+                    <p>
+                      Grauer Bereich unterhalb des zugewiesenen Speichers.
+                      Enthält zufällige Speicherinhalte nach dem Speicherblock.
+                      Dieser Bereich ist ebenfalls ausgegraut und zeigt an, dass
+                      er nicht zum zugewiesenen Speicher gehört.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -281,7 +342,8 @@ export default function MemoryStackVisualizer({
                     className={styles.textInput}
                   />
                   <span className={styles.tooltip}>
-                    Passen Sie den Text hier an, um den Speicherinhalt zu ändern.
+                    Passen Sie den Text hier an, um den Speicherinhalt zu
+                    ändern.
                   </span>
                 </div>
               </>

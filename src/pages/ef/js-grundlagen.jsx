@@ -7,8 +7,9 @@ export default function JSGrundlagen() {
       <Section>
         <h2>Arbeitsauftrag: Grundinstallation</h2>
         <p>
-          Bevor wir mit dem Programmieren beginnen, musst du deine Entwicklungsumgebung
-          einrichten. Am Ende dieser Installation musst du folgende Punkte erledigt haben:
+          Bevor wir mit dem Programmieren beginnen, musst du deine
+          Entwicklungsumgebung einrichten. Am Ende dieser Installation musst du
+          folgende Punkte erledigt haben:
         </p>
 
         <h3>Was am Ende installiert sein muss:</h3>
@@ -17,7 +18,9 @@ export default function JSGrundlagen() {
             <strong>Ein Editor zum Bearbeiten von JavaScript-Code</strong>
             <ul>
               <li>Empfehlung: Visual Studio Code (VSCode)</li>
-              <li>Alternativen: Zed, VSCodium, Neovim, Sublime Text, WebStorm</li>
+              <li>
+                Alternativen: Zed, VSCodium, Neovim, Sublime Text, WebStorm
+              </li>
             </ul>
           </li>
           <li>
@@ -31,30 +34,45 @@ export default function JSGrundlagen() {
           <li>
             <strong>Git als Versionierungswerkzeug</strong>
             <ul>
-              <li>Git muss auf deinem Computer installiert und konfiguriert sein</li>
-              <li>Dein Name und E-Mail müssen als Git-Identität gesetzt sein</li>
+              <li>
+                Git muss auf deinem Computer installiert und konfiguriert sein
+              </li>
+              <li>
+                Dein Name und E-Mail müssen als Git-Identität gesetzt sein
+              </li>
             </ul>
           </li>
           <li>
-            <strong>Ein GitHub-Account mit einem Repository für JavaScript-Aufgaben</strong>
+            <strong>
+              Ein GitHub-Account mit einem Repository für JavaScript-Aufgaben
+            </strong>
             <ul>
-              <li>Erstelle ein <strong>privates Repository</strong> auf GitHub</li>
-              <li>Dieses Repository dient als Ablage für alle deine JavaScript-Aufgaben</li>
+              <li>
+                Erstelle ein <strong>privates Repository</strong> auf GitHub
+              </li>
+              <li>
+                Dieses Repository dient als Ablage für alle deine
+                JavaScript-Aufgaben
+              </li>
             </ul>
           </li>
           <li>
             <strong>Lehrperson als Collaborator hinzugefügt</strong>
             <ul>
-              <li>GitHub-Alias der Lehrperson: <strong>cedricgeissmann</strong></li>
-              <li>Füge diese Person als Collaborator in deinem Repository hinzu</li>
+              <li>
+                GitHub-Alias der Lehrperson: <strong>cedricgeissmann</strong>
+              </li>
+              <li>
+                Füge diese Person als Collaborator in deinem Repository hinzu
+              </li>
             </ul>
           </li>
         </ol>
 
         <p>
-          <strong>Wichtig:</strong> Erledige alle fünf Punkte bevor du mit den ersten
-          Programmieraufgaben beginnst. Ohne diese Grundinstallation kannst du deine
-          Aufgaben nicht korrekt abgeben.
+          <strong>Wichtig:</strong> Erledige alle fünf Punkte bevor du mit den
+          ersten Programmieraufgaben beginnst. Ohne diese Grundinstallation
+          kannst du deine Aufgaben nicht korrekt abgeben.
         </p>
       </Section>
 

@@ -8,7 +8,9 @@ function WeekSection({ weekNumber, title, items }) {
       <ol className={style.nav}>
         <li className={style.weekTopic}>{title}</li>
         {items.map((item) => (
-          <NavLink key={item.to} to={item.to}>{item.label}</NavLink>
+          <NavLink key={item.to} to={item.to}>
+            {item.label}
+          </NavLink>
         ))}
       </ol>
     </section>
@@ -74,11 +76,7 @@ export default function EfIndex() {
         title="Grundlagen der Programmierung"
         items={[]}
       />
-      <WeekSection
-        weekNumber="3"
-        title="Algorithmen"
-        items={[]}
-      />
+      <WeekSection weekNumber="3" title="Algorithmen" items={[]} />
       <WeekSection
         weekNumber="4"
         title="Funktionales Programmieren"
@@ -89,11 +87,7 @@ export default function EfIndex() {
         title="Objektorientiertes Programmieren"
         items={[]}
       />
-      <WeekSection
-        weekNumber="6"
-        title="Leistungsüberprüfung"
-        items={[]}
-      />
+      <WeekSection weekNumber="6" title="Leistungsüberprüfung" items={[]} />
     </div>
   );
 }

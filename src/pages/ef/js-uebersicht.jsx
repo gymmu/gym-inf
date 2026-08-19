@@ -1,5 +1,5 @@
-import LearningGoals from "@components/LearningGoals";
 import JSTerminal from "@components/JSTerminal";
+import LearningGoals from "@components/LearningGoals";
 import Section from "@components/Section";
 
 export default function JSUebersicht() {
@@ -10,13 +10,14 @@ export default function JSUebersicht() {
         <p>
           In diesem Kapitel siehst du eine <strong>schnelle Übersicht</strong>
           über die wichtigsten JavaScript-Konzepte. Du wirst viele verschiedene
-          Code-Beispiele anschauen, ausführen und kleine Änderungen ausprobieren.
+          Code-Beispiele anschauen, ausführen und kleine Änderungen
+          ausprobieren.
         </p>
         <p>
           <strong>Wichtig:</strong> Es geht jetzt nicht darum, jede Syntax im
-          Detail zu verstehen – das lernen wir in den folgenden Kapiteln.
-          Schau dir die Beispiele an, führe sie aus und überlege, was du
-          beobachten kannst. Was passiert, wenn du den Code änderst?
+          Detail zu verstehen – das lernen wir in den folgenden Kapiteln. Schau
+          dir die Beispiele an, führe sie aus und überlege, was du beobachten
+          kannst. Was passiert, wenn du den Code änderst?
         </p>
       </Section>
 
@@ -29,21 +30,13 @@ export default function JSUebersicht() {
             <li>
               Variablen mit <code>const</code> und <code>let</code> verwenden
             </li>
-            <li>
-              Einfache Berechnungen mit Operatoren durchführen
-            </li>
+            <li>Einfache Berechnungen mit Operatoren durchführen</li>
             <li>
               Bedingungen mit <code>if/else</code> erkennen
             </li>
-            <li>
-              Schleifen zum Wiederholen von Code verstehen
-            </li>
-            <li>
-              Arrays als Listen von Werten verwenden
-            </li>
-            <li>
-              Funktionen als wiederverwendbare Code-Blöcke kennenlernen
-            </li>
+            <li>Schleifen zum Wiederholen von Code verstehen</li>
+            <li>Arrays als Listen von Werten verwenden</li>
+            <li>Funktionen als wiederverwendbare Code-Blöcke kennenlernen</li>
           </ul>
         </LearningGoals>
       </Section>
@@ -147,8 +140,8 @@ console.log("Neuer Preis: " + neupreis + " CHF");`}
         <h2>Beispiel 4: Bedingungen – Programme steuern</h2>
         <p>
           Mit <code>if</code> und <code>else</code> kannst du Programme
-          unterschiedlich reagieren lassen, je nach Bedingung. Ändere die
-          Werte und überlege, welcher Teil ausgeführt wird!
+          unterschiedlich reagieren lassen, je nach Bedingung. Ändere die Werte
+          und überlege, welcher Teil ausgeführt wird!
         </p>
         <JSTerminal filename="bedingungen.js">
           {`// Alter prüfen

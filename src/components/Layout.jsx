@@ -1,6 +1,6 @@
-import Biit from "@components/gym/Biit/Biit";
 import ChapterRating from "@components/ChapterRating/ChapterRating";
 import Footer from "@components/Footer";
+import Biit from "@components/gym/Biit/Biit";
 import Header from "@components/Header";
 import style from "@components/Layout.module.css";
 import Navbar from "@components/Navbar";

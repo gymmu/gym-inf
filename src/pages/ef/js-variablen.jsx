@@ -15,18 +15,16 @@ export default function JSVariablen() {
         </p>
         <p>
           Warum braucht man Variablen? Stell dir vor, du möchtest den Preis
-          eines Produkts berechnen. Du musst den Grundpreis, den Steuernsatz
-          und den Rabatt speichern und damit rechnen. Ohne Variablen müsstest
-          du jede Zahl immer wieder tippen. Mit Variablen speicherst du die
-          Werte einmal und kannst sie später beliebig oft verwenden.
+          eines Produkts berechnen. Du musst den Grundpreis, den Steuernsatz und
+          den Rabatt speichern und damit rechnen. Ohne Variablen müsstest du
+          jede Zahl immer wieder tippen. Mit Variablen speicherst du die Werte
+          einmal und kannst sie später beliebig oft verwenden.
         </p>
       </Section>
 
       <Section>
         <h2>Variablen deklarieren</h2>
-        <p>
-          In JavaScript kannst du Variablen auf drei Arten erstellen:
-        </p>
+        <p>In JavaScript kannst du Variablen auf drei Arten erstellen:</p>
         <ul>
           <li>
             <code>let</code>: Eine Variable, deren Wert später geändert werden
@@ -37,7 +35,8 @@ export default function JSVariablen() {
             darf (wie eine verschlossene Schublade)
           </li>
           <li>
-            <code>var</code>: Die veraltete Methode aus alten JavaScript-Versionen
+            <code>var</code>: Die veraltete Methode aus alten
+            JavaScript-Versionen
           </li>
         </ul>
         <p>
@@ -67,14 +66,14 @@ console.log(alt); // 14
 
       <Section>
         <h2>Benennungsregeln für Variablen</h2>
-        <p>
-          Variablennamen müssen bestimmte Regeln befolgen:
-        </p>
+        <p>Variablennamen müssen bestimmte Regeln befolgen:</p>
         <ul>
           <li>Dürfen nur Buchstaben, Zahlen, $ und _ enthalten</li>
           <li>Dürfen nicht mit einer Zahl beginnen</li>
           <li>Sind gross-/kleinschreibungsabhängig (alter ≠ Alter)</li>
-          <li>Dürfen keine reservierten Wörter sein (wie let, const, if, ...)</li>
+          <li>
+            Dürfen keine reservierten Wörter sein (wie let, const, if, ...)
+          </li>
         </ul>
         <p>
           <strong>Gute Namenskonvention:</strong> Verwende camelCase und mache
@@ -97,8 +96,8 @@ let preisInFranken = 25.50;
       <Section>
         <h2>Datentypen in JavaScript</h2>
         <p>
-          Jeder Wert in JavaScript hat einen bestimmten Typ (eine "Klasse").
-          Die wichtigsten Typen sind:
+          Jeder Wert in JavaScript hat einen bestimmten Typ (eine "Klasse"). Die
+          wichtigsten Typen sind:
         </p>
         <ul>
           <li>
@@ -132,9 +131,9 @@ let preisInFranken = 25.50;
         <h2>Mit typeof den Datentyp prüfen</h2>
         <p>
           JavaScript bietet den Operator <code>typeof</code>, um den Typ eines
-          Werts zu überprüfen. Das ist besonders hilfreich, wenn du nicht
-          sicher bist, welchen Typ eine Variable hat, oder wenn du deinen Code
-          testen möchtest.
+          Werts zu überprüfen. Das ist besonders hilfreich, wenn du nicht sicher
+          bist, welchen Typ eine Variable hat, oder wenn du deinen Code testen
+          möchtest.
         </p>
         <p>
           <strong>Syntax:</strong> <code>typeof variable</code> gibt einen
@@ -179,9 +178,9 @@ console.log(typeof {a: 1});     // "object"
 
         <h3>Strings (Texte)</h3>
         <p>
-          Strings können mit einfachen (''), doppelten (") oder Backticks{" "}
-          (``) geschrieben werden. Backticks ermöglichen Template Literals,
-          also das Einfügen von Variablen direkt im Text:
+          Strings können mit einfachen (''), doppelten (") oder Backticks (``)
+          geschrieben werden. Backticks ermöglichen Template Literals, also das
+          Einfügen von Variablen direkt im Text:
         </p>
         <JSTerminal filename="strings.js">
           {`
@@ -275,8 +274,8 @@ console.log(5 === "5"); // false (ungleich, unterschiedlicher Typ!)
         <h3>Von String zu Number</h3>
         <p>
           Wenn du einen Text wie <code>"42"</code> in eine echte Zahl{" "}
-          <code>42</code> umwandeln möchtest, verwende <code>Number()</code> oder{" "}
-          <code>parseInt()</code> / <code>parseFloat()</code>:
+          <code>42</code> umwandeln möchtest, verwende <code>Number()</code>{" "}
+          oder <code>parseInt()</code> / <code>parseFloat()</code>:
         </p>
         <JSTerminal filename="string-zahl.js">
           {`
@@ -348,12 +347,14 @@ console.log(preis.toFixed(1));  // "20.0" (auf 1 Dezimalstelle)
         </JSTerminal>
 
         <h3>Von String zu Boolean</h3>
-        <p>
-          Die Umwandlung von Strings zu Booleans folgt diesen Regeln:
-        </p>
+        <p>Die Umwandlung von Strings zu Booleans folgt diesen Regeln:</p>
         <ul>
-          <li>Leere Strings <code>""</code> werden zu <code>false</code></li>
-          <li>Alle anderen Strings werden zu <code>true</code></li>
+          <li>
+            Leere Strings <code>""</code> werden zu <code>false</code>
+          </li>
+          <li>
+            Alle anderen Strings werden zu <code>true</code>
+          </li>
         </ul>
         <JSTerminal filename="string-boolean.js">
           {`
@@ -378,12 +379,14 @@ if (benutzerEingabe) {
         </JSTerminal>
 
         <h3>Von Boolean zu Number</h3>
-        <p>
-          Booleans können in Zahlen umgewandelt werden:
-        </p>
+        <p>Booleans können in Zahlen umgewandelt werden:</p>
         <ul>
-          <li><code>true</code> wird zu <code>1</code></li>
-          <li><code>false</code> wird zu <code>0</code></li>
+          <li>
+            <code>true</code> wird zu <code>1</code>
+          </li>
+          <li>
+            <code>false</code> wird zu <code>0</code>
+          </li>
         </ul>
         <JSTerminal filename="boolean-zahl.js">
           {`
@@ -437,17 +440,15 @@ console.log(Number(a) + b);  // 8 (klar und deutlich)
 
       <Section>
         <h2>Zusammenfassung</h2>
-        <p>
-          Hier sind die wichtigsten Punkte dieser Lektion:
-        </p>
+        <p>Hier sind die wichtigsten Punkte dieser Lektion:</p>
         <ul>
           <li>
             Variablen speichern Werte und können mit <code>let</code> oder{" "}
             <code>const</code> erstellt werden
           </li>
           <li>
-            <code>const</code> für unveränderliche Werte, <code>let</code>{" "}
-            für veränderliche Werte
+            <code>const</code> für unveränderliche Werte, <code>let</code> für
+            veränderliche Werte
           </li>
           <li>
             Die wichtigsten Typen sind: string, number, boolean, array, object

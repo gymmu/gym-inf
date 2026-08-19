@@ -50,7 +50,9 @@ delete person.hobby;
         </CodeBlock>
       </Section>
       <Section>
-        <h2>Das <code>this</code> Keyword</h2>
+        <h2>
+          Das <code>this</code> Keyword
+        </h2>
         <p>
           In Methoden zeigt <code>this</code> auf das Objekt selbst. Damit
           kannst du auf die Eigenschaften des eigenen Objekts zugreifen.
