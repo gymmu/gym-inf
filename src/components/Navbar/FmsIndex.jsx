@@ -11,15 +11,14 @@ export default function FmsIndex() {
         </ol>
       </section>
       <section>
+        <h2>Microsoft Word</h2>
+        <ol className={style.nav}>
+          <NavLink to="/fms/word">Einstieg in Word</NavLink>
+        </ol>
+      </section>
+      <section>
         <h2>1. Klasse</h2>
         <ol className={style.nav}>
-          <span>
-            Obsidian
-            <ol>
-              <NavLink to="obsidian">Einführung</NavLink>
-              <NavLink to="obsidian-md">Markdown in Obsidian</NavLink>
-            </ol>
-          </span>
           <span>
             Einführung
             <ol>
@@ -69,21 +68,6 @@ export default function FmsIndex() {
                 Sortieralgorithmen
               </NavLink>
               <NavLink to="/fms/algorithmen-aufgaben">Aufgaben</NavLink>
-            </ol>
-          </span>
-          <span>
-            Microsoft Word
-            <ol>
-              <NavLink to="/fms/word">Einstieg in Word</NavLink>
-              <NavLink to="/fms/word-formatvorlagen">Formatvorlagen</NavLink>
-              <NavLink to="/fms/word-inhaltsverzeichnis">
-                Inhaltsverzeichnis
-              </NavLink>
-              <NavLink to="/fms/word-seitenzahlen">
-                Kopf- und Fusszeilen
-              </NavLink>
-              <NavLink to="/fms/word-probleme">Das Problem mit Word</NavLink>
-              <NavLink to="/fms/word-latex">LaTeX mit Overleaf</NavLink>
             </ol>
           </span>
         </ol>

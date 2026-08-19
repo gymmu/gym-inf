@@ -129,18 +129,19 @@ const FmsAlgorithmenGlossar = lazy(
 );
 const FmsWebdesign = lazy(() => import("@pages-fms/webdesign.jsx"));
 const GymByod = lazy(() => import("@pages-gym/byod.jsx"));
-const FmsWord = lazy(() => import("@pages/fms/word.mdx"));
+const FmsWord = lazy(() => import("@pages/fms/word.jsx"));
+const FmsWordArchive = lazy(() => import("@pages/fms/word-archive.mdx"));
 const FmsWordFormatvorlagen = lazy(
-  () => import("@pages/fms/word-formatvorlagen.mdx"),
+  () => import("@pages/fms/word-formatvorlagen.jsx"),
 );
 const FmsWordInhaltsverzeichnis = lazy(
-  () => import("@pages/fms/word-inhaltsverzeichnis.mdx"),
+  () => import("@pages/fms/word-inhaltsverzeichnis.jsx"),
 );
 const FmsWordSeitenzahlen = lazy(
-  () => import("@pages/fms/word-seitenzahlen.mdx"),
+  () => import("@pages/fms/word-seitenzahlen.jsx"),
 );
-const FmsWordProbleme = lazy(() => import("@pages/fms/word-probleme.mdx"));
-const FmsWordLatex = lazy(() => import("@pages/fms/word-latex.mdx"));
+const FmsWordProbleme = lazy(() => import("@pages/fms/word-probleme.jsx"));
+const FmsWordLatex = lazy(() => import("@pages/fms/word-latex.jsx"));
 
 // EF - Programmieren mit JavaScript
 const EFEditor = lazy(() => import("@pages-ef/js-editor.jsx"));
@@ -325,6 +326,7 @@ export const routes = [
 
       // FMS Routes 2. Klasse
       { path: "/fms/word", element: <FmsWord /> },
+      { path: "/fms/word-archive", element: <FmsWordArchive /> },
       { path: "/fms/word-formatvorlagen", element: <FmsWordFormatvorlagen /> },
       {
         path: "/fms/word-inhaltsverzeichnis",
