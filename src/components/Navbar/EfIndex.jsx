@@ -71,8 +71,29 @@ export default function EfIndex() {
       />
       <WeekSection
         weekNumber="2"
-        title="Grundlagen der Programmierung"
-        items={[]}
+        title="Funktionen und Objekte"
+        items={[
+          {
+            type: "repetition",
+            to: "ef/js-repetition",
+            label: "Repetition",
+          },
+          {
+            type: "theorie",
+            to: "ef/js-funktionen-theorie",
+            label: "Theorie: Funktionen",
+          },
+          {
+            type: "theorie",
+            to: "ef/js-objekte-theorie",
+            label: "Theorie: Objekte",
+          },
+          {
+            type: "aufgaben",
+            to: "ef/js-aufgaben-funktionen-objekte",
+            label: "Aufgaben: Funktionen und Objekte",
+          },
+        ]}
       />
       <WeekSection
         weekNumber="3"

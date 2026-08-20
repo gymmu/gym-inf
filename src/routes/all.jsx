@@ -160,6 +160,10 @@ const EFFunktionales = lazy(
   () => import("@pages-ef/js-funktionales-programmieren.jsx"),
 );
 const EFKlassen = lazy(() => import("@pages-ef/js-klassen.jsx"));
+const EFRepetition = lazy(() => import("@pages-ef/js-repetition.jsx"));
+const EFFunktionenTheorie = lazy(() => import("@pages-ef/js-funktionen-theorie.jsx"));
+const EFObjekteTheorie = lazy(() => import("@pages-ef/js-objekte-theorie.jsx"));
+const EFAufgabenFunktionenObjekte = lazy(() => import("@pages-ef/js-aufgaben-funktionen-objekte.jsx"));
 
 const BoxModel = lazy(() => import("../components/BoxModel"));
 const CodePen = lazy(() => import("../components/CodePen"));
@@ -362,6 +366,12 @@ export const routes = [
         element: <EFFunktionales />,
       },
       { path: "ef/js-klassen", element: <EFKlassen /> },
+
+      // EF Woche 02: Funktionen und Objekte
+      { path: "ef/js-repetition", element: <EFRepetition /> },
+      { path: "ef/js-funktionen-theorie", element: <EFFunktionenTheorie /> },
+      { path: "ef/js-objekte-theorie", element: <EFObjekteTheorie /> },
+      { path: "ef/js-aufgaben-funktionen-objekte", element: <EFAufgabenFunktionenObjekte /> },
 
       // TODO: Comment these out if no longer tested
       { path: "codepen", element: <CodePen /> },
