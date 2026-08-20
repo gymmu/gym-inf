@@ -405,7 +405,7 @@
 /* Terminal Section - at bottom of editor area */
 .terminalSection {
   height: 200px;
-  min-height: 150px;
+  min-height: 120px;
   background-color: var(--color-bg-dark);
   display: flex;
   flex-direction: column;

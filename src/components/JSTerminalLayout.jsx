@@ -2,6 +2,52 @@ import styles from "@components/JSTerminal.module.css";
 import { Editor as MEditor } from "@monaco-editor/react";
 import { useEffect, useRef, useState } from "react";
 
+/**
+ * Force the JSTerminal to relayout when it becomes visible again.
+ * This fixes the issue with Reveal.js which hides non-active slides
+ * via display:none, causing Monaco to lose its layout.
+ */
+function useVisibleLayout() {
+  const editorRef = useRef(null);
+  const containerRef = useRef(null);
+  const observerRef = useRef(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    // Disconnect previous observer
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    // Create IntersectionObserver
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && editorRef.current?.layout) {
+            // Small delay ensures the container has its real dimensions
+            setTimeout(() => {
+              editorRef.current.layout();
+            }, 0);
+          }
+        });
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(el);
+    observerRef.current = observer;
+
+    return () => {
+      observer.disconnect();
+      observerRef.current = null;
+    };
+  }, []);
+
+  return { editorRef, containerRef };
+}
+
 const GLOBAL_EXAMPLES_KEY = "jsterminal_global_examples";
 const USER_FILES_KEY = "jsterminal_user_files";
 
@@ -200,6 +246,9 @@ Verfügbare Befehle:
   const terminalEndRef = useRef(null);
   const inputRef = useRef(null);
   const terminalContentRef = useRef(null);
+
+  // Hook to relayout Monaco when the slide becomes visible
+  const { editorRef, containerRef } = useVisibleLayout();
 
   // Available commands for tab completion
   const availableCommands = ["node", "clear", "ls", "touch", "rm", "reset"];
@@ -947,7 +996,7 @@ Verfügbare Befehle:
               </button>
             </div>
           </div>
-          <div className={styles.editorContainer}>
+          <div className={styles.editorContainer} ref={containerRef}>
             <MEditor
               key={currentActiveFile}
               defaultLanguage="javascript"
@@ -955,6 +1004,9 @@ Verfügbare Befehle:
               theme="vs-dark"
               onChange={setCode}
               height={monacoHeight}
+              onMount={(editor) => {
+                editorRef.current = editor;
+              }}
               options={{
                 minimap: { enabled: false },
                 fontSize: 14,

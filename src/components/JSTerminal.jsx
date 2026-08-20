@@ -18,16 +18,16 @@ export default function JSTerminal({
   defaultCode,
   children,
   height = "300px",
+  wrapperHeight = "600px",
 }) {
-  // Calculate Monaco height: wrapper (600px) – terminal (200px) – headers/padding (~80px)
-  // We pass `height` directly since the CSS already sets the wrapper height.
+  // Calculate Monaco height: wrapper – terminal (200px) – headers/padding (~80px)
   return (
     <JSTerminalLayout
       filename={filename}
       initialCode={initialCode}
       defaultCode={children || defaultCode}
       monacoHeight={height}
-      wrapperHeight="600px"
+      wrapperHeight={wrapperHeight}
     />
   );
 }
