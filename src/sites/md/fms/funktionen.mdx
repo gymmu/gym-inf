@@ -1,0 +1,631 @@
+import PrismBlock from "@components/PrismBlock.jsx"
+import SolutionBlock from "@components/SolutionBlock.jsx"
+import LearningGoals from "@components/LearningGoals.jsx"
+
+## Theorie: Funktionen in JavaScript
+
+Funktionen sind eines der wichtigsten Konzepte in JavaScript. Sie erlauben uns, Code-Blöcke zu definieren und wiederzuverwenden. In diesem Kapitel lernen wir, wie man Funktionen erstellt, den Unterschied zwischen normalen Funktionen und Arrow-Funktionen kennen, und wie man Callback-Funktionen verwendet.
+
+<LearningGoals>
+
+- Sie wissen, wie man eine Funktion mit `function` definiert.
+- Sie kennen den Unterschied zwischen normalen Funktionen und Arrow-Funktionen.
+- Sie verstehen, was Parameter und Rückgabewerte sind.
+- Sie können `forEach`, `map`, `filter` und `reduce` verwenden.
+- Sie wissen, wie man Schleifen mit Callback-Funktionen ersetzt.
+
+</LearningGoals>
+
+## Was ist eine Funktion?
+
+Eine Funktion ist ein Block von Code, der einen bestimmten Namen hat und bei Bedarf ausgeführt werden kann. Funktionen können **Parameter** (Eingabewerte) haben und einen **Rückgabewert** (Ausgabewert) liefern.
+
+### Einfache Funktion ohne Parameter
+
+<PrismBlock>
+
+```javascript
+// Funktion definieren
+function begruessen() {
+  console.log("Hallo Welt!")
+}
+
+// Funktion aufrufen
+begruessen() // Ausgabe: "Hallo Welt!"
+```
+
+</PrismBlock>
+
+### Funktion mit Parametern und Rückgabewert
+
+<PrismBlock>
+
+```javascript
+// Funktion mit Parametern definieren
+function addiere(a, b) {
+  return a + b
+}
+
+// Funktion aufrufen und Ergebnis speichern
+let resultat = addiere(5, 3)
+console.log(resultat) // Ausgabe: 8
+```
+
+</PrismBlock>
+
+Hier sehen Sie:
+
+- `function` ist das Schlüsselwort zum Definieren einer Funktion
+- `addiere` ist der Name der Funktion
+- `(a, b)` sind die Parameter
+- `return` gibt einen Wert zurück
+- `addiere(5, 3)` ruft die Funktion auf und übergibt die Argumente
+
+## Funktionen vs. Arrow-Funktionen
+
+In JavaScript gibt es zwei Hauptarten, Funktionen zu definieren: **normale Funktionen** und **Arrow-Funktionen** (Pfeil-Funktionen).
+
+### Normale Funktion
+
+<PrismBlock>
+
+```javascript
+// Normale Funktion definieren
+function Quadrat(x) {
+  return x * x
+}
+
+console.log(Quadrat(5)) // Ausgabe: 25
+```
+
+</PrismBlock>
+
+### Arrow-Funktion
+
+<PrismBlock>
+
+```javascript
+// Arrow-Funktion definieren
+const Quadrat = (x) => {
+  return x * x
+}
+
+console.log(Quadrat(5)) // Ausgabe: 25
+```
+
+</PrismBlock>
+
+### Unterschiede im Detail
+
+#### Einfache Arrow-Funktion mit einem Parameter
+
+Bei einem Parameter können die Klammern weggelassen werden:
+
+<PrismBlock>
+
+```javascript
+// Mit Klammern
+const verdoppeln = (x) => {
+  return x * 2
+}
+
+// Ohne Klammern bei einem Parameter
+const verdoppeln = x => x * 2
+```
+
+</PrismBlock>
+
+#### Arrow-Funktion ohne Klammern und ohne Block
+
+Wenn die Funktion nur einen Rückgabewert hat, können wir `{}` und `return` weglassen:
+
+<PrismBlock>
+
+```javascript
+// Vollständige Schreibweise
+const begruessen = (name) => {
+  return "Hallo " + name
+}
+
+// Kurzschreibweise (impliziter Return)
+const begruessen = (name) => "Hallo " + name
+```
+
+</PrismBlock>
+
+#### Zusammenfassung der Unterschiede
+
+| Merkmal | Normale Funktion | Arrow-Funktion |
+|---------|-----------------|----------------|
+| Schlüsselwort | `function` | `const`/`let`/`var` |
+| Syntax | `function name() {}` | `const name = () => {}` |
+| `this`-Binding | Dynamisch | Lexikalisch |
+| Als Konstruktor | Ja (`new`) | Nein |
+| `arguments`-Objekt | Ja | Nein |
+
+> **Wichtig:** Arrow-Funktionen haben kein eigenes `this`. Das bedeutet, sie erben `this` vom umgebenden Kontext. Das ist besonders nützlich in Callbacks und Event-Handlern.
+
+## Callback-Funktionen
+
+Eine **Callback-Funktion** ist eine Funktion, die als Argument an eine andere Funktion übergeben wird. Die aufgerufene Funktion kann dann den Callback zu einem bestimmten Zeitpunkt ausführen.
+
+### Einfaches Beispiel
+
+<PrismBlock>
+
+```javascript
+// Normale Funktion
+function begruessen(name) {
+  console.log("Hallo " + name)
+}
+
+// Callback-Funktion (anonyme Funktion)
+function wiederhole(action, count) {
+  for (let i = 0; i < count; i++) {
+    action()
+  }
+}
+
+// Callback übergeben
+wiederhole(() => begruessen("Maria"), 3)
+// Ausgabe:
+// "Hallo Maria"
+// "Hallo Maria"
+// "Hallo Maria"
+```
+
+</PrismBlock>
+
+## Array-Methoden mit Callbacks
+
+JavaScript-Arrays bieten mehrere eingebaute Methoden, die Callback-Funktionen verwenden. Diese machen den Umgang mit Daten viel einfacher und lesbarer.
+
+### forEach - Elemente durchgehen
+
+`forEach` führt eine Funktion für jedes Element eines Arrays aus.
+
+#### Mit forEach
+
+<PrismBlock>
+
+```javascript
+const namen = ["Anna", "Beat", "Claudia", "Daniel"]
+
+// forEach mit Arrow-Funktion
+namen.forEach((name, index) => {
+  console.log(index + 1 + ": " + name)
+})
+
+// Ausgabe:
+// 1: Anna
+// 2: Beat
+// 3: Claudia
+// 4: Daniel
+```
+
+</PrismBlock>
+
+#### Mit normaler Schleife (Alternative)
+
+<PrismBlock>
+
+```javascript
+const namen = ["Anna", "Beat", "Claudia", "Daniel"]
+
+// for-Schleife
+for (let i = 0; i < namen.length; i++) {
+  console.log((i + 1) + ": " + namen[i])
+}
+```
+
+</PrismBlock>
+
+> **Unterschied:** `forEach` ist kürzer und lesbarer. Die normale Schleife gibt Ihnen mehr Kontrolle (z.B. frühes Beenden mit `break`).
+
+### map - Array transformieren
+
+`map` erstellt ein neues Array, indem die Callback-Funktion auf jedes Element angewendet wird.
+
+#### Mit map
+
+<PrismBlock>
+
+```javascript
+const zahlen = [1, 2, 3, 4, 5]
+
+// map: Jedes Element verdoppeln
+const verdoppelte = zahlen.map((zahl) => {
+  return zahl * 2
+})
+
+console.log(verdoppelte) // [2, 4, 6, 8, 10]
+console.log(zahlen)      // [1, 2, 3, 4, 5] (original bleibt unverändert)
+```
+
+</PrismBlock>
+
+#### Mit normaler Schleife (Alternative)
+
+<PrismBlock>
+
+```javascript
+const zahlen = [1, 2, 3, 4, 5]
+
+// for-Schleife mit neuem Array
+const verdoppelte = []
+for (let i = 0; i < zahlen.length; i++) {
+  verdoppelte.push(zahlen[i] * 2)
+}
+
+console.log(verdoppelte) // [2, 4, 6, 8, 10]
+```
+
+</PrismBlock>
+
+> **Wichtig:** `map` verändert das Original-Array **nicht**. Es erstellt immer ein neues Array.
+
+#### Praktisches Beispiel: HTML-Elemente erstellen
+
+<PrismBlock>
+
+```javascript
+const namen = ["Anna", "Beat", "Claudia"]
+
+// Jedes Element als HTML-Listenelement
+const liElemente = namen.map((name) => {
+  return "<li>" + name + "</li>"
+})
+
+const ulElement = "<ul>" + liElemente.join("") + "</ul>"
+console.log(ulElement)
+// <ul><li>Anna</li><li>Beat</li><li>Claudia</li></ul>
+```
+
+</PrismBlock>
+
+### filter - Elemente herausfiltern
+
+`filter` erstellt ein neues Array mit allen Elementen, die die Bedingung erfüllen.
+
+#### Mit filter
+
+<PrismBlock>
+
+```javascript
+const zahlen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+// Nur gerade Zahlen filtern
+const geradeZahlen = zahlen.filter((zahl) => {
+  return zahl % 2 === 0
+})
+
+console.log(geradeZahlen) // [2, 4, 6, 8, 10]
+```
+
+</PrismBlock>
+
+#### Mit normaler Schleife (Alternative)
+
+<PrismBlock>
+
+```javascript
+const zahlen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+// for-Schleife mit neuem Array
+const geradeZahlen = []
+for (let i = 0; i < zahlen.length; i++) {
+  if (zahlen[i] % 2 === 0) {
+    geradeZahlen.push(zahlen[i])
+  }
+}
+
+console.log(geradeZahlen) // [2, 4, 6, 8, 10]
+```
+
+</PrismBlock>
+
+#### Praktisches Beispiel: Namen filtern
+
+<PrismBlock>
+
+```javascript
+const schueler = [
+  { name: "Anna", alter: 16 },
+  { name: "Beat", alter: 14 },
+  { name: "Claudia", alter: 18 },
+  { name: "Daniel", alter: 15 },
+]
+
+// Nur Erwachsene (ab 16 Jahre) filtern
+const erwachsene = schueler.filter((person) => {
+  return person.alter >= 16
+})
+
+console.log(erwachsene)
+// [{ name: "Anna", alter: 16 }, { name: "Claudia", alter: 18 }]
+```
+
+</PrismBlock>
+
+### reduce - Werte zusammenrechnen
+
+`reduce` reduziert ein Array auf einen einzelnen Wert. Es ist sehr flexibel und wird für Berechnungen, Gruppierungen und Transformationen verwendet.
+
+#### Mit reduce
+
+<PrismBlock>
+
+```javascript
+const zahlen = [1, 2, 3, 4, 5]
+
+// Summe berechnen
+const summe = zahlen.reduce((accumulator, zahl) => {
+  return accumulator + zahl
+}, 0) // 0 ist der Startwert
+
+console.log(summe) // 15
+```
+
+</PrismBlock>
+
+> **Erklärung:**
+> - `accumulator` ist der gesammelte Wert (wächst mit jedem Schritt)
+> - `zahl` ist das aktuelle Element
+> - `0` ist der Startwert des Akkumulators
+
+#### reduce Schritt für Schritt
+
+<PrismBlock>
+
+```javascript
+const zahlen = [1, 2, 3, 4, 5]
+
+// reduce berechnet:
+// Schritt 1: 0 + 1 = 1
+// Schritt 2: 1 + 2 = 3
+// Schritt 3: 3 + 3 = 6
+// Schritt 4: 6 + 4 = 10
+// Schritt 5: 10 + 5 = 15
+// Ergebnis: 15
+```
+
+</PrismBlock>
+
+#### Mit normaler Schleife (Alternative)
+
+<PrismBlock>
+
+```javascript
+const zahlen = [1, 2, 3, 4, 5]
+
+// for-Schleife
+let summe = 0
+for (let i = 0; i < zahlen.length; i++) {
+  summe = summe + zahlen[i]
+}
+
+console.log(summe) // 15
+```
+
+</PrismBlock>
+
+#### Praktisches Beispiel: Produkt berechnen
+
+<PrismBlock>
+
+```javascript
+const zahlen = [2, 3, 4, 5]
+
+// Produkt aller Zahlen
+const produkt = zahlen.reduce((accumulator, zahl) => {
+  return accumulator * zahl
+}, 1) // Startwert ist 1 (neutrales Element der Multiplikation)
+
+console.log(produkt) // 120 (2 * 3 * 4 * 5)
+```
+
+</PrismBlock>
+
+#### reduce mit Objekten
+
+<PrismBlock>
+
+```javascript
+const schueler = [
+  { name: "Anna", note: 5.5 },
+  { name: "Beat", note: 4.0 },
+  { name: "Claudia", note: 5.0 },
+  { name: "Daniel", note: 6.0 },
+]
+
+// Durchschnittsnote berechnen
+const durchschnitt = schueler.reduce((summe, schueler) => {
+  return summe + schueler.note
+}, 0) / schueler.length
+
+console.log(durchschnitt) // 5.125
+```
+
+</PrismBlock>
+
+## Vergleich: Alle Methoden im Überblick
+
+| Methode | Zweck | Gibt zurück | Verändert Original? |
+|---------|-------|-------------|---------------------|
+| `forEach` | Code für jedes Element ausführen | `undefined` | Nein |
+| `map` | Element transformieren | Neues Array | Nein |
+| `filter` | Elemente herausfiltern | Neues Array | Nein |
+| `reduce` | Werte zusammenrechnen | Einzeler Wert | Nein |
+
+## Kombinierte Beispiele
+
+Oft werden mehrere Methoden kombiniert:
+
+### Beispiel: Namen filtern und transformieren
+
+<PrismBlock>
+
+```javascript
+const schueler = [
+  { name: "Anna", alter: 16 },
+  { name: "Beat", alter: 14 },
+  { name: "Claudia", alter: 18 },
+  { name: "Daniel", alter: 15 },
+]
+
+// Nur Erwachsene auswählen und Namen gross schreiben
+const erwachseneNamen = schueler
+  .filter((person) => person.alter >= 16)
+  .map((person) => person.name.toUpperCase())
+
+console.log(erwachseneNamen) // ["ANNA", "CLAUDIA"]
+```
+
+</PrismBlock>
+
+### Beispiel: Summe der Notenvon erwachsenen Schülern
+
+<PrismBlock>
+
+```javascript
+const schueler = [
+  { name: "Anna", note: 5.5, alter: 16 },
+  { name: "Beat", note: 4.0, alter: 14 },
+  { name: "Claudia", note: 5.0, alter: 18 },
+  { name: "Daniel", note: 6.0, alter: 15 },
+]
+
+// Summe der Notenvon erwachsenen Schülern
+const noteSumme = schueler
+  .filter((person) => person.alter >= 16)
+  .reduce((summe, person) => summe + person.note, 0)
+
+console.log(noteSumme) // 10.5
+```
+
+</PrismBlock>
+
+## Übungen
+
+### Übung 1: forEach mit console.log
+
+<PrismBlock>
+
+```javascript
+const wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
+
+// Aufgabe: Verwende forEach, um jeden Wochentag auszugeben
+// mit dem Format: "Tag 1: Montag"
+```
+
+</PrismBlock>
+
+<SolutionBlock>
+
+<PrismBlock>
+
+```javascript
+wochentage.forEach((tag, index) => {
+  console.log("Tag " + (index + 1) + ": " + tag)
+})
+```
+
+</PrismBlock>
+
+</SolutionBlock>
+
+### Übung 2: map zur Transformation
+
+<PrismBlock>
+
+```javascript
+const preise = [10, 20, 30, 40, 50]
+
+// Aufgabe: Erstelle ein neues Array mit den Preisen inkl. 8% MwSt.
+// (Preis * 1.08)
+```
+
+</PrismBlock>
+
+<SolutionBlock>
+
+<PrismBlock>
+
+```javascript
+const preiseMwst = preise.map((preis) => {
+  return preis * 1.08
+})
+
+console.log(preiseMwst) // [10.8, 21.6, 32.4, 43.2, 54]
+```
+
+</PrismBlock>
+
+</SolutionBlock>
+
+### Übung 3: filter mit Bedingung
+
+<PrismBlock>
+
+```javascript
+const werte = [1, -2, 3, -4, 5, -6, 7, -8]
+
+// Aufgabe: Filtere alle positiven Zahlen
+```
+
+</PrismBlock>
+
+<SolutionBlock>
+
+<PrismBlock>
+
+```javascript
+const positiveWerte = werte.filter((wert) => {
+  return wert > 0
+})
+
+console.log(positiveWerte) // [1, 3, 5, 7]
+```
+
+</PrismBlock>
+
+</SolutionBlock>
+
+### Übung 4: reduce zur Berechnung
+
+<PrismBlock>
+
+```javascript
+const werte = [5, 10, 15, 20, 25]
+
+// Aufgabe: Berechne das Produkt aller Werte
+```
+
+</PrismBlock>
+
+<SolutionBlock>
+
+<PrismBlock>
+
+```javascript
+const produkt = werte.reduce((accumulator, wert) => {
+  return accumulator * wert
+}, 1)
+
+console.log(produkt) // 1875000
+```
+
+</PrismBlock>
+
+</SolutionBlock>
+
+## Wann welche Methode verwenden?
+
+- **`forEach`**: Wenn Sie etwas mit jedem Element tun möchten (z.B. DOM-Elemente erstellen, console.log)
+- **`map`**: Wenn Sie ein neues Array mit transformierten Werten brauchen
+- **`filter`**: Wenn Sie eine Teilmenge des Arrays brauchen
+- **`reduce`**: Wenn Sie einen einzelnen Wert aus dem Array berechnen wollen
+
+## Zusammenfassung
+
+Funktionen sind ein fundamentales Konzept in JavaScript. Sie erlauben uns, Code zu organisieren und wiederzuverwenden. Der Unterschied zwischen normalen Funktionen und Arrow-Funktionen liegt vor allem in der Syntax und im Verhalten von `this`. Callback-Funktionen sind Funktionen, die als Argument übergeben werden, und werden häufig bei Array-Methoden wie `forEach`, `map`, `filter` und `reduce` verwendet. Diese Methoden machen den Umgang mit Arrays viel eleganter und lesbarer als normale Schleifen.

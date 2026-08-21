@@ -257,8 +257,6 @@ main section ol {
 .content-grid {
   display: grid;
   grid-template-columns: [full-width-start] 50px [breakout-start] 50px [content-start] 1fr [content-end] 50px [breakout-end] 50px [full-width-end];
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
 }
 
 .content-grid > * {

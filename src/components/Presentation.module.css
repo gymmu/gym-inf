@@ -3,7 +3,6 @@
   display: flex !important;
   flex-direction: row;
   overflow-x: scroll;
-  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   anchor-name: --presentation;
 }
@@ -41,7 +40,6 @@
 }
 
 .slide {
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: center;
