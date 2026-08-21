@@ -15,8 +15,8 @@ export default function JSFunktionenTheorie() {
             Funktionen sind eines der wichtigsten Konzepte in JavaScript. Sie
             erlauben uns, Code-Blöcke zu definieren und wiederzuverwenden. In
             diesem Kapitel lernen wir, wie man Funktionen erstellt, den
-            Unterschied zwischen normalen Funktionen und Arrow-Funktionen kennen,
-            und wie man Callback-Funktionen verwendet.
+            Unterschied zwischen normalen Funktionen und Arrow-Funktionen
+            kennen, und wie man Callback-Funktionen verwendet.
           </p>
 
           <h3>Lernziele</h3>
@@ -89,7 +89,6 @@ begruessen(); // Ausgabe: "Hallo Welt!"
       </ScrollSection>
       <ScrollSection>
         <section>
-
           <h3>Funktion mit Parametern und Rückgabewert</h3>
           <JSTerminal filename="funktion-params.js">
             {`
@@ -187,26 +186,40 @@ console.log(Quadrat(5)); // Ausgabe: 25
             <tbody>
               <tr>
                 <td>Schlüsselwort</td>
-                <td><code>function</code></td>
-                <td><code>const</code> / <code>let</code> / <code>var</code></td>
+                <td>
+                  <code>function</code>
+                </td>
+                <td>
+                  <code>const</code> / <code>let</code> / <code>var</code>
+                </td>
               </tr>
               <tr>
                 <td>Syntax</td>
-                <td><code>function name() {"{"}</code> <code>{"}"}</code></td>
-                <td><code>const name = () =&gt; {"{"}</code> <code>{"}"}</code></td>
+                <td>
+                  <code>function name() {"{"}</code> <code>{"}"}</code>
+                </td>
+                <td>
+                  <code>const name = () =&gt; {"{"}</code> <code>{"}"}</code>
+                </td>
               </tr>
               <tr>
-                <td><code>this</code>-Binding</td>
+                <td>
+                  <code>this</code>-Binding
+                </td>
                 <td>Dynamisch</td>
                 <td>Lexikalisch</td>
               </tr>
               <tr>
                 <td>Als Konstruktor</td>
-                <td>Ja (<code>new</code>)</td>
+                <td>
+                  Ja (<code>new</code>)
+                </td>
                 <td>Nein</td>
               </tr>
               <tr>
-                <td><code>arguments</code>-Objekt</td>
+                <td>
+                  <code>arguments</code>-Objekt
+                </td>
                 <td>Ja</td>
                 <td>Nein</td>
               </tr>
@@ -240,13 +253,10 @@ const verdoppeln = (x) => {
 const verdoppeln = x => x * 2;
 `}
           </JSTerminal>
-
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-
           <h4>Vollständige vs. Kurzschreibweise</h4>
           <JSTerminal filename="arrow-kurz.js">
             {`
@@ -319,10 +329,9 @@ wiederhole(() => begruessen("Maria"), 3);
             Arrays aus.
           </p>
           <p>
-            <strong>Unterschied zur for-Schleife:</strong>{" "}
-            <code>forEach</code> ist kürzer und lesbarer. Die normale Schleife
-            gibt Ihnen mehr Kontrolle (z.B. frühes Beenden mit{" "}
-            <code>break</code>).
+            <strong>Unterschied zur for-Schleife:</strong> <code>forEach</code>{" "}
+            ist kürzer und lesbarer. Die normale Schleife gibt Ihnen mehr
+            Kontrolle (z.B. frühes Beenden mit <code>break</code>).
           </p>
         </section>
       </ScrollSection>
@@ -351,13 +360,10 @@ namen.forEach((name, index) => {
 // 4: Daniel
 `}
           </JSTerminal>
-
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-
           <h4>Mit normaler Schleife (Alternative)</h4>
           <JSTerminal filename="for-schleife-vergleich.js">
             {`
@@ -411,13 +417,10 @@ console.log(verdoppelte); // [2, 4, 6, 8, 10]
 console.log(zahlen);      // [1, 2, 3, 4, 5] (original bleibt unverändert)
 `}
           </JSTerminal>
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-
-
           <h4>Mit normaler Schleife (Alternative)</h4>
           <JSTerminal filename="map-schleife-vergleich.js">
             {`
@@ -432,13 +435,10 @@ for (let i = 0; i < zahlen.length; i++) {
 console.log(verdoppelte); // [2, 4, 6, 8, 10]
 `}
           </JSTerminal>
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-          
-
           <h4>Praktisches Beispiel: HTML-Elemente erstellen</h4>
           <JSTerminal filename="map-html-beispiel.js">
             {`
@@ -490,13 +490,10 @@ const geradeZahlen = zahlen.filter((zahl) => {
 console.log(geradeZahlen); // [2, 4, 6, 8, 10]
 `}
           </JSTerminal>
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-
-
           <h4>Mit normaler Schleife (Alternative)</h4>
           <JSTerminal filename="filter-schleife-vergleich.js">
             {`
@@ -513,14 +510,10 @@ for (let i = 0; i < zahlen.length; i++) {
 console.log(geradeZahlen); // [2, 4, 6, 8, 10]
 `}
           </JSTerminal>
-
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-
-
           <h4>Praktisches Beispiel: Namen filtern</h4>
           <JSTerminal filename="filter-objekte.js">
             {`
@@ -592,14 +585,10 @@ const summe = zahlen.reduce((accumulator, zahl) => {
 console.log(summe); // 15
 `}
           </JSTerminal>
-
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-          
-
           <h4>reduce Schritt für Schritt</h4>
           <JSTerminal filename="reduce-schritte.js">
             {`
@@ -614,13 +603,10 @@ const zahlen = [1, 2, 3, 4, 5];
 // Ergebnis: 15
 `}
           </JSTerminal>
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-
-
           <h4>Mit normaler Schleife (Alternative)</h4>
           <JSTerminal filename="reduce-schleife-vergleich.js">
             {`
@@ -635,13 +621,10 @@ for (let i = 0; i < zahlen.length; i++) {
 console.log(summe); // 15
 `}
           </JSTerminal>
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-
-
           <h4>Praktisches Beispiel: Produkt berechnen</h4>
           <JSTerminal filename="reduce-produkt.js">
             {`
@@ -655,14 +638,10 @@ const produkt = zahlen.reduce((accumulator, zahl) => {
 console.log(produkt); // 120 (2 * 3 * 4 * 5)
 `}
           </JSTerminal>
-
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-
-
           <h4>reduce mit Objekten</h4>
           <JSTerminal filename="reduce-objekte.js">
             {`
@@ -701,25 +680,35 @@ console.log(durchschnitt); // 5.125
             </thead>
             <tbody>
               <tr>
-                <td><code>forEach</code></td>
+                <td>
+                  <code>forEach</code>
+                </td>
                 <td>Code für jedes Element ausführen</td>
-                <td><code>undefined</code></td>
+                <td>
+                  <code>undefined</code>
+                </td>
                 <td>Nein</td>
               </tr>
               <tr>
-                <td><code>map</code></td>
+                <td>
+                  <code>map</code>
+                </td>
                 <td>Element transformieren</td>
                 <td>Neues Array</td>
                 <td>Nein</td>
               </tr>
               <tr>
-                <td><code>filter</code></td>
+                <td>
+                  <code>filter</code>
+                </td>
                 <td>Elemente herausfiltern</td>
                 <td>Neues Array</td>
                 <td>Nein</td>
               </tr>
               <tr>
-                <td><code>reduce</code></td>
+                <td>
+                  <code>reduce</code>
+                </td>
                 <td>Werte zusammenrechnen</td>
                 <td>Einzelner Wert</td>
                 <td>Nein</td>
@@ -764,14 +753,10 @@ const erwachseneNamen = schueler
 console.log(erwachseneNamen); // ["ANNA", "CLAUDIA"]
 `}
           </JSTerminal>
-
-
         </section>
       </ScrollSection>
       <ScrollSection>
         <section>
-
-
           <h3>Beispiel: Summe der Noten von erwachsenen Schülern</h3>
           <JSTerminal filename="kombiniert-filter-reduce.js">
             {`
@@ -794,185 +779,57 @@ console.log(noteSumme); // 10.5
       </ScrollSection>
 
       {/* ══════════════════════════════════════════════════════
-          SECTION 22 — Übungen
-          ══════════════════════════════════════════════════════ */}
-      <ScrollSection>
-        <section>
-          <h2>Übungen</h2>
-        </section>
-      </ScrollSection>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 23 — Übung 1: forEach
-          ══════════════════════════════════════════════════════ */}
-      <ScrollSection area="content">
-        <section>
-          <h2>Übung 1: forEach mit console.log</h2>
-          <JSTerminal filename="uebungen-1.js">
-            {`
-const wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
-
-// Aufgabe: Verwende forEach, um jeden Wochentag auszugeben
-// mit dem Format: "Tag 1: Montag"
-
-// Ihre Lösung hier:
-
-`}
-          </JSTerminal>
-
-          <details>
-            <summary>Lösung anzeigen</summary>
-            <JSTerminal filename="uebungen-1-loesung.js">
-              {`
-wochentage.forEach((tag, index) => {
-  console.log("Tag " + (index + 1) + ": " + tag);
-});
-`}
-            </JSTerminal>
-          </details>
-        </section>
-      </ScrollSection>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 24 — Übung 2: map
-          ══════════════════════════════════════════════════════ */}
-      <ScrollSection area="content">
-        <section>
-          <h2>Übung 2: map zur Transformation</h2>
-          <JSTerminal filename="uebungen-2.js">
-            {`
-const preise = [10, 20, 30, 40, 50];
-
-// Aufgabe: Erstelle ein neues Array mit den Preisen inkl. 8% MwSt.
-// (Preis * 1.08)
-
-// Ihre Lösung hier:
-
-`}
-          </JSTerminal>
-
-          <details>
-            <summary>Lösung anzeigen</summary>
-            <JSTerminal filename="uebungen-2-loesung.js">
-              {`
-const preiseMwst = preise.map((preis) => {
-  return preis * 1.08;
-});
-
-console.log(preiseMwst); // [10.8, 21.6, 32.4, 43.2, 54]
-`}
-            </JSTerminal>
-          </details>
-        </section>
-      </ScrollSection>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 25 — Übung 3: filter
-          ══════════════════════════════════════════════════════ */}
-      <ScrollSection area="content">
-        <section>
-          <h2>Übung 3: filter mit Bedingung</h2>
-          <JSTerminal filename="uebungen-3.js">
-            {`
-const werte = [1, -2, 3, -4, 5, -6, 7, -8];
-
-// Aufgabe: Filtere alle positiven Zahlen
-
-// Ihre Lösung hier:
-
-`}
-          </JSTerminal>
-
-          <details>
-            <summary>Lösung anzeigen</summary>
-            <JSTerminal filename="uebungen-3-loesung.js">
-              {`
-const positiveWerte = werte.filter((wert) => {
-  return wert > 0;
-});
-
-console.log(positiveWerte); // [1, 3, 5, 7]
-`}
-            </JSTerminal>
-          </details>
-        </section>
-      </ScrollSection>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 26 — Übung 4: reduce
-          ══════════════════════════════════════════════════════ */}
-      <ScrollSection area="content">
-        <section>
-          <h2>Übung 4: reduce zur Berechnung</h2>
-          <JSTerminal filename="uebungen-4.js">
-            {`
-const werte = [5, 10, 15, 20, 25];
-
-// Aufgabe: Berechne das Produkt aller Werte
-
-// Ihre Lösung hier:
-
-`}
-          </JSTerminal>
-
-          <details>
-            <summary>Lösung anzeigen</summary>
-            <JSTerminal filename="uebungen-4-loesung.js">
-              {`
-const produkt = werte.reduce((accumulator, wert) => {
-  return accumulator * wert;
-}, 1);
-
-console.log(produkt); // 1875000
-`}
-            </JSTerminal>
-          </details>
-        </section>
-      </ScrollSection>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 27 — Wann welche Methode verwenden?
+          SECTION 22 — Wann welche Methode verwenden?
           ══════════════════════════════════════════════════════ */}
       <ScrollSection>
         <section>
           <h2>Wann welche Methode verwenden?</h2>
           <ul>
             <li>
-              <strong><code>forEach</code></strong>: Wenn Sie etwas mit jedem
-              Element tun möchten (z.B. DOM-Elemente erstellen, console.log)
+              <strong>
+                <code>forEach</code>
+              </strong>
+              : Wenn Sie etwas mit jedem Element tun möchten (z.B. DOM-Elemente
+              erstellen, console.log)
             </li>
             <li>
-              <strong><code>map</code></strong>: Wenn Sie ein neues Array mit
-              transformierten Werten brauchen
+              <strong>
+                <code>map</code>
+              </strong>
+              : Wenn Sie ein neues Array mit transformierten Werten brauchen
             </li>
             <li>
-              <strong><code>filter</code></strong>: Wenn Sie eine Teilmenge des
-              Arrays brauchen
+              <strong>
+                <code>filter</code>
+              </strong>
+              : Wenn Sie eine Teilmenge des Arrays brauchen
             </li>
             <li>
-              <strong><code>reduce</code></strong>: Wenn Sie einen einzelnen
-              Wert aus dem Array berechnen wollen
+              <strong>
+                <code>reduce</code>
+              </strong>
+              : Wenn Sie einen einzelnen Wert aus dem Array berechnen wollen
             </li>
           </ul>
         </section>
       </ScrollSection>
 
       {/* ══════════════════════════════════════════════════════
-          SECTION 28 — Zusammenfassung
+          SECTION 27 — Zusammenfassung
           ══════════════════════════════════════════════════════ */}
       <ScrollSection>
         <section>
           <h2>Zusammenfassung</h2>
           <p>
-            Funktionen sind ein fundamentales Konzept in JavaScript. Sie erlauben
-            uns, Code zu organisieren und wiederzuverwenden. Der Unterschied
-            zwischen normalen Funktionen und Arrow-Funktionen liegt vor allem in
-            der Syntax und im Verhalten von <code>this</code>. Callback-Funktionen
-            sind Funktionen, die als Argument übergeben werden, und werden häufig
-            bei Array-Methoden wie <code>forEach</code>, <code>map</code>,{" "}
-            <code>filter</code> und <code>reduce</code> verwendet. Diese Methoden
-            machen den Umgang mit Arrays viel eleganter und lesbarer als normale
-            Schleifen.
+            Funktionen sind ein fundamentales Konzept in JavaScript. Sie
+            erlauben uns, Code zu organisieren und wiederzuverwenden. Der
+            Unterschied zwischen normalen Funktionen und Arrow-Funktionen liegt
+            vor allem in der Syntax und im Verhalten von <code>this</code>.
+            Callback-Funktionen sind Funktionen, die als Argument übergeben
+            werden, und werden häufig bei Array-Methoden wie{" "}
+            <code>forEach</code>, <code>map</code>, <code>filter</code> und{" "}
+            <code>reduce</code> verwendet. Diese Methoden machen den Umgang mit
+            Arrays viel eleganter und lesbarer als normale Schleifen.
           </p>
         </section>
       </ScrollSection>
