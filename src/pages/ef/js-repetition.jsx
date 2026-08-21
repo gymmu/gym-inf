@@ -1,5 +1,5 @@
-import Slideshow, { Slide } from "@components/gym/Slideshow/Slideshow";
 import JSTerminal from "@components/JSTerminal";
+import ScrollSection from "@components/ScrollSection";
 
 export default function JSRepetition() {
   return (
@@ -10,40 +10,46 @@ export default function JSRepetition() {
         Bedingungen, Listen und Schleifen.
       </p>
 
-      <Slideshow title="JS-Repetition">
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 1 — Titel
-            ══════════════════════════════════════════════════════ */}
-        <Slide className="title-slide" transition="zoom">
-          <h1>JavaScript</h1>
-          <h2>Repetition</h2>
-          <p>Variablen · Bedingungen · Listen · Schleifen</p>
-        </Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 1 — Titel
+          ══════════════════════════════════════════════════════ */}
+      <div className="title-slide">
+        <h1>JavaScript</h1>
+        <h2>Repetition</h2>
+        <p>Variablen · Bedingungen · Listen · Schleifen</p>
+      </div>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 2 — Variablen: Erklärung
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 2 — Variablen: Erklärung
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection>
+        <section>
           <h2>Variablen</h2>
           <p>Variablen sind "Boxen", in denen wir Werte speichern.</p>
           <div className="cols">
             <div>
-              <p><strong>var</strong> — alt (global)</p>
-              <p><strong>let</strong> — neu (block-scope, veränderbar)</p>
-              <p><strong>const</strong> — neu (block-scope, unveränderbar)</p>
+              <p>
+                <strong>var</strong> — alt (global)
+              </p>
+              <p>
+                <strong>let</strong> — neu (block-scope, veränderbar)
+              </p>
+              <p>
+                <strong>const</strong> — neu (block-scope, unveränderbar)
+              </p>
             </div>
           </div>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 3 — Variablen: JSTerminal
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 3 — Variablen: Code testen
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection area="content">
+        <section>
           <h2>Variablen — Code testen</h2>
           <JSTerminal
             filename="variablen.js"
-            wrapperHeight="500px"
-            height="400px"
           >
             {`// Variablen erstellen
 let name = "Anna";
@@ -57,33 +63,43 @@ console.log("Alter:", alter);
 name = "Anna Maria";
 console.log("Neuer Name:", name);`}
           </JSTerminal>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 4 — Datentypen: Erklärung
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 4 — Datentypen: Erklärung
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection>
+        <section>
           <h2>Datentypen</h2>
           <p>JavaScript kennt verschiedene Typen:</p>
           <ul>
-            <li><strong>string</strong> — Text (in Anführungszeichen)</li>
-            <li><strong>number</strong> — Zahlen</li>
-            <li><strong>boolean</strong> — true oder false</li>
-            <li><strong>array</strong> — Liste von Werten</li>
-            <li><strong>object</strong> — Schlüssel-Wert-Paare</li>
+            <li>
+              <strong>string</strong> — Text (in Anführungszeichen)
+            </li>
+            <li>
+              <strong>number</strong> — Zahlen
+            </li>
+            <li>
+              <strong>boolean</strong> — true oder false
+            </li>
+            <li>
+              <strong>array</strong> — Liste von Werten
+            </li>
+            <li>
+              <strong>object</strong> — Schlüssel-Wert-Paare
+            </li>
           </ul>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 5 — Datentypen: JSTerminal
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 5 — Datentypen: Code testen
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection area="content">
+        <section>
           <h2>Datentypen — Code testen</h2>
-          <JSTerminal
-            filename="typen.js"
-            wrapperHeight="500px"
-            height="400px"
-          >
+          <JSTerminal filename="typen.js">
             {`// String (Text)
 let text = "Hallo";
 console.log(typeof text); // "string"
@@ -107,31 +123,44 @@ console.log(typeof person); // "object"
 // Prüfen ob Array
 console.log(Array.isArray(farben)); // true`}
           </JSTerminal>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 6 — Bedingungen: Erklärung
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 6 — Bedingungen: Erklärung
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection>
+        <section>
           <h2>Bedingungen</h2>
-          <p>Bedingungen erlauben es, Code nur auszuführen wenn eine Bedingung erfüllt ist:</p>
+          <p>
+            Bedingungen erlauben es, Code nur auszuführen wenn eine Bedingung
+            erfüllt ist:
+          </p>
           <ul>
-            <li><code>if (...)</code> — wenn Bedingung wahr</li>
-            <li><code>else if (...)</code> — weitere Bedingung</li>
-            <li><code>else</code> — sonst</li>
+            <li>
+              <code>if (...)</code> — wenn Bedingung wahr
+            </li>
+            <li>
+              <code>else if (...)</code> — weitere Bedingung
+            </li>
+            <li>
+              <code>else</code> — sonst
+            </li>
           </ul>
-          <p><strong>Operatoren:</strong> ===, !==, &lt;, &gt;, &amp;&amp;, ||</p>
-        </Slide>
+          <p>
+            <strong>Operatoren:</strong> ===, !==, &lt;, &gt;, &amp;&amp;, ||
+          </p>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 7 — Bedingungen: JSTerminal
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 7 — Bedingungen: Code testen
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection area="content">
+        <section>
           <h2>Bedingungen — Code testen</h2>
           <JSTerminal
             filename="bedingungen.js"
-            wrapperHeight="500px"
-            height="400px"
           >
             {`let score = 85;
 
@@ -157,33 +186,43 @@ if (alter >= 18 && hatLizenz) {
 let status = (score >= 50) ? "bestanden" : "nicht bestanden";
 console.log(status);`}
           </JSTerminal>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 8 — Listen: Erklärung
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 8 — Listen: Erklärung
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection>
+        <section>
           <h2>Listen (Arrays)</h2>
           <p>Eine Liste speichert mehrere Werte unter einem Namen:</p>
           <ul>
-            <li>Erstellen mit <code>[]</code></li>
-            <li>Index beginnt bei <strong>0</strong></li>
-            <li><code>.length</code> — Anzahl Elemente</li>
-            <li><code>.push()</code> — Element hinzufügen</li>
-            <li><code>.pop()</code> — letztes Element entfernen</li>
+            <li>
+              Erstellen mit <code>[]</code>
+            </li>
+            <li>
+              Index beginnt bei <strong>0</strong>
+            </li>
+            <li>
+              <code>.length</code> — Anzahl Elemente
+            </li>
+            <li>
+              <code>.push()</code> — Element hinzufügen
+            </li>
+            <li>
+              <code>.pop()</code> — letztes Element entfernen
+            </li>
           </ul>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 9 — Listen: JSTerminal
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 9 — Listen: Code testen
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection area="content">
+        <section>
           <h2>Listen — Code testen</h2>
-          <JSTerminal
-            filename="arrays.js"
-            wrapperHeight="500px"
-            height="400px"
-          >
+          <JSTerminal filename="arrays.js">
             {`// Liste erstellen
 let kinder = ["Anna", "Ben", "Clara"];
 
@@ -204,30 +243,38 @@ kinder.forEach(function(kind) {
   console.log("Hallo " + kind + "!");
 });`}
           </JSTerminal>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 10 — Schleifen: Erklärung
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 10 — Schleifen: Erklärung
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection>
+        <section>
           <h2>Schleifen</h2>
           <p>Schleifen wiederholen Code mehrere Male:</p>
           <ul>
-            <li><code>for (let i = 0; i &lt; n; i++)</code></li>
-            <li><code>while (Bedingung) &#123; ... &#125;</code></li>
-            <li><code>for ... of</code> — über Array-Elemente</li>
+            <li>
+              <code>for (let i = 0; i &lt; n; i++)</code>
+            </li>
+            <li>
+              <code>while (Bedingung) &#123; ... &#125;</code>
+            </li>
+            <li>
+              <code>for ... of</code> — über Array-Elemente
+            </li>
           </ul>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 11 — Schleifen: JSTerminal
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 11 — Schleifen: Code testen
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection area="content">
+        <section>
           <h2>Schleifen — Code testen</h2>
           <JSTerminal
             filename="schleifen.js"
-            wrapperHeight="500px"
-            height="400px"
           >
             {`// for-Schleife
 console.log("for-Schleife:");
@@ -236,7 +283,7 @@ for (let i = 1; i <= 5; i++) {
 }
 
 // while-Schleife
-console.log("\\nwhile-Schleife:");
+console.log("\nwhile-Schleife:");
 let count = 3;
 while (count > 0) {
   console.log(count, "...");
@@ -245,37 +292,45 @@ while (count > 0) {
 console.log("Los!");
 
 // for ... of
-console.log("\\nfor ... of:");
+console.log("\nfor ... of:");
 let fruits = ["🍎", "🍌", "🍒"];
 for (let fruit of fruits) {
   console.log(fruit);
 }`}
           </JSTerminal>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 12 — Funktionen: Erklärung
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 12 — Funktionen: Erklärung
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection>
+        <section>
           <h2>Funktionen</h2>
           <p>Funktionen sind wiederverwendbare Code-Blöcke:</p>
           <ul>
-            <li><strong>Declaration:</strong> <code>function name() &#123; ... &#125;</code></li>
-            <li><strong>Expression:</strong> <code>const name = () =&gt; &#123; ... &#125;</code></li>
+            <li>
+              <strong>Declaration:</strong>{" "}
+              <code>function name() &#123; ... &#125;</code>
+            </li>
+            <li>
+              <strong>Expression:</strong>{" "}
+              <code>const name = () =&gt; &#123; ... &#125;</code>
+            </li>
             <li>Parameter: Werte die man übergibt</li>
             <li>Return-Wert: Ergebnis zurückgeben</li>
           </ul>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 13 — Funktionen: JSTerminal
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 13 — Funktionen: Code testen
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection area="content">
+        <section>
           <h2>Funktionen — Code testen</h2>
           <JSTerminal
             filename="funktionen.js"
-            wrapperHeight="500px"
-            height="400px"
           >
             {`// Funktion mit Parameter
 function begruessung(name) {
@@ -300,23 +355,37 @@ sageHallo("Clara");
 const addiere = (a, b) => a + b;
 console.log("3 + 4 =", addiere(3, 4));`}
           </JSTerminal>
-        </Slide>
+        </section>
+      </ScrollSection>
 
-        {/* ══════════════════════════════════════════════════════
-            SLIDE 14 — Zusammenfassung
-            ══════════════════════════════════════════════════════ */}
-        <Slide>
+      {/* ══════════════════════════════════════════════════════
+          SECTION 14 — Zusammenfassung
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection>
+        <section>
           <h2>Zusammenfassung</h2>
           <ul>
-            <li><strong>Variablen:</strong> let, const</li>
-            <li><strong>Datentypen:</strong> string, number, boolean, array, object</li>
-            <li><strong>Bedingungen:</strong> if, else if, else</li>
-            <li><strong>Listen:</strong> [], .length, .push()</li>
-            <li><strong>Schleifen:</strong> for, while, for ... of</li>
-            <li><strong>Funktionen:</strong> function, =&gt;</li>
+            <li>
+              <strong>Variablen:</strong> let, const
+            </li>
+            <li>
+              <strong>Datentypen:</strong> string, number, boolean, array, object
+            </li>
+            <li>
+              <strong>Bedingungen:</strong> if, else if, else
+            </li>
+            <li>
+              <strong>Listen:</strong> [], .length, .push()
+            </li>
+            <li>
+              <strong>Schleifen:</strong> for, while, for ... of
+            </li>
+            <li>
+              <strong>Funktionen:</strong> function, =&gt;
+            </li>
           </ul>
-        </Slide>
-      </Slideshow>
+        </section>
+      </ScrollSection>
     </>
   );
 }

@@ -1003,7 +1003,6 @@ Verfügbare Befehle:
               value={code}
               theme="vs-dark"
               onChange={setCode}
-              height={monacoHeight}
               onMount={(editor) => {
                 editorRef.current = editor;
               }}

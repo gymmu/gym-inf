@@ -101,12 +101,6 @@ pre:has(code) {
   margin: var(--space-xs) 0;
 }
 
-/* Diesen Hack brauchen wir, damit der Monaco-Editor in RevealJS richtig
- angezeigt wird. */
-.monaco-editor {
-  height: 300px !important;
-}
-
 /* Legacy class - use .mx-auto instead */
 .center {
   margin-inline: auto;

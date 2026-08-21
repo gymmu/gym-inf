@@ -257,6 +257,8 @@ main section ol {
 .content-grid {
   display: grid;
   grid-template-columns: [full-width-start] 50px [breakout-start] 50px [content-start] 1fr [content-end] 50px [breakout-end] 50px [full-width-end];
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
 }
 
 .content-grid > * {
@@ -474,4 +476,21 @@ svg {
   :root {
     color-scheme: dark !important;
   }
+}
+
+/* ═══════════════════════════════════════════════════
+   ScrollSection — Vollbild-Sektion mit Scroll-Snapping
+   ═══════════════════════════════════════════════════ */
+.scroll-section {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  border-bottom: 1px solid hsl(from var(--color-fg) h s calc(l - 60) / 0.15);
+}
+
+.scroll-section-content {
+  width: 100%;
 }
