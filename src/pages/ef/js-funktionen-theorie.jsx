@@ -1,4 +1,4 @@
-import CodeBlock from "@components/CodeBlock";
+import JSTerminal from "@components/JSTerminal";
 import Section from "@components/Section";
 
 export default function JSFunktionenTheorie() {
@@ -46,7 +46,7 @@ export default function JSFunktionenTheorie() {
         </p>
 
         <h3>Einfache Funktion ohne Parameter</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="funktion-definieren.js">
           {`
 // Funktion definieren
 function begruessen() {
@@ -56,10 +56,10 @@ function begruessen() {
 // Funktion aufrufen
 begruessen(); // Ausgabe: "Hallo Welt!"
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h3>Funktion mit Parametern und Rückgabewert</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="funktion-params.js">
           {`
 // Funktion mit Parametern definieren
 function addiere(a, b) {
@@ -70,7 +70,7 @@ function addiere(a, b) {
 let resultat = addiere(5, 3);
 console.log(resultat); // Ausgabe: 8
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <p>Hier sehen Sie:</p>
         <ul>
@@ -103,7 +103,7 @@ console.log(resultat); // Ausgabe: 8
         </p>
 
         <h3>Normale Funktion</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="normale-funktion.js">
           {`
 // Normale Funktion definieren
 function Quadrat(x) {
@@ -112,10 +112,10 @@ function Quadrat(x) {
 
 console.log(Quadrat(5)); // Ausgabe: 25
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h3>Arrow-Funktion</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="arrow-funktion.js">
           {`
 // Arrow-Funktion definieren
 const Quadrat = (x) => {
@@ -124,13 +124,13 @@ const Quadrat = (x) => {
 
 console.log(Quadrat(5)); // Ausgabe: 25
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h3>Unterschiede im Detail</h3>
 
         <h4>Einfache Arrow-Funktion mit einem Parameter</h4>
         <p>Bei einem Parameter können die Klammern weggelassen werden:</p>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="arrow-einfach.js">
           {`
 // Mit Klammern
 const verdoppeln = (x) => {
@@ -140,7 +140,7 @@ const verdoppeln = (x) => {
 // Ohne Klammern bei einem Parameter
 const verdoppeln = x => x * 2;
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h4>Arrow-Funktion ohne Klammern und ohne Block</h4>
         <p>
@@ -148,7 +148,7 @@ const verdoppeln = x => x * 2;
           <code>{"{"}</code> <code>{"}"}</code> und <code>return</code>{" "}
           weglassen:
         </p>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="arrow-kurz.js">
           {`
 // Vollständige Schreibweise
 const begruessen = (name) => {
@@ -158,7 +158,7 @@ const begruessen = (name) => {
 // Kurzschreibweise (impliziter Return)
 const begruessen = (name) => "Hallo " + name;
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h4>Zusammenfassung der Unterschiede</h4>
         <table>
@@ -230,7 +230,7 @@ const begruessen = (name) => "Hallo " + name;
         </p>
 
         <h3>Einfaches Beispiel</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="callback-beispiel.js">
           {`
 // Normale Funktion
 function begruessen(name) {
@@ -251,7 +251,7 @@ wiederhole(() => begruessen("Maria"), 3);
 // "Hallo Maria"
 // "Hallo Maria"
 `}
-        </CodeBlock>
+        </JSTerminal>
       </Section>
 
       <Section>
@@ -269,7 +269,7 @@ wiederhole(() => begruessen("Maria"), 3);
         </p>
 
         <h4>Mit forEach</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="forEach-beispiel.js">
           {`
 const namen = ["Anna", "Beat", "Claudia", "Daniel"];
 
@@ -284,10 +284,10 @@ namen.forEach((name, index) => {
 // 3: Claudia
 // 4: Daniel
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h4>Mit normaler Schleife (Alternative)</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="for-schleife-vergleich.js">
           {`
 const namen = ["Anna", "Beat", "Claudia", "Daniel"];
 
@@ -296,7 +296,7 @@ for (let i = 0; i < namen.length; i++) {
   console.log((i + 1) + ": " + namen[i]);
 }
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <p>
           <strong>Unterschied:</strong> <code>forEach</code> ist kürzer und
@@ -311,7 +311,7 @@ for (let i = 0; i < namen.length; i++) {
         </p>
 
         <h4>Mit map</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="map-beispiel.js">
           {`
 const zahlen = [1, 2, 3, 4, 5];
 
@@ -323,10 +323,10 @@ const verdoppelte = zahlen.map((zahl) => {
 console.log(verdoppelte); // [2, 4, 6, 8, 10]
 console.log(zahlen);      // [1, 2, 3, 4, 5] (original bleibt unverändert)
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h4>Mit normaler Schleife (Alternative)</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="map-schleife-vergleich.js">
           {`
 const zahlen = [1, 2, 3, 4, 5];
 
@@ -338,7 +338,7 @@ for (let i = 0; i < zahlen.length; i++) {
 
 console.log(verdoppelte); // [2, 4, 6, 8, 10]
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <p>
           <strong>Wichtig:</strong> <code>map</code> verändert das
@@ -347,7 +347,7 @@ console.log(verdoppelte); // [2, 4, 6, 8, 10]
         </p>
 
         <h4>Praktisches Beispiel: HTML-Elemente erstellen</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="map-html-beispiel.js">
           {`
 const namen = ["Anna", "Beat", "Claudia"];
 
@@ -360,7 +360,7 @@ const ulElement = "<ul>" + liElemente.join("") + "</ul>";
 console.log(ulElement);
 // <ul><li>Anna</li><li>Beat</li><li>Claudia</li></ul>
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h3>filter - Elemente herausfiltern</h3>
         <p>
@@ -369,7 +369,7 @@ console.log(ulElement);
         </p>
 
         <h4>Mit filter</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="filter-beispiel.js">
           {`
 const zahlen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -380,10 +380,10 @@ const geradeZahlen = zahlen.filter((zahl) => {
 
 console.log(geradeZahlen); // [2, 4, 6, 8, 10]
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h4>Mit normaler Schleife (Alternative)</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="filter-schleife-vergleich.js">
           {`
 const zahlen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -397,10 +397,10 @@ for (let i = 0; i < zahlen.length; i++) {
 
 console.log(geradeZahlen); // [2, 4, 6, 8, 10]
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h4>Praktisches Beispiel: Namen filtern</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="filter-objekte.js">
           {`
 const schueler = [
   { name: "Anna", alter: 16 },
@@ -417,7 +417,7 @@ const erwachsene = schueler.filter((person) => {
 console.log(erwachsene);
 // [{ name: "Anna", alter: 16 }, { name: "Claudia", alter: 18 }]
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h3>reduce - Werte zusammenrechnen</h3>
         <p>
@@ -427,7 +427,7 @@ console.log(erwachsene);
         </p>
 
         <h4>Mit reduce</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="reduce-beispiel.js">
           {`
 const zahlen = [1, 2, 3, 4, 5];
 
@@ -438,7 +438,7 @@ const summe = zahlen.reduce((accumulator, zahl) => {
 
 console.log(summe); // 15
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <p>
           <strong>Erklärung:</strong>
@@ -457,7 +457,7 @@ console.log(summe); // 15
         </ul>
 
         <h4>reduce Schritt für Schritt</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="reduce-schritte.js">
           {`
 const zahlen = [1, 2, 3, 4, 5];
 
@@ -469,10 +469,10 @@ const zahlen = [1, 2, 3, 4, 5];
 // Schritt 5: 10 + 5 = 15
 // Ergebnis: 15
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h4>Mit normaler Schleife (Alternative)</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="reduce-schleife-vergleich.js">
           {`
 const zahlen = [1, 2, 3, 4, 5];
 
@@ -484,10 +484,10 @@ for (let i = 0; i < zahlen.length; i++) {
 
 console.log(summe); // 15
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h4>Praktisches Beispiel: Produkt berechnen</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="reduce-produkt.js">
           {`
 const zahlen = [2, 3, 4, 5];
 
@@ -498,10 +498,10 @@ const produkt = zahlen.reduce((accumulator, zahl) => {
 
 console.log(produkt); // 120 (2 * 3 * 4 * 5)
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h4>reduce mit Objekten</h4>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="reduce-objekte.js">
           {`
 const schueler = [
   { name: "Anna", note: 5.5 },
@@ -517,7 +517,7 @@ const durchschnitt = schueler.reduce((summe, schueler) => {
 
 console.log(durchschnitt); // 5.125
 `}
-        </CodeBlock>
+        </JSTerminal>
       </Section>
 
       <Section>
@@ -575,7 +575,7 @@ console.log(durchschnitt); // 5.125
         <p>Oft werden mehrere Methoden kombiniert:</p>
 
         <h3>Beispiel: Namen filtern und transformieren</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="kombiniert-filter-map.js">
           {`
 const schueler = [
   { name: "Anna", alter: 16 },
@@ -591,10 +591,10 @@ const erwachseneNamen = schueler
 
 console.log(erwachseneNamen); // ["ANNA", "CLAUDIA"]
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <h3>Beispiel: Summe der Noten von erwachsenen Schülern</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="kombiniert-filter-reduce.js">
           {`
 const schueler = [
   { name: "Anna", note: 5.5, alter: 16 },
@@ -610,46 +610,52 @@ const noteSumme = schueler
 
 console.log(noteSumme); // 10.5
 `}
-        </CodeBlock>
+        </JSTerminal>
       </Section>
 
       <Section>
         <h2>Übungen</h2>
 
         <h3>Übung 1: forEach mit console.log</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="uebungen-1.js">
           {`
 const wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
 
 // Aufgabe: Verwende forEach, um jeden Wochentag auszugeben
 // mit dem Format: "Tag 1: Montag"
+
+// Ihre Lösung hier:
+
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <details>
           <summary>Lösung anzeigen</summary>
-          <CodeBlock lang="javascript">
+          <JSTerminal filename="uebungen-1-loesung.js">
             {`
 wochentage.forEach((tag, index) => {
   console.log("Tag " + (index + 1) + ": " + tag);
 });
 `}
-          </CodeBlock>
+          </JSTerminal>
         </details>
 
         <h3>Übung 2: map zur Transformation</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="uebungen-2.js">
           {`
 const preise = [10, 20, 30, 40, 50];
 
 // Aufgabe: Erstelle ein neues Array mit den Preisen inkl. 8% MwSt.
 // (Preis * 1.08)
+
+// Ihre Lösung hier:
+
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <details>
           <summary>Lösung anzeigen</summary>
-          <CodeBlock lang="javascript">
+          <JSTerminal filename="uebungen-2-loesung.js">
             {`
 const preiseMwst = preise.map((preis) => {
   return preis * 1.08;
@@ -657,21 +663,24 @@ const preiseMwst = preise.map((preis) => {
 
 console.log(preiseMwst); // [10.8, 21.6, 32.4, 43.2, 54]
 `}
-          </CodeBlock>
+          </JSTerminal>
         </details>
 
         <h3>Übung 3: filter mit Bedingung</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="uebungen-3.js">
           {`
 const werte = [1, -2, 3, -4, 5, -6, 7, -8];
 
 // Aufgabe: Filtere alle positiven Zahlen
+
+// Ihre Lösung hier:
+
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <details>
           <summary>Lösung anzeigen</summary>
-          <CodeBlock lang="javascript">
+          <JSTerminal filename="uebungen-3-loesung.js">
             {`
 const positiveWerte = werte.filter((wert) => {
   return wert > 0;
@@ -679,21 +688,24 @@ const positiveWerte = werte.filter((wert) => {
 
 console.log(positiveWerte); // [1, 3, 5, 7]
 `}
-          </CodeBlock>
+          </JSTerminal>
         </details>
 
         <h3>Übung 4: reduce zur Berechnung</h3>
-        <CodeBlock lang="javascript">
+        <JSTerminal filename="uebungen-4.js">
           {`
 const werte = [5, 10, 15, 20, 25];
 
 // Aufgabe: Berechne das Produkt aller Werte
+
+// Ihre Lösung hier:
+
 `}
-        </CodeBlock>
+        </JSTerminal>
 
         <details>
           <summary>Lösung anzeigen</summary>
-          <CodeBlock lang="javascript">
+          <JSTerminal filename="uebungen-4-loesung.js">
             {`
 const produkt = werte.reduce((accumulator, wert) => {
   return accumulator * wert;
@@ -701,7 +713,7 @@ const produkt = werte.reduce((accumulator, wert) => {
 
 console.log(produkt); // 1875000
 `}
-          </CodeBlock>
+          </JSTerminal>
         </details>
       </Section>
 
