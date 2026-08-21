@@ -7,6 +7,8 @@ import {
   Presets as ConnectionPresets,
 } from "rete-connection-plugin"
 import { ReactPlugin, Presets, useRete } from "rete-react-plugin"
+
+const { useConnection, Connection: ReteConnection } = Presets.classic
 import ClientOnly from "@components/ClientOnly"
 
 // ─── Shared socket ────────────────────────────────────────────────────────────
@@ -110,6 +112,31 @@ function LabeledControlComponent({ data }) {
   )
 }
 
+// ─── Custom connection component (back-edges rendered dashed) ─────────────────
+
+function CustomConnection({ data }) {
+  const { path } = useConnection()
+  if (!path) return null
+
+  if (!data.isBackEdge) {
+    return <ReteConnection data={data} />
+  }
+
+  // Back-edge: render with dashed red stroke on top of a transparent base
+  return (
+    <>
+      <ReteConnection
+        data={data}
+        styles={() => ({
+          stroke: "#f38ba8",
+          strokeWidth: "3px",
+          strokeDasharray: "8 5",
+        })}
+      />
+    </>
+  )
+}
+
 // ─── Node classes ─────────────────────────────────────────────────────────────
 
 class StartNode extends ClassicPreset.Node {
@@ -127,7 +154,7 @@ class EndNode extends ClassicPreset.Node {
   height = 80
   constructor() {
     super("Ende")
-    this.addInput("in", new ClassicPreset.Input(socket, "→"))
+    this.addInput("in", new ClassicPreset.Input(socket, "→", true))
   }
 }
 
@@ -136,7 +163,7 @@ class MoveRightNode extends ClassicPreset.Node {
   height = 110
   constructor() {
     super("Rechts gehen")
-    this.addInput("in", new ClassicPreset.Input(socket, "→"))
+    this.addInput("in", new ClassicPreset.Input(socket, "→", true))
     this.addOutput("out", new ClassicPreset.Output(socket, "→"))
   }
 }
@@ -145,7 +172,7 @@ class MoveLeftNode extends ClassicPreset.Node {
   height = 110
   constructor() {
     super("Links gehen")
-    this.addInput("in", new ClassicPreset.Input(socket, "→"))
+    this.addInput("in", new ClassicPreset.Input(socket, "→", true))
     this.addOutput("out", new ClassicPreset.Output(socket, "→"))
   }
 }
@@ -154,7 +181,7 @@ class MoveUpNode extends ClassicPreset.Node {
   height = 110
   constructor() {
     super("Hoch gehen")
-    this.addInput("in", new ClassicPreset.Input(socket, "→"))
+    this.addInput("in", new ClassicPreset.Input(socket, "→", true))
     this.addOutput("out", new ClassicPreset.Output(socket, "→"))
   }
 }
@@ -163,7 +190,7 @@ class MoveDownNode extends ClassicPreset.Node {
   height = 110
   constructor() {
     super("Runter gehen")
-    this.addInput("in", new ClassicPreset.Input(socket, "→"))
+    this.addInput("in", new ClassicPreset.Input(socket, "→", true))
     this.addOutput("out", new ClassicPreset.Output(socket, "→"))
   }
 }
@@ -173,7 +200,7 @@ class LoopNode extends ClassicPreset.Node {
   height = 190
   constructor(times = 3) {
     super("Wiederhole")
-    this.addInput("in", new ClassicPreset.Input(socket, "→"))
+    this.addInput("in", new ClassicPreset.Input(socket, "→", true))
     this.addControl(
       "times",
       new LabeledControl({ label: "Anzahl", type: "number", initial: times }),
@@ -197,7 +224,7 @@ class SetVarNode extends ClassicPreset.Node {
           ? "Variable -= 1"
           : "Variable setzen"
     super(nodeLabel)
-    this.addInput("in", new ClassicPreset.Input(socket, "→"))
+    this.addInput("in", new ClassicPreset.Input(socket, "→", true))
     this.addControl(
       "varName",
       new LabeledControl({
@@ -241,7 +268,7 @@ class IfNode extends ClassicPreset.Node {
   height = 280
   constructor(varName = "i", op = "<", limit = 5) {
     super("Wenn")
-    this.addInput("in", new ClassicPreset.Input(socket, "→"))
+    this.addInput("in", new ClassicPreset.Input(socket, "→", true))
     this.addControl(
       "varName",
       new LabeledControl({ label: "Variable", type: "text", initial: varName }),
@@ -304,7 +331,7 @@ class IfNode extends ClassicPreset.Node {
 
 const MAX_STEPS = 500
 
-function extractSequence(editor) {
+function extractSequence(editor, levelConfig) {
   const nodes = editor.getNodes()
   const connections = editor.getConnections()
 
@@ -324,8 +351,19 @@ function extractSequence(editor) {
   const loopCounters = {}
   let reachesEnd = false
 
+  // Track player position through the sequence
+  const grid = levelConfig?.grid ?? []
+  let playerCol = levelConfig?.playerStart?.col ?? 0
+  let playerRow = levelConfig?.playerStart?.row ?? 0
+
   // Start node is always the first visited step (action: null = no movement)
-  steps.push({ action: null, nodeId: startNode.id })
+  steps.push({
+    action: null,
+    nodeId: startNode.id,
+    nodeLabel: "Start",
+    vars: {},
+    playerPos: { col: playerCol, row: playerRow },
+  })
 
   const stack = [nextMap[startNode.id]?.["out"]]
 
@@ -337,7 +375,13 @@ function extractSequence(editor) {
 
     // End node: add as final step, stop traversal
     if (endNode && nodeId === endNode.id) {
-      steps.push({ action: null, nodeId })
+      steps.push({
+        action: null,
+        nodeId,
+        nodeLabel: "Ende",
+        vars: { ...vars },
+        playerPos: { col: playerCol, row: playerRow },
+      })
       reachesEnd = true
       break
     }
@@ -345,44 +389,117 @@ function extractSequence(editor) {
     const outs = nextMap[nodeId] ?? {}
 
     if (node instanceof MoveRightNode) {
-      steps.push({ action: "right", nodeId })
+      playerCol += 1
+      steps.push({
+        action: "right",
+        nodeId,
+        nodeLabel: "Rechts gehen",
+        vars: { ...vars },
+        playerPos: { col: playerCol, row: playerRow },
+      })
       stack.push(outs["out"])
     } else if (node instanceof MoveLeftNode) {
-      steps.push({ action: "left", nodeId })
+      playerCol -= 1
+      steps.push({
+        action: "left",
+        nodeId,
+        nodeLabel: "Links gehen",
+        vars: { ...vars },
+        playerPos: { col: playerCol, row: playerRow },
+      })
       stack.push(outs["out"])
     } else if (node instanceof MoveUpNode) {
-      steps.push({ action: "up", nodeId })
+      playerRow -= 1
+      steps.push({
+        action: "up",
+        nodeId,
+        nodeLabel: "Hoch gehen",
+        vars: { ...vars },
+        playerPos: { col: playerCol, row: playerRow },
+      })
       stack.push(outs["out"])
     } else if (node instanceof MoveDownNode) {
-      steps.push({ action: "down", nodeId })
+      playerRow += 1
+      steps.push({
+        action: "down",
+        nodeId,
+        nodeLabel: "Runter gehen",
+        vars: { ...vars },
+        playerPos: { col: playerCol, row: playerRow },
+      })
       stack.push(outs["out"])
     } else if (node instanceof LoopNode) {
       // LoopNode is visible as a step each time it's entered
-      steps.push({ action: null, nodeId })
       if (loopCounters[nodeId] === undefined) loopCounters[nodeId] = 0
       const max = Math.min(node.times, 100)
       if (loopCounters[nodeId] < max) {
         loopCounters[nodeId]++
+        steps.push({
+          action: null,
+          nodeId,
+          nodeLabel: "Wiederhole",
+          vars: { ...vars },
+          playerPos: { col: playerCol, row: playerRow },
+          loopInfo: { counter: loopCounters[nodeId], max },
+          condResult: "body",
+        })
         stack.push(nodeId)
         stack.push(outs["body"])
       } else {
         loopCounters[nodeId] = 0
+        steps.push({
+          action: null,
+          nodeId,
+          nodeLabel: "Wiederhole",
+          vars: { ...vars },
+          playerPos: { col: playerCol, row: playerRow },
+          loopInfo: { counter: loopCounters[nodeId], max },
+          condResult: "done",
+        })
         stack.push(outs["done"])
       }
     } else if (node instanceof SetVarNode) {
-      steps.push({ action: null, nodeId })
       const name = node.varName,
         op = node.op
       if (op === "inc") vars[name] = (vars[name] ?? 0) + 1
       else if (op === "dec") vars[name] = (vars[name] ?? 0) - 1
       else vars[name] = node.value
+      const opLabel =
+        op === "inc" ? `${name} += 1` : op === "dec" ? `${name} -= 1` : `${name} = ${node.value}`
+      steps.push({
+        action: null,
+        nodeId,
+        nodeLabel: opLabel,
+        vars: { ...vars },
+        playerPos: { col: playerCol, row: playerRow },
+      })
       stack.push(outs["out"])
     } else if (node instanceof IfNode) {
-      steps.push({ action: null, nodeId })
-      if (node.evaluate(vars)) stack.push(outs["wahr"])
+      const result = node.evaluate(vars)
+      steps.push({
+        action: null,
+        nodeId,
+        nodeLabel: `Wenn ${node.varName} ${node.cmpOp} ${node.limit}`,
+        vars: { ...vars },
+        playerPos: { col: playerCol, row: playerRow },
+        condResult: result ? "wahr" : "fertig",
+      })
+      if (result) stack.push(outs["wahr"])
       else stack.push(outs["fertig"])
     } else {
       stack.push(outs["out"])
+    }
+  }
+
+  // Annotate each step with a wall flag based on the grid
+  for (const step of steps) {
+    if (step.action && grid.length > 0) {
+      const { col, row } = step.playerPos
+      const outOfBounds =
+        row < 0 || row >= grid.length || col < 0 || col >= (grid[0]?.length ?? 0)
+      step.isWall = outOfBounds || grid[row]?.[col] === 1
+    } else {
+      step.isWall = false
     }
   }
 
@@ -499,6 +616,31 @@ const LEVELS = [
   },
 ]
 
+// ─── Graph helpers ────────────────────────────────────────────────────────────
+
+// Returns true if candidateAncestorId can reach nodeId by following connections forward.
+// Used to detect back-edges (cycles) when a new connection is drawn.
+function isAncestor(editor, candidateAncestorId, nodeId) {
+  const connections = editor.getConnections()
+  // Build forward adjacency map
+  const fwd = {}
+  for (const c of connections) {
+    if (!fwd[c.source]) fwd[c.source] = []
+    fwd[c.source].push(c.target)
+  }
+  // BFS from candidateAncestorId
+  const visited = new Set()
+  const queue = [candidateAncestorId]
+  while (queue.length > 0) {
+    const cur = queue.shift()
+    if (cur === nodeId) return true
+    if (visited.has(cur)) continue
+    visited.add(cur)
+    for (const next of fwd[cur] ?? []) queue.push(next)
+  }
+  return false
+}
+
 // ─── Rete editor factory ──────────────────────────────────────────────────────
 
 function makeCreateEditor(levelConfig, onDeleteNode) {
@@ -516,6 +658,9 @@ function makeCreateEditor(levelConfig, onDeleteNode) {
               return LabeledControlComponent
             return null
           },
+          connection() {
+            return CustomConnection
+          },
         },
       }),
     )
@@ -529,6 +674,58 @@ function makeCreateEditor(levelConfig, onDeleteNode) {
       accumulating: AreaExtensions.accumulateOnCtrl(),
     })
     AreaExtensions.simpleNodesOrder(area)
+
+    // Block the plugin from removing connections via the PickedExisting reconnect-mode.
+    // When the user drags from an occupied input, ClassicFlow removes the existing connection
+    // and re-routes it — we want to keep it and add a new one instead.
+    // We block ALL connectionremove events that originate from the plugin (i.e. not from our
+    // own removeConnection calls). We track our own removes with a flag set.
+    const ownRemoves = new Set()
+    editor.addPipe((ctx) => {
+      if (ctx.type === "connectionremove") {
+        if (ownRemoves.has(ctx.data.id)) {
+          ownRemoves.delete(ctx.data.id)
+          return ctx // our own remove — allow it
+        }
+        // Check if this connection was removed by the plugin reconnect-mode:
+        // only block if the connection target still matches a valid input node
+        // (i.e. the plugin is trying to re-route an existing input connection)
+        const conn = ctx.data
+        const targetNode = editor.getNode(conn.target)
+        if (targetNode) {
+          const port = targetNode.inputs[conn.targetInput]
+          if (port?.multipleConnections) {
+            return undefined // block — keep the existing connection
+          }
+        }
+      }
+      return ctx
+    })
+
+    // Intercept new connections:
+    // 1. Remove any existing connection from the same source output (no parallelism on outputs)
+    // 2. Detect back-edge: if target already reaches source → isBackEdge = true (dashed line)
+    //    Multiple inputs on a node are allowed — that's how loops/merges work.
+    editor.addPipe(async (ctx) => {
+      if (ctx.type === "connectioncreate") {
+        const newConn = ctx.data
+        newConn.isBackEdge = isAncestor(editor, newConn.target, newConn.source)
+
+        // Enforce single connection per source output (use ownRemoves so the guard above allows it)
+        const sameOut = editor
+          .getConnections()
+          .filter(
+            (c) =>
+              c.source === newConn.source &&
+              c.sourceOutput === newConn.sourceOutput,
+          )
+        for (const old of sameOut) {
+          ownRemoves.add(old.id)
+          await editor.removeConnection(old.id)
+        }
+      }
+      return ctx
+    })
 
     // Build default nodes
     const builtNodes = []
@@ -551,9 +748,9 @@ function makeCreateEditor(levelConfig, onDeleteNode) {
     }
 
     for (const [fi, fp, ti, tp] of levelConfig.defaultConnections) {
-      await editor.addConnection(
-        new ClassicPreset.Connection(builtNodes[fi], fp, builtNodes[ti], tp),
-      )
+      const conn = new ClassicPreset.Connection(builtNodes[fi], fp, builtNodes[ti], tp)
+      conn.isBackEdge = isAncestor(editor, builtNodes[ti].id, builtNodes[fi].id)
+      await editor.addConnection(conn)
     }
 
     // Delete selected nodes on Backspace/Delete (not Start/End)
@@ -1206,6 +1403,174 @@ function EditorPanel({
   )
 }
 
+// ─── Trace table ─────────────────────────────────────────────────────────────
+
+const ACTION_SYMBOL = {
+  right: "→ Rechts",
+  left: "← Links",
+  up: "↑ Hoch",
+  down: "↓ Runter",
+}
+
+function TraceTable({ steps, currentStep }) {
+  const activeRef = useRef(null)
+
+  // Auto-scroll active row into view
+  useEffect(() => {
+    if (activeRef.current) {
+      activeRef.current.scrollIntoView({ block: "nearest", behavior: "smooth" })
+    }
+  }, [currentStep])
+
+  const thStyle = {
+    position: "sticky",
+    top: 0,
+    background: "#1e1e2e",
+    color: "#a6adc8",
+    fontSize: "11px",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    letterSpacing: "0.05em",
+    padding: "6px 10px",
+    borderBottom: "2px solid #313244",
+    textAlign: "left",
+    whiteSpace: "nowrap",
+  }
+
+  const tdStyle = (active) => ({
+    padding: "5px 10px",
+    fontSize: "12px",
+    color: active ? "#1e1e2e" : "#cdd6f4",
+    borderBottom: "1px solid #2a2a3a",
+    verticalAlign: "middle",
+    whiteSpace: "nowrap",
+  })
+
+  return (
+    <div
+      style={{
+        flex: "1 1 auto",
+        overflow: "auto",
+        background: "#181825",
+      }}>
+      <table
+        style={{
+          width: "100%",
+          borderCollapse: "collapse",
+          tableLayout: "auto",
+        }}>
+        <thead>
+          <tr>
+            <th style={thStyle}>#</th>
+            <th style={thStyle}>Knoten</th>
+            <th style={thStyle}>Aktion</th>
+            <th style={thStyle}>Position</th>
+            <th style={thStyle}>Variablen</th>
+            <th style={thStyle}>Ergebnis</th>
+          </tr>
+        </thead>
+        <tbody>
+          {steps.map((step, idx) => {
+            // currentStep is 1-based (set via onStep's idx param which is stepIndex after increment)
+            const active = idx + 1 === currentStep
+            const rowBg = active
+              ? "#cba6f7"
+              : idx % 2 === 0
+                ? "#1e1e2e"
+                : "#181825"
+
+            const varsStr =
+              Object.keys(step.vars ?? {}).length > 0
+                ? Object.entries(step.vars)
+                    .map(([k, v]) => `${k} = ${v}`)
+                    .join(",  ")
+                : "–"
+
+            const posStr = step.playerPos
+              ? `(${step.playerPos.col}, ${step.playerPos.row})`
+              : "–"
+
+            let resultStr = "–"
+            let resultColor = "#6c7086"
+            if (step.condResult === "wahr") {
+              resultStr = "wahr"
+              resultColor = active ? "#1e1e2e" : "#a6e3a1"
+            } else if (step.condResult === "fertig" || step.condResult === "done") {
+              resultStr = "fertig"
+              resultColor = active ? "#1e1e2e" : "#f38ba8"
+            } else if (step.condResult === "body" && step.loopInfo) {
+              resultStr = `Durchlauf ${step.loopInfo.counter} / ${step.loopInfo.max}`
+              resultColor = active ? "#1e1e2e" : "#fab387"
+            }
+
+            const actionStr = ACTION_SYMBOL[step.action] ?? "–"
+            const actionColor = step.action
+              ? active
+                ? "#1e1e2e"
+                : "#89b4fa"
+              : active
+                ? "#1e1e2e"
+                : "#585b70"
+
+            const wallWarning = step.isWall && step.action
+
+            return (
+              <tr
+                key={idx}
+                ref={active ? activeRef : null}
+                style={{ background: rowBg }}>
+                <td
+                  style={{
+                    ...tdStyle(active),
+                    color: active ? "#1e1e2e" : "#6c7086",
+                    fontVariantNumeric: "tabular-nums",
+                    minWidth: 28,
+                  }}>
+                  {idx + 1}
+                </td>
+                <td style={tdStyle(active)}>{step.nodeLabel ?? "–"}</td>
+                <td style={{ ...tdStyle(active), color: actionColor }}>
+                  {actionStr}
+                  {wallWarning && (
+                    <span
+                      title="Wand!"
+                      style={{
+                        marginLeft: 4,
+                        color: active ? "#1e1e2e" : "#f38ba8",
+                        fontSize: 11,
+                      }}>
+                      🧱
+                    </span>
+                  )}
+                </td>
+                <td
+                  style={{
+                    ...tdStyle(active),
+                    color: active ? "#1e1e2e" : "#89dceb",
+                    fontVariantNumeric: "tabular-nums",
+                  }}>
+                  {posStr}
+                </td>
+                <td
+                  style={{
+                    ...tdStyle(active),
+                    fontFamily: "monospace",
+                    color: active ? "#1e1e2e" : "#f9e2af",
+                  }}>
+                  {varsStr}
+                </td>
+                <td style={{ ...tdStyle(active), color: resultColor }}>
+                  {resultStr}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 // ─── Debug panel (always visible) ────────────────────────────────────────────
 
 function DebugPanel({
@@ -1318,6 +1683,8 @@ function ReteAlgosInner() {
   const [totalSteps, setTotalSteps] = useState(0)
   const [validationError, setValidationError] = useState(null)
   const [breakpoints, setBreakpoints] = useState(() => new Set())
+  const [traceSteps, setTraceSteps] = useState([])
+  const [activeTab, setActiveTab] = useState("game") // "game" | "trace"
 
   const handleToggleBreakpoint = useCallback((nodeId) => {
     setBreakpoints((prev) => {
@@ -1371,6 +1738,8 @@ function ReteAlgosInner() {
     setActiveNodeId(null)
     setCurrentStep(0)
     setTotalSteps(0)
+    setTraceSteps([])
+    setActiveTab("game")
   }, [])
 
   const handleLevelChange = useCallback(
@@ -1397,7 +1766,7 @@ function ReteAlgosInner() {
       const rete = reteRef.current
       if (!rete || running) return
 
-      const { steps, reachesEnd } = extractSequence(rete.editor)
+      const { steps, reachesEnd } = extractSequence(rete.editor, levelConfig)
 
       if (!reachesEnd) {
         setValidationError(
@@ -1420,6 +1789,8 @@ function ReteAlgosInner() {
       setRunning(true)
       setPaused(startPaused)
       setActiveNodeId(null)
+      setTraceSteps(steps)
+      if (startPaused) setActiveTab("trace")
 
       try {
         const handle = await launchPhaser(
@@ -1681,56 +2052,148 @@ function ReteAlgosInner() {
           onToggleBreakpoint={handleToggleBreakpoint}
         />
 
-        {/* Phaser panel */}
+        {/* Phaser / Trace panel */}
         <div
           style={{
             flex: "1 1 45%",
             background: "#1e1e2e",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "12px",
-            gap: "10px",
             minWidth: 0,
+            overflow: "hidden",
           }}>
+          {/* Tab header */}
           <div
-            style={{ fontSize: "12px", color: "#6c7086", textAlign: "center" }}>
-            Figur startet unten links · Ziel:{" "}
-            <span style={{ color: "#a6e3a1" }}>🏁</span> · Graue Blöcke = Wände
-          </div>
-          <div
-            ref={phaserContainerRef}
             style={{
-              borderRadius: "8px",
-              overflow: "hidden",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
-              maxWidth: "100%",
-              maxHeight: "calc(100% - 60px)",
-            }}
-          />
-          {!running && !result && (
-            <div style={{ color: "#585b70", fontSize: "12px" }}>
-              Verbinde die Knoten bis zum{" "}
-              <strong style={{ color: "#cdd6f4" }}>Ende</strong>-Knoten, dann
-              drücke <strong style={{ color: "#a6e3a1" }}>▶ Ausführen</strong>
-            </div>
-          )}
-          {result === "win" && levelIndex < LEVELS.length - 1 && (
+              display: "flex",
+              borderBottom: "1px solid #313244",
+              background: "#181825",
+              flexShrink: 0,
+            }}>
             <button
-              onClick={() => handleLevelChange(levelIndex + 1)}
+              onClick={() => setActiveTab("game")}
               style={{
-                background: "#a6e3a1",
+                flex: 1,
+                background: activeTab === "game" ? "#1e1e2e" : "transparent",
                 border: "none",
-                borderRadius: "6px",
-                padding: "8px 20px",
-                color: "#1e1e2e",
+                borderBottom:
+                  activeTab === "game"
+                    ? "2px solid #cba6f7"
+                    : "2px solid transparent",
+                color: activeTab === "game" ? "#cdd6f4" : "#6c7086",
+                padding: "7px 0",
+                fontSize: "12px",
                 fontWeight: "bold",
-                fontSize: "14px",
                 cursor: "pointer",
+                letterSpacing: "0.03em",
               }}>
-              Weiter zu {LEVELS[levelIndex + 1].title} →
+              Spiel
             </button>
+            <button
+              onClick={() => setActiveTab("trace")}
+              disabled={traceSteps.length === 0}
+              title={
+                traceSteps.length === 0
+                  ? "Starte den Debug-Modus um die Trace-Tabelle zu sehen"
+                  : undefined
+              }
+              style={{
+                flex: 1,
+                background: activeTab === "trace" ? "#1e1e2e" : "transparent",
+                border: "none",
+                borderBottom:
+                  activeTab === "trace"
+                    ? "2px solid #cba6f7"
+                    : "2px solid transparent",
+                color:
+                  traceSteps.length === 0
+                    ? "#45475a"
+                    : activeTab === "trace"
+                      ? "#cdd6f4"
+                      : "#6c7086",
+                padding: "7px 0",
+                fontSize: "12px",
+                fontWeight: "bold",
+                cursor: traceSteps.length === 0 ? "default" : "pointer",
+                letterSpacing: "0.03em",
+              }}>
+              Trace
+              {traceSteps.length > 0 && (
+                <span
+                  style={{
+                    marginLeft: 5,
+                    background: "#cba6f755",
+                    color: "#cba6f7",
+                    borderRadius: "10px",
+                    padding: "1px 7px",
+                    fontSize: "10px",
+                  }}>
+                  {traceSteps.length}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* Tab content */}
+          {activeTab === "trace" && traceSteps.length > 0 ? (
+            <TraceTable steps={traceSteps} currentStep={currentStep} />
+          ) : (
+            <div
+              style={{
+                flex: "1 1 auto",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "12px",
+                gap: "10px",
+                overflow: "hidden",
+              }}>
+              <div
+                style={{
+                  fontSize: "12px",
+                  color: "#6c7086",
+                  textAlign: "center",
+                }}>
+                Figur startet unten links · Ziel:{" "}
+                <span style={{ color: "#a6e3a1" }}>🏁</span> · Graue Blöcke =
+                Wände
+              </div>
+              <div
+                ref={phaserContainerRef}
+                style={{
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+                  maxWidth: "100%",
+                  maxHeight: "calc(100% - 60px)",
+                }}
+              />
+              {!running && !result && (
+                <div style={{ color: "#585b70", fontSize: "12px" }}>
+                  Verbinde die Knoten bis zum{" "}
+                  <strong style={{ color: "#cdd6f4" }}>Ende</strong>-Knoten,
+                  dann drücke{" "}
+                  <strong style={{ color: "#a6e3a1" }}>▶ Ausführen</strong>
+                </div>
+              )}
+              {result === "win" && levelIndex < LEVELS.length - 1 && (
+                <button
+                  onClick={() => handleLevelChange(levelIndex + 1)}
+                  style={{
+                    background: "#a6e3a1",
+                    border: "none",
+                    borderRadius: "6px",
+                    padding: "8px 20px",
+                    color: "#1e1e2e",
+                    fontWeight: "bold",
+                    fontSize: "14px",
+                    cursor: "pointer",
+                  }}>
+                  Weiter zu {LEVELS[levelIndex + 1].title} →
+                </button>
+              )}
+            </div>
           )}
         </div>
       </div>

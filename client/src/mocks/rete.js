@@ -19,7 +19,7 @@ export const AreaExtensions = {
 }
 export const ConnectionPlugin = class {}
 export const Presets = {
-  classic: { setup: () => {} },
+  classic: { setup: () => {}, useConnection: () => ({ path: null }) },
 }
 export const ReactPlugin = class {}
 export const useRete = () => [() => {}, null]
