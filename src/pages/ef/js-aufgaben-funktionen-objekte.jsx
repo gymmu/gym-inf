@@ -4,12 +4,13 @@ export default function JSAufgabenFunktionenObjekte() {
   return (
     <>
       <Section>
-        <h2>Aufgaben: Funktionen und Objekte</h2>
+        <h2>Aufgaben: Objekte, Spread und Dekomposition</h2>
         <p>
           In diesem Arbeitsauftrag bearbeiten Sie 10 kleine Programmieraufgaben
-          zu Funktionen und Array-Methoden. Sie decken die vier zentralen
-          Methoden ab: <strong>forEach</strong>, <strong>map</strong>,
-          <strong>filter</strong> und <strong>reduce</strong>.
+          zu JavaScript-Objekten. Sie decken die zentralen Konzepte ab:
+          <strong>Objekte erstellen</strong>, <strong>Eigenschaften zugreifen</strong>,
+          <strong>über Objekte iterieren</strong>, <strong>Spread-Syntax</strong>,
+          <strong>Dekomposition</strong> und <strong>Factory-Funktionen</strong>.
         </p>
         <p>
           <strong>Wichtig:</strong> Es gibt keine Musterlösungen oder
@@ -27,11 +28,11 @@ export default function JSAufgabenFunktionenObjekte() {
         <ol>
           <li>
             Erstellen Sie in Ihrem Repository einen Ordner{" "}
-            <code>aufgaben-funktionen</code>
+            <code>aufgaben-objekte</code>
           </li>
           <li>
             Speichern Sie jede Aufgabe als eigene <code>.js</code>-Datei (z.B.
-            <code>01-wochentage.js</code>)
+            <code>01-person-erstellen.js</code>)
           </li>
           <li>
             Committen Sie Ihre Dateien regelmässig mit einer sinnvollen
@@ -39,7 +40,7 @@ export default function JSAufgabenFunktionenObjekte() {
           </li>
           <li>
             Der <strong>letzte Commit</strong> muss die Nachricht{" "}
-            <code>Arbeitsauftrag Funktionen bearbeitet</code> enthalten
+            <code>Arbeitsauftrag Objekte bearbeitet</code> enthalten
           </li>
         </ol>
         <p>
@@ -48,7 +49,7 @@ export default function JSAufgabenFunktionenObjekte() {
         <pre>
           <code>
             {`git add .
-git commit -m "Arbeitsauftrag Funktionen bearbeitet"`}
+git commit -m "Arbeitsauftrag Objekte bearbeitet"`}
           </code>
         </pre>
       </Section>
@@ -61,15 +62,15 @@ git commit -m "Arbeitsauftrag Funktionen bearbeitet"`}
         </p>
         <pre>
           <code>
-            {`// Aufgabe 1: Wochentage ausgeben
-// Was ich gemacht habe: forEach mit Arrow-Funktion verwendet
-// Was ich gelernt habe: Der Index beginnt bei 0
+            {`// Aufgabe 1: Person-Objekt erstellen
+// Was ich gemacht habe: Objekt mit Schlüssel-Wert-Paaren definiert
+// Was ich gelernt habe: Eigenschaften mit Punkt-Notation zugänglich
 // Schwierigkeit: leicht`}
           </code>
         </pre>
         <p>
           Sie können auch eine <code>README.md</code> im Ordner{" "}
-          <code>aufgaben-funktionen</code> erstellen, wo Sie alle Aufgaben
+          <code>aufgaben-objekte</code> erstellen, wo Sie alle Aufgaben
           auflisten.
         </p>
       </Section>
@@ -78,100 +79,123 @@ git commit -m "Arbeitsauftrag Funktionen bearbeitet"`}
         <h2>Aufgaben</h2>
 
         <div className="aufgabe">
-          <h4>Aufgabe 1: Wochentage ausgeben</h4>
+          <h4>Aufgabe 1: Person-Objekt erstellen</h4>
           <p>
-            Definieren Sie ein Array mit den Wochentagen{" "}
-            <code>
-              ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
-            </code>
-            . Verwenden Sie <code>forEach</code>, um jeden Wochentag mit seiner
-            Nummer auszugeben. Das Format soll <code>"Tag 1: Montag"</code>{" "}
-            sein.
+            Erstellen Sie ein Objekt <code>person</code> mit den Eigenschaften
+            <code>name</code> (String), <code>alter</code> (Zahl),
+            <code>adresse</code> (verschachteltes Objekt mit <code>strasse</code>
+            und <code>plz</code>) und <code>faecher</code> (Array mit Strings).
+            Geben Sie das Objekt mit <code>console.log</code> aus.
           </p>
         </div>
 
         <div className="aufgabe">
-          <h4>Aufgabe 2: Preise mit Mehrwertsteuer</h4>
+          <h4>Aufgabe 2: Eigenschaften mit Punkt- und Klammernotation</h4>
           <p>
-            Definieren Sie ein Array mit Preisen{" "}
-            <code>[10, 20, 30, 40, 50]</code>. Erstellen Sie mit{" "}
-            <code>map</code> ein neues Array, das die Preise inklusive 8%
-            Mehrwertsteuer enthält (jeder Preis wird mit 1.08 multipliziert).
+            Definieren Sie ein Objekt <code>produkt</code> mit den Eigenschaften
+            <code>name</code>, <code>preis</code>, <code>gewicht</code> und{" "}
+            <code>"erste-kauft"</code> (Schlüssel mit Bindestrich).
+            Lesen Sie alle vier Eigenschaften — zuerst mit Punkt-Notation,
+            anschliessend mit Klammernotation. Ändern Sie den <code>preis</code>
+            um 10% und geben Sie das Ergebnis aus.
           </p>
         </div>
 
         <div className="aufgabe">
-          <h4>Aufgabe 3: Positive Zahlen filtern</h4>
+          <h4>Aufgabe 3: Eigenschaften hinzufügen und entfernen</h4>
           <p>
-            Definieren Sie ein Array mit positiven und negativen Zahlen
-            <code>[1, -2, 3, -4, 5, -6, 7, -8]</code>. Verwenden Sie{" "}
-            <code>filter</code>, um nur die positiven Zahlen herauszufiltern.
+            Definieren Sie ein Objekt <code>schueler</code> mit den Eigenschaften
+            <code>name</code> und <code>klasse</code>. Fügen Sie dynamisch die
+            Eigenschaften <code>note</code> (Zahl) und <code>telefon</code>
+            (String) hinzu. Entfernen Sie anschliessend die Eigenschaft{" "}
+            <code>klasse</code> mit <code>delete</code>. Prüfen Sie mit{" "}
+            <code>in</code>, ob <code>klasse</code> noch existiert.
           </p>
         </div>
 
         <div className="aufgabe">
-          <h4>Aufgabe 4: Produkt berechnen</h4>
+          <h4>Aufgabe 4: Object.keys/values/entries verwenden</h4>
           <p>
-            Definieren Sie ein Array mit Zahlen <code>[5, 10, 15, 20, 25]</code>
-            . Verwenden Sie <code>reduce</code>, um das Produkt aller Werte zu
-            berechnen.
+            Definieren Sie ein Objekt <code>person</code> mit mindestens vier
+            Eigenschaften. Verwenden Sie <code>Object.keys()</code>,
+            <code>Object.values()</code> und <code>Object.entries()</code>, um
+            die Schlüssel, Werte und Paare zu erhalten. Geben Sie jedes Ergebnis
+            aus. Verwenden Sie <code>forEach</code> über <code>Object.entries()</code>,
+            um <code>"Schlüssel: Wert"</code> auszugeben.
           </p>
         </div>
 
         <div className="aufgabe">
-          <h4>Aufgabe 5: Namen gross schreiben</h4>
+          <h4>Aufgabe 5: for...in Schleife</h4>
           <p>
-            Definieren Sie ein Array mit Namen{" "}
-            <code>["anna", "beat", "claudia", "daniel"]</code>. Verwenden Sie{" "}
-            <code>map</code>, um ein neues Array zu erstellen, in dem alle Namen
-            in Grossbuchstaben sind.
+            Definieren Sie ein Objekt <code>warenkorb</code> mit mindestens fünf
+            Eigenschaften (jeweils Artikelname als Schlüssel und Preis als Wert).
+            Verwenden Sie eine <code>for...in</code>-Schleife, um alle Artikel
+            und Preise auszugeben. Berechnen Sie gleichzeitig die Gesamtsumme.
           </p>
         </div>
 
         <div className="aufgabe">
-          <h4>Aufgabe 6: Schüler ab 16 Jahren filtern</h4>
+          <h4>Aufgabe 6: Spread — Objekt kopieren und erweitern</h4>
           <p>
-            Definieren Sie ein Array mit Schüler-Objekten (jeweils mit den
-            Eigenschaften name und alter). Verwenden Sie <code>filter</code>, um
-            nur die Schüler ab 16 Jahren auszuwählen.
+            Definieren Sie ein Objekt <code>person</code> mit den Eigenschaften
+            <code>name</code>, <code>alter</code> und <code>stadt</code>. Erstellen
+            Sie mit der Spread-Syntax eine Kopie <code>personNeu</code>. Fügen Sie
+            in der Kopie die neue Eigenschaft <code>beruf</code> hinzu und ändern
+            Sie den <code>alter</code> um 1. Prüfen Sie, dass das Original{" "}
+            <code>person</code> unverändert bleibt.
           </p>
         </div>
 
         <div className="aufgabe">
-          <h4>Aufgabe 7: Summe der Noten berechnen</h4>
+          <h4>Aufgabe 7: Spread — Objekte verbinden</h4>
           <p>
-            Definieren Sie ein Array mit Notenzahlen. Verwenden Sie{" "}
-            <code>reduce</code>, um die Summe aller Noten zu berechnen. Geben
-            Sie anschliessend auch den Durchschnitt aus.
+            Definieren Sie zwei Objekte: <code>adresse</code> (mit{" "}
+            <code>strasse</code>, <code>plz</code>, <code>ort</code>) und{" "}
+            <code>kontakt</code> (mit <code>email</code>, <code>telefon</code>).
+            Verbinden Sie beide Objekte mit der Spread-Syntax zu einem neuen
+            Objekt <code>profil</code>. Überschreiben Sie dabei den <code>ort</code>
+            mit einem neuen Wert. Geben Sie das Resultat aus.
           </p>
         </div>
 
         <div className="aufgabe">
-          <h4>Aufgabe 8: Gerade Zahlen verdoppeln</h4>
+          <h4>Aufgabe 8: Dekomposition — Eigenschaften extrahieren</h4>
           <p>
-            Definieren Sie ein Array mit den Zahlen 1 bis 10. Verwenden Sie{" "}
-            <code>filter</code>, um nur die geraden Zahlen auszuwählen, und
-            anschliessend <code>map</code>, um diese Zahlen zu verdoppeln.
+            Definieren Sie ein Objekt <code>produkt</code> mit den Eigenschaften
+            <code>name</code>, <code>preis</code>, <code>gewicht</code> und{" "}
+            <code>kategorie</code>. Verwenden Sie Dekomposition, um <code>name</code>
+            und <code>preis</code> direkt in Variablen zu extrahieren.
+            Extrahieren Sie anschliessend nur <code>kategorie</code> und speichern
+            Sie den Rest in <code>rest</code>. Geben Sie alle Ergebnisse aus.
           </p>
         </div>
 
         <div className="aufgabe">
-          <h4>Aufgabe 9: Produkte mit Rabatt auflisten</h4>
+          <h4>Aufgabe 9: Factory-Funktion — Objekte erstellen</h4>
           <p>
-            Definieren Sie ein Array mit Produkt-Objekten (jeweils mit den
-            Eigenschaften name, preis und rabatt). Verwenden Sie{" "}
-            <code>map</code>, um ein neues Array mit den reduzierten Preisen zu
-            erstellen (Preis * (1 - Rabatt)).
+            Schreiben Sie eine Factory-Funktion <code>erstelleProdukt(name, preis, kategorie)</code>,
+            die ein Produkt-Objekt zurückgibt mit den Eigenschaften{" "}
+            <code>name</code>, <code>preis</code>, <code>kategorie</code>,{" "}
+            <code>mwst</code> (immer 8.1%) und <code>preisMitMwst</code> (berechnete
+            Funktion, die den Preis mit MwSt. zurückgibt). Erstellen Sie drei
+            verschiedene Produkte und geben Sie sie aus.
           </p>
         </div>
 
         <div className="aufgabe">
-          <h4>Aufgabe 10: Gesamteinkauf berechnen</h4>
+          <h4>Aufgabe 10: Kombinierte Aufgabe — Datenverwaltung</h4>
           <p>
-            Definieren Sie ein Array mit Einkaufs-Objekten (jeweils mit den
-            Eigenschaften artikel und preis). Verwenden Sie <code>reduce</code>,
-            um die Gesamtkosten zu berechnen. Geben Sie das Resultat mit dem
-            Format <code>"Gesamtkosten: X.XX CHF"</code> aus.
+            Definieren Sie ein Array <code>personen</code> mit mindestens vier
+            Personen-Objekten (jeweils <code>name</code>, <code>alter</code>,{" "}
+            <code>stadt</code>). Schreiben Sie eine Funktion{" "}
+            <code>erwachseneErstellen(pers)</code>, die nur die Personen ab{" "}
+            <strong>18</strong> Jahren auswählt und für jede ein neues Objekt
+            erstellt mit:<br />
+            <code>name</code>, <code>stadt</code> und{" "}
+            <code>status</code> (<code>"Erwachsen"</code> oder{" "}
+            <code>"Minderjährig"</code>). Verwenden Sie dabei <code>filter</code>,{" "}
+            <code>map</code> und die Spread-Syntax.
           </p>
         </div>
       </Section>
