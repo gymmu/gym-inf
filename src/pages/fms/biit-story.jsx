@@ -94,7 +94,7 @@ export default function BiitStory() {
         </p>
       </StoryPart>
 
-      <StoryPart component={ExtendedTable} imagePosition="right">
+      <StoryPart component={ExtendedTable} imagePosition="right" wide>
         <p>
           Prof. ASCII nutzt dieses Wissen und erstellt damit die erweiterte
           ASCII-Tabelle, in der er seltene Zeichen unterbringt, die nicht in
