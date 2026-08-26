@@ -1,6 +1,12 @@
+import { AsciiByteList } from "@/components/gym/AsciiByte/AsciiByte";
 import Biit from "@/components/gym/Biit/Biit";
 import Byte from "@/components/gym/Byte/Byte";
+import { Ascii } from "@/components/gym/Character/characters.jsx";
 import StoryPart from "@/components/StoryPart";
+
+const AsciiExamples = (props) => (
+  <AsciiByteList items={["A", "m", "7", "?", " "]} {...props} />
+);
 
 export default function BiitStory() {
   return (
@@ -28,11 +34,20 @@ export default function BiitStory() {
         </p>
       </StoryPart>
 
-      <StoryPart component={Biit} imagePosition="right">
+      <StoryPart component={Ascii} imagePosition="right">
         <p>
           Einer der Bewohner von Binaria ist <strong>Professor ASCII</strong>.
           Er studiert die Bytes, wann und wo sie vorkommen. Dafür erstellt er
           die berühmte <strong>ASCII-Tabelle</strong>.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={AsciiExamples} imagePosition="left">
+        <p>
+          Professor ASCII weist jedem Byte einen <strong>Identifizierer</strong>{" "}
+          zu, damit er die Gruppen einfach unterscheiden kann. So wird aus einer
+          Folge von Nullen und Einsen ein Grossbuchstabe, ein Kleinbuchstabe,
+          eine Ziffer, ein Satzzeichen oder sogar ein Leerschlag.
         </p>
       </StoryPart>
     </>

@@ -1,0 +1,63 @@
+.asciiByte {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+  margin: 0;
+}
+
+.arrow {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-fg-muted, #928374);
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3rem;
+  padding: 0.15rem var(--space-sm, 0.5rem);
+  border-radius: var(--radius-xl);
+  background-color: rgba(40, 40, 40, 0.5);
+  font-family: monospace;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-yellow, #fabd2f);
+}
+
+/* Mehrere Beispiele untereinander */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.5rem);
+}
+
+/* Kompaktere Bits, damit 5 Beispiele Platz haben */
+.list .asciiByte > :first-child {
+  --byte-bit-width: 1.6rem;
+  --byte-bit-height: 2rem;
+  --byte-bit-font-size: 1rem;
+
+  padding: var(--space-sm, 0.5rem);
+}
+
+@media (max-width: 768px) {
+  .symbol {
+    min-width: 2.25rem;
+    font-size: 1.4rem;
+  }
+
+  .list .asciiByte > :first-child {
+    --byte-bit-width: 1.2rem;
+    --byte-bit-height: 1.6rem;
+    --byte-bit-font-size: 0.8rem;
+  }
+}

@@ -1,4 +1,8 @@
 .byte {
+  --byte-bit-width: 2.5rem;
+  --byte-bit-height: 3rem;
+  --byte-bit-font-size: 1.5rem;
+
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
@@ -12,11 +16,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 3rem;
+  width: var(--byte-bit-width);
+  height: var(--byte-bit-height);
   border-radius: var(--radius-sm, 4px);
   font-family: monospace;
-  font-size: 1.5rem;
+  font-size: var(--byte-bit-font-size);
   font-weight: bold;
   transition:
     background-color 0.25s ease,
@@ -34,9 +38,9 @@
 }
 
 .scaled .bit {
-  width: calc(2.5rem * var(--bit-scale, 1));
-  height: calc(3rem * var(--bit-scale, 1));
-  font-size: calc(1.5rem * var(--bit-scale, 1));
+  width: calc(var(--byte-bit-width) * var(--bit-scale, 1));
+  height: calc(var(--byte-bit-height) * var(--bit-scale, 1));
+  font-size: calc(var(--byte-bit-font-size) * var(--bit-scale, 1));
   border-radius: calc(var(--radius-sm, 4px) * var(--bit-scale, 1));
 }
 
@@ -55,16 +59,10 @@
 }
 
 @media (max-width: 768px) {
-  .bit {
-    width: 1.75rem;
-    height: 2.25rem;
-    font-size: 1.1rem;
-  }
-
-  .scaled .bit {
-    width: calc(1.75rem * var(--bit-scale, 1));
-    height: calc(2.25rem * var(--bit-scale, 1));
-    font-size: calc(1.1rem * var(--bit-scale, 1));
+  .byte {
+    --byte-bit-width: 1.75rem;
+    --byte-bit-height: 2.25rem;
+    --byte-bit-font-size: 1.1rem;
   }
 }
 
