@@ -85,6 +85,73 @@ export const CHARACTER_PRESETS = {
       { offset: "100%", color: PALETTE.aqua },
     ],
   },
+  rgb: {
+    text: "RGB",
+    label: "Professor RGB",
+    geometry: {
+      fontSize: 56,
+      charSpacing: 34,
+      eyeSpacing: 32,
+      paddingX: 50,
+      eyeRadiusX: 13,
+      eyeRadiusY: 13,
+      pupilRadius: 6.5,
+      rectHeight: 74,
+    },
+    gradient: [
+      { offset: "0%", color: PALETTE.red },
+      { offset: "50%", color: PALETTE.green },
+      { offset: "100%", color: PALETTE.blue },
+    ],
+  },
+  alpha: {
+    text: "ALPHA",
+    label: "Dr. Alpha",
+    geometry: {
+      fontSize: 48,
+      charSpacing: 30,
+      eyeSpacing: 34,
+      paddingX: 40,
+      eyeRadiusX: 13,
+      eyeRadiusY: 13,
+      pupilRadius: 6.5,
+      rectHeight: 70,
+    },
+    gradient: [
+      { offset: "0%", color: PALETTE.dark },
+      { offset: "100%", color: PALETTE.lightPurple },
+    ],
+  },
+  png: {
+    text: "PNG",
+    label: "Dr. PNG",
+    geometry: {
+      fontSize: 56,
+      charSpacing: 34,
+      eyeSpacing: 32,
+      paddingX: 50,
+      eyeRadiusX: 13,
+      eyeRadiusY: 13,
+      pupilRadius: 6.5,
+      rectHeight: 74,
+    },
+    fill: PALETTE.lightBlue,
+  },
+  jpeg: {
+    text: "JPEG",
+    label: "Dr. JPEG",
+    geometry: {
+      fontSize: 48,
+      charSpacing: 30,
+      eyeSpacing: 32,
+      paddingX: 44,
+      eyeRadiusX: 13,
+      eyeRadiusY: 13,
+      pupilRadius: 6.5,
+      rectHeight: 70,
+    },
+    fill: PALETTE.orange,
+  },
 };
 
 /** Erzeugt eine Charakter-Komponente aus einem Preset. */
@@ -108,3 +175,7 @@ export function createCharacter(presetName) {
 export const Ascii = createCharacter("ascii");
 export const Dec = createCharacter("dec");
 export const Hex = createCharacter("hex");
+export const Rgb = createCharacter("rgb");
+export const Alpha = createCharacter("alpha");
+export const Png = createCharacter("png");
+export const Jpeg = createCharacter("jpeg");

@@ -1,0 +1,36 @@
+.hexChannels {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.dot {
+  flex: 0 0 auto;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+}
+
+.arrow {
+  color: var(--color-gray);
+}
+
+.hex {
+  min-width: 2.5em;
+  font-family: monospace;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .hex {
+    font-size: 1.2rem;
+  }
+}

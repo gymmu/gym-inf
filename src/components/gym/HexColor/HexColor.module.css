@@ -1,0 +1,41 @@
+.hexColor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.swatch {
+  width: 8rem;
+  height: 8rem;
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 0 0 2px rgba(235, 219, 178, 0.25);
+}
+
+.code {
+  display: flex;
+  align-items: baseline;
+  gap: 0.15em;
+  padding: var(--space-sm) var(--space-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-lg);
+  font-family: monospace;
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.hash {
+  color: var(--color-gray);
+}
+
+@media (max-width: 768px) {
+  .swatch {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .code {
+    font-size: 1.3rem;
+  }
+}

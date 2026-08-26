@@ -1,0 +1,50 @@
+.resolution {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+  max-width: 32rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+/* Das "Bild": ein feines Pixelraster */
+.screen {
+  flex: 1 1 auto;
+  border-radius: var(--radius-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  background-image:
+    linear-gradient(to right, rgba(146, 131, 116, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(146, 131, 116, 0.4) 1px, transparent 1px);
+  background-size: 8px 8px;
+  box-shadow: inset 0 0 0 2px var(--color-gray);
+}
+
+.top,
+.side,
+.total {
+  font-family: monospace;
+  color: var(--color-gray);
+}
+
+.top,
+.side {
+  font-size: 1rem;
+}
+
+.side {
+  writing-mode: vertical-rl;
+}
+
+.total {
+  margin-top: var(--space-xs);
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-yellow);
+}

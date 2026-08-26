@@ -1,0 +1,88 @@
+.hexTable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  gap: 4px;
+  width: 100%;
+  max-width: 40rem;
+  padding: var(--space-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-xl);
+  box-sizing: border-box;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: var(--space-2xs) 0;
+  font-family: monospace;
+  border-radius: var(--radius-sm);
+  background-color: rgba(92, 88, 69, 0.35);
+}
+
+.dec {
+  font-size: 0.7rem;
+  color: var(--color-gray);
+}
+
+.hex {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--color-aqua);
+}
+
+.newDigit {
+  background-color: rgba(142, 192, 124, 0.18);
+}
+
+.newDigit .hex {
+  color: var(--color-yellow);
+}
+
+/* Alle 16 Ziffern des Systems */
+.digits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2xs);
+}
+
+.digit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: var(--radius-sm);
+  background-color: rgba(92, 88, 69, 0.35);
+  color: var(--color-aqua);
+}
+
+.digit.newDigit {
+  color: var(--color-yellow);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .digit {
+    width: 1.6rem;
+    height: 1.6rem;
+    font-size: 0.9rem;
+  }
+}
