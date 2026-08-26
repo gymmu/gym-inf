@@ -101,6 +101,89 @@ export default function BiitStory() {
           allen Sprachen existieren.
         </p>
       </StoryPart>
+
+      {/* New StoryParts */}
+
+      <StoryPart component={} imagePosition="left" wide>
+        <p>
+          Dr. HEX ist ein Rivale von Dr. DEC. Er behauptet, das Zahlensystem das verwendet wird, mache keinen Sinn. Es braucht nur ca. 25% der möglichen Zahlen. Er könne das viel besser, und sogar nur mit 2 Stellen.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={/* Gib hier eine Tabelle an, von 0 bis 32 mit den jeweiligen dec und hexwerten.*/} imagePosition="right" wide>
+        <p>
+          Die 10 Ziffern reichen aber für das neue System nicht aus, also fügt er einfach die Ziffern A-F hinzu.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={} imagePosition="left" wide>
+        <p>
+          Dr. HEX behauptet das sein System so viel besser für Binaria gemacht ist, da man alle Bytes in seinem System von 00-FF durchnummerieren kann.
+        </p>
+      </StoryPart>
+      
+      <StoryPart component={} imagePosition="right" wide>
+        <p>
+          Aber nicht alle können in dem neuen System gut rechnen. Dr. HEX merkt das, und entwickelt eine Formel um direkt in das Dezimalsystem zu rechnen.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={} imagePosition="left" wide>
+        <p>
+          Es gibt noch weitere Forschungsgruppen die Binaria anschauen. So ist Prof. RGB aufgefallen dass sich die Bytes oftmals in 3er-Gruppen zusammen finden. Er hat seine Forschung diesen grösseren Gruppen gewidmet. Diese Gruppen nennt er Pixel.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={} imagePosition="right" wide>
+        <p>
+          NAch ein paar Abschätzungen, ist seine Arbeitsgruppe darauf gekommen das es 16777216 unterschiedliche Pixel gibt. Das ist viel zu gross um es in einer Tabelle festzuhalten, also gibt er jedem Pixel eine Farbe.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={} imagePosition="right" wide>
+        <p>
+          Damit er die übersicht nicht verliert, teilt er die Pixel in 3 Kanäle ein. Ein Kanal ist immer gerade ein Byte. So ist das erste Byte der Rot-Kanal, dann kommt der Grün-Kanal und dann der Blau-Kanal. Je höher der Zahlenwert in einem Kanal, desto mehr Farbe davon ist enthalten.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={} imagePosition="right" wide>
+        <p>
+          Dr. HEX sieht in dem Pixel-Studium seine Chance seine Arbeit weiter zu verbreiten. So entwickelt er die radikale Idee eine Farbe mit genau 7 Zeichen darzustellen. Seine Schöpfung nennt er RGB-Hex-Wert.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={} imagePosition="right" wide>
+        <p>
+          Dabei verwendet er die Kanal-Idee von Prof. RGB. Er braucht immer genau 2 Hexwerte um einen Wert von 00-FF darzustellen.
+        </p>
+      </StoryPart>
+
+
+      <StoryPart component={} imagePosition="right" wide>
+        <p>
+          Dr. ALPHA ist aufgefallen das sich oftmals ein viertes Byte an ein Pixel anschliesst. Seine Entdeckung nennt er den Alpha-Kanal. Dieser gibt an wie sehr so ein Pixel sichtbar ist. Meistens schliesst sich ein Byte an, das nur aus 1 besteht.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={} imagePosition="right" wide>
+        <p>
+          Je tiefer der Wert in einem Alpha-Kanal ist, desto durchsichtiger ist das Pixel.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={} imagePosition="right" wide>
+        <p>
+          Dr. PNG und Dr. JPEG studieren das zusammenleben von Pixeln. Ihnen ist aufgefallen das sich diese Pixel alle schön aufreihen und dann ein Bild erzeugen.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={} imagePosition="right" wide>
+        <p>
+        ese Gruppen werden sehr schnell recht gross, so wird für ein normaler Bildschirm ein Bild mit 1920x1200 Pixel gebraucht. 
+        </p>
+      </StoryPart>
+
+      
     </>
   );
 }
