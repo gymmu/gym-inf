@@ -368,18 +368,27 @@ export default function Character({
     }));
   }, [isSad]);
 
-  // Kleine Konfetti-Wolke über dem Kopf
+  // Einmalige Konfetti-Explosion über dem Kopf
   const confetti = useMemo(() => {
     if (!isHappy) return [];
-    return Array.from({ length: 9 }, () => ({
-      x: random(-0.35, 0.35),
-      size: random(3, 6),
-      color: CONFETTI_COLORS[Math.floor(random(0, CONFETTI_COLORS.length))],
-      duration: random(1.4, 2.6),
-      delay: random(0, 1.8),
-      rotation: random(-180, 180),
-      round: Math.random() < 0.4,
-    }));
+    const count = 22;
+    return Array.from({ length: count }, (_, index) => {
+      // Radial nach aussen, mit leichter Streuung und Drall nach oben
+      const angle =
+        (index / count) * Math.PI * 2 + random(-0.18, 0.18) - Math.PI / 2;
+      const distance = random(26, 62);
+      return {
+        x: random(-0.06, 0.06),
+        dx: Math.cos(angle) * distance,
+        dy: Math.sin(angle) * distance * 0.85,
+        size: random(3, 7),
+        color: CONFETTI_COLORS[Math.floor(random(0, CONFETTI_COLORS.length))],
+        duration: random(0.55, 0.85),
+        delay: random(0, 0.06),
+        rotation: random(-360, 360),
+        round: Math.random() < 0.4,
+      };
+    });
   }, [isHappy]);
 
   const eyeRy = blink
@@ -490,6 +499,8 @@ export default function Character({
                     animationDuration: `${piece.duration}s`,
                     animationDelay: `${piece.delay}s`,
                     "--confetti-rotation": `${piece.rotation}deg`,
+                    "--confetti-dx": `${piece.dx}px`,
+                    "--confetti-dy": `${piece.dy}px`,
                   }}
                 >
                   {piece.round ? (

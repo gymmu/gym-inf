@@ -15,8 +15,28 @@ function shuffle(items) {
   return next;
 }
 
-function pickQuestions(catalog, count) {
-  return shuffle(catalog).slice(0, count);
+const EASY_COUNT = BIT_COUNT / 2;
+
+/**
+ * Wählt die Fragen für ein Byte aus: die ersten vier Bits erhalten einfache
+ * Fragen, die letzten vier Bits schwere. Fehlen Fragen einer Stufe, wird mit
+ * den übrigen Fragen aufgefüllt.
+ */
+function pickQuestions(catalog, count = BIT_COUNT) {
+  const easy = shuffle(catalog.filter((q) => q.difficulty !== "hard"));
+  const hard = shuffle(catalog.filter((q) => q.difficulty === "hard"));
+
+  const picked = [
+    ...easy.slice(0, EASY_COUNT),
+    ...hard.slice(0, count - EASY_COUNT),
+  ];
+
+  if (picked.length < count) {
+    const rest = shuffle(catalog).filter((q) => !picked.includes(q));
+    picked.push(...rest.slice(0, count - picked.length));
+  }
+
+  return picked.slice(0, count);
 }
 
 function randomByte() {
@@ -116,9 +136,10 @@ function isCorrect(question, answer) {
  * falsch = 0, unbeantwortet = grau. Die Fragen füllen das Byte von hinten
  * nach vorne (Frage 1 = kleinstes Bit, rechts).
  *
- * Biit reagiert nicht auf richtig/falsch, sondern darauf, ob das gesetzte Bit
- * mit dem Ziel-Byte übereinstimmt. Am Schluss richtet sich seine Stimmung
- * nach der Anzahl übereinstimmender Bits.
+ * Während des Spiels reagiert Biit direkt auf richtig/falsch. Ob ein Bit zur
+ * gesuchten Gruppe passt, muss die spielende Person selbst herausfinden – erst
+ * am Schluss richtet sich Biits Stimmung nach der Anzahl übereinstimmender
+ * Bits.
  *
  * @param {Array} [questions] Fragekatalog (Standard: Dummy-Fragen)
  */
@@ -182,9 +203,6 @@ export default function ByteQuiz({ questions = BYTE_QUIZ_QUESTIONS }) {
 
   const result = results[current];
   const answered = result !== null;
-  const ownBit = answered ? (result ? 1 : 0) : null;
-  const targetBit = bitAt(target, current);
-  const bitMatches = answered && ownBit === targetBit;
   const reaction = getReaction(matches);
 
   return (
@@ -219,8 +237,8 @@ export default function ByteQuiz({ questions = BYTE_QUIZ_QUESTIONS }) {
                 <span
                   className={`${styles.bit} ${stateClass} ${
                     questionIndex === current && !finished ? styles.active : ""
-                  } ${state !== null && matched ? styles.matched : ""} ${
-                    state !== null && !matched ? styles.mismatched : ""
+                  } ${finished && matched ? styles.matched : ""} ${
+                    finished && !matched ? styles.mismatched : ""
                   }`}
                 >
                   {bit}
@@ -233,9 +251,11 @@ export default function ByteQuiz({ questions = BYTE_QUIZ_QUESTIONS }) {
 
         <div className={styles.values}>
           <span className={styles.hex}>0x{toHex(byteValue)}</span>
-          <span className={styles.dec}>
-            {matches} von {BIT_COUNT} Bits stimmen
-          </span>
+          {finished && (
+            <span className={styles.dec}>
+              {matches} von {BIT_COUNT} Bits stimmen
+            </span>
+          )}
         </div>
       </div>
 
@@ -243,7 +263,8 @@ export default function ByteQuiz({ questions = BYTE_QUIZ_QUESTIONS }) {
       {question && (
         <div className={styles.stage}>
           <div className={styles.progress}>
-            Frage {current + 1} von {BIT_COUNT}
+            Frage {current + 1} von {BIT_COUNT} –{" "}
+            {question.difficulty === "hard" ? "schwer" : "einfach"}
           </div>
 
           <div className={styles.questionRow}>
@@ -315,19 +336,10 @@ export default function ByteQuiz({ questions = BYTE_QUIZ_QUESTIONS }) {
               {answered && (
                 <div
                   className={`${styles.feedback} ${
-                    bitMatches ? styles.feedbackOk : styles.feedbackBad
+                    result ? styles.feedbackOk : styles.feedbackBad
                   }`}
                 >
-                  <strong>
-                    {bitMatches
-                      ? `Bit ${current + 1} passt zu Biits Gruppe.`
-                      : `Bit ${current + 1} passt nicht zu Biits Gruppe.`}
-                  </strong>
-                  <span>
-                    {" "}
-                    Deine Antwort war {result ? "richtig" : "falsch"} → Bit{" "}
-                    {ownBit}.
-                  </span>
+                  <strong>{result ? "Richtig." : "Falsch."}</strong>
                   {question.explanation && <span> {question.explanation}</span>}
                 </div>
               )}
@@ -344,7 +356,7 @@ export default function ByteQuiz({ questions = BYTE_QUIZ_QUESTIONS }) {
                 variant="large"
                 size={170}
                 animate={false}
-                value={answered ? (bitMatches ? 1 : 0) : "neutral"}
+                value={answered ? (result ? 1 : 0) : "neutral"}
               />
             </div>
           </div>
