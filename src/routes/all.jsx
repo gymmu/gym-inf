@@ -250,7 +250,7 @@ export const routes = [
 
       // FMS Routes 1. Klasse
       { path: "fms-theorie", element: <FMSIndex /> },
-      { path: "fms/biit-story", element: <BiitStory /> },
+      { path: "/fms/biit-story", element: <BiitStory /> },
       { path: "/fms/hardware", element: <Hardware /> },
       { path: "/fms/binary", element: <Binary /> },
       { path: "/fms/hex", element: <Hex /> },

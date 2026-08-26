@@ -1,9 +1,5 @@
-import Layout from "@components/Layout.jsx";
-import StoryScroll from "@components/StoryScroll";
-
 export default function BiitStory() {
   return (
-    <Layout>
       <div className="page-header">
         <h1>Willkommen in der Welt der Bits und Bytes</h1>
         <p className="page-subtitle">
@@ -11,7 +7,5 @@ export default function BiitStory() {
           digitalen Welt:
         </p>
       </div>
-      <StoryScroll />
-    </Layout>
   );
 }
