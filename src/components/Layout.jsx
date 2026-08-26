@@ -1,6 +1,5 @@
 import ChapterRating from "@components/ChapterRating/ChapterRating";
 import Footer from "@components/Footer";
-import Biit from "@components/gym/Biit/Biit";
 import Header from "@components/Header";
 import style from "@components/Layout.module.css";
 import Navbar from "@components/Navbar";
@@ -46,10 +45,6 @@ function LayoutContent() {
 
   return (
     <div id={style.app} className={classes}>
-      {/* Biit Overlay — rechts, vertikal zentriert */}
-      <div className={style.biitOverlay}>
-        <Biit value="neutral" />
-      </div>
       <Header />
       <Navbar />
       <main className="content-grid">
