@@ -1,0 +1,224 @@
+/* Element + Klasse: überschreibt eine von aussen gesetzte max-width (z.B. StoryPart) */
+figure.formula {
+  --formula-bit-size: 2.5rem;
+
+  width: 100%;
+  max-width: 640px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-md);
+  margin: 0;
+  padding: var(--space-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-xl);
+  user-select: none;
+}
+
+/* Ein Abschnitt der Visualisierung (Bits aufbrechen bzw. Rechnung) */
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  background-color: rgba(29, 32, 33, 0.45);
+}
+
+/* Die eigentliche Rechnung hebt sich deutlich ab */
+.calculation {
+  border: 1px solid var(--color-yellow);
+  background-color: rgba(250, 189, 47, 0.08);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* 8 Spalten – jede Spalte gehört zu einem Bit */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, var(--formula-bit-size));
+  gap: var(--space-2xs) var(--space-xs);
+  justify-items: center;
+  align-items: center;
+}
+
+.bit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--formula-bit-size);
+  height: calc(var(--formula-bit-size) * 1.2);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: monospace;
+  font-size: calc(var(--formula-bit-size) * 0.6);
+  font-weight: bold;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+button.bit {
+  cursor: pointer;
+}
+
+button.bit:hover {
+  transform: scale(1.08);
+}
+
+button.bit:focus-visible {
+  outline: 2px solid var(--color-yellow);
+  outline-offset: 2px;
+}
+
+.one {
+  background-color: var(--color-green);
+  color: var(--color-white);
+}
+
+.zero {
+  background-color: var(--color-red);
+  color: var(--color-fg);
+}
+
+.arrow {
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--color-gray);
+}
+
+.weight {
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: var(--color-blue);
+}
+
+.part {
+  font-family: monospace;
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
+.partActive {
+  color: var(--color-yellow);
+}
+
+.partZero {
+  color: var(--color-gray);
+}
+
+.expression {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs) var(--space-xs);
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+/* Vollständige Formel: immer auf einer Zeile */
+.expressionFull {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  font-size: clamp(0.7rem, 1.6vw, 1.05rem);
+}
+
+/* Faktoren so eng wie möglich um das Multiplikationszeichen */
+.term {
+  white-space: nowrap;
+}
+
+.term sup {
+  vertical-align: super;
+  font-size: 0.7em;
+  line-height: 0;
+}
+
+.mult {
+  padding: 0 0.04em;
+  font-size: 0.85em;
+  opacity: 0.75;
+}
+
+.expressionShort {
+  font-size: 1.15rem;
+}
+
+.operator {
+  color: var(--color-gray);
+}
+
+.termActive {
+  color: var(--color-yellow);
+  font-weight: bold;
+}
+
+.termZero {
+  color: var(--color-gray);
+}
+
+/* Ergebniszeile mit Rechenstrich darüber */
+.result {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-xs);
+  width: 100%;
+  margin: 0;
+  padding-top: var(--space-sm);
+  border-top: 2px solid rgba(250, 189, 47, 0.5);
+  font-family: monospace;
+}
+
+.equals {
+  font-size: 1.4rem;
+  color: var(--color-yellow);
+}
+
+.binary {
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--color-fg);
+}
+
+.total {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--color-yellow);
+}
+
+@media (max-width: 768px) {
+  .formula {
+    --formula-bit-size: 1.75rem;
+  }
+
+  .expression,
+  .binary {
+    font-size: 0.85rem;
+  }
+
+  .expressionFull {
+    font-size: clamp(0.5rem, 2.2vw, 0.85rem);
+  }
+
+  .expressionShort {
+    font-size: 1rem;
+  }
+
+  .total {
+    font-size: 1.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bit,
+  button.bit:hover {
+    transition: none;
+    transform: none;
+  }
+}

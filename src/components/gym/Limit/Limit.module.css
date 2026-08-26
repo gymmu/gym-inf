@@ -1,0 +1,80 @@
+.limit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.title {
+  font-size: 1.4rem;
+  color: var(--color-yellow, #fabd2f);
+  text-align: center;
+}
+
+.examples {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.exampleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.label,
+.result {
+  font-family: monospace;
+  font-size: 1rem;
+  color: var(--color-fg-muted, #928374);
+}
+
+.note {
+  max-width: 30rem;
+  text-align: center;
+  font-style: italic;
+  color: var(--color-lightAqua, #8ec07c);
+}
+
+/* Markierung */
+.highlightMarker {
+  position: absolute;
+  top: -1.5rem;
+  right: 50%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.arrow {
+  font-size: 2rem;
+  color: var(--color-yellow, #fabd2f);
+}
+
+.text {
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-yellow, #fabd2f);
+}
+
+@media (max-width: 768px) {
+  .limit {
+    gap: var(--space-sm);
+  }
+
+  .title,
+  .exampleRow,
+  .note {
+    font-size: 0.9rem;
+  }
+
+  .highlightMarker {
+    position: static;
+    top: auto;
+    right: auto;
+    order: -1;
+    margin-bottom: var(--space-xs);
+  }
+}

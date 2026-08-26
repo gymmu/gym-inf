@@ -1,9 +1,14 @@
-.byte {
+/* Doppelte Klasse: verhindert, dass Layout-Klassen von aussen (z.B. StoryPart)
+   das Flex-Layout überschreiben und die Bits umbrechen lassen. */
+.byte.byte {
   --byte-bit-width: 2.5rem;
   --byte-bit-height: 3rem;
   --byte-bit-font-size: 1.5rem;
 
   display: inline-flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  max-width: none;
   align-items: center;
   gap: var(--space-xs);
   padding: var(--space-md);
@@ -14,6 +19,7 @@
 
 .bit {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   width: var(--byte-bit-width);
@@ -59,10 +65,24 @@
 }
 
 @media (max-width: 768px) {
-  .byte {
+  .byte.byte {
     --byte-bit-width: 1.75rem;
     --byte-bit-height: 2.25rem;
     --byte-bit-font-size: 1.1rem;
+    padding: var(--space-sm);
+  }
+}
+
+@media (max-width: 430px) {
+  .byte.byte {
+    --byte-bit-width: 1.4rem;
+    --byte-bit-height: 1.8rem;
+    --byte-bit-font-size: 0.9rem;
+    gap: 2px;
+  }
+
+  .byte.byte .bit:nth-child(4) {
+    margin-right: var(--space-sm);
   }
 }
 

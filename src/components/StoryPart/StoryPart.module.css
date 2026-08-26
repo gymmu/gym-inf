@@ -40,6 +40,15 @@
   height: auto;
 }
 
+/* Breite Visuals (z.B. Formel-Visualisierung) nutzen die ganze Spalte */
+.wide .visual {
+  max-width: 100%;
+}
+
+.wide .component {
+  max-width: 100%;
+}
+
 .image {
   display: block;
   max-width: 100%;
@@ -77,6 +86,10 @@
 
   .component {
     max-width: 200px;
+  }
+
+  .wide .component {
+    max-width: 100%;
   }
 
   /* Auf kleinen Screens immer Visual oben, Text darunter */

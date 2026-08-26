@@ -1,0 +1,90 @@
+.boundary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+}
+
+/* Beobachteter Bereich */
+.observed,
+.theoretical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.label {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--color-fg-muted, #928374);
+}
+
+/* Trennlinie */
+.divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.boundaryLine {
+  font-size: 4rem;
+  color: var(--color-red, #fb4934);
+  font-weight: bold;
+}
+
+/* Markierung */
+.highlightMarker {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 2rem);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.arrow {
+  font-size: 2rem;
+  color: var(--color-yellow, #fabd2f);
+}
+
+.text {
+  font-family: monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--color-yellow, #fabd2f);
+}
+
+/* Theorie-Hintegrund leicht ausgegraut */
+.theoretical {
+  opacity: 0.7;
+}
+
+.highlight .boundaryLine {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (max-width: 768px) {
+  .boundaryLine {
+    font-size: 3rem;
+  }
+
+  .highlightMarker {
+    position: static;
+    top: auto;
+    right: auto;
+    order: -1;
+    margin-bottom: var(--space-md);
+  }
+}

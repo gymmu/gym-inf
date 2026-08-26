@@ -7,6 +7,7 @@ import style from "./StoryPart.module.css";
  * @param {string} [imageSrc] Alternativ: Bildquelle
  * @param {string} [alt] Alt-Text für das Bild
  * @param {"left"|"right"} [imagePosition] Position des Visuals
+ * @param {boolean} [wide] Visual darf die volle Spaltenbreite nutzen
  * @param {string} [className] Zusätzliche Klassen (z.B. "full-width")
  */
 export default function StoryPart({
@@ -14,13 +15,17 @@ export default function StoryPart({
   imageSrc,
   alt = "",
   imagePosition = "left",
+  wide = false,
   className = "",
   children,
 }) {
   const positionClass = imagePosition === "right" ? style.right : style.left;
+  const wideClass = wide ? style.wide : "";
 
   return (
-    <section className={`${style.storyPart} ${positionClass} ${className}`}>
+    <section
+      className={`${style.storyPart} ${positionClass} ${wideClass} ${className}`}
+    >
       <div className={style.visual}>
         {Component ? (
           <Component className={style.component} />
