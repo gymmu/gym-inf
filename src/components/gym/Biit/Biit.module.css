@@ -18,3 +18,35 @@
 .biit[data-state="1"] {
   filter: drop-shadow(0 0 20px rgba(184, 187, 38, 0.3));
 }
+
+/* Byte-Gruppe */
+.byte-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px;
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-xl);
+}
+
+.bit-in-byte {
+  margin: 0;
+}
+
+/* Animation für den Wechsel der Bits */
+@keyframes bitChange {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.biit.animating {
+  animation: bitChange 0.3s ease;
+}

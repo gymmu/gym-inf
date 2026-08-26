@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Character from "@/components/gym/Character/Character";
 import {
   CHARACTER_PRESETS,
@@ -37,6 +37,8 @@ function getGradientStops(state) {
 /**
  * Biit — der binäre Charakter.
  *
+ * Der Zustand (0 / 1) wechselt automatisch alle 3–5 Sekunden.
+ *
  * variant="large": Augen folgen dem Cursor / Biit schläft ein (Standard)
  * variant="small": nur unregelmässiges Blinzeln
  */
@@ -46,34 +48,38 @@ export default function Biit({
   size,
   className = "",
 }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [hoverX, setHoverX] = useState(0.5); // 0 = links, 1 = rechts
-  const biitRef = useRef(null);
+  const [state, setState] = useState(() => Number.parseFloat(value));
 
-  const state = isHovered ? hoverX : Number.parseFloat(value);
+  useEffect(() => {
+    setState(Number.parseFloat(value));
+  }, [value]);
+
+  useEffect(() => {
+    let timeoutId;
+
+    const scheduleNext = () => {
+      const delay = 3000 + Math.random() * 2000; // 3–5 Sekunden
+      timeoutId = setTimeout(() => {
+        setState((prev) => (prev >= 0.5 ? 0 : 1));
+        scheduleNext();
+      }, delay);
+    };
+
+    scheduleNext();
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   const gradient = getGradientStops(state);
+  const dataState = Number.isNaN(state) ? "neutral" : String(state);
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: rein dekorative Hover-Interaktion
-    <div
-      ref={biitRef}
-      className={`${style.biit} ${className}`}
-      data-state={value}
-      onMouseEnter={() => variant === "large" && setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onMouseMove={(e) => {
-        if (variant !== "large" || !biitRef.current) return;
-        const rect = biitRef.current.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        setHoverX(Math.max(0, Math.min(1, x)));
-      }}
-    >
+    <div className={`${style.biit} ${className}`} data-state={dataState}>
       <Character
         {...PRESET}
         variant={variant}
         size={size}
         gradient={gradient}
-        label="Biit — interaktiver binärer Charakter"
+        label="Biit — binärer Charakter"
       />
     </div>
   );
