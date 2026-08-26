@@ -1,0 +1,389 @@
+/* === StoryPart – Bild-Text Komponente mit Übergangseffekten === */
+
+.story-part {
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-2xl);
+}
+
+/* === Bild-Wrapper === */
+
+.story-part__image-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition:
+    opacity 0.6s ease,
+    filter 0.6s ease;
+  will-change: opacity, filter;
+  z-index: 1;
+}
+
+.story-part__image-wrapper.is-loaded {
+  opacity: 1;
+}
+
+.story-part__image {
+  display: block;
+  max-height: 80vh;
+  object-fit: cover;
+  transition:
+    opacity 0.6s ease,
+    filter 0.6s ease;
+  will-change: opacity, filter;
+}
+
+.story-part__image-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(60, 56, 54, 0.3) 25%,
+    rgba(60, 56, 54, 0.5) 50%,
+    rgba(60, 56, 54, 0.3) 75%
+  );
+  background-size: 200% 100%;
+  animation: story-part__skeleton 1.5s ease-in-out infinite;
+  border-radius: inherit;
+}
+
+@keyframes story-part__skeleton {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* === Text-Bereich === */
+
+.story-part__text {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  line-height: 1.8;
+  color: var(--color-fg);
+  max-width: 700px;
+}
+
+.story-part__text p {
+  margin-bottom: var(--space-lg);
+}
+
+.story-part__text p:last-child {
+  margin-bottom: 0;
+}
+
+.story-part__text strong {
+  color: var(--color-green);
+  font-weight: 700;
+}
+
+.story-part__text em {
+  color: var(--color-purple);
+  font-style: italic;
+}
+
+.story-part__text sup {
+  font-size: 0.7em;
+  color: var(--color-yellow);
+}
+
+/* === Anordnung: Bild links === */
+
+.story-part--left {
+  flex-direction: row;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
+.story-part--left .story-part__image-wrapper {
+  order: 1;
+}
+
+.story-part--left .story-part__text {
+  order: 2;
+}
+
+/* === Anordnung: Bild rechts === */
+
+.story-part--right {
+  flex-direction: row;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
+.story-part--right .story-part__image-wrapper {
+  order: 2;
+}
+
+.story-part--right .story-part__text {
+  order: 1;
+}
+
+/* === Breite Bilder mit Übergangseffekt === */
+
+.story-part--wide .story-part__image-wrapper {
+  position: absolute;
+  z-index: 2;
+  transition:
+    opacity 0.4s ease,
+    filter 0.4s ease;
+}
+
+/* Breite Bilder links */
+.story-part--wide.story-part--left .story-part__image-wrapper {
+  left: max(0px, calc((100vw - var(--container-width, 1200px)) / 2));
+  transform: translateX(calc(-50% + 20px));
+}
+
+/* Breite Bilder rechts */
+.story-part--wide.story-part--right .story-part__image-wrapper {
+  right: max(0px, calc((100vw - var(--container-width, 1200px)) / 2));
+  transform: translateX(calc(50% - 20px));
+}
+
+/* Text überlappt das Bild mit Gradient */
+.story-part--wide .story-part__text {
+  position: relative;
+  z-index: 3;
+  padding: var(--space-4xl) 0;
+}
+
+/* Gradient Overlay für den Übergang */
+.story-part--wide .story-part__text::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.story-part--wide.story-part--left .story-part__text::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(var(--color-bg-rgb, 255, 255, 255), 0.3) 30%,
+    rgba(var(--color-bg-rgb, 255, 255, 255), 0.7) 60%,
+    rgba(var(--color-bg-rgb, 255, 255, 255), 1) 100%
+  );
+}
+
+.story-part--wide.story-part--right .story-part__text::before {
+  background: linear-gradient(
+    to left,
+    transparent 0%,
+    rgba(var(--color-bg-rgb, 255, 255, 255), 0.3) 30%,
+    rgba(var(--color-bg-rgb, 255, 255, 255), 0.7) 60%,
+    rgba(var(--color-bg-rgb, 255, 255, 255), 1) 100%
+  );
+}
+
+/* Bild wird dunkler und durchsichtiger beim Scrollen */
+.story-part--wide .story-part__image-wrapper.has-transition {
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease,
+    transform 0.3s ease;
+}
+
+.story-part--wide .story-part__image-wrapper.is-fading {
+  opacity: 0.4;
+  filter: brightness(0.6) saturate(0.8);
+}
+
+/* === Fullscreen Overlay === */
+
+.story-part__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  animation: story-part__overlay-in 0.4s ease forwards;
+}
+
+@keyframes story-part__overlay-in {
+  from {
+    opacity: 0;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+  }
+}
+
+.story-part__overlay-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 95vw;
+  max-height: 95vh;
+  padding: var(--space-2xl);
+}
+
+.story-part__overlay-image {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+  animation: story-part__image-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)
+    forwards;
+  transform: scale(0.7);
+  opacity: 0;
+  filter: brightness(1.1) saturate(1.1);
+}
+
+@keyframes story-part__image-in {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+    filter: brightness(0.5) saturate(0.5);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    filter: brightness(1.1) saturate(1.1);
+  }
+}
+
+.story-part__overlay-close {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+.story-part__overlay-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+/* === Responsive === */
+
+@media (width < 768px) {
+  .story-part.story-part--mobile-column {
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .story-part.story-part--mobile-column .story-part__image-wrapper {
+    order: 0;
+    max-width: 100%;
+  }
+
+  .story-part.story-part--mobile-column .story-part__text {
+    order: 0;
+  }
+
+  .story-part.story-part--mobile-column.story-part--wide
+    .story-part__image-wrapper {
+    position: relative;
+    left: auto;
+    right: auto;
+    transform: none;
+  }
+
+  .story-part.story-part--mobile-column.story-part--wide
+    .story-part__text::before {
+    display: none;
+  }
+
+  .story-part.story-part--mobile-column .story-part__image {
+    max-height: 60vh;
+    width: 100%;
+  }
+
+  .story-part.story-part--mobile-column .story-part__overlay-image {
+    max-width: 95vw;
+    max-height: 80vh;
+  }
+
+  .story-part.story-part--mobile-column .story-part__overlay-close {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (width >= 1200px) {
+  .story-part {
+    padding: var(--space-4xl);
+  }
+
+  .story-part--left,
+  .story-part--right {
+    gap: var(--space-5xl);
+  }
+
+  .story-part__text {
+    max-width: 600px;
+  }
+}
+
+/* === Scroll-Triggered Transitions (für breite Bilder) === */
+
+.story-part--wide.is-in-viewport .story-part__image-wrapper {
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* === Dark Mode Support === */
+
+@media (prefers-color-scheme: dark) {
+  .story-part__overlay {
+    background: rgba(0, 0, 0, 0.97);
+  }
+
+  .story-part__overlay-image {
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* === Reduced Motion === */
+
+@media (prefers-reduced-motion: reduce) {
+  .story-part__image-wrapper,
+  .story-part__image,
+  .story-part__overlay,
+  .story-part__overlay-image {
+    transition: none;
+    animation: none;
+  }
+
+  .story-part__image-skeleton {
+    animation: none;
+  }
+}
