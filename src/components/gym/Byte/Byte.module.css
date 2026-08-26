@@ -28,6 +28,18 @@
   margin-right: var(--space-md);
 }
 
+/* Byte mit Rangordnung: links das grösste, rechts das kleinste Bit */
+.scaled {
+  align-items: center;
+}
+
+.scaled .bit {
+  width: calc(2.5rem * var(--bit-scale, 1));
+  height: calc(3rem * var(--bit-scale, 1));
+  font-size: calc(1.5rem * var(--bit-scale, 1));
+  border-radius: calc(var(--radius-sm, 4px) * var(--bit-scale, 1));
+}
+
 .one {
   background-color: var(--color-green);
   color: var(--color-white);
@@ -47,6 +59,12 @@
     width: 1.75rem;
     height: 2.25rem;
     font-size: 1.1rem;
+  }
+
+  .scaled .bit {
+    width: calc(1.75rem * var(--bit-scale, 1));
+    height: calc(2.25rem * var(--bit-scale, 1));
+    font-size: calc(1.1rem * var(--bit-scale, 1));
   }
 }
 

@@ -7,11 +7,13 @@ import styles from "./Byte.module.css";
  *
  * @param {number} [minDelay] minimale Zeit in ms bis ein Bit kippt
  * @param {number} [maxDelay] maximale Zeit in ms bis ein Bit kippt
+ * @param {boolean} [scaled] Bits nach Rang skalieren (links gross, rechts klein)
  * @param {string} [className] zusätzliche Klassen
  */
 export default function Byte({
   minDelay = 3000,
   maxDelay = 4000,
+  scaled = false,
   className = "",
 }) {
   const [bits, setBits] = useState(() =>
@@ -56,11 +58,14 @@ export default function Byte({
   }, [minDelay, maxDelay]);
 
   return (
-    <div className={`${styles.byte} ${className}`}>
+    <div
+      className={`${styles.byte} ${scaled ? styles.scaled : ""} ${className}`}
+    >
       {bits.map((bit, index) => (
         <span
           // biome-ignore lint/suspicious/noArrayIndexKey: fixe Bit-Positionen
           key={index}
+          style={scaled ? { "--bit-scale": 1 - index * 0.09 } : undefined}
           className={`${styles.bit} ${bit === 1 ? styles.one : styles.zero} ${
             flipping[index] ? styles.flipping : ""
           }`}

@@ -27,6 +27,14 @@ export default function BiitStory() {
           8. Eine solche Gruppe nennt man ein <strong>Byte</strong>.
         </p>
       </StoryPart>
+
+      <StoryPart component={Biit} imagePosition="right">
+        <p>
+          Einer der Bewohner von Binaria ist <strong>Professor ASCII</strong>.
+          Er studiert die Bytes, wann und wo sie vorkommen. Dafür erstellt er
+          die berühmte <strong>ASCII-Tabelle</strong>.
+        </p>
+      </StoryPart>
     </>
   );
 }
