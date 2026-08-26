@@ -41,6 +41,20 @@ const DEFAULT_GEOMETRY = {
 
 const OUTLINE_COLOR = "#282828";
 
+// Träne (Tropfenform, Spitze oben)
+const TEAR_PATH = "M 0 0 C 4 5 7 8 7 12 A 7 7 0 0 1 -7 12 C -7 8 -4 5 0 0 Z";
+
+const CONFETTI_COLORS = [
+  "#fb4934",
+  "#fabd2f",
+  "#b8bb26",
+  "#83a598",
+  "#d3869b",
+  "#8ec07c",
+];
+
+const random = (min, max) => min + Math.random() * (max - min);
+
 // ---- Farb-Hilfsfunktionen für animierte Farbverläufe ----------------------
 function hexToHsl(hex) {
   const clean = hex.replace("#", "");
@@ -92,6 +106,7 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 export default function Character({
   text = "01",
   variant = "large",
+  mood = "neutral", // "neutral" | "happy" | "sad"
   size,
   gradient = null, // [{ offset, color }, ...] – überschreibt fill
   animatedGradient = false, // Farbverlauf verschiebt sich langsam (Farbton + Stops + Richtung)
@@ -335,9 +350,42 @@ export default function Character({
   const maskId = `charTextMask-${uid}`;
   const glowId = `charGlow-${uid}`;
 
+  // ---- Stimmung (nur über die Augen) --------------------------------------
+  const isHappy = mood === "happy";
+  const isSad = mood === "sad";
+
+  // Glückliche Augen sind leicht zusammengedrückt ("lachende" Augen)
+  const moodSquint = isHappy ? 0.75 : 1;
+
+  // Jede Träne fällt in ihrem eigenen, zufälligen Rhythmus
+  const tears = useMemo(() => {
+    if (!isSad) return [];
+    return Array.from({ length: 4 }, (_, index) => ({
+      eye: index % 2,
+      duration: random(1.6, 3.4),
+      delay: random(0, 2.5),
+      scale: random(0.75, 1.1),
+    }));
+  }, [isSad]);
+
+  // Kleine Konfetti-Wolke über dem Kopf
+  const confetti = useMemo(() => {
+    if (!isHappy) return [];
+    return Array.from({ length: 9 }, () => ({
+      x: random(-0.35, 0.35),
+      size: random(3, 6),
+      color: CONFETTI_COLORS[Math.floor(random(0, CONFETTI_COLORS.length))],
+      duration: random(1.4, 2.6),
+      delay: random(0, 1.8),
+      rotation: random(-180, 180),
+      round: Math.random() < 0.4,
+    }));
+  }, [isHappy]);
+
   const eyeRy = blink
     ? 1
-    : geo.eyeRadiusY - (isLarge ? sleepy * (geo.eyeRadiusY - 4) : 0);
+    : (geo.eyeRadiusY - (isLarge ? sleepy * (geo.eyeRadiusY - 4) : 0)) *
+      moodSquint;
 
   const width = size ?? (isLarge ? 220 : 56);
   const height = (width * layout.height) / layout.width;
@@ -427,47 +475,113 @@ export default function Character({
           className={style.bgRect}
         />
 
+        {/* Konfetti über dem Kopf (nur bei glücklicher Stimmung) */}
+        {isHappy && (
+          <g className={style.confetti}>
+            {confetti.map((piece, index) => (
+              <g
+                // biome-ignore lint/suspicious/noArrayIndexKey: feste Anzahl Konfetti-Stücke
+                key={index}
+                transform={`translate(${layout.centerX + piece.x * layout.rectWidth}, ${geo.rectY - 18})`}
+              >
+                <g
+                  className={style.confettiPiece}
+                  style={{
+                    animationDuration: `${piece.duration}s`,
+                    animationDelay: `${piece.delay}s`,
+                    "--confetti-rotation": `${piece.rotation}deg`,
+                  }}
+                >
+                  {piece.round ? (
+                    <circle r={piece.size / 2} fill={piece.color} />
+                  ) : (
+                    <rect
+                      x={-piece.size / 2}
+                      y={-piece.size / 2}
+                      width={piece.size}
+                      height={piece.size * 1.6}
+                      rx="1"
+                      fill={piece.color}
+                    />
+                  )}
+                </g>
+              </g>
+            ))}
+          </g>
+        )}
+
         {/* Comic-Augen */}
         <g className={style.eyes}>
-          {layout.eyes.map((eye, i) => (
-            <g
-              // biome-ignore lint/suspicious/noArrayIndexKey: feste Reihenfolge (links/rechts)
-              key={i}
-              transform={`translate(${eye.cx}, ${eye.cy})`}
-            >
-              <ellipse
-                cx="0"
-                cy="0"
-                rx={geo.eyeRadiusX}
-                ry={eyeRy}
-                fill="white"
-                stroke={OUTLINE_COLOR}
-                strokeWidth="2"
-                className={style.eyeWhite}
-              />
-              {!blink && (
-                <g
-                  ref={(el) => {
-                    pupilRefs.current[i] = el;
-                  }}
-                  style={{ transformOrigin: "0 0" }}
-                >
-                  <circle
-                    cx="2"
-                    cy="0"
-                    r={geo.pupilRadius}
-                    fill={OUTLINE_COLOR}
-                  />
-                  <circle
-                    cx="4"
-                    cy="-2"
-                    r={geo.pupilRadius * 0.36}
-                    fill="white"
-                  />
-                </g>
-              )}
-            </g>
-          ))}
+          {layout.eyes.map((eye, i) => {
+            // Innenseite des Auges (Richtung Gesichtsmitte)
+            const innerSign = i === 0 ? 1 : -1;
+            return (
+              <g
+                // biome-ignore lint/suspicious/noArrayIndexKey: feste Reihenfolge (links/rechts)
+                key={i}
+                transform={`translate(${eye.cx}, ${eye.cy})`}
+              >
+                <ellipse
+                  cx="0"
+                  cy="0"
+                  rx={geo.eyeRadiusX}
+                  ry={eyeRy}
+                  fill="white"
+                  stroke={OUTLINE_COLOR}
+                  strokeWidth="2"
+                  className={style.eyeWhite}
+                />
+                {/* Traurige Augen: Tränen mit zufälligen Intervallen */}
+                {isSad && (
+                  <g
+                    transform={`translate(${-geo.eyeRadiusX * 0.5 * innerSign}, ${geo.eyeRadiusY - 2})`}
+                  >
+                    {tears
+                      .filter((tear) => tear.eye === i)
+                      .map((tear, tearIndex) => (
+                        <g
+                          // biome-ignore lint/suspicious/noArrayIndexKey: feste Anzahl Tränen
+                          key={tearIndex}
+                          className={style.tear}
+                          style={{
+                            animationDuration: `${tear.duration}s`,
+                            animationDelay: `${tear.delay}s`,
+                          }}
+                        >
+                          <path
+                            d={TEAR_PATH}
+                            fill="#83a598"
+                            opacity="0.9"
+                            transform={`scale(${tear.scale})`}
+                          />
+                        </g>
+                      ))}
+                  </g>
+                )}
+                {!blink && (
+                  <g
+                    ref={(el) => {
+                      pupilRefs.current[i] = el;
+                    }}
+                    style={{ transformOrigin: "0 0" }}
+                  >
+                    <circle
+                      cx="2"
+                      cy="0"
+                      r={geo.pupilRadius}
+                      fill={OUTLINE_COLOR}
+                    />
+                    <circle
+                      cx="4"
+                      cy="-2"
+                      r={geo.pupilRadius * 0.36}
+                      fill="white"
+                    />
+                  </g>
+                )}
+              </g>
+            );
+          })}
         </g>
       </svg>
     </div>

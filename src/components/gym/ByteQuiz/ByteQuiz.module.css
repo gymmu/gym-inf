@@ -1,0 +1,342 @@
+.quiz {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  margin: var(--space-xl) 0;
+}
+
+/* --- Ziel-Byte (Biits Gruppe) --------------------------------------- */
+.targetBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.targetLabel {
+  font-size: 0.9rem;
+  color: var(--color-gray-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.target {
+  position: relative;
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--color-bg-dark);
+  color: var(--color-yellow);
+  border: 2px dashed var(--color-yellow);
+  border-radius: var(--radius-xl);
+  font-family: monospace;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: help;
+}
+
+.targetBits {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + var(--space-xs));
+  transform: translate(-50%, 4px);
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--color-bg-lighter);
+  color: var(--color-fg);
+  border-radius: var(--radius-md);
+  font-family: monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.target:hover .targetBits,
+.target:focus-visible .targetBits {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.targetHint {
+  font-size: 0.8rem;
+  color: var(--color-gray);
+}
+
+/* --- Byte-Anzeige --------------------------------------------------- */
+.byteBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: var(--color-bg-light);
+  border-radius: var(--radius-xl);
+}
+
+.bits {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  gap: var(--space-xs);
+}
+
+.bitCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.bitCell:nth-child(4) {
+  margin-right: var(--space-md);
+}
+
+.bit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 3rem;
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.pending {
+  background-color: var(--color-gray);
+  color: var(--color-bg);
+}
+
+.one {
+  background-color: var(--color-green);
+  color: var(--color-bg);
+}
+
+.zero {
+  background-color: var(--color-red);
+  color: var(--color-fg);
+}
+
+.active {
+  border-color: var(--color-yellow);
+  transform: scale(1.08);
+}
+
+/* Stimmt das Bit mit Biits Gruppe überein? */
+.matched {
+  box-shadow: 0 0 0 2px var(--color-aqua);
+}
+
+.mismatched {
+  box-shadow: 0 0 0 2px var(--color-red);
+}
+
+.bitLabel {
+  font-size: 0.75rem;
+  color: var(--color-gray-light);
+}
+
+.values {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-md);
+}
+
+.hex {
+  font-family: monospace;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-yellow);
+}
+
+.dec {
+  font-size: 0.9rem;
+  color: var(--color-gray-light);
+}
+
+/* --- Frage ---------------------------------------------------------- */
+.stage {
+  padding: var(--space-lg);
+  background-color: var(--color-bg-light);
+  border-radius: var(--radius-xl);
+}
+
+.progress {
+  margin-bottom: var(--space-sm);
+  font-size: 0.9rem;
+  color: var(--color-gray-light);
+}
+
+.questionRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.questionBody {
+  flex: 1 1 auto;
+}
+
+.questionText {
+  margin: 0 0 var(--space-md);
+  font-size: 1.2rem;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.option {
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--color-bg-lighter);
+  color: var(--color-fg);
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.option:hover:not(:disabled),
+.option:focus-visible:not(:disabled) {
+  border-color: var(--color-yellow);
+  outline: none;
+}
+
+.option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.numberForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.numberInput {
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-bg-dark);
+  color: var(--color-fg);
+  border: 2px solid var(--color-bg-lighter);
+  border-radius: var(--radius-lg);
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+.feedback {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-left: 4px solid var(--color-gray);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-dark);
+}
+
+.feedbackOk {
+  border-left-color: var(--color-green);
+}
+
+.feedbackBad {
+  border-left-color: var(--color-red);
+}
+
+.next {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--color-blue);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.next:hover,
+.next:focus-visible {
+  filter: brightness(1.1);
+  outline: none;
+}
+
+/* --- Biit neben der Frage ------------------------------------------- */
+.biit {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* --- Abschluss ------------------------------------------------------ */
+.summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  background-color: var(--color-bg-light);
+  border-radius: var(--radius-xl);
+}
+
+.summaryBiit {
+  flex: 0 0 auto;
+}
+
+.summaryTitle {
+  margin: 0 0 var(--space-sm);
+}
+
+.summary p {
+  margin: 0 0 var(--space-sm);
+}
+
+@media (max-width: 768px) {
+  .bit {
+    width: 1.75rem;
+    height: 2.25rem;
+    font-size: 1.1rem;
+  }
+
+  .hex {
+    font-size: 1.5rem;
+  }
+
+  .questionRow,
+  .summary {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .summaryBiit {
+    align-self: center;
+  }
+
+  .target {
+    font-size: 2rem;
+  }
+
+  .biit {
+    align-self: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bit {
+    transition: none;
+  }
+
+  .active {
+    transform: none;
+  }
+}

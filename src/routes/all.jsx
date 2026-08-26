@@ -11,6 +11,7 @@ const Hardware = lazy(() => import("@pages-fms/hardware.jsx"));
 const Hex = lazy(() => import("@pages/fms/hex.mdx"));
 const FMSIndex = lazy(() => import("@pages/fms/index.mdx"));
 const BiitStory = lazy(() => import("@pages-fms/biit-story.jsx"));
+const ByteQuiz = lazy(() => import("@pages-fms/byte-quiz.jsx"));
 const Pictures = lazy(() => import("@pages/fms/pictures.mdx"));
 const FmsSVG = lazy(() => import("@pages/fms/svg.mdx"));
 const FmsSVGAnimation = lazy(() => import("@pages/fms/svg-animation.mdx"));
@@ -251,6 +252,7 @@ export const routes = [
       // FMS Routes 1. Klasse
       { path: "fms-theorie", element: <FMSIndex /> },
       { path: "/fms/biit-story", element: <BiitStory /> },
+      { path: "/fms/byte-quiz", element: <ByteQuiz /> },
       { path: "/fms/hardware", element: <Hardware /> },
       { path: "/fms/binary", element: <Binary /> },
       { path: "/fms/hex", element: <Hex /> },

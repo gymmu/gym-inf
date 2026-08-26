@@ -22,7 +22,10 @@ export default function FmsIndex() {
           <span>
             Einführung
             <ol>
-              <NavLink to="fms/biit-story">Willkommen in der Welt der Bits</NavLink>
+              <NavLink to="fms/biit-story">
+                Willkommen in der Welt der Bits
+              </NavLink>
+              <NavLink to="fms/byte-quiz">Quiz: Bau dein Byte</NavLink>
               <NavLink to="fms/hardware">Computer Hardware</NavLink>
               <NavLink to="fms/binary">Binärsystem</NavLink>
               <NavLink to="fms/Hex">Hexadezimalsystem</NavLink>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Alpha from "@/components/gym/Alpha/Alpha";
 import AlphaScale from "@/components/gym/AlphaScale/AlphaScale";
 import { AsciiByteList } from "@/components/gym/AsciiByte/AsciiByte";
@@ -261,6 +262,15 @@ export default function BiitStory() {
           die alle sauber der Reihe nach stehen müssen.
         </p>
       </StoryPart>
+
+      <section>
+        <h2>Wie gut kennst du Binaria?</h2>
+        <p>
+          Teste dein Wissen im{" "}
+          <Link to="/fms/byte-quiz">Quiz: Bau dein Byte</Link> – acht Fragen,
+          die gemeinsam ein Byte ergeben.
+        </p>
+      </section>
     </>
   );
 }
