@@ -1,0 +1,102 @@
+.character {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}
+
+.svg {
+  width: var(--character-width, 220px);
+  height: auto;
+  overflow: visible;
+}
+
+.large .svg {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+.small {
+  vertical-align: middle;
+}
+
+.bgRect {
+  transition: all 0.6s ease;
+}
+
+.eyes {
+  overflow: visible;
+}
+
+.eyeWhite {
+  transition: ry 0.1s ease;
+}
+
+/* Tränen für traurige Augen */
+@keyframes tearFall {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.4);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(2px) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(26px) scale(1.05);
+  }
+}
+
+.tear {
+  animation: tearFall 2.2s ease-in infinite;
+}
+
+/* Konfetti über dem Kopf (glückliche Stimmung) */
+.confetti {
+  overflow: visible;
+}
+
+@keyframes confettiBurst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.3) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(
+        calc(var(--confetti-dx, 0px) * 0.55),
+        calc(var(--confetti-dy, 0px) * 0.55)
+      )
+      scale(1.15) rotate(calc(var(--confetti-rotation, 90deg) * 0.5));
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--confetti-dx, 0px), var(--confetti-dy, 0px))
+      scale(0.85) rotate(var(--confetti-rotation, 90deg));
+  }
+}
+
+.confettiPiece {
+  opacity: 0;
+  animation: confettiBurst 0.75s cubic-bezier(0.12, 0.8, 0.3, 1) 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tear,
+  .confettiPiece {
+    animation: none;
+  }
+
+  .confettiPiece {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .large .svg {
+    width: min(var(--character-width, 220px), 180px);
+  }
+}

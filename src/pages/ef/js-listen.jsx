@@ -9,8 +9,9 @@ export default function JSListen() {
         <p>
           Listen (in JavaScript "Arrays" genannt) sind Sammlungen von Werten,
           die du in einer einzigen Variable speichern kannst. Stell dir eine
-          Liste wie einen Einkaufszettel vor: Du schreibst alle Punkte nacheinander
-          auf, und jeder Punkt hat eine bestimmte Position auf der Liste.
+          Liste wie einen Einkaufszettel vor: Du schreibst alle Punkte
+          nacheinander auf, und jeder Punkt hat eine bestimmte Position auf der
+          Liste.
         </p>
         <p>
           Listen sind sehr nützlich, wenn du mehrere zusammengehörige Werte
@@ -109,8 +110,8 @@ console.log(letzterTag); // "So"
       <Section>
         <h2>Arrays verändern</h2>
         <p>
-          Du kannst Arrays auf verschiedene Weise verändern: Elemente hinzufügen,
-          entfernen oder ändern:
+          Du kannst Arrays auf verschiedene Weise verändern: Elemente
+          hinzufügen, entfernen oder ändern:
         </p>
         <JSTerminal filename="arrays-aendern.js">
           {`let zahlen = [1, 2, 3];
@@ -211,8 +212,8 @@ console.log(durchschnitt); // 5.2
         <h2>Arrays durchlaufen</h2>
         <p>
           Oft möchtest du alle Elemente eines Arrays bearbeiten. Dazu gibt es
-          verschiedene Methoden. Die einfachste ist die{" "}
-          <code>for...of</code>-Schleife:
+          verschiedene Methoden. Die einfachste ist die <code>for...of</code>
+          -Schleife:
         </p>
         <JSTerminal filename="array-durchlaufen.js">
           {`const schueler = ["Anna", "Beat", "Claudia", "Daniel"];
@@ -305,9 +306,7 @@ if (!gefunden) {
 
       <Section>
         <h2>Zusammenfassung</h2>
-        <p>
-          Hier sind die wichtigsten Punkte dieser Lektion:
-        </p>
+        <p>Hier sind die wichtigsten Punkte dieser Lektion:</p>
         <ul>
           <li>Arrays speichern mehrere Werte in einer Variable</li>
           <li>
@@ -328,8 +327,8 @@ if (!gefunden) {
             prüft das Vorhandensein
           </li>
           <li>
-            <code>slice()</code> kopiert Teile, <code>splice()</code>{" "}
-            verändert das Original
+            <code>slice()</code> kopiert Teile, <code>splice()</code> verändert
+            das Original
           </li>
           <li>
             <code>for...of</code> durchläuft alle Elemente einfach

@@ -1,0 +1,105 @@
+.storyPart {
+  /* Volle Bildschirmhöhe (Viewport minus Header/Footer) */
+  min-height: var(--body-height);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: var(--space-3xl);
+  padding: var(--space-3xl) 0;
+  box-sizing: border-box;
+}
+
+.visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.text {
+  width: 100%;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  line-height: 1.8;
+  color: var(--color-fg);
+}
+
+.text p {
+  margin-bottom: var(--space-lg);
+}
+
+.text p:last-child {
+  margin-bottom: 0;
+}
+
+.component {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+/* Breite Visuals (z.B. Formel-Visualisierung) nutzen die ganze Spalte */
+.wide .visual {
+  max-width: 100%;
+}
+
+.wide .component {
+  max-width: 100%;
+}
+
+.image {
+  display: block;
+  max-width: 100%;
+  max-height: 60vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Bild/Komponente links (Standard) */
+.left .visual {
+  order: 1;
+}
+
+.left .text {
+  order: 2;
+}
+
+/* Bild/Komponente rechts: Reihenfolge tauschen */
+.right .visual {
+  order: 2;
+}
+
+.right .text {
+  order: 1;
+}
+
+@media (max-width: 768px) {
+  .storyPart {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: var(--space-2xl);
+    padding: var(--space-2xl) 0;
+  }
+
+  .component {
+    max-width: 200px;
+  }
+
+  .wide .component {
+    max-width: 100%;
+  }
+
+  /* Auf kleinen Screens immer Visual oben, Text darunter */
+  .right .visual,
+  .left .visual {
+    order: 1;
+  }
+
+  .right .text,
+  .left .text {
+    order: 2;
+  }
+}

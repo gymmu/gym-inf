@@ -13,8 +13,8 @@ export default function BYOD() {
         Für <strong>Apple-Geräte (Mac)</strong> kannst du dem Video teilweise
         folgen. In der entsprechenden Präsentation findest du Hinweise, wenn
         etwas auf dem Mac speziell durchgeführt werden muss. Die Installationen
-        funktionieren auf dem Mac etwas anders, sind dort aber in der Regel
-        sehr selbsterklärend.
+        funktionieren auf dem Mac etwas anders, sind dort aber in der Regel sehr
+        selbsterklärend.
       </p>
 
       <section>

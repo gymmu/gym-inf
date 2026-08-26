@@ -1,0 +1,81 @@
+figure.imageSize {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  margin: 0;
+  padding: var(--space-lg);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-xl);
+  user-select: none;
+}
+
+.calculation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  font-family: monospace;
+  font-size: 1.1rem;
+}
+
+.step {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2xs) var(--space-xs);
+}
+
+.term {
+  color: var(--color-yellow);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.mult {
+  padding: 0 0.1em;
+  color: var(--color-gray);
+  opacity: 0.75;
+}
+
+.operator {
+  color: var(--color-gray);
+}
+
+.unit {
+  color: var(--color-aqua);
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--color-gray);
+}
+
+.total {
+  color: var(--color-green);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+  width: 100%;
+  padding-top: var(--space-sm);
+  border-top: 2px solid rgba(250, 189, 47, 0.5);
+  text-align: center;
+}
+
+.big {
+  font-family: monospace;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--color-yellow);
+}
+
+.label {
+  font-size: 0.95rem;
+  color: var(--color-gray);
+}

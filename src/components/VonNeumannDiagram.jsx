@@ -82,9 +82,7 @@ export default function VonNeumannDiagram() {
         </div>
 
         {/* RAM - rechts positioniert */}
-        <div
-          style={styles.componentBox(480, 40, 160, 90, "var(--color-blue)")}
-        >
+        <div style={styles.componentBox(480, 40, 160, 90, "var(--color-blue)")}>
           <span style={styles.componentLabel}>RAM</span>
           <span
             style={{ fontSize: "0.85rem", fontWeight: "bold", color: "#fff" }}

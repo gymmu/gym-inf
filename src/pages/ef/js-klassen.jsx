@@ -57,8 +57,8 @@ console.log(rex.bell());       // "Wuff! Wuff!"
       <Section>
         <h2>Überschreiben von Methoden</h2>
         <p>
-          Eine Unterklasse kann Methoden der Oberklasse überschreiben, um
-          ihr eigenes Verhalten zu definieren:
+          Eine Unterklasse kann Methoden der Oberklasse überschreiben, um ihr
+          eigenes Verhalten zu definieren:
         </p>
         <CodeBlock lang="javascript">
           {`
@@ -75,11 +75,21 @@ class Hund extends Tier {
       <Section>
         <h2>Wichtige Konzepte</h2>
         <ul>
-          <li><code>class</code> – definiert eine Klasse</li>
-          <li><code>constructor</code> – Initialisierung</li>
-          <li><code>extends</code> – Vererbung</li>
-          <li><code>super</code> – Zugriff auf die Oberklasse</li>
-          <li><code>new</code> – erstellt eine Instanz</li>
+          <li>
+            <code>class</code> – definiert eine Klasse
+          </li>
+          <li>
+            <code>constructor</code> – Initialisierung
+          </li>
+          <li>
+            <code>extends</code> – Vererbung
+          </li>
+          <li>
+            <code>super</code> – Zugriff auf die Oberklasse
+          </li>
+          <li>
+            <code>new</code> – erstellt eine Instanz
+          </li>
         </ul>
       </Section>
     </>

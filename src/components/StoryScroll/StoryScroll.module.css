@@ -1,0 +1,456 @@
+/* === StoryScroll – Scroll-Geschichten-Komponente mit Fakten-Stacks === */
+
+.story-scroll {
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* === Fortschrittsanzeige === */
+
+.story-scroll__progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(40, 40, 40, 0.5);
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.story-scroll__progress-bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-purple),
+    var(--color-yellow),
+    var(--color-green)
+  );
+  transition: width 0.1s ease-out;
+  border-radius: 0 2px 2px 0;
+}
+
+/* === Hero Section === */
+
+.story-scroll__hero {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.story-scroll__hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 20% 50%,
+      rgba(211, 134, 155, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 50%,
+      rgba(142, 192, 124, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 50% 80%,
+      rgba(250, 189, 47, 0.1) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+.story-scroll__hero-content {
+  text-align: center;
+  z-index: 1;
+  padding: var(--space-xl);
+}
+
+.story-scroll__title {
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 900;
+  color: var(--color-yellow);
+  margin-bottom: var(--space-lg);
+  line-height: 1.2;
+  text-shadow: 0 2px 20px rgba(250, 189, 47, 0.3);
+}
+
+.story-scroll__subtitle {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: var(--color-aqua);
+  margin-bottom: var(--space-3xl);
+  font-style: italic;
+}
+
+.story-scroll__scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-gray);
+  animation: story-scroll__bounce 2s ease-in-out infinite;
+}
+
+.story-scroll__arrow {
+  font-size: 2rem;
+  color: var(--color-purple);
+}
+
+@keyframes story-scroll__bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+/* === Sections (jeder Teil der Geschichte) === */
+
+.story-scroll__section {
+  min-height: var(--section-height, 180vh);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.8s ease-out;
+}
+
+.story-scroll__section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Parallax-Hintergrund der Scene (grösser als Viewport) */
+.story-scroll__section-bg {
+  position: absolute;
+  inset: -20% 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+  transition: transform 0.1s ease-out;
+}
+
+.story-scroll__section-illustration {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 2 / 3;
+  opacity: 0.6;
+  filter: blur(0.5px);
+}
+
+.story-scroll__section-illustration svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Abwechselnde Hintergrund-Farben */
+.story-scroll__section:nth-child(odd) .story-scroll__section-bg {
+  background:
+    radial-gradient(
+      ellipse at 30% 30%,
+      rgba(131, 165, 152, 0.12) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 70% 70%,
+      rgba(211, 134, 155, 0.08) 0%,
+      transparent 60%
+    );
+}
+
+.story-scroll__section:nth-child(even) .story-scroll__section-bg {
+  background:
+    radial-gradient(
+      ellipse at 70% 30%,
+      rgba(250, 189, 47, 0.1) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 30% 70%,
+      rgba(142, 192, 124, 0.08) 0%,
+      transparent 60%
+    );
+}
+
+/* === Fakten-Stack === */
+
+.story-scroll__facts-stack {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 800px;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-xl);
+}
+
+/* Container der Fakten (wird verschoben) */
+.story-scroll__facts-container {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* Ein einzelner Fakt */
+.story-scroll__fact {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl);
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.4s ease-out;
+}
+
+.story-scroll__fact.is-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.story-scroll__fact.is-entering {
+  opacity: 0.3;
+  transform: translateY(100px) scale(0.9);
+}
+
+.story-scroll__fact-content {
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  line-height: 1.8;
+  color: var(--color-fg);
+  text-align: center;
+  background: rgba(60, 56, 54, 0.85);
+  backdrop-filter: blur(8px);
+  padding: var(--space-2xl) var(--space-3xl);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 0 0 1px rgba(250, 189, 47, 0.15);
+  max-width: 700px;
+}
+
+.story-scroll__fact-content strong {
+  color: var(--color-green);
+  font-weight: 700;
+}
+
+.story-scroll__fact-content em {
+  color: var(--color-purple);
+  font-style: italic;
+}
+
+.story-scroll__fact-content sup {
+  font-size: 0.7em;
+  color: var(--color-yellow);
+}
+
+/* Hervorhebung der wichtigsten Begriffe */
+.story-scroll__fact-highlight {
+  display: inline-block;
+  margin-top: var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
+  background: linear-gradient(
+    135deg,
+    rgba(250, 189, 47, 0.2),
+    rgba(211, 134, 155, 0.2)
+  );
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  color: var(--color-yellow);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Fortschrittsanzeige für Fakten */
+.story-scroll__fact-progress {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-2xl);
+}
+
+.story-scroll__fact-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(60, 56, 54, 0.5);
+  border: 2px solid rgba(250, 189, 47, 0.3);
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.story-scroll__fact-dot.is-active {
+  background: var(--color-yellow);
+  border-color: var(--color-yellow);
+  transform: scale(1.3);
+  box-shadow: 0 0 12px rgba(250, 189, 47, 0.5);
+}
+
+/* Section-Titel */
+.story-scroll__section-title {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: var(--color-yellow);
+  text-align: center;
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-xl);
+  padding: var(--space-md) var(--space-2xl);
+  background: rgba(40, 40, 40, 0.7);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius-lg);
+  border-bottom: 3px solid;
+  border-image: linear-gradient(90deg, var(--color-purple), transparent) 1;
+}
+
+/* === Footer === */
+
+.story-scroll__footer {
+  min-height: 50dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-3xl);
+  gap: var(--space-lg);
+}
+
+.story-scroll__footer p {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  color: var(--color-yellow);
+}
+
+.story-scroll__footer-note {
+  font-size: 0.9rem;
+  color: var(--color-gray);
+}
+
+.story-scroll__footer-note a {
+  color: var(--color-aqua);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--color-aqua);
+}
+
+.story-scroll__footer-note a:hover {
+  color: var(--color-green);
+  border-color: var(--color-green);
+}
+
+/* === Responsive === */
+
+@media (width < 600px) {
+  .story-scroll__section {
+    --section-height: 160vh;
+  }
+
+  .story-scroll__facts-stack {
+    height: 50vh;
+    padding: var(--space-md);
+  }
+
+  .story-scroll__fact {
+    min-height: 50vh;
+    padding: var(--space-md);
+  }
+
+  .story-scroll__fact-content {
+    padding: var(--space-lg);
+    font-size: 1rem;
+  }
+
+  .story-scroll__section-title {
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+    margin: var(--space-lg);
+  }
+}
+
+@media (width >= 900px) {
+  .story-scroll__facts-stack {
+    height: 70vh;
+  }
+
+  .story-scroll__fact {
+    min-height: 70vh;
+  }
+}
+
+/* === Scrollbar Styling === */
+
+.story-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.story-scroll::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+.story-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-purple), var(--color-yellow));
+  border-radius: 4px;
+}
+
+/* === Parallax-Animationen === */
+
+.story-scroll__section-bg {
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+/* === Dekorative Elemente === */
+
+.story-scroll__section::before {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.story-scroll__section:nth-child(3n)::before {
+  background: var(--color-yellow);
+  top: -80px;
+  right: -80px;
+}
+
+.story-scroll__section:nth-child(3n + 1)::before {
+  background: var(--color-green);
+  bottom: -80px;
+  left: -80px;
+}
+
+.story-scroll__section:nth-child(3n + 2)::before {
+  background: var(--color-purple);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  height: 350px;
+}

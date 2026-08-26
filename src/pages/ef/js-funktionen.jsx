@@ -8,8 +8,8 @@ export default function JSFunktionen() {
         <h2>Funktionen</h2>
         <p>
           Funktionen sind wiederverwendbare Codeblöcke, die eine bestimmte
-          Aufgabe erfüllen. Du kannst ihnen Werte übergeben (Parameter) und
-          sie können Werte zurückgeben.
+          Aufgabe erfüllen. Du kannst ihnen Werte übergeben (Parameter) und sie
+          können Werte zurückgeben.
         </p>
       </Section>
       <Section>
@@ -37,9 +37,7 @@ const ergebnis = addiere(3, 5); // 8
       </Section>
       <Section>
         <h2>Pfeilfunktionen (Arrow Functions)</h2>
-        <p>
-          Eine kompakte Schreibweise für Funktionen:
-        </p>
+        <p>Eine kompakte Schreibweise für Funktionen:</p>
         <CodeBlock lang="javascript">
           {`
 // Klassische Funktion

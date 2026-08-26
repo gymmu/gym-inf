@@ -1,0 +1,82 @@
+figure.hexFormula {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  margin: 0;
+  padding: var(--space-lg);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-xl);
+  user-select: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 3rem);
+  gap: var(--space-2xs) var(--space-md);
+  justify-items: center;
+  align-items: center;
+}
+
+.digit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3.5rem;
+  font-family: monospace;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border-radius: var(--radius-md);
+  background-color: rgba(142, 192, 124, 0.2);
+  color: var(--color-aqua);
+}
+
+.arrow {
+  font-size: 0.9rem;
+  color: var(--color-gray);
+}
+
+.weight {
+  font-family: monospace;
+  font-size: 0.95rem;
+  color: var(--color-blue);
+}
+
+.calculation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2xs);
+  padding-top: var(--space-sm);
+  border-top: 2px solid rgba(250, 189, 47, 0.5);
+  font-family: monospace;
+  font-size: 1.2rem;
+}
+
+.step {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+}
+
+.term {
+  color: var(--color-yellow);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.mult {
+  padding: 0 0.1em;
+  opacity: 0.75;
+}
+
+.operator {
+  color: var(--color-gray);
+}
+
+.total {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-yellow);
+}

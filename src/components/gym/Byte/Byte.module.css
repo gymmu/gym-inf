@@ -1,0 +1,111 @@
+/* Doppelte Klasse: verhindert, dass Layout-Klassen von aussen (z.B. StoryPart)
+   das Flex-Layout überschreiben und die Bits umbrechen lassen. */
+.byte.byte {
+  --byte-bit-width: 2.5rem;
+  --byte-bit-height: 3rem;
+  --byte-bit-font-size: 1.5rem;
+
+  display: inline-flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  max-width: none;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-xl);
+  user-select: none;
+}
+
+.bit {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: var(--byte-bit-width);
+  height: var(--byte-bit-height);
+  border-radius: var(--radius-sm, 4px);
+  font-family: monospace;
+  font-size: var(--byte-bit-font-size);
+  font-weight: bold;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.bit:nth-child(4) {
+  margin-right: var(--space-md);
+}
+
+/* Byte mit Rangordnung: links das grösste, rechts das kleinste Bit */
+.scaled {
+  align-items: center;
+}
+
+.scaled .bit {
+  width: calc(var(--byte-bit-width) * var(--bit-scale, 1));
+  height: calc(var(--byte-bit-height) * var(--bit-scale, 1));
+  font-size: calc(var(--byte-bit-font-size) * var(--bit-scale, 1));
+  border-radius: calc(var(--radius-sm, 4px) * var(--bit-scale, 1));
+}
+
+.one {
+  background-color: var(--color-green);
+  color: var(--color-white);
+}
+
+.zero {
+  background-color: var(--color-red);
+  color: var(--color-fg);
+}
+
+.flipping {
+  transform: scale(1.15);
+}
+
+.clickable {
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.clickable:hover,
+.clickable:focus-visible {
+  transform: scale(1.1);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(235, 219, 178, 0.6);
+}
+
+@media (max-width: 768px) {
+  .byte.byte {
+    --byte-bit-width: 1.75rem;
+    --byte-bit-height: 2.25rem;
+    --byte-bit-font-size: 1.1rem;
+    padding: var(--space-sm);
+  }
+}
+
+@media (max-width: 430px) {
+  .byte.byte {
+    --byte-bit-width: 1.4rem;
+    --byte-bit-height: 1.8rem;
+    --byte-bit-font-size: 0.9rem;
+    gap: 2px;
+  }
+
+  .byte.byte .bit:nth-child(4) {
+    margin-right: var(--space-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bit {
+    transition: none;
+  }
+
+  .flipping {
+    transform: none;
+  }
+}

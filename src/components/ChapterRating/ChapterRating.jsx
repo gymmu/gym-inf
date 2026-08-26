@@ -31,6 +31,7 @@ const excludedPaths = [
   "regexeditor",
   "boxmodel",
   "path-editor",
+  "fms/byte-quiz",
 ];
 
 function getSlugFromPath(pathname) {

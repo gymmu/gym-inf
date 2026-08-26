@@ -174,7 +174,7 @@
   .memoryGrid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .addressCell {
     width: 55px;
     height: 70px;

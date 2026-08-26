@@ -8,9 +8,9 @@ export default function JSFunktionalesProgrammieren() {
         <h2>Funktionales Programmieren</h2>
         <p>
           Funktionales Programmieren ist ein Programmierparadigma, bei dem
-          Funktionen erste Bürger sind. Du arbeitest viel mit
-          höherwertigen Funktionen wie <code>map</code>,{" "}
-          <code>filter</code> und <code>reduce</code>.
+          Funktionen erste Bürger sind. Du arbeitest viel mit höherwertigen
+          Funktionen wie <code>map</code>, <code>filter</code> und{" "}
+          <code>reduce</code>.
         </p>
       </Section>
       <Section>

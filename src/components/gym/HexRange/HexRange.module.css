@@ -1,0 +1,31 @@
+.hexRange {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.arrow {
+  font-size: 1.2rem;
+  color: var(--color-gray);
+}
+
+.hex {
+  min-width: 2.5em;
+  font-family: monospace;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--color-aqua);
+}
+
+@media (max-width: 768px) {
+  .hex {
+    font-size: 1.2rem;
+  }
+}

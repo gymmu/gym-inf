@@ -1,4 +1,9 @@
-import { loadFms, loadSection, saveFms, saveSection } from "@utils/visitStorage";
+import {
+  loadFms,
+  loadSection,
+  saveFms,
+  saveSection,
+} from "@utils/visitStorage";
 import { createContext, useEffect, useState } from "react";
 
 const NavContext = createContext({});
@@ -24,9 +29,7 @@ function NavProvider({ children }) {
   }, [section]);
 
   return (
-    <NavContext.Provider
-      value={{ visible, setVisible, section, setSection }}
-    >
+    <NavContext.Provider value={{ visible, setVisible, section, setSection }}>
       {children}
     </NavContext.Provider>
   );

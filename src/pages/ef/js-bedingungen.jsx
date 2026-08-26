@@ -30,8 +30,8 @@ export default function JSBedingungen() {
         <h2>if, else if, else</h2>
         <p>
           Die Grundstruktur einer Bedingung in JavaScript besteht aus{" "}
-          <code>if</code>, <code>else if</code> (optional) und{" "}
-          <code>else</code> (optional):
+          <code>if</code>, <code>else if</code> (optional) und <code>else</code>{" "}
+          (optional):
         </p>
         <ul>
           <li>
@@ -122,7 +122,8 @@ if (alter >= 18 && hatLegi) {
             <code>===</code> gleich (typfest - Wert UND Typ müssen gleich sein)
           </li>
           <li>
-            <code>!==</code> ungleich (typfest - Wert ODER Typ muss unterschiedlich sein)
+            <code>!==</code> ungleich (typfest - Wert ODER Typ muss
+            unterschiedlich sein)
           </li>
           <li>
             <code>==</code> gleich (nur Wert, Typ wird ignoriert)
@@ -130,10 +131,18 @@ if (alter >= 18 && hatLegi) {
           <li>
             <code>!=</code> ungleich (nur Wert, Typ wird ignoriert)
           </li>
-          <li><code>&gt;</code> grösser</li>
-          <li><code>&lt;</code> kleiner</li>
-          <li><code>&gt;=</code> grösser oder gleich</li>
-          <li><code>&lt;=</code> kleiner oder gleich</li>
+          <li>
+            <code>&gt;</code> grösser
+          </li>
+          <li>
+            <code>&lt;</code> kleiner
+          </li>
+          <li>
+            <code>&gt;=</code> grösser oder gleich
+          </li>
+          <li>
+            <code>&lt;=</code> kleiner oder gleich
+          </li>
         </ul>
       </Section>
 
@@ -198,8 +207,8 @@ console.log(5 === "5");     // false (korrekt!)
           <strong>Typgleichheit</strong> bedeutet, dass nicht nur der Wert,
           sondern auch der Datentyp identisch sein muss. Das ist wichtig, denn
           in JavaScript kann <code>"5"</code> (ein String) nicht einfach als
-          <code>5</code> (eine Zahl) betrachtet werden - sie haben unterschiedliche
-          Bedeutung und Funktionen.
+          <code>5</code> (eine Zahl) betrachtet werden - sie haben
+          unterschiedliche Bedeutung und Funktionen.
         </p>
         <JSTerminal filename="typgleichheit.js">
           {`// Typgleichheit prüfen mit typeof und ===
@@ -265,8 +274,8 @@ if (typeof benutzerEingabe === "string") {
       <Section>
         <h2>Logische Operatoren</h2>
         <p>
-          Logische Operatoren kombinieren mehrere Bedingungen. Sie arbeiten
-          mit booleschen Werten (true/false):
+          Logische Operatoren kombinieren mehrere Bedingungen. Sie arbeiten mit
+          booleschen Werten (true/false):
         </p>
         <ul>
           <li>
@@ -486,8 +495,6 @@ console.log("Z" < "a");     // true (Grossbuchstaben < Kleinbuchstaben)
         </JSTerminal>
       </Section>
 
-
-
       <Section>
         <h2>Verzweigungen verschachteln</h2>
         <p>
@@ -615,20 +622,19 @@ console.log(5 === "5");   // false (korrekt!)
 
       <Section>
         <h2>Zusammenfassung</h2>
-        <p>
-          Hier sind die wichtigsten Punkte dieser Lektion:
-        </p>
+        <p>Hier sind die wichtigsten Punkte dieser Lektion:</p>
         <ul>
           <li>
-            Bedingungen erlauben es dem Programm, verschiedene Entscheidungen
-            zu treffen
+            Bedingungen erlauben es dem Programm, verschiedene Entscheidungen zu
+            treffen
           </li>
           <li>
             <code>if</code> prüft die erste Bedingung, <code>else if</code>{" "}
             weitere, <code>else</code> den Fallback
           </li>
           <li>
-            <code>===</code> und <code>!==</code> prüfen Wert UND Typ (empfohlen!)
+            <code>===</code> und <code>!==</code> prüfen Wert UND Typ
+            (empfohlen!)
           </li>
           <li>
             <code>==</code> und <code>!=</code> prüfen nur den Wert (vermeiden!)

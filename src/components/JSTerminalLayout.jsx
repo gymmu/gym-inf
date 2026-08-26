@@ -210,7 +210,10 @@ export default function JSTerminalLayout({
       setOpenFiles((prev) => [...prev, newFilename]);
     }
 
-    addToHistory({ type: "log", content: `📄 Neue Datei '${newFilename}' erstellt` });
+    addToHistory({
+      type: "log",
+      content: `📄 Neue Datei '${newFilename}' erstellt`,
+    });
   };
 
   // Help text for the terminal
@@ -259,9 +262,9 @@ Verfügbare Befehle:
     setFiles((prev) => ({
       ...prev,
       [controlledActiveFile || activeFile]: {
-        ...(controlledActiveFile || activeFile) in prev
+        ...((controlledActiveFile || activeFile) in prev
           ? prev[controlledActiveFile || activeFile]
-          : {},
+          : {}),
         content: newCode,
       },
     }));
@@ -293,7 +296,15 @@ Verfügbare Befehle:
     } catch (error) {
       console.error("Error saving to localStorage:", error);
     }
-  }, [files, openFiles, controlledActiveFile, activeFile, commandHistory, storageKey, userFiles]);
+  }, [
+    files,
+    openFiles,
+    controlledActiveFile,
+    activeFile,
+    commandHistory,
+    storageKey,
+    userFiles,
+  ]);
 
   // Register this terminal's code in global examples
   useEffect(() => {
@@ -313,11 +324,15 @@ Verfügbare Befehle:
 
       const existingIndex = examples.findIndex((e) => e.id === filename);
 
-      const updatedExamples = existingIndex >= 0
-        ? examples.map((e, i) => (i === existingIndex ? example : e))
-        : [...examples, example];
+      const updatedExamples =
+        existingIndex >= 0
+          ? examples.map((e, i) => (i === existingIndex ? example : e))
+          : [...examples, example];
 
-      localStorage.setItem(GLOBAL_EXAMPLES_KEY, JSON.stringify(updatedExamples));
+      localStorage.setItem(
+        GLOBAL_EXAMPLES_KEY,
+        JSON.stringify(updatedExamples),
+      );
       setGlobalExamples(updatedExamples);
     } catch (error) {
       console.error("Error saving global example:", error);
@@ -441,10 +456,9 @@ Verfügbare Befehle:
 
   // Reset to default code
   const resetToDefault = () => {
-    const fileToReset = selectedExampleFile || (controlledActiveFile || activeFile);
-    const defaultCode = selectedExample
-      ? selectedExample.code
-      : sourceCode;
+    const fileToReset =
+      selectedExampleFile || controlledActiveFile || activeFile;
+    const defaultCode = selectedExample ? selectedExample.code : sourceCode;
     setFiles((prev) => ({
       ...prev,
       [fileToReset]: {
@@ -970,8 +984,6 @@ Verfügbare Befehle:
             </div>
           )}
 
-
-
           <div className={styles.editorHeader}>
             <span className={styles.filename}>{currentActiveFile}</span>
             <span className={styles.language}>JavaScript</span>
@@ -1041,8 +1053,14 @@ Verfügbare Befehle:
             </div>
           </div>
           {showHelp && (
-            <div className={styles.helpOverlay} onClick={() => setShowHelp(false)}>
-              <div className={styles.helpPanel} onClick={(e) => e.stopPropagation()}>
+            <div
+              className={styles.helpOverlay}
+              onClick={() => setShowHelp(false)}
+            >
+              <div
+                className={styles.helpPanel}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <div className={styles.helpContent}>{helpText}</div>
                 <button
                   type="button"
@@ -1120,54 +1138,54 @@ Verfügbare Befehle:
               <>
                 <div className={styles.explorerSectionTitle}>📚 Beispiele</div>
                 {globalExamples.map((example) => {
-                    return (
+                  return (
+                    <div key={example.id} className={styles.explorerFileGroup}>
                       <div
-                        key={example.id}
-                        className={styles.explorerFileGroup}
+                        className={`${styles.explorerItem} ${currentActiveFile === example.id ? styles.activeExplorerItem : ""}`}
+                        onClick={() => loadExample(example, example.id)}
+                        title={example.name}
                       >
-                        <div
-                          className={`${styles.explorerItem} ${currentActiveFile === example.id ? styles.activeExplorerItem : ""}`}
-                          onClick={() => loadExample(example, example.id)}
-                          title={example.name}
-                        >
-                          <span className={styles.fileIcon}>📄</span>
-                          <span className={styles.explorerFileName}>{example.name}</span>
-                        </div>
-                        <button
-                          type="button"
-                          className={styles.resetFileButton}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            resetExampleFile(example.id, example.code);
-                          }}
-                          title="Zurück zum Standard-Code"
-                        >
-                          ↺
-                        </button>
+                        <span className={styles.fileIcon}>📄</span>
+                        <span className={styles.explorerFileName}>
+                          {example.name}
+                        </span>
                       </div>
-                    );
-                  })}
+                      <button
+                        type="button"
+                        className={styles.resetFileButton}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          resetExampleFile(example.id, example.code);
+                        }}
+                        title="Zurück zum Standard-Code"
+                      >
+                        ↺
+                      </button>
+                    </div>
+                  );
+                })}
               </>
             )}
 
             {/* Section: Eigene Dateien */}
             {Object.keys(userFiles).length > 0 && (
               <>
-                <div className={styles.explorerSectionTitle}>✏️ Eigene Dateien</div>
+                <div className={styles.explorerSectionTitle}>
+                  ✏️ Eigene Dateien
+                </div>
                 {Object.keys(userFiles)
                   .sort()
                   .map((fileName) => (
-                    <div
-                      key={fileName}
-                      className={styles.explorerFileGroup}
-                    >
+                    <div key={fileName} className={styles.explorerFileGroup}>
                       <div
                         className={`${styles.explorerItem} ${currentActiveFile === fileName ? styles.activeExplorerItem : ""}`}
                         onClick={() => openFile(fileName)}
                         title={fileName}
                       >
                         <span className={styles.fileIcon}>📄</span>
-                        <span className={styles.explorerFileName}>{fileName}</span>
+                        <span className={styles.explorerFileName}>
+                          {fileName}
+                        </span>
                       </div>
                       <button
                         type="button"
@@ -1195,7 +1213,11 @@ Verfügbare Befehle:
             type="button"
             className={`${styles.activityButton} ${fileBrowserOpen ? styles.activityButtonActive : ""}`}
             onClick={() => setFileBrowserOpen(!fileBrowserOpen)}
-            title={fileBrowserOpen ? "File-Browser ausblenden" : "File-Browser einblenden"}
+            title={
+              fileBrowserOpen
+                ? "File-Browser ausblenden"
+                : "File-Browser einblenden"
+            }
           >
             {fileBrowserOpen ? "📁" : "📂"}
           </button>
