@@ -98,9 +98,13 @@ export const CHARACTER_PRESETS = {
       pupilRadius: 6.5,
       rectHeight: 74,
     },
+    // Farbschema verschiebt sich laufend (Farbton, Stops und Richtung)
+    animatedGradient: true,
     gradient: [
       { offset: "0%", color: PALETTE.red },
+      { offset: "25%", color: PALETTE.orange },
       { offset: "50%", color: PALETTE.green },
+      { offset: "75%", color: PALETTE.aqua },
       { offset: "100%", color: PALETTE.blue },
     ],
   },

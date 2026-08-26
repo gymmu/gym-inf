@@ -1,7 +1,17 @@
-.hexChannels {
+/* Doppelte Klasse: verhindert, dass Layout-Klassen von aussen (z.B. StoryPart)
+   das Flex-Layout überschreiben. */
+.hexChannels.hexChannels {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: var(--space-sm);
+  width: max-content;
+  max-width: 100%;
+}
+
+.channels {
+  display: flex;
+  flex-direction: column;
   gap: var(--space-sm);
 }
 
@@ -29,8 +39,53 @@
   font-weight: bold;
 }
 
+.arrowDown {
+  font-size: 1.8rem;
+  color: var(--color-gray);
+  line-height: 1;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.swatch {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 0 0 2px rgba(235, 219, 178, 0.25);
+}
+
+.code {
+  display: flex;
+  align-items: baseline;
+  gap: 0.15em;
+  padding: var(--space-sm) var(--space-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-lg);
+  font-family: monospace;
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.hash {
+  color: var(--color-gray);
+}
+
 @media (max-width: 768px) {
   .hex {
+    font-size: 1.2rem;
+  }
+
+  .swatch {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .code {
     font-size: 1.2rem;
   }
 }

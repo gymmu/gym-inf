@@ -41,6 +41,46 @@ const DEFAULT_GEOMETRY = {
 
 const OUTLINE_COLOR = "#282828";
 
+// ---- Farb-Hilfsfunktionen für animierte Farbverläufe ----------------------
+function hexToHsl(hex) {
+  const clean = hex.replace("#", "");
+  const full =
+    clean.length === 3
+      ? clean
+          .split("")
+          .map((c) => c + c)
+          .join("")
+      : clean;
+  const r = Number.parseInt(full.slice(0, 2), 16) / 255;
+  const g = Number.parseInt(full.slice(2, 4), 16) / 255;
+  const b = Number.parseInt(full.slice(4, 6), 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  const d = max - min;
+
+  let h = 0;
+  let s = 0;
+  if (d !== 0) {
+    s = d / (1 - Math.abs(2 * l - 1));
+    if (max === r) h = ((g - b) / d) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h *= 60;
+    if (h < 0) h += 360;
+  }
+
+  return { h, s, l };
+}
+
+function hslToCss(h, s, l) {
+  const hue = ((h % 360) + 360) % 360;
+  return `hsl(${hue.toFixed(1)}, ${(s * 100).toFixed(1)}%, ${(l * 100).toFixed(1)}%)`;
+}
+
+const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+
 /**
  * Generischer Charakter: Text mit aufgesetzten Comic-Augen.
  *
@@ -54,6 +94,7 @@ export default function Character({
   variant = "large",
   size,
   gradient = null, // [{ offset, color }, ...] – überschreibt fill
+  animatedGradient = false, // Farbverlauf verschiebt sich langsam (Farbton + Stops + Richtung)
   fill = OUTLINE_COLOR, // Vollfarbe, wenn kein Farbverlauf
   geometry: geometryOverrides = null,
   glow = true,
@@ -220,6 +261,75 @@ export default function Character({
     };
   }, [isLarge, layout]);
 
+  // ---- Animierter Farbverlauf ---------------------------------------------
+  const gradientRef = useRef(null);
+  const stopRefs = useRef([]);
+
+  useEffect(() => {
+    if (!animatedGradient || !gradient) return undefined;
+    if (typeof window === "undefined") return undefined;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches)
+      return undefined;
+
+    const base = gradient.map((stop) => ({
+      offset: Number.parseFloat(stop.offset),
+      hsl: hexToHsl(stop.color),
+    }));
+
+    let rafId = null;
+    const start = performance.now();
+
+    const tick = (now) => {
+      const t = (now - start) / 1000;
+
+      // Farbton wandert langsam durch das Spektrum, jeder Stop leicht versetzt
+      let previousOffset = 0;
+      base.forEach((stop, i) => {
+        const el = stopRefs.current[i];
+        if (!el) return;
+
+        const hue = stop.hsl.h + t * 14 + Math.sin(t * 0.7 + i) * 12;
+        const light = clamp(
+          stop.hsl.l + Math.sin(t * 0.9 + i * 1.7) * 0.06,
+          0.1,
+          0.9,
+        );
+        const sat = clamp(stop.hsl.s + Math.sin(t * 0.5 + i) * 0.08, 0.15, 1);
+
+        // Stops verschieben sich leicht -> der Verlauf "atmet"
+        const shifted = clamp(
+          stop.offset + Math.sin(t * 0.6 + i * 1.3) * 14,
+          0,
+          100,
+        );
+        const offset = Math.max(shifted, previousOffset);
+        previousOffset = offset;
+
+        el.setAttribute("offset", `${offset.toFixed(2)}%`);
+        el.setAttribute("stop-color", hslToCss(hue, sat, light));
+      });
+
+      // Richtung des Verlaufs dreht sich langsam
+      const gradEl = gradientRef.current;
+      if (gradEl) {
+        const angle = ((t * 18 + Math.sin(t * 0.4) * 25) * Math.PI) / 180;
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        gradEl.setAttribute("x1", `${(50 - 50 * cos).toFixed(2)}%`);
+        gradEl.setAttribute("y1", `${(50 - 50 * sin).toFixed(2)}%`);
+        gradEl.setAttribute("x2", `${(50 + 50 * cos).toFixed(2)}%`);
+        gradEl.setAttribute("y2", `${(50 + 50 * sin).toFixed(2)}%`);
+      }
+
+      rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [animatedGradient, gradient]);
+
   // ---- Darstellung ---------------------------------------------------------
   const gradientId = `charGradient-${uid}`;
   const maskId = `charTextMask-${uid}`;
@@ -254,10 +364,20 @@ export default function Character({
         <title>{accessibleLabel}</title>
         <defs>
           {gradient && (
-            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-              {gradient.map((stop) => (
+            <linearGradient
+              ref={gradientRef}
+              id={gradientId}
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              {gradient.map((stop, i) => (
                 <stop
                   key={`${stop.offset}-${stop.color}`}
+                  ref={(el) => {
+                    stopRefs.current[i] = el;
+                  }}
                   offset={stop.offset}
                   stopColor={stop.color}
                 />

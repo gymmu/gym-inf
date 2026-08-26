@@ -1,9 +1,24 @@
-.alphaScale {
+/* Doppelte Klasse: verhindert, dass Layout-Klassen von aussen (z.B. StoryPart)
+   das Flex-Layout überschreiben. */
+.alphaScale.alphaScale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  width: max-content;
+  max-width: 100%;
+}
+
+.scale {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   flex-wrap: wrap;
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid rgba(235, 219, 178, 0.2);
+  width: 100%;
 }
 
 .item {
@@ -15,8 +30,6 @@
 
 /* Schachbrett macht die Transparenz sichtbar */
 .checker {
-  width: 3.5rem;
-  height: 3.5rem;
   border-radius: var(--radius-md);
   overflow: hidden;
   background-color: #d3d3d3;
@@ -27,9 +40,11 @@
   background-position:
     0 0,
     0.5rem 0.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
 }
 
-.swatch {
+.stepSwatch {
   width: 100%;
   height: 100%;
 }
@@ -40,10 +55,101 @@
   color: var(--color-gray);
 }
 
+.channels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.dot {
+  flex: 0 0 auto;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(235, 219, 178, 0.5);
+}
+
+.arrow {
+  color: var(--color-gray);
+}
+
+.hex {
+  min-width: 2.5em;
+  font-family: monospace;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.arrowDown {
+  font-size: 1.8rem;
+  color: var(--color-gray);
+  line-height: 1;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.resultChecker.resultChecker {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 0 0 2px rgba(235, 219, 178, 0.25);
+}
+
+.swatch {
+  width: 100%;
+  height: 100%;
+}
+
+.code {
+  display: flex;
+  align-items: baseline;
+  gap: 0.15em;
+  padding: var(--space-sm) var(--space-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-lg);
+  font-family: monospace;
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.hash {
+  color: var(--color-gray);
+}
+
 @media (max-width: 768px) {
   .checker {
     width: 2.5rem;
     height: 2.5rem;
     background-size: 0.75rem 0.75rem;
+  }
+
+  .hex {
+    font-size: 1.2rem;
+  }
+
+  .scale {
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+  }
+
+  .resultChecker.resultChecker {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .code {
+    font-size: 1.2rem;
   }
 }

@@ -64,6 +64,20 @@
   transform: scale(1.15);
 }
 
+.clickable {
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.clickable:hover,
+.clickable:focus-visible {
+  transform: scale(1.1);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(235, 219, 178, 0.6);
+}
+
 @media (max-width: 768px) {
   .byte.byte {
     --byte-bit-width: 1.75rem;

@@ -1,20 +1,46 @@
-.hexTable {
+/* Doppelte Klasse: verhindert, dass Layout-Klassen von aussen (z.B. StoryPart)
+   das Flex-Layout überschreiben. */
+.hexTable.hexTable {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-md);
   width: 100%;
+  max-width: 100%;
+  /* Grundlage für cqw-Einheiten: alles skaliert mit der Spaltenbreite */
+  container-type: inline-size;
 }
 
+/* Alle 16 Ziffern des Systems — immer in einer Zeile */
+.digits {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: clamp(2px, 0.5cqw, 6px);
+  width: 100%;
+}
+
+.digit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  font-family: monospace;
+  font-size: clamp(0.55rem, 3.2cqw, 1.3rem);
+  font-weight: bold;
+  border-radius: var(--radius-sm);
+  background-color: rgba(92, 88, 69, 0.35);
+  color: var(--color-aqua);
+}
+
+/* Trennlinie wie bei AlphaScale */
 .grid {
   display: grid;
-  grid-template-columns: repeat(11, minmax(0, 1fr));
-  gap: 4px;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: clamp(2px, 0.5cqw, 5px);
   width: 100%;
-  max-width: 40rem;
-  padding: var(--space-md);
-  background-color: rgba(40, 40, 40, 0.5);
-  border-radius: var(--radius-xl);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid rgba(235, 219, 178, 0.2);
   box-sizing: border-box;
 }
 
@@ -23,20 +49,22 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  padding: var(--space-2xs) 0;
+  gap: 1px;
+  padding: 2px 0;
   font-family: monospace;
   border-radius: var(--radius-sm);
   background-color: rgba(92, 88, 69, 0.35);
 }
 
 .dec {
-  font-size: 0.7rem;
+  font-size: clamp(0.45rem, 2.2cqw, 0.8rem);
+  line-height: 1.2;
   color: var(--color-gray);
 }
 
 .hex {
-  font-size: 0.95rem;
+  font-size: clamp(0.55rem, 2.9cqw, 1.05rem);
+  line-height: 1.2;
   font-weight: bold;
   color: var(--color-aqua);
 }
@@ -45,44 +73,14 @@
   background-color: rgba(142, 192, 124, 0.18);
 }
 
-.newDigit .hex {
-  color: var(--color-yellow);
-}
-
-/* Alle 16 Ziffern des Systems */
-.digits {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-2xs);
-}
-
-.digit {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  font-family: monospace;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: var(--radius-sm);
-  background-color: rgba(92, 88, 69, 0.35);
-  color: var(--color-aqua);
-}
-
+.newDigit .hex,
 .digit.newDigit {
   color: var(--color-yellow);
 }
 
 @media (max-width: 768px) {
   .grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .digit {
-    width: 1.6rem;
-    height: 1.6rem;
-    font-size: 0.9rem;
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
   }
 }

@@ -43,18 +43,58 @@ export default function HexFormula({ value, className = "" }) {
         ))}
       </div>
 
-      {/* Die Rechnung */}
+      {/* Die Rechnung — Schritt für Schritt */}
       <div className={styles.calculation}>
-        <span className={styles.term}>
-          {digits[0]}
-          <span className={styles.mult}>·</span>16
-        </span>
-        <span className={styles.operator}>+</span>
-        <span className={styles.term}>{digits[1]}</span>
-        <span className={styles.operator}>=</span>
-        <span className={styles.total}>
-          {contributions[0] + contributions[1]}
-        </span>
+        {/* Schritt 1: mit Potenzen */}
+        <div className={styles.step}>
+          <span className={styles.term}>
+            {HEX_DIGITS[digits[0]]}
+            <span className={styles.mult}>·</span>16<sup>1</sup>
+          </span>
+          <span className={styles.operator}>+</span>
+          <span className={styles.term}>
+            {HEX_DIGITS[digits[1]]}
+            <span className={styles.mult}>·</span>16<sup>0</sup>
+          </span>
+        </div>
+
+        {/* Schritt 2: Potenzen ausgerechnet */}
+        <div className={styles.step}>
+          <span className={styles.operator}>=</span>
+          <span className={styles.term}>
+            {HEX_DIGITS[digits[0]]}
+            <span className={styles.mult}>·</span>16
+          </span>
+          <span className={styles.operator}>+</span>
+          <span className={styles.term}>{HEX_DIGITS[digits[1]]}</span>
+        </div>
+
+        {/* Schritt 3: Hex-Ziffern als Dezimalzahlen */}
+        <div className={styles.step}>
+          <span className={styles.operator}>=</span>
+          <span className={styles.term}>
+            {digits[0]}
+            <span className={styles.mult}>·</span>16
+          </span>
+          <span className={styles.operator}>+</span>
+          <span className={styles.term}>{digits[1]}</span>
+        </div>
+
+        {/* Schritt 4: Produkte ausgerechnet */}
+        <div className={styles.step}>
+          <span className={styles.operator}>=</span>
+          <span className={styles.term}>{contributions[0]}</span>
+          <span className={styles.operator}>+</span>
+          <span className={styles.term}>{contributions[1]}</span>
+        </div>
+
+        {/* Ergebnis */}
+        <div className={styles.step}>
+          <span className={styles.operator}>=</span>
+          <span className={styles.total}>
+            {contributions[0] + contributions[1]}
+          </span>
+        </div>
       </div>
     </figure>
   );

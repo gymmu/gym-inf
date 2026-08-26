@@ -11,6 +11,7 @@ import styles from "./Byte.module.css";
  * @param {number} [minDelay] minimale Zeit in ms bis ein Bit kippt
  * @param {number} [maxDelay] maximale Zeit in ms bis ein Bit kippt
  * @param {boolean} [scaled] Bits nach Rang skalieren (links gross, rechts klein)
+ * @param {(index: number) => void} [onBitClick] macht die Bits klickbar (Index 0 = MSB)
  * @param {string} [className] zusätzliche Klassen
  */
 export default function Byte({
@@ -18,6 +19,7 @@ export default function Byte({
   minDelay = 3000,
   maxDelay = 4000,
   scaled = false,
+  onBitClick,
   className = "",
 }) {
   const isStatic = typeof value === "number";
@@ -73,18 +75,32 @@ export default function Byte({
     <div
       className={`${styles.byte} ${scaled ? styles.scaled : ""} ${className}`}
     >
-      {shownBits.map((bit, index) => (
-        <span
-          // biome-ignore lint/suspicious/noArrayIndexKey: fixe Bit-Positionen
-          key={index}
-          style={scaled ? { "--bit-scale": 1 - index * 0.09 } : undefined}
-          className={`${styles.bit} ${bit === 1 ? styles.one : styles.zero} ${
+      {shownBits.map((bit, index) => {
+        const bitProps = {
+          style: scaled ? { "--bit-scale": 1 - index * 0.09 } : undefined,
+          className: `${styles.bit} ${bit === 1 ? styles.one : styles.zero} ${
             flipping[index] ? styles.flipping : ""
-          }`}
-        >
-          {bit}
-        </span>
-      ))}
+          } ${onBitClick ? styles.clickable : ""}`,
+        };
+
+        return onBitClick ? (
+          <button
+            // biome-ignore lint/suspicious/noArrayIndexKey: fixe Bit-Positionen
+            key={index}
+            type="button"
+            aria-label={`Bit ${7 - index} umschalten`}
+            onClick={() => onBitClick(index)}
+            {...bitProps}
+          >
+            {bit}
+          </button>
+        ) : (
+          // biome-ignore lint/suspicious/noArrayIndexKey: fixe Bit-Positionen
+          <span key={index} {...bitProps}>
+            {bit}
+          </span>
+        );
+      })}
     </div>
   );
 }

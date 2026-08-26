@@ -13,9 +13,11 @@ import Hex from "@/components/gym/Hex/Hex";
 import HexChannels from "@/components/gym/HexChannels/HexChannels";
 import HexColor from "@/components/gym/HexColor/HexColor";
 import HexFormula from "@/components/gym/HexFormula/HexFormula";
+import HexNibble from "@/components/gym/HexNibble/HexNibble";
 import HexRange from "@/components/gym/HexRange/HexRange";
 import HexTable from "@/components/gym/HexTable/HexTable";
 import ImageFormats from "@/components/gym/ImageFormats/ImageFormats";
+import ImageSize from "@/components/gym/ImageSize/ImageSize";
 import Limit from "@/components/gym/Limit/Limit";
 import Resolution from "@/components/gym/Resolution/Resolution";
 import Rgb from "@/components/gym/Rgb/Rgb";
@@ -26,6 +28,9 @@ const ScaledByte = (props) => <ByteStatic scaled {...props} />;
 const AsciiExamples = (props) => (
   <AsciiByteList items={["A", "m", "7", "?", " "]} {...props} />
 );
+const HexNibbleAlt = (props) => <HexNibble value={0x3f} {...props} />;
+const ImageBytes = (props) => <ImageSize unit="byte" {...props} />;
+const ImageBits = (props) => <ImageSize unit="bit" {...props} />;
 
 export default function BiitStory() {
   return (
@@ -147,6 +152,26 @@ export default function BiitStory() {
         </p>
       </StoryPart>
 
+      <StoryPart component={HexNibble} imagePosition="left" wide>
+        <p>
+          Doch Dr. HEX geht noch einen Schritt weiter. Ihm fällt auf, dass ein
+          Byte genau in zwei Hälften zerfällt: <strong>4 Bits</strong> links und{" "}
+          <strong>4 Bits</strong> rechts. Und jede dieser Hälften – ein{" "}
+          <strong>Halbbyte</strong> – kann Werte von 0 bis 15 annehmen. Genau so
+          viele, wie er Ziffern hat!
+        </p>
+      </StoryPart>
+
+      <StoryPart component={HexNibbleAlt} imagePosition="right" wide>
+        <p>
+          Damit braucht er die grosse Formel gar nicht mehr: Man betrachtet
+          jeweils nur das <strong>halbe Byte</strong> und rechnet darin mit den
+          Werten <strong>8, 4, 2, 1</strong>. Die linke Hälfte ergibt die erste
+          Hex-Ziffer, die rechte Hälfte die zweite. Zusammengeschrieben stehen
+          sie für das ganze Byte.
+        </p>
+      </StoryPart>
+
       <StoryPart component={Rgb} imagePosition="left">
         <p>
           Auch andere Forschungsgruppen beobachten Binaria. So fällt{" "}
@@ -173,7 +198,7 @@ export default function BiitStory() {
         </p>
       </StoryPart>
 
-      <StoryPart component={HexColor} imagePosition="right">
+      <StoryPart component={HexColor} imagePosition="right" wide>
         <p>
           Dr. HEX sieht im Pixel-Studium seine Chance. Er entwickelt die
           radikale Idee, eine Farbe mit genau <strong>7 Zeichen</strong>{" "}
@@ -216,6 +241,24 @@ export default function BiitStory() {
         <p>
           Diese Gruppen werden schnell sehr gross: Ein Bild für einen normalen
           Bildschirm braucht schon <strong>1920 x 1200</strong> Pixel.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={ImageBytes} imagePosition="right" wide>
+        <p>
+          Dr. PNG will genauer wissen, wie schwer so ein Bild wiegt. Er zählt
+          nach: Jeder Pixel bringt <strong>3 Bytes</strong> mit – eines pro
+          Kanal. Bei einem Bild in dieser Grösse kommen so über{" "}
+          <strong>6 Millionen Bytes</strong> zusammen.
+        </p>
+      </StoryPart>
+
+      <StoryPart component={ImageBits} imagePosition="left" wide>
+        <p>
+          Biit rechnet weiter: In jedem Byte stecken ja <strong>8 Bits</strong>.
+          Ein einziges Bild besteht also aus über{" "}
+          <strong>55 Millionen Bits</strong> – 55 Millionen Nullen und Einsen,
+          die alle sauber der Reihe nach stehen müssen.
         </p>
       </StoryPart>
     </>
