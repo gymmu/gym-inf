@@ -163,9 +163,27 @@ const EFFunktionales = lazy(
 );
 const EFKlassen = lazy(() => import("@pages-ef/js-klassen.jsx"));
 const EFRepetition = lazy(() => import("@pages-ef/js-repetition.jsx"));
-const EFFunktionenTheorie = lazy(() => import("@pages-ef/js-funktionen-theorie.jsx"));
+const EFFunktionenTheorie = lazy(
+  () => import("@pages-ef/js-funktionen-theorie.jsx"),
+);
 const EFObjekteTheorie = lazy(() => import("@pages-ef/js-objekte-theorie.jsx"));
-const EFAufgabenFunktionenObjekte = lazy(() => import("@pages-ef/js-aufgaben-funktionen-objekte.jsx"));
+const EFAufgabenFunktionenObjekte = lazy(
+  () => import("@pages-ef/js-aufgaben-funktionen-objekte.jsx"),
+);
+const EFRepetitionFunktionenObjekte = lazy(
+  () => import("@pages-ef/js-repetition-funktionen-objekte.jsx"),
+);
+const EFBubbleSort = lazy(() => import("@pages-ef/js-bubblesort.jsx"));
+const EFQuickSort = lazy(() => import("@pages-ef/js-quicksort.jsx"));
+const EFStandardAlgorithmen = lazy(
+  () => import("@pages-ef/js-standard-algorithmen.jsx"),
+);
+const EFLaufzeitanalyse = lazy(
+  () => import("@pages-ef/js-laufzeitanalyse.jsx"),
+);
+const EFAufgabenAlgorithmen = lazy(
+  () => import("@pages-ef/js-aufgaben-algorithmen.jsx"),
+);
 
 const BoxModel = lazy(() => import("../components/BoxModel"));
 const CodePen = lazy(() => import("../components/CodePen"));
@@ -375,7 +393,25 @@ export const routes = [
       { path: "ef/js-repetition", element: <EFRepetition /> },
       { path: "ef/js-funktionen-theorie", element: <EFFunktionenTheorie /> },
       { path: "ef/js-objekte-theorie", element: <EFObjekteTheorie /> },
-      { path: "ef/js-aufgaben-funktionen-objekte", element: <EFAufgabenFunktionenObjekte /> },
+      {
+        path: "ef/js-aufgaben-funktionen-objekte",
+        element: <EFAufgabenFunktionenObjekte />,
+      },
+      {
+        path: "ef/js-repetition-funktionen-objekte",
+        element: <EFRepetitionFunktionenObjekte />,
+      },
+      { path: "ef/js-bubblesort", element: <EFBubbleSort /> },
+      { path: "ef/js-quicksort", element: <EFQuickSort /> },
+      {
+        path: "ef/js-standard-algorithmen",
+        element: <EFStandardAlgorithmen />,
+      },
+      { path: "ef/js-laufzeitanalyse", element: <EFLaufzeitanalyse /> },
+      {
+        path: "ef/js-aufgaben-algorithmen",
+        element: <EFAufgabenAlgorithmen />,
+      },
 
       // TODO: Comment these out if no longer tested
       { path: "codepen", element: <CodePen /> },

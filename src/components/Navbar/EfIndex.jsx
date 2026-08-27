@@ -97,7 +97,42 @@ export default function EfIndex() {
           },
         ]}
       />
-      <WeekSection weekNumber="3" title="Algorithmen" items={[]} />
+      <WeekSection
+        weekNumber="3"
+        title="Algorithmen"
+        items={[
+          {
+            type: "repetition",
+            to: "ef/js-repetition-funktionen-objekte",
+            label: "Repetition: Funktionen und Objekte",
+          },
+          {
+            type: "theorie",
+            to: "ef/js-bubblesort",
+            label: "Theorie: Bubble Sort",
+          },
+          {
+            type: "theorie",
+            to: "ef/js-quicksort",
+            label: "Theorie: Quicksort",
+          },
+          {
+            type: "theorie",
+            to: "ef/js-standard-algorithmen",
+            label: "Theorie: Weitere Standard-Algorithmen",
+          },
+          {
+            type: "theorie",
+            to: "ef/js-laufzeitanalyse",
+            label: "Theorie: Laufzeitanalyse",
+          },
+          {
+            type: "aufgaben",
+            to: "ef/js-aufgaben-algorithmen",
+            label: "Aufgaben: Algorithmen",
+          },
+        ]}
+      />
       <WeekSection
         weekNumber="4"
         title="Funktionales Programmieren"
