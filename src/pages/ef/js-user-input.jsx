@@ -43,6 +43,59 @@ rl.question('Was ist dein Name? ', (answer) => {
       </Section>
 
       <Section>
+        <h2>Mehrere Eingaben mit readline</h2>
+        <p>
+          <code>rl.question()</code> ist <em>asynchron</em>: Der Code nach dem
+          Aufruf läuft sofort weiter, ohne auf die Eingabe zu warten. Wenn du
+          mehrere Werte nacheinander abfragen möchtest, musst du die Aufrufe
+          deshalb <strong>verschachteln</strong> – die nächste Frage wird erst
+          innerhalb der Callback-Funktion der vorherigen Frage gestellt:
+        </p>
+        <JSTerminal filename="mehrere-eingaben.js">
+          {`const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.question('Wie heisst du? ', (name) => {
+  // Zweite Frage erst hier, nachdem der Name eingegeben wurde
+  rl.question('Wie alt bist du? ', (alter) => {
+    const alterAlsZahl = Number(alter);
+
+    console.log('Hallo ' + name + '!');
+    console.log('Im nächsten Jahr bist du ' + (alterAlsZahl + 1) + '.');
+
+    rl.close();
+  });
+});`}
+        </JSTerminal>
+        <p>
+          Jede weitere Frage kommt eine Ebene tiefer. Das funktioniert auch mit
+          drei oder mehr Eingaben – wird aber schnell unübersichtlich (man nennt
+          das <em>Callback-Hell</em>):
+        </p>
+        <JSTerminal filename="drei-eingaben.js">
+          {`rl.question('Vorname? ', (vorname) => {
+  rl.question('Nachname? ', (nachname) => {
+    rl.question('Lieblingsfarbe? ', (farbe) => {
+      console.log(vorname + ' ' + nachname + ' mag ' + farbe + '.');
+      rl.close();
+    });
+  });
+});`}
+        </JSTerminal>
+        <p>
+          <strong>Merke:</strong> Die Variablen der äusseren Fragen (
+          <code>vorname</code>, <code>nachname</code>) sind in den inneren
+          Callbacks weiterhin verfügbar. <code>rl.close()</code> wird nur
+          <em> einmal</em> ganz zuletzt aufgerufen, sonst werden die weiteren
+          Fragen nicht mehr gestellt.
+        </p>
+      </Section>
+
+      <Section>
         <h2>Kommandozeilenargumente lesen</h2>
         <p>
           Eine weitere Möglichkeit, Eingaben zu lesen, ist die Verwendung von

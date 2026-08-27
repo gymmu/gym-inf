@@ -173,11 +173,11 @@ const EFAufgabenFunktionenObjekte = lazy(
 const EFRepetitionFunktionenObjekte = lazy(
   () => import("@pages-ef/js-repetition-funktionen-objekte.jsx"),
 );
-const EFBubbleSort = lazy(() => import("@pages-ef/js-bubblesort.jsx"));
-const EFQuickSort = lazy(() => import("@pages-ef/js-quicksort.jsx"));
 const EFStandardAlgorithmen = lazy(
   () => import("@pages-ef/js-standard-algorithmen.jsx"),
 );
+const EFBubbleSort = lazy(() => import("@pages-ef/js-bubblesort.jsx"));
+const EFQuickSort = lazy(() => import("@pages-ef/js-quicksort.jsx"));
 const EFLaufzeitanalyse = lazy(
   () => import("@pages-ef/js-laufzeitanalyse.jsx"),
 );
@@ -401,12 +401,12 @@ export const routes = [
         path: "ef/js-repetition-funktionen-objekte",
         element: <EFRepetitionFunktionenObjekte />,
       },
-      { path: "ef/js-bubblesort", element: <EFBubbleSort /> },
-      { path: "ef/js-quicksort", element: <EFQuickSort /> },
       {
         path: "ef/js-standard-algorithmen",
         element: <EFStandardAlgorithmen />,
       },
+      { path: "ef/js-bubblesort", element: <EFBubbleSort /> },
+      { path: "ef/js-quicksort", element: <EFQuickSort /> },
       { path: "ef/js-laufzeitanalyse", element: <EFLaufzeitanalyse /> },
       {
         path: "ef/js-aufgaben-algorithmen",

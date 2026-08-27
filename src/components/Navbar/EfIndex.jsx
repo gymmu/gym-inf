@@ -108,6 +108,11 @@ export default function EfIndex() {
           },
           {
             type: "theorie",
+            to: "ef/js-standard-algorithmen",
+            label: "Theorie: Einfache Standard-Algorithmen",
+          },
+          {
+            type: "theorie",
             to: "ef/js-bubblesort",
             label: "Theorie: Bubble Sort",
           },
@@ -115,11 +120,6 @@ export default function EfIndex() {
             type: "theorie",
             to: "ef/js-quicksort",
             label: "Theorie: Quicksort",
-          },
-          {
-            type: "theorie",
-            to: "ef/js-standard-algorithmen",
-            label: "Theorie: Weitere Standard-Algorithmen",
           },
           {
             type: "theorie",

@@ -7,9 +7,10 @@ export default function JSAufgabenAlgorithmen() {
         <h2>Aufgaben: Algorithmen</h2>
         <p>
           In diesem Arbeitsauftrag bearbeiten Sie <strong>5 Aufgaben</strong> zu
-          den Algorithmen dieser Woche. Die Aufgaben sind deutlich umfangreicher
-          als in den letzten Wochen — planen Sie pro Aufgabe genügend Zeit ein
-          und arbeiten Sie in kleinen Schritten.
+          den Algorithmen dieser Woche. Sie beginnen mit zwei klassischen
+          Rechen-Algorithmen und arbeiten sich zu den Sortieralgorithmen vor.
+          Die Aufgaben sind deutlich umfangreicher als in den letzten Wochen —
+          planen Sie genügend Zeit ein und arbeiten Sie in kleinen Schritten.
         </p>
         <p>
           <strong>Wichtig:</strong> Es gibt keine Musterlösungen. Sie schreiben
@@ -26,49 +27,19 @@ export default function JSAufgabenAlgorithmen() {
       </Section>
 
       <Section>
-        <h2>Abgabe über GitHub</h2>
-        <ol>
-          <li>
-            Erstellen Sie in Ihrem Repository einen Ordner{" "}
-            <code>aufgaben-algorithmen</code>
-          </li>
-          <li>
-            Speichern Sie jede Aufgabe als eigene <code>.js</code>-Datei
-            (z.&nbsp;B. <code>01-selection-sort.js</code>)
-          </li>
-          <li>Committen Sie regelmässig mit sinnvollen Nachrichten</li>
-          <li>
-            Der <strong>letzte Commit</strong> muss die Nachricht{" "}
-            <code>Arbeitsauftrag Algorithmen bearbeitet</code> enthalten
-          </li>
-        </ol>
-        <pre>
-          <code>
-            {`git add .
-git commit -m "Arbeitsauftrag Algorithmen bearbeitet"`}
-          </code>
-        </pre>
-      </Section>
-
-      <Section>
         <h2>Dokumentation</h2>
         <p>
           Beginnen Sie jede Datei mit einem Kommentarblock nach diesem Muster:
         </p>
         <pre>
           <code>
-            {`// Aufgabe 1: Selection Sort
-// Idee: Suche das kleinste Element und tausche es nach vorne
-// Laufzeit: O(n²), weil zwei verschachtelte Schleifen
+            {`// Aufgabe 1: Modulo selbst berechnen
+// Idee: Solange der Divisor passt, wird er abgezogen
+// Laufzeit: O(a / b), weil pro Durchgang genau einmal subtrahiert wird
 // Schwierig war: ...
 // Gelernt habe ich: ...`}
           </code>
         </pre>
-        <p>
-          Erstellen Sie zusätzlich eine <code>README.md</code> im Ordner{" "}
-          <code>aufgaben-algorithmen</code> mit einer Tabelle: Aufgabe,
-          Algorithmus, Laufzeit, Bemerkung.
-        </p>
       </Section>
 
       <Section>
@@ -76,7 +47,135 @@ git commit -m "Arbeitsauftrag Algorithmen bearbeitet"`}
 
         {/* ── Aufgabe 1 ─────────────────────────────────── */}
         <div className="aufgabe">
-          <h4>Aufgabe 1: Selection Sort (Sortieren durch Auswählen)</h4>
+          <h4>Aufgabe 1: Modulo selbst berechnen</h4>
+          <p>
+            Der Modulo-Operator <code>%</code> gibt den{" "}
+            <strong>Rest einer Division</strong> zurück:{" "}
+            <code>17 % 5 === 2</code>, weil 5 dreimal in 17 passt und 2 übrig
+            bleibt. In dieser Aufgabe bauen Sie diesen Operator selbst nach.
+          </p>
+          <p>
+            <strong>Regel:</strong> Sie dürfen <code>%</code> nicht verwenden.
+            Auch <code>Math.floor</code>, <code>Math.trunc</code> und ähnliche
+            Abkürzungen sind nicht erlaubt. Nur <code>+</code>, <code>-</code>,{" "}
+            Vergleiche und Schleifen.
+          </p>
+          <p>Schreiben Sie:</p>
+          <ol>
+            <li>
+              <code>modulo(a, b)</code> — gibt den Rest von <code>a / b</code>{" "}
+              zurück. Idee: Ziehen Sie <code>b</code> so lange von{" "}
+              <code>a</code> ab, wie <code>a</code> noch mindestens so gross ist
+              wie <code>b</code>. Was übrig bleibt, ist der Rest.
+            </li>
+            <li>
+              <code>ganzzahlDivision(a, b)</code> — gibt zurück, wie oft{" "}
+              <code>b</code> ganz in <code>a</code> passt. Das ist genau die
+              Anzahl Subtraktionen aus Aufgabenteil 1.
+            </li>
+            <li>
+              <code>teile(a, b)</code> — gibt beides zusammen als Objekt zurück:{" "}
+              <code>{"{ quotient, rest }"}</code>.
+            </li>
+            <li>
+              <code>istTeilbar(a, b)</code> — <code>true</code>, wenn der Rest 0
+              ist. Testen Sie damit, welche Zahlen von 1 bis 50 durch 7 teilbar
+              sind.
+            </li>
+          </ol>
+          <p>
+            <strong>Testen Sie mit:</strong> <code>modulo(17, 5)</code> → 2,{" "}
+            <code>modulo(20, 4)</code> → 0, <code>modulo(3, 7)</code> → 3,{" "}
+            <code>modulo(0, 5)</code> → 0. Vergleichen Sie Ihr Resultat jeweils
+            mit dem eingebauten <code>%</code>, um zu prüfen, ob Sie richtig
+            liegen.
+          </p>
+          <p>
+            <strong>Sonderfälle bedenken:</strong> Was passiert bei{" "}
+            <code>b === 0</code>? Und was bei negativen Zahlen? Behandeln Sie
+            mindestens den Fall <code>b === 0</code> sauber (z.&nbsp;B. mit
+            einer Fehlermeldung).
+          </p>
+          <p>
+            <strong>Laufzeitüberlegung (als Kommentar):</strong> Wie viele
+            Durchgänge braucht Ihre Schleife bei <code>modulo(1000, 3)</code>?
+            Und bei <code>modulo(1000000, 3)</code>? Die Laufzeit hängt hier
+            nicht von der Länge einer Liste ab — wovon dann? Warum ist das für
+            sehr grosse Zahlen ein Problem?
+          </p>
+        </div>
+
+        {/* ── Aufgabe 2 ─────────────────────────────────── */}
+        <div className="aufgabe">
+          <h4>Aufgabe 2: Grösster gemeinsamer Teiler (GGT)</h4>
+          <p>
+            Der <strong>GGT</strong> zweier Zahlen ist die grösste Zahl, die
+            beide ohne Rest teilt. Zum Beispiel ist{" "}
+            <code>ggt(48, 18) === 6</code>. Man braucht ihn unter anderem zum
+            Kürzen von Brüchen. Der <em>euklidische Algorithmus</em> dafür ist
+            über 2000 Jahre alt und einer der ältesten Algorithmen überhaupt.
+          </p>
+          <p>Schreiben Sie drei Varianten und vergleichen Sie sie:</p>
+          <ol>
+            <li>
+              <code>ggtBrutal(a, b)</code> — probiert alle Zahlen von 1 bis zur
+              kleineren der beiden durch und merkt sich die grösste, die beide
+              teilt. Verwenden Sie dafür Ihr <code>istTeilbar</code> aus Aufgabe
+              1.
+            </li>
+            <li>
+              <code>ggtSubtraktion(a, b)</code> — der ursprüngliche Euklid:
+              Solange die beiden Zahlen verschieden sind, ziehe die kleinere von
+              der grösseren ab. Wenn beide gleich sind, ist das der GGT.
+            </li>
+            <li>
+              <code>ggtModulo(a, b)</code> — die moderne Version: Solange{" "}
+              <code>b</code> nicht 0 ist, ersetze das Paar <code>(a, b)</code>{" "}
+              durch <code>(b, a mod b)</code>. Sobald <code>b === 0</code> ist,
+              ist <code>a</code> der GGT. Verwenden Sie dafür Ihre eigene{" "}
+              <code>modulo</code>-Funktion aus Aufgabe 1.
+            </li>
+          </ol>
+          <p>
+            Alle drei Funktionen sollen zusätzlich die Anzahl{" "}
+            <strong>Durchgänge</strong> mitzählen und ausgeben.
+          </p>
+          <p>
+            <strong>Testen Sie mit:</strong> <code>(48, 18)</code> → 6,{" "}
+            <code>(1071, 462)</code> → 21, <code>(17, 5)</code> → 1
+            (teilerfremd), <code>(100, 100)</code> → 100 und{" "}
+            <code>(1000000, 2)</code>.
+          </p>
+          <p>
+            <strong>Erweiterungen:</strong>
+          </p>
+          <ul>
+            <li>
+              <code>kgv(a, b)</code> — das kleinste gemeinsame Vielfache. Tipp:{" "}
+              <code>a · b / ggt(a, b)</code>.
+            </li>
+            <li>
+              <code>kuerze(zaehler, nenner)</code> — kürzt einen Bruch
+              vollständig und gibt <code>{"{ zaehler, nenner }"}</code> zurück.
+              Testen Sie mit <code>48/18</code> → <code>8/3</code>.
+            </li>
+            <li>
+              <code>ggtListe(zahlen)</code> — der GGT einer ganzen Liste von
+              Zahlen (mehrfach anwenden).
+            </li>
+          </ul>
+          <p>
+            <strong>Laufzeitüberlegung (als Kommentar):</strong> Vergleichen Sie
+            die Anzahl Durchgänge der drei Varianten für{" "}
+            <code>(1071, 462)</code> und für <code>(1000000, 2)</code>. Welche
+            Variante ist bei welcher Eingabe besonders schlecht und warum?
+            Ordnen Sie <code>ggtBrutal</code> einer Laufzeitklasse zu.
+          </p>
+        </div>
+
+        {/* ── Aufgabe 3 ─────────────────────────────────── */}
+        <div className="aufgabe">
+          <h4>Aufgabe 3: Selection Sort (Sortieren durch Auswählen)</h4>
           <p>
             <strong>Idee:</strong> Suche in der unsortierten Restliste das{" "}
             <em>kleinste</em> Element und tausche es an den Anfang dieser
@@ -118,9 +217,9 @@ git commit -m "Arbeitsauftrag Algorithmen bearbeitet"`}
           </p>
         </div>
 
-        {/* ── Aufgabe 2 ─────────────────────────────────── */}
+        {/* ── Aufgabe 4 ─────────────────────────────────── */}
         <div className="aufgabe">
-          <h4>Aufgabe 2: Insertion Sort (Sortieren durch Einfügen)</h4>
+          <h4>Aufgabe 4: Insertion Sort (Sortieren durch Einfügen)</h4>
           <p>
             <strong>Idee:</strong> Wie beim Sortieren von Jasskarten auf der
             Hand. Die linke Seite der Liste ist immer schon sortiert. Man nimmt
@@ -164,100 +263,6 @@ git commit -m "Arbeitsauftrag Algorithmen bearbeitet"`}
           </p>
         </div>
 
-        {/* ── Aufgabe 3 ─────────────────────────────────── */}
-        <div className="aufgabe">
-          <h4>Aufgabe 3: Anagramme erkennen</h4>
-          <p>
-            Zwei Wörter sind Anagramme, wenn sie aus genau denselben Buchstaben
-            bestehen — nur in anderer Reihenfolge. Zum Beispiel{" "}
-            <code>Lager</code> und <code>Regal</code>.
-          </p>
-          <p>Schreiben Sie:</p>
-          <ol>
-            <li>
-              Eine Funktion <code>normalisieren(wort)</code>, die
-              Grossschreibung, Leerzeichen und Satzzeichen entfernt.
-            </li>
-            <li>
-              Eine Funktion <code>istAnagramm(a, b)</code>, die{" "}
-              <code>true</code> oder <code>false</code> zurückgibt. Lösen Sie
-              sie über <strong>Buchstaben zählen</strong> mit einem Objekt
-              (nicht über Sortieren).
-            </li>
-            <li>
-              Eine Funktion <code>findeAnagramme(wort, liste)</code>, die aus
-              einer Wortliste alle Anagramme des gesuchten Wortes zurückgibt.
-            </li>
-          </ol>
-          <p>
-            <strong>Testen Sie mit:</strong> <code>"Lager"</code> /{" "}
-            <code>"Regal"</code>, <code>"Ampel"</code> / <code>"Lampe"</code>,{" "}
-            <code>"Hallo"</code> / <code>"Hallo"</code>,{" "}
-            <code>"Informatik"</code> / <code>"Informatiker"</code> und einer
-            Wortliste mit mindestens 10 Wörtern.
-          </p>
-          <p>
-            <strong>Erweiterung:</strong> Schreiben Sie{" "}
-            <code>gruppiereAnagramme(liste)</code>, die eine Wortliste in
-            Gruppen von Anagrammen einteilt. Ergebnis z.&nbsp;B.:
-            <br />
-            <code>
-              {'{ aegl: ["Lager", "Regal"], aelmp: ["Ampel", "Lampe"] }'}
-            </code>
-            <br />
-            Tipp: Das sortierte Wort eignet sich hervorragend als Schlüssel.
-          </p>
-          <p>
-            <strong>Laufzeitüberlegung (als Kommentar):</strong> Welche Laufzeit
-            hat Ihre Zähl-Lösung, welche hätte die Sortier-Lösung? Und welche
-            Laufzeit hat <code>findeAnagramme</code>, wenn die Wortliste{" "}
-            <code>m</code> Wörter mit je <code>n</code> Buchstaben enthält?
-          </p>
-        </div>
-
-        {/* ── Aufgabe 4 ─────────────────────────────────── */}
-        <div className="aufgabe">
-          <h4>Aufgabe 4: Suchen im Vergleich</h4>
-          <p>
-            Implementieren Sie beide Suchverfahren selbst und vergleichen Sie
-            sie experimentell.
-          </p>
-          <ol>
-            <li>
-              <code>lineareSuche(liste, gesucht)</code> — gibt ein Objekt
-              zurück: <code>{"{ index, vergleiche }"}</code>. Nicht gefunden ⇒{" "}
-              <code>index: -1</code>.
-            </li>
-            <li>
-              <code>binaereSuche(liste, gesucht)</code> — gleiche Rückgabe.
-              Voraussetzung: die Liste ist sortiert.
-            </li>
-            <li>
-              <code>vergleiche(n)</code> — erzeugt eine sortierte Liste mit{" "}
-              <code>n</code> Zahlen und sucht darin <strong>jede</strong>{" "}
-              enthaltene Zahl einmal mit beiden Verfahren. Geben Sie die{" "}
-              <em>durchschnittliche</em> Anzahl Vergleiche pro Suche aus.
-            </li>
-          </ol>
-          <p>
-            Rufen Sie <code>vergleiche(n)</code> für{" "}
-            <code>n = 10, 100, 1000, 10000</code> auf und stellen Sie das
-            Ergebnis als Tabelle in Ihrer <code>README.md</code> dar.
-          </p>
-          <p>
-            <strong>Erweiterung:</strong> Schreiben Sie eine{" "}
-            <strong>rekursive</strong> Version der binären Suche mit den
-            Parametern <code>links</code> und <code>rechts</code>.
-          </p>
-          <p>
-            <strong>Laufzeitüberlegung (als Kommentar):</strong> Wie verändert
-            sich die Anzahl Vergleiche, wenn <code>n</code> verzehnfacht wird —
-            bei der linearen und bei der binären Suche? Passt Ihre Messung zu{" "}
-            <code>O(n)</code> bzw. <code>O(log n)</code>? Und: Ab wie vielen
-            Suchvorgängen lohnt es sich, die Liste vorher zu sortieren?
-          </p>
-        </div>
-
         {/* ── Aufgabe 5 ─────────────────────────────────── */}
         <div className="aufgabe">
           <h4>Aufgabe 5: Notenstatistik — alles zusammen</h4>
@@ -283,7 +288,7 @@ git commit -m "Arbeitsauftrag Algorithmen bearbeitet"`}
               <code>rangliste(schueler)</code> — eine <strong>neue</strong>{" "}
               Liste, absteigend nach Durchschnitt sortiert. Verwenden Sie einen{" "}
               <strong>selbst geschriebenen</strong> Sortieralgorithmus aus
-              Aufgabe 1 oder 2, nicht <code>sort()</code>.
+              Aufgabe 3 oder 4, nicht <code>sort()</code>.
             </li>
             <li>
               <code>notenverteilung(schueler)</code> — zählt mit einem Objekt,
@@ -310,34 +315,6 @@ git commit -m "Arbeitsauftrag Algorithmen bearbeitet"`}
             <code>rangliste</code> Quicksort statt Bubble Sort verwenden würden?
           </p>
         </div>
-      </Section>
-
-      <Section>
-        <h2>Bewertungskriterien</h2>
-        <ul>
-          <li>
-            <strong>Korrektheit:</strong> Die Algorithmen liefern für alle
-            Testfälle (inklusive Sonderfälle wie leere Liste) das richtige
-            Ergebnis.
-          </li>
-          <li>
-            <strong>Selbst geschrieben:</strong> Die Sortier- und
-            Suchalgorithmen sind von Hand implementiert, nicht mit{" "}
-            <code>sort()</code> oder <code>indexOf()</code> abgekürzt.
-          </li>
-          <li>
-            <strong>Lesbarkeit:</strong> sprechende Namen, sinnvolle Kommentare,
-            saubere Einrückung.
-          </li>
-          <li>
-            <strong>Laufzeitüberlegungen:</strong> zu jeder Aufgabe vorhanden
-            und nachvollziehbar begründet.
-          </li>
-          <li>
-            <strong>Abgabe:</strong> alle Dateien im richtigen Ordner, README
-            vorhanden, letzter Commit korrekt benannt.
-          </li>
-        </ul>
       </Section>
     </>
   );

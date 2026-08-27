@@ -84,64 +84,7 @@ export default function JSLaufzeitanalyse() {
       </ScrollSection>
 
       {/* ══════════════════════════════════════════════════════
-          SECTION 3 — Operationen zählen
-          ══════════════════════════════════════════════════════ */}
-      <ScrollSection area="content">
-        <section>
-          <h2>Operationen zählen — selbst ausprobieren</h2>
-          <p>
-            Wir bauen einen Zähler in unsere Algorithmen ein und schauen, wie
-            die Zahlen wachsen, wenn wir <code>n</code> verdoppeln.
-          </p>
-          <JSTerminal filename="operationen-zaehlen.js">
-            {`// Wir zählen die Vergleiche bei Bubble Sort
-function bubbleSortZaehlen(eingabe) {
-  const liste = [...eingabe];
-  let vergleiche = 0;
-
-  for (let i = 0; i < liste.length - 1; i++) {
-    for (let j = 0; j < liste.length - 1 - i; j++) {
-      vergleiche++;
-      if (liste[j] > liste[j + 1]) {
-        [liste[j], liste[j + 1]] = [liste[j + 1], liste[j]];
-      }
-    }
-  }
-  return vergleiche;
-}
-
-// Zufällige Liste der Länge n erzeugen
-function zufallsListe(n) {
-  const liste = [];
-  for (let i = 0; i < n; i++) {
-    liste.push(Math.floor(Math.random() * 1000));
-  }
-  return liste;
-}
-
-console.log("n\\tVergleiche\\tFaktor");
-let vorher = 0;
-for (const n of [10, 20, 40, 80, 160]) {
-  const v = bubbleSortZaehlen(zufallsListe(n));
-  const faktor = vorher === 0 ? "-" : (v / vorher).toFixed(1);
-  console.log(n + "\\t" + v + "\\t\\t" + faktor);
-  vorher = v;
-}
-
-// Beobachtung: n verdoppeln => Vergleiche ca. VERVIERFACHEN
-// Das ist typisch für O(n²)`}
-          </JSTerminal>
-          <p>
-            <strong>Das ist der Kern der Laufzeitanalyse:</strong> Bei{" "}
-            <code>O(n²)</code> führt doppelt so viel Input zu viermal so viel
-            Arbeit. Bei <code>O(n)</code> nur zu doppelt so viel. Bei{" "}
-            <code>O(log n)</code> praktisch zu gar nichts mehr.
-          </p>
-        </section>
-      </ScrollSection>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 4 — Die O-Notation
+          SECTION 3 — Die O-Notation
           ══════════════════════════════════════════════════════ */}
       <ScrollSection>
         <section>
@@ -191,7 +134,7 @@ for (const n of [10, 20, 40, 80, 160]) {
       </ScrollSection>
 
       {/* ══════════════════════════════════════════════════════
-          SECTION 5 — Wachstum vergleichen
+          SECTION 4 — Wachstum vergleichen
           ══════════════════════════════════════════════════════ */}
       <ScrollSection area="breakout">
         <section>
@@ -212,7 +155,7 @@ for (const n of [10, 20, 40, 80, 160]) {
       </ScrollSection>
 
       {/* ══════════════════════════════════════════════════════
-          SECTION 6 — Klassen erkennen
+          SECTION 5 — Klassen erkennen
           ══════════════════════════════════════════════════════ */}
       <ScrollSection>
         <section>
@@ -286,198 +229,11 @@ for (const n of [10, 20, 40, 80, 160]) {
       </ScrollSection>
 
       {/* ══════════════════════════════════════════════════════
-          SECTION 7 — Bubble Sort analysiert
+          SECTION 6 — Suche analysiert
           ══════════════════════════════════════════════════════ */}
       <ScrollSection>
         <section>
-          <h2>Analyse 1: Bubble Sort</h2>
-          <p>
-            Zwei verschachtelte Schleifen. Die äussere läuft <code>n − 1</code>{" "}
-            Mal, die innere jedes Mal etwas kürzer:
-          </p>
-          <p>
-            <code>(n−1) + (n−2) + … + 2 + 1 = n · (n−1) / 2</code>
-          </p>
-          <p>
-            Bei 10 Elementen sind das 45 Vergleiche, bei 100 schon 4950, bei
-            1000 rund 500'000.
-          </p>
-          <table>
-            <thead>
-              <tr>
-                <th>Fall</th>
-                <th>Wann?</th>
-                <th>Laufzeit</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Bester Fall</td>
-                <td>
-                  Liste bereits sortiert (nur mit der Abbruch-Optimierung)
-                </td>
-                <td>
-                  <code>O(n)</code>
-                </td>
-              </tr>
-              <tr>
-                <td>Durchschnitt</td>
-                <td>zufällige Liste</td>
-                <td>
-                  <code>O(n²)</code>
-                </td>
-              </tr>
-              <tr>
-                <td>Schlechtester Fall</td>
-                <td>Liste absteigend sortiert</td>
-                <td>
-                  <code>O(n²)</code>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p>
-            <strong>Speicher:</strong> <code>O(1)</code> — es wird nur
-            getauscht, keine zweite Liste angelegt.
-          </p>
-        </section>
-      </ScrollSection>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 8 — Quicksort analysiert
-          ══════════════════════════════════════════════════════ */}
-      <ScrollSection>
-        <section>
-          <h2>Analyse 2: Quicksort</h2>
-          <p>
-            Beim Partitionieren wird jedes Element des Bereichs einmal
-            angeschaut — das ist <code>O(n)</code> pro &laquo;Ebene&raquo;.
-            Entscheidend ist, <strong>wie viele Ebenen</strong> es gibt.
-          </p>
-          <ul>
-            <li>
-              <strong>Gutes Pivot</strong> (etwa in der Mitte): Der Bereich
-              halbiert sich jedes Mal. Nach <code>log₂(n)</code> Ebenen ist
-              alles fertig. Gesamt: <code>n · log n</code>. Bei n = 1024 sind
-              das 10 Ebenen à 1024 Vergleiche ≈ 10'000.
-            </li>
-            <li>
-              <strong>Schlechtes Pivot</strong> (immer das kleinste oder grösste
-              Element): Der Bereich schrumpft nur um 1. Dann gibt es{" "}
-              <code>n</code> Ebenen → <code>n²</code>. Genau das passiert mit
-              unserer Version bei einer bereits sortierten Liste!
-            </li>
-          </ul>
-          <table>
-            <thead>
-              <tr>
-                <th>Fall</th>
-                <th>Wann?</th>
-                <th>Laufzeit</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Bester Fall</td>
-                <td>Pivot teilt immer genau in der Mitte</td>
-                <td>
-                  <code>O(n · log n)</code>
-                </td>
-              </tr>
-              <tr>
-                <td>Durchschnitt</td>
-                <td>zufällige Liste</td>
-                <td>
-                  <code>O(n · log n)</code>
-                </td>
-              </tr>
-              <tr>
-                <td>Schlechtester Fall</td>
-                <td>bereits sortierte Liste (bei Pivot = letztes Element)</td>
-                <td>
-                  <code>O(n²)</code>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p>
-            <strong>Deshalb:</strong> In der Praxis wählt man ein{" "}
-            <em>zufälliges</em> Pivot. Dann ist der schlechteste Fall so
-            unwahrscheinlich, dass er praktisch nie auftritt.
-          </p>
-        </section>
-      </ScrollSection>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 9 — Vergleich messen
-          ══════════════════════════════════════════════════════ */}
-      <ScrollSection area="content">
-        <section>
-          <h2>Bubble Sort gegen Quicksort — messen</h2>
-          <p>
-            Jetzt messen wir tatsächlich die Zeit. Achtung: Erhöhen Sie{" "}
-            <code>n</code> nur vorsichtig, sonst blockiert Bubble Sort den
-            Browser.
-          </p>
-          <JSTerminal filename="messen.js">
-            {`function zufallsListe(n) {
-  const liste = [];
-  for (let i = 0; i < n; i++) liste.push(Math.random());
-  return liste;
-}
-
-function bubbleSort(eingabe) {
-  const liste = [...eingabe];
-  for (let i = 0; i < liste.length - 1; i++) {
-    for (let j = 0; j < liste.length - 1 - i; j++) {
-      if (liste[j] > liste[j + 1]) {
-        [liste[j], liste[j + 1]] = [liste[j + 1], liste[j]];
-      }
-    }
-  }
-  return liste;
-}
-
-function quickSort(liste) {
-  if (liste.length <= 1) return liste;
-  const [pivot, ...rest] = liste;
-  return [
-    ...quickSort(rest.filter((x) => x < pivot)),
-    pivot,
-    ...quickSort(rest.filter((x) => x >= pivot)),
-  ];
-}
-
-function messen(name, fn, daten) {
-  const start = performance.now();
-  fn(daten);
-  const dauer = performance.now() - start;
-  console.log(name + ": " + dauer.toFixed(1) + " ms");
-}
-
-for (const n of [500, 1000, 2000, 4000]) {
-  const daten = zufallsListe(n);
-  console.log("--- n = " + n + " ---");
-  messen("Bubble Sort", bubbleSort, daten);
-  messen("Quicksort  ", quickSort, daten);
-  messen("sort()     ", (d) => [...d].sort((a, b) => a - b), daten);
-}`}
-          </JSTerminal>
-          <p>
-            <strong>Beobachten Sie:</strong> Bei jeder Verdopplung von{" "}
-            <code>n</code> wird Bubble Sort etwa viermal langsamer, Quicksort
-            nur gut doppelt so langsam. Bei n = 4000 ist der Unterschied schon
-            gewaltig.
-          </p>
-        </section>
-      </ScrollSection>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 10 — Suche analysiert
-          ══════════════════════════════════════════════════════ */}
-      <ScrollSection>
-        <section>
-          <h2>Analyse 3: Lineare und binäre Suche</h2>
+          <h2>Analyse 1: Lineare und binäre Suche</h2>
 
           <h3>Lineare Suche — O(n)</h3>
           <ul>
@@ -545,11 +301,11 @@ for (const n of [500, 1000, 2000, 4000]) {
       </ScrollSection>
 
       {/* ══════════════════════════════════════════════════════
-          SECTION 11 — Restliche Algorithmen
+          SECTION 7 — Restliche Algorithmen
           ══════════════════════════════════════════════════════ */}
       <ScrollSection>
         <section>
-          <h2>Analyse 4: Die übrigen Algorithmen</h2>
+          <h2>Analyse 2: Die übrigen einfachen Algorithmen</h2>
 
           <h3>Maximum finden — O(n)</h3>
           <p>
@@ -618,6 +374,252 @@ for (const n of [500, 1000, 2000, 4000]) {
             Lesbarkeit schlägt Geschwindigkeit — bis die Geschwindigkeit zum
             Problem wird.
           </blockquote>
+        </section>
+      </ScrollSection>
+
+      {/* ══════════════════════════════════════════════════════
+          SECTION 8 — Operationen zählen
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection area="content">
+        <section>
+          <h2>Operationen zählen — selbst ausprobieren</h2>
+          <p>
+            Bisher waren alle einfachen Algorithmen <code>O(n)</code> oder
+            besser. Jetzt kommen wir zu den Sortieralgorithmen — und dort wird
+            es spannend. Wir bauen dazu einen Zähler in den Algorithmus ein und
+            schauen, wie die Zahlen wachsen, wenn wir <code>n</code> verdoppeln.
+          </p>
+          <JSTerminal filename="operationen-zaehlen.js">
+            {`// Wir zählen die Vergleiche bei Bubble Sort
+function bubbleSortZaehlen(eingabe) {
+  const liste = [...eingabe];
+  let vergleiche = 0;
+
+  for (let i = 0; i < liste.length - 1; i++) {
+    for (let j = 0; j < liste.length - 1 - i; j++) {
+      vergleiche++;
+      if (liste[j] > liste[j + 1]) {
+        [liste[j], liste[j + 1]] = [liste[j + 1], liste[j]];
+      }
+    }
+  }
+  return vergleiche;
+}
+
+// Zufällige Liste der Länge n erzeugen
+function zufallsListe(n) {
+  const liste = [];
+  for (let i = 0; i < n; i++) {
+    liste.push(Math.floor(Math.random() * 1000));
+  }
+  return liste;
+}
+
+console.log("n\\tVergleiche\\tFaktor");
+let vorher = 0;
+for (const n of [10, 20, 40, 80, 160]) {
+  const v = bubbleSortZaehlen(zufallsListe(n));
+  const faktor = vorher === 0 ? "-" : (v / vorher).toFixed(1);
+  console.log(n + "\\t" + v + "\\t\\t" + faktor);
+  vorher = v;
+}
+
+// Beobachtung: n verdoppeln => Vergleiche ca. VERVIERFACHEN
+// Das ist typisch für O(n²)`}
+          </JSTerminal>
+          <p>
+            <strong>Das ist der Kern der Laufzeitanalyse:</strong> Bei{" "}
+            <code>O(n²)</code> führt doppelt so viel Input zu viermal so viel
+            Arbeit. Bei <code>O(n)</code> nur zu doppelt so viel. Bei{" "}
+            <code>O(log n)</code> praktisch zu gar nichts mehr.
+          </p>
+        </section>
+      </ScrollSection>
+
+      {/* ══════════════════════════════════════════════════════
+          SECTION 9 — Bubble Sort analysiert
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection>
+        <section>
+          <h2>Analyse 3: Bubble Sort</h2>
+          <p>
+            Zwei verschachtelte Schleifen. Die äussere läuft <code>n − 1</code>{" "}
+            Mal, die innere jedes Mal etwas kürzer:
+          </p>
+          <p>
+            <code>(n−1) + (n−2) + … + 2 + 1 = n · (n−1) / 2</code>
+          </p>
+          <p>
+            Bei 10 Elementen sind das 45 Vergleiche, bei 100 schon 4950, bei
+            1000 rund 500'000.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Fall</th>
+                <th>Wann?</th>
+                <th>Laufzeit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bester Fall</td>
+                <td>
+                  Liste bereits sortiert (nur mit der Abbruch-Optimierung)
+                </td>
+                <td>
+                  <code>O(n)</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Durchschnitt</td>
+                <td>zufällige Liste</td>
+                <td>
+                  <code>O(n²)</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Schlechtester Fall</td>
+                <td>Liste absteigend sortiert</td>
+                <td>
+                  <code>O(n²)</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <strong>Speicher:</strong> <code>O(1)</code> — es wird nur
+            getauscht, keine zweite Liste angelegt.
+          </p>
+        </section>
+      </ScrollSection>
+
+      {/* ══════════════════════════════════════════════════════
+          SECTION 10 — Quicksort analysiert
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection>
+        <section>
+          <h2>Analyse 4: Quicksort</h2>
+          <p>
+            Beim Partitionieren wird jedes Element des Bereichs einmal
+            angeschaut — das ist <code>O(n)</code> pro &laquo;Ebene&raquo;.
+            Entscheidend ist, <strong>wie viele Ebenen</strong> es gibt.
+          </p>
+          <ul>
+            <li>
+              <strong>Gutes Pivot</strong> (etwa in der Mitte): Der Bereich
+              halbiert sich jedes Mal. Nach <code>log₂(n)</code> Ebenen ist
+              alles fertig. Gesamt: <code>n · log n</code>. Bei n = 1024 sind
+              das 10 Ebenen à 1024 Vergleiche ≈ 10'000.
+            </li>
+            <li>
+              <strong>Schlechtes Pivot</strong> (immer das kleinste oder grösste
+              Element): Der Bereich schrumpft nur um 1. Dann gibt es{" "}
+              <code>n</code> Ebenen → <code>n²</code>. Genau das passiert mit
+              unserer Version bei einer bereits sortierten Liste!
+            </li>
+          </ul>
+          <table>
+            <thead>
+              <tr>
+                <th>Fall</th>
+                <th>Wann?</th>
+                <th>Laufzeit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bester Fall</td>
+                <td>Pivot teilt immer genau in der Mitte</td>
+                <td>
+                  <code>O(n · log n)</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Durchschnitt</td>
+                <td>zufällige Liste</td>
+                <td>
+                  <code>O(n · log n)</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Schlechtester Fall</td>
+                <td>bereits sortierte Liste (bei Pivot = letztes Element)</td>
+                <td>
+                  <code>O(n²)</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <strong>Deshalb:</strong> In der Praxis wählt man ein{" "}
+            <em>zufälliges</em> Pivot. Dann ist der schlechteste Fall so
+            unwahrscheinlich, dass er praktisch nie auftritt.
+          </p>
+        </section>
+      </ScrollSection>
+
+      {/* ══════════════════════════════════════════════════════
+          SECTION 11 — Vergleich messen
+          ══════════════════════════════════════════════════════ */}
+      <ScrollSection area="content">
+        <section>
+          <h2>Bubble Sort gegen Quicksort — messen</h2>
+          <p>
+            Jetzt messen wir tatsächlich die Zeit. Achtung: Erhöhen Sie{" "}
+            <code>n</code> nur vorsichtig, sonst blockiert Bubble Sort den
+            Browser.
+          </p>
+          <JSTerminal filename="messen.js">
+            {`function zufallsListe(n) {
+  const liste = [];
+  for (let i = 0; i < n; i++) liste.push(Math.random());
+  return liste;
+}
+
+function bubbleSort(eingabe) {
+  const liste = [...eingabe];
+  for (let i = 0; i < liste.length - 1; i++) {
+    for (let j = 0; j < liste.length - 1 - i; j++) {
+      if (liste[j] > liste[j + 1]) {
+        [liste[j], liste[j + 1]] = [liste[j + 1], liste[j]];
+      }
+    }
+  }
+  return liste;
+}
+
+function quickSort(liste) {
+  if (liste.length <= 1) return liste;
+  const [pivot, ...rest] = liste;
+  return [
+    ...quickSort(rest.filter((x) => x < pivot)),
+    pivot,
+    ...quickSort(rest.filter((x) => x >= pivot)),
+  ];
+}
+
+function messen(name, fn, daten) {
+  const start = performance.now();
+  fn(daten);
+  const dauer = performance.now() - start;
+  console.log(name + ": " + dauer.toFixed(1) + " ms");
+}
+
+for (const n of [500, 1000, 2000, 4000]) {
+  const daten = zufallsListe(n);
+  console.log("--- n = " + n + " ---");
+  messen("Bubble Sort", bubbleSort, daten);
+  messen("Quicksort  ", quickSort, daten);
+  messen("sort()     ", (d) => [...d].sort((a, b) => a - b), daten);
+}`}
+          </JSTerminal>
+          <p>
+            <strong>Beobachten Sie:</strong> Bei jeder Verdopplung von{" "}
+            <code>n</code> wird Bubble Sort etwa viermal langsamer, Quicksort
+            nur gut doppelt so langsam. Bei n = 4000 ist der Unterschied schon
+            gewaltig.
+          </p>
         </section>
       </ScrollSection>
 

@@ -22,13 +22,19 @@ export default function JSStandardAlgorithmen() {
           ══════════════════════════════════════════════════════ */}
       <ScrollSection>
         <section>
-          <h2>Weitere Standard-Algorithmen</h2>
+          <h2>Einfache Standard-Algorithmen</h2>
           <p>
-            Sortieren ist nur ein Beispiel. In fast jedem Programm tauchen
-            dieselben kleinen Bausteine immer wieder auf. Wer diese{" "}
-            <strong>Muster</strong> kennt, kann neue Probleme viel schneller
-            lösen — man erkennt: &laquo;Ah, das ist ja im Grunde eine
-            Suche.&raquo;
+            Ein <strong>Algorithmus</strong> ist eine eindeutige
+            Handlungsvorschrift, die ein Problem in endlich vielen Schritten
+            löst — ein Rezept. In fast jedem Programm tauchen dabei dieselben
+            kleinen Bausteine immer wieder auf. Wer diese{" "}
+            <strong>Muster</strong> kennt, löst neue Probleme viel schneller —
+            man erkennt: &laquo;Ah, das ist ja im Grunde eine Suche.&raquo;
+          </p>
+          <p>
+            Wir starten mit den einfachen Mustern. Erst danach nehmen wir uns
+            mit <strong>Bubble Sort</strong> und <strong>Quicksort</strong> die
+            anspruchsvolleren Sortieralgorithmen vor.
           </p>
 
           <h3>Die sechs Muster dieser Seite</h3>
@@ -663,7 +669,7 @@ console.log(istAnagramm2("Informatik", "Informatiker"));`}
                 </td>
               </tr>
               <tr>
-                <td>Sortieren</td>
+                <td>Sortieren (nächste Seiten)</td>
                 <td>Reihenfolge herstellen</td>
                 <td>
                   <code>O(n²)</code> bzw. <code>O(n · log n)</code>
@@ -672,8 +678,10 @@ console.log(istAnagramm2("Informatik", "Informatiker"));`}
             </tbody>
           </table>
           <p>
-            Auf der nächsten Seite schauen wir uns genau an, was diese{" "}
-            <code>O(...)</code>-Angaben bedeuten und warum sie so wichtig sind.
+            Auf den nächsten Seiten geht es weiter mit den{" "}
+            <strong>Sortieralgorithmen</strong>. Ganz am Schluss schauen wir uns
+            an, was diese <code>O(...)</code>-Angaben genau bedeuten und warum
+            sie so wichtig sind.
           </p>
         </section>
       </ScrollSection>
