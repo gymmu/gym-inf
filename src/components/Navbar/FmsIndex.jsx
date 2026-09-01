@@ -19,7 +19,7 @@ export default function FmsIndex() {
       <section>
         <h2>1. Klasse</h2>
         <ol className={style.nav}>
-          <span>
+          <div>
             Einführung
             <ol>
               <NavLink to="fms/biit-story">
@@ -32,8 +32,8 @@ export default function FmsIndex() {
               <NavLink to="information">Daten und Informationen</NavLink>
               <NavLink to="colors">Farben</NavLink>
             </ol>
-          </span>
-          <span>
+          </div>
+          <div>
             Bilder
             <ol>
               <NavLink to="pictures">Bilder</NavLink>
@@ -45,8 +45,8 @@ export default function FmsIndex() {
               <NavLink to="fms/svg-transformation">Transformationen</NavLink>
               <NavLink to="fms/svg-animation">Animationen</NavLink>
             </ol>
-          </span>
-          <span>
+          </div>
+          <div>
             Internet und Sicherheit
             <ol>
               <NavLink to="fms/internet">Internet</NavLink>
@@ -58,8 +58,8 @@ export default function FmsIndex() {
               <NavLink to="fms/schluesselaustausch">Schlüsselaustausch</NavLink>
               <NavLink to="fms/passwoerter">Passwörter</NavLink>
             </ol>
-          </span>
-          <span>
+          </div>
+          <div>
             Algorithmen
             <ol>
               <NavLink to="/fms/algorithmen">Was sind Algorithmen?</NavLink>
@@ -73,13 +73,13 @@ export default function FmsIndex() {
               </NavLink>
               <NavLink to="/fms/algorithmen-aufgaben">Aufgaben</NavLink>
             </ol>
-          </span>
+          </div>
         </ol>
       </section>
       <section>
         <h2>2. Klasse</h2>
         <ol className={style.nav}>
-          <span>
+          <div>
             Tabellenkalkulation
             <ol>
               <NavLink to="fms/excel">Einstieg in Excel</NavLink>
@@ -87,15 +87,15 @@ export default function FmsIndex() {
                 Zusammenarbeit in Excel
               </NavLink>
             </ol>
-          </span>
-          <span>
+          </div>
+          <div>
             Webdesign
             <ol>
               <NavLink to="fms/html">Einstieg in HTML</NavLink>
               <NavLink to="fms/webdesign">Webdesign mit HTML</NavLink>
               <NavLink to="fms/javascript">Interaktive Webseiten</NavLink>
             </ol>
-          </span>
+          </div>
         </ol>
       </section>
     </div>
