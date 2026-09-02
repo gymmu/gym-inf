@@ -1,0 +1,116 @@
+.signed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  margin: 0;
+}
+
+.bits {
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.bit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.6rem;
+  border: none;
+  border-radius: var(--radius-sm, 4px);
+  font-family: monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.bit:hover {
+  transform: scale(1.1);
+}
+
+.one {
+  background-color: var(--color-green, #b8bb26);
+  color: var(--color-white, #fff);
+}
+
+.zero {
+  background-color: var(--color-red, #fb4934);
+  color: var(--color-fg, #ebdbb2);
+}
+
+.signBit {
+  outline: 2px solid var(--color-yellow, #fabd2f);
+}
+
+.signLabel {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: var(--color-yellow, #fabd2f);
+}
+
+.readings {
+  display: flex;
+  gap: var(--space-xl);
+}
+
+.reading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.readLabel {
+  font-size: 0.8rem;
+  color: var(--color-gray, #928374);
+}
+
+.readValue {
+  font-family: monospace;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--color-fg, #ebdbb2);
+}
+
+.neg {
+  color: var(--color-red, #fb4934);
+}
+
+.pos {
+  color: var(--color-green, #b8bb26);
+}
+
+.caption {
+  max-width: 24rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--color-fg, #ebdbb2);
+}
+
+@media (max-width: 768px) {
+  .bit {
+    width: 1.7rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  .readValue {
+    font-size: 1.4rem;
+  }
+
+  .readings {
+    gap: var(--space-lg);
+  }
+}

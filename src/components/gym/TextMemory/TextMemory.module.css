@@ -1,0 +1,145 @@
+.textMem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  margin: 0;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.fieldLabel {
+  font-size: 0.95rem;
+  color: var(--color-gray, #928374);
+}
+
+.input {
+  padding: var(--space-xs) var(--space-sm);
+  font-family: monospace;
+  font-size: 1.1rem;
+  color: var(--color-fg, #ebdbb2);
+  background-color: rgba(40, 40, 40, 0.6);
+  border: 2px solid var(--color-green, #b8bb26);
+  border-radius: var(--radius-sm, 4px);
+  width: 14rem;
+  max-width: 60vw;
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--color-yellow, #fabd2f);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 4.5rem auto 2rem 2.5rem 2.5rem;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm, 4px);
+  background-color: rgba(0, 0, 0, 0.25);
+  outline: 1px solid var(--color-lightAqua, #8ec07c);
+}
+
+/* Byte-Komponente kompakter einbetten */
+.bits {
+  display: flex;
+}
+
+.bits :global(.byte.byte) {
+  --byte-bit-width: 1.25rem;
+  --byte-bit-height: 1.5rem;
+  --byte-bit-font-size: 0.8rem;
+  gap: 3px;
+  padding: 0;
+  background-color: transparent;
+}
+
+.header {
+  background-color: transparent;
+  outline: none;
+  padding-bottom: 0;
+}
+
+.header span {
+  font-family: monospace;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-gray, #928374);
+}
+
+.address {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--color-gray, #928374);
+}
+
+.char {
+  font-family: monospace;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--color-lightAqua, #8ec07c);
+  text-align: center;
+  line-height: 1.1;
+}
+
+.code {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--color-fg, #ebdbb2);
+  text-align: right;
+}
+
+.hex {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--color-gray, #928374);
+  text-align: right;
+}
+
+.caption {
+  max-width: 28rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--color-fg, #ebdbb2);
+}
+
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: 3.5rem auto 1.6rem 2.2rem;
+    gap: var(--space-sm);
+  }
+
+  .code {
+    display: none;
+  }
+
+  .header span:last-child {
+    display: none;
+  }
+
+  .bits :global(.byte.byte) {
+    --byte-bit-width: 1rem;
+    --byte-bit-height: 1.3rem;
+    --byte-bit-font-size: 0.7rem;
+  }
+
+  .char {
+    font-size: 1.1rem;
+  }
+}

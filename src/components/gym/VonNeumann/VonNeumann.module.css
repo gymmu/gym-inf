@@ -1,0 +1,105 @@
+.vonNeumann {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 640px;
+  margin: 0;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+}
+
+.cpuBox,
+.memBox,
+.ioBox {
+  fill: var(--color-bg-light, #3c3836);
+  stroke: var(--color-gray, #928374);
+  stroke-width: 2;
+}
+
+.cpuBox {
+  stroke: var(--color-blue, #83a598);
+}
+
+.memBox {
+  stroke: var(--color-yellow, #fabd2f);
+}
+
+.ioBox {
+  stroke: var(--color-aqua, #8ec07c);
+}
+
+.unit {
+  fill: var(--color-bg-dark, #1d2021);
+  stroke: var(--color-blue, #83a598);
+  stroke-width: 1.5;
+}
+
+.memCell {
+  fill: var(--color-bg-dark, #1d2021);
+  stroke: var(--color-yellow, #fabd2f);
+  stroke-width: 1.5;
+}
+
+.cpuLabel {
+  fill: var(--color-fg, #ebdbb2);
+  font-size: 15px;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+.unitTitle {
+  fill: var(--color-fg, #ebdbb2);
+  font-size: 14px;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+.unitSub {
+  fill: var(--color-gray, #928374);
+  font-size: 12px;
+  text-anchor: middle;
+}
+
+.bus {
+  stroke: var(--color-fg, #ebdbb2);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.busLabel {
+  fill: var(--color-gray, #928374);
+  font-size: 13px;
+  text-anchor: middle;
+}
+
+.link {
+  stroke: var(--color-gray, #928374);
+  stroke-width: 3;
+}
+
+.packet {
+  transition: transform 1s ease-in-out;
+}
+
+.packetBox {
+  fill: var(--color-green, #b8bb26);
+  stroke: var(--color-bg, #282828);
+  stroke-width: 1.5;
+}
+
+.packetText {
+  fill: var(--color-bg, #282828);
+  font-family: monospace;
+  font-size: 8px;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .packet {
+    transition: none;
+  }
+}

@@ -4,6 +4,7 @@ import style from "./StoryPart.module.css";
  * StoryPart – Bild/Component und Text nebeneinander, volle Bildschirmhöhe
  *
  * @param {Function} [component] React-Komponente für die visuelle Seite
+ * @param {object} [componentProps] zusätzliche Props für die Komponente
  * @param {string} [imageSrc] Alternativ: Bildquelle
  * @param {string} [alt] Alt-Text für das Bild
  * @param {"left"|"right"} [imagePosition] Position des Visuals
@@ -12,6 +13,7 @@ import style from "./StoryPart.module.css";
  */
 export default function StoryPart({
   component: Component,
+  componentProps = {},
   imageSrc,
   alt = "",
   imagePosition = "left",
@@ -28,7 +30,7 @@ export default function StoryPart({
     >
       <div className={style.visual}>
         {Component ? (
-          <Component className={style.component} />
+          <Component className={style.component} {...componentProps} />
         ) : imageSrc ? (
           <img className={style.image} src={imageSrc} alt={alt} />
         ) : null}

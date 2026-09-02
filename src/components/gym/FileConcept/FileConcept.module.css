@@ -1,0 +1,148 @@
+.file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  margin: 0;
+  width: 100%;
+}
+
+.table {
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-lg, 8px);
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  padding: var(--space-xs) var(--space-md);
+  text-align: left;
+  font-family: monospace;
+}
+
+.table th {
+  font-size: 0.75rem;
+  color: var(--color-gray, #928374);
+  border-bottom: 1px solid var(--color-gray, #928374);
+}
+
+.fileRow {
+  cursor: pointer;
+  color: var(--color-fg, #ebdbb2);
+  transition: background-color 0.15s ease;
+}
+
+.fileRow:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.selectedRow {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nameCell {
+  font-weight: bold;
+}
+
+.nameBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  color: inherit;
+}
+
+.aqua {
+  --file-color: var(--color-aqua, #8ec07c);
+}
+.blue {
+  --file-color: var(--color-blue, #83a598);
+}
+.orange {
+  --file-color: var(--color-orange, #fe8019);
+}
+
+.selectedRow .nameBtn,
+.selectedRow.aqua,
+.selectedRow.blue,
+.selectedRow.orange {
+  color: var(--file-color);
+}
+
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3px;
+  padding: var(--space-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 2.2rem;
+  padding: 3px 0;
+  border-radius: var(--radius-sm, 4px);
+  background-color: rgba(0, 0, 0, 0.25);
+  outline: 1px solid rgba(255, 255, 255, 0.08);
+  transition: outline 0.15s ease;
+}
+
+.cellActive {
+  outline: 2px solid var(--file-color, var(--color-yellow, #fabd2f));
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.cellAddr {
+  font-family: monospace;
+  font-size: 0.6rem;
+  color: var(--color-gray, #928374);
+}
+
+.cellVal {
+  font-family: monospace;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--color-fg, #ebdbb2);
+}
+
+.readout {
+  max-width: 30rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--color-fg, #ebdbb2);
+}
+
+.mono {
+  font-family: monospace;
+  color: var(--color-yellow, #fabd2f);
+}
+
+.caption {
+  max-width: 30rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--color-fg, #ebdbb2);
+}
+
+@media (max-width: 768px) {
+  .cell {
+    width: 1.7rem;
+  }
+
+  .cellVal {
+    font-size: 0.8rem;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--space-xs) var(--space-sm);
+  }
+}
