@@ -69,7 +69,8 @@
 }
 
 .carryRow {
-  height: 1.2rem;
+  height: 1.4rem;
+  margin-top: 2px;
 }
 
 .carry {
@@ -77,11 +78,41 @@
   align-items: center;
   justify-content: center;
   width: 2rem;
-  height: 1.2rem;
+  height: 1.4rem;
   font-family: monospace;
   font-size: 0.85rem;
   font-weight: bold;
   color: var(--color-yellow, #fabd2f);
+}
+
+.carryLabel {
+  font-size: 0.8rem;
+  color: var(--color-yellow, #fabd2f);
+}
+
+/* Abstand zwischen zwei Byte-Gruppen */
+.gap {
+  margin-left: var(--space-sm, 0.5rem);
+}
+
+.byteLabels {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md, 1rem);
+  margin-top: var(--space-xs);
+}
+
+.byteLabel {
+  min-width: 16rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-gray, #928374);
+  border-top: 1px dashed var(--color-gray, #928374);
+  padding-top: 2px;
+}
+
+.warn {
+  color: var(--color-red, #fb4934);
 }
 
 .carryOn {
@@ -111,7 +142,7 @@
   text-align: center;
   font-size: 0.95rem;
   color: var(--color-fg, #ebdbb2);
-  max-width: 24rem;
+  max-width: 32rem;
 }
 
 @media (max-width: 768px) {
@@ -128,5 +159,9 @@
   .result {
     min-width: 2.5rem;
     font-size: 0.95rem;
+  }
+
+  .byteLabel {
+    min-width: 12rem;
   }
 }

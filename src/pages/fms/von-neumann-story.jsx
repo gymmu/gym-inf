@@ -235,12 +235,30 @@ export default function VonNeumannStory() {
         </p>
       </StoryPart>
 
-      <StoryPart component={Subtraction} imagePosition="right" wide>
+      <StoryPart
+        component={Subtraction}
+        componentProps={{ part: 1 }}
+        imagePosition="right"
+        wide
+      >
         <p>
-          Aus <strong>a − b</strong> macht er <strong>a + (−b)</strong>. Die
-          negative Zahl entsteht mit dem Zweierkomplement von Dr. NEG: alle Bits
-          umdrehen und 1 addieren. So genügt dem Rechenwerk eine einzige
-          Fähigkeit – das <strong>Addieren</strong>.
+          Zuerst wird nur <strong>übersetzt</strong>: Aus <strong>b</strong>{" "}
+          wird <strong>−b</strong>. Dafür dreht Dr. NEG alle Bits um und addiert
+          1 – das <strong>Zweierkomplement</strong>. Gerechnet wird hier noch
+          gar nichts.
+        </p>
+      </StoryPart>
+
+      <StoryPart
+        component={Subtraction}
+        componentProps={{ part: 2 }}
+        imagePosition="left"
+        wide
+      >
+        <p>
+          Erst jetzt kommt die <strong>Rechnung</strong>: Aus{" "}
+          <strong>a − b</strong> wird <strong>a + (−b)</strong>. So genügt dem
+          Rechenwerk eine einzige Fähigkeit – das <strong>Addieren</strong>.
         </p>
       </StoryPart>
 
@@ -250,6 +268,21 @@ export default function VonNeumannStory() {
           Man nimmt <strong>mehr als ein Byte</strong>. Zwei Bytes zusammen sind{" "}
           <strong>16 Bit</strong> und reichen schon bis <strong>65'535</strong>.
           Das linke Byte zählt in grossen Schritten, das rechte die Einer.
+        </p>
+      </StoryPart>
+
+      <StoryPart
+        component={ByteAddition}
+        componentProps={{ bytes: 2, a: 4321, b: 12345 }}
+        imagePosition="right"
+        wide
+      >
+        <p>
+          Frau ADD rechnet auch mit grossen Zahlen genau gleich: Bit für Bit von
+          rechts nach links, und der <strong>Übertrag</strong> wandert eine
+          Stelle weiter. Wird das <strong>niedrige Byte</strong> voll, springt
+          der Übertrag einfach über die <strong>Byte-Grenze</strong> ins hohe
+          Byte – nichts geht verloren.
         </p>
       </StoryPart>
 

@@ -8,16 +8,14 @@
 
 .bits {
   display: flex;
-  gap: var(--space-xs);
+  gap: var(--space-md);
   padding: var(--space-md);
   background-color: rgba(40, 40, 40, 0.5);
   border-radius: var(--radius-lg, 8px);
 }
 
-.col {
+.nibble {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: var(--space-xs);
 }
 
@@ -52,29 +50,21 @@
 
 .signBit {
   outline: 2px solid var(--color-yellow, #fabd2f);
-}
-
-.signLabel {
-  font-family: monospace;
-  font-size: 0.7rem;
-  color: var(--color-yellow, #fabd2f);
+  outline-offset: 2px;
 }
 
 .readings {
-  display: flex;
-  gap: var(--space-xl);
-}
-
-.reading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  column-gap: var(--space-md);
+  row-gap: var(--space-xs);
 }
 
 .readLabel {
   font-size: 0.8rem;
   color: var(--color-gray, #928374);
+  text-align: right;
 }
 
 .readValue {
@@ -82,6 +72,9 @@
   font-size: 1.8rem;
   font-weight: bold;
   color: var(--color-fg, #ebdbb2);
+  text-align: right;
+  min-width: 4.5ch;
+  font-variant-numeric: tabular-nums;
 }
 
 .neg {
@@ -90,13 +83,6 @@
 
 .pos {
   color: var(--color-green, #b8bb26);
-}
-
-.caption {
-  max-width: 24rem;
-  text-align: center;
-  font-size: 0.95rem;
-  color: var(--color-fg, #ebdbb2);
 }
 
 @media (max-width: 768px) {
@@ -108,9 +94,5 @@
 
   .readValue {
     font-size: 1.4rem;
-  }
-
-  .readings {
-    gap: var(--space-lg);
   }
 }

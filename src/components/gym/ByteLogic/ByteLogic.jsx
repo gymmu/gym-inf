@@ -95,7 +95,9 @@ export default function ByteLogic({
     <figure className={`${styles.logic} ${className}`}>
       <div className={styles.calc}>
         <div className={styles.row}>
-          <span className={styles.op} />
+          {/* Bei NOT steht der Operator vor dem einzigen Summanden, also
+              direkt über dem Strich – wie bei AND/OR die zweite Zeile. */}
+          <span className={styles.op}>{config.unary ? config.symbol : ""}</span>
           {renderEditableRow(aBits, setValA)}
           <span className={styles.result}>= {valA}</span>
         </div>
@@ -109,9 +111,7 @@ export default function ByteLogic({
         )}
 
         <div className={`${styles.row} ${styles.sumRow}`}>
-          <span className={styles.op}>
-            {config.unary ? config.symbol : "="}
-          </span>
+          <span className={styles.op}>=</span>
           {resultBits.map((bit, i) => (
             <span
               // biome-ignore lint/suspicious/noArrayIndexKey: feste Bitpositionen

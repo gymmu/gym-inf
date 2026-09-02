@@ -14,8 +14,10 @@ const bitsOf = (value) =>
  * @param {number} [value] Startwert (0-255)
  * @param {string} [className] zusätzliche Klassen
  */
-export default function SignedByte({ value = 214, className = "" }) {
-  const [byte, setByte] = useState(value & 0xff);
+export default function SignedByte({ value = 86, className = "" }) {
+  // Das Vorzeichen-Bit ist beim Start nie gesetzt – das soll nur
+  // über einen Klick von Hand passieren.
+  const [byte, setByte] = useState(value & 0x7f);
 
   const bits = bitsOf(byte);
   const unsigned = byte;
@@ -24,49 +26,42 @@ export default function SignedByte({ value = 214, className = "" }) {
 
   const toggle = (i) => setByte((prev) => (prev ^ (1 << (7 - i))) & 0xff);
 
+  const renderBit = (bit, i) => (
+    <button
+      key={i}
+      type="button"
+      onClick={() => toggle(i)}
+      className={`${styles.bit} ${bit === 1 ? styles.one : styles.zero} ${
+        i === 0 ? styles.signBit : ""
+      }`}
+      aria-label={`Bit ${7 - i} umschalten`}
+    >
+      {bit}
+    </button>
+  );
+
   return (
     <figure className={`${styles.signed} ${className}`}>
       <div className={styles.bits}>
-        {bits.map((bit, i) => (
-          <div
-            // biome-ignore lint/suspicious/noArrayIndexKey: feste Bitpositionen
-            key={i}
-            className={styles.col}
-          >
-            <button
-              type="button"
-              onClick={() => toggle(i)}
-              className={`${styles.bit} ${bit === 1 ? styles.one : styles.zero} ${
-                i === 0 ? styles.signBit : ""
-              }`}
-              aria-label={`Bit ${7 - i} umschalten`}
-            >
-              {bit}
-            </button>
-            {i === 0 && <span className={styles.signLabel}>Vorzeichen</span>}
-          </div>
-        ))}
+        <div className={styles.nibble}>
+          {bits.slice(0, 4).map((bit, i) => renderBit(bit, i))}
+        </div>
+        <div className={styles.nibble}>
+          {bits.slice(4).map((bit, i) => renderBit(bit, i + 4))}
+        </div>
       </div>
 
       <div className={styles.readings}>
-        <div className={styles.reading}>
-          <span className={styles.readLabel}>ohne Vorzeichen</span>
-          <span className={styles.readValue}>{unsigned}</span>
-        </div>
-        <div className={styles.reading}>
-          <span className={styles.readLabel}>mit Vorzeichen</span>
-          <span
-            className={`${styles.readValue} ${isNegative ? styles.neg : styles.pos}`}
-          >
-            {signed}
-          </span>
-        </div>
-      </div>
+        <span className={styles.readLabel}>ohne Vorzeichen</span>
+        <span className={styles.readValue}>{unsigned}</span>
 
-      <figcaption className={styles.caption}>
-        Ist das grösste Bit eine <strong>1</strong>, ist die Zahl im
-        Zweierkomplement <strong>negativ</strong>.
-      </figcaption>
+        <span className={styles.readLabel}>mit Vorzeichen</span>
+        <span
+          className={`${styles.readValue} ${isNegative ? styles.neg : styles.pos}`}
+        >
+          {signed}
+        </span>
+      </div>
     </figure>
   );
 }
