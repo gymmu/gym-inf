@@ -184,6 +184,14 @@ const EFLaufzeitanalyse = lazy(
 const EFAufgabenAlgorithmen = lazy(
   () => import("@pages-ef/js-aufgaben-algorithmen.jsx"),
 );
+const EFRepetitionAlgorithmen = lazy(
+  () => import("@pages-ef/js-repetition-algorithmen.jsx"),
+);
+const EFFPTheorie = lazy(() => import("@pages-ef/js-fp-theorie.jsx"));
+const EFAufgabenFP = lazy(() => import("@pages-ef/js-aufgaben-fp.jsx"));
+const EFRepetitionFP = lazy(() => import("@pages-ef/js-repetition-fp.jsx"));
+const EFOOPTheorie = lazy(() => import("@pages-ef/js-oop-theorie.jsx"));
+const EFAufgabenOOP = lazy(() => import("@pages-ef/js-aufgaben-oop.jsx"));
 
 const BoxModel = lazy(() => import("../components/BoxModel"));
 const CodePen = lazy(() => import("../components/CodePen"));
@@ -408,6 +416,15 @@ export const routes = [
       { path: "ef/js-bubblesort", element: <EFBubbleSort /> },
       { path: "ef/js-quicksort", element: <EFQuickSort /> },
       { path: "ef/js-laufzeitanalyse", element: <EFLaufzeitanalyse /> },
+      {
+        path: "ef/js-repetition-algorithmen",
+        element: <EFRepetitionAlgorithmen />,
+      },
+      { path: "ef/js-fp-theorie", element: <EFFPTheorie /> },
+      { path: "ef/js-aufgaben-fp", element: <EFAufgabenFP /> },
+      { path: "ef/js-repetition-fp", element: <EFRepetitionFP /> },
+      { path: "ef/js-oop-theorie", element: <EFOOPTheorie /> },
+      { path: "ef/js-aufgaben-oop", element: <EFAufgabenOOP /> },
       {
         path: "ef/js-aufgaben-algorithmen",
         element: <EFAufgabenAlgorithmen />,

@@ -136,12 +136,44 @@ export default function EfIndex() {
       <WeekSection
         weekNumber="4"
         title="Funktionales Programmieren"
-        items={[]}
+        items={[
+          {
+            type: "repetition",
+            to: "ef/js-repetition-algorithmen",
+            label: "Repetition: Algorithmen",
+          },
+          {
+            type: "theorie",
+            to: "ef/js-fp-theorie",
+            label: "Theorie: map, filter, reduce",
+          },
+          {
+            type: "aufgaben",
+            to: "ef/js-aufgaben-fp",
+            label: "Aufgaben: Funktionales Programmieren",
+          },
+        ]}
       />
       <WeekSection
         weekNumber="5"
+        items={[
+          {
+            type: "repetition",
+            to: "ef/js-repetition-fp",
+            label: "Repetition: Funktionales Programmieren",
+          },
+          {
+            type: "theorie",
+            to: "ef/js-oop-theorie",
+            label: "Theorie: Klassen und Objekte",
+          },
+          {
+            type: "aufgaben",
+            to: "ef/js-aufgaben-oop",
+            label: "Projekt: Dungeon-Duell",
+          },
+        ]}
         title="Objektorientiertes Programmieren"
-        items={[]}
       />
       <WeekSection weekNumber="6" title="Leistungsüberprüfung" items={[]} />
     </div>
