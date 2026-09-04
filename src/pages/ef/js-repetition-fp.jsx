@@ -31,7 +31,7 @@ export default function JSRepetitionFP() {
             </li>
             <li>
               <code>find</code>, <code>some</code>, <code>every</code>,{" "}
-              <code>sort</code> — die Suchfragen
+              <code>toSorted</code> — die Suchfragen
             </li>
             <li>
               Eigene <strong>Prädikate</strong> und{" "}

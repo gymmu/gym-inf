@@ -392,7 +392,7 @@ const liste = [
 console.log(liste.filter((s) => s.hatBestanden()).map((s) => s.name));
 
 console.log(
-  [...liste].sort((a, b) => b.schnitt() - a.schnitt()).map((s) => s.name)
+  liste.toSorted((a, b) => b.schnitt() - a.schnitt()).map((s) => s.name)
 );
 
 const schnitt =

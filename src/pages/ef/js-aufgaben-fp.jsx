@@ -200,8 +200,8 @@ export default function JSAufgabenFP() {
             </li>
             <li>
               <code>rangliste(schueler)</code> — nach Schnitt absteigend
-              sortiert, als <code>"1. Anna (5.25)"</code> ausgegeben. Denken Sie
-              daran, vor dem <code>sort</code> zu kopieren.
+              sortiert, als <code>"1. Anna (5.25)"</code> ausgegeben. Verwenden
+              Sie <code>toSorted</code> mit einer Vergleichsfunktion.
             </li>
             <li>
               <code>klassenschnitt(schueler, klasse)</code> — Durchschnitt aller
@@ -331,8 +331,8 @@ export default function JSAufgabenFP() {
             <li>
               Schreiben Sie eine <strong>Funktionen-Fabrik</strong>{" "}
               <code>ausGenre(genre)</code>, die ein Prädikat zurückgibt, sowie{" "}
-              <code>nach(schluessel)</code> für <code>sort</code>. Verwenden Sie
-              beide mindestens zweimal mit unterschiedlichen Werten.
+              <code>nach(schluessel)</code> für <code>toSorted</code>. Verwenden
+              Sie beide mindestens zweimal mit unterschiedlichen Werten.
             </li>
             <li>
               <code>suche(liste, text)</code> — findet alle Songs, bei denen{" "}

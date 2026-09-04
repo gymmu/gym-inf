@@ -276,9 +276,9 @@ console.log(anzahl); // { a: 3, b: 1, c: 1 }`}
               </tr>
               <tr>
                 <td>
-                  <code>sort</code>
+                  <code>toSorted</code>
                 </td>
-                <td>sortierte Liste</td>
+                <td>neue, sortierte Liste</td>
                 <td>Bubble Sort &amp; Co.</td>
               </tr>
             </tbody>
@@ -292,13 +292,16 @@ console.log(zahlen.some((z) => z > 40));      // true
 console.log(zahlen.every((z) => z > 3));      // true
 console.log(zahlen.includes(15));             // true
 
-// sort braucht eine Vergleichsfunktion für Zahlen
-const kopie = [...zahlen];
-kopie.sort((a, b) => b - a); // absteigend
-console.log(kopie);
+// toSorted braucht eine Vergleichsfunktion für Zahlen
+console.log(zahlen.toSorted((a, b) => a - b)); // aufsteigend
+console.log(zahlen.toSorted((a, b) => b - a)); // absteigend
 
-// Achtung: sort verändert die Liste!
-// Darum vorher mit [...liste] kopieren.`}
+// a - b  negativ -> a kommt zuerst
+//        positiv -> b kommt zuerst
+
+// toSorted gibt eine NEUE Liste zurück,
+// das Original bleibt unverändert:
+console.log(zahlen); // [4, 8, 15, 16, 23, 42]`}
           </JSTerminal>
         </section>
       </ScrollSection>
@@ -326,7 +329,7 @@ console.log(kopie);
 const namen = schueler
   .filter((s) => s.note >= 4)     // auswählen
   .map((s) => s.name)             // umwandeln
-  .sort();                        // sortieren
+  .toSorted();                    // sortieren
 
 console.log(namen); // ["Anna", "Clara", "David"]
 
@@ -483,8 +486,8 @@ console.log(produkte.map((p) => p.preis).map(mit20Prozent));
 // Sehr nützlich: Sortier-Funktionen erzeugen
 const nach = (schluessel) => (a, b) => a[schluessel] - b[schluessel];
 
-console.log([...produkte].sort(nach("preis")).map((p) => p.name));
-console.log([...produkte].sort(nach("lager")).map((p) => p.name));`}
+console.log(produkte.toSorted(nach("preis")).map((p) => p.name));
+console.log(produkte.toSorted(nach("lager")).map((p) => p.name));`}
           </JSTerminal>
           <p>
             Der Trick: <code>teurerAls(50)</code> merkt sich den Wert{" "}
@@ -516,8 +519,8 @@ console.log([...produkte].sort(nach("lager")).map((p) => p.name));`}
             </li>
             <li>
               Alle drei erzeugen <strong>neue</strong> Listen — das Original
-              bleibt heil. Nur <code>sort</code> und <code>push</code> verändern
-              direkt.
+              bleibt heil — auch <code>toSorted</code>. Nur das ältere{" "}
+              <code>sort</code> und <code>push</code> verändern direkt.
             </li>
             <li>
               Arrow-Funktion ohne Klammern gibt automatisch zurück:{" "}
