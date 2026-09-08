@@ -5,6 +5,87 @@
   margin: var(--space-xl) 0;
 }
 
+/* --- Startbildschirm: Kapitelauswahl -------------------------------- */
+.setup {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  background-color: var(--color-bg-light);
+  border-radius: var(--radius-xl);
+}
+
+.setupBiit {
+  flex: 0 0 auto;
+}
+
+.setupBody {
+  flex: 1 1 auto;
+}
+
+.setupTitle {
+  margin: 0 0 var(--space-sm);
+}
+
+.setupHint {
+  margin: 0 0 var(--space-md);
+  font-size: 0.95rem;
+  color: var(--color-gray-light);
+}
+
+.chapterList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-md);
+  padding: 0;
+  list-style: none;
+}
+
+.chapterOption {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-bg-lighter);
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.chapterOption:hover,
+.chapterOption:focus-within {
+  border-color: var(--color-yellow);
+}
+
+.chapterChecked {
+  border-color: var(--color-blue);
+}
+
+.chapterOption input {
+  margin-top: 0.3rem;
+  accent-color: var(--color-blue);
+}
+
+.chapterOption > span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.chapterMeta {
+  font-size: 0.85rem;
+  color: var(--color-yellow);
+}
+
+.chapterDescription {
+  font-size: 0.9rem;
+  color: var(--color-gray-light);
+}
+
 /* --- Ziel-Byte (Biits Gruppe) --------------------------------------- */
 .targetBox {
   display: flex;
@@ -264,10 +345,38 @@
   cursor: pointer;
 }
 
-.next:hover,
-.next:focus-visible {
+.next:hover:not(:disabled),
+.next:focus-visible:not(:disabled) {
   filter: brightness(1.1);
   outline: none;
+}
+
+.next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.secondary {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-lg);
+  background-color: transparent;
+  color: var(--color-fg);
+  border: 2px solid var(--color-bg-lighter);
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.secondary:hover,
+.secondary:focus-visible {
+  border-color: var(--color-yellow);
+  outline: none;
+}
+
+.summaryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
 }
 
 /* --- Biit neben der Frage ------------------------------------------- */
@@ -316,6 +425,11 @@
   .summary {
     flex-direction: column-reverse;
     align-items: stretch;
+  }
+
+  .setup {
+    flex-direction: column;
+    align-items: center;
   }
 
   .summaryBiit {

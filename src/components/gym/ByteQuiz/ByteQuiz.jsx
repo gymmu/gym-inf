@@ -1,7 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Biit from "@/components/gym/Biit/Biit";
 import styles from "./ByteQuiz.module.css";
-import { BYTE_QUIZ_QUESTIONS } from "./questions";
+import {
+  BYTE_QUIZ_CHAPTERS,
+  BYTE_QUIZ_QUESTIONS,
+  getQuestionsByChapters,
+} from "./questions";
 
 const BIT_COUNT = 8;
 
@@ -34,6 +38,12 @@ function pickQuestions(catalog, count = BIT_COUNT) {
   if (picked.length < count) {
     const rest = shuffle(catalog).filter((q) => !picked.includes(q));
     picked.push(...rest.slice(0, count - picked.length));
+  }
+
+  // Notfall: Reicht der Katalog nicht für ein ganzes Byte, werden Fragen
+  // wiederholt, damit das Quiz trotzdem spielbar bleibt.
+  while (picked.length < count && catalog.length > 0) {
+    picked.push(catalog[picked.length % catalog.length]);
   }
 
   return picked.slice(0, count);
@@ -141,28 +151,67 @@ function isCorrect(question, answer) {
  * am Schluss richtet sich Biits Stimmung nach der Anzahl übereinstimmender
  * Bits.
  *
- * @param {Array} [questions] Fragekatalog (Standard: Dummy-Fragen)
+ * Vor dem Start wählt die spielende Person aus, aus welchen Kapiteln die
+ * Fragen kommen sollen (mehrere Kapitel sind möglich).
+ *
+ * @param {Array} [questions] Fragekatalog (Standard: alle Fragen)
+ * @param {Array} [chapters] Kapitel-Metadaten (Standard: alle Kapitel)
  */
-export default function ByteQuiz({ questions = BYTE_QUIZ_QUESTIONS }) {
-  // Deterministischer erster Render (SSG), danach Zufall im Client.
+export default function ByteQuiz({
+  questions = BYTE_QUIZ_QUESTIONS,
+  chapters = BYTE_QUIZ_CHAPTERS,
+}) {
+  // Kapitel, die im Katalog tatsächlich Fragen haben.
+  const availableChapters = useMemo(
+    () =>
+      chapters
+        .map((chapter) => ({
+          ...chapter,
+          count: questions.filter((q) => q.chapter === chapter.id).length,
+        }))
+        .filter((chapter) => chapter.count > 0),
+    [chapters, questions],
+  );
+
+  const [started, setStarted] = useState(false);
+  const [chapterIds, setChapterIds] = useState(() =>
+    availableChapters.map((chapter) => chapter.id),
+  );
   const [selected, setSelected] = useState(() => questions.slice(0, BIT_COUNT));
   const [target, setTarget] = useState(0);
   const [results, setResults] = useState(() => Array(BIT_COUNT).fill(null));
   const [current, setCurrent] = useState(0);
   const [draft, setDraft] = useState("");
 
-  const reset = useCallback(() => {
-    setSelected(pickQuestions(questions, BIT_COUNT));
+  const pool = useMemo(
+    () => getQuestionsByChapters(chapterIds, questions),
+    [chapterIds, questions],
+  );
+
+  const toggleChapter = (id) => {
+    setChapterIds((prev) =>
+      prev.includes(id) ? prev.filter((entry) => entry !== id) : [...prev, id],
+    );
+  };
+
+  /** Startet ein neues Byte mit den Fragen der gewählten Kapitel. */
+  const start = useCallback(() => {
+    if (pool.length === 0) return;
+    setSelected(pickQuestions(pool, BIT_COUNT));
     setTarget(randomByte());
     setResults(Array(BIT_COUNT).fill(null));
     setCurrent(0);
     setDraft("");
-  }, [questions]);
+    setStarted(true);
+  }, [pool]);
 
-  useEffect(() => {
-    setSelected(pickQuestions(questions, BIT_COUNT));
-    setTarget(randomByte());
-  }, [questions]);
+  /** Zurück zur Kapitelauswahl. */
+  const backToSetup = useCallback(() => {
+    setStarted(false);
+    setResults(Array(BIT_COUNT).fill(null));
+    setCurrent(0);
+    setDraft("");
+  }, []);
 
   const byteValue = useMemo(
     () =>
@@ -204,6 +253,79 @@ export default function ByteQuiz({ questions = BYTE_QUIZ_QUESTIONS }) {
   const result = results[current];
   const answered = result !== null;
   const reaction = getReaction(matches);
+
+  const chapterTitle = (id) =>
+    availableChapters.find((chapter) => chapter.id === id)?.title ?? id;
+
+  /* --- Startbildschirm: Kapitelauswahl ----------------------------- */
+  if (!started) {
+    return (
+      <div className={styles.quiz}>
+        <div className={styles.setup}>
+          <div className={styles.setupBiit}>
+            <Biit variant="large" size={150} animate={false} value="neutral" />
+          </div>
+
+          <div className={styles.setupBody}>
+            <h3 className={styles.setupTitle}>
+              Woraus sollen die Fragen kommen?
+            </h3>
+            <p className={styles.setupHint}>
+              Wähle ein oder mehrere Kapitel aus. Danach stellt Biit dir{" "}
+              {BIT_COUNT} Fragen – jede richtige Antwort setzt ein Bit auf 1.
+            </p>
+
+            <ul className={styles.chapterList}>
+              {availableChapters.map((chapter) => {
+                const checked = chapterIds.includes(chapter.id);
+                return (
+                  <li key={chapter.id}>
+                    <label
+                      className={`${styles.chapterOption} ${
+                        checked ? styles.chapterChecked : ""
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => toggleChapter(chapter.id)}
+                      />
+                      <span>
+                        <strong>{chapter.title}</strong>
+                        <span className={styles.chapterMeta}>
+                          {chapter.count} Fragen
+                        </span>
+                        {chapter.description && (
+                          <span className={styles.chapterDescription}>
+                            {chapter.description}
+                          </span>
+                        )}
+                      </span>
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <p className={styles.setupHint}>
+              {pool.length > 0
+                ? `Ausgewählt: ${pool.length} Fragen`
+                : "Bitte mindestens ein Kapitel auswählen."}
+            </p>
+
+            <button
+              type="button"
+              className={styles.next}
+              disabled={pool.length === 0}
+              onClick={start}
+            >
+              Quiz starten
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.quiz}>
@@ -264,7 +386,8 @@ export default function ByteQuiz({ questions = BYTE_QUIZ_QUESTIONS }) {
         <div className={styles.stage}>
           <div className={styles.progress}>
             Frage {current + 1} von {BIT_COUNT} –{" "}
-            {question.difficulty === "hard" ? "schwer" : "einfach"}
+            {question.difficulty === "hard" ? "schwer" : "einfach"} –{" "}
+            {chapterTitle(question.chapter)}
           </div>
 
           <div className={styles.questionRow}>
@@ -387,9 +510,18 @@ export default function ByteQuiz({ questions = BYTE_QUIZ_QUESTIONS }) {
               <br />
               Übereinstimmende Bits: <strong>{matches}</strong> von {BIT_COUNT}
             </p>
-            <button type="button" className={styles.next} onClick={reset}>
-              Neue Gruppe suchen
-            </button>
+            <div className={styles.summaryActions}>
+              <button type="button" className={styles.next} onClick={start}>
+                Neue Gruppe suchen
+              </button>
+              <button
+                type="button"
+                className={styles.secondary}
+                onClick={backToSetup}
+              >
+                Kapitel ändern
+              </button>
+            </div>
           </div>
         </div>
       )}
