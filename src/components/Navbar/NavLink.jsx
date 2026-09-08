@@ -6,7 +6,7 @@ import { registerRoute } from "@/routes.jsx";
 import style from "./NavLink.module.css";
 import ProgressDot from "./ProgressDot";
 
-function NavLink({ to, elem, children }) {
+function NavLink({ to, elem, children, className }) {
   const { setVisible } = useContext(NavContext);
   const { hasNote } = useNotes();
   const location = useLocation();
@@ -38,7 +38,7 @@ function NavLink({ to, elem, children }) {
   const isActive = location.pathname === to || location.pathname === `/${slug}`;
 
   return (
-    <div>
+    <div className={className}>
       <Link
         onClick={hide}
         to={to}

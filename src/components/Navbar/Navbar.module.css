@@ -32,6 +32,29 @@
   display: none;
 }
 
+.quizLink a {
+  margin: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-bg);
+  background-color: var(--color-yellow);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  display: block;
+  transition: all var(--transition-fast);
+}
+
+.quizLink a:hover {
+  filter: brightness(1.1);
+  color: var(--color-bg);
+}
+
+.quizLink a.active {
+  outline: 2px solid var(--color-fg);
+}
+
 .navList {
   h2 {
     text-align: center;

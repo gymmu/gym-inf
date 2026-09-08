@@ -2,6 +2,10 @@ import style from "./Navbar.module.css";
 import NavLink from "./NavLink";
 
 export default function FmsIndex() {
+  const showAll =
+    typeof window !== "undefined" &&
+    window.localStorage.getItem("showAllIndex") === "true";
+
   return (
     <div className={style.navList}>
       <section>
@@ -18,6 +22,9 @@ export default function FmsIndex() {
       </section>
       <section>
         <h2>1. Klasse</h2>
+        <NavLink to="fms/byte-quiz" className={style.quizLink}>
+          🧩 Quiz: Bau dein Byte
+        </NavLink>
         <ol className={style.nav}>
           <div>
             Einführung
@@ -25,58 +32,71 @@ export default function FmsIndex() {
               <NavLink to="fms/biit-story">
                 Willkommen in der Welt der Bits
               </NavLink>
-              <NavLink to="fms/byte-quiz">Quiz: Bau dein Byte</NavLink>
               <NavLink to="fms/von-neumann-story">
                 Wie ein Computer denkt
               </NavLink>
-              <NavLink to="fms/hardware">Computer Hardware</NavLink>
-              <NavLink to="fms/binary">Binärsystem</NavLink>
-              <NavLink to="fms/Hex">Hexadezimalsystem</NavLink>
-              <NavLink to="information">Daten und Informationen</NavLink>
-              <NavLink to="colors">Farben</NavLink>
+              {showAll && (
+                <>
+                  <NavLink to="fms/hardware">Computer Hardware</NavLink>
+                  <NavLink to="fms/binary">Binärsystem</NavLink>
+                  <NavLink to="fms/Hex">Hexadezimalsystem</NavLink>
+                  <NavLink to="information">Daten und Informationen</NavLink>
+                  <NavLink to="colors">Farben</NavLink>
+                </>
+              )}
             </ol>
           </div>
-          <div>
-            Bilder
-            <ol>
-              <NavLink to="pictures">Bilder</NavLink>
-              <NavLink to="fms/svg">SVG</NavLink>
-              <NavLink to="fms/svg-line">Linien</NavLink>
-              <NavLink to="fms/svg-path">Pfade</NavLink>
-              <NavLink to="fms/svg-aufgaben">Aufgaben</NavLink>
-              <NavLink to="fms/svg-path-2">Pfade 2.0</NavLink>
-              <NavLink to="fms/svg-transformation">Transformationen</NavLink>
-              <NavLink to="fms/svg-animation">Animationen</NavLink>
-            </ol>
-          </div>
-          <div>
-            Internet und Sicherheit
-            <ol>
-              <NavLink to="fms/internet">Internet</NavLink>
-              <NavLink to="fms/internet-karte">Karte des Internets</NavLink>
-              <NavLink to="fms/internet-quiz">Quiz: Internet</NavLink>
-              <NavLink to="fms/vpn">VPN</NavLink>
-              <NavLink to="fms/vpn-quiz">Quiz: VPN</NavLink>
-              <NavLink to="fms/verschluesselung">Verschlüsselung</NavLink>
-              <NavLink to="fms/schluesselaustausch">Schlüsselaustausch</NavLink>
-              <NavLink to="fms/passwoerter">Passwörter</NavLink>
-            </ol>
-          </div>
-          <div>
-            Algorithmen
-            <ol>
-              <NavLink to="/fms/algorithmen">Was sind Algorithmen?</NavLink>
-              <NavLink to="/fms/algorithmen-loops">Schleifen</NavLink>
-              <NavLink to="/fms/algorithmen-alltag">Alltag</NavLink>
-              <NavLink to="/fms/algorithmen-mathematik">Mathematik</NavLink>
-              <NavLink to="/fms/algorithmen-strings">Strings</NavLink>
-              <NavLink to="/fms/algorithmen-suchen">Suchalgorithmen</NavLink>
-              <NavLink to="/fms/algorithmen-sortieren">
-                Sortieralgorithmen
-              </NavLink>
-              <NavLink to="/fms/algorithmen-aufgaben">Aufgaben</NavLink>
-            </ol>
-          </div>
+          {showAll && (
+            <>
+              <div>
+                Bilder
+                <ol>
+                  <NavLink to="pictures">Bilder</NavLink>
+                  <NavLink to="fms/svg">SVG</NavLink>
+                  <NavLink to="fms/svg-line">Linien</NavLink>
+                  <NavLink to="fms/svg-path">Pfade</NavLink>
+                  <NavLink to="fms/svg-aufgaben">Aufgaben</NavLink>
+                  <NavLink to="fms/svg-path-2">Pfade 2.0</NavLink>
+                  <NavLink to="fms/svg-transformation">
+                    Transformationen
+                  </NavLink>
+                  <NavLink to="fms/svg-animation">Animationen</NavLink>
+                </ol>
+              </div>
+              <div>
+                Internet und Sicherheit
+                <ol>
+                  <NavLink to="fms/internet">Internet</NavLink>
+                  <NavLink to="fms/internet-karte">Karte des Internets</NavLink>
+                  <NavLink to="fms/internet-quiz">Quiz: Internet</NavLink>
+                  <NavLink to="fms/vpn">VPN</NavLink>
+                  <NavLink to="fms/vpn-quiz">Quiz: VPN</NavLink>
+                  <NavLink to="fms/verschluesselung">Verschlüsselung</NavLink>
+                  <NavLink to="fms/schluesselaustausch">
+                    Schlüsselaustausch
+                  </NavLink>
+                  <NavLink to="fms/passwoerter">Passwörter</NavLink>
+                </ol>
+              </div>
+              <div>
+                Algorithmen
+                <ol>
+                  <NavLink to="/fms/algorithmen">Was sind Algorithmen?</NavLink>
+                  <NavLink to="/fms/algorithmen-loops">Schleifen</NavLink>
+                  <NavLink to="/fms/algorithmen-alltag">Alltag</NavLink>
+                  <NavLink to="/fms/algorithmen-mathematik">Mathematik</NavLink>
+                  <NavLink to="/fms/algorithmen-strings">Strings</NavLink>
+                  <NavLink to="/fms/algorithmen-suchen">
+                    Suchalgorithmen
+                  </NavLink>
+                  <NavLink to="/fms/algorithmen-sortieren">
+                    Sortieralgorithmen
+                  </NavLink>
+                  <NavLink to="/fms/algorithmen-aufgaben">Aufgaben</NavLink>
+                </ol>
+              </div>
+            </>
+          )}
         </ol>
       </section>
       <section>
@@ -91,14 +111,16 @@ export default function FmsIndex() {
               </NavLink>
             </ol>
           </div>
-          <div>
-            Webdesign
-            <ol>
-              <NavLink to="fms/html">Einstieg in HTML</NavLink>
-              <NavLink to="fms/webdesign">Webdesign mit HTML</NavLink>
-              <NavLink to="fms/javascript">Interaktive Webseiten</NavLink>
-            </ol>
-          </div>
+          {showAll && (
+            <div>
+              Webdesign
+              <ol>
+                <NavLink to="fms/html">Einstieg in HTML</NavLink>
+                <NavLink to="fms/webdesign">Webdesign mit HTML</NavLink>
+                <NavLink to="fms/javascript">Interaktive Webseiten</NavLink>
+              </ol>
+            </div>
+          )}
         </ol>
       </section>
     </div>

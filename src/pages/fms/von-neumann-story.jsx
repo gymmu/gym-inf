@@ -371,6 +371,11 @@ export default function VonNeumannStory() {
       <section>
         <h2>Weiterlernen</h2>
         <p>
+          Teste dein Wissen im{" "}
+          <Link to="/fms/byte-quiz">Quiz: Bau dein Byte</Link> – acht Fragen,
+          die gemeinsam ein Byte ergeben.
+        </p>
+        <p>
           Zurück zur ersten Reise:{" "}
           <Link to="/fms/biit-story">Willkommen in der Welt der Bits</Link>.
         </p>
