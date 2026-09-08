@@ -9,7 +9,11 @@ export default function ByteQuizPage() {
       </div>
 
       <p>
-        Hilf Biit, seine Gruppe zu finden. 
+        Hilf Biit, seine Gruppe zu finden. Wähle zuerst aus, aus welchen
+        Kapiteln die Fragen kommen sollen – aus{" "}
+        <Link to="/fms/biit-story">Bits und Bytes</Link>, aus der{" "}
+        <Link to="/fms/von-neumann-story">Von-Neumann-Architektur</Link> oder
+        aus beiden. Danach startest du das Quiz.
       </p>
 
       <ByteQuiz />

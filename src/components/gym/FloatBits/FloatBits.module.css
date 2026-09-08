@@ -1,0 +1,140 @@
+.float {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  margin: 0;
+  width: 100%;
+}
+
+.segments {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.bitRow {
+  display: flex;
+  gap: 2px;
+}
+
+.bit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.05rem;
+  height: 1.6rem;
+  border: none;
+  border-radius: 2px;
+  font-family: monospace;
+  font-size: 0.7rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.bit:hover,
+.bit:focus-visible {
+  transform: scale(1.2);
+  outline: 1.5px solid var(--color-yellow, #fabd2f);
+}
+
+.on {
+  color: var(--color-white, #fff);
+}
+
+.off {
+  color: var(--color-bg, #282828);
+  opacity: 0.55;
+}
+
+.sign.on {
+  background-color: var(--color-red, #fb4934);
+}
+.sign.off {
+  background-color: var(--color-red, #fb4934);
+}
+
+.exponent.on {
+  background-color: var(--color-blue, #83a598);
+}
+.exponent.off {
+  background-color: var(--color-blue, #83a598);
+}
+
+.mantissa.on {
+  background-color: var(--color-aqua, #8ec07c);
+}
+.mantissa.off {
+  background-color: var(--color-aqua, #8ec07c);
+}
+
+.segLabel {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--color-gray, #928374);
+}
+
+.calc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: monospace;
+}
+
+.line {
+  font-size: 1.15rem;
+  color: var(--color-fg, #ebdbb2);
+}
+
+.cSign {
+  color: var(--color-red, #fb4934);
+  font-weight: bold;
+}
+.cExp {
+  color: var(--color-blue, #83a598);
+  font-weight: bold;
+}
+.cMant {
+  color: var(--color-aqua, #8ec07c);
+  font-weight: bold;
+}
+
+.value {
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-yellow, #fabd2f);
+}
+
+.caption {
+  max-width: 26rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-fg, #ebdbb2);
+}
+
+@media (max-width: 768px) {
+  .steps li {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  .bit {
+    width: 0.85rem;
+    height: 1.3rem;
+    font-size: 0.6rem;
+  }
+}
