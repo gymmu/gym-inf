@@ -298,9 +298,10 @@ export default function VonNeumannStory() {
         <p>
           Für eine solche Zahl reserviert sie <strong>4 Bytes</strong> und teilt
           sie geschickt auf: ein Bit für das <strong>Vorzeichen</strong>, acht
-          Bit für den <strong>Exponenten</strong> (er verschiebt das Komma) und
-          der Rest für die <strong>Mantisse</strong> (die eigentlichen Ziffern).
-          So passt sogar eine Kommazahl in ein paar Bytes.
+          Bit für den <strong>Exponenten</strong> und der Rest für die{" "}
+          <strong>Mantisse</strong>. Die Mantisse sind die Ziffern (immer als
+          1,irgendwas), der Exponent die Zweierpotenz – er sagt, wohin das{" "}
+          <strong>Komma rutscht</strong>: 6,25 = 1,1001₂ · 2².
         </p>
       </StoryPart>
 

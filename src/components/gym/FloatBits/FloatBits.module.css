@@ -86,15 +86,30 @@
   color: var(--color-gray, #928374);
 }
 
-.explain {
-  max-width: 26rem;
-  text-align: center;
-  font-size: 0.95rem;
+.calc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: monospace;
+}
+
+.line {
+  font-size: 1.15rem;
   color: var(--color-fg, #ebdbb2);
 }
 
-.explain p {
-  margin: var(--space-xs) 0;
+.cSign {
+  color: var(--color-red, #fb4934);
+  font-weight: bold;
+}
+.cExp {
+  color: var(--color-blue, #83a598);
+  font-weight: bold;
+}
+.cMant {
+  color: var(--color-aqua, #8ec07c);
+  font-weight: bold;
 }
 
 .value {
@@ -107,11 +122,16 @@
 .caption {
   max-width: 26rem;
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: var(--color-fg, #ebdbb2);
 }
 
 @media (max-width: 768px) {
+  .steps li {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
   .bit {
     width: 0.85rem;
     height: 1.3rem;
