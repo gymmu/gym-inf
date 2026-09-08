@@ -1,4 +1,4 @@
-import{j as e}from"./react-vendor-7TcISLYx.js";import{L as a,S as s}from"./gym-pages-B-wyVlBl.js";import{P as i}from"./fms-pages-DLW5EFRR.js";import"./vendor-BpcXj_Y6.js";import"./monaco-CPFjTESt.js";import"./reveal-Rylxx4kG.js";import"./remotion-D4ALPBen.js";function t(r){const n={code:"code",h2:"h2",li:"li",p:"p",pre:"pre",strong:"strong",ul:"ul",...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(n.h2,{children:"Einführung in Javascript"}),`
+import{j as e}from"./react-vendor-7TcISLYx.js";import{L as a,S as s}from"./gym-pages-B-wyVlBl.js";import{P as i}from"./fms-pages-CDabT6-0.js";import"./vendor-BpcXj_Y6.js";import"./monaco-CPFjTESt.js";import"./reveal-Rylxx4kG.js";import"./remotion-D4ALPBen.js";function t(r){const n={code:"code",h2:"h2",li:"li",p:"p",pre:"pre",strong:"strong",ul:"ul",...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(n.h2,{children:"Einführung in Javascript"}),`
 `,e.jsx(n.p,{children:`Javascript ist eine von sehr vielen Programmiersprachen. Javascript wird in der
 Webentwicklung verwendet, und ist dafür auch optimiert. Javascript kann in jedem
 modernen Webbrowser ausgeführt werden, es muss also nicht zusätzliches
