@@ -87,3 +87,15 @@ RESEND_FROM=onboarding@resend.dev
 | `backup-db.sh`      | Datenbank-Backup erstellen               | Server (Cron) |
 
 Alle Scripts sind vollständig kommentiert. Siehe [SCRIPTS.md](./SCRIPTS.md) für Details und manuelle Schritte.
+
+## Submodule
+
+| Pfad                    | Repo                                            | Verwendet in                |
+| ----------------------- | ----------------------------------------------- | --------------------------- |
+| `external/graph-search` | https://github.com/gymmu/graph-search           | EF Woche 7/8 (Klassische KI) |
+
+Nach dem Klonen:
+
+```bash
+git submodule update --init --recursive
+```

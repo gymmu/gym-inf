@@ -176,6 +176,32 @@ export default function EfIndex() {
         title="Objektorientiertes Programmieren"
       />
       <WeekSection weekNumber="6" title="Leistungsüberprüfung" items={[]} />
+      <WeekSection
+        weekNumber="7"
+        title="Klassische KI: Graphensuche"
+        items={[
+          {
+            type: "theorie",
+            to: "ef/ki-graphensuche",
+            label: "Theorie: Graphensuche",
+          },
+          {
+            type: "aufgaben",
+            to: "ef/ki-aufgaben-graphensuche-hand",
+            label: "Aufgaben: Graphensuche von Hand",
+          },
+          {
+            type: "aufgaben",
+            to: "ef/ki-aufgaben-graphensuche-code",
+            label: "Aufgaben: Graphensuche mit Code",
+          },
+        ]}
+      />
+      <WeekSection
+        weekNumber="8"
+        title="Heuristiken: Greedy und A*"
+        items={[]}
+      />
     </div>
   );
 }

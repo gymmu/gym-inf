@@ -1,0 +1,3 @@
+[submodule "external/graph-search"]
+	path = external/graph-search
+	url = https://github.com/gymmu/graph-search.git

@@ -193,6 +193,13 @@ const EFAufgabenFP = lazy(() => import("@pages-ef/js-aufgaben-fp.jsx"));
 const EFRepetitionFP = lazy(() => import("@pages-ef/js-repetition-fp.jsx"));
 const EFOOPTheorie = lazy(() => import("@pages-ef/js-oop-theorie.jsx"));
 const EFAufgabenOOP = lazy(() => import("@pages-ef/js-aufgaben-oop.jsx"));
+const EFKIGraphensuche = lazy(() => import("@pages-ef/ki-graphensuche.jsx"));
+const EFKIAufgabenGraphensucheHand = lazy(
+  () => import("@pages-ef/ki-aufgaben-graphensuche-hand.jsx"),
+);
+const EFKIAufgabenGraphensucheCode = lazy(
+  () => import("@pages-ef/ki-aufgaben-graphensuche-code.jsx"),
+);
 
 const BoxModel = lazy(() => import("../components/BoxModel"));
 const CodePen = lazy(() => import("../components/CodePen"));
@@ -427,6 +434,15 @@ export const routes = [
       { path: "ef/js-repetition-fp", element: <EFRepetitionFP /> },
       { path: "ef/js-oop-theorie", element: <EFOOPTheorie /> },
       { path: "ef/js-aufgaben-oop", element: <EFAufgabenOOP /> },
+      { path: "ef/ki-graphensuche", element: <EFKIGraphensuche /> },
+      {
+        path: "ef/ki-aufgaben-graphensuche-hand",
+        element: <EFKIAufgabenGraphensucheHand />,
+      },
+      {
+        path: "ef/ki-aufgaben-graphensuche-code",
+        element: <EFKIAufgabenGraphensucheCode />,
+      },
       {
         path: "ef/js-aufgaben-algorithmen",
         element: <EFAufgabenAlgorithmen />,
