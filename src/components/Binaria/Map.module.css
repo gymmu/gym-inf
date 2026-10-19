@@ -80,6 +80,63 @@
   z-index: 5;
 }
 
+/* Wrapper, damit der "spielen"-Button direkt am Level hängen kann */
+.levelNodeWrap {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.levelNodeWrap.selectedWrap {
+  z-index: 6;
+}
+
+.levelNodeWrap .node {
+  position: static;
+  transform: none;
+}
+
+.levelNodeWrap .node:hover,
+.levelNodeWrap .node:focus-visible {
+  transform: scale(1.08);
+}
+
+.playButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  background: var(--node-accent, var(--color-green));
+  border: 1px solid var(--color-bg-dark);
+  color: var(--color-bg-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-base);
+}
+
+.playButton:hover,
+.playButton:focus-visible {
+  transform: scale(1.06);
+  text-decoration: none;
+}
+
+.playLocked {
+  background: var(--color-bg-lighter);
+  color: var(--color-gray-light);
+  cursor: not-allowed;
+}
+
+.playLocked:hover {
+  transform: none;
+}
+
 .nodeIcon {
   display: grid;
   place-items: center;
@@ -100,6 +157,13 @@
 
 .nodeIcon[data-status="done"] {
   box-shadow: 0 0 18px var(--node-accent, var(--color-green));
+}
+
+.nodeIcon[data-status="locked"] {
+  filter: grayscale(1);
+  opacity: 0.6;
+  border-color: var(--color-gray);
+  border-style: dashed;
 }
 
 .boss {
@@ -130,6 +194,10 @@
   border: 1px solid var(--color-bg-lighter);
   max-width: 190px;
   font-size: 0.8rem;
+}
+
+.locked .levelLabel {
+  opacity: 0.7;
 }
 
 .nodeSub {
@@ -337,6 +405,31 @@
   margin-left: auto;
   color: var(--color-gray);
   font-size: 0.8rem;
+}
+
+/* --- Level-Quiz im Panel --------------------------------------------- */
+
+.quizHint {
+  margin: var(--space-md) 0 var(--space-sm);
+  color: var(--color-gray-light);
+  font-size: 0.85rem;
+}
+
+.quizButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-full);
+  background: var(--node-accent, var(--color-green));
+  color: var(--color-bg-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.quizButton:hover {
+  text-decoration: none;
+  filter: brightness(1.08);
 }
 
 .hint {

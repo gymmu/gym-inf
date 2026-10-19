@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import style from "./Map.module.css";
 import { blobPath, serpentineLayout, smoothPath } from "./mapUtils";
 import { CHAPTER_STATE_LABEL, useBinariaProgress } from "./useBinariaProgress";
+import { useBinariaUnlock } from "./useBinariaUnlock";
 
 const LEVEL_MAP_WIDTH = 1000;
 const LEVEL_MAP_HEIGHT = 520;
@@ -22,9 +23,18 @@ const STATE_ICON = {
   done: "⭐",
 };
 
+/** Erstes noch nicht abgeschlossenes Kapitel eines Levels (sonst das erste). */
+function getNextChapter(level, getChapterState) {
+  return (
+    level.chapters.find((c) => getChapterState(c) !== "done") ||
+    level.chapters[0]
+  );
+}
+
 export default function LevelMap({ world }) {
-  const { getLevelState, getChapterState, getWorldState, getCurrentLevelId } =
+  const { getLevelState, getChapterState, getWorldState } =
     useBinariaProgress();
+  const { isLevelUnlocked, isLevelPassed, getOpenLevelId } = useBinariaUnlock();
   const [selectedId, setSelectedId] = useState(null);
 
   const positions = useMemo(
@@ -52,10 +62,16 @@ export default function LevelMap({ world }) {
   );
 
   const worldState = getWorldState(world);
-  const currentLevelId = getCurrentLevelId(world);
+  // Level, in dem Biit ohne eigene Auswahl steht: das erste offene Level.
+  const openLevelId = getOpenLevelId(world);
   const selected =
     world.levels.find((l) => l.id === selectedId) ||
-    world.levels.find((l) => l.id === currentLevelId);
+    world.levels.find((l) => l.id === openLevelId);
+  // Biit reist immer zum ausgewählten Level.
+  const biitLevelId = selected?.id;
+  const selectedUnlocked = selected
+    ? isLevelUnlocked(world.id, selected.id)
+    : false;
 
   return (
     <div className={style.mapWrapper}>
@@ -128,40 +144,64 @@ export default function LevelMap({ world }) {
         {world.levels.map((level, index) => {
           const state = getLevelState(level);
           const pos = positions[index];
-          const isCurrent = level.id === currentLevelId;
+          const isCurrent = level.id === openLevelId;
           const isSelected = selected?.id === level.id;
+          const hasBiit = level.id === biitLevelId;
+          const unlocked = isLevelUnlocked(world.id, level.id);
+          const passed = isLevelPassed(world.id, level.id);
+          const nextChapter = getNextChapter(level, getChapterState);
           return (
-            <button
-              type="button"
+            <div
               key={level.id}
-              onClick={() => setSelectedId(level.id)}
-              className={`${style.node} ${style.levelNode} ${isCurrent ? style.current : ""} ${isSelected ? style.selected : ""}`}
+              className={`${style.levelNodeWrap} ${isSelected ? style.selectedWrap : ""}`}
               style={{
                 left: `${(pos.x / LEVEL_MAP_WIDTH) * 100}%`,
                 top: `${(pos.y / LEVEL_MAP_HEIGHT) * 100}%`,
                 "--node-accent": world.accent,
               }}
-              aria-label={`Level ${index + 1}: ${level.name}`}
             >
-              {isCurrent && (
-                <span className={style.biitMarker}>
-                  <Biit variant="small" size={100} animate />
-                </span>
-              )}
-              <span
-                className={`${style.nodeIcon} ${level.type ? style[level.type] || "" : ""}`}
-                data-status={state.status}
+              <button
+                type="button"
+                onClick={() => setSelectedId(level.id)}
+                className={`${style.node} ${style.levelNode} ${isCurrent ? style.current : ""} ${isSelected ? style.selected : ""} ${unlocked ? "" : style.locked}`}
+                aria-label={`Level ${index + 1}: ${level.name}${unlocked ? "" : " (noch gesperrt)"}`}
               >
-                {state.status === "done" ? "⭐" : level.icon}
-              </span>
-              <span className={style.levelLabel}>
-                <span className={style.levelNumber}>
-                  {world.levels.length > 1 ? `Level ${index + 1}` : "Level"}
-                  {level.type ? ` · ${TYPE_LABEL[level.type]}` : ""}
+                {hasBiit && (
+                  <span className={style.biitMarker}>
+                    <Biit variant="small" size={100} animate />
+                  </span>
+                )}
+                <span
+                  className={`${style.nodeIcon} ${level.type ? style[level.type] || "" : ""}`}
+                  data-status={unlocked ? state.status : "locked"}
+                >
+                  {!unlocked ? "🔒" : passed ? "⭐" : level.icon}
                 </span>
-                <strong>{level.name}</strong>
-              </span>
-            </button>
+                <span className={style.levelLabel}>
+                  <span className={style.levelNumber}>
+                    {world.levels.length > 1 ? `Level ${index + 1}` : "Level"}
+                    {level.type ? ` · ${TYPE_LABEL[level.type]}` : ""}
+                  </span>
+                  <strong>{level.name}</strong>
+                </span>
+              </button>
+              {isSelected &&
+                (unlocked ? (
+                  nextChapter && (
+                    <Link
+                      to={nextChapter.path}
+                      className={style.playButton}
+                      title={nextChapter.title}
+                    >
+                      ▶ spielen
+                    </Link>
+                  )
+                ) : (
+                  <span className={`${style.playButton} ${style.playLocked}`}>
+                    🔒 gesperrt
+                  </span>
+                ))}
+            </div>
           );
         })}
       </div>
@@ -177,26 +217,46 @@ export default function LevelMap({ world }) {
               <span className={style.badge}>{TYPE_LABEL[selected.type]}</span>
             )}
           </h3>
-          <ul className={style.chapterList}>
-            {selected.chapters.map((chapter) => {
-              const chapterState = getChapterState(chapter);
-              return (
-                <li key={chapter.path}>
-                  <Link to={chapter.path} className={style.chapterLink}>
-                    <span
-                      className={style.chapterState}
-                      data-state={chapterState}
-                      title={CHAPTER_STATE_LABEL[chapterState]}
-                    >
-                      {STATE_ICON[chapterState]}
-                    </span>
-                    <span>{chapter.title}</span>
-                    <span className={style.chapterGo}>spielen →</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          {selectedUnlocked ? (
+            <>
+              <ul className={style.chapterList}>
+                {selected.chapters.map((chapter) => {
+                  const chapterState = getChapterState(chapter);
+                  return (
+                    <li key={chapter.path}>
+                      <Link to={chapter.path} className={style.chapterLink}>
+                        <span
+                          className={style.chapterState}
+                          data-state={chapterState}
+                          title={CHAPTER_STATE_LABEL[chapterState]}
+                        >
+                          {STATE_ICON[chapterState]}
+                        </span>
+                        <span>{chapter.title}</span>
+                        <span className={style.chapterGo}>spielen →</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+              <p className={style.quizHint}>
+                {isLevelPassed(world.id, selected.id)
+                  ? "✅ Level-Quiz bestanden — das nächste Level ist offen."
+                  : "Am Ende des Levels wartet ein kurzes Quiz. Bestehst du es, öffnet sich das nächste Level."}
+              </p>
+              <Link
+                to={`/fms/binaria/${world.id}/${selected.id}/quiz`}
+                className={style.quizButton}
+              >
+                🧪 Level-Quiz starten
+              </Link>
+            </>
+          ) : (
+            <p className={style.quizHint}>
+              🔒 Dieses Level ist noch gesperrt. Bestehe zuerst das Quiz des
+              Levels davor.
+            </p>
+          )}
         </div>
       )}
     </div>

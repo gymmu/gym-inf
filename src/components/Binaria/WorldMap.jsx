@@ -4,6 +4,7 @@ import { binariaWorlds, MAP_HEIGHT, MAP_WIDTH } from "@/data/binaria";
 import style from "./Map.module.css";
 import { blobPath, smoothPath } from "./mapUtils";
 import { useBinariaProgress } from "./useBinariaProgress";
+import { useBinariaUnlock } from "./useBinariaUnlock";
 
 const routePoints = binariaWorlds.map((world) => [world.x, world.y]);
 const routeD = smoothPath(routePoints);
@@ -22,6 +23,7 @@ const waves = Array.from({ length: 14 }, (_, i) => ({
 
 export default function WorldMap() {
   const { getWorldState, currentWorldId } = useBinariaProgress();
+  const { isWorldUnlocked } = useBinariaUnlock();
 
   return (
     <div className={style.mapWrapper}>
@@ -100,12 +102,13 @@ export default function WorldMap() {
 
         {binariaWorlds.map((world) => {
           const state = getWorldState(world);
+          const unlocked = isWorldUnlocked(world.id);
           const isCurrent = world.id === currentWorldId;
           return (
             <Link
               key={world.id}
               to={`/fms/binaria/${world.id}`}
-              className={`${style.node} ${style.worldNode} ${isCurrent ? style.current : ""}`}
+              className={`${style.node} ${style.worldNode} ${isCurrent ? style.current : ""} ${unlocked ? "" : style.locked}`}
               style={{
                 left: `${(world.x / MAP_WIDTH) * 100}%`,
                 top: `${(world.y / MAP_HEIGHT) * 100}%`,
@@ -118,8 +121,11 @@ export default function WorldMap() {
                   <Biit variant="small" size={110} animate />
                 </span>
               )}
-              <span className={style.nodeIcon} data-status={state.status}>
-                {state.status === "done" ? "🏁" : world.icon}
+              <span
+                className={style.nodeIcon}
+                data-status={unlocked ? state.status : "locked"}
+              >
+                {!unlocked ? "🔒" : state.status === "done" ? "🏁" : world.icon}
               </span>
               <span className={style.nodeLabel}>
                 <strong>{world.name}</strong>
@@ -143,8 +149,8 @@ export default function WorldMap() {
       </div>
 
       <p className={style.hint}>
-        Tipp: Klicke auf ein Land, um die Levels zu sehen. Biit steht immer
-        dort, wo du gerade unterwegs bist.
+        Tipp: Klicke auf ein Land, um die Levels zu sehen. Gesperrte Länder 🔒
+        öffnen sich, sobald du die Level-Quizze davor bestanden hast.
       </p>
     </div>
   );

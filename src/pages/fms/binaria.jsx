@@ -65,9 +65,17 @@ export default function Binaria() {
             gehören.
           </li>
           <li>
-            Ein Level bekommt einen <strong>Stern ⭐</strong>, sobald du alle
-            seine Kapitel unten auf der Seite mit „Gut verstanden“ bewertet
-            hast.
+            Am Ende jedes Levels wartet ein <strong>kurzes Quiz</strong> (4–6
+            Fragen). Bestehst du es, bekommt das Level einen{" "}
+            <strong>Stern ⭐</strong> und das nächste Level wird freigeschaltet.
+          </li>
+          <li>
+            Gesperrte Levels erkennst du am <strong>Schloss 🔒</strong>. Dein
+            Fortschritt wird in diesem Browser gespeichert.
+          </li>
+          <li>
+            <strong>Biit reist mit:</strong> Die Figur steht immer bei dem
+            Level, das du gerade angewählt hast.
           </li>
           <li>
             Die Navigationsleiste oben bleibt bestehen — sie ist die Abkürzung

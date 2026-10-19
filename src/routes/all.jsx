@@ -19,6 +19,9 @@ const ByteQuizBits = lazy(() => import("@pages-fms/byte-quiz-bits.jsx"));
 const Pictures = lazy(() => import("@pages/fms/pictures.mdx"));
 const Binaria = lazy(() => import("@pages-fms/binaria.jsx"));
 const BinariaWelt = lazy(() => import("@pages-fms/binaria-welt.jsx"));
+const BinariaLevelQuiz = lazy(
+  () => import("@pages-fms/binaria-level-quiz.jsx"),
+);
 const FmsSVG = lazy(() => import("@pages/fms/svg.mdx"));
 const FmsSVGAnimation = lazy(() => import("@pages/fms/svg-animation.mdx"));
 const FmsSVGAufgaben = lazy(() => import("@pages/fms/svg-aufgaben.mdx"));
@@ -301,6 +304,13 @@ export const routes = [
         path: `/fms/binaria/${world.id}`,
         element: <BinariaWelt worldId={world.id} />,
       })),
+      // Level-Quiz am Ende jedes Levels (schaltet das nächste Level frei)
+      ...binariaWorlds.flatMap((world) =>
+        world.levels.map((level) => ({
+          path: `/fms/binaria/${world.id}/${level.id}/quiz`,
+          element: <BinariaLevelQuiz worldId={world.id} levelId={level.id} />,
+        })),
+      ),
 
       { path: "/fms/biit-story", element: <BiitStory /> },
       { path: "/fms/von-neumann-story", element: <VonNeumannStory /> },
