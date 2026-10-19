@@ -1,7 +1,9 @@
 // Critical components: Normal import (always needed)
+
 import Layout from "@components/Layout";
 import { lazy } from "react";
 import { createBrowserRouter, Link } from "react-router-dom";
+import { binariaWorlds } from "@/data/binaria";
 
 // All pages: Lazy loading
 const Colors = lazy(() => import("@pages/colors.mdx"));
@@ -13,7 +15,10 @@ const FMSIndex = lazy(() => import("@pages/fms/index.mdx"));
 const BiitStory = lazy(() => import("@pages-fms/biit-story.jsx"));
 const VonNeumannStory = lazy(() => import("@pages-fms/von-neumann-story.jsx"));
 const ByteQuiz = lazy(() => import("@pages-fms/byte-quiz.jsx"));
+const ByteQuizBits = lazy(() => import("@pages-fms/byte-quiz-bits.jsx"));
 const Pictures = lazy(() => import("@pages/fms/pictures.mdx"));
+const Binaria = lazy(() => import("@pages-fms/binaria.jsx"));
+const BinariaWelt = lazy(() => import("@pages-fms/binaria-welt.jsx"));
 const FmsSVG = lazy(() => import("@pages/fms/svg.mdx"));
 const FmsSVGAnimation = lazy(() => import("@pages/fms/svg-animation.mdx"));
 const FmsSVGAufgaben = lazy(() => import("@pages/fms/svg-aufgaben.mdx"));
@@ -289,9 +294,18 @@ export const routes = [
 
       // FMS Routes 1. Klasse
       { path: "fms-theorie", element: <FMSIndex /> },
+
+      // Binaria — spielerische Übersichtskarte
+      { path: "/fms/binaria", element: <Binaria /> },
+      ...binariaWorlds.map((world) => ({
+        path: `/fms/binaria/${world.id}`,
+        element: <BinariaWelt worldId={world.id} />,
+      })),
+
       { path: "/fms/biit-story", element: <BiitStory /> },
       { path: "/fms/von-neumann-story", element: <VonNeumannStory /> },
       { path: "/fms/byte-quiz", element: <ByteQuiz /> },
+      { path: "/fms/byte-quiz-bits", element: <ByteQuizBits /> },
       { path: "/fms/hardware", element: <Hardware /> },
       { path: "/fms/binary", element: <Binary /> },
       { path: "/fms/hex", element: <Hex /> },

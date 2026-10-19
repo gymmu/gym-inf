@@ -21,6 +21,14 @@ function Header() {
           alt="Hamburger Menu Icon"
           onClick={toggleSide}
         />
+        <Link
+          to="/fms/binaria"
+          className={style.mapLink}
+          title="Karte von Binaria"
+          aria-label="Karte von Binaria"
+        >
+          🗺️
+        </Link>
         <h1>
           <Link to="/">Informatik Skript</Link>
         </h1>

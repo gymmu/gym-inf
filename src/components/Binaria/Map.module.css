@@ -1,0 +1,376 @@
+.mapWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.map {
+  position: relative;
+  width: 100%;
+  border: 2px solid var(--color-bg-lighter);
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* === SVG-Deko ========================================================== */
+
+.wave {
+  fill: none;
+  stroke: var(--color-bg-lighter);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.5;
+}
+
+.island {
+  stroke: rgba(235, 219, 178, 0.25);
+  stroke-width: 2;
+}
+
+.islandShadow {
+  fill: rgba(0, 0, 0, 0.35);
+}
+
+.route {
+  fill: none;
+  stroke: var(--color-fg);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 2 16;
+  opacity: 0.8;
+}
+
+.routeShadow {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.4);
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+
+/* === Knoten (Welten / Levels) ========================================== */
+
+.node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--color-fg);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--transition-base);
+}
+
+.node:hover,
+.node:focus-visible {
+  transform: translate(-50%, -50%) scale(1.08);
+  z-index: 5;
+}
+
+.nodeIcon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  font-size: 1.9rem;
+  line-height: 1;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-dark);
+  border: 3px solid var(--node-accent, var(--color-gray));
+  box-shadow: var(--shadow-md);
+}
+
+.nodeIcon[data-status="new"] {
+  filter: grayscale(0.7);
+  opacity: 0.75;
+}
+
+.nodeIcon[data-status="done"] {
+  box-shadow: 0 0 18px var(--node-accent, var(--color-green));
+}
+
+.boss {
+  width: 76px;
+  height: 76px;
+  font-size: 2.2rem;
+  border-width: 4px;
+}
+
+.miniboss {
+  width: 70px;
+  height: 70px;
+  font-size: 2rem;
+  border-style: dashed;
+  border-width: 3px;
+}
+
+.nodeLabel,
+.levelLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-lg);
+  background: rgba(29, 32, 33, 0.85);
+  border: 1px solid var(--color-bg-lighter);
+  max-width: 190px;
+  font-size: 0.8rem;
+}
+
+.nodeSub {
+  color: var(--color-gray);
+  font-size: 0.7rem;
+  line-height: 1.2;
+}
+
+.levelNumber {
+  color: var(--node-accent, var(--color-gray));
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.nodeMeta {
+  color: var(--color-gray);
+  font-size: 0.7rem;
+}
+
+.progressBar {
+  display: block;
+  width: 100%;
+  min-width: 110px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-lighter);
+  overflow: hidden;
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+.current .nodeIcon {
+  animation: nodePulse 2s ease-in-out infinite;
+}
+
+.selected .nodeIcon {
+  outline: 2px dashed var(--color-fg);
+  outline-offset: 4px;
+}
+
+@keyframes nodePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(235, 219, 178, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(235, 219, 178, 0);
+  }
+}
+
+/* Biit als Spielfigur auf der Karte */
+.biitMarker {
+  position: absolute;
+  bottom: calc(100% - 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  animation: biitHop 1.8s ease-in-out infinite;
+}
+
+@keyframes biitHop {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .biitMarker,
+  .current .nodeIcon {
+    animation: none;
+  }
+}
+
+/* === Weltkopf (Levelkarte) ============================================= */
+
+.worldHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  border-left: 4px solid var(--node-accent, var(--color-gray));
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-light);
+}
+
+.backLink {
+  color: var(--color-gray-light);
+  font-size: 0.85rem;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.backLink:hover {
+  color: var(--color-fg);
+  text-decoration: underline;
+}
+
+.worldTitle {
+  margin: 0;
+}
+
+.worldSubtitle {
+  margin: 0;
+  color: var(--node-accent, var(--color-gray));
+  font-weight: 600;
+}
+
+.worldDescription {
+  margin: 0;
+  color: var(--color-gray-light);
+}
+
+.worldStats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  max-width: 420px;
+}
+
+/* === Level-Panel ======================================================= */
+
+.levelPanel {
+  padding: var(--space-md);
+  border: 1px solid var(--color-bg-lighter);
+  border-top: 3px solid var(--node-accent, var(--color-gray));
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-light);
+}
+
+.levelPanelTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.badge {
+  padding: 2px var(--space-sm);
+  border-radius: var(--radius-full);
+  background: var(--node-accent, var(--color-gray));
+  color: var(--color-bg-dark);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.chapterList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+}
+
+.chapterLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-fg);
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+
+.chapterLink:hover {
+  background: var(--color-bg-lighter);
+}
+
+.chapterState {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-lighter);
+  font-size: 0.9rem;
+}
+
+.chapterState[data-state="done"] {
+  background: var(--color-green);
+}
+
+.chapterState[data-state="learning"] {
+  background: var(--color-yellow);
+}
+
+.chapterState[data-state="visited"] {
+  background: var(--color-blue);
+}
+
+.chapterGo {
+  margin-left: auto;
+  color: var(--color-gray);
+  font-size: 0.8rem;
+}
+
+.hint {
+  margin: 0;
+  color: var(--color-gray);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* === Kleine Bildschirme =============================================== */
+
+@media (max-width: 900px) {
+  .nodeLabel,
+  .levelLabel {
+    font-size: 0.6rem;
+    max-width: 120px;
+    padding: 2px var(--space-xs);
+  }
+
+  .nodeIcon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+
+  .boss,
+  .miniboss {
+    width: 52px;
+    height: 52px;
+    font-size: 1.4rem;
+  }
+
+  .nodeSub,
+  .biitMarker {
+    display: none;
+  }
+}

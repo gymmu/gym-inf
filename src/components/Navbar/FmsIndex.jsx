@@ -9,6 +9,12 @@ export default function FmsIndex() {
   return (
     <div className={style.navList}>
       <section>
+        <h2>Binaria</h2>
+        <NavLink to="/fms/binaria" className={style.quizLink}>
+          🗺️ Karte von Binaria
+        </NavLink>
+      </section>
+      <section>
         <h2>BYOD</h2>
         <ol className={style.nav}>
           <NavLink to="byod">Grundinstallation</NavLink>
