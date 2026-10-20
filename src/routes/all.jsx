@@ -22,6 +22,11 @@ const BinariaWelt = lazy(() => import("@pages-fms/binaria-welt.jsx"));
 const BinariaLevelQuiz = lazy(
   () => import("@pages-fms/binaria-level-quiz.jsx"),
 );
+const FmsSVGStory = lazy(() => import("@pages-fms/svg-story.jsx"));
+const FmsSVGKreis = lazy(() => import("@pages-fms/svg-kreis.jsx"));
+const FmsSVGRechteck = lazy(() => import("@pages-fms/svg-rechteck.jsx"));
+const FmsSVGFormenBoss = lazy(() => import("@pages-fms/svg-formen-boss.jsx"));
+const FmsSVGWip = lazy(() => import("@pages-fms/svg-wip.jsx"));
 const FmsSVG = lazy(() => import("@pages/fms/svg.mdx"));
 const FmsSVGAnimation = lazy(() => import("@pages/fms/svg-animation.mdx"));
 const FmsSVGAufgaben = lazy(() => import("@pages/fms/svg-aufgaben.mdx"));
@@ -320,6 +325,10 @@ export const routes = [
       { path: "/fms/binary", element: <Binary /> },
       { path: "/fms/hex", element: <Hex /> },
       { path: "pictures", element: <Pictures /> },
+      { path: "/fms/svg-story", element: <FmsSVGStory /> },
+      { path: "/fms/svg-kreis", element: <FmsSVGKreis /> },
+      { path: "/fms/svg-rechteck", element: <FmsSVGRechteck /> },
+      { path: "/fms/svg-formen-boss", element: <FmsSVGFormenBoss /> },
       { path: "/fms/svg", element: <FmsSVG /> },
       { path: "/fms/svg-line", element: <FmsSVGLine /> },
       { path: "/fms/svg-path", element: <FmsSVGPath /> },
@@ -332,6 +341,52 @@ export const routes = [
       {
         path: "/fms/svg-animation",
         element: <FmsSVGAnimation />,
+      },
+      // Geplante Kapitel von Vektoria — vorerst Platzhalter
+      { path: "/fms/svg-linie", element: <FmsSVGWip title="Linien" /> },
+      {
+        path: "/fms/svg-polyline",
+        element: <FmsSVGWip title="Linienzüge (polyline)" />,
+      },
+      {
+        path: "/fms/svg-polygon",
+        element: <FmsSVGWip title="Vielecke (polygon)" />,
+      },
+      {
+        path: "/fms/svg-linien-boss",
+        element: <FmsSVGWip title="Zwischenboss: Der Linienmeister" />,
+      },
+      {
+        path: "/fms/svg-pfade-1",
+        element: <FmsSVGWip title="Pfade 1 — gerade Wege" />,
+      },
+      {
+        path: "/fms/svg-pfade-2",
+        element: <FmsSVGWip title="Pfade 2 — Kurven" />,
+      },
+      {
+        path: "/fms/svg-pfade-boss",
+        element: <FmsSVGWip title="Zwischenboss: Der Pfadwächter" />,
+      },
+      {
+        path: "/fms/svg-animation-1",
+        element: <FmsSVGWip title="Animationen 1 — Bewegung" />,
+      },
+      {
+        path: "/fms/svg-animation-2",
+        element: <FmsSVGWip title="Animationen 2 — Timing und Pfade" />,
+      },
+      {
+        path: "/fms/svg-animation-boss",
+        element: <FmsSVGWip title="Zwischenboss: Der Zeitgeist" />,
+      },
+      {
+        path: "/fms/svg-mix",
+        element: <FmsSVGWip title="Gemischte Aufgaben" />,
+      },
+      {
+        path: "/fms/svg-endboss",
+        element: <FmsSVGWip title="Endboss: Der Vektorfürst" />,
       },
       // Internet und Sicherheit
       { path: "/fms/internet", element: <FmsInternet /> },

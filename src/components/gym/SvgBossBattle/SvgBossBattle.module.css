@@ -1,0 +1,88 @@
+.battle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-lg);
+  background: linear-gradient(
+    160deg,
+    rgba(60, 56, 54, 0.9),
+    rgba(29, 32, 33, 0.9)
+  );
+  border: 2px solid var(--color-purple, #d3869b);
+  border-radius: var(--radius-xl, 12px);
+}
+
+.victory {
+  text-align: center;
+  border-color: var(--color-green, #b8bb26);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.subtitle {
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+  color: var(--color-gray-light);
+}
+
+.life {
+  flex: 1 1 180px;
+  max-width: 320px;
+  height: 14px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color-subtle, #504945);
+  border-radius: 999px;
+}
+
+.lifeBar {
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    var(--color-red, #fb4934),
+    var(--color-purple, #d3869b)
+  );
+  transition: width 0.4s ease;
+}
+
+.hit {
+  font-weight: bold;
+  color: var(--color-green, #b8bb26);
+}
+
+.button,
+.buttonGhost {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: var(--radius-lg, 8px);
+}
+
+.button {
+  font-weight: bold;
+  color: var(--color-bg-dark, #1d2021);
+  background-color: var(--color-green, #b8bb26);
+  border: none;
+}
+
+.buttonGhost {
+  color: var(--color-fg);
+  background-color: transparent;
+  border: 1px solid var(--border-color-subtle, #504945);
+}
+
+.buttonGhost:hover {
+  background-color: rgba(168, 153, 132, 0.15);
+}

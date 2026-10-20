@@ -41,6 +41,12 @@ export default function FmsIndex() {
               <NavLink to="fms/von-neumann-story">
                 Wie ein Computer denkt
               </NavLink>
+              <NavLink to="fms/svg-story">Willkommen in Vektoria</NavLink>
+              <NavLink to="fms/svg-kreis">Kreise (SVG)</NavLink>
+              <NavLink to="fms/svg-rechteck">Rechtecke (SVG)</NavLink>
+              <NavLink to="fms/svg-formen-boss">
+                Zwischenboss: Formenwächter
+              </NavLink>
               {showAll && (
                 <>
                   <NavLink to="fms/hardware">Computer Hardware</NavLink>

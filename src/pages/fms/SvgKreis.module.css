@@ -1,0 +1,60 @@
+/* Trenner und Abstände für das Kapitel "Kreisbucht".
+   Die drei Schritte sollen klar voneinander getrennt sein, darum gibt es
+   zwischen ihnen viel Leerraum und eine dezente Trennlinie. */
+
+.stepBreak {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: center;
+
+  /* Der grosse Leerraum zwischen zwei Teilen des Kapitels. */
+  margin-block: clamp(3.5rem, 9vw, 7rem);
+}
+
+.stepBreak::before,
+.stepBreak::after {
+  flex: 1 1 0;
+  max-width: 220px;
+  height: 1px;
+  content: "";
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border-color-subtle, #504945),
+    transparent
+  );
+}
+
+.stepBreak span {
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: var(--color-gray);
+}
+
+/* Erste Section eines Schritts: etwas Luft nach oben, falls kein Trenner
+   davor steht (z.B. direkt nach den Lernzielen). */
+.stepStart {
+  margin-block-start: clamp(2rem, 5vw, 3.5rem);
+}
+
+/* Letzte Section eines Schritts: Luft nach unten vor dem Trenner. */
+.stepEnd {
+  margin-block-end: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+/* Abstand zwischen den Blöcken *innerhalb* eines Schritts
+   (erklären → ausprobieren → Ziel treffen). */
+.block {
+  margin-block-start: var(--space-xl, 2rem);
+}
+
+/* Kleine Überschrift über dem Titel eines Schritts. */
+.eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.18em;
+  color: var(--color-orange, #fe8019);
+  text-transform: uppercase;
+}

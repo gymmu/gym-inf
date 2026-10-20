@@ -86,56 +86,146 @@ export const binariaWorlds = [
     y: 300,
     levels: [
       {
-        id: "pixelstrand",
-        name: "Pixelstrand",
-        icon: "🖼️",
-        chapters: [{ title: "Bilder", path: "/pictures" }],
+        id: "svg-tor",
+        name: "Tor von Vektoria",
+        icon: "🚪",
+        chapters: [{ title: "Willkommen in Vektoria", path: "/fms/svg-story" }],
       },
       {
-        id: "formenbucht",
-        name: "Formenbucht",
+        id: "kreisbucht",
+        name: "Kreisbucht",
         icon: "⭕",
-        chapters: [{ title: "SVG — Grundlagen", path: "/fms/svg" }],
+        chapters: [{ title: "Kreise", path: "/fms/svg-kreis" }],
       },
+      {
+        id: "rechteckstadt",
+        name: "Rechteckstadt",
+        icon: "⬛",
+        chapters: [{ title: "Rechtecke", path: "/fms/svg-rechteck" }],
+      },
+      {
+        id: "formen-boss",
+        name: "Der Formenwächter",
+        icon: "🛡️",
+        type: "boss",
+        chapters: [
+          {
+            title: "Zwischenboss: Formen treffen",
+            path: "/fms/svg-formen-boss",
+            completeOnVisit: true,
+          },
+        ],
+      },
+      // --- Geplant: Inhalte entstehen Schritt für Schritt ------------------
+      // Die Kapitel unten sind erst als Übersicht angelegt. Noch nicht
+      // geschriebene Seiten zeigen vorerst die Platzhalterseite an.
       {
         id: "linienschlucht",
         name: "Linienschlucht",
         icon: "📏",
-        chapters: [{ title: "Linien", path: "/fms/svg-line" }],
+        chapters: [{ title: "Linien", path: "/fms/svg-linie" }],
+      },
+      {
+        id: "zickzacktal",
+        name: "Zickzacktal",
+        icon: "📈",
+        chapters: [
+          { title: "Linienzüge (polyline)", path: "/fms/svg-polyline" },
+        ],
+      },
+      {
+        id: "vieleckfeld",
+        name: "Vieleckfeld",
+        icon: "🔺",
+        chapters: [{ title: "Vielecke (polygon)", path: "/fms/svg-polygon" }],
+      },
+      {
+        id: "linien-boss",
+        name: "Der Linienmeister",
+        icon: "🛡️",
+        type: "boss",
+        chapters: [
+          {
+            title: "Zwischenboss: Linien und Vielecke",
+            path: "/fms/svg-linien-boss",
+          },
+        ],
       },
       {
         id: "pfadgebirge",
         name: "Pfadgebirge",
         icon: "🧭",
-        chapters: [{ title: "Pfade", path: "/fms/svg-path" }],
-      },
-      {
-        id: "uebungsarena",
-        name: "Übungsarena",
-        icon: "🎯",
-        type: "exercise",
-        chapters: [{ title: "Aufgaben", path: "/fms/svg-aufgaben" }],
+        chapters: [
+          {
+            title: "Pfade 1 — gerade Wege (M, L, Z)",
+            path: "/fms/svg-pfade-1",
+          },
+        ],
       },
       {
         id: "kurventaeler",
         name: "Kurventäler",
         icon: "🌊",
-        chapters: [{ title: "Pfade 2.0", path: "/fms/svg-path-2" }],
+        chapters: [
+          { title: "Pfade 2 — Kurven (C, Q, A)", path: "/fms/svg-pfade-2" },
+        ],
       },
       {
-        id: "spiegelsaal",
-        name: "Spiegelsaal",
-        icon: "🔄",
+        id: "pfad-boss",
+        name: "Der Pfadwächter",
+        icon: "👹",
+        type: "boss",
         chapters: [
-          { title: "Transformationen", path: "/fms/svg-transformation" },
+          {
+            title: "Zwischenboss: Pfade zeichnen",
+            path: "/fms/svg-pfade-boss",
+          },
+        ],
+      },
+      {
+        id: "animationswerkstatt",
+        name: "Animationswerkstatt",
+        icon: "⏱️",
+        chapters: [
+          { title: "Animationen 1 — Bewegung", path: "/fms/svg-animation-1" },
         ],
       },
       {
         id: "animationsgipfel",
         name: "Animationsgipfel",
         icon: "🎬",
+        chapters: [
+          {
+            title: "Animationen 2 — Timing und Pfade",
+            path: "/fms/svg-animation-2",
+          },
+        ],
+      },
+      {
+        id: "animations-boss",
+        name: "Der Zeitgeist",
+        icon: "🌀",
         type: "boss",
-        chapters: [{ title: "Animationen", path: "/fms/svg-animation" }],
+        chapters: [
+          {
+            title: "Zwischenboss: Animationen",
+            path: "/fms/svg-animation-boss",
+          },
+        ],
+      },
+      {
+        id: "uebungsarena",
+        name: "Übungsarena",
+        icon: "🎯",
+        type: "exercise",
+        chapters: [{ title: "Gemischte Aufgaben", path: "/fms/svg-mix" }],
+      },
+      {
+        id: "vektoria-endboss",
+        name: "Der Vektorfürst",
+        icon: "👑",
+        type: "boss",
+        chapters: [{ title: "Endboss von Vektoria", path: "/fms/svg-endboss" }],
       },
     ],
   },

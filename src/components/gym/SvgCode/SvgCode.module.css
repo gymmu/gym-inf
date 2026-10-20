@@ -1,0 +1,73 @@
+.code {
+  margin: 0;
+  padding: var(--space-md);
+  overflow-x: auto;
+  font-family: monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  tab-size: 2;
+  /* Lange Zeilen umbrechen statt horizontal scrollen. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background-color: var(--color-bg-dark);
+  border: 1px solid var(--border-color-subtle);
+  border-radius: var(--radius-lg, 8px);
+}
+
+/* Variante ohne Umbruch: jede Form bleibt auf einer Zeile. */
+.nowrap {
+  white-space: pre;
+  overflow-wrap: normal;
+}
+
+.line {
+  display: inline;
+}
+
+.tag {
+  color: var(--color-aqua);
+}
+
+.attr {
+  color: var(--color-yellow);
+}
+
+.value {
+  color: var(--color-green);
+}
+
+.punct {
+  color: var(--color-gray);
+}
+
+.comment {
+  color: var(--color-gray);
+  font-style: italic;
+}
+
+.attrGroup {
+  padding: 0.05em 0;
+  border-radius: 3px;
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.attrGroup.active {
+  background-color: rgba(250, 189, 47, 0.22);
+  box-shadow: 0 0 0 2px rgba(250, 189, 47, 0.45);
+}
+
+/* Nebensächlicher Code (z.B. das <svg>-Wurzelelement) wird ausgegraut,
+   damit nur die Zeile auffällt, um die es gerade geht. */
+.dim {
+  color: var(--color-gray);
+  opacity: 0.45;
+}
+
+.dim .tag,
+.dim .attr,
+.dim .value,
+.dim .punct {
+  color: inherit;
+}

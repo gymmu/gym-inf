@@ -1,0 +1,180 @@
+.studio {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-bg-dark, #1d2021);
+  border: 1px solid var(--border-color-subtle, #504945);
+  border-radius: var(--radius-xl, 12px);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background-color: rgba(60, 56, 54, 0.8);
+  border-bottom: 1px solid var(--border-color-subtle, #504945);
+}
+
+.brand {
+  font-size: 0.95rem;
+  color: var(--color-yellow);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.button {
+  padding: 0.25rem 0.7rem;
+  font-size: 0.85rem;
+  color: var(--color-fg);
+  cursor: pointer;
+  background-color: var(--color-bg-lighter, #3c3836);
+  border: 1px solid var(--border-color-subtle, #504945);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.button:hover {
+  background-color: var(--color-bg-dark);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1.4fr) minmax(220px, 1fr);
+  height: var(--studio-height, 460px);
+}
+
+@media (width <= 900px) {
+  .body {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .editor {
+    height: var(--studio-height, 460px);
+  }
+}
+
+.files {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  overflow-y: auto;
+  border-right: 1px solid var(--border-color-subtle, #504945);
+}
+
+.panelTitle {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-gray);
+  text-transform: uppercase;
+}
+
+.fileList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.file {
+  display: block;
+  width: 100%;
+  padding: 0.3rem 0.5rem;
+  overflow: hidden;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--color-fg);
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg, 8px);
+}
+
+.file:hover {
+  background-color: rgba(168, 153, 132, 0.15);
+}
+
+.fileActive {
+  color: var(--color-bg-dark, #1d2021);
+  background-color: var(--color-yellow, #fabd2f);
+  border-color: var(--color-yellow, #fabd2f);
+}
+
+.fileActive:hover {
+  background-color: var(--color-yellow, #fabd2f);
+}
+
+.editorPanel,
+.previewPanel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0.5rem;
+}
+
+.editorPanel .panelTitle {
+  font-family: monospace;
+  text-transform: none;
+}
+
+.editor {
+  flex: 1 1 auto;
+  min-height: 220px;
+  overflow: hidden;
+  border: 1px solid var(--border-color-subtle, #504945);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.previewPanel {
+  border-left: 1px solid var(--border-color-subtle, #504945);
+}
+
+.preview {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  overflow: auto;
+  background-color: var(--color-white, #fff);
+  background-image:
+    linear-gradient(45deg, rgba(0, 0, 0, 0.05) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(0, 0, 0, 0.05) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.05) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.05) 75%);
+  background-position:
+    0 0,
+    0 8px,
+    8px -8px,
+    -8px 0;
+  background-size: 16px 16px;
+  border: 1px solid var(--border-color-subtle, #504945);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.stage svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.hint,
+.error {
+  margin: 0.4rem 0 0;
+  font-size: 0.8rem;
+  color: var(--color-gray-light);
+}
+
+.error {
+  color: var(--color-red, #fb4934);
+}

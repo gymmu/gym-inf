@@ -1,0 +1,115 @@
+.playground {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+  margin: 0;
+  padding: var(--space-lg);
+  background-color: rgba(40, 40, 40, 0.5);
+  border-radius: var(--radius-xl);
+}
+
+.body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.canvasWrapper {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: var(--space-xs, 0.25rem);
+  align-items: center;
+}
+
+.canvas {
+  max-width: 100%;
+  height: auto;
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.toggle {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--color-gray-light);
+  cursor: pointer;
+}
+
+.codeWrapper {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--space-sm, 0.5rem) var(--space-md);
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg, 8px);
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.controlActive {
+  background-color: rgba(250, 189, 47, 0.1);
+  border-color: rgba(250, 189, 47, 0.5);
+}
+
+.controlLabel {
+  display: flex;
+  gap: var(--space-xs, 0.25rem);
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.controlValue {
+  font-family: monospace;
+  font-weight: bold;
+  color: var(--color-yellow);
+}
+
+.control input[type="range"] {
+  width: 100%;
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.swatch {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  cursor: pointer;
+  border: 2px solid var(--color-bg-lighter);
+  border-radius: 50%;
+}
+
+.swatchActive {
+  border-color: var(--color-fg);
+  box-shadow: 0 0 0 2px rgba(250, 189, 47, 0.5);
+}
+
+.caption {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-gray-light);
+  text-align: center;
+}

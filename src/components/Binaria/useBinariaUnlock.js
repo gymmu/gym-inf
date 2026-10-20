@@ -28,7 +28,7 @@ const STORAGE_KEY = "binaria-levels-v1";
  */
 export const DEFAULT_UNLOCKED = {
   byteburg: "*",
-  vektoria: ["pixelstrand"],
+  vektoria: ["svg-tor"],
 };
 
 /** Ist das Level ohne Quiz-Fortschritt bereits offen? */
