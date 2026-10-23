@@ -213,6 +213,16 @@ const EFKIAufgabenGraphensucheHand = lazy(
 const EFKIAufgabenGraphensucheCode = lazy(
   () => import("@pages-ef/ki-aufgaben-graphensuche-code.jsx"),
 );
+const EFKIHeuristiken = lazy(() => import("@pages-ef/ki-heuristiken.jsx"));
+const EFKIAufgabenHeuristikenHand = lazy(
+  () => import("@pages-ef/ki-aufgaben-heuristiken-hand.jsx"),
+);
+const EFKIAufgabenHeuristikenCode = lazy(
+  () => import("@pages-ef/ki-aufgaben-heuristiken-code.jsx"),
+);
+const EFKIHausaufgabenPaper = lazy(
+  () => import("@pages-ef/ki-hausaufgaben-paper.jsx"),
+);
 
 const BoxModel = lazy(() => import("../components/BoxModel"));
 const CodePen = lazy(() => import("../components/CodePen"));
@@ -521,6 +531,19 @@ export const routes = [
       {
         path: "ef/ki-aufgaben-graphensuche-code",
         element: <EFKIAufgabenGraphensucheCode />,
+      },
+      { path: "ef/ki-heuristiken", element: <EFKIHeuristiken /> },
+      {
+        path: "ef/ki-aufgaben-heuristiken-hand",
+        element: <EFKIAufgabenHeuristikenHand />,
+      },
+      {
+        path: "ef/ki-aufgaben-heuristiken-code",
+        element: <EFKIAufgabenHeuristikenCode />,
+      },
+      {
+        path: "ef/ki-hausaufgaben-paper",
+        element: <EFKIHausaufgabenPaper />,
       },
       {
         path: "ef/js-aufgaben-algorithmen",

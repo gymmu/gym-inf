@@ -47,6 +47,23 @@ export function zeigeNachfolger(g, state) {
   }
 }
 
+/**
+ * Ist dieser Knoten schon expandiert? Das ist genau dann der Fall, wenn
+ * alle seine Nachfolger bereits im Graphen stehen. Alle übrigen Knoten
+ * bilden die Grenze (frontier): bekannt, aber noch nicht aufgeklappt.
+ */
+export function istExpandiert(g, node) {
+  for (const edge of g.successorsOf(node.state)) {
+    if (!g.nodes.has(g.keyOf(edge.state))) return false;
+  }
+  return true;
+}
+
+/** Alle Knoten der Grenze — bekannt, aber noch nicht expandiert. */
+export function grenze(g) {
+  return [...g.nodes.values()].filter((n) => !istExpandiert(g, n));
+}
+
 export function kanteId(a, b) {
   return a < b ? `${a}|${b}` : `${b}|${a}`;
 }

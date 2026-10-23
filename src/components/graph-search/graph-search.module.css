@@ -371,6 +371,16 @@
   line-height: 1.45;
 }
 
+.goalNote {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-green);
+  border-left: 3px solid var(--color-green);
+  padding-left: var(--space-xs);
+  margin: var(--space-sm) 0;
+  line-height: 1.45;
+}
+
 .cycleNote {
   font-size: 0.85rem;
   font-weight: 600;

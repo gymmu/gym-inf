@@ -15,6 +15,7 @@ import {
   baumLayout,
   bogen,
   deckeAufBisTiefe,
+  grenze,
   kantenMenge,
   kuerzesterWeg,
   leererGraph,
@@ -70,6 +71,10 @@ export default function StateSpace({
 
   const h = HEURISTIKEN[heuristik].fn;
 
+  // Ist das Ziel erreicht, hört die Suche auf: A* gibt den Weg zurück und
+  // expandiert nichts mehr. Also sind ab hier alle Züge gesperrt.
+  const zielErreicht = isGoal(state);
+
   if (graph.current === null) {
     graph.current = leererGraph(initial, key, successors);
     deckeAufBisTiefe(graph.current, initial, 1);
@@ -95,6 +100,7 @@ export default function StateSpace({
   /** Zieht einen Zug und hängt Knoten + Kante in den Graphen. */
   const geheZu = useCallback(
     (vonState, nachState) => {
+      if (zielErreicht) return;
       const { schonBesucht, kreis: neuerKreis } = zugAnwenden(
         g,
         vonState,
@@ -106,7 +112,7 @@ export default function StateSpace({
       setKreis(neuerKreis);
       redraw();
     },
-    [g, redraw],
+    [g, redraw, zielErreicht],
   );
 
   /**
@@ -116,6 +122,7 @@ export default function StateSpace({
    */
   const springeZu = useCallback(
     (zielKey) => {
+      if (zielErreicht) return;
       if (zielKey === key(state)) return;
       const pfad = kuerzesterWeg(g, key(state), zielKey);
       if (!pfad) return;
@@ -142,7 +149,7 @@ export default function StateSpace({
       setKreis(letzterKreis);
       redraw();
     },
-    [g, state, redraw],
+    [g, state, redraw, zielErreicht],
   );
 
   const klickStein = (index) => {
@@ -154,11 +161,12 @@ export default function StateSpace({
   /** Breitensuche vom Start aus: alles bis Tiefe `tiefe` aufklappen. */
   const bisTiefe = useCallback(
     (tiefe) => {
+      if (zielErreicht) return;
       deckeAufBisTiefe(g, startState, tiefe);
       setKreis(null);
       redraw();
     },
-    [g, startState, redraw],
+    [g, startState, redraw, zielErreicht],
   );
 
   // ── Zeichnen ──────────────────────────────────────────────────────
@@ -166,6 +174,7 @@ export default function StateSpace({
   const aktuell = key(state);
   const nachfolger = successors(state);
   const kreisKanten = kantenMenge(kreis);
+  const nachbarKeys = new Set(nachfolger.map((e) => key(e.state)));
 
   // Deterministisches Baum-Layout, bei jedem Rendern frisch berechnet.
   const { pos, tiefe, baumKanten, schleifen } = baumLayout(g, key(startState), {
@@ -184,6 +193,22 @@ export default function StateSpace({
   const gWert = (k) => tiefe.get(k) ?? 0;
   const hAktuell = h(state);
   const gAktuell = gWert(aktuell);
+
+  // Die Grenze, sortiert nach f = g + h — genau die Reihenfolge, in der
+  // A* die Knoten aus der Prioritätswarteschlange holt.
+  const grenzeSortiert = grenze(g)
+    .map((n) => {
+      const gN = gWert(n.key);
+      const hN = h(n.state);
+      return { key: n.key, state: n.state, g: gN, h: hN, f: gN + hN };
+    })
+    .sort((a, b) =>
+      zeigeH
+        ? a.f - b.f || a.h - b.h || a.key.localeCompare(b.key)
+        : a.g - b.g || a.key.localeCompare(b.key),
+    );
+  const naechster = grenzeSortiert[0]?.key ?? null;
+  const grenzeKeys = new Set(grenzeSortiert.map((e) => e.key));
 
   return (
     <div className={styles.wrapper}>
@@ -220,6 +245,7 @@ export default function StateSpace({
           type="button"
           className={styles.button}
           onClick={() => bisTiefe(2)}
+          disabled={zielErreicht}
         >
           bis Tiefe 2
         </button>
@@ -227,6 +253,7 @@ export default function StateSpace({
           type="button"
           className={styles.button}
           onClick={() => bisTiefe(3)}
+          disabled={zielErreicht}
         >
           bis Tiefe 3
         </button>
@@ -296,7 +323,7 @@ export default function StateSpace({
                     .filter(Boolean)
                     .join(" ")}
                   onClick={() => klickStein(index)}
-                  disabled={wert === 0}
+                  disabled={wert === 0 || zielErreicht}
                 >
                   {wert === 0 ? "" : wert}
                 </button>
@@ -336,13 +363,22 @@ export default function StateSpace({
             <span className={styles.statValue}>{g.nodes.size}</span>
             <span className={styles.statKey}>Kanten (Züge)</span>
             <span className={styles.statValue}>{g.edges.size}</span>
+            <span className={styles.statKey}>Grenze (noch offen)</span>
+            <span className={styles.statValue}>{grenzeSortiert.length}</span>
             <span className={styles.statKey}>Schleifen im Graph</span>
             <span className={styles.statValue}>{schleifen.length}</span>
             <span className={styles.statKey}>schon bekannt</span>
             <span className={styles.statValue}>{rueckkehr}</span>
           </div>
 
-          {kreis ? (
+          {zielErreicht ? (
+            <p className={styles.goalNote}>
+              Ziel erreicht — die Suche bricht ab. Der gefundene Weg ist{" "}
+              {gAktuell} {gAktuell === 1 ? "Zug" : "Züge"} lang; die restliche
+              Grenze wird nie mehr expandiert. Mit «Baum leeren» oder einer
+              neuen Stellung geht es weiter.
+            </p>
+          ) : kreis ? (
             <p className={styles.cycleNote}>
               Schleife! Diese Stellung kannten wir schon — der Zug schliesst
               einen Kreis aus {kreis.length} Zuständen.
@@ -356,56 +392,70 @@ export default function StateSpace({
           )}
 
           <p className={styles.columnTitle}>
-            Nachfolger ({nachfolger.length}) — klicken zum Ziehen
+            Grenze ({grenzeSortiert.length}) — sortiert nach{" "}
+            {zeigeH ? "f = g + h" : "g (Tiefe)"}
           </p>
+          <p className={styles.frontierHint}>
+            Das ist die ganze Warteschlange, nicht nur die Nachfolger der
+            aktuellen Stellung. Oben steht der Knoten, den{" "}
+            {zeigeH ? (
+              <>
+                A<sup>*</sup>
+              </>
+            ) : (
+              "die Breitensuche"
+            )}{" "}
+            als Nächstes expandieren würde — er ist im Baum{" "}
+            <span style={{ color: "var(--color-orange)" }}>orange</span>{" "}
+            umrandet. Ein Klick expandiert ihn (das Puzzle wandert dorthin).
+          </p>
+          <div className={styles.controls} style={{ marginBottom: "0.5rem" }}>
+            <button
+              type="button"
+              className={styles.button}
+              onClick={() => naechster && springeZu(naechster)}
+              disabled={!naechster || zielErreicht}
+            >
+              nächsten Knoten expandieren
+            </button>
+          </div>
           <div className={styles.frontierList}>
-            {nachfolger.map((edge) => {
-              const bekannt = g.nodes.get(key(edge.state))?.gespielt === true;
+            {grenzeSortiert.map((eintrag, i) => {
+              const nachbar = nachbarKeys.has(eintrag.key);
               return (
                 <button
-                  key={edge.action}
+                  key={eintrag.key}
                   type="button"
                   className={[
                     styles.frontierItem,
-                    bekannt ? "" : styles.frontierItemNew,
+                    i === 0 ? styles.frontierItemNext : "",
+                    nachbar ? styles.frontierItemNew : "",
                   ]
                     .filter(Boolean)
                     .join(" ")}
-                  style={{ cursor: "pointer", textAlign: "left" }}
-                  onClick={() => geheZu(state, edge.state)}
+                  style={{
+                    cursor: zielErreicht ? "default" : "pointer",
+                    textAlign: "left",
+                  }}
+                  onClick={() => springeZu(eintrag.key)}
+                  disabled={zielErreicht}
                 >
-                  <span className={styles.frontierAction}>{edge.action}</span>
-                  <span className={styles.frontierMeta}>{key(edge.state)}</span>
-                  {zeigeH && (
-                    <span className={styles.frontierMeta}>
-                      h={h(edge.state)}{" "}
-                      {h(edge.state) < hAktuell
-                        ? "↓ näher"
-                        : h(edge.state) > hAktuell
-                          ? "↑ weiter"
-                          : "→ gleich"}
-                    </span>
-                  )}
-                  {zeigeH && zeigeF && (
-                    <span className={styles.frontierMeta}>
-                      g=
-                      {Math.min(
-                        gAktuell + 1,
-                        tiefe.get(key(edge.state)) ?? gAktuell + 1,
-                      )}{" "}
-                      f=
-                      {Math.min(
-                        gAktuell + 1,
-                        tiefe.get(key(edge.state)) ?? gAktuell + 1,
-                      ) + h(edge.state)}
-                    </span>
-                  )}
+                  <span className={styles.frontierMeta}>{i + 1}.</span>
+                  <span className={styles.frontierAction}>{eintrag.key}</span>
                   <span className={styles.frontierMeta}>
-                    {bekannt ? "bekannt" : "neu"}
+                    {zeigeH
+                      ? `g=${eintrag.g} h=${eintrag.h} f=${eintrag.f}`
+                      : `g=${eintrag.g}`}
                   </span>
+                  {nachbar && (
+                    <span className={styles.frontierMeta}>ein Zug</span>
+                  )}
                 </button>
               );
             })}
+            {grenzeSortiert.length === 0 && (
+              <p className={styles.empty}>Die Grenze ist leer.</p>
+            )}
           </div>
         </div>
 
@@ -478,6 +528,8 @@ export default function StateSpace({
                     x={p.x}
                     y={p.y}
                     aktiv={n.key === aktuell}
+                    inGrenze={grenzeKeys.has(n.key)}
+                    istNaechster={n.key === naechster}
                     imKreis={kreis?.includes(n.key) ?? false}
                     zeigeZahlen={zeigeZahlen}
                     hWert={zeigeH ? h(n.state) : null}
@@ -492,9 +544,13 @@ export default function StateSpace({
 
           <div className={styles.legend}>
             <Legende farbe="var(--color-yellow)" text="aktuelle Stellung" />
+            <Legende
+              farbe="var(--color-orange)"
+              text="als Nächstes dran (kleinstes f)"
+            />
+            <Legende farbe="var(--color-blue)" text="Grenze (noch offen)" />
+            <Legende farbe="var(--color-gray)" text="besucht / expandiert" />
             <Legende farbe="var(--color-aqua)" text="Zielstellung" />
-            <Legende farbe="var(--color-blue)" text="selbst besucht" />
-            <Legende farbe="var(--color-gray)" text="nur aufgedeckt" />
             <Legende farbe="var(--color-purple)" text="Schleife (Rückkante)" />
             <span>Jede Zeile = ein Zug weiter vom Start weg</span>
             <span>Klick auf einen Knoten: dorthin springen</span>
@@ -526,6 +582,8 @@ function Knoten({
   x,
   y,
   aktiv,
+  inGrenze,
+  istNaechster,
   imKreis,
   zeigeZahlen,
   hWert,
@@ -538,11 +596,13 @@ function Knoten({
     ? "var(--color-yellow)"
     : imKreis
       ? "var(--color-red)"
-      : ziel
-        ? "var(--color-aqua)"
-        : node.gespielt
-          ? "var(--color-blue)"
-          : "var(--color-gray)";
+      : istNaechster
+        ? "var(--color-orange)"
+        : ziel
+          ? "var(--color-aqua)"
+          : inGrenze
+            ? "var(--color-blue)"
+            : "var(--color-gray)";
 
   // Farbe des h-Werts: näher am Ziel als die aktuelle Stellung = grün.
   const hFarbe =
@@ -573,7 +633,7 @@ function Knoten({
         <circle
           cx={x}
           cy={y}
-          r={aktiv ? 8 : node.gespielt ? 6 : 4}
+          r={aktiv || istNaechster ? 8 : inGrenze ? 5 : 4}
           fill={farbe}
         />
         {hWert !== null && (
@@ -631,7 +691,7 @@ function Knoten({
         rx={3}
         fill="var(--color-bg)"
         stroke={farbe}
-        strokeWidth={aktiv || imKreis ? 2.5 : 1.2}
+        strokeWidth={aktiv || imKreis || istNaechster ? 2.5 : 1.2}
       />
       {node.state.map((wert, i) => (
         <text
@@ -646,9 +706,9 @@ function Knoten({
           fill={
             wert === 0
               ? "transparent"
-              : node.gespielt
+              : aktiv || istNaechster || inGrenze
                 ? "var(--color-fg)"
-                : "var(--color-gray-light)"
+                : "var(--color-gray)"
           }
         >
           {wert}

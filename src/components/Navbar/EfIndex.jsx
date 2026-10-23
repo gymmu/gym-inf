@@ -200,7 +200,34 @@ export default function EfIndex() {
       <WeekSection
         weekNumber="8"
         title="Heuristiken: Greedy und A*"
-        items={[]}
+        items={[
+          {
+            type: "theorie",
+            to: "ef/ki-heuristiken",
+            label: "Theorie: Heuristiken, A* und Greedy",
+          },
+          {
+            type: "aufgaben",
+            to: "ef/ki-aufgaben-heuristiken-hand",
+            label: "Aufgaben: Heuristiken von Hand",
+          },
+          {
+            type: "aufgaben",
+            to: "ef/ki-aufgaben-heuristiken-code",
+            label: "Aufgaben: A* und Greedy implementieren",
+          },
+        ]}
+      />
+      <WeekSection
+        weekNumber="9"
+        title="Kürzeste Pfade: Dijkstra und Routenplanung"
+        items={[
+          {
+            type: "hausaufgaben",
+            to: "ef/ki-hausaufgaben-paper",
+            label: "Hausaufgaben: Paper vorbereiten",
+          },
+        ]}
       />
     </div>
   );
