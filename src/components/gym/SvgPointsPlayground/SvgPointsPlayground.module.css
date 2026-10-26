@@ -1,0 +1,66 @@
+/* Ergänzungen zur gemeinsamen Spielwiesen-Gestaltung. */
+
+.handle {
+  cursor: grab;
+}
+
+.handle:focus-visible circle {
+  outline: none;
+  stroke: var(--color-red, #fb4934);
+  stroke-width: 1.5;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.button {
+  padding: 0.2rem 0.6rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: var(--color-gray-light);
+  cursor: pointer;
+  background-color: rgba(80, 73, 69, 0.4);
+  border: 1px solid rgba(168, 153, 132, 0.4);
+  border-radius: var(--radius-md, 6px);
+}
+
+.button:hover:not(:disabled) {
+  background-color: rgba(168, 153, 132, 0.3);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.buttonActive {
+  color: var(--color-dark, #282828);
+  background-color: var(--color-aqua, #8ec07c);
+  border-color: var(--color-aqua, #8ec07c);
+}
+
+.hint {
+  margin: var(--space-xs, 0.25rem) 0 0;
+  font-size: 0.85rem;
+  color: var(--color-gray-light);
+}
+
+/* Auswahl des Punktes und die beiden Regler dazu. */
+
+.selectControl select {
+  padding: 0.2rem 0.4rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+}
+
+.selectControl,
+.selectedControl {
+  border-color: rgba(251, 73, 52, 0.5);
+}
+
+.selectedControl input[type="range"] {
+  accent-color: #fb4934;
+}

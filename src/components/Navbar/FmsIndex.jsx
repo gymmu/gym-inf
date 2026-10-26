@@ -47,6 +47,12 @@ export default function FmsIndex() {
               <NavLink to="fms/svg-formen-boss">
                 Zwischenboss: Formenwächter
               </NavLink>
+              <NavLink to="fms/svg-linie">Linien (SVG)</NavLink>
+              <NavLink to="fms/svg-polyline">Linienzüge (SVG)</NavLink>
+              <NavLink to="fms/svg-polygon">Vielecke (SVG)</NavLink>
+              <NavLink to="fms/svg-linien-boss">
+                Zwischenboss: Linienmeister
+              </NavLink>
               {showAll && (
                 <>
                   <NavLink to="fms/hardware">Computer Hardware</NavLink>

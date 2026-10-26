@@ -44,6 +44,79 @@ const NUMERIC_ATTRS = new Set([
 /** Attribute, die als Farbe verglichen werden. */
 const COLOR_ATTRS = new Set(["fill", "stroke"]);
 
+/** Attribute, die aus einer Liste von Zahlen bestehen. */
+const LIST_ATTRS = new Set(["points", "stroke-dasharray"]);
+
+/** Zerlegt eine Zahlenliste wie "10,20 30,40" in [10, 20, 30, 40]. */
+export function parseNumberList(raw) {
+  return String(raw ?? "")
+    .trim()
+    .split(/[\s,]+/)
+    .filter((part) => part !== "")
+    .map((part) => Number.parseFloat(part));
+}
+
+/** Macht aus [x1, y1, x2, y2, ...] eine Liste von Punkten [[x1, y1], ...]. */
+function toPairs(numbers) {
+  const pairs = [];
+  for (let index = 0; index + 1 < numbers.length; index += 2) {
+    pairs.push([numbers[index], numbers[index + 1]]);
+  }
+  return pairs;
+}
+
+function samePoint(a, b, tolerance) {
+  return (
+    Math.abs(a[0] - b[0]) <= tolerance && Math.abs(a[1] - b[1]) <= tolerance
+  );
+}
+
+function sameSequence(a, b, tolerance) {
+  return a.every((point, index) => samePoint(point, b[index], tolerance));
+}
+
+/**
+ * Vergleicht zwei Punktlisten *geometrisch*.
+ *
+ * Ein Linienzug sieht gleich aus, wenn man ihn rückwärts zeichnet. Ein
+ * Vieleck sieht zusätzlich gleich aus, wenn man an einer anderen Ecke
+ * beginnt. Genau das lassen wir hier zu — die Reihenfolge der Punkte muss
+ * also nicht exakt mit dem Ziel übereinstimmen, solange dasselbe Bild
+ * entsteht.
+ *
+ * @returns {"equal"|"same-points"|"different"}
+ */
+export function comparePointLists(wanted, got, tolerance = 2, tag = "") {
+  const a = toPairs(wanted);
+  const b = toPairs(got);
+  if (a.length === 0 || a.length !== b.length) return "different";
+
+  const variants = [b, [...b].reverse()];
+  if (tag === "polygon") {
+    // Geschlossene Form: jeder Startpunkt ist erlaubt (in beide Richtungen).
+    for (const base of [b, [...b].reverse()]) {
+      for (let shift = 1; shift < base.length; shift += 1) {
+        variants.push([...base.slice(shift), ...base.slice(0, shift)]);
+      }
+    }
+  }
+
+  if (variants.some((variant) => sameSequence(a, variant, tolerance))) {
+    return "equal";
+  }
+
+  // Gleiche Punkte, aber in einer Reihenfolge, die ein anderes Bild ergibt.
+  const rest = [...b];
+  const allFound = a.every((point) => {
+    const index = rest.findIndex((other) => samePoint(point, other, tolerance));
+    if (index < 0) return false;
+    rest.splice(index, 1);
+    return true;
+  });
+
+  return allFound ? "same-points" : "different";
+}
+
 /** Standardwerte, wenn ein Attribut fehlt. */
 const DEFAULTS = {
   fill: "#000000",
@@ -139,13 +212,18 @@ function attrValue(shape, name) {
     const number = Number.parseFloat(raw);
     return Number.isNaN(number) ? raw : number;
   }
+  if (LIST_ATTRS.has(name)) {
+    const numbers = parseNumberList(raw);
+    return numbers.some(Number.isNaN) ? String(raw).trim() : numbers;
+  }
   return raw === undefined ? undefined : String(raw).trim();
 }
 
 /** Alle Attributnamen, die bei einer Form verglichen werden. */
 function relevantAttrs(target) {
   const names = new Set(Object.keys(target.attrs));
-  names.add("fill");
+  // Bei einer Linie hat `fill` keine sichtbare Wirkung.
+  if (target.tag !== "line") names.add("fill");
   names.add("stroke");
   if (normalizeColor(target.attrs.stroke ?? DEFAULTS.stroke) !== "none") {
     names.add("stroke-width");
@@ -154,22 +232,130 @@ function relevantAttrs(target) {
 }
 
 /** Vergleicht eine Form mit einer Zielform. Gibt die Abweichungen zurück. */
-function diffShape(target, candidate, tolerance) {
-  if (target.tag !== candidate.tag) return [{ name: "tag" }];
+function diffShape(target, rawCandidate, tolerance) {
+  if (target.tag !== rawCandidate.tag) return [{ name: "tag" }];
+
+  const candidate = maybeFlipLine(target, rawCandidate, tolerance);
 
   const problems = [];
   for (const name of relevantAttrs(target)) {
     const wanted = attrValue(target, name);
     const got = attrValue(candidate, name);
 
-    const ok =
-      typeof wanted === "number" && typeof got === "number"
-        ? Math.abs(wanted - got) <= tolerance
-        : wanted === got;
+    let ok = false;
+    let note;
+    if (typeof wanted === "number" && typeof got === "number") {
+      ok = Math.abs(wanted - got) <= tolerance;
+    } else if (Array.isArray(wanted) && Array.isArray(got)) {
+      if (name === "points") {
+        // Punktliste: dasselbe Bild zählt, nicht derselbe Text.
+        const verdict = comparePointLists(wanted, got, tolerance, target.tag);
+        ok = verdict === "equal";
+        if (verdict === "same-points") note = "order";
+        else if (!ok && wanted.length !== got.length) note = "count";
+      } else {
+        ok =
+          wanted.length === got.length &&
+          wanted.every(
+            (number, index) => Math.abs(number - got[index]) <= tolerance,
+          );
+      }
+    } else {
+      ok = wanted === got;
+    }
 
-    if (!ok) problems.push({ name, wanted, got });
+    if (!ok) problems.push({ name, wanted, got, note });
   }
   return problems;
+}
+
+/**
+ * Eine Linie sieht gleich aus, egal an welchem Ende sie beginnt. Passt die
+ * getauschte Variante besser, vergleichen wir mit dieser.
+ */
+function maybeFlipLine(target, candidate, tolerance) {
+  if (target.tag !== "line") return candidate;
+
+  const near = (a, b) => Math.abs(a - b) <= tolerance;
+  const num = (shape, name) => Number.parseFloat(shape.attrs[name]);
+  const straight =
+    near(num(target, "x1"), num(candidate, "x1")) &&
+    near(num(target, "y1"), num(candidate, "y1")) &&
+    near(num(target, "x2"), num(candidate, "x2")) &&
+    near(num(target, "y2"), num(candidate, "y2"));
+  if (straight) return candidate;
+
+  const flipped =
+    near(num(target, "x1"), num(candidate, "x2")) &&
+    near(num(target, "y1"), num(candidate, "y2")) &&
+    near(num(target, "x2"), num(candidate, "x1")) &&
+    near(num(target, "y2"), num(candidate, "y1"));
+  if (!flipped) return candidate;
+
+  return {
+    ...candidate,
+    attrs: {
+      ...candidate.attrs,
+      x1: candidate.attrs.x2,
+      y1: candidate.attrs.y2,
+      x2: candidate.attrs.x1,
+      y2: candidate.attrs.y1,
+    },
+  };
+}
+
+/** Macht aus einer Abweichung einen gut lesbaren Hinweis-Baustein. */
+function problemLabel(problem) {
+  if (problem.name !== "points") return problem.name;
+  if (problem.note === "order")
+    return "points (die Punkte stimmen, aber die Reihenfolge ergibt ein anderes Bild)";
+  if (problem.note === "count") {
+    const wantedCount = Math.floor(problem.wanted.length / 2);
+    const gotCount = Math.floor(problem.got.length / 2);
+    return `points (${wantedCount} Punkte erwartet, ${gotCount} gefunden)`;
+  }
+  return "points";
+}
+
+/**
+ * Prüft, ob eine einzelne Form einer Zielform entspricht.
+ *
+ * @param {{tag: string, attrs: Record<string, unknown>}} target Zielform
+ * @param {{tag: string, attrs: Record<string, unknown>}} candidate Kandidat
+ * @param {number} [tolerance] erlaubte Abweichung bei Zahlen
+ */
+export function shapeMatches(target, candidate, tolerance = 2) {
+  return diffShape(target, candidate, tolerance).length === 0;
+}
+
+/**
+ * Findet alle Formen in einem SVG-Text — inklusive ihrer Position im Text.
+ *
+ * Anders als `parseShapes` arbeitet das hier rein textuell. Dafür weiß man
+ * hinterher, welcher Abschnitt des Codes zu welcher Form gehört (praktisch,
+ * um eine erledigte Form wieder aus dem Editor zu entfernen).
+ *
+ * @returns {{tag: string, attrs: Record<string, string>, start: number, end: number}[]}
+ */
+export function scanShapes(code) {
+  const text = String(code ?? "");
+  const element = new RegExp(`<(${SHAPES.join("|")})\\b([^>]*?)/?>`, "gi");
+  const found = [];
+
+  for (const match of text.matchAll(element)) {
+    const attrs = {};
+    for (const pair of match[2].matchAll(/([\w-]+)\s*=\s*"([^"]*)"/g)) {
+      attrs[pair[1]] = pair[2];
+    }
+    found.push({
+      tag: match[1].toLowerCase(),
+      attrs,
+      start: match.index,
+      end: match.index + match[0].length,
+    });
+  }
+
+  return found;
 }
 
 /**
@@ -217,7 +403,7 @@ export function compareSvg(userCode, targetCode, tolerance = 2) {
     }
 
     if (bestProblems && bestIndex >= 0 && bestProblems[0].name !== "tag") {
-      const names = bestProblems.map((problem) => problem.name).join(", ");
+      const names = bestProblems.map(problemLabel).join(", ");
       hints.push(`Bei einem <${wanted.tag}> stimmt noch nicht: ${names}.`);
       open.splice(bestIndex, 1);
     } else {

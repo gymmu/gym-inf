@@ -26,6 +26,10 @@ const FmsSVGStory = lazy(() => import("@pages-fms/svg-story.jsx"));
 const FmsSVGKreis = lazy(() => import("@pages-fms/svg-kreis.jsx"));
 const FmsSVGRechteck = lazy(() => import("@pages-fms/svg-rechteck.jsx"));
 const FmsSVGFormenBoss = lazy(() => import("@pages-fms/svg-formen-boss.jsx"));
+const FmsSVGLinie = lazy(() => import("@pages-fms/svg-linie.jsx"));
+const FmsSVGPolyline = lazy(() => import("@pages-fms/svg-polyline.jsx"));
+const FmsSVGPolygon = lazy(() => import("@pages-fms/svg-polygon.jsx"));
+const FmsSVGLinienBoss = lazy(() => import("@pages-fms/svg-linien-boss.jsx"));
 const FmsSVGWip = lazy(() => import("@pages-fms/svg-wip.jsx"));
 const FmsSVG = lazy(() => import("@pages/fms/svg.mdx"));
 const FmsSVGAnimation = lazy(() => import("@pages/fms/svg-animation.mdx"));
@@ -352,20 +356,12 @@ export const routes = [
         path: "/fms/svg-animation",
         element: <FmsSVGAnimation />,
       },
+      { path: "/fms/svg-linie", element: <FmsSVGLinie /> },
+      { path: "/fms/svg-polyline", element: <FmsSVGPolyline /> },
+      { path: "/fms/svg-polygon", element: <FmsSVGPolygon /> },
+
       // Geplante Kapitel von Vektoria — vorerst Platzhalter
-      { path: "/fms/svg-linie", element: <FmsSVGWip title="Linien" /> },
-      {
-        path: "/fms/svg-polyline",
-        element: <FmsSVGWip title="Linienzüge (polyline)" />,
-      },
-      {
-        path: "/fms/svg-polygon",
-        element: <FmsSVGWip title="Vielecke (polygon)" />,
-      },
-      {
-        path: "/fms/svg-linien-boss",
-        element: <FmsSVGWip title="Zwischenboss: Der Linienmeister" />,
-      },
+      { path: "/fms/svg-linien-boss", element: <FmsSVGLinienBoss /> },
       {
         path: "/fms/svg-pfade-1",
         element: <FmsSVGWip title="Pfade 1 — gerade Wege" />,

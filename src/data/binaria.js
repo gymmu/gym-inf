@@ -116,9 +116,6 @@ export const binariaWorlds = [
           },
         ],
       },
-      // --- Geplant: Inhalte entstehen Schritt für Schritt ------------------
-      // Die Kapitel unten sind erst als Übersicht angelegt. Noch nicht
-      // geschriebene Seiten zeigen vorerst die Platzhalterseite an.
       {
         id: "linienschlucht",
         name: "Linienschlucht",
@@ -148,9 +145,13 @@ export const binariaWorlds = [
           {
             title: "Zwischenboss: Linien und Vielecke",
             path: "/fms/svg-linien-boss",
+            completeOnVisit: true,
           },
         ],
       },
+      // --- Geplant: Inhalte entstehen Schritt für Schritt ------------------
+      // Die Kapitel unten sind erst als Übersicht angelegt. Noch nicht
+      // geschriebene Seiten zeigen vorerst die Platzhalterseite an.
       {
         id: "pfadgebirge",
         name: "Pfadgebirge",

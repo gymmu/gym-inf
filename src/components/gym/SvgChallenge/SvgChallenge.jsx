@@ -25,6 +25,8 @@ import { setupSvgLanguage } from "./svgMonaco";
  * @param {boolean} [editable] Code frei bearbeitbar (Standard true)
  * @param {boolean} [sliders] Regler für alle Zahlen im Code anzeigen
  * @param {number} [height] Höhe des Editors in Pixel
+ * @param {boolean} [grid] Koordinatengitter hinter beiden Bildern (Standard an)
+ * @param {number} [gridStep] Abstand der feinen Gitterlinien (Standard 10)
  * @param {() => void} [onSolved] wird einmal aufgerufen, sobald es stimmt
  * @param {React.ReactNode} [footer] zusätzlicher Inhalt unten (z.B. Buttons)
  */
@@ -37,12 +39,18 @@ export default function SvgChallenge({
   editable = true,
   sliders = false,
   height = 240,
+  grid = true,
+  gridStep = 10,
   onSolved,
   footer,
   className = "",
 }) {
   const [code, setCode] = useState(start ?? "");
   const [showTarget, setShowTarget] = useState(false);
+  const [showGrid, setShowGrid] = useState(grid);
+
+  // Grösse der Leinwand — das Gitter wird genau darübergelegt.
+  const size = useMemo(() => readSize(target), [target]);
 
   const result = useMemo(
     () => compareSvg(code, target, tolerance),
@@ -86,12 +94,23 @@ export default function SvgChallenge({
         {/* --- links: aktuelles Bild --- */}
         <figure className={style.panel}>
           <figcaption className={style.panelTitle}>Dein Bild</figcaption>
-          <div
-            className={style.stage}
-            // Der Code stammt aus dem Editor der Lernenden (lokal, ohne Server).
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: Lernumgebung
-            dangerouslySetInnerHTML={{ __html: code }}
-          />
+          <div className={style.stage}>
+            <div className={style.stageInner}>
+              {showGrid && size && (
+                <CoordinateGrid
+                  width={size.width}
+                  height={size.height}
+                  step={gridStep}
+                />
+              )}
+              <div
+                className={style.drawing}
+                // Der Code stammt aus dem Editor der Lernenden (lokal, ohne Server).
+                // biome-ignore lint/security/noDangerouslySetInnerHtml: Lernumgebung
+                dangerouslySetInnerHTML={{ __html: code }}
+              />
+            </div>
+          </div>
         </figure>
 
         {/* --- Mitte: Code --- */}
@@ -163,6 +182,16 @@ export default function SvgChallenge({
             >
               {showTarget ? "Ziel-Code verbergen" : "Ziel-Code zeigen"}
             </button>
+            {size && (
+              <label className={style.toggle}>
+                <input
+                  type="checkbox"
+                  checked={showGrid}
+                  onChange={(event) => setShowGrid(event.target.checked)}
+                />
+                Gitter
+              </label>
+            )}
           </div>
         </div>
 
@@ -170,11 +199,26 @@ export default function SvgChallenge({
         <figure className={style.panel}>
           <figcaption className={style.panelTitle}>Ziel</figcaption>
           <div
-            className={`${style.stage} ${style.targetStage}`}
-            // Statischer Lerninhalt aus dieser Datei.
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: statisches Ziel
-            dangerouslySetInnerHTML={{ __html: target }}
-          />
+            className={`${style.stage} ${
+              showGrid && size ? "" : style.targetStage
+            }`}
+          >
+            <div className={style.stageInner}>
+              {showGrid && size && (
+                <CoordinateGrid
+                  width={size.width}
+                  height={size.height}
+                  step={gridStep}
+                />
+              )}
+              <div
+                className={style.drawing}
+                // Statischer Lerninhalt aus dieser Datei.
+                // biome-ignore lint/security/noDangerouslySetInnerHtml: statisches Ziel
+                dangerouslySetInnerHTML={{ __html: target }}
+              />
+            </div>
+          </div>
         </figure>
       </div>
 
@@ -193,6 +237,120 @@ export default function SvgChallenge({
 
       {footer && <div className={style.footer}>{footer}</div>}
     </section>
+  );
+}
+
+/**
+ * Liest die Grösse der Leinwand aus einem SVG-String.
+ * Zuerst aus width/height, sonst aus der viewBox.
+ */
+function readSize(code) {
+  const text = String(code ?? "");
+  const open = text.match(/<svg\b[^>]*>/i)?.[0];
+  if (!open) return null;
+
+  const width = Number.parseFloat(open.match(/\bwidth="([\d.]+)"/)?.[1]);
+  const height = Number.parseFloat(open.match(/\bheight="([\d.]+)"/)?.[1]);
+  if (width > 0 && height > 0) return { width, height };
+
+  const box = open.match(/\bviewBox="([^"]+)"/)?.[1];
+  if (box) {
+    const parts = box
+      .trim()
+      .split(/[\s,]+/)
+      .map(Number);
+    if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) {
+      return { width: parts[2], height: parts[3] };
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Koordinatengitter, das genau über der Leinwand liegt.
+ *
+ * Feine Linien im Abstand `step`, kräftigere alle 50 Einheiten — dort stehen
+ * auch die Zahlen, damit man Koordinaten direkt ablesen kann.
+ */
+function CoordinateGrid({ width, height, step = 10 }) {
+  const major = 50;
+  const lines = [];
+  const labels = [];
+
+  for (let x = step; x < width; x += step) {
+    const strong = x % major === 0;
+    lines.push(
+      <line
+        key={`v${x}`}
+        x1={x}
+        y1={0}
+        x2={x}
+        y2={height}
+        stroke={strong ? "rgba(60,56,54,0.35)" : "rgba(60,56,54,0.14)"}
+        strokeWidth={strong ? 0.8 : 0.5}
+      />,
+    );
+    if (strong) {
+      labels.push(
+        <text key={`vt${x}`} x={x + 2} y={9} fontSize="8" fill="#7c6f64">
+          {x}
+        </text>,
+      );
+    }
+  }
+
+  for (let y = step; y < height; y += step) {
+    const strong = y % major === 0;
+    lines.push(
+      <line
+        key={`h${y}`}
+        x1={0}
+        y1={y}
+        x2={width}
+        y2={y}
+        stroke={strong ? "rgba(60,56,54,0.35)" : "rgba(60,56,54,0.14)"}
+        strokeWidth={strong ? 0.8 : 0.5}
+      />,
+    );
+    if (strong) {
+      labels.push(
+        <text key={`ht${y}`} x={2} y={y - 2} fontSize="8" fill="#7c6f64">
+          {y}
+        </text>,
+      );
+    }
+  }
+
+  return (
+    <svg
+      className={style.grid}
+      viewBox={`0 0 ${width} ${height}`}
+      width={width}
+      height={height}
+      aria-hidden="true"
+      focusable="false"
+    >
+      {lines}
+      {/* Achsen durch den Nullpunkt oben links */}
+      <line
+        x1={0}
+        y1={0}
+        x2={width}
+        y2={0}
+        stroke="rgba(60,56,54,0.5)"
+        strokeWidth="1"
+      />
+      <line
+        x1={0}
+        y1={0}
+        x2={0}
+        y2={height}
+        stroke="rgba(60,56,54,0.5)"
+        strokeWidth="1"
+      />
+      {labels}
+    </svg>
   );
 }
 
