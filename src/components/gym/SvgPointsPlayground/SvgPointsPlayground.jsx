@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 // Grundaussehen wie bei den anderen Spielwiesen.
 import base from "@/components/gym/SvgCirclePlayground/SvgCirclePlayground.module.css";
 import { SvgCodeBlock, SvgTag } from "@/components/gym/SvgCode/SvgCode";
+import group from "@/components/gym/SvgPlaygroundGroups.module.css";
 import style from "./SvgPointsPlayground.module.css";
 
 const SIZE = 200;
@@ -286,152 +287,186 @@ export default function SvgPointsPlayground({
         </div>
       </div>
 
-      {/* --- Steuerung --- */}
-      <div className={base.controls}>
-        {allowSwitch && (
+      {/* --- Steuerung, in drei Gruppen --- */}
+      <div className={group.groups}>
+        {/* Gruppe 1: die Punktliste als Ganzes */}
+        <fieldset className={group.group}>
+          <legend className={group.groupTitle}>Punktliste</legend>
+          <p className={group.groupHint}>
+            Wie viele Punkte es gibt — und ob der Weg offen bleibt.
+          </p>
+
+          {allowSwitch && (
+            <div className={base.control}>
+              <span className={base.controlLabel}>
+                Form
+                <span className={base.controlValue}>&lt;{shape}&gt;</span>
+              </span>
+              <div className={style.buttons}>
+                <button
+                  type="button"
+                  className={`${style.button} ${
+                    shape === "polyline" ? style.buttonActive : ""
+                  }`}
+                  onClick={() => setShape("polyline")}
+                >
+                  polyline
+                </button>
+                <button
+                  type="button"
+                  className={`${style.button} ${
+                    shape === "polygon" ? style.buttonActive : ""
+                  }`}
+                  onClick={() => setShape("polygon")}
+                >
+                  polygon
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className={base.control}>
             <span className={base.controlLabel}>
-              Form
-              <span className={base.controlValue}>&lt;{shape}&gt;</span>
+              Anzahl Punkte
+              <span className={base.controlValue}>{points.length}</span>
             </span>
             <div className={style.buttons}>
-              <button
-                type="button"
-                className={`${style.button} ${
-                  shape === "polyline" ? style.buttonActive : ""
-                }`}
-                onClick={() => setShape("polyline")}
-              >
-                polyline
+              <button type="button" className={style.button} onClick={addPoint}>
+                + Punkt
               </button>
               <button
                 type="button"
-                className={`${style.button} ${
-                  shape === "polygon" ? style.buttonActive : ""
-                }`}
-                onClick={() => setShape("polygon")}
+                className={style.button}
+                onClick={removePoint}
+                disabled={points.length <= 2}
               >
-                polygon
+                − Punkt
+              </button>
+              <button
+                type="button"
+                className={style.button}
+                onClick={resetPoints}
+              >
+                zurücksetzen
               </button>
             </div>
           </div>
-        )}
+        </fieldset>
 
-        <div className={base.control}>
-          <span className={base.controlLabel}>
-            Punkte
-            <span className={base.controlValue}>{points.length}</span>
-          </span>
-          <div className={style.buttons}>
-            <button type="button" className={style.button} onClick={addPoint}>
-              + Punkt
-            </button>
-            <button
-              type="button"
-              className={style.button}
-              onClick={removePoint}
-              disabled={points.length <= 2}
-            >
-              − Punkt
-            </button>
-            <button
-              type="button"
-              className={style.button}
-              onClick={resetPoints}
-            >
-              zurücksetzen
-            </button>
-          </div>
-        </div>
+        {/* Gruppe 2: ein einzelner Punkt, x und y beieinander */}
+        <fieldset className={`${group.group} ${style.pointGroup}`}>
+          <legend className={group.groupTitle}>
+            Punkt {selected + 1} — x und y
+          </legend>
+          <p className={group.groupHint}>
+            Im Attribut <code>points</code> ist das das {selected + 1}. Paar:{" "}
+            <code>
+              {selectedX},{selectedY}
+            </code>
+          </p>
 
-        {/* --- Punkt auswählen und verschieben --- */}
-        <div className={`${base.control} ${style.selectControl}`}>
-          <span className={base.controlLabel}>
-            ausgewählter Punkt
-            <span className={base.controlValue}>
-              {selectedX} / {selectedY}
+          <div className={`${base.control} ${style.selectControl}`}>
+            <span className={base.controlLabel}>
+              ausgewählter Punkt
+              <span className={base.controlValue}>
+                {selectedX} / {selectedY}
+              </span>
             </span>
-          </span>
-          <select
-            value={selected}
-            onChange={(event) => setSelected(Number(event.target.value))}
-          >
-            {points.map(([x, y], index) => (
-              <option
-                // biome-ignore lint/suspicious/noArrayIndexKey: Punkte sind über die Reihenfolge definiert
-                key={index}
-                value={index}
-              >
-                Punkt {index + 1} ({x} / {y})
-              </option>
-            ))}
-          </select>
-        </div>
+            <select
+              value={selected}
+              onChange={(event) => setSelected(Number(event.target.value))}
+            >
+              {points.map(([x, y], index) => (
+                <option
+                  // biome-ignore lint/suspicious/noArrayIndexKey: Punkte sind über die Reihenfolge definiert
+                  key={index}
+                  value={index}
+                >
+                  Punkt {index + 1} ({x} / {y})
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <label className={`${base.control} ${style.selectedControl}`}>
-          <span className={base.controlLabel}>
-            x von Punkt {selected + 1}
-            <span className={base.controlValue}>{selectedX}</span>
-          </span>
-          <input
-            type="range"
-            min="0"
-            max={SIZE}
-            step="1"
-            value={selectedX}
-            onChange={(event) => moveSelected("x", Number(event.target.value))}
+          <div className={group.sub}>
+            <label className={`${base.control} ${style.selectedControl}`}>
+              <span className={base.controlLabel}>
+                x — nach rechts
+                <span className={base.controlValue}>{selectedX}</span>
+              </span>
+              <input
+                type="range"
+                min="0"
+                max={SIZE}
+                step="1"
+                value={selectedX}
+                onChange={(event) =>
+                  moveSelected("x", Number(event.target.value))
+                }
+              />
+            </label>
+
+            <label className={`${base.control} ${style.selectedControl}`}>
+              <span className={base.controlLabel}>
+                y — nach unten
+                <span className={base.controlValue}>{selectedY}</span>
+              </span>
+              <input
+                type="range"
+                min="0"
+                max={SIZE}
+                step="1"
+                value={selectedY}
+                onChange={(event) =>
+                  moveSelected("y", Number(event.target.value))
+                }
+              />
+            </label>
+          </div>
+        </fieldset>
+
+        {/* Gruppe 3: Aussehen */}
+        <fieldset className={group.group}>
+          <legend className={group.groupTitle}>Aussehen</legend>
+          <p className={group.groupHint}>
+            Gilt für die ganze Form, nicht für einzelne Punkte.
+          </p>
+
+          <label className={base.control}>
+            <span className={base.controlLabel}>
+              stroke-width — Dicke
+              <span className={base.controlValue}>{strokeWidth}</span>
+            </span>
+            <input
+              type="range"
+              min="0"
+              max="20"
+              step="1"
+              value={strokeWidth}
+              onChange={(event) => setStrokeWidth(Number(event.target.value))}
+            />
+          </label>
+
+          <ColorControl
+            label="stroke — Linienfarbe"
+            value={stroke}
+            options={STROKE_COLORS}
+            onChange={setStroke}
           />
-        </label>
-
-        <label className={`${base.control} ${style.selectedControl}`}>
-          <span className={base.controlLabel}>
-            y von Punkt {selected + 1}
-            <span className={base.controlValue}>{selectedY}</span>
-          </span>
-          <input
-            type="range"
-            min="0"
-            max={SIZE}
-            step="1"
-            value={selectedY}
-            onChange={(event) => moveSelected("y", Number(event.target.value))}
+          <ColorControl
+            label="fill — Füllfarbe"
+            value={fill}
+            options={FILL_COLORS}
+            onChange={setFill}
           />
-        </label>
-
-        <label className={base.control}>
-          <span className={base.controlLabel}>
-            stroke-width — Dicke
-            <span className={base.controlValue}>{strokeWidth}</span>
-          </span>
-          <input
-            type="range"
-            min="0"
-            max="20"
-            step="1"
-            value={strokeWidth}
-            onChange={(event) => setStrokeWidth(Number(event.target.value))}
-          />
-        </label>
-
-        <ColorControl
-          label="fill — Füllfarbe"
-          value={fill}
-          options={FILL_COLORS}
-          onChange={setFill}
-        />
-        <ColorControl
-          label="stroke — Linienfarbe"
-          value={stroke}
-          options={STROKE_COLORS}
-          onChange={setStroke}
-        />
+        </fieldset>
       </div>
 
       <figcaption className={base.caption}>
-        Wähle unten einen Punkt aus — er wird <strong>rot</strong> gezeichnet —
-        und verschiebe ihn mit den beiden Reglern. Im Attribut{" "}
-        <code>points</code> stehen immer Paare:{" "}
-        <code>x,y&nbsp;x,y&nbsp;x,y&nbsp;…</code>
+        Wähle in der mittleren Gruppe einen Punkt aus — er wird{" "}
+        <strong>rot</strong> gezeichnet — und verschiebe ihn mit den Reglern{" "}
+        <code>x</code> und <code>y</code>. Im Attribut <code>points</code>{" "}
+        stehen immer Paare: <code>x,y&nbsp;x,y&nbsp;x,y&nbsp;…</code>
       </figcaption>
     </figure>
   );

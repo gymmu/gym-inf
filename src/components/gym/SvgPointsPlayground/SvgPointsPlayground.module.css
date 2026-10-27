@@ -64,3 +64,13 @@
 .selectedControl input[type="range"] {
   accent-color: #fb4934;
 }
+
+/* Die Gruppe des ausgewählten Punktes wird rot hervorgehoben. */
+.pointGroup {
+  border-color: rgba(251, 73, 52, 0.55);
+}
+
+.pointGroup code {
+  font-size: 0.75rem;
+  color: var(--color-yellow);
+}

@@ -24,8 +24,10 @@ import style from "./SvgShapeArena.module.css";
  *   • Die Spielerin baut im Editor die fehlenden Formen, sodass am Ende
  *     genau eine <line>, eine <polyline> und ein <polygon> in der Arena
  *     stehen.
- *   • Beim Abschuss rollt der Ball los, prallt an den Wänden ab und zerstört
- *     jede Form, die er trifft — jeder Treffer kostet den Boss Kraft.
+ *   • Beim Abschuss rollt der Ball los und zerstört jede Form, die er trifft
+ *     — jeder Treffer kostet den Boss Kraft.
+ *   • Berührt der Ball den Rand der Arena, zerspringt er und das Level ist
+ *     zu Ende.
  *   • Ziel: alle drei Formen mit einem Abschuss treffen.
  */
 
@@ -184,7 +186,7 @@ export default function SvgShapeArena({
   }, [check, level]);
 
   const finish = useCallback(
-    (success) => {
+    (success, reason = "done") => {
       const gained = Math.max(0, damageRef.current - bestRef.current);
       bestRef.current = Math.max(bestRef.current, damageRef.current);
 
@@ -196,6 +198,7 @@ export default function SvgShapeArena({
 
       setReport({
         success,
+        reason,
         damage: damageRef.current,
         gained,
         hits: objectsRef.current.filter((item) => item.hit).length,
@@ -224,22 +227,25 @@ export default function SvgShapeArena({
       ball.x += ball.vx * dt;
       ball.y += ball.vy * dt;
 
-      // Wände
-      if (ball.x < BALL_RADIUS) {
-        ball.x = BALL_RADIUS;
-        ball.vx = Math.abs(ball.vx);
-      }
-      if (ball.x > ARENA.width - BALL_RADIUS) {
-        ball.x = ARENA.width - BALL_RADIUS;
-        ball.vx = -Math.abs(ball.vx);
-      }
-      if (ball.y < BALL_RADIUS) {
-        ball.y = BALL_RADIUS;
-        ball.vy = Math.abs(ball.vy);
-      }
-      if (ball.y > ARENA.height - BALL_RADIUS) {
-        ball.y = ARENA.height - BALL_RADIUS;
-        ball.vy = -Math.abs(ball.vy);
+      // Rand: Der Ball zerspringt, das Level ist zu Ende.
+      if (
+        ball.x <= BALL_RADIUS ||
+        ball.x >= ARENA.width - BALL_RADIUS ||
+        ball.y <= BALL_RADIUS ||
+        ball.y >= ARENA.height - BALL_RADIUS
+      ) {
+        ball.x = Math.min(
+          ARENA.width - BALL_RADIUS,
+          Math.max(BALL_RADIUS, ball.x),
+        );
+        ball.y = Math.min(
+          ARENA.height - BALL_RADIUS,
+          Math.max(BALL_RADIUS, ball.y),
+        );
+        ballNode.current?.setAttribute("cx", String(ball.x));
+        ballNode.current?.setAttribute("cy", String(ball.y));
+        finish(false, "wall");
+        return;
       }
 
       // Formen
@@ -291,7 +297,7 @@ export default function SvgShapeArena({
         return;
       }
       if (clock.current >= MAX_TIME) {
-        finish(false);
+        finish(false, "timeout");
         return;
       }
 
@@ -456,6 +462,9 @@ export default function SvgShapeArena({
               )}
               <circle
                 ref={ballNode}
+                style={{
+                  display: report?.reason === "wall" ? "none" : undefined,
+                }}
                 cx={phase === "aim" ? level.ball.x : ballRef.current.x}
                 cy={phase === "aim" ? level.ball.y : ballRef.current.y}
                 r={BALL_RADIUS}
@@ -486,7 +495,9 @@ export default function SvgShapeArena({
                     <h3>
                       {report.success
                         ? "🎯 Alle drei getroffen!"
-                        : `${report.hits} von ${objects.length} getroffen`}
+                        : report.reason === "wall"
+                          ? `💥 Ball am Rand zerbrochen — ${report.hits} von ${objects.length} getroffen`
+                          : `${report.hits} von ${objects.length} getroffen`}
                     </h3>
                     <p>
                       Schaden in diesem Wurf: {report.damage}
@@ -596,8 +607,9 @@ export default function SvgShapeArena({
           </div>
 
           <p className={style.help}>
-            Der Ball startet beim hellen Punkt und fliegt in Pfeilrichtung. Er
-            prallt an den Wänden ab; jede Form, die er berührt, wird zerstört.
+            Der Ball startet beim hellen Punkt und fliegt in Pfeilrichtung. Jede
+            Form, die er berührt, wird zerstört und kostet den Boss Kraft —
+            berührt er aber den Rand, zerspringt er und das Level ist zu Ende.
             Platziere deine Formen so, dass er alle drei erwischt.
           </p>
         </div>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 // Gleiches Aussehen wie die Kreis- und Rechteck-Spielwiese.
 import style from "@/components/gym/SvgCirclePlayground/SvgCirclePlayground.module.css";
 import { SvgCodeBlock, SvgTag } from "@/components/gym/SvgCode/SvgCode";
+import group from "@/components/gym/SvgPlaygroundGroups.module.css";
 
 const SIZE = 200;
 
@@ -40,6 +41,8 @@ export default function SvgLinePlayground({
   const [strokeWidth, setStrokeWidth] = useState(6);
   const [linecap, setLinecap] = useState("butt");
   const [dashed, setDashed] = useState(false);
+  const [dashLength, setDashLength] = useState(12);
+  const [gapLength, setGapLength] = useState(8);
   const [helpers, setHelpers] = useState(true);
   const [activeAttr, setActiveAttr] = useState(null);
 
@@ -78,13 +81,18 @@ export default function SvgLinePlayground({
       active: activeAttr === "stroke-linecap",
     });
   }
+  const dashArray = `${dashLength} ${gapLength}`;
   if (dashed) {
     lineAttrs.push({
       name: "stroke-dasharray",
-      value: "10 6",
+      value: dashArray,
       active: activeAttr === "stroke-dasharray",
     });
   }
+
+  // Runde und quadratische Enden wachsen über jeden Strich hinaus und
+  // können die Lücken komplett zuschütten. Das verwirrt sonst nur.
+  const capsHideGaps = dashed && linecap !== "butt" && gapLength <= strokeWidth;
 
   const length = Math.round(Math.hypot(x2 - x1, y2 - y1));
 
@@ -113,7 +121,7 @@ export default function SvgLinePlayground({
               stroke={stroke}
               strokeWidth={strokeWidth}
               strokeLinecap={linecap}
-              strokeDasharray={dashed ? "10 6" : undefined}
+              strokeDasharray={dashed ? dashArray : undefined}
             />
 
             {helpers && <Helpers x1={x1} y1={y1} x2={x2} y2={y2} />}
@@ -152,101 +160,152 @@ export default function SvgLinePlayground({
         </div>
       </div>
 
-      {/* --- Regler --- */}
-      <div className={style.controls}>
-        <Control
-          label="x1 — Start, nach rechts"
-          value={x1}
-          onChange={update("x1", setX1)}
-          min={0}
-          max={SIZE}
-          active={activeAttr === "x1"}
-        />
-        <Control
-          label="y1 — Start, nach unten"
-          value={y1}
-          onChange={update("y1", setY1)}
-          min={0}
-          max={SIZE}
-          active={activeAttr === "y1"}
-        />
-        <Control
-          label="x2 — Ende, nach rechts"
-          value={x2}
-          onChange={update("x2", setX2)}
-          min={0}
-          max={SIZE}
-          active={activeAttr === "x2"}
-        />
-        <Control
-          label="y2 — Ende, nach unten"
-          value={y2}
-          onChange={update("y2", setY2)}
-          min={0}
-          max={SIZE}
-          active={activeAttr === "y2"}
-        />
-        <Control
-          label="stroke-width — Dicke"
-          value={strokeWidth}
-          onChange={update("stroke-width", setStrokeWidth)}
-          min={0}
-          max={30}
-          active={activeAttr === "stroke-width"}
-        />
-        <ColorControl
-          label="stroke — Farbe"
-          value={stroke}
-          options={STROKE_COLORS}
-          onChange={update("stroke", setStroke)}
-          active={activeAttr === "stroke"}
-        />
-        <div
-          className={`${style.control} ${
-            activeAttr === "stroke-linecap" ? style.controlActive : ""
-          }`}
-        >
-          <span className={style.controlLabel}>
-            stroke-linecap — Enden
-            <span className={style.controlValue}>{linecap}</span>
-          </span>
-          <select
-            value={linecap}
-            onChange={(event) =>
-              update("stroke-linecap", setLinecap)(event.target.value)
-            }
-          >
-            {LINECAPS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <label
-          className={`${style.control} ${
-            activeAttr === "stroke-dasharray" ? style.controlActive : ""
-          }`}
-        >
-          <span className={style.controlLabel}>
-            stroke-dasharray — gestrichelt
-            <span className={style.controlValue}>
-              {dashed ? "10 6" : "aus"}
-            </span>
-          </span>
-          <input
-            type="checkbox"
-            checked={dashed}
-            onChange={(event) =>
-              update("stroke-dasharray", setDashed)(event.target.checked)
-            }
+      {/* --- Regler, in drei Gruppen --- */}
+      <div className={group.groups}>
+        {/* Gruppe 1: Startpunkt */}
+        <fieldset className={group.group}>
+          <legend className={group.groupTitle}>Punkt 1 — Start</legend>
+          <p className={group.groupHint}>Wo die Linie beginnt.</p>
+          <Control
+            label="x1 — nach rechts"
+            value={x1}
+            onChange={update("x1", setX1)}
+            min={0}
+            max={SIZE}
+            active={activeAttr === "x1"}
           />
-        </label>
+          <Control
+            label="y1 — nach unten"
+            value={y1}
+            onChange={update("y1", setY1)}
+            min={0}
+            max={SIZE}
+            active={activeAttr === "y1"}
+          />
+        </fieldset>
+
+        {/* Gruppe 2: Endpunkt */}
+        <fieldset className={group.group}>
+          <legend className={group.groupTitle}>Punkt 2 — Ende</legend>
+          <p className={group.groupHint}>Wo die Linie aufhört.</p>
+          <Control
+            label="x2 — nach rechts"
+            value={x2}
+            onChange={update("x2", setX2)}
+            min={0}
+            max={SIZE}
+            active={activeAttr === "x2"}
+          />
+          <Control
+            label="y2 — nach unten"
+            value={y2}
+            onChange={update("y2", setY2)}
+            min={0}
+            max={SIZE}
+            active={activeAttr === "y2"}
+          />
+        </fieldset>
+
+        {/* Gruppe 3: Aussehen */}
+        <fieldset className={group.group}>
+          <legend className={group.groupTitle}>Aussehen — der Strich</legend>
+          <p className={group.groupHint}>Wie die Verbindung gezeichnet wird.</p>
+          <ColorControl
+            label="stroke — Farbe"
+            value={stroke}
+            options={STROKE_COLORS}
+            onChange={update("stroke", setStroke)}
+            active={activeAttr === "stroke"}
+          />
+          <Control
+            label="stroke-width — Dicke"
+            value={strokeWidth}
+            onChange={update("stroke-width", setStrokeWidth)}
+            min={0}
+            max={30}
+            active={activeAttr === "stroke-width"}
+          />
+          <div
+            className={`${style.control} ${
+              activeAttr === "stroke-linecap" ? style.controlActive : ""
+            }`}
+          >
+            <span className={style.controlLabel}>
+              stroke-linecap — Enden
+              <span className={style.controlValue}>{linecap}</span>
+            </span>
+            <select
+              value={linecap}
+              onChange={(event) =>
+                update("stroke-linecap", setLinecap)(event.target.value)
+              }
+            >
+              {LINECAPS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <label
+            className={`${style.control} ${
+              activeAttr === "stroke-dasharray" ? style.controlActive : ""
+            }`}
+          >
+            <span className={style.controlLabel}>
+              stroke-dasharray — gestrichelt
+              <span className={style.controlValue}>
+                {dashed ? dashArray : "aus"}
+              </span>
+            </span>
+            <input
+              type="checkbox"
+              checked={dashed}
+              onChange={(event) =>
+                update("stroke-dasharray", setDashed)(event.target.checked)
+              }
+            />
+          </label>
+
+          <div
+            className={`${group.sub} ${dashed ? "" : group.subDisabled}`}
+            aria-hidden={!dashed}
+          >
+            <Control
+              label="Strichlänge"
+              value={dashLength}
+              onChange={update("stroke-dasharray", setDashLength)}
+              min={1}
+              max={40}
+              disabled={!dashed}
+              active={activeAttr === "stroke-dasharray"}
+            />
+            <Control
+              label="Lückenlänge"
+              value={gapLength}
+              onChange={update("stroke-dasharray", setGapLength)}
+              min={1}
+              max={40}
+              disabled={!dashed}
+              active={activeAttr === "stroke-dasharray"}
+            />
+          </div>
+        </fieldset>
       </div>
 
       <figcaption className={style.caption}>
         Eine Linie hat <strong>keine Fläche</strong>. Ohne <code>stroke</code>{" "}
         ist sie unsichtbar. Aktuelle Länge: ungefähr {length} Einheiten.
+        {capsHideGaps && (
+          <>
+            {" "}
+            <strong>Achtung:</strong> Mit <code>{linecap}</code>-Enden wird
+            jeder Strich um <code>{strokeWidth / 2}</code> verlängert — die
+            Lücken verschwinden. Wähle <code>butt</code> oder mache die Lücken
+            grösser.
+          </>
+        )}
       </figcaption>
     </figure>
   );

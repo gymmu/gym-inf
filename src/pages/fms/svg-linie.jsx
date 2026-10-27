@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import SvgChallenge from "@/components/gym/SvgChallenge/SvgChallenge";
-import { SvgSource } from "@/components/gym/SvgCode/SvgCode";
 import SvgLinePlayground from "@/components/gym/SvgLinePlayground/SvgLinePlayground";
 import SvgShapeDemo from "@/components/gym/SvgShapeDemo/SvgShapeDemo";
 import SvgStudio from "@/components/gym/SvgStudio/SvgStudio";
@@ -11,9 +10,10 @@ import style from "./SvgKreis.module.css";
 /**
  * Vektoria, Level 5 — "Linienschlucht".
  *
- * Gleicher Aufbau wie Kreisbucht und Rechteckstadt: drei Schritte,
- * jeder Schritt erklären → ausprobieren → Ziel treffen.
+ * Dieses Kapitel startet bewusst anders als Kreisbucht und Rechteckstadt:
+ * Zuerst wird gespielt, danach wird erklärt, was man gerade gesehen hat.
  *
+ *   0. Spielwiese             alle Attribute sofort anfassen
  *   1. Zwei Punkte            x1, y1, x2, y2
  *   2. Sichtbar machen        stroke, stroke-width, stroke-linecap, dasharray
  *   3. Mehrere Linien         Figuren aus Linien bauen
@@ -30,14 +30,16 @@ function StepBreak({ label = "◆ ◆ ◆" }) {
 
 // --- Beispiele -----------------------------------------------------------
 
-const BASIC = `<line
-  x1="20"
-  y1="20"
-  x2="180"
-  y2="120"
-  stroke="#282828"
-  stroke-width="4"
-/>`;
+const BASIC = `<svg width="200" height="140">
+  <line
+    x1="20"
+    y1="20"
+    x2="180"
+    y2="120"
+    stroke="#282828"
+    stroke-width="4"
+  />
+</svg>`;
 
 const INVISIBLE = `<svg width="200" height="140">
   <line
@@ -300,10 +302,55 @@ export default function SvgLinie() {
       </LearningGoals>
 
       <p className="lead">
-        Auch dieses Kapitel hat drei Schritte: zuerst <strong>erklären</strong>,
-        dann <strong>ausprobieren</strong>, zum Schluss{" "}
-        <strong>ein Ziel treffen</strong>.
+        Hier geht es sofort los: Du beginnst in der <strong>Spielwiese</strong>{" "}
+        und schiebst die Linie herum. Danach erklären wir in Ruhe, was dabei
+        passiert ist — und zum Schluss triffst du ein Ziel.
       </p>
+
+      {/* ================= Schritt 0: Zuerst ausprobieren ================= */}
+
+      <StepBreak label="ZUERST AUSPROBIEREN" />
+
+      <Section classes={`full-width ${style.block}`}>
+        <p className={style.eyebrow}>Spielwiese</p>
+        <h2>Fass die Linie an</h2>
+
+        <p>
+          Links siehst du die Grafik, rechts den passenden SVG-Code. Die Regler
+          darunter sind in drei Gruppen geordnet: <strong>Punkt 1</strong> (wo
+          die Linie beginnt), <strong>Punkt 2</strong> (wo sie aufhört) und{" "}
+          <strong>Aussehen</strong> (wie der Strich gezeichnet wird). Bewege
+          einen Regler: Die Linie verändert sich — und im Code leuchtet genau
+          das Attribut auf, das du gerade veränderst. Du musst jetzt noch nichts
+          verstehen, probiere einfach alles einmal durch.
+        </p>
+
+        <SvgLinePlayground />
+
+        <p>
+          Diese vier Fragen kannst du allein mit den Reglern beantworten.
+          Notiere dir deine Beobachtungen — gleich danach erklären wir sie:
+        </p>
+
+        <ul>
+          <li>
+            Stelle eine <strong>waagrechte</strong> Linie ein. Was fällt dir bei{" "}
+            <code>y1</code> und <code>y2</code> auf?
+          </li>
+          <li>
+            Stelle eine <strong>senkrechte</strong> Linie ein. Welche beiden
+            Zahlen sind jetzt gleich?
+          </li>
+          <li>
+            Was passiert, wenn Start- und Endpunkt <strong>identisch</strong>{" "}
+            sind?
+          </li>
+          <li>
+            Ziehe <code>stroke-width</code> auf <code>0</code>. Wo ist die Linie
+            hin?
+          </li>
+        </ul>
+      </Section>
 
       {/* ================= Schritt 1: Zwei Punkte ================= */}
 
@@ -311,11 +358,11 @@ export default function SvgLinie() {
 
       <Section classes={style.stepStart}>
         <p className={style.eyebrow}>Schritt 1 von 3</p>
-        <h2>Zwei Punkte, eine Linie</h2>
+        <h2>Was dabei passiert ist: zwei Punkte, eine Linie</h2>
 
         <p>
-          Eine Linie verbindet genau zwei Punkte. Darum braucht sie vier Zahlen
-          — zwei pro Punkt:
+          Die vier Regler oben waren kein Zufall: Eine Linie verbindet genau
+          zwei Punkte. Darum braucht sie vier Zahlen — zwei pro Punkt:
         </p>
 
         <ul>
@@ -333,7 +380,11 @@ export default function SvgLinie() {
           rechts, <code>y</code> nach unten.
         </p>
 
-        <SvgSource code={BASIC} wrap={false} />
+        <SvgShapeDemo
+          code={BASIC}
+          title="Vom Punkt (20 / 20) zum Punkt (180 / 120)"
+          caption="Links das Ergebnis, rechts der Code dazu."
+        />
 
         <p>
           Eine Linie hat <strong>keine Fläche</strong>, die man füllen könnte.{" "}
@@ -345,36 +396,12 @@ export default function SvgLinie() {
           code={INVISIBLE}
           title="Eine Linie ohne stroke bleibt unsichtbar"
         />
-      </Section>
-
-      <Section classes={`full-width ${style.block}`}>
-        <h3>Ausprobieren: Spielwiese</h3>
 
         <p>
-          Verschiebe Start- und Endpunkt mit den Reglern. Im Code leuchtet
-          jeweils das Attribut auf, das du gerade veränderst.
+          Gehe ruhig nochmals kurz zur Spielwiese zurück und stelle dort die
+          Diagonale von der oberen linken in die untere rechte Ecke ein. Jetzt
+          weisst du genau, welche Zahl wofür zuständig ist.
         </p>
-
-        <SvgLinePlayground />
-
-        <ul>
-          <li>
-            Stelle eine <strong>waagrechte</strong> Linie ein. Was fällt dir bei{" "}
-            <code>y1</code> und <code>y2</code> auf?
-          </li>
-          <li>
-            Stelle eine <strong>senkrechte</strong> Linie ein. Welche beiden
-            Zahlen sind jetzt gleich?
-          </li>
-          <li>
-            Was passiert, wenn Start- und Endpunkt <strong>identisch</strong>{" "}
-            sind?
-          </li>
-          <li>
-            Stelle die Diagonale von der oberen linken in die untere rechte Ecke
-            ein.
-          </li>
-        </ul>
       </Section>
 
       <Section classes={`full-width ${style.block} ${style.stepEnd}`}>
@@ -403,8 +430,9 @@ export default function SvgLinie() {
         <h2>Dicke, Enden und Striche</h2>
 
         <p>
-          Weil eine Linie nur aus ihrem Rand besteht, sind hier drei Attribute
-          wichtig:
+          Die unteren Regler der Spielwiese hast du vorhin schon ausprobiert —
+          hier kommt die Erklärung dazu. Weil eine Linie nur aus ihrem Rand
+          besteht, sind drei Attribute wichtig:
         </p>
 
         <ul>
@@ -426,7 +454,14 @@ export default function SvgLinie() {
         <p>
           Mit <code>stroke-dasharray</code> wird die Linie gestrichelt. Die
           erste Zahl ist die Länge eines Strichs, die zweite die Länge der
-          Lücke.
+          Lücke. In der Spielwiese kannst du beide Zahlen einzeln einstellen.
+        </p>
+
+        <p>
+          Vorsicht beim Kombinieren: Mit <code>round</code> oder{" "}
+          <code>square</code> wird <em>jeder einzelne Strich</em> an beiden
+          Enden verlängert. Sind die Lücken kleiner als die Linie dick ist,
+          verschwinden sie ganz — die Linie sieht wieder durchgezogen aus.
         </p>
 
         <SvgShapeDemo code={DASHED} title="Gestrichelte Linie" />

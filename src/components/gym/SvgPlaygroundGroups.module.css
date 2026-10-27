@@ -1,0 +1,53 @@
+/*
+ * Ergänzung zum gemeinsamen Spielwiesen-Layout
+ * (SvgCirclePlayground.module.css): gruppierte Regler.
+ *
+ * Wird von mehreren Spielwiesen verwendet (Linie, Punkte …).
+ */
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-md, 1rem);
+  align-items: start;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0.5rem 0.6rem 0.7rem;
+  background-color: rgba(60, 56, 54, 0.45);
+  border: 1px solid rgba(146, 131, 116, 0.35);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.groupTitle {
+  padding: 0 0.3rem;
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-yellow);
+}
+
+.groupHint {
+  padding: 0 0.3rem 0.2rem;
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  color: var(--color-gray-light);
+}
+
+/* Untergeordnete Regler (z.B. Strich- und Lückenlänge). */
+.sub {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(146, 131, 116, 0.35);
+}
+
+.subDisabled {
+  opacity: 0.45;
+}

@@ -19,10 +19,11 @@ export default function SvgLinienBoss() {
 
       <p>
         Am Ende des Vieleckfelds wartet der <strong>Linienmeister</strong>. Der
-        Kampf läuft wie Minigolf: Ein Ball rollt los und prallt an Wänden und
-        Formen ab. Jede Form, die er trifft, zerspringt — und der Linienmeister
-        verliert Kraft. Deine Aufgabe ist es, die Formen im Code so zu
-        platzieren, dass der Ball sie alle erwischt.
+        Kampf läuft wie Minigolf: Ein Ball rollt los und prallt an den Formen
+        ab. Jede Form, die er trifft, zerspringt — und der Linienmeister
+        verliert Kraft. Berührt der Ball aber den Rand der Arena, zerbricht er
+        und das Level ist sofort zu Ende. Deine Aufgabe ist es, die Formen im
+        Code so zu platzieren, dass der Ball sie alle erwischt.
       </p>
 
       <Section>
@@ -45,10 +46,14 @@ export default function SvgLinienBoss() {
             Ruhe, wo deine Formen stehen müssen.
           </li>
           <li>
-            Beim Abschuss rollt der Ball los, prallt an den Wänden ab und
-            zerstört jede Form, die er berührt: <code>&lt;line&gt;</code> = 10,{" "}
+            Beim Abschuss rollt der Ball los und zerstört jede Form, die er
+            berührt: <code>&lt;line&gt;</code> = 10,{" "}
             <code>&lt;polyline&gt;</code> = 15, <code>&lt;polygon&gt;</code> =
-            20 Schaden.
+            20 Schaden. Nur Formtreffer ziehen dem Boss Lebenspunkte ab.
+          </li>
+          <li>
+            <strong>Achtung Rand:</strong> Berührt der Ball eine Wand der Arena,
+            zerspringt er — der Wurf und damit das Level sind beendet.
           </li>
           <li>
             Ziel: <strong>alle drei Formen in einem Wurf</strong> treffen. Du
