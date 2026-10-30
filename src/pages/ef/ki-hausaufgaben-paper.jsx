@@ -81,9 +81,8 @@ export default function KIHausaufgabenPaper() {
               Stichwort pro Abschnitt genügt.
             </li>
             <li>
-              <strong>(ca. 5 Min.)</strong> Suchen Sie die{" "}
-              <strong>Laufzeittabelle</strong> am Ende von Abschnitt 2. Notieren
-              Sie, was dort überhaupt verglichen wird.
+              <strong>(ca. 5 Min.)</strong> Suchen Sie <strong>Figure 7</strong>{" "}
+              in Abschnitt 3. Notieren Sie, was dort überhaupt verglichen wird.
             </li>
             <li>
               <strong>(ca. 5 Min.)</strong> Notieren Sie{" "}
@@ -176,11 +175,82 @@ export default function KIHausaufgabenPaper() {
         <h3>Lektion 2 — Das Paper im Detail lesen</h3>
         <p>
           Jetzt haben Sie Zeit zum Lesen. Ein Paper liest man nicht wie einen
-          Roman: Sie werden nicht jeden Satz verstehen, und das ist normal.
-          Pflicht sind nicht alle 60 Seiten, sondern Abschnitt 1, Abschnitt 2.1,
-          Abschnitt 2.3 und die Laufzeittabelle am Ende von Abschnitt 2. Dazu
-          bekommen Sie ein Leseprotokoll mit gezielten Fragen.
+          Roman: Sie werden nicht jeden Satz verstehen, und das ist normal. Das
+          Paper hat 65 Seiten — wir lesen davon nur die folgende Auswahl. Diese
+          Abschnitte schauen wir uns <strong>im Detail</strong> an, alles andere
+          ist für uns höchstens Nachschlagewerk. Die Seitenzahlen beziehen sich
+          auf die PDF-Version von arXiv. Dazu bekommen Sie ein Leseprotokoll mit
+          gezielten Fragen.
         </p>
+
+        <div className="aufgabe">
+          <h4>2 Shortest Paths Algorithms (S. 3)</h4>
+          <ul>
+            <li>
+              <strong>2.2 Goal-Directed Techniques</strong> (S. 5) — davon:{" "}
+              <em>A* Search</em> (S. 5) und <em>Arc Flags</em> (S. 6)
+            </li>
+            <li>
+              <strong>2.4 Hierarchical Techniques</strong> (S. 9) — davon:{" "}
+              <em>Contraction Hierarchies</em> (S. 9) und <em>Reach</em> (S. 10)
+            </li>
+            <li>
+              <strong>2.7 Extensions</strong> (S. 14) — davon:{" "}
+              <em>2.7.1 Path Retrieval</em> (S. 14) und{" "}
+              <em>2.7.3 Dynamic Networks</em> (S. 16)
+            </li>
+          </ul>
+        </div>
+
+        <div className="aufgabe">
+          <h4>3 Route Planning in Road Networks</h4>
+          <ul>
+            <li>
+              Nur <strong>Figure 7</strong> — das Diagramm mit dem Vergleich der
+              Verfahren (Vorverarbeitung, Speicher, Antwortzeit).
+            </li>
+          </ul>
+        </div>
+
+        <div className="aufgabe">
+          <h4>4 Journey Planning in Public Transit Networks (S. 28)</h4>
+          <ul>
+            <li>
+              <strong>4.1 Modeling</strong> (S. 29) — davon:{" "}
+              <em>Time-Expanded Model</em> (S. 29)
+            </li>
+            <li>
+              <strong>4.2 Algorithms without Preprocessing</strong> (S. 31) —
+              davon: <em>Multicriteria Problem</em> (S. 33)
+            </li>
+          </ul>
+        </div>
+
+        <div className="aufgabe">
+          <h4>5 Multimodal Journey Planning (S. 41)</h4>
+          <ul>
+            <li>
+              <em>Overview</em> (S. 42)
+            </li>
+            <li>
+              <strong>5.1 Combining Costs</strong> (S. 42)
+            </li>
+            <li>
+              <strong>5.2 Label-Constrained Shortest Paths</strong> (S. 42) —
+              davon: <em>Contraction Hierarchies</em> (S. 44)
+            </li>
+            <li>
+              <strong>5.3 Multicriteria Optimization</strong> (S. 44)
+            </li>
+          </ul>
+        </div>
+
+        <div className="aufgabe">
+          <h4>6 Final Remarks (S. 45)</h4>
+          <ul>
+            <li>Ganz lesen — hier steht, was offen geblieben ist.</li>
+          </ul>
+        </div>
 
         <h3>Lektion 3 — Fragen stellen und diskutieren</h3>
         <p>
