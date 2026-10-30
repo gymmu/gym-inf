@@ -211,6 +211,10 @@ const EFRepetitionFP = lazy(() => import("@pages-ef/js-repetition-fp.jsx"));
 const EFOOPTheorie = lazy(() => import("@pages-ef/js-oop-theorie.jsx"));
 const EFAufgabenOOP = lazy(() => import("@pages-ef/js-aufgaben-oop.jsx"));
 const EFKIGraphensuche = lazy(() => import("@pages-ef/ki-graphensuche.jsx"));
+const EFKIRoutenplanung = lazy(() => import("@pages-ef/ki-routenplanung.jsx"));
+const EFKIRoutenplanungPaper = lazy(
+  () => import("@pages-ef/ki-routenplanung-paper.jsx"),
+);
 const EFKIAufgabenGraphensucheHand = lazy(
   () => import("@pages-ef/ki-aufgaben-graphensuche-hand.jsx"),
 );
@@ -520,6 +524,11 @@ export const routes = [
       { path: "ef/js-oop-theorie", element: <EFOOPTheorie /> },
       { path: "ef/js-aufgaben-oop", element: <EFAufgabenOOP /> },
       { path: "ef/ki-graphensuche", element: <EFKIGraphensuche /> },
+      { path: "ef/ki-routenplanung", element: <EFKIRoutenplanung /> },
+      {
+        path: "ef/ki-routenplanung-paper",
+        element: <EFKIRoutenplanungPaper />,
+      },
       {
         path: "ef/ki-aufgaben-graphensuche-hand",
         element: <EFKIAufgabenGraphensucheHand />,

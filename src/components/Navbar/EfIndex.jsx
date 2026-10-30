@@ -227,6 +227,16 @@ export default function EfIndex() {
             to: "ef/ki-hausaufgaben-paper",
             label: "Hausaufgaben: Paper vorbereiten",
           },
+          {
+            type: "theorie",
+            to: "ef/ki-routenplanung",
+            label: "Theorie: Dijkstra und Routenplanung",
+          },
+          {
+            type: "theorie",
+            to: "ef/ki-routenplanung-paper",
+            label: "Theorie: Wie echte Routenplaner rechnen",
+          },
         ]}
       />
     </div>

@@ -1,0 +1,378 @@
+/* ── Hülle ─────────────────────────────────────────────────────────── */
+
+.wrapper {
+  margin: var(--space-xl) auto;
+  border: 2px solid var(--color-bg-lighter);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-dark);
+  padding: var(--space-lg);
+  max-width: 1100px;
+}
+
+.title {
+  margin: 0 0 var(--space-sm) 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.hinweis {
+  margin: 0 0 var(--space-md) 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--color-gray-light);
+}
+
+/* ── Bedienung ─────────────────────────────────────────────────────── */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.button {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-light);
+  color: var(--color-fg);
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.buttonPrimary {
+  border-color: var(--color-aqua);
+  color: var(--color-aqua);
+}
+
+.select {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-light);
+  color: var(--color-fg);
+}
+
+.label {
+  font-size: 0.78rem;
+  color: var(--color-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* ── Stufen-Navigation (Karte → Graph) ─────────────────────────────── */
+
+.stufen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.stufe {
+  font: inherit;
+  font-size: 0.78rem;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-bg-lighter);
+  border-bottom-width: 3px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-gray);
+  cursor: pointer;
+}
+
+.stufeAktiv {
+  color: var(--color-fg);
+  border-bottom-color: var(--color-orange);
+  background-color: var(--color-bg-light);
+}
+
+/* ── Zeichenfläche ─────────────────────────────────────────────────── */
+
+.canvas {
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-dark);
+  overflow: hidden;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.kante {
+  transition:
+    stroke 0.18s,
+    stroke-width 0.18s,
+    opacity 0.18s;
+}
+
+.knotenId {
+  font-family: var(--font-mono, monospace);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.knotenName {
+  font-size: 12px;
+  fill: #d5c4a1;
+}
+
+.knotenWert {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 700;
+  fill: #fabd2f;
+}
+
+.strassenName {
+  font-size: 10px;
+  fill: #a89984;
+  letter-spacing: 0.02em;
+}
+
+.gewicht {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.knotenKlick {
+  cursor: pointer;
+}
+
+/* ── Erklärtext unter der Grafik ───────────────────────────────────── */
+
+.erklaerung {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-left: 3px solid var(--color-orange);
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-fg);
+  min-height: 3.4em;
+}
+
+.schrittZaehler {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8rem;
+  color: var(--color-gray);
+}
+
+/* ── Panels (Tabellen, Queue) ──────────────────────────────────────── */
+
+.panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+@media (min-width: 900px) {
+  .panelsZwei {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.panel {
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.panelTitel {
+  margin: 0 0 var(--space-xs) 0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-gray);
+}
+
+/* Warteschlange als Chips */
+
+.queue {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  min-height: 2em;
+}
+
+.chip {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  border: 1px solid var(--color-yellow);
+  border-radius: var(--radius-md);
+  color: var(--color-yellow);
+  background-color: rgba(250, 189, 47, 0.08);
+}
+
+.chipR {
+  border-color: var(--color-purple);
+  color: var(--color-purple);
+  background-color: rgba(211, 134, 155, 0.08);
+}
+
+.chipLeer {
+  font-size: 0.8rem;
+  color: var(--color-gray);
+}
+
+/* Distanztabelle */
+
+.tabelle {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.78rem;
+}
+
+.tabelle th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-gray);
+  border-bottom: 1px solid var(--color-bg-lighter);
+  padding: 3px 6px;
+}
+
+.tabelle td {
+  padding: 3px 6px;
+  border-bottom: 1px solid var(--color-bg-dark);
+  color: var(--color-fg);
+}
+
+.zeileBesucht td {
+  color: var(--color-blue);
+}
+
+.zeileBesuchtR td {
+  color: var(--color-purple);
+}
+
+.zeileGrenze td {
+  color: var(--color-yellow);
+}
+
+.zeileAktuell td {
+  background-color: rgba(254, 128, 25, 0.12);
+  color: var(--color-orange);
+  font-weight: 700;
+}
+
+/* ── Statistik / Ergebnis ──────────────────────────────────────────── */
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+  font-size: 0.82rem;
+  color: var(--color-gray-light);
+}
+
+.stat strong {
+  color: var(--color-fg);
+  font-family: var(--font-mono, monospace);
+}
+
+.ergebnis {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-orange);
+  border-radius: var(--radius-md);
+  background-color: rgba(254, 128, 25, 0.08);
+  font-size: 0.88rem;
+  color: var(--color-fg);
+}
+
+/* ── Legende ───────────────────────────────────────────────────────── */
+
+.legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  font-size: 0.78rem;
+  color: var(--color-gray-light);
+}
+
+.legendeItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+/* ── Erklärbox zur Rangberechnung ──────────────────────────────────── */
+
+.erklaerBox {
+  margin-top: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: 6px;
+  background-color: var(--color-bg-dark);
+}
+
+.erklaerTitel {
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-yellow);
+}
+
+.erklaerListe {
+  margin: var(--space-sm) 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--color-gray-light);
+}
+
+.erklaerListe li {
+  margin-bottom: 0.35rem;
+}
+
+.erklaerListe code,
+.erklaerSchluss code {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.78rem;
+  color: var(--color-fg);
+}
+
+.erklaerSchluss {
+  margin: var(--space-sm) 0 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--color-gray);
+}
