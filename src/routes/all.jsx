@@ -231,6 +231,9 @@ const EFKIAufgabenHeuristikenCode = lazy(
 const EFKIHausaufgabenPaper = lazy(
   () => import("@pages-ef/ki-hausaufgaben-paper.jsx"),
 );
+const EFKIProbabilistischesPlanen = lazy(
+  () => import("@pages-ef/ki-probabilistisches-planen.jsx"),
+);
 
 const BoxModel = lazy(() => import("../components/BoxModel"));
 const CodePen = lazy(() => import("../components/CodePen"));
@@ -549,6 +552,10 @@ export const routes = [
       {
         path: "ef/ki-hausaufgaben-paper",
         element: <EFKIHausaufgabenPaper />,
+      },
+      {
+        path: "ef/ki-probabilistisches-planen",
+        element: <EFKIProbabilistischesPlanen />,
       },
       {
         path: "ef/js-aufgaben-algorithmen",

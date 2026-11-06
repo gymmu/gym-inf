@@ -1,0 +1,170 @@
+/* ── Hülle ─────────────────────────────────────────────────────────── */
+
+.wrapper {
+  margin: var(--space-xl) auto;
+  border: 2px solid var(--color-bg-lighter);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-dark);
+  padding: var(--space-lg);
+  max-width: 1100px;
+}
+
+.title {
+  margin: 0 0 var(--space-sm) 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.hinweis {
+  margin: 0 0 var(--space-md) 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--color-gray-light);
+}
+
+/* ── Bedienung ─────────────────────────────────────────────────────── */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.button {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-bg-lighter);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-light);
+  color: var(--color-fg);
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.buttonActive {
+  border-color: var(--color-aqua);
+  color: var(--color-aqua);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 0.85rem;
+  color: var(--color-gray-light);
+}
+
+.slider {
+  width: 160px;
+}
+
+/* ── Layout ────────────────────────────────────────────────────────── */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.canvas {
+  width: 100%;
+  height: auto;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+/* ── Statistik ─────────────────────────────────────────────────────── */
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  font-size: 0.85rem;
+  color: var(--color-gray-light);
+  border-bottom: 1px solid var(--color-bg-lighter);
+  padding-bottom: var(--space-xs);
+}
+
+.statValue {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-fg);
+  font-weight: 600;
+}
+
+.bar {
+  height: 14px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-light);
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  background-color: var(--color-aqua);
+  transition: width 0.2s ease;
+}
+
+.status {
+  margin-top: var(--space-md);
+  font-size: 0.85rem;
+  color: var(--color-gray-light);
+  min-height: 1.4em;
+}
+
+.erfolg {
+  color: var(--color-aqua);
+  font-weight: 600;
+}
+
+.misserfolg {
+  color: var(--color-red);
+  font-weight: 600;
+}
+
+.legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  font-size: 0.8rem;
+  color: var(--color-gray-light);
+}
+
+.legendeItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: inline-block;
+}

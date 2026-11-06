@@ -239,6 +239,17 @@ export default function EfIndex() {
           },
         ]}
       />
+      <WeekSection
+        weekNumber="10"
+        title="Probabilistisches Planen und Monte-Carlo"
+        items={[
+          {
+            type: "theorie",
+            to: "ef/ki-probabilistisches-planen",
+            label: "Theorie: Planen im Ungewissen",
+          },
+        ]}
+      />
     </div>
   );
 }
