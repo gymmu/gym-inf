@@ -1,3 +1,4 @@
+import { Math as Tex } from "@components/Katex.jsx";
 import { useMemo, useRef, useState } from "react";
 import styles from "./mcts.module.css";
 
@@ -224,10 +225,10 @@ export default function MCTSTree({
     select: (
       <>
         <strong>Selection:</strong> Von der Wurzel aus wird immer das Kind mit
-        dem höchsten <code>UCT</code>-Wert gewählt — so lange, bis ein Knoten
-        erreicht ist, der noch unbesuchte Kinder hat. Knoten mit{" "}
-        <code>n = 0</code> haben <code>UCT = ∞</code> und werden deshalb zuerst
-        ausprobiert.
+        dem höchsten <Tex>{"\\mathrm{UCT}"}</Tex>-Wert gewählt — so lange, bis
+        ein Knoten erreicht ist, der noch unbesuchte Kinder hat. Knoten mit{" "}
+        <Tex>{"n = 0"}</Tex> haben <Tex>{"\\mathrm{UCT} = \\infty"}</Tex> und
+        werden deshalb zuerst ausprobiert.
       </>
     ),
     expand: (
@@ -235,7 +236,7 @@ export default function MCTSTree({
         <strong>Expansion:</strong> Der Pfad{" "}
         <code>{pfad.map((id) => BAUM[id].label).join(" → ")}</code> wurde
         ausgewählt. Jetzt wird ein noch unbesuchtes Kind als neuer Knoten an den
-        Baum angehängt (<code>n = 0</code>, <code>w = 0</code>).
+        Baum angehängt (<Tex>{"n = 0"}</Tex>, <Tex>{"w = 0"}</Tex>).
       </>
     ),
     simulate: (
@@ -478,7 +479,11 @@ export default function MCTSTree({
       <p className={styles.text}>{erklaerung}</p>
 
       <p className={styles.formel}>
-        UCT(Kind) = <strong>w / n</strong> + c · √( ln(N<sub>Eltern</sub>) / n )
+        <Tex>
+          {
+            "\\mathrm{UCT}(\\text{Kind}) = \\frac{w}{n} + c \\cdot \\sqrt{\\frac{\\ln N_{\\text{Eltern}}}{n}}"
+          }
+        </Tex>
         &nbsp;&nbsp;— links die bisherige Gewinnquote (Ausbeutung), rechts der
         Bonus für selten besuchte Knoten (Erkundung).
       </p>

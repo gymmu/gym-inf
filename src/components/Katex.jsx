@@ -10,7 +10,7 @@ export function Math({ children }) {
     katex.render(children, katexElement.current, {
       throwOnError: false,
     });
-  }, [katexElement]);
+  }, [children]);
   return (
     <span className={styles.inline} ref={katexElement}>
       {children}
@@ -26,7 +26,7 @@ export function DMath({ children }) {
       displayMode: true,
       throwOnError: false,
     });
-  }, [katexElement]);
+  }, [children]);
   return (
     <div className={styles.wrapper}>
       <div ref={katexElement} className={styles.display}>

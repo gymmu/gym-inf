@@ -1,0 +1,259 @@
+/* ─────────────────────────────────────────────
+   Kopf eines Aufgabenblatts
+   ───────────────────────────────────────────── */
+.header {
+  margin: var(--space-md) 0 var(--space-xl);
+  padding: var(--space-lg);
+  border: var(--border-width) solid var(--color-gray);
+  border-left: 4px solid var(--color-yellow);
+  border-radius: var(--radius-lg);
+  background-color: rgba(128, 128, 128, 0.07);
+}
+
+.header h2 {
+  margin-top: 0;
+}
+
+.kicker {
+  margin: 0 0 var(--space-xs);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+
+/* Meta-Zeile: Material, Dauer, Abgabe … */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: var(--border-width) solid var(--color-gray-darker);
+}
+
+.metaItem {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  padding: var(--space-2xs) var(--space-sm);
+  font-size: 0.85rem;
+  border: var(--border-width) solid var(--color-gray);
+  border-radius: var(--radius-full);
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+.metaLabel {
+  color: var(--color-gray);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+/* ─────────────────────────────────────────────
+   Teil-Überschrift
+   ───────────────────────────────────────────── */
+.teil {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-md);
+  margin: var(--space-2xl) 0 var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--color-gray-darker);
+}
+
+.teilNummer {
+  flex: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-bg);
+  background-color: var(--color-yellow);
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-full);
+}
+
+.teil h2 {
+  margin: 0;
+}
+
+.teilText {
+  margin-top: 0;
+  color: var(--color-gray-light);
+}
+
+/* ─────────────────────────────────────────────
+   Einzelne Aufgabe
+   ───────────────────────────────────────────── */
+.aufgabe {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md) var(--space-lg);
+  border: var(--border-width) solid var(--color-gray-darker);
+  border-left: 3px solid var(--color-blue);
+  border-radius: var(--radius-md);
+  background-color: rgba(128, 128, 128, 0.05);
+  transition: border-color var(--transition-base);
+}
+
+.aufgabe:hover {
+  border-left-color: var(--color-aqua);
+}
+
+.aufgabe.bonus {
+  border-left-color: var(--color-purple);
+  border-style: dashed;
+  border-left-style: solid;
+}
+
+.aufgabeHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.nummer {
+  flex: none;
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-bg);
+  background-color: var(--color-blue);
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+}
+
+.bonus .nummer {
+  background-color: var(--color-purple);
+}
+
+.titel {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--color-fg);
+}
+
+.tag {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--color-gray);
+  border: var(--border-width) solid var(--color-gray-darker);
+  border-radius: var(--radius-full);
+  padding: var(--space-2xs) var(--space-sm);
+  white-space: nowrap;
+}
+
+.aufgabe > :global(p):first-of-type {
+  margin-top: 0;
+}
+
+.aufgabe :global(ol),
+.aufgabe :global(ul) {
+  padding-left: 1.4em;
+}
+
+.aufgabe :global(ol) > :global(li) {
+  margin-bottom: var(--space-xs);
+}
+
+/* ─────────────────────────────────────────────
+   Hinweis-Box (Varianten)
+   ───────────────────────────────────────────── */
+.box {
+  margin: var(--space-md) 0;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--color-gray);
+  background-color: rgba(128, 128, 128, 0.08);
+  font-size: 0.95rem;
+}
+
+.box > :first-child {
+  margin-top: 0;
+}
+
+.box > :last-child {
+  margin-bottom: 0;
+}
+
+.boxTitel {
+  display: block;
+  margin-bottom: var(--space-2xs);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tipp {
+  border-left-color: var(--color-aqua);
+}
+.tipp .boxTitel {
+  color: var(--color-aqua);
+}
+
+.achtung {
+  border-left-color: var(--color-orange);
+}
+.achtung .boxTitel {
+  color: var(--color-orange);
+}
+
+.loesung {
+  border-left-color: var(--color-green);
+  background-color: rgba(184, 187, 38, 0.08);
+}
+.loesung .boxTitel {
+  color: var(--color-green);
+}
+
+.regel {
+  border-left-color: var(--color-yellow);
+}
+.regel .boxTitel {
+  color: var(--color-yellow);
+}
+
+/* ─────────────────────────────────────────────
+   Abgabe-Block
+   ───────────────────────────────────────────── */
+.abgabe {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  border: var(--border-width) dashed var(--color-gray);
+  border-radius: var(--radius-lg);
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+.abgabe h2 {
+  margin-top: 0;
+}
+
+/* ─────────────────────────────────────────────
+   Figur / Skizze (ASCII-Welt zentriert)
+   ───────────────────────────────────────────── */
+.figur {
+  margin: var(--space-md) 0;
+  padding: var(--space-md);
+  border: var(--border-width) solid var(--color-gray-darker);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-dark);
+  text-align: center;
+}
+
+.figur pre {
+  display: inline-block;
+  margin: 0;
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-fg);
+}
+
+.figurCaption {
+  margin: var(--space-sm) 0 0;
+  font-size: 0.8rem;
+  color: var(--color-gray);
+  text-align: center;
+}

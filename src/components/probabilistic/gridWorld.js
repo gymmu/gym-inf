@@ -28,7 +28,7 @@ export const RICHTUNGEN = {
 };
 
 /** Die beiden Richtungen, in die man bei einer Aktion wegrutschen kann. */
-const QUER = {
+export const QUER = {
   oben: ["links", "rechts"],
   unten: ["links", "rechts"],
   links: ["oben", "unten"],
@@ -46,6 +46,49 @@ export function istKlippe(x, y) {
 
 export function istZiel(x, y) {
   return x === ZIEL.x && y === ZIEL.y;
+}
+
+/* ── Zustandsraum als Graph ─────────────────────────────────────────── */
+
+/** Wohin führt eine Bewegung? Gegen die Wand = stehen bleiben. */
+export function nachfolger(x, y, richtung) {
+  const { dx, dy } = RICHTUNGEN[richtung];
+  const nx = x + dx;
+  const ny = y + dy;
+  return feld(nx, ny) === null ? { x, y } : { x: nx, y: ny };
+}
+
+/**
+ * Übergangsverteilung P(s' | s, a).
+ *
+ * Mit p = 0 ergibt sich genau ein Nachfolger (klassisches, deterministisches
+ * Setting), sonst bis zu drei. Führen zwei Richtungen auf dasselbe Feld (z. B.
+ * weil man gegen eine Wand rutscht), werden ihre Wahrscheinlichkeiten addiert.
+ *
+ * @returns {{x:number,y:number,prob:number,richtungen:string[]}[]}
+ */
+export function uebergaenge(x, y, aktion, p) {
+  const roh = [
+    [aktion, 1 - p],
+    [QUER[aktion][0], p / 2],
+    [QUER[aktion][1], p / 2],
+  ];
+  const verteilung = new Map();
+
+  for (const [richtung, prob] of roh) {
+    if (prob <= 0) continue;
+    const ziel = nachfolger(x, y, richtung);
+    const key = `${ziel.x},${ziel.y}`;
+    const vorhanden = verteilung.get(key);
+    if (vorhanden) {
+      vorhanden.prob += prob;
+      vorhanden.richtungen.push(richtung);
+    } else {
+      verteilung.set(key, { ...ziel, prob, richtungen: [richtung] });
+    }
+  }
+
+  return [...verteilung.values()].sort((a, b) => b.prob - a.prob);
 }
 
 /* ── Zufallsgenerator mit Seed (reproduzierbar im Unterricht) ───────── */

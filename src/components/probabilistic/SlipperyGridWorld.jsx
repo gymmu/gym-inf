@@ -1,3 +1,4 @@
+import { Math as Tex } from "@components/Katex.jsx";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   BREITE,
@@ -13,10 +14,21 @@ import {
 import styles from "./probabilistic.module.css";
 
 const ZELLE = 64;
-const MODI = [
-  { key: "kurz", label: "Plan kurz" },
-  { key: "sicher", label: "Plan sicher" },
-  { key: "strategie", label: "Strategie" },
+
+const PLAN_MODI = [
+  { key: "kurz", label: "«kurz» (der Klippe entlang)" },
+  { key: "sicher", label: "«sicher» (oben herum)" },
+];
+
+const STRATEGIE_MODI = [{ key: "strategie", label: "«korrigieren»" }];
+
+const GLYPH = { oben: "↑", unten: "↓", links: "←", rechts: "→" };
+
+/** Die Strategie aus gridWorld.js, in Worte gefasst. */
+const REGELN = [
+  "wenn in der Zielspalte → ↓",
+  "sonst wenn nicht zuoberst → ↑",
+  "sonst → →",
 ];
 
 const LEER_STATS = {
@@ -194,25 +206,79 @@ export default function SlipperyGridWorld({
       <p className={styles.title}>{title}</p>
       <p className={styles.hinweis}>
         Der Roboter führt eine Aktion aus — aber der Boden ist rutschig. Mit
-        Wahrscheinlichkeit <code>p</code> landet er stattdessen auf einem der
-        beiden Felder quer zur gewünschten Richtung. Ein <em>Plan</em> ist eine
-        feste Liste von Aktionen (ohne Rückmeldung), eine <em>Strategie</em>{" "}
-        entscheidet bei jedem Schritt neu, je nach aktueller Position.
+        Wahrscheinlichkeit <Tex>{"p"}</Tex> landet er stattdessen auf einem der
+        beiden Felder quer zur gewünschten Richtung.
       </p>
 
+      {/* ── Plan oder Strategie: bewusst getrennt ── */}
+      <div className={styles.modeBar}>
+        <div className={`${styles.modeGroup} ${styles.modeGroupPlan}`}>
+          <span className={styles.modeGroupLabel}>Plan</span>
+          <span className={styles.modeGroupHint}>
+            Eine feste <strong>Liste von Aktionen</strong>, vorher berechnet und
+            blind abgearbeitet. Der Roboter schaut nie nach, wo er ist.
+          </span>
+          <div className={styles.modeButtons}>
+            {PLAN_MODI.map((m) => (
+              <button
+                key={m.key}
+                type="button"
+                className={`${styles.button} ${modus === m.key ? styles.buttonPlanActive : ""}`}
+                onClick={() => setModus(m.key)}
+              >
+                {m.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className={`${styles.modeGroup} ${styles.modeGroupStrategie}`}>
+          <span className={styles.modeGroupLabel}>Strategie (Policy)</span>
+          <span className={styles.modeGroupHint}>
+            Eine <strong>Regel pro Feld</strong>: <Tex>{"\\pi(s) = a"}</Tex>.
+            Nach jedem Schritt wird geschaut, wo der Roboter wirklich steht, und
+            neu entschieden.
+          </span>
+          <div className={styles.modeButtons}>
+            {STRATEGIE_MODI.map((m) => (
+              <button
+                key={m.key}
+                type="button"
+                className={`${styles.button} ${modus === m.key ? styles.buttonStrategieActive : ""}`}
+                onClick={() => setModus(m.key)}
+              >
+                {m.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Was gerade ausgeführt wird ── */}
+      {modus === "strategie" ? (
+        <p className={`${styles.aktiveWahl} ${styles.aktiveWahlStrategie}`}>
+          <strong>Regel:</strong>
+          {REGELN.map((r) => (
+            <span key={r} className={styles.regelChip}>
+              {r}
+            </span>
+          ))}
+        </p>
+      ) : (
+        <p className={`${styles.aktiveWahl} ${styles.aktiveWahlPlan}`}>
+          <strong>Aktionsliste:</strong>
+          {(PLAENE[modus]?.aktionen ?? []).map((a, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: Aktionen wiederholen sich im Plan
+            <span key={`${a}-${i}`} className={styles.aktionChip}>
+              {i + 1}. {GLYPH[a]}
+            </span>
+          ))}
+        </p>
+      )}
+
       <div className={styles.controls}>
-        {MODI.map((m) => (
-          <button
-            key={m.key}
-            type="button"
-            className={`${styles.button} ${modus === m.key ? styles.buttonActive : ""}`}
-            onClick={() => setModus(m.key)}
-          >
-            {m.label}
-          </button>
-        ))}
         <label className={styles.label} htmlFor="rutsch">
-          p = {p.toFixed(2)}
+          <Tex>{`p = ${p.toFixed(2)}`}</Tex>
           <input
             id="rutsch"
             className={styles.slider}

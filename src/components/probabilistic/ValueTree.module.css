@@ -1,0 +1,127 @@
+.wrapper {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md);
+  border: var(--border-width) solid var(--color-gray-darker);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-dark);
+}
+
+.reihe {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+}
+
+.reihe > .wrapper {
+  margin: 0;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 660px;
+  margin: 0 auto;
+  font-family: inherit;
+}
+
+.caption {
+  margin: var(--space-sm) 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--color-gray);
+  text-align: center;
+}
+
+/* ── Kanten ─────────────────────────────────────────────────────── */
+
+.kante {
+  stroke: var(--color-gray);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.kanteBest {
+  stroke: var(--color-green);
+  stroke-width: 2.5;
+}
+
+/* ── Knoten ─────────────────────────────────────────────────────── */
+
+.zustand {
+  fill: var(--color-bg-light);
+  stroke: var(--color-blue);
+  stroke-width: 2;
+}
+
+.zustandZiel {
+  stroke: var(--color-green);
+}
+
+.zustandLoch {
+  stroke: var(--color-red);
+}
+
+.aktion {
+  fill: var(--color-bg-light);
+  stroke: var(--color-gray);
+  stroke-width: 1.5;
+}
+
+.aktionBest {
+  stroke: var(--color-green);
+  stroke-width: 2.5;
+}
+
+/* ── Beschriftungen ─────────────────────────────────────────────── */
+
+.knotenText {
+  fill: var(--color-fg);
+  font-size: 15px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.aktionText {
+  fill: var(--color-fg);
+  font-size: 13px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.wahrscheinlichkeit {
+  fill: var(--color-yellow);
+  font-size: 12px;
+  text-anchor: middle;
+}
+
+.wertText {
+  fill: var(--color-gray-light);
+  font-size: 12px;
+  text-anchor: middle;
+}
+
+.formel {
+  fill: var(--color-gray-light);
+  font-size: 12.5px;
+  text-anchor: middle;
+}
+
+.formelBest {
+  fill: var(--color-green);
+  font-weight: 600;
+}
+
+.marke {
+  fill: var(--color-green);
+  font-size: 11px;
+  text-anchor: middle;
+  letter-spacing: 0.06em;
+}
+
+.legende {
+  fill: var(--color-gray);
+  font-size: 11px;
+}

@@ -234,6 +234,12 @@ const EFKIHausaufgabenPaper = lazy(
 const EFKIProbabilistischesPlanen = lazy(
   () => import("@pages-ef/ki-probabilistisches-planen.jsx"),
 );
+const EFKIAufgabenMCTSHand = lazy(
+  () => import("@pages-ef/ki-aufgaben-mcts-hand.jsx"),
+);
+const EFKIAufgabenMCTSCode = lazy(
+  () => import("@pages-ef/ki-aufgaben-mcts-code.jsx"),
+);
 
 const BoxModel = lazy(() => import("../components/BoxModel"));
 const CodePen = lazy(() => import("../components/CodePen"));
@@ -556,6 +562,14 @@ export const routes = [
       {
         path: "ef/ki-probabilistisches-planen",
         element: <EFKIProbabilistischesPlanen />,
+      },
+      {
+        path: "ef/ki-aufgaben-mcts-hand",
+        element: <EFKIAufgabenMCTSHand />,
+      },
+      {
+        path: "ef/ki-aufgaben-mcts-code",
+        element: <EFKIAufgabenMCTSCode />,
       },
       {
         path: "ef/js-aufgaben-algorithmen",

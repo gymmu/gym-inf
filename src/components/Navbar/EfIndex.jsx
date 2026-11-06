@@ -248,6 +248,16 @@ export default function EfIndex() {
             to: "ef/ki-probabilistisches-planen",
             label: "Theorie: Planen im Ungewissen",
           },
+          {
+            type: "aufgaben",
+            to: "ef/ki-aufgaben-mcts-hand",
+            label: "Aufgaben: Planen im Ungewissen von Hand",
+          },
+          {
+            type: "aufgaben",
+            to: "ef/ki-aufgaben-mcts-code",
+            label: "Aufgaben: Probabilistisches Planen implementieren",
+          },
         ]}
       />
     </div>
