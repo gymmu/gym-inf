@@ -30,6 +30,8 @@ const FmsSVGLinie = lazy(() => import("@pages-fms/svg-linie.jsx"));
 const FmsSVGPolyline = lazy(() => import("@pages-fms/svg-polyline.jsx"));
 const FmsSVGPolygon = lazy(() => import("@pages-fms/svg-polygon.jsx"));
 const FmsSVGLinienBoss = lazy(() => import("@pages-fms/svg-linien-boss.jsx"));
+const FmsSVGPfade1 = lazy(() => import("@pages-fms/svg-pfade-1.jsx"));
+const FmsSVGPfade2 = lazy(() => import("@pages-fms/svg-pfade-2.jsx"));
 const FmsSVGWip = lazy(() => import("@pages-fms/svg-wip.jsx"));
 const FmsSVG = lazy(() => import("@pages/fms/svg.mdx"));
 const FmsSVGAnimation = lazy(() => import("@pages/fms/svg-animation.mdx"));
@@ -375,14 +377,8 @@ export const routes = [
 
       // Geplante Kapitel von Vektoria — vorerst Platzhalter
       { path: "/fms/svg-linien-boss", element: <FmsSVGLinienBoss /> },
-      {
-        path: "/fms/svg-pfade-1",
-        element: <FmsSVGWip title="Pfade 1 — gerade Wege" />,
-      },
-      {
-        path: "/fms/svg-pfade-2",
-        element: <FmsSVGWip title="Pfade 2 — Kurven" />,
-      },
+      { path: "/fms/svg-pfade-1", element: <FmsSVGPfade1 /> },
+      { path: "/fms/svg-pfade-2", element: <FmsSVGPfade2 /> },
       {
         path: "/fms/svg-pfade-boss",
         element: <FmsSVGWip title="Zwischenboss: Der Pfadwächter" />,

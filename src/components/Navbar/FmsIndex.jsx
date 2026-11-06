@@ -53,6 +53,8 @@ export default function FmsIndex() {
               <NavLink to="fms/svg-linien-boss">
                 Zwischenboss: Linienmeister
               </NavLink>
+              <NavLink to="fms/svg-pfade-1">Pfade: gerade Wege (SVG)</NavLink>
+              <NavLink to="fms/svg-pfade-2">Pfade: Kurven (SVG)</NavLink>
               {showAll && (
                 <>
                   <NavLink to="fms/hardware">Computer Hardware</NavLink>

@@ -2,7 +2,8 @@ import { Editor } from "@monaco-editor/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SvgSource } from "@/components/gym/SvgCode/SvgCode";
 import style from "./SvgChallenge.module.css";
-import { compareSvg } from "./svgCompare";
+import { usesAbsolute, usesRelative } from "./pathCompare.js";
+import { compareSvg, scanShapes } from "./svgCompare";
 import { setupSvgLanguage } from "./svgMonaco";
 
 /**
@@ -25,6 +26,9 @@ import { setupSvgLanguage } from "./svgMonaco";
  * @param {boolean} [editable] Code frei bearbeitbar (Standard true)
  * @param {boolean} [sliders] Regler für alle Zahlen im Code anzeigen
  * @param {number} [height] Höhe des Editors in Pixel
+ * @param {"relative"|"absolute"|null} [requireStyle] verlangt zusätzlich eine
+ *   Schreibweise der Pfadbefehle (klein bzw. gross). Ohne Angabe ist beides
+ *   richtig, solange dasselbe Bild entsteht.
  * @param {boolean} [grid] Koordinatengitter hinter beiden Bildern (Standard an)
  * @param {number} [gridStep] Abstand der feinen Gitterlinien (Standard 10)
  * @param {() => void} [onSolved] wird einmal aufgerufen, sobald es stimmt
@@ -39,6 +43,7 @@ export default function SvgChallenge({
   editable = true,
   sliders = false,
   height = 240,
+  requireStyle = null,
   grid = true,
   gridStep = 10,
   onSolved,
@@ -57,6 +62,31 @@ export default function SvgChallenge({
     [code, target, tolerance],
   );
 
+  // Optionale Zusatzregel: Die Pfadbefehle sollen relativ (bzw. absolut)
+  // geschrieben sein. Das Bild allein kann das nicht unterscheiden.
+  const styleHint = useMemo(() => {
+    if (!requireStyle) return null;
+    const paths = scanShapes(code).filter(
+      (shape) => shape.tag === "path" && shape.attrs.d,
+    );
+    if (paths.length === 0) return null;
+    if (
+      requireStyle === "relative" &&
+      paths.some((shape) => usesAbsolute(shape.attrs.d))
+    ) {
+      return "Das Bild stimmt — aber hier sind kleine Buchstaben gefragt: l, h, v, z (nur das erste M bleibt gross).";
+    }
+    if (
+      requireStyle === "absolute" &&
+      paths.some((shape) => usesRelative(shape.attrs.d))
+    ) {
+      return "Das Bild stimmt — aber hier sind grosse Buchstaben gefragt: M, L, H, V.";
+    }
+    return null;
+  }, [code, requireStyle]);
+
+  const solved = result.ok && !styleHint;
+
   const numbers = useMemo(
     () => (sliders ? findNumbers(code) : []),
     [code, sliders],
@@ -69,20 +99,20 @@ export default function SvgChallenge({
   // Treffer nur einmal melden.
   const reported = useRef(false);
   useEffect(() => {
-    if (result.ok && !reported.current) {
+    if (solved && !reported.current) {
       reported.current = true;
       onSolved?.();
     }
-  }, [result.ok, onSolved]);
+  }, [solved, onSolved]);
 
-  const stateClass = result.ok ? style.ok : style.wrong;
+  const stateClass = solved ? style.ok : style.wrong;
 
   return (
     <section className={`${style.challenge} ${stateClass} ${className}`}>
       <header className={style.header}>
         <h3 className={style.title}>{title ?? "Zeichne das Ziel nach"}</h3>
         <span className={`${style.badge} ${stateClass}`}>
-          {result.ok
+          {solved
             ? "✓ Geschafft!"
             : `${result.matched} / ${result.total} Formen stimmen`}
         </span>
@@ -222,9 +252,10 @@ export default function SvgChallenge({
         </figure>
       </div>
 
-      {(result.error || result.hints.length > 0) && !result.ok && (
+      {(result.error || result.hints.length > 0 || styleHint) && !solved && (
         <ul className={style.hints}>
           {result.error && <li>{result.error}</li>}
+          {styleHint && <li>{styleHint}</li>}
           {result.hints.map((hint) => (
             <li key={hint}>{hint}</li>
           ))}

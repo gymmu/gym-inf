@@ -5,7 +5,14 @@
  * es, und welche Eigenschaften haben sie? So darf die Schülerlösung anders
  * formatiert sein (andere Reihenfolge der Attribute, andere Schreibweise der
  * Farbe) und gilt trotzdem als richtig.
+ *
+ * Für das Attribut `d` gilt das besonders: Es wird über `comparePathData`
+ * geometrisch verglichen. Absolut oder relativ geschrieben, `H`/`V` statt
+ * `L`, Kommas oder Zeilenumbrüche — alles egal, solange derselbe Weg
+ * entsteht.
  */
+
+import { comparePathData } from "./pathCompare.js";
 
 /** Formen, die wir vergleichen. */
 const SHAPES = [
@@ -244,7 +251,12 @@ function diffShape(target, rawCandidate, tolerance) {
 
     let ok = false;
     let note;
-    if (typeof wanted === "number" && typeof got === "number") {
+    if (name === "d") {
+      // Pfadangabe: Es zählt der Weg, nicht die Schreibweise.
+      const verdict = comparePathData(wanted, got, tolerance);
+      ok = verdict.ok;
+      if (!ok) note = verdict.note;
+    } else if (typeof wanted === "number" && typeof got === "number") {
       ok = Math.abs(wanted - got) <= tolerance;
     } else if (Array.isArray(wanted) && Array.isArray(got)) {
       if (name === "points") {
@@ -306,6 +318,17 @@ function maybeFlipLine(target, candidate, tolerance) {
 
 /** Macht aus einer Abweichung einen gut lesbaren Hinweis-Baustein. */
 function problemLabel(problem) {
+  if (problem.name === "d") {
+    if (problem.note === "closed")
+      return "d (der Weg stimmt — aber einer der Teilwege ist nicht mit Z geschlossen)";
+    if (problem.note === "order")
+      return "d (die Punkte stimmen, aber die Reihenfolge ergibt ein anderes Bild)";
+    if (problem.note === "count")
+      return "d (die Anzahl Wegstücke stimmt noch nicht)";
+    if (problem.note === "parts")
+      return "d (die Anzahl Teilwege stimmt noch nicht — wie viele M stehen im Pfad?)";
+    return "d (der Weg führt noch nicht zu den richtigen Punkten)";
+  }
   if (problem.name !== "points") return problem.name;
   if (problem.note === "order")
     return "points (die Punkte stimmen, aber die Reihenfolge ergibt ein anderes Bild)";

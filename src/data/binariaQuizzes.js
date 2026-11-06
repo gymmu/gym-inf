@@ -456,6 +456,183 @@ export const binariaQuizzes = {
     ],
   },
 
+  pfadgebirge: {
+    title: "Quiz: Pfadgebirge",
+    questions: [
+      {
+        id: "path-1",
+        question: "Wie ist eine Pfadangabe aufgebaut?",
+        answers: [
+          {
+            text: "Ein Buchstabe (Befehl), danach die Zahlen, die zu diesem Befehl gehören.",
+            correct: true,
+          },
+          { text: "Immer Paare aus x und y, getrennt durch Kommas." },
+          { text: "Eine Liste von Farben und Längen." },
+          { text: "Ein Buchstabe pro Punkt, die Zahlen stehen davor." },
+        ],
+        explanation:
+          'In d="M 20 160 L 70 60" sagt der Buchstabe, was gemacht wird, die Zahlen sagen wie viel.',
+      },
+      {
+        id: "path-2",
+        question: "Womit beginnt jeder Pfad?",
+        answers: [
+          {
+            text: "Mit M — der Stift wird gesetzt, ohne zu zeichnen.",
+            correct: true,
+          },
+          { text: "Mit L — der ersten Linie." },
+          { text: "Mit Z — dem geschlossenen Weg." },
+          { text: "Mit einer Farbe." },
+        ],
+        explanation:
+          "Ohne M weiss der Stift nicht, wo er steht — M x y setzt ihn an eine Stelle.",
+      },
+      {
+        id: "path-3",
+        question: "Wie viele Zahlen gehören zu H?",
+        answers: [
+          { text: "Eine — nur das neue x, y bleibt gleich.", correct: true },
+          { text: "Zwei — x und y." },
+          { text: "Keine." },
+          { text: "Drei — x, y und die Länge." },
+        ],
+        explanation:
+          "H x zeichnet waagrecht, V y senkrecht. Beide brauchen nur eine Zahl.",
+      },
+      {
+        id: "path-4",
+        question: "Was bewirkt Z am Ende eines Pfades?",
+        answers: [
+          {
+            text: "Es zieht eine Linie zurück zum letzten M — der Weg ist geschlossen.",
+            correct: true,
+          },
+          { text: "Es löscht den Pfad." },
+          { text: "Es füllt die Form mit Schwarz." },
+          { text: "Es setzt den Stift an den Nullpunkt." },
+        ],
+        explanation:
+          "Z (oder z) schliesst den Teilweg und braucht keine Zahlen.",
+      },
+      {
+        id: "path-5",
+        question: "Der Stift steht bei 50/50. Wo endet l 20 -10?",
+        answers: [
+          { text: "Bei 70/40", correct: true },
+          { text: "Bei 20/-10" },
+          { text: "Bei 30/60" },
+          { text: "Bei 50/50 — nichts passiert." },
+        ],
+        explanation:
+          "Kleine Buchstaben sind relativ: 50+20 = 70 und 50−10 = 40.",
+      },
+      {
+        id: "path-6",
+        question: "Was passiert, wenn mitten im d ein zweites M steht?",
+        answers: [
+          {
+            text: "Es beginnt ein neuer Teilweg — die Verbindung dorthin wird nicht gezeichnet.",
+            correct: true,
+          },
+          { text: "Der Pfad wird ungültig." },
+          { text: "Der Pfad beginnt von vorne, alles davor verschwindet." },
+          { text: "Es wird eine Linie dorthin gezeichnet." },
+        ],
+        explanation:
+          "So zeichnet ein einziger <path> mehrere getrennte Linien oder Formen.",
+      },
+    ],
+  },
+
+  kurventaeler: {
+    title: "Quiz: Kurventäler",
+    questions: [
+      {
+        id: "curve-1",
+        question: "Wie viele Zahlen gehören zu Q?",
+        answers: [
+          { text: "Vier: x1 y1 x y", correct: true },
+          { text: "Zwei: x y" },
+          { text: "Sechs: x1 y1 x2 y2 x y" },
+          { text: "Sieben" },
+        ],
+        explanation:
+          "Q hat einen Kontrollpunkt (x1 y1) und den Endpunkt (x y).",
+      },
+      {
+        id: "curve-2",
+        question: "Was ist ein Kontrollpunkt?",
+        answers: [
+          {
+            text: "Ein Griff, der die Kurve zu sich zieht — er liegt meist nicht auf der Kurve.",
+            correct: true,
+          },
+          { text: "Der Punkt, an dem die Kurve endet." },
+          { text: "Der Mittelpunkt des Kreises." },
+          { text: "Ein Punkt, der immer sichtbar gezeichnet wird." },
+        ],
+        explanation:
+          "Die Kurve wird in Richtung des Griffs gezogen, berührt ihn aber nicht.",
+      },
+      {
+        id: "curve-3",
+        question: "Welcher Befehl hat zwei Kontrollpunkte?",
+        answers: [
+          { text: "C", correct: true },
+          { text: "Q" },
+          { text: "A" },
+          { text: "L" },
+        ],
+        explanation:
+          "C x1 y1 x2 y2 x y — zuerst beide Griffe, dann der Endpunkt: sechs Zahlen.",
+      },
+      {
+        id: "curve-4",
+        question: "Welche Zahlen stehen bei A ganz am Schluss?",
+        answers: [
+          { text: "Der Endpunkt x y", correct: true },
+          { text: "Die Radien rx ry" },
+          { text: "Die beiden Schalter 0/1" },
+          { text: "Der Drehwinkel" },
+        ],
+        explanation:
+          "A rx ry rot large-arc sweep x y — wie bei allen Befehlen steht der Endpunkt zuhinterst.",
+      },
+      {
+        id: "curve-5",
+        question: "Wozu dienen die beiden Schalter 0/1 bei A?",
+        answers: [
+          {
+            text: "Sie wählen einen der vier möglichen Bögen zwischen den zwei Punkten aus.",
+            correct: true,
+          },
+          { text: "Sie schalten die Füllfarbe ein und aus." },
+          { text: "Sie bestimmen die Strichdicke." },
+          { text: "Sie geben an, ob der Pfad geschlossen wird." },
+        ],
+        explanation:
+          "large-arc wählt kurzer/langer Bogen, sweep die Drehrichtung.",
+      },
+      {
+        id: "curve-6",
+        question: "Was bedeutet ein kleines q statt Q?",
+        answers: [
+          {
+            text: "Alle vier Zahlen zählen ab dem aktuellen Punkt.",
+            correct: true,
+          },
+          { text: "Die Kurve wird gespiegelt." },
+          { text: "Nur der Endpunkt ist relativ, der Griff bleibt absolut." },
+          { text: "Es ist ein Schreibfehler — q gibt es nicht." },
+        ],
+        explanation:
+          "Kleinbuchstaben sind immer relativ: alle Koordinaten sind Schritte ab dem aktuellen Punkt.",
+      },
+    ],
+  },
+
   // Beispiel (auskommentiert, dient als Vorlage):
   //
   // bitwald: {

@@ -1,0 +1,518 @@
+/*
+ * TurtleWalk — Aufbau:
+ *
+ *   .main      links die Bühne, rechts die beiden Zettel
+ *   .panelDraw Zettel A — Zeichenvorschrift (gelb)
+ *   .panelPath Zettel B — Weganweisung d    (blau)
+ *   .codeArea  beide Zettel zusammen als Code
+ *
+ * Knotenpunkte sind durchnummeriert (1, 2, 3 …) und tragen überall —
+ * Leinwand, Liste, Code — dieselbe Nummer.
+ */
+
+.widget {
+  --tw-draw: #fabd2f;
+  --tw-path: #83a598;
+  --tw-mark: #fe8019;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: auto minmax(320px, 1fr);
+  gap: var(--space-lg, 1.2rem);
+  align-items: start;
+}
+
+@media (max-width: 1000px) {
+  .main {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+.stageCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 0.35rem);
+  align-items: center;
+  min-width: 0;
+}
+
+/* --- Bühne: Leinwand mit der Schildkröte darüber --- */
+
+.stage {
+  /* Platz links und oben, damit die Schildkröte beim Ursprung (0/0)
+     vollständig sichtbar bleibt. */
+  padding: 56px 8px 8px 60px;
+  max-width: 100%;
+}
+
+.canvasBox {
+  position: relative;
+  max-width: 100%;
+}
+
+.turtleLayer {
+  position: absolute;
+  width: 104px;
+  pointer-events: none;
+  transition: none;
+}
+
+/* --- Leinwand-Hilfslinien --- */
+
+.grid line {
+  stroke: #ebdbb2;
+  stroke-width: 1;
+}
+
+.axes line {
+  stroke: #928374;
+  stroke-width: 2;
+}
+
+/* --- Knotenpunkte auf der Leinwand --- */
+
+.node circle {
+  fill: #fbf1c7;
+  stroke: #928374;
+  stroke-width: 1.5;
+}
+
+.node text {
+  font-family: monospace;
+  font-size: 8px;
+  font-weight: bold;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: #504945;
+  pointer-events: none;
+}
+
+.nodeStart circle {
+  fill: #d5c4a1;
+}
+
+/* schon abgelaufen: eingefärbt */
+.nodeDone.nodeDraw circle {
+  fill: #83a598;
+  stroke: #458588;
+}
+
+.nodeDone.nodeDraw text {
+  fill: #fbf1c7;
+}
+
+/* Knoten, den die Schildkröte mit gehobenem Stift erreicht */
+.nodeMove circle {
+  stroke-dasharray: 3 2;
+}
+
+.nodeDone.nodeMove circle {
+  fill: #ebdbb2;
+  stroke: #665c54;
+}
+
+/* markiert (Hover in Liste/Code oder gerade aktiv) */
+.nodeMarked circle {
+  fill: #fe8019;
+  stroke: #af3a03;
+  stroke-width: 2;
+  r: 9;
+}
+
+.nodeMarked text {
+  font-size: 9px;
+  fill: #282828;
+}
+
+/* --- Statuszeile unter der Leinwand --- */
+
+.status {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--color-gray-light);
+}
+
+.statusBadge,
+.stepNum,
+.codeNum,
+.legendDraw,
+.legendMove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35em;
+  height: 1.35em;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #282828;
+  background-color: #d5c4a1;
+  border-radius: 999px;
+}
+
+.statusBadge {
+  background-color: var(--tw-mark, #fe8019);
+}
+
+/* --- Die beiden Zettel --- */
+
+.panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: var(--space-md, 1rem);
+  align-items: start;
+  width: 100%;
+  min-width: 0;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background-color: rgba(60, 56, 54, 0.45);
+  border: 1px solid rgba(146, 131, 116, 0.35);
+  border-top-width: 3px;
+  border-radius: var(--radius-lg, 8px);
+}
+
+.panelDraw {
+  border-top-color: var(--tw-draw, #fabd2f);
+}
+
+.panelPath {
+  border-top-color: var(--tw-path, #83a598);
+}
+
+.panelHead {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  padding: 0.45rem 0.6rem;
+  background-color: rgba(40, 40, 40, 0.45);
+}
+
+.panelBadge {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  font-family: monospace;
+  font-weight: bold;
+  color: #282828;
+  border-radius: 6px;
+}
+
+.panelDraw .panelBadge {
+  background-color: var(--tw-draw, #fabd2f);
+}
+
+.panelPath .panelBadge {
+  background-color: var(--tw-path, #83a598);
+}
+
+.panelTitle {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.panelDraw .panelTitle {
+  color: var(--tw-draw, #fabd2f);
+}
+
+.panelPath .panelTitle {
+  color: var(--tw-path, #83a598);
+}
+
+.panelHint {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--color-gray-light);
+}
+
+.panelBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem 0.6rem 0.7rem;
+}
+
+/* --- Schrittliste (Wegstücke) --- */
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* Die globale Nummerierung (main section ol > li::before) stört hier —
+   die Wegstücke tragen ihre eigene Nummer. */
+.steps > li {
+  padding-left: 0;
+}
+
+.steps > li::before {
+  content: none;
+}
+
+.step,
+.stepStart {
+  display: grid;
+  grid-template-columns: 1.6em 1.3em 1fr auto;
+  gap: 0.4rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.2rem 0.35rem;
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: var(--color-gray-light);
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: 1px solid transparent;
+  border-left: 3px solid rgba(146, 131, 116, 0.35);
+  border-radius: 4px;
+}
+
+.stepStart {
+  cursor: default;
+}
+
+.step:hover,
+.stepHover {
+  background-color: rgba(168, 153, 132, 0.18);
+  border-left-color: var(--tw-mark, #fe8019);
+}
+
+.stepActive {
+  background-color: rgba(254, 128, 25, 0.18);
+  border-color: rgba(254, 128, 25, 0.55);
+  border-left-color: var(--tw-mark, #fe8019);
+}
+
+.stepLetter {
+  min-width: 1.1em;
+  font-weight: bold;
+  color: var(--color-orange, #fe8019);
+}
+
+.stepArgs {
+  color: var(--color-green);
+}
+
+.stepText {
+  grid-column: 2 / -1;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.78rem;
+  color: var(--color-gray);
+}
+
+.stepTo {
+  font-size: 0.75rem;
+  color: var(--tw-path, #83a598);
+  white-space: nowrap;
+}
+
+.stepToMove {
+  color: var(--color-gray);
+}
+
+/* --- Legende zu den Knotenpunkten --- */
+
+.legend {
+  margin: 0.2rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--color-gray);
+}
+
+.legendDraw {
+  color: #fbf1c7;
+  background-color: #83a598;
+}
+
+.legendMove {
+  background-color: #ebdbb2;
+}
+
+/* --- Eingabe des Wegs --- */
+
+.pathEdit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.45rem;
+  border-top: 1px dashed rgba(146, 131, 116, 0.35);
+}
+
+.input {
+  width: 100%;
+  padding: 0.3rem 0.4rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--color-green);
+  background-color: rgba(40, 40, 40, 0.8);
+  border: 1px solid rgba(146, 131, 116, 0.5);
+  border-radius: 4px;
+}
+
+/* --- Chips (Füllung, Beispiele) --- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.chip {
+  padding: 0.2rem 0.55rem;
+  font-size: 0.8rem;
+  color: var(--color-gray-light);
+  cursor: pointer;
+  background-color: rgba(60, 56, 54, 0.6);
+  border: 1px solid rgba(146, 131, 116, 0.4);
+  border-radius: 999px;
+}
+
+.chip:hover {
+  background-color: rgba(146, 131, 116, 0.3);
+}
+
+.chipActive {
+  color: var(--color-bg, #282828);
+  background-color: var(--color-yellow, #fabd2f);
+  border-color: var(--color-yellow, #fabd2f);
+}
+
+/* --- Steuerung --- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  align-items: center;
+  justify-content: center;
+  max-width: 420px;
+  margin: 0.2rem 0;
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.button {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  color: var(--color-fg, #ebdbb2);
+  cursor: pointer;
+  background-color: rgba(60, 56, 54, 0.8);
+  border: 1px solid rgba(146, 131, 116, 0.5);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.button:hover {
+  background-color: rgba(146, 131, 116, 0.35);
+}
+
+.buttonMain {
+  color: #282828;
+  background-color: var(--tw-mark, #fe8019);
+  border-color: var(--tw-mark, #fe8019);
+}
+
+.buttonMain:hover {
+  background-color: #fabd2f;
+}
+
+.slider {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--color-gray-light);
+}
+
+.slider input[type="range"] {
+  width: 110px;
+}
+
+.checkbox {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--color-gray-light);
+  cursor: pointer;
+}
+
+/* --- Code --- */
+
+.codeArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.codeHint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--color-gray-light);
+}
+
+.attr {
+  color: var(--color-yellow);
+}
+
+.attrPath {
+  color: var(--tw-path, #83a598);
+  font-weight: bold;
+}
+
+.value {
+  color: var(--color-green);
+}
+
+/* anklickbares Wegstück im Code */
+.codeSeg {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+  margin: 0 0.15rem 0.1rem 0;
+  padding: 0 0.2rem;
+  font: inherit;
+  color: var(--color-green);
+  cursor: pointer;
+  background: rgba(131, 165, 152, 0.12);
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.codeSeg:hover,
+.codeSegOn {
+  color: #282828;
+  background-color: var(--tw-mark, #fe8019);
+  border-color: #af3a03;
+}
+
+.codeNum {
+  font-size: 0.65rem;
+  background-color: #d5c4a1;
+}

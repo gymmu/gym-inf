@@ -58,3 +58,55 @@
   color: var(--color-orange, #fe8019);
   text-transform: uppercase;
 }
+
+/* Einstieg mit der Schildkröte (Pfadgebirge): Figur neben dem Text. */
+.intro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md, 1rem) var(--space-lg, 2rem);
+  align-items: center;
+}
+
+.intro > div {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.introTurtle {
+  flex: 0 0 auto;
+  margin-inline: auto;
+}
+
+/* Gegenüberstellung absolut ↔ relativ (Pfadgebirge). */
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-md, 1rem);
+  margin-block: var(--space-md, 1rem);
+}
+
+.compareAbs,
+.compareRel {
+  padding: var(--space-md, 1rem);
+  border-left: 6px solid var(--color-gray, #928374);
+  border-radius: 6px;
+  background: rgb(255 255 255 / 4%);
+}
+
+.compareAbs {
+  border-left-color: var(--color-blue, #83a598);
+}
+
+.compareRel {
+  border-left-color: var(--color-red, #fb4934);
+}
+
+.compareAbs h3,
+.compareRel h3 {
+  margin-block: 0 0.6rem;
+}
+
+.compareAbs p:last-child,
+.compareRel p:last-child {
+  margin-block-end: 0;
+}

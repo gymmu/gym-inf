@@ -149,16 +149,13 @@ export const binariaWorlds = [
           },
         ],
       },
-      // --- Geplant: Inhalte entstehen Schritt für Schritt ------------------
-      // Die Kapitel unten sind erst als Übersicht angelegt. Noch nicht
-      // geschriebene Seiten zeigen vorerst die Platzhalterseite an.
       {
         id: "pfadgebirge",
         name: "Pfadgebirge",
         icon: "🧭",
         chapters: [
           {
-            title: "Pfade 1 — gerade Wege (M, L, Z)",
+            title: "Pfade 1 — gerade Wege (M, L, H, V, Z)",
             path: "/fms/svg-pfade-1",
           },
         ],
@@ -168,9 +165,13 @@ export const binariaWorlds = [
         name: "Kurventäler",
         icon: "🌊",
         chapters: [
-          { title: "Pfade 2 — Kurven (C, Q, A)", path: "/fms/svg-pfade-2" },
+          { title: "Pfade 2 — Kurven (Q, C, A)", path: "/fms/svg-pfade-2" },
         ],
       },
+
+      // --- Geplant: Inhalte entstehen Schritt für Schritt ------------------
+      // Die Kapitel unten sind erst als Übersicht angelegt. Noch nicht
+      // geschriebene Seiten zeigen vorerst die Platzhalterseite an.
       {
         id: "pfad-boss",
         name: "Der Pfadwächter",
