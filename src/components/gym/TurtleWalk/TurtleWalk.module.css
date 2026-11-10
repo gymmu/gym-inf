@@ -71,6 +71,49 @@
   stroke-width: 2;
 }
 
+/* --- Griffe (Kontrollpunkte) einer Kurve --- */
+
+/* immer sichtbar, aber zurückhaltend … */
+.handles {
+  opacity: 0.45;
+}
+
+/* … und kräftig beim Wegstück, auf dem die Schildkröte gerade ist */
+.handlesOn {
+  opacity: 1;
+}
+
+.handleLine {
+  fill: none;
+  stroke: #d3869b;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+.handleEllipse {
+  fill: none;
+  stroke: #d3869b;
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+  opacity: 0.8;
+}
+
+.handle rect {
+  fill: #d3869b;
+  stroke: #8f3f71;
+  stroke-width: 1.5;
+}
+
+.handle text {
+  font-family: monospace;
+  font-size: 7px;
+  font-weight: bold;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: #fbf1c7;
+  pointer-events: none;
+}
+
 /* --- Knotenpunkte auf der Leinwand --- */
 
 .node circle {

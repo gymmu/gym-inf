@@ -52,10 +52,202 @@ const COMMAND_TEXT = {
   H: "waagrecht bis x",
   V: "senkrecht bis y",
   Z: "zurück zum Anfang",
+  Q: "Kurve mit einem Griff",
+  C: "Kurve mit zwei Griffen",
+  A: "Bogen auf einer Ellipse",
 };
 
 const round = (n) => Math.round(n * 10) / 10;
 const lerp = (a, b, t) => a + (b - a) * t;
+
+/** Wie fein Kurven in kleine Geradenstücke zerlegt werden. */
+const CURVE_STEPS = 48;
+
+/** Punkt auf einer quadratischen Kurve (ein Griff). */
+function quadPoint(p0, c, p1, t) {
+  const u = 1 - t;
+  return [
+    u * u * p0[0] + 2 * u * t * c[0] + t * t * p1[0],
+    u * u * p0[1] + 2 * u * t * c[1] + t * t * p1[1],
+  ];
+}
+
+/** Punkt auf einer kubischen Kurve (zwei Griffe). */
+function cubicPoint(p0, c1, c2, p1, t) {
+  const u = 1 - t;
+  const a = u * u * u;
+  const b = 3 * u * u * t;
+  const c = 3 * u * t * t;
+  const dd = t * t * t;
+  return [
+    a * p0[0] + b * c1[0] + c * c2[0] + dd * p1[0],
+    a * p0[1] + b * c1[1] + c * c2[1] + dd * p1[1],
+  ];
+}
+
+/**
+ * Rechnet einen Bogen (`A`) von der Endpunkt- in die Mittelpunktform um
+ * und gibt eine Funktion zurück, die den Punkt bei `t` (0 … 1) liefert.
+ *
+ * Das ist genau das Verfahren aus der SVG-Spezifikation.
+ */
+function arcSampler(p0, rxIn, ryIn, rotDeg, largeArc, sweep, p1) {
+  let rx = Math.abs(rxIn);
+  let ry = Math.abs(ryIn);
+  if (rx === 0 || ry === 0) {
+    return {
+      at: (t) => [lerp(p0[0], p1[0], t), lerp(p0[1], p1[1], t)],
+      ellipse: null,
+    };
+  }
+
+  const phi = (rotDeg * Math.PI) / 180;
+  const cos = Math.cos(phi);
+  const sin = Math.sin(phi);
+
+  const dx = (p0[0] - p1[0]) / 2;
+  const dy = (p0[1] - p1[1]) / 2;
+  const x1 = cos * dx + sin * dy;
+  const y1 = -sin * dx + cos * dy;
+
+  // Zu kleine Radien aufblasen, damit der Bogen überhaupt passt.
+  const check = (x1 * x1) / (rx * rx) + (y1 * y1) / (ry * ry);
+  if (check > 1) {
+    const s = Math.sqrt(check);
+    rx *= s;
+    ry *= s;
+  }
+
+  const num = rx * rx * ry * ry - rx * rx * y1 * y1 - ry * ry * x1 * x1;
+  const den = rx * rx * y1 * y1 + ry * ry * x1 * x1;
+  const factor =
+    (largeArc === sweep ? -1 : 1) * Math.sqrt(Math.max(0, num) / (den || 1));
+  const cx1 = (factor * rx * y1) / ry;
+  const cy1 = (-factor * ry * x1) / rx;
+
+  const cx = cos * cx1 - sin * cy1 + (p0[0] + p1[0]) / 2;
+  const cy = sin * cx1 + cos * cy1 + (p0[1] + p1[1]) / 2;
+
+  const angle = (ux, uy, vx, vy) => {
+    const dot = ux * vx + uy * vy;
+    const len = Math.hypot(ux, uy) * Math.hypot(vx, vy);
+    const a = Math.acos(Math.max(-1, Math.min(1, dot / (len || 1))));
+    return ux * vy - uy * vx < 0 ? -a : a;
+  };
+
+  const start = angle(1, 0, (x1 - cx1) / rx, (y1 - cy1) / ry);
+  let sweepAngle = angle(
+    (x1 - cx1) / rx,
+    (y1 - cy1) / ry,
+    (-x1 - cx1) / rx,
+    (-y1 - cy1) / ry,
+  );
+  if (!sweep && sweepAngle > 0) sweepAngle -= 2 * Math.PI;
+  if (sweep && sweepAngle < 0) sweepAngle += 2 * Math.PI;
+
+  return {
+    at: (t) => {
+      const a = start + sweepAngle * t;
+      const px = rx * Math.cos(a);
+      const py = ry * Math.sin(a);
+      return [cos * px - sin * py + cx, sin * px + cos * py + cy];
+    },
+    // Die Ellipse, auf der der Bogen liegt — als Hilfslinie zeichenbar.
+    ellipse: { cx, cy, rx, ry, rot: rotDeg },
+  };
+}
+
+/** Zerlegt eine Kurve in viele kleine Geradenstücke. */
+function samplePoints(sampler) {
+  const points = [];
+  for (let i = 0; i <= CURVE_STEPS; i += 1) {
+    points.push(sampler(i / CURVE_STEPS));
+  }
+  return points;
+}
+
+/** Länge eines Streckenzugs. */
+function polylineLength(points) {
+  let sum = 0;
+  for (let i = 1; i < points.length; i += 1) {
+    sum += Math.hypot(
+      points[i][0] - points[i - 1][0],
+      points[i][1] - points[i - 1][1],
+    );
+  }
+  return sum;
+}
+
+/** Richtung (in Grad) von Punkt `a` nach Punkt `b`. */
+function headingOf(a, b) {
+  return (Math.atan2(b[1] - a[1], b[0] - a[0]) * 180) / Math.PI;
+}
+
+/**
+ * Hilfslinien zu den Griffen einer Kurve.
+ *
+ * Bei `Q` zieht ein Griff — die Linie geht vom Start über ihn zum Ziel.
+ * Bei `C` zieht Griff 1 am Start und Griff 2 am Ziel: zwei getrennte Linien.
+ */
+function handleLines(seg) {
+  const [c1, c2] = seg.controls ?? [];
+  if (!c1) return "";
+  const p = (q) => `${round(q[0])} ${round(q[1])}`;
+  if (!c2) return `M ${p(seg.from)} L ${p(c1)} L ${p(seg.to)}`;
+  return `M ${p(seg.from)} L ${p(c1)} M ${p(seg.to)} L ${p(c2)}`;
+}
+
+/** Streckenzug als `d`-Wert — für die Markierung eines Wegstücks. */
+function polylinePath(points) {
+  return points
+    .map((p, i) => `${i === 0 ? "M" : "L"} ${round(p[0])} ${round(p[1])}`)
+    .join(" ");
+}
+
+/**
+ * Läuft ein Wegstück bis zur Strecke `covered` ab.
+ *
+ * Zurück kommen der erreichte Punkt, die Blickrichtung und die bereits
+ * gelaufenen Teilstücke als `L`-Befehle.
+ */
+function traverse(seg, covered) {
+  const pts = seg.points;
+  let rest = covered;
+  let point = pts[0];
+  let heading = pts.length > 1 ? headingOf(pts[0], pts[1]) : 0;
+  let drawn = "";
+
+  if (seg.length === 0) {
+    const last = pts[pts.length - 1];
+    return {
+      point: last,
+      heading,
+      drawn: `L ${round(last[0])} ${round(last[1])} `,
+    };
+  }
+
+  for (let i = 1; i < pts.length; i += 1) {
+    const a = pts[i - 1];
+    const b = pts[i];
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    if (len === 0) continue;
+
+    if (rest >= len) {
+      drawn += `L ${round(b[0])} ${round(b[1])} `;
+      point = b;
+      heading = headingOf(a, b);
+      rest -= len;
+    } else {
+      const t = rest / len;
+      point = [lerp(a[0], b[0], t), lerp(a[1], b[1], t)];
+      heading = headingOf(a, b);
+      drawn += `L ${round(point[0])} ${round(point[1])} `;
+      break;
+    }
+  }
+
+  return { point, heading, drawn };
+}
 
 /**
  * Zerlegt eine Pfadangabe in Wegstücke, die die Schildkröte abläuft.
@@ -63,7 +255,7 @@ const lerp = (a, b, t) => a + (b - a) * t;
  * Der Stift startet immer im Koordinatenursprung (0 / 0) — das erste
  * `M` ist also selbst schon ein (unsichtbarer) Weg dorthin.
  */
-function toSegments(d) {
+export function toSegments(d) {
   const items = parsePath(d);
   let cx = 0;
   let cy = 0;
@@ -79,7 +271,15 @@ function toSegments(d) {
     const oy = rel ? cy : 0;
     const n = (i) => item.args[i] ?? 0;
 
+    const from = [cx, cy];
     let end = [cx, cy];
+    // Alle Wegstücke werden als Streckenzug gespeichert — Geraden haben
+    // zwei Punkte, Kurven viele kleine.
+    let points = null;
+    // Griffe (Kontrollpunkte) einer Kurve bzw. Hilfsellipse eines Bogens.
+    let controls = [];
+    let ellipse = null;
+
     switch (upper) {
       case "M":
         end = [ox + n(0), oy + n(1)];
@@ -98,19 +298,54 @@ function toSegments(d) {
       case "Z":
         end = [sx, sy];
         break;
+      case "Q": {
+        const c = [ox + n(0), oy + n(1)];
+        end = [ox + n(2), oy + n(3)];
+        controls = [c];
+        points = samplePoints((t) => quadPoint(from, c, end, t));
+        break;
+      }
+      case "C": {
+        const c1 = [ox + n(0), oy + n(1)];
+        const c2 = [ox + n(2), oy + n(3)];
+        end = [ox + n(4), oy + n(5)];
+        controls = [c1, c2];
+        points = samplePoints((t) => cubicPoint(from, c1, c2, end, t));
+        break;
+      }
+      case "A": {
+        end = [ox + n(5), oy + n(6)];
+        const arc = arcSampler(
+          from,
+          n(0),
+          n(1),
+          n(2),
+          n(3) !== 0,
+          n(4) !== 0,
+          end,
+        );
+        ellipse = arc.ellipse;
+        points = samplePoints(arc.at);
+        break;
+      }
       default:
         return;
     }
 
-    const length = Math.hypot(end[0] - cx, end[1] - cy);
+    if (!points) points = [from, end];
+    const length = polylineLength(points);
     walked += length;
 
     segments.push({
       index,
       cmd: item.cmd,
       args: item.args,
-      from: [cx, cy],
+      from,
       to: end,
+      points,
+      controls,
+      ellipse,
+      curved: upper === "Q" || upper === "C" || upper === "A",
       draw: upper !== "M",
       length,
       // Gesamtstrecke bis zum Ende dieses Wegstücks — für "schon erreicht?".
@@ -125,7 +360,7 @@ function toSegments(d) {
 }
 
 /** Zustand der Wanderung bei einer bestimmten gelaufenen Strecke. */
-function walkState(segments, travelled) {
+export function walkState(segments, travelled) {
   let drawn = "";
   let guide = "";
   let point = [0, 0];
@@ -137,31 +372,23 @@ function walkState(segments, travelled) {
 
   for (const seg of segments) {
     const covered = Math.max(0, Math.min(seg.length, rest));
-    const t = seg.length === 0 ? 1 : covered / seg.length;
-    const p = [
-      lerp(seg.from[0], seg.to[0], t),
-      lerp(seg.from[1], seg.to[1], t),
-    ];
+    const step = traverse(seg, covered);
 
     if (rest > 0 || seg.length === 0) {
       active = seg.index;
       penUp = !seg.draw;
-      point = p;
-      if (seg.length > 0) {
-        heading =
-          (Math.atan2(seg.to[1] - seg.from[1], seg.to[0] - seg.from[0]) * 180) /
-          Math.PI;
-      }
+      point = step.point;
+      if (seg.length > 0) heading = step.heading;
 
       if (seg.draw) {
         if (!open) {
           drawn += `M ${round(seg.from[0])} ${round(seg.from[1])} `;
           open = true;
         }
-        drawn += `L ${round(p[0])} ${round(p[1])} `;
+        drawn += step.drawn;
       } else {
         open = false;
-        guide += `M ${round(seg.from[0])} ${round(seg.from[1])} L ${round(p[0])} ${round(p[1])} `;
+        guide += `M ${round(seg.from[0])} ${round(seg.from[1])} L ${round(step.point[0])} ${round(step.point[1])} `;
       }
     }
 
@@ -194,6 +421,7 @@ export default function TurtleWalk({
   initialPath = EXAMPLES[0].d,
   initialColor = "#fb4934",
   initialWidth = 6,
+  examples = EXAMPLES,
   className = "",
 }) {
   const titleId = useId();
@@ -208,6 +436,7 @@ export default function TurtleWalk({
   const [playing, setPlaying] = useState(false);
   const [travelled, setTravelled] = useState(0);
   const [showGhost, setShowGhost] = useState(true);
+  const [showHandles, setShowHandles] = useState(true);
   // Wegstück, über dem gerade die Maus steht (Liste ↔ Leinwand ↔ Code).
   const [hovered, setHovered] = useState(null);
   const [editing, setEditing] = useState(false);
@@ -364,12 +593,13 @@ export default function TurtleWalk({
                 {/* Markiertes Wegstück (Liste ↔ Leinwand ↔ Code) */}
                 {markedSegment && (
                   <path
-                    d={`M ${markedSegment.from[0]} ${markedSegment.from[1]} L ${markedSegment.to[0]} ${markedSegment.to[1]}`}
+                    d={polylinePath(markedSegment.points)}
                     fill="none"
                     stroke="#fe8019"
                     strokeWidth={Number(strokeWidth) + 7}
                     strokeOpacity="0.3"
                     strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 )}
 
@@ -384,6 +614,48 @@ export default function TurtleWalk({
                     strokeLinecap="round"
                   />
                 )}
+
+                {/* Die Griffe aller Kurven — dauerhaft sichtbar, das
+                    Wegstück, auf dem Pfadi gerade ist, hervorgehoben. */}
+                {showHandles &&
+                  segments
+                    .filter((seg) => seg.curved)
+                    .map((seg) => (
+                      <g
+                        key={`handles-${seg.index}`}
+                        className={`${style.handles} ${seg.index === marked ? style.handlesOn : ""}`}
+                        onMouseEnter={() => setHovered(seg.index)}
+                        onMouseLeave={() => setHovered(null)}
+                      >
+                        {seg.ellipse && (
+                          <ellipse
+                            className={style.handleEllipse}
+                            cx={seg.ellipse.cx}
+                            cy={seg.ellipse.cy}
+                            rx={seg.ellipse.rx}
+                            ry={seg.ellipse.ry}
+                            transform={`rotate(${seg.ellipse.rot} ${seg.ellipse.cx} ${seg.ellipse.cy})`}
+                          />
+                        )}
+                        <path
+                          className={style.handleLine}
+                          d={handleLines(seg)}
+                        />
+                        {seg.controls.map((c, i) => (
+                          <g key={c.join(",")} className={style.handle}>
+                            <rect
+                              x={c[0] - 5.5}
+                              y={c[1] - 5.5}
+                              width="11"
+                              height="11"
+                            />
+                            <text x={c[0]} y={c[1]}>
+                              {seg.controls.length > 1 ? i + 1 : "◆"}
+                            </text>
+                          </g>
+                        ))}
+                      </g>
+                    ))}
 
                 {/* Das, was die Schildkröte bereits gezeichnet hat */}
                 {state.drawn && (
@@ -519,6 +791,15 @@ export default function TurtleWalk({
               />
               Weg vorher zeigen
             </label>
+
+            <label className={style.checkbox}>
+              <input
+                type="checkbox"
+                checked={showHandles}
+                onChange={(e) => setShowHandles(e.target.checked)}
+              />
+              Griffe der Kurven zeigen
+            </label>
           </div>
         </div>
 
@@ -649,12 +930,15 @@ export default function TurtleWalk({
                 Die Zahlen <span className={style.legendDraw}>1</span>{" "}
                 <span className={style.legendMove}>2</span> stehen auf der
                 Leinwand beim passenden Knotenpunkt. Gefüllte Kreise = Stift
-                unten, helle Kreise = Stift oben.
+                unten, helle Kreise = Stift oben. Bei Kurven (<code>Q</code>,{" "}
+                <code>C</code>, <code>A</code>) zeigen die{" "}
+                <strong>eckigen</strong> Punkte die Griffe — sie liegen neben
+                dem Weg, die Schildkröte läuft nie über sie.
               </p>
 
               <div className={style.pathEdit}>
                 <div className={style.chips}>
-                  {EXAMPLES.map((item) => (
+                  {examples.map((item) => (
                     <button
                       key={item.label}
                       type="button"

@@ -32,6 +32,7 @@ const FmsSVGPolygon = lazy(() => import("@pages-fms/svg-polygon.jsx"));
 const FmsSVGLinienBoss = lazy(() => import("@pages-fms/svg-linien-boss.jsx"));
 const FmsSVGPfade1 = lazy(() => import("@pages-fms/svg-pfade-1.jsx"));
 const FmsSVGPfade2 = lazy(() => import("@pages-fms/svg-pfade-2.jsx"));
+const FmsSVGPfadeBoss = lazy(() => import("@pages-fms/svg-pfade-boss.jsx"));
 const FmsSVGWip = lazy(() => import("@pages-fms/svg-wip.jsx"));
 const FmsSVG = lazy(() => import("@pages/fms/svg.mdx"));
 const FmsSVGAnimation = lazy(() => import("@pages/fms/svg-animation.mdx"));
@@ -381,7 +382,7 @@ export const routes = [
       { path: "/fms/svg-pfade-2", element: <FmsSVGPfade2 /> },
       {
         path: "/fms/svg-pfade-boss",
-        element: <FmsSVGWip title="Zwischenboss: Der Pfadwächter" />,
+        element: <FmsSVGPfadeBoss />,
       },
       {
         path: "/fms/svg-animation-1",

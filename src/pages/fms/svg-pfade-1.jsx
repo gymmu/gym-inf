@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import SvgChallenge from "@/components/gym/SvgChallenge/SvgChallenge";
-import { SvgSource } from "@/components/gym/SvgCode/SvgCode";
+import {
+  SvgCodeBlock,
+  SvgSource,
+  SvgTag,
+} from "@/components/gym/SvgCode/SvgCode";
 import SvgPathPlayground from "@/components/gym/SvgPathPlayground/SvgPathPlayground";
 import SvgShapeDemo from "@/components/gym/SvgShapeDemo/SvgShapeDemo";
 import SvgStudio from "@/components/gym/SvgStudio/SvgStudio";
@@ -13,7 +17,7 @@ import style from "./SvgKreis.module.css";
 /**
  * Vektoria, Level 9 — "Pfadgebirge".
  *
- * Das ganze Kapitel hängt an der Schildkröte: Sie bekommt die
+ * Das ganze Kapitel hängt an Pfadi, der Schildkröte: Sie bekommt die
  * **Weganweisung** `d` und läuft sie ab. Schritt für Schritt lernt sie
  * einen neuen Befehl dazu:
  *
@@ -162,32 +166,109 @@ export default function SvgPfade1() {
         />
 
         <div>
-          <p>
-            Im <strong>Pfadgebirge</strong> gibt es nur noch <em>ein</em>{" "}
-            Element: <code>&lt;path&gt;</code>. Damit lässt sich jede Form
-            zeichnen — aber nur, wenn man seine <strong>Weganweisung</strong>{" "}
-            lesen kann. Sie steht im Attribut <code>d</code> (von{" "}
-            <em>data</em>).
+          <p className="lead">
+            Das ist <strong>Pfadi</strong>, die Schildkröte des Pfadgebirges.
           </p>
 
           <p>
-            Stell dir eine <strong>Schildkröte</strong> vor, die einen Stift
-            hinter sich herzieht. Auf ihrem Zettel steht <code>d</code>: eine
+            Pfadi zieht einen <strong>Stift</strong> hinter sich her: Wo sie
+            läuft, entsteht eine Linie. In der anderen Hand hält sie ihren
+            Zettel — darauf steht die <strong>Weganweisung</strong>, also eine
             Liste von Befehlen. Jeder Befehl ist ein{" "}
             <strong>Buchstabe</strong>, dahinter stehen die{" "}
             <strong>Zahlen</strong>, die er braucht.
           </p>
 
           <p>
-            Die Schildkröte startet immer im <strong>Ursprung 0 / 0</strong>,
-            oben links. In diesem Kapitel lernt sie Schritt für Schritt einen
-            Befehl nach dem anderen dazu.
+            Pfadi kennt nur das <strong>Gitter der Leinwand</strong>: Sie
+            startet im <strong>Ursprung 0 / 0</strong> oben links. In diesem
+            Kapitel lernt sie Schritt für Schritt einen Befehl nach dem anderen
+            dazu — und du lernst mit ihr, ihre Weganweisung zu lesen und zu
+            schreiben.
           </p>
         </div>
       </div>
 
+      <Section classes={style.stepStart}>
+        <p className={style.eyebrow}>Das Element</p>
+        <h2>
+          <code>&lt;path&gt;</code> — ein ganz normales SVG-Element
+        </h2>
+
+        <p>
+          Pfadi arbeitet mit dem Element <code>&lt;path&gt;</code>. Das ist
+          zuerst einmal ein <strong>ganz normales SVG-Element</strong>, genau
+          wie <code>&lt;circle&gt;</code>, <code>&lt;rect&gt;</code> oder{" "}
+          <code>&lt;line&gt;</code>. Es steht im <code>&lt;svg&gt;</code>, es
+          wird gleich geschrieben, und es kennt dieselben Attribute für das
+          Aussehen: <code>fill</code>, <code>stroke</code>,{" "}
+          <code>stroke-width</code>, <code>opacity</code> …
+        </p>
+
+        <p>
+          <strong>Ein</strong> Attribut ist aber neu — und es ist das
+          wichtigste des ganzen Kapitels: <code>d</code> (von <em>data</em>).
+          Darin steht Pfadis Weganweisung. Ohne <code>d</code> zeichnet ein{" "}
+          <code>&lt;path&gt;</code> gar nichts.
+        </p>
+
+        <SvgCodeBlock>
+          <SvgTag name="svg" attrs={[{ name: "width", value: "200" }]} dim />
+          <SvgTag
+            name="path"
+            indent={1}
+            multiline
+            selfClosing
+            attrs={[
+              { name: "d", value: "M 20 160 L 70 60 L 120 140", active: true },
+              { name: "fill", value: "none" },
+              { name: "stroke", value: "#282828" },
+              { name: "stroke-width", value: "5" },
+            ]}
+          />
+          <SvgTag name="svg" closing dim />
+        </SvgCodeBlock>
+
+        <p>
+          Das Markierte ist der Teil, um den es geht. Alles andere —{" "}
+          <code>fill</code>, <code>stroke</code>, <code>stroke-width</code> —
+          kennst du schon von den anderen Formen und funktioniert hier genau
+          gleich.
+        </p>
+
+        <Section classes="important">
+          <h3>
+            Die Syntax von <code>d</code>
+          </h3>
+
+          <SvgSource
+            code={`d="M 20 160 L 70 60 L 120 140"
+<!--  ↑  ↑   ↑   ↑  ↑  ↑         -->
+<!--  B  Z   Z   B  Z  Z         -->
+<!--  B = Befehl (Buchstabe), Z = Zahl -->`}
+            wrap={false}
+          />
+
+          <p>
+            <strong>Buchstabe, dann die Zahlen, die er braucht</strong> — und
+            das so oft hintereinander, wie du willst. Mehr Regeln gibt es
+            nicht. Welcher Buchstabe wie viele Zahlen braucht, lernst du ab
+            jetzt Schritt für Schritt.
+          </p>
+        </Section>
+
+        <p>
+          Der ganze Rest dieses Kapitels handelt deshalb fast nur noch von{" "}
+          <code>d</code>.
+        </p>
+      </Section>
+
       <LearningGoals>
         <ul>
+          <li>
+            Sie wissen, dass <code>&lt;path&gt;</code> ein normales SVG-Element
+            ist, und kennen sein wichtigstes Attribut <code>d</code>.
+          </li>
           <li>
             Sie können die Schreibweise von <code>d</code> erklären: Buchstabe
             (Befehl), dann die Zahlen, die dazugehören.
@@ -453,7 +534,7 @@ export default function SvgPfade1() {
       </Section>
 
       <Section classes={`full-width ${style.block}`}>
-        <h3>Schau der Schildkröte zu — relativ unterwegs</h3>
+        <h3>Schau Pfadi zu — relativ unterwegs</h3>
 
         <p>
           Hier läuft die Schildkröte eine <strong>relative</strong> Weganweisung

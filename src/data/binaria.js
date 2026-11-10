@@ -168,22 +168,23 @@ export const binariaWorlds = [
           { title: "Pfade 2 — Kurven (Q, C, A)", path: "/fms/svg-pfade-2" },
         ],
       },
-
-      // --- Geplant: Inhalte entstehen Schritt für Schritt ------------------
-      // Die Kapitel unten sind erst als Übersicht angelegt. Noch nicht
-      // geschriebene Seiten zeigen vorerst die Platzhalterseite an.
       {
         id: "pfad-boss",
-        name: "Der Pfadwächter",
+        name: "Der Pfadmeister",
         icon: "👹",
         type: "boss",
         chapters: [
           {
-            title: "Zwischenboss: Pfade zeichnen",
+            title: "Zwischenboss: Das Labyrinth",
             path: "/fms/svg-pfade-boss",
+            completeOnVisit: true,
           },
         ],
       },
+
+      // --- Geplant: Inhalte entstehen Schritt für Schritt ------------------
+      // Die Kapitel unten sind erst als Übersicht angelegt. Noch nicht
+      // geschriebene Seiten zeigen vorerst die Platzhalterseite an.
       {
         id: "animationswerkstatt",
         name: "Animationswerkstatt",

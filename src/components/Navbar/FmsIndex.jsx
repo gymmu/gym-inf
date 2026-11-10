@@ -55,6 +55,9 @@ export default function FmsIndex() {
               </NavLink>
               <NavLink to="fms/svg-pfade-1">Pfade: gerade Wege (SVG)</NavLink>
               <NavLink to="fms/svg-pfade-2">Pfade: Kurven (SVG)</NavLink>
+              <NavLink to="fms/svg-pfade-boss">
+                Zwischenboss: Pfadmeister
+              </NavLink>
               {showAll && (
                 <>
                   <NavLink to="fms/hardware">Computer Hardware</NavLink>
